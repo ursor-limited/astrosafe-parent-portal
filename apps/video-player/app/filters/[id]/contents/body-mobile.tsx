@@ -7,19 +7,25 @@ import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "../components/SearchWordsSection";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterSubcategory,
+  IFilterCategory,
+  IFilterUrl,
+} from "../../contents/common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { ITitleRowItem } from "@/app/components/TitleRow";
-import MobileDevicesSection from "@/app/folders/[id]/components/MobileDevicesSection";
-import ApiController from "@/app/api";
+import MobileFilterPageDevicesSection from "../components/MobileFilterDevicesSection";
 import MobileFilterPageCategoriesSection from "../components/MobileCategoriesSection";
+import { useRouter } from "next/navigation";
 
 export default function FilterPageMobileBody(props: {
   filterId: number;
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterCategory["categoryId"][];
+  allowedCategories: IFilterSubcategory["id"][];
   flipCategory: (id: IFilterCategory["categoryId"]) => void;
+  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -35,23 +41,22 @@ export default function FilterPageMobileBody(props: {
   addAllowedSite: (url: IFilterUrl["url"]) => void;
   removeBlockedSite: (url: IFilterUrl["url"]) => void;
   removeAllowedSite: (url: IFilterUrl["url"]) => void;
+  openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
+  const router = useRouter();
   return (
     <MobilePageLayout
       actions={props.actions}
-      titleRow={props.titleRow}
+      titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={() => router.push("/filters")}
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">
-        <MobileDevicesSection
-          title={`Filter applied to ${props.devices.length} Devices.`}
+        <MobileFilterPageDevicesSection
           devices={props.devices}
-          folderId={props.filterId}
           onAdd={props.setAddDeviceDialogOpen}
-          onRemove={(id: IDevice["id"]) =>
-            ApiController.removeFolderFromDevice(props.filterId, id).then(
-              props.onRemoveDevice
-            )
+          openChangeFilterDialogForDevice={
+            props.openChangeFilterDialogForDevice
           }
         />
         {/* <FilterPageServicesSection
@@ -71,6 +76,7 @@ export default function FilterPageMobileBody(props: {
           categories={props.categories}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
+          flipSubcategory={props.flipSubcategory}
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}

@@ -106,11 +106,13 @@ export default function ProfilePage(props: {
           ) : null}
         </Stack>
       ),
-      options: allDevices.map((d) => ({
-        text: d.name,
-        imageUrl: d.profileAvatarUrl,
-        callback: () => router.push(`/profiles/${d.id}`),
-      })),
+      options: allDevices
+        .filter((d) => d.id !== props.deviceId)
+        .map((d) => ({
+          text: d.name,
+          imageUrl: d.profileAvatarUrl,
+          callback: () => router.push(`/profiles/${d.id}`),
+        })),
       label:
         !props.isMobile && device?.deviceType
           ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]
@@ -141,6 +143,25 @@ export default function ProfilePage(props: {
       notificationCtx.success("Created Folder and added it to the Device.");
     });
 
+  const setDeviceOnlineStatus = useCallback(
+    (deviceId: IDevice["id"], online: IEnrichedDevice["online"]) => {
+      device && deviceId === props.deviceId && setDevice({ ...device, online });
+    },
+    [props.deviceId, device]
+  );
+
+  // useEffect(() => {
+  //   const socket = new WebSocket(
+  //     `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+  //   );
+  //   socket.addEventListener("message", (event) => {
+  //     if (!event.data) return;
+  //     const data = JSON.parse(event.data);
+  //     props.deviceId === data.deviceId &&
+  //       setDeviceOnlineStatus(data.deviceId, data.online);
+  //   });
+  // }, []);
+
   return device ? (
     <>
       {props.isMobile ? (
@@ -170,9 +191,13 @@ export default function ProfilePage(props: {
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
         onSubmit={(name) => {
-          ApiController.renameDevice(props.deviceId, name).then(loadDevice);
+          ApiController.renameDevice(props.deviceId, name)
+            .then(loadDevice)
+            .then(() => notificationCtx.success("Renamed Device"));
           setRenameDialogOpen(false);
         }}
+        name={device.name ?? ""}
+        isMobile={props.isMobile}
       />
       <DeviceDisconnectDialog
         open={disconnectDialogOpen}

@@ -2,10 +2,11 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { AstroBentoCard } from "./AstroBentoCard";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import XIcon from "@/images/icons/X.svg";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
-import { DeviceType, IDevice } from "../contents/common";
+import { IDevice } from "../contents/common";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,18 +17,19 @@ const FilterPageDevicesSection = (props: {
   devices: IDevice[];
   onAdd: () => void;
   onRemove: () => void;
+  openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) => {
   const router = useRouter();
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
-
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false);
-
   return (
     <>
       <AstroBentoCard
         title={
-          props.devices.length === 1
+          props.devices.length === 0
+            ? "No Devices yet have this Filter applied"
+            : props.devices.length === 1
             ? "Filter applied to this Device"
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }
@@ -61,14 +63,24 @@ const FilterPageDevicesSection = (props: {
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <Stack
-                  onClick={() => router.push(`/profiles/${d.id}`)}
                   sx={{
                     cursor: "pointer",
                     "&:hover": { opacity: 0.7 },
                     transition: "0.2s",
                   }}
                 >
-                  <DeviceCard {...d} noExtras />
+                  <DeviceCard
+                    {...d}
+                    button={
+                      <Stack
+                        onClick={() => props.openChangeFilterDialogForDevice(d)}
+                      >
+                        <XIcon height={16} width={16} />
+                      </Stack>
+                    }
+                    noExtras
+                    onClick={() => router.push(`/profiles/${d.id}`)}
+                  />
                 </Stack>
               </UrsorFadeIn>
             ))}
@@ -108,15 +120,16 @@ const FilterPageDevicesSection = (props: {
         )}
       </AstroBentoCard>
       <AllDevicesDialog
-        title={`${props.devices.length} Device${
-          props.devices.length === 1 ? "" : "s"
-        } have this Filter applied.`}
+        title={`${props.devices.length} ${
+          props.devices.length === 1 ? "Device has" : "Devices have"
+        } this Filter applied`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
-        onAdd={() => {
-          props.onAdd();
-          setDevicesGridDialogOpen(false);
+        onAdd={props.onAdd}
+        onRemove={(id) => {
+          const device = props.devices.find((d) => d.id === id);
+          device && props.openChangeFilterDialogForDevice(device);
         }}
       />
     </>

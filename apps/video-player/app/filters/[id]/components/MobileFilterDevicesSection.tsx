@@ -1,56 +1,65 @@
+import React from "react";
+import DynamicCardGrid from "@/app/components/DynamicCardGrid";
+import { AstroBentoCard } from "./AstroBentoCard";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import XIcon from "@/images/icons/X.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import XIcon from "@/images/icons/X.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
+import { IDevice } from "../contents/common";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
-import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
+import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 
-const MobileDevicesSection = (props: {
-  title: string;
+const MobileFilterPageDevicesSection = (props: {
   devices: IDevice[];
-  folderId: IContentBucket["id"];
   onAdd: () => void;
-  onRemove: (id: IDevice["id"]) => void;
+  openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) => {
+  const router = useRouter();
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
-
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false);
-
-  const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
-    useState<number | undefined>();
-
-  // const removeDevice = (id: IDevice["id"]) =>
-  //   ApiController.removeFolderFromDevice(props.folderId, id);
-  // .then(
-  //     props.onRemove
-  //   );
-
   return (
     <>
-      <AstroBentoCard title={props.title} notCollapsible isMobile>
+      <AstroBentoCard
+        title={
+          props.devices.length === 0
+            ? "No Devices yet have this Filter applied"
+            : props.devices.length === 1
+            ? "Filter applied to this Device"
+            : `Filter applied to these ${props.devices.length ?? 0} Devices`
+        }
+        isMobile
+        notCollapsible
+      >
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="150px" rowGap="12px" columnGap="12px">
             {props.devices.map((d, i) => (
-              <UrsorFadeIn key={d.id} duration={800} delay={i * 150}>
-                <MobileDeviceCard
-                  {...d}
-                  button={
-                    <Stack onClick={() => setRemovalConfirmationDialogId(d.id)}>
-                      <XIcon height={16} width={16} />
-                    </Stack>
-                  }
-                  noExtras
-                />
+              <UrsorFadeIn key={i} duration={800} delay={i * 150}>
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <MobileDeviceCard
+                    {...d}
+                    button={
+                      <Stack
+                        onClick={() => props.openChangeFilterDialogForDevice(d)}
+                      >
+                        <XIcon height={16} width={16} />
+                      </Stack>
+                    }
+                    noExtras
+                    onClick={() => router.push(`/profiles/${d.id}`)}
+                  />
+                </Stack>
               </UrsorFadeIn>
             ))}
           </DynamicCardGrid>
@@ -92,6 +101,7 @@ const MobileDevicesSection = (props: {
             size="small"
             variant="secondary"
             endIcon={ChevronRightIcon}
+            iconSize={16}
             onClick={() => setDevicesGridDialogOpen(true)}
             width="100%"
           >
@@ -102,6 +112,7 @@ const MobileDevicesSection = (props: {
             variant="tertiary"
             size="small"
             endIcon={PlusIcon}
+            iconSize={16}
             onClick={props.onAdd}
             width="100%"
           >
@@ -112,29 +123,18 @@ const MobileDevicesSection = (props: {
       <MobileAllDevicesDialog
         title={`${props.devices.length} ${
           props.devices.length === 1 ? "Device has" : "Devices have"
-        } access to this Folder`}
+        } this Filter applied`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
-        onAdd={() => {
-          props.onAdd();
+        onAdd={props.onAdd}
+        onRemove={(id) => {
+          const device = props.devices.find((d) => d.id === id);
+          device && props.openChangeFilterDialogForDevice(device);
         }}
-        onRemove={setRemovalConfirmationDialogId}
       />
-      {removalConfirmationDialogId ? (
-        <FolderDeviceRemovalConfirmationDialog
-          open={true}
-          onClose={() => setRemovalConfirmationDialogId(undefined)}
-          onSubmit={() => props.onRemove(removalConfirmationDialogId)}
-          deviceName={
-            props.devices.find((d) => d.id === removalConfirmationDialogId)
-              ?.name ?? ""
-          }
-          isMobile
-        />
-      ) : null}
     </>
   );
 };
 
-export default MobileDevicesSection;
+export default MobileFilterPageDevicesSection;

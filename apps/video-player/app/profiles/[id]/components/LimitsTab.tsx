@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import _ from "lodash";
@@ -15,6 +15,7 @@ import utc from "dayjs/plugin/utc";
 import { useWindowSize } from "usehooks-ts";
 import MobileAllowedTimesSection from "./MobileAllowedTimesSection";
 import ProfilePageTabLayout from "./ProfilePageTabLayout";
+import NotificationContext from "@/app/components/NotificationContext";
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
@@ -39,42 +40,8 @@ export type Weekday = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 export const DAILY_LIMIT_INCREMENT = 15; // minutes
 
 const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
-const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1365;
-const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1080;
-
-const DUMMY_SEARCHES = [
-  {
-    title: "Safe Search (Recommended)",
-    subtitle:
-      "Search engine returns content aligned with the device’s filter system.",
-    image: (
-      <Stack sx={{ svg: { path: { fill: PALETTE.system.orange } } }}>
-        <SearchIcon height="36px" width="36px" />
-      </Stack>
-    ),
-    id: "safe",
-  },
-  {
-    title: "Encyclopedic - up to 7 yrs.",
-    subtitle: "A handful of educational sites to introduce searching safely",
-    image: (
-      <Stack sx={{ svg: { path: { fill: PALETTE.system.orange } } }}>
-        <SearchIcon height="36px" width="36px" />
-      </Stack>
-    ),
-    id: "encyclopedic",
-  },
-  {
-    title: "Off",
-    subtitle: "Turn off the search engine to create a more focused experience.",
-    image: (
-      <Stack sx={{ svg: { path: { fill: PALETTE.system.orange } } }}>
-        <SearchIcon height="36px" width="36px" />
-      </Stack>
-    ),
-    id: "off",
-  },
-];
+const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1506;
+const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1110;
 
 export interface ITimeLimit {
   id: number;
@@ -116,7 +83,7 @@ const DevicePageLimitsTab = (props: {
     startTime: number,
     endTime: number
   ) => {
-    ApiController.addAllowedTime(
+    ApiController.addAllowedTimeRange(
       props.deviceId,
       day,
       getISODateString(
@@ -130,6 +97,10 @@ const DevicePageLimitsTab = (props: {
 
   const reset = (day: IAllowedTime["day"]) => {
     ApiController.resetAllowedTimes(props.deviceId, day).then(loadData);
+  };
+
+  const deleteRange = (id: IAllowedTime["id"]) => {
+    ApiController.removeAllowedTimeRange(id).then(loadData);
   };
 
   const [allowedTimesEnabled, setAllowedTimesEnabled] =
@@ -185,6 +156,8 @@ const DevicePageLimitsTab = (props: {
       ),
     [width]
   );
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <ProfilePageTabLayout
@@ -296,13 +269,12 @@ const DevicePageLimitsTab = (props: {
                       t.id === id ? { ...t, startTime, endTime } : t
                     )
                   );
-                  ApiController.changeAllowedTime(id, startTime, endTime);
+                  ApiController.changeAllowedTimeRange(id, startTime, endTime);
                 }}
-                removeAllowedTime={() => null}
+                deleteRange={deleteRange}
                 addTimeLimit={addAllowedTime}
                 reset={reset}
                 smallerLabelFont={allowedTimesLabelsSmallerFontSize}
-                halveLabelFrequency={halveLabelFrequency}
                 disabled={!allowedTimesEnabled}
               />
             ) : (
@@ -316,6 +288,11 @@ const DevicePageLimitsTab = (props: {
                         props.deviceId,
                         !allowedTimesEnabled
                       );
+                      notificationCtx.success(
+                        `Switched allowed times ${
+                          allowedTimesEnabled ? "off" : "on"
+                        } on this Device`
+                      );
                     }}
                   />
                 }
@@ -326,10 +303,11 @@ const DevicePageLimitsTab = (props: {
                       t.id === id ? { ...t, startTime, endTime } : t
                     )
                   );
-                  ApiController.changeAllowedTime(id, startTime, endTime);
+                  ApiController.changeAllowedTimeRange(id, startTime, endTime);
                 }}
                 addTimeLimit={addAllowedTime}
                 reset={reset}
+                deleteRange={deleteRange}
                 smallerLabelFont={allowedTimesLabelsSmallerFontSize}
                 halveLabelFrequency={halveLabelFrequency}
                 disabled={!allowedTimesEnabled}
@@ -345,6 +323,11 @@ const DevicePageLimitsTab = (props: {
                   ApiController.flipTimeLimitsEnabled(
                     props.deviceId,
                     !timeLimitsEnabled
+                  );
+                  notificationCtx.success(
+                    `Switched time limits ${
+                      timeLimitsEnabled ? "off" : "on"
+                    } on this Device`
                   );
                 }}
               />

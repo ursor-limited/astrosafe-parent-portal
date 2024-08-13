@@ -148,6 +148,7 @@ const PinPad = (props: {
   dark?: boolean;
   gap?: string;
   keySize?: string;
+  spacing?: string;
 }) => {
   const [red, setRed] = useState<boolean>(false);
   useEffect(() => {
@@ -157,7 +158,7 @@ const PinPad = (props: {
     }
   }, [props.wrong]);
   return (
-    <Stack spacing="46px" justifyContent="center">
+    <Stack spacing={props.spacing || "46px"} justifyContent="center">
       <Stack direction="row" spacing="24px" justifyContent="center">
         {[...Array(4).keys()].map((i) => (
           <Stack

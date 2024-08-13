@@ -27,11 +27,10 @@ const AstroTimeChart = (props: {
     [props.times]
   );
   const [nHorizontalLines, setNHorizontalLines] = useState<number>(1);
-  useEffect(
-    () => setNHorizontalLines(Math.ceil(maxTime / (60 * yInterval)) + 1),
-    [maxTime]
-  );
-  console.log(props.times, maxTime, "alaooso");
+  useEffect(() => {
+    const nIntervals = Math.ceil(maxTime / (60 * yInterval));
+    setNHorizontalLines(nIntervals === 1 ? 1 : nIntervals + 1); // if the total time is less than 1 hour, the y range should be only 1 hour for ease of viewing
+  }, [maxTime]);
   return (
     <Stack
       flex={1}
@@ -48,6 +47,9 @@ const AstroTimeChart = (props: {
               width="100%"
               bgcolor={PALETTE.secondary.grey[2]}
               position="relative"
+              sx={{
+                opacity: nHorizontalLines > 9 && i % 2 ? 0 : 1,
+              }}
             >
               <Stack
                 width="30px"
@@ -84,7 +86,7 @@ const AstroTimeChart = (props: {
           >
             <Stack
               height={`${
-                (100 * dayTime.screenTime) / (yInterval * nHorizontalLines)
+                (100 * dayTime.screenTime) / 60 / (yInterval * nHorizontalLines)
               }%`}
               width={props.barWidth ?? "32px"}
               borderRadius="4px 4px 0 0"

@@ -10,6 +10,10 @@ module.exports = withSvgr({
         protocol: "https",
         hostname: "**",
       },
+      {
+        protocol: "http",
+        hostname: "**",
+      },
     ],
     // domains: [
     //   "https://www.astrosafe.co",

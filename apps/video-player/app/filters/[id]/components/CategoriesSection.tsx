@@ -1,11 +1,19 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
+import LockIcon from "@/images/icons/LockIcon.svg";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
+import { DynamicContainer, PALETTE, Typography } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterSubcategory,
+  IFilterCategory,
+} from "../../contents/common";
+import AstroCard from "./AstroCard";
+import { useEffect, useState } from "react";
 
 export const FilterLegend = (props: { small?: boolean }) => (
   <Stack direction="row" spacing="20px">
@@ -43,13 +51,145 @@ export const FilterLegend = (props: { small?: boolean }) => (
         />
       </Stack>
     </Stack>
+    <Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={props.small ? "7px" : "10px"}
+      >
+        <Typography variant={props.small ? "small" : "normal"} bold>
+          Custom
+        </Typography>
+        <Stack
+          height={props.small ? "12px" : "16px"}
+          width={props.small ? "12px" : "16px"}
+          borderRadius="100%"
+          bgcolor={PALETTE.system.orange}
+        />
+      </Stack>
+    </Stack>
   </Stack>
 );
+
+const CategoryCard = (
+  props: IFilterCategory & {
+    flipCategory: (id: IFilterCategory["categoryId"]) => void;
+    flipSubcategory: (id: IFilterSubcategory["id"]) => void;
+    allowedCategories: IFilterSubcategory["id"][];
+  }
+) => {
+  const [collapsed, setCollapsed] = useState<boolean>(true);
+  const [status, setStatus] = useState<"on" | "off" | "custom">("off");
+  useEffect(
+    () =>
+      setStatus(
+        props.subCategories.every((c) => props.allowedCategories.includes(c.id))
+          ? "on"
+          : props.subCategories.some((c) =>
+              props.allowedCategories.includes(c.id)
+            )
+          ? "custom"
+          : "off"
+      ),
+    [props.subCategories, props.allowedCategories]
+  );
+  return (
+    <AstroCard key={props.categoryId}>
+      <DynamicContainer duration={600}>
+        <Stack p="16px" spacing="16px">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Stack>
+              <Typography bold>{props.title}</Typography>
+              <Typography
+                bold
+                variant="small"
+                color={PALETTE.secondary.grey[3]}
+              >
+                32 Categories allowed
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing="20px">
+              <Stack
+                sx={{
+                  pointerEvents: props.permanentlyBlocked ? "none" : undefined,
+                }}
+              >
+                <AstroSwitch
+                  on={status === "on"}
+                  compromise={status === "custom"}
+                  callback={() => props.flipCategory(props.categoryId)}
+                  icon={props.permanentlyBlocked ? LockIcon : undefined}
+                />
+              </Stack>
+              <Stack
+                sx={{
+                  transform: `rotate(${collapsed ? 0 : 180}deg)`,
+                  transition: "0.2s",
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                }}
+                onClick={() => setCollapsed(!collapsed)}
+              >
+                <ChevronDownIcon height="24px" width="24px" />
+              </Stack>
+            </Stack>
+          </Stack>
+          {!collapsed ? (
+            <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+              {props.subCategories.map((sc, i) => (
+                <UrsorFadeIn key={sc.id} duration={800} delay={i * 40}>
+                  <Stack
+                    height="72px"
+                    bgcolor="rgb(255,255,255)"
+                    borderRadius="12px"
+                    border={`1px solid ${PALETTE.secondary.grey[2]}`}
+                    px="16px"
+                    boxSizing="border-box"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    direction="row"
+                    onClick={() => props.flipSubcategory(sc.id)}
+                    sx={{
+                      cursor: "pointer",
+                      transition: "0.2s",
+                      "&:hover": { opacity: 0.7 },
+                      pointerEvents: props.permanentlyBlocked
+                        ? "none"
+                        : undefined,
+                    }}
+                  >
+                    <Stack justifyContent="space-between">
+                      <Stack spacing="16px" alignItems="center" direction="row">
+                        <Typography maxLines={1} bold>
+                          {sc.title}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                    <AstroSwitch
+                      on={props.allowedCategories.includes(sc.id)}
+                      callback={() => null}
+                      icon={props.permanentlyBlocked ? LockIcon : undefined}
+                    />
+                  </Stack>
+                </UrsorFadeIn>
+              ))}
+            </DynamicCardGrid>
+          ) : null}
+        </Stack>
+      </DynamicContainer>
+    </AstroCard>
+  );
+};
 
 const FilterPageCategoriesSection = (props: {
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterUrl["id"][];
+  allowedCategories: IFilterSubcategory["id"][];
+  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
   flipCategory: (id: IFilterCategory["categoryId"]) => void;
 }) => (
   <AstroBentoCard
@@ -60,41 +200,17 @@ const FilterPageCategoriesSection = (props: {
     subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
     topRightStuff={<FilterLegend />}
   >
-    <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-      {props.categories.map((c, i) => (
-        <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 40}>
-          <Stack
-            height="72px"
-            bgcolor="rgb(255,255,255)"
-            borderRadius="12px"
-            border={`1px solid ${PALETTE.secondary.grey[2]}`}
-            px="16px"
-            boxSizing="border-box"
-            justifyContent="space-between"
-            alignItems="center"
-            direction="row"
-            onClick={() => props.flipCategory(c.categoryId)}
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.7 },
-            }}
-          >
-            <Stack justifyContent="space-between">
-              <Stack spacing="16px" alignItems="center" direction="row">
-                <Typography maxLines={1} bold>
-                  {c.title}
-                </Typography>
-              </Stack>
-            </Stack>
-            <AstroSwitch
-              on={props.allowedCategories.includes(c.categoryId)}
-              callback={() => null}
-            />
-          </Stack>
-        </UrsorFadeIn>
+    <Stack spacing="20px">
+      {props.categories.map((cg) => (
+        <CategoryCard
+          key={cg.categoryId}
+          {...cg}
+          flipCategory={props.flipCategory}
+          flipSubcategory={props.flipSubcategory}
+          allowedCategories={props.allowedCategories}
+        />
       ))}
-    </DynamicCardGrid>
+    </Stack>
   </AstroBentoCard>
 );
 

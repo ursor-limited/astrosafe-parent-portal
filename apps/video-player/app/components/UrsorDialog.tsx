@@ -163,7 +163,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         }
         px={props.paddingX}
         py={props.paddingY}
-        pt={props.paddingTop}
+        pt={props.paddingTop || `calc(${PADDING} - 4px)`}
         borderRadius="25px"
         overflow={props.scrollable ? "scroll" : "hidden"}
         flex={1}
@@ -197,6 +197,22 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             <ByteStepper nSteps={props.nSteps} step={props.step} />
           </Stack>
         ) : null}
+        {props.onCloseCallback && !props.noCloseButton ? (
+          <Box
+            position="absolute"
+            top={props.isMobile ? "29px" : "34px"}
+            right={props.isMobile ? "20px" : "34px"}
+            onClick={props.onCloseCallback}
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+              zIndex: Z_INDEX,
+            }}
+          >
+            <X height={props.isMobile ? "26px" : "27px"} />
+          </Box>
+        ) : null}
         <Stack
           flex={1}
           spacing={
@@ -207,10 +223,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           sx={_.isNumber(props.step) ? animation : null}
           overflow="hidden"
         >
-          {props.subtitle ||
-          props.title ||
-          props.supertitle ||
-          props.onCloseCallback ? (
+          {props.subtitle || props.title || props.supertitle ? (
             <Stack
               spacing={props.isMobile ? "0px" : "12px"}
               width="100%"
@@ -218,20 +231,21 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               textAlign="center"
               boxSizing="border-box"
             >
-              {props.supertitle ||
-              (props.onCloseCallback && !props.noCloseButton) ? (
+              {props.supertitle ? (
                 <Stack direction="row" width="100%">
-                  <Stack width="100%" alignItems="center">
-                    <Typography
-                      variant={props.title ? "medium" : "large"}
-                      bold
-                      color={PALETTE.font.dark}
-                    >
-                      {props.supertitle}
-                    </Typography>
-                  </Stack>
-                  <Stack
-                    width={0}
+                  {props.supertitle ? (
+                    <Stack width="100%" alignItems="center">
+                      <Typography
+                        variant={props.title ? "medium" : "large"}
+                        bold
+                        color={PALETTE.font.dark}
+                      >
+                        {props.supertitle}
+                      </Typography>
+                    </Stack>
+                  ) : null}
+                  {/* <Stack
+                    width="100%"
                     position="relative"
                     sx={{ transform: "translateX(-24px)" }}
                   >
@@ -262,7 +276,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                         </Box>
                       ) : null}
                     </Stack>
-                  </Stack>
+                  </Stack> */}
                 </Stack>
               ) : null}
               {props.title ? (

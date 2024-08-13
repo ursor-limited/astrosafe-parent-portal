@@ -10,7 +10,7 @@ import FilterIcon from "@/images/icons/FilterIcon.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
@@ -18,6 +18,7 @@ import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
 import { useElementSize } from "usehooks-ts";
 import { cleanUrl } from "../[id]/components/MobileInsightsTab";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -232,6 +233,7 @@ const DeviceCard = (
     url?: string;
     button?: React.ReactNode;
     small?: boolean;
+    onClick?: () => void;
     noExtras?: boolean;
   }
 ) => {
@@ -242,13 +244,15 @@ const DeviceCard = (
   );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
+
+  const notificationCtx = useContext(NotificationContext);
   return (
     <AstroCard>
-      <Stack p="20px" boxSizing="border-box" position="relative" spacing="20px">
+      <Stack p="20px" boxSizing="border-box" position="relative">
         {props.button ? (
           <Stack
             position="absolute"
-            top="20px"
+            top="28px"
             right="15px"
             sx={{
               cursor: "pointer",
@@ -262,16 +266,17 @@ const DeviceCard = (
         ) : null}
         <Stack
           direction="row"
-          spacing="8px"
+          spacing="18px"
           position="relative"
           height={props.small ? "58px" : "90px"}
           alignItems="center"
           width="94%"
+          onClick={props.onClick}
         >
           <Stack position="relative">
             <Stack
-              minHeight={props.small ? "40px" : "92px"}
-              minWidth={props.small ? "40px" : "92px"}
+              minHeight={props.small ? "40px" : "84px"}
+              minWidth={props.small ? "40px" : "84px"}
               borderRadius="100%"
               overflow="hidden"
               bgcolor={props.backgroundColor}
@@ -284,8 +289,8 @@ const DeviceCard = (
             >
               <Image
                 src={props.profileAvatarUrl}
-                height={props.small ? 40 : 92}
-                width={props.small ? 40 : 92}
+                height={props.small ? 40 : 84}
+                width={props.small ? 40 : 84}
                 alt="device profile"
               />
             </Stack>
@@ -349,12 +354,16 @@ const DeviceCard = (
                 spacing="8px"
                 alignItems="center"
                 sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
                   svg: {
                     path: {
                       fill: PALETTE.system.orange,
                     },
                   },
                 }}
+                onClick={() => router.push(`/filters/${props.filterId}`)}
               >
                 <FilterIcon height="16px" width="16px" />
                 <Typography maxLines={1}>{props.filterName}</Typography>
@@ -364,7 +373,7 @@ const DeviceCard = (
         </Stack>
         {!props.noExtras ? (
           <>
-            <Stack spacing="12px">
+            <Stack spacing="12px" pt="20px">
               <DeviceCardCurrentUrlSection
                 url={props.latestBrowsing?.url}
                 disabled={
@@ -389,6 +398,11 @@ const DeviceCard = (
                 flipBrowsingEnabled={() => {
                   setBrowsingEnabled(!browsingEnabled);
                   ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+                  notificationCtx.success(
+                    `Browsing is now ${
+                      !browsingEnabled ? "enabled" : "disabled"
+                    } on ${props.name}`
+                  );
                 }}
               />
             </Stack>
@@ -411,17 +425,19 @@ const DeviceCard = (
               </Typography>
               <ChevronRightIcon height="16px" width="16px" />
             </Stack> */}
+            <Stack pt="20px">
+              <UrsorButton
+                variant="secondary"
+                endIcon={ChevronRightIcon}
+                onClick={() => router.push(`/profiles/${props.id}`)}
+                width="100%"
+                backgroundColor="white"
+              >
+                Go to Device
+              </UrsorButton>
+            </Stack>
           </>
         ) : null}
-        <UrsorButton
-          variant="secondary"
-          endIcon={ChevronRightIcon}
-          onClick={() => router.push(`/profiles/${props.id}`)}
-          width="100%"
-          backgroundColor="white"
-        >
-          Go to Device
-        </UrsorButton>
       </Stack>
     </AstroCard>
   );

@@ -15,7 +15,7 @@ import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
 //       placement=''
 //     >
 //       <Stack alignItems="center" direction="row" spacing="5px">
-//         <Typography bold>{dayjs(t.startTime).format("HH:mma")}</Typography>
+//         <Typography bold>{dayjs(t.startTime).format("hh:mma")}</Typography>
 //         <PencilIcon height="16px" width="16px" />
 //       </Stack>
 //     </UrsorPopover>
@@ -29,12 +29,11 @@ const MobileAllowedTimesSection = (props: {
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
   ) => void;
-  removeAllowedTime: (id: IAllowedTime["id"]) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   addTimeLimit: (day: number, startTime: number, endTime: number) => void;
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
   smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
   disabled: boolean;
 }) => (
   <AstroBentoCard
@@ -65,11 +64,11 @@ const MobileAllowedTimesSection = (props: {
               day === "sun" ? t.day === 0 : t.day === i + 1
             )}
             reset={() => props.reset(day === "sun" ? 0 : i + 1)}
-            addAllowedTime={(startTime, endTime) =>
+            addRange={(startTime, endTime) =>
               props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
             }
-            setAllowedTime={props.setAllowedTime}
-            removeAllowedTime={props.removeAllowedTime}
+            setRangeTimes={props.setAllowedTime}
+            deleteRange={props.deleteRange}
           />
         ))}
       </Stack>

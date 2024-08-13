@@ -9,6 +9,7 @@ const FilterCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
   onSubmit: (name: string) => void;
+  isMobile?: boolean;
 }) => {
   const [name, setName] = useState<string>("");
   return (
@@ -19,6 +20,7 @@ const FilterCreationDialog = (props: {
       subtitle={["Choose a name for", "your Filter."]}
       width="422px"
       dynamicHeight
+      isMobile={props.isMobile}
     >
       <Stack
         flex={1}

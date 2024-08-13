@@ -37,7 +37,7 @@ const TimeSelectionColumn = (props: {
   return (
     <Stack spacing="12px" alignItems="center">
       <Typography bold variant="h5" color={PALETTE.secondary.grey[5]}>
-        {dayjs(props.time).utc().format("HH:mma")}
+        {dayjs(props.time).utc().format("hh:mma")}
       </Typography>
       <Stack position="relative" overflow="hidden">
         <Stack
@@ -99,7 +99,7 @@ const TimeSelectionColumn = (props: {
                       .minute(0)
                       .millisecond(0)
                       .add(i * 15, "minutes")
-                      .format("HH:mm a")}
+                      .format("hh:mm a")}
                   </Typography>
                 </Stack>
               )),
@@ -192,7 +192,7 @@ const MobileAllowedTimeRowDisplayButton = (props: {
       >
         <Stack alignItems="center" direction="row" spacing="5px">
           <Typography bold>
-            {dayjs(props.startTime).utc().format("HH:mma")}
+            {dayjs(props.startTime).utc().format("hh:mma")}
           </Typography>
           {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
@@ -201,7 +201,7 @@ const MobileAllowedTimeRowDisplayButton = (props: {
         </Typography>
         <Stack alignItems="center" direction="row" spacing="5px">
           <Typography bold>
-            {dayjs(props.endTime).utc().format("HH:mma")}
+            {dayjs(props.endTime).utc().format("hh:mma")}
           </Typography>
           {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
@@ -224,10 +224,10 @@ const MobileAllowedTimeRowDisplayButton = (props: {
 const MobileAllowedTimeRow = (props: {
   day: IAllowedTime["day"];
   times: IAllowedTime[];
-  addAllowedTime: (startTime: number, endTime: number) => void;
-  removeAllowedTime: (id: IAllowedTime["id"]) => void;
+  addRange: (startTime: number, endTime: number) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   reset: () => void;
-  setAllowedTime: (
+  setRangeTimes: (
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
@@ -265,25 +265,27 @@ const MobileAllowedTimeRow = (props: {
                 dayName={dayName}
                 startTime={t.startTime}
                 setStartTime={(time) =>
-                  props.setAllowedTime(t.id, time, t.endTime)
+                  props.setRangeTimes(t.id, time, t.endTime)
                 }
                 endTime={t.endTime}
                 setEndTime={(time) =>
-                  props.setAllowedTime(t.id, t.startTime, time)
+                  props.setRangeTimes(t.id, t.startTime, time)
                 }
               />
-              <Stack
-                sx={{
-                  svg: {
-                    path: {
-                      fill: PALETTE.system.red,
+              {sortedTimes.length > 1 ? (
+                <Stack
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.system.red,
+                      },
                     },
-                  },
-                }}
-                onClick={() => props.removeAllowedTime(t.id)}
-              >
-                <XIcon height="20px" width="20px" />
-              </Stack>
+                  }}
+                  onClick={() => props.deleteRange(t.id)}
+                >
+                  <XIcon height="20px" width="20px" />
+                </Stack>
+              ) : null}
             </Stack>
           ))}
         </Stack>
@@ -309,7 +311,7 @@ const MobileAllowedTimeRow = (props: {
             }}
             onClick={() => {
               newSegmentTimes &&
-                props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
+                props.addRange(newSegmentTimes[0], newSegmentTimes[1]);
               clearNewSegmentTimes();
             }}
           >

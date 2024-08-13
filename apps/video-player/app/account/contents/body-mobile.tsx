@@ -12,6 +12,7 @@ import {
   AstroPlanState,
   IUser,
   PLAN_BANNER_ITEMS,
+  PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
 } from "./common";
@@ -19,7 +20,7 @@ import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import UsersTable from "../components/UsersTable";
 import DevicesTable from "../components/DevicesTable";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
-import AccountPageHeader from "../components/AccountPageHeader";
+import MobileAccountPageHeader from "../components/MobileAccountPageHeader";
 
 const AccountPageMobileBody = (props: {
   user: IUser;
@@ -29,6 +30,7 @@ const AccountPageMobileBody = (props: {
   setInviteDialogOpen: () => void;
   setConnectDialogOpen: () => void;
   planState: AstroPlanState;
+  onManagePlan: () => void;
 }) => (
   <MobilePageLayout
     title="My Account"
@@ -46,9 +48,8 @@ const AccountPageMobileBody = (props: {
       </UrsorButton>
     }
     header={
-      <AccountPageHeader
+      <MobileAccountPageHeader
         setUpgradeDialogOpen={props.setUpgradeDialogOpen}
-        isMobile
       />
     }
   >
@@ -118,7 +119,7 @@ const AccountPageMobileBody = (props: {
           <UrsorButton
             size="small"
             variant="secondary"
-            onClick={() => null}
+            onClick={props.onManagePlan}
             endIcon={ChevronRightIcon}
             iconSize={14}
           >
@@ -142,20 +143,22 @@ const AccountPageMobileBody = (props: {
             justifyContent="space-between"
           >
             <Typography variant="large" bold color="rgb(255,255,255)">
-              Free trial
+              {PLAN_DISPLAY_NAMES[props.planState]}
             </Typography>
-            <UrsorButton
-              dark
-              endIcon={VerifiedIcon}
-              size="small"
-              backgroundColor="rgb(255,255,255)"
-              fontColor={PALETTE.primary.navy}
-              hoverOpacity={0.7}
-              onClick={props.setUpgradeDialogOpen}
-              iconSize={16}
-            >
-              Upgrade
-            </UrsorButton>
+            {props.planState !== "troomi" ? (
+              <UrsorButton
+                dark
+                endIcon={VerifiedIcon}
+                size="small"
+                backgroundColor="rgb(255,255,255)"
+                fontColor={PALETTE.primary.navy}
+                hoverOpacity={0.7}
+                onClick={props.setUpgradeDialogOpen}
+                iconSize={16}
+              >
+                Upgrade
+              </UrsorButton>
+            ) : null}
           </Stack>
           <Stack pt="12px" direction="row" alignItems="center" spacing="24px">
             <Stack flex={1}>

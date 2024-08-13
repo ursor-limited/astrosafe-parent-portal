@@ -15,7 +15,7 @@ const RequestedSiteRow = (
 ) => (
   <Stack
     direction="row"
-    height="48px"
+    height="58px"
     alignItems="center"
     px="16px"
     justifyContent="space-between"
@@ -25,30 +25,43 @@ const RequestedSiteRow = (
     bgcolor={PALETTE.secondary.orange[1]}
     overflow="hidden"
   >
-    <Stack direction="row" spacing="10px" alignItems="center" width="30%">
+    <Stack direction="row" spacing="10px" alignItems="center" flex={1}>
       <Stack borderRadius="100%" overflow="hidden" minWidth="20px">
-        <Stack height="20px" width="20px" borderRadius="100%" overflow="hidden">
+        <Stack height="32px" width="32px" borderRadius="100%" overflow="hidden">
           {props.faviconUrl ? (
             <Image
               src={props.faviconUrl}
-              height={20}
-              width={20}
+              height={32}
+              width={32}
               alt="favicon"
             />
           ) : null}
         </Stack>
       </Stack>
-      <Typography bold noWrap>
-        {props.title}
-      </Typography>
-    </Stack>
-    <Stack flex={1}>
-      <Typography noWrap sx={{ minWidth: "100%", maxWidth: 0 }}>
-        {props.url}
-      </Typography>
+      <Stack sx={{ transform: "translateY(-2px)" }} flex={1}>
+        <Typography bold noWrap>
+          {props.title}
+        </Typography>
+        <Stack flex={1}>
+          <Typography
+            variant="tiny"
+            bold
+            color={PALETTE.secondary.grey[3]}
+            noWrap
+            sx={{ minWidth: "100%", maxWidth: 0 }}
+          >
+            {props.url}
+          </Typography>
+        </Stack>
+      </Stack>
     </Stack>
     <Stack direction="row" spacing="6px">
-      <UrsorButton size="small" onClick={props.onApprove}>
+      <UrsorButton
+        dark
+        variant="tertiary"
+        size="small"
+        onClick={props.onApprove}
+      >
         Approve
       </UrsorButton>
       <UrsorButton

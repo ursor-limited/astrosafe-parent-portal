@@ -94,6 +94,7 @@ export interface IUrsorTableProps<T extends Record<string, any>> {
   sortSelectionCallback: (columnId: string) => void;
   rowClickCallback?: (id: string) => void;
   noHeaderGradient?: boolean;
+  titleColumnWidth?: string;
 }
 
 const fadedRowStyle = {
@@ -204,6 +205,7 @@ const UrsorTableBodyCell = (props: {
   checkbox?: { checked: boolean; callback: () => void };
   extraElement?: JSX.Element;
   newTagDatetime?: string;
+  titleColumnWidth?: string;
   onClick?: () => void;
 }) => {
   const [newTagOn, setNewTagOn] = useState<boolean>(false);
@@ -221,7 +223,7 @@ const UrsorTableBodyCell = (props: {
       key={props.columnName}
       width={
         props.columnName === "title"
-          ? "37%"
+          ? props.titleColumnWidth || "37%"
           : props.columnName === "domain" || props.columnName === "url"
           ? "23%"
           : props.columnName === "accessLevel"
@@ -593,6 +595,7 @@ export default function UrsorTable<T extends Record<string, any>>(
                     url={column.link ? row.url : undefined}
                     button={column.getButton?.(row.id)}
                     listButton={column.getListButton?.(row.items[column.name])}
+                    titleColumnWidth={props.titleColumnWidth}
                     actionButtonItems={column.getActionButtonItems?.(row.id)}
                     checkbox={
                       column.checkbox && props.checkboxes

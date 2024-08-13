@@ -11,6 +11,9 @@ import {
   AstroContent,
   IContent,
 } from "@/app/profiles/[id]/components/ContentTab";
+import Link from "next/link";
+import { getAbsoluteUrl } from "@/app/api";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: "Video",
@@ -21,16 +24,17 @@ export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
 const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
+  url: IContent["url"];
   onClick?: () => void;
   noPointerEvents?: boolean;
   noMenu?: boolean;
   onDelete: () => void;
   onOpenEditingDialog: () => void;
   isMobile?: boolean;
+  twoLineTitleSectionHeight?: boolean;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
-  const [pinned, setPinned] = useState<boolean>(false);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   return (
     <>
@@ -42,6 +46,7 @@ const ContentCard = (props: {
         p="4px"
         boxSizing="border-box"
         overflow="hidden"
+        sx={{ pointerEvents: props.noPointerEvents ? "none" : undefined }}
       >
         <Stack position="absolute" right="2px" bottom="32px">
           {!props.noMenu ? (
@@ -66,71 +71,56 @@ const ContentCard = (props: {
             />
           ) : null}
         </Stack>
-        {/* <Stack
-          position="absolute"
-          right="18px"
-          top="18px"
-          height="28px"
-          width="28px"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="100%"
-          justifyContent="center"
-          alignItems="center"
-          boxShadow="0 0 16px rgba(0,0,0,0.08)"
-          zIndex={2}
-          sx={{
-            "&:hover": { transform: "scale(1.1)" },
-            transition: "0.2s",
-            cursor: "pointer",
-            svg: {
-              fill: PALETTE.secondary.purple[2],
-            },
-            pointerEvents: props.noPointerEvents ? "none" : undefined,
+        <Link
+          href={getAbsoluteUrl(cleanUrl(props.url))}
+          target="_blank"
+          style={{
+            textDecoration: "none",
           }}
-          onClick={() => setPinned(!pinned)}
+          rel="noreferrer"
         >
-          {pinned ? (
-            <FilledPinIcon height="14px" width="14px" />
-          ) : (
-            <PinIcon height="14px" width="14px" />
-          )}
-        </Stack> */}
-        <Stack
-          onClick={props.onClick}
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.6 },
-          }}
-          spacing="6px"
-        >
-          {props.children}
-          <Stack width="calc(100% - 24px)" minHeight="24px">
-            <Typography bold maxLines={2}>
-              {props.title}
-            </Typography>
-          </Stack>
           <Stack
-            height="24px"
-            px="8px"
-            alignItems="center"
-            sx={{ svg: { path: { fill: CONTENT_BRANDING[props.type].color } } }}
-            bgcolor={PALETTE.secondary.grey[1]}
-            direction="row"
-            spacing="8px"
-            borderRadius="12px"
-            width="fit-content"
+            onClick={props.onClick}
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+            }}
+            spacing="6px"
           >
-            <Icon height="16px" width="16px" />
-            <Typography
-              variant="tiny"
-              bold
-              color={CONTENT_BRANDING[props.type].color}
+            {props.children}
+            <Stack
+              width="calc(100% - 24px)"
+              minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
             >
-              {CONTENT_DISPLAY_NAMES[props.type]}
-            </Typography>
+              <Typography bold maxLines={2}>
+                {props.title}
+              </Typography>
+            </Stack>
+            <Stack
+              height="24px"
+              px="8px"
+              alignItems="center"
+              sx={{
+                svg: { path: { fill: CONTENT_BRANDING[props.type].color } },
+              }}
+              bgcolor={PALETTE.secondary.grey[1]}
+              direction="row"
+              spacing="8px"
+              borderRadius="12px"
+              width="fit-content"
+            >
+              <Icon height="16px" width="16px" />
+              <Typography
+                variant="tiny"
+                bold
+                color={CONTENT_BRANDING[props.type].color}
+              >
+                {CONTENT_DISPLAY_NAMES[props.type]}
+              </Typography>
+            </Stack>
           </Stack>
-        </Stack>
+        </Link>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

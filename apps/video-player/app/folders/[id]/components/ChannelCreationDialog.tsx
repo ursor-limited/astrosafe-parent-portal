@@ -10,6 +10,7 @@ import { PALETTE, Typography } from "ui";
 import InfoButton from "@/app/components/InfoButton";
 import { IEnrichedContentBucket } from "../../contents/common";
 import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const ChannelCreationDialog = (props: {
   open: boolean;
@@ -67,7 +68,8 @@ const ChannelCreationDialog = (props: {
   //   )
   //     .then((result) => {
   //       result.title && !manuallyChangedTitle && setTitle(result.title);
-  //       result.favicon && setThumbnailUrl(result.favicon);
+  //       result.bannerUrl && setBannerUrl(result.bannerUrl);
+  //       result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl);
   //     })
   //     .catch(() => null);
   // };
@@ -140,6 +142,7 @@ const ChannelCreationDialog = (props: {
           bannerUrl={bannerUrl}
           noPointerEvents
           noMenu
+          twoLineTitleSectionHeight
         />
       </Stack>
     </ContentCreationDialog>

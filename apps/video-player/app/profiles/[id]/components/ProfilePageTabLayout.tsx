@@ -71,15 +71,19 @@ const ProfilePageTabLayout = (props: {
   title: string;
   rightSideElement?: React.ReactNode;
   explanation: string;
+  mobile?: boolean;
   children: React.ReactNode;
 }) => (
   <Stack flex={1} spacing="24px">
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <Stack direction="row" alignItems="center" spacing="16px">
-        <Typography variant="h5">{props.title}</Typography>
-        <InfoButton text={props.explanation} />
+    <Stack spacing="6px">
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Stack direction="row" alignItems="center" spacing="16px">
+          <Typography variant="h5">{props.title}</Typography>
+          {!props.mobile ? <InfoButton text={props.explanation} /> : null}
+        </Stack>
+        {props.rightSideElement}
       </Stack>
-      {props.rightSideElement}
+      {props.mobile ? <InfoButton text={props.explanation} /> : null}
     </Stack>
     {props.children}
   </Stack>

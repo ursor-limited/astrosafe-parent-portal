@@ -6,19 +6,26 @@ import FilterPageCategoriesSection from "../components/CategoriesSection";
 import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
 import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "../components/SearchWordsSection";
-import FilterPageDevicesSection from "../components/DevicesSection";
+import FilterPageDevicesSection from "../components/FilterDevicesSection";
 import PageLayout from "@/app/components/PageLayout";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterSubcategory,
+  IFilterCategory,
+  IFilterUrl,
+} from "../../contents/common";
 import { ITitleRowItem } from "@/app/components/TitleRow";
+import { useRouter } from "next/navigation";
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterCategory["categoryId"][];
+  allowedCategories: IFilterSubcategory["id"][];
   flipCategory: (id: IFilterCategory["categoryId"]) => void;
+  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -34,11 +41,13 @@ export default function FilterPageDesktopBody(props: {
   addAllowedSite: (url: IFilterUrl["url"]) => void;
   removeBlockedSite: (url: IFilterUrl["url"]) => void;
   removeAllowedSite: (url: IFilterUrl["url"]) => void;
+  openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
+  const router = useRouter();
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButton={true}
+      titleBackButtonCallback={() => router.push("/filters")}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="filters"
@@ -51,12 +60,16 @@ export default function FilterPageDesktopBody(props: {
           devices={props.devices}
           onAdd={props.setAddDeviceDialogOpen}
           onRemove={props.onRemoveDevice}
+          openChangeFilterDialogForDevice={
+            props.openChangeFilterDialogForDevice
+          }
         />
         <FilterPageCategoriesSection
           filter={props.filter}
           categories={props.categories}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
+          flipSubcategory={props.flipSubcategory}
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}

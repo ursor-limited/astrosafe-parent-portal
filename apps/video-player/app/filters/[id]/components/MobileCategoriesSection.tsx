@@ -4,7 +4,12 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterSubcategory,
+  IFilterCategory,
+  IFilterUrl,
+} from "../../contents/common";
 import { FilterLegend } from "./CategoriesSection";
 
 const MobileFilterPageCategoriesSection = (props: {
@@ -12,6 +17,7 @@ const MobileFilterPageCategoriesSection = (props: {
   categories: IFilterCategory[];
   allowedCategories: IFilterUrl["id"][];
   flipCategory: (id: number) => void;
+  flipSubcategory: (id: IFilterCategory["categoryId"]) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}

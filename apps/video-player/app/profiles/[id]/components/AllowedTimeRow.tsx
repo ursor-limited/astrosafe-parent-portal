@@ -5,6 +5,7 @@ import { IAllowedTime, getISODateString } from "./LimitsTab";
 import _ from "lodash";
 import dayjs from "dayjs";
 import useNewSegmentTimes from "./useNewSegmentTimes";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 const DISPLAY_INTERVAL = 2; // hours
 // const MIN = 0;
@@ -19,6 +20,8 @@ const BrowsingTimeSelectorRange = (props: {
   end: number;
   dragInterval: number;
   setTimes: (start: number, end: number) => void;
+  delete: () => void;
+  noDeletion?: boolean;
 }) => {
   const [draggingDot1, setDraggingDot1] = useState<boolean>(false);
   const [draggingDot2, setDraggingDot2] = useState<boolean>(false);
@@ -73,6 +76,7 @@ const BrowsingTimeSelectorRange = (props: {
       window.removeEventListener("mouseup", handleDraggingEnd);
     };
   }, [handleDraggingEnd]);
+  const [hovering, setHovering] = useState<boolean>(false);
   return (
     <>
       <Stack position="absolute" left={dot1X} zIndex={3}>
@@ -87,7 +91,7 @@ const BrowsingTimeSelectorRange = (props: {
             }}
             height="14px"
             width="14px"
-            bgcolor={PALETTE.secondary.purple[2]}
+            bgcolor={PALETTE.secondary.blue[2]}
             borderRadius="100%"
             onMouseDown={(e) => {
               setDraggingDot1(true);
@@ -121,20 +125,57 @@ const BrowsingTimeSelectorRange = (props: {
         position="absolute"
         left={Math.min(dot1X, dot2X)}
         width={Math.abs(dot2X - dot1X)}
-        height="4px"
+        height="20px"
+        alignItems="center"
         zIndex={2}
-        sx={{
-          pointerEvents: "none",
-          background: `linear-gradient(90deg, ${PALETTE.secondary.purple[1]}, ${PALETTE.secondary.blue[1]})`,
+        onMouseEnter={() => {
+          setHovering(true);
         }}
-      />
+        onMouseLeave={() => {
+          setHovering(false);
+        }}
+      >
+        <Stack
+          height="4px"
+          width="100%"
+          bgcolor={PALETTE.secondary.blue[1]}
+          position="relative"
+        >
+          {!props.noDeletion ? (
+            <Stack
+              position="absolute"
+              left={props.mouseX - props.lineLeftX - dot1X}
+              top="-26px"
+              zIndex={3}
+              sx={{
+                transform: "translate(-50%)",
+                opacity: hovering && !draggingDot1 && !draggingDot2 ? 1 : 0,
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: PALETTE.system.red,
+                  },
+                },
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                pointerEvents: hovering ? undefined : "none",
+              }}
+              pb="6px"
+              onClick={props.delete}
+            >
+              <TrashcanIcon height="20px" width="20px" />
+            </Stack>
+          ) : null}
+        </Stack>
+      </Stack>
     </>
   );
 };
 
 const BrowsingTimeSelector = (props: {
-  times?: IAllowedTime[];
-  setTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
+  ranges?: IAllowedTime[];
+  setRangeTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
 }) => {
@@ -177,16 +218,16 @@ const BrowsingTimeSelector = (props: {
         ref={setLineRef}
         position="relative"
       >
-        {props.times?.map((timeLimit, i) => {
+        {props.ranges?.map((allowedTimeRange, i) => {
           const decimalStartTime =
-            dayjs(timeLimit.startTime).utc().hour() +
-            dayjs(timeLimit.startTime).utc().minute() / 60;
+            dayjs(allowedTimeRange.startTime).utc().hour() +
+            dayjs(allowedTimeRange.startTime).utc().minute() / 60;
           const decimalEndTime =
-            dayjs(timeLimit.endTime).utc().hour() +
-            dayjs(timeLimit.endTime).utc().minute() / 60;
+            dayjs(allowedTimeRange.endTime).utc().hour() +
+            dayjs(allowedTimeRange.endTime).utc().minute() / 60;
           const endTimeIsMidnight =
-            dayjs(timeLimit.endTime).utc().day() >
-            dayjs(timeLimit.startTime).utc().day();
+            dayjs(allowedTimeRange.endTime).utc().day() >
+            dayjs(allowedTimeRange.startTime).utc().day();
           return (
             <BrowsingTimeSelectorRange
               key={i}
@@ -197,20 +238,22 @@ const BrowsingTimeSelector = (props: {
               start={decimalStartTime}
               end={endTimeIsMidnight ? 24 : decimalEndTime}
               setTimes={(start, end) => {
-                return props.setTimes(
-                  timeLimit.id,
+                return props.setRangeTimes(
+                  allowedTimeRange.id,
                   getISODateString(
-                    timeLimit.day,
+                    allowedTimeRange.day,
                     Math.floor(start),
                     Math.floor((start % 1) * 60)
                   ),
                   getISODateString(
-                    timeLimit.day,
+                    allowedTimeRange.day,
                     Math.floor(end),
                     Math.floor((end % 1) * 60)
                   )
                 );
               }}
+              delete={() => props.deleteRange(allowedTimeRange.id)}
+              noDeletion={props.ranges?.length === 1}
             />
           );
         })}
@@ -257,6 +300,7 @@ const AllowedTimeRow = (props: {
   times: IAllowedTime[];
   addAllowedTime: (startTime: number, endTime: number) => void;
   reset: () => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   setAllowedTimes: (
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
@@ -280,8 +324,9 @@ const AllowedTimeRow = (props: {
         </Typography>
       </Stack>
       <BrowsingTimeSelector
-        times={sortedTimes}
-        setTimes={props.setAllowedTimes}
+        ranges={sortedTimes}
+        setRangeTimes={props.setAllowedTimes}
+        deleteRange={props.deleteRange}
         smallerLabelFont={props.smallerLabelFont}
         halveLabelFrequency={props.halveLabelFrequency}
       />

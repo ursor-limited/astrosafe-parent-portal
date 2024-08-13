@@ -3,6 +3,7 @@ import { IGroup } from "./folders/[id]/contents/common";
 import { IDevice, IFilterException } from "./filters/[id]/contents/common";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
 } from "./filters/contents/common";
@@ -101,7 +102,7 @@ class ApiController {
   }
 
   static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
-    return put(`devices/${id}`, { name });
+    return patch(`devices/${id}`, { name });
   }
 
   static async getGroupEnrichedDevices(id: IGroup["id"]) {
@@ -315,14 +316,14 @@ class ApiController {
   }
 
   static async getBlockedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/whitelist/exceptions`).then(
-      (response: any) => response.json()
+    return get(`filters/${filterId}/blacklist`).then((response: any) =>
+      response.json()
     );
   }
 
   static async getAllowedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/blacklist/exceptions`).then(
-      (response: any) => response.json()
+    return get(`filters/${filterId}/whitelist`).then((response: any) =>
+      response.json()
     );
   }
 
@@ -331,14 +332,14 @@ class ApiController {
     url: IFilterException["domain"]
   ) {
     return dellete(
-      `filters/${filterId}/whitelist/exceptions/${encodeURIComponent(
+      `filters/${filterId}/blacklist/${encodeURIComponent(
         getAbsoluteUrl(cleanUrl(url))
       )}`
     );
   }
 
   static async addBlockedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
-    return post(`filters/${filterId}/whitelist/exceptions`, {
+    return post(`filters/${filterId}/blacklist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
@@ -348,32 +349,50 @@ class ApiController {
     url: IFilterException["domain"]
   ) {
     return dellete(
-      `filters/${filterId}/blacklist/exceptions/${encodeURIComponent(
+      `filters/${filterId}/whitelist/${encodeURIComponent(
         getAbsoluteUrl(cleanUrl(url))
       )}`
     );
   }
 
   static async addAllowedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
-    return post(`filters/${filterId}/blacklist/exceptions`, {
+    return post(`filters/${filterId}/whitelist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
 
-  static async addWhitelistCategory(
+  static async addWhitelistSubcategory(
     filterId: IFilter["id"],
-    categoryId: IFilterCategory["categoryId"]
+    id: IFilterSubcategory["id"]
   ) {
     return post(`filters/${filterId}/whitelist/categories`, {
-      categoryId: categoryId.toString(),
+      categoryId: id.toString(),
+    });
+  }
+
+  static async removeWhitelistSubcategory(
+    filterId: IFilter["id"],
+    id: IFilterSubcategory["id"]
+  ) {
+    return dellete(`filters/${filterId}/whitelist/categories/${id}`);
+  }
+
+  static async addWhitelistCategory(
+    filterId: IFilter["id"],
+    id: IFilterCategory["categoryId"]
+  ) {
+    return post(`filters/${filterId}/whitelist/categories?isGroup=true`, {
+      categoryId: id.toString(),
     });
   }
 
   static async removeWhitelistCategory(
     filterId: IFilter["id"],
-    categoryId: IFilterCategory["categoryId"]
+    id: IFilterCategory["categoryId"]
   ) {
-    return dellete(`filters/${filterId}/whitelist/categories/${categoryId}`);
+    return dellete(
+      `filters/${filterId}/whitelist/categories/${id}?isGroup=true`
+    );
   }
 
   static async getBlockedSearchWords(filterId: IFilter["id"]) {
@@ -410,7 +429,7 @@ class ApiController {
     );
   }
 
-  static async getVideoPreview(url: ILink["url"]) {
+  static async getVideoPreview(url: IVideo["url"]) {
     return get(`content/videos/preview/${url}`).then((response: any) =>
       response.json()
     );
@@ -420,7 +439,7 @@ class ApiController {
     return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
   }
 
-  static async addAllowedTime(
+  static async addAllowedTimeRange(
     deviceId: IDevice["id"],
     day: IAllowedTime["day"],
     startTime: IAllowedTime["startTime"],
@@ -432,7 +451,7 @@ class ApiController {
     });
   }
 
-  static async changeAllowedTime(
+  static async changeAllowedTimeRange(
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
@@ -441,6 +460,10 @@ class ApiController {
       startTime,
       endTime,
     });
+  }
+
+  static async removeAllowedTimeRange(id: IAllowedTime["id"]) {
+    return dellete(`devices/configs/screentime/allowed/${id}`);
   }
 
   static async resetAllowedTimes(
@@ -494,14 +517,31 @@ class ApiController {
     ).then((response: any) => response.json());
   }
 
+  static async getHistory(
+    deviceId: IDevice["id"],
+    date: string,
+    pageIndex: number,
+    pageSize: number,
+    searchTerm?: string
+  ) {
+    return get(
+      `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}${
+        searchTerm ? `&search=${searchTerm}` : ""
+      }`
+    ).then((response: any) => response.json());
+  }
+
   static async getApps(
     deviceId: IDevice["id"],
     pageIndex: number,
     pageSize: number,
-    categoryId?: IFilterCategory['categoryId']
+    categoryId?: IFilterSubcategory["categoryId"],
+    searchTerm?: string
   ) {
     return get(
-      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${categoryId ? `&categoryId=${categoryId}` : ''}`
+      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${
+        searchTerm ? `&search=${searchTerm}` : ""
+      }${categoryId ? `&categoryId=${categoryId}` : ""}`
     ).then((response: any) => response.json());
   }
 
@@ -511,6 +551,14 @@ class ApiController {
 
   static async disableApp(deviceId: IDevice["id"], appId: IApp["id"]) {
     return dellete(`devices/${deviceId}/apps/${appId}/disable`);
+  }
+
+  static async updateUser(
+    id: IUser["id"],
+    realName: IUser["realName"],
+    displayName: IUser["displayName"]
+  ) {
+    return put(`users/${id}`, { realName, displayName });
   }
 }
 

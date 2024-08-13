@@ -17,18 +17,20 @@ const VideoCard = (
     onUpdate?: () => void;
     onOpenEditingDialog?: () => void;
     isMobile?: boolean;
+    twoLineTitleSectionHeight?: boolean;
   }
 ) => {
   return (
     <ContentCard
       type="video"
       title={props.title}
-      // onClick={props.onClick}
+      url={props.url}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
       isMobile={props.isMobile}
+      twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
     >
       <Stack
         height={IMAGE_HEIGHT}

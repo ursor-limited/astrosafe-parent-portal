@@ -4,9 +4,15 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { PALETTE } from "ui";
 import FilterPageDesktopBody from "./body-desktop";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterSubcategory,
+  IFilterCategory,
+  IFilterUrl,
+} from "../../contents/common";
 import { useRouter } from "next/navigation";
 import FilterPageMobileBody from "./body-mobile";
 import ApiController from "@/app/api";
@@ -15,6 +21,9 @@ import { DUMMY_GROUP_ID } from "../../contents/body-mobile";
 import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import FilterRenameDialog from "../components/FilterRenameDialog";
+import ChangeFilterDialog from "../components/ChangeFilterDialog";
+import { Stack } from "@mui/system";
+import _ from "lodash";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -82,12 +91,12 @@ export default function FilterPage(props: {
     ApiController.getAllFilterCategories().then(setCategories);
   }, []);
 
-  const [allowedCategories, setAllowedCategories] = useState<
-    IFilterCategory["categoryId"][]
+  const [allowedSubcategories, setAllowedSubcategories] = useState<
+    IFilterSubcategory["id"][]
   >([]);
   useEffect(() => {
-    ApiController.getFilterCategories(props.filterId).then(
-      setAllowedCategories
+    ApiController.getFilterCategories(props.filterId).then((response) =>
+      setAllowedSubcategories(response.map((x: any) => x.categoryId))
     );
   }, [props.filterId]);
 
@@ -130,7 +139,13 @@ export default function FilterPage(props: {
     // },
     {
       text: "Delete",
-      kallback: () => setDeletionDialogOpen(true),
+      kallback: () => {
+        devices.length > 0
+          ? notificationCtx.negativeSuccess(
+              "Cannot delete a Filter that is applied to Devices."
+            )
+          : setDeletionDialogOpen(true);
+      },
       icon: TrashcanIcon,
       color: PALETTE.system.red,
     },
@@ -145,10 +160,27 @@ export default function FilterPage(props: {
     },
     {
       text: filter?.title ?? "",
-      options: allFilters.map((d) => ({
-        text: d.title,
-        callback: () => router.push(`/filters/${d.id}`),
-      })),
+      options: allFilters
+        .filter((f) => f.id !== props.filterId)
+        .map((f) => ({
+          text: f.title,
+          image: (
+            <Stack
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.orange[3],
+                  },
+                },
+              }}
+              height="16px"
+              width="16px"
+            >
+              <FilterIcon height="16px" width="16px" />
+            </Stack>
+          ),
+          callback: () => router.push(`/filters/${f.id}`),
+        })),
     },
   ];
 
@@ -158,18 +190,38 @@ export default function FilterPage(props: {
   const notificationCtx = useContext(NotificationContext);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [changeFilterDialogOpenForDevice, setChangeFilterDialogOpenForDevice] =
+    useState<IDevice | undefined>();
 
   const deleteFilter = () =>
     ApiController.removeFilter(props.filterId).then(() =>
       router.push("/filters")
     );
 
+  const flipSubcategory = (id: IFilterSubcategory["id"]) => {
+    if (allowedSubcategories.includes(id)) {
+      setAllowedSubcategories(allowedSubcategories.filter((sid) => sid !== id));
+      ApiController.removeWhitelistSubcategory(props.filterId, id);
+    } else {
+      setAllowedSubcategories([...allowedSubcategories, id]);
+      ApiController.addWhitelistSubcategory(props.filterId, id);
+    }
+  };
+
   const flipCategory = (id: IFilterCategory["categoryId"]) => {
-    if (allowedCategories.includes(id)) {
-      setAllowedCategories(allowedCategories.filter((sid) => sid !== id));
+    const subcategoryIds = categories
+      .find((cg) => cg.categoryId === id)
+      ?.subCategories.map((c) => c.id);
+    if (!subcategoryIds) return;
+    if (subcategoryIds?.every((cid) => allowedSubcategories.includes(cid))) {
+      setAllowedSubcategories(
+        allowedSubcategories.filter((acid) => !subcategoryIds.includes(acid))
+      );
       ApiController.removeWhitelistCategory(props.filterId, id);
     } else {
-      setAllowedCategories([...allowedCategories, id]);
+      setAllowedSubcategories(
+        _.uniq([...allowedSubcategories, ...subcategoryIds])
+      );
       ApiController.addWhitelistCategory(props.filterId, id);
     }
   };
@@ -217,11 +269,12 @@ export default function FilterPage(props: {
         <FilterPageMobileBody
           filterId={props.filterId}
           filter={filter}
-          flipCategory={(id) => flipCategory}
+          flipCategory={flipCategory}
+          flipSubcategory={flipSubcategory}
           devices={devices}
           actions={actions}
           categories={categories}
-          allowedCategories={allowedCategories}
+          allowedCategories={allowedSubcategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
@@ -235,16 +288,18 @@ export default function FilterPage(props: {
           addAllowedSite={addAllowedSite}
           removeBlockedSite={removeBlockedSite}
           removeAllowedSite={removeAllowedSite}
+          openChangeFilterDialogForDevice={setChangeFilterDialogOpenForDevice}
         />
       ) : (
         <FilterPageDesktopBody
           filterId={props.filterId}
           filter={filter}
           flipCategory={flipCategory}
+          flipSubcategory={flipSubcategory}
           devices={devices}
           actions={actions}
           categories={categories}
-          allowedCategories={allowedCategories}
+          allowedCategories={allowedSubcategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
@@ -258,6 +313,7 @@ export default function FilterPage(props: {
           addAllowedSite={addAllowedSite}
           removeBlockedSite={removeBlockedSite}
           removeAllowedSite={removeAllowedSite}
+          openChangeFilterDialogForDevice={setChangeFilterDialogOpenForDevice}
         />
       )}
       {devices ? (
@@ -285,9 +341,33 @@ export default function FilterPage(props: {
         onClose={() => setRenameDialogOpen(false)}
         name={filter.title}
         onSubmit={(name) =>
-          ApiController.changeFilterName(props.filterId, name).then(loadFilter)
+          ApiController.changeFilterName(props.filterId, name)
+            .then(loadFilter)
+            .then(() => notificationCtx.success("Renamed Filter"))
         }
       />
+      {changeFilterDialogOpenForDevice ? (
+        <ChangeFilterDialog
+          open
+          onClose={() => setChangeFilterDialogOpenForDevice(undefined)}
+          submitChange={(id) =>
+            ApiController.addFilterToDevice(
+              id,
+              changeFilterDialogOpenForDevice.id
+            )
+              .then(loadDevices)
+              .then(() =>
+                notificationCtx.success(
+                  `${changeFilterDialogOpenForDevice.name} changed to new Filter`
+                )
+              )
+          }
+          currentFilterId={props.filterId}
+          groupId={DUMMY_GROUP_ID}
+          deviceName={changeFilterDialogOpenForDevice.name}
+          isMobile={props.isMobile}
+        />
+      ) : null}
     </>
   ) : null;
 }

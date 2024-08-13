@@ -87,7 +87,10 @@ export const VisitedSiteRow = (
   </Stack>
 );
 
-const MostVisitedSitesSection = (props: { sites: IVisitedSite[] }) => {
+const MostVisitedSitesSection = (props: {
+  sites: IVisitedSite[];
+  isMobile?: boolean;
+}) => {
   const [allMostVisitedSitesDialogOpen, setAllMostVisitedSitesDialogOpen] =
     useState<boolean>(false);
   return (
@@ -119,6 +122,7 @@ const MostVisitedSitesSection = (props: { sites: IVisitedSite[] }) => {
         sites={props.sites}
         open={allMostVisitedSitesDialogOpen}
         onClose={() => setAllMostVisitedSitesDialogOpen(false)}
+        isMobile={props.isMobile}
       />
     </>
   );

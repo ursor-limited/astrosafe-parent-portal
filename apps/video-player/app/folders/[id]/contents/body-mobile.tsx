@@ -26,6 +26,7 @@ import {
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import Link from "next/link";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { useRouter } from "next/navigation";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -47,9 +48,11 @@ const FolderPageMobileBody = (props: {
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
 }) => {
+  const router = useRouter();
   return (
     <MobilePageLayout
-      titleRow={props.titleRow}
+      titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={() => router.push("/folders")}
       selectedPage="content"
       actions={props.actions}
     >
@@ -74,27 +77,10 @@ const FolderPageMobileBody = (props: {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack spacing="12px">
-          {["link", "video", "channel"].map((c) => (
-            <Stack
-              key={c}
-              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
-              flex={1}
-            >
-              <AddContentButton
-                key={c as AstroContent}
-                onClick={() => null}
-                {...CONTENT_BRANDING[c as AstroContent]}
-                fullWidth
-              />
-            </Stack>
-          ))}
-        </Stack>
         <Stack justifyContent="space-between" spacing="8px">
-          <Typography
-            variant="medium"
-            bold
-          >{`${props.contents.length} pieces of Content in this Folder`}</Typography>
+          <Typography variant="medium" bold>{`${props.contents.length} item${
+            props.contents.length === 1 ? "" : "s"
+          } in this Folder`}</Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
               value={props.searchValue ?? ""}
@@ -104,6 +90,7 @@ const FolderPageMobileBody = (props: {
               clearCallback={() => props.setSearchValue("")}
               shadow
               fullWidth
+              iconSize="18px"
             />
             <SortButton
               noText
@@ -122,6 +109,23 @@ const FolderPageMobileBody = (props: {
             />
           </Stack>
         </Stack>
+        <Stack spacing="12px">
+          {["link", "video", "channel"].map((c) => (
+            <Stack
+              key={c}
+              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
+              flex={1}
+            >
+              <AddContentButton
+                key={c as AstroContent}
+                onClick={() => null}
+                {...CONTENT_BRANDING[c as AstroContent]}
+                fullWidth
+              />
+            </Stack>
+          ))}
+        </Stack>
+
         <Stack
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"

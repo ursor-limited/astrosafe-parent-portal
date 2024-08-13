@@ -1,19 +1,22 @@
 import { Stack } from "@mui/system";
-import TitleRow, { ITitleRowItem } from "./TitleRow";
+import MobileTitleRow from "./MobileTitleRow";
 import UrsorActionButton from "./UrsorActionButton";
 import { IActionPopupItem } from "./ActionPopup";
 import React, { useState } from "react";
 import { Typography } from "ui";
 import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
 import MobileSideBar, { AstroPage } from "./MobileSideBar";
+import { ITitleRowItem } from "./TitleRow";
+import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 
 const MobilePageLayout = (props: {
   title?: string;
-  titleRow?: ITitleRowItem[];
+  titleRow?: ITitleRowItem;
   actions?: IActionPopupItem[];
   topRightElement?: React.ReactNode;
   selectedPage: AstroPage;
   header?: React.ReactNode;
+  titleBackButtonCallback?: () => void;
   children: React.ReactNode;
 }) => {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
@@ -38,14 +41,27 @@ const MobilePageLayout = (props: {
             <Stack onClick={() => setSideBarOpen(true)}>
               <ThreeBarsIcon height="20px" width="20px" />
             </Stack>
+            {props.titleBackButtonCallback ? (
+              <Stack width="25px">
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                  }}
+                  onClick={props.titleBackButtonCallback}
+                  justifyContent="center"
+                >
+                  <ChevronLeftIcon height="24px" width="24px" />
+                </Stack>
+              </Stack>
+            ) : null}
             {props.title ? (
               <Typography bold variant="medium">
                 {props.title}
               </Typography>
             ) : null}
-            {props.titleRow ? (
-              <TitleRow items={props.titleRow} isMobile />
-            ) : null}
+            {props.titleRow ? <MobileTitleRow item={props.titleRow} /> : null}
           </Stack>
           {props.topRightElement}
           {props.actions ? (

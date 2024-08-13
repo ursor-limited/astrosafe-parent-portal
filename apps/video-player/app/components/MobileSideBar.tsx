@@ -2,7 +2,7 @@
 
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import BookIcon from "@/images/icons/BookIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
@@ -21,7 +21,7 @@ export const astroPages = [
 ] as const;
 export type AstroPage = (typeof astroPages)[number];
 const PAGE_ICONS: Record<AstroPage, React.FC<React.SVGProps<SVGSVGElement>>> = {
-  profiles: PhoneIcon,
+  profiles: PeopleIcon,
   filters: FilterIcon,
   content: BookIcon,
   lessons: VersionsIcon,
@@ -98,7 +98,7 @@ const MobileSideBar = (props: {
         </Stack>
         <Stack justifyContent="space-between" height="100%">
           <Stack spacing="24px">
-            {["profiles", "filters", "content", "lessons"].map((page) => {
+            {["profiles", "filters", "content"].map((page) => {
               const Icon = PAGE_ICONS[page as AstroPage];
               return (
                 <Stack

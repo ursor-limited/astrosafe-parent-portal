@@ -14,6 +14,7 @@ import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import MobileDeviceCard from "../../components/MobileDeviceCard";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import DevicePageAppsTab from "../components/AppsTab";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -30,12 +31,18 @@ const ProfilePageMobileBody = (props: {
     props.tab ?? "content"
   );
   return (
-    <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
+    <MobilePageLayout
+      titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={() => router.push("/profiles")}
+      selectedPage="profiles"
+      actions={props.actions}
+    >
       <Stack spacing="24px" flex={1}>
         <MobileDeviceCard
           {...props.device}
           onClickViewScreenTime={() => setSelectedTab("limits")}
           onUpdate={props.onUpdateDevice}
+          noDeviceTypeUnderAvatar
         />
         <Stack width="100%" alignItems="center" justifyContent="center">
           <Stack
@@ -68,14 +75,16 @@ const ProfilePageMobileBody = (props: {
         />
         {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab deviceId={props.device.id} />
+        ) : selectedTab === "apps" ? (
+          <DevicePageAppsTab deviceId={props.device.id} isMobile />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}
             deviceName={props.device.name}
             folders={props.folders}
-            isMobile
             onUpdate={props.onUpdateFolders}
             openAddFolderDialog={props.openAddFolderDialog}
+            isMobile
           />
         ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab deviceId={props.device.id} isMobile />
