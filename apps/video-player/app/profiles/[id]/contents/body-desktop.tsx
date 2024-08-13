@@ -8,30 +8,40 @@ import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import DevicePageInsightsTab from "../components/InsightsTab";
 import DevicePageContentTab from "../components/ContentTab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AstroAccountTab } from "./common";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageLimitsTab from "../components/LimitsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
 import DevicePageAppsTab, { IApp } from "../components/AppsTab";
+import { useWindowSize } from "usehooks-ts";
+import MobileDeviceCard from "../../components/MobileDeviceCard";
+
+const SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD = 1283;
 
 const ProfilePageDesktopBody = (props: {
   device: IEnrichedDevice;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
   folders: IEnrichedContentBucket[];
-  // apps: IApp[];
   tab?: AstroAccountTab;
   onUpdateDevice: () => void;
   onUpdateFolders: () => void;
   openAddFolderDialog: () => void;
-  // flipAppEnabled: (id: IApp["id"]) => void;
 }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
     props.tab ?? "content"
   );
+  const { width } = useWindowSize();
+  const [switchToMobileDeviceCard, setSwitchToMobileDeviceCard] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setSwitchToMobileDeviceCard(
+      width < SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD
+    );
+  }, [width]);
   return (
     <PageLayout
       titleRow={props.titleRow}
@@ -44,11 +54,20 @@ const ProfilePageDesktopBody = (props: {
       scrollable
     >
       <Stack pl="48px">
-        <HorizontalDeviceCard
-          {...props.device}
-          onClickViewScreenTime={() => setSelectedTab("limits")}
-          onUpdate={props.onUpdateDevice}
-        />
+        {switchToMobileDeviceCard ? (
+          <MobileDeviceCard
+            {...props.device}
+            onClickViewScreenTime={() => setSelectedTab("limits")}
+            onUpdate={props.onUpdateDevice}
+            noDeviceTypeUnderAvatar
+          />
+        ) : (
+          <HorizontalDeviceCard
+            {...props.device}
+            onClickViewScreenTime={() => setSelectedTab("limits")}
+            onUpdate={props.onUpdateDevice}
+          />
+        )}
         <Stack flex={1} height="56px" minHeight="56px" justifyContent="center">
           <Stack
             height="1px"

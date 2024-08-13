@@ -313,8 +313,8 @@ const MobileDeviceCard = (
               </Typography>
               {!props.noDeviceTypeUnderAvatar ? (
                 <Stack direction="row" spacing="6px" alignItems="center">
-                  <PhoneIcon height="16px" width="16px" />
-                  <Typography maxLines={1}>
+                  <PhoneIcon height="14px" width="14px" />
+                  <Typography variant="small" maxLines={1}>
                     {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
                   </Typography>
                 </Stack>

@@ -87,7 +87,7 @@ const MobileDevicesSection = (props: {
             </Typography>
           </Stack>
         )}
-        <Stack direction="row" spacing="8px" pt="14px">
+        <Stack direction="row" spacing="12px" pt="14px">
           <UrsorButton
             size="small"
             variant="secondary"

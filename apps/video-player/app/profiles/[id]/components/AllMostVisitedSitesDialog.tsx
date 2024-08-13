@@ -7,6 +7,7 @@ import { IVisitedSite } from "./InsightsTab";
 import { Typography } from "ui";
 import { SearchInput } from "@/app/components/SearchInput";
 import { VisitedSiteRow } from "./MostVisitedSitesSection";
+import XIcon from "@/images/icons/X.svg";
 import _ from "lodash";
 
 const AllMostVisitedSitesDialog = (props: {
@@ -36,12 +37,12 @@ const AllMostVisitedSitesDialog = (props: {
       PaperProps={{
         style: {
           maxWidth: 1308,
-          width: "70%",
+          width: props.isMobile ? "100%" : "70%",
           maxHeight: 726,
           height: "70%",
           borderRadius: BORDER_RADIUS,
           margin: "20px",
-          padding: "32px",
+          padding: props.isMobile ? "20px" : "32px",
         },
       }}
       sx={{
@@ -55,16 +56,39 @@ const AllMostVisitedSitesDialog = (props: {
           justifyContent="space-between"
           spacing={props.isMobile ? "6px" : undefined}
         >
-          <Typography bold variant={props.isMobile ? "large" : "h5"}>
-            Most visited sites today
-          </Typography>
-          <Stack direction="row" spacing="12px" alignItems="center">
+          <Stack direction="row" justifyContent="space-between">
+            <Typography bold variant={props.isMobile ? "large" : "h5"}>
+              Most visited sites today
+            </Typography>
+            <Stack
+              width="40px"
+              alignItems="flex-end"
+              pt="3px"
+              onClick={props.onClose}
+            >
+              <XIcon height="22px" width="22px" />
+            </Stack>
+          </Stack>
+
+          <Stack direction="row" spacing="0px" alignItems="center">
             <SearchInput
               value={searchValue}
               callback={setSearchValue}
               clearCallback={() => setSearchValue("")}
+              fullWidth={props.isMobile}
+              iconSize={props.isMobile ? "16px" : undefined}
               grey
             />
+            {!props.isMobile ? (
+              <Stack
+                width="40px"
+                alignItems="flex-end"
+                pt="3px"
+                onClick={props.onClose}
+              >
+                <XIcon height="22px" width="22px" />
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
         <Stack>

@@ -27,7 +27,9 @@ const FilterPageDevicesSection = (props: {
     <>
       <AstroBentoCard
         title={
-          props.devices.length === 1
+          props.devices.length === 0
+            ? "No Devices yet have this Filter applied"
+            : props.devices.length === 1
             ? "Filter applied to this Device"
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }

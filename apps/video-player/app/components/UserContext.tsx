@@ -37,7 +37,9 @@ export interface IUserProviderProps {
   checkoutSessionId?: string;
   children: React.ReactNode;
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// this is legacy, used for getting the user details by auth0. Got to hook it up to keycloak!
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 const UserProvider = (props: IUserProviderProps) => {
   const [user, setUser] = useState<IUser | undefined>();
 

@@ -27,35 +27,14 @@ const MobileFilterPageDevicesSection = (props: {
     <>
       <AstroBentoCard
         title={
-          props.devices.length === 1
+          props.devices.length === 0
+            ? "No Devices yet have this Filter applied"
+            : props.devices.length === 1
             ? "Filter applied to this Device"
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }
         isMobile
         notCollapsible
-        topRightStuff={
-          <Stack direction="row" spacing="12px">
-            <UrsorButton
-              size="small"
-              variant="secondary"
-              endIcon={ChevronRightIcon}
-              iconSize={16}
-              onClick={() => setDevicesGridDialogOpen(true)}
-            >
-              View all
-            </UrsorButton>
-            <UrsorButton
-              dark
-              variant="tertiary"
-              size="small"
-              endIcon={PlusIcon}
-              iconSize={16}
-              onClick={props.onAdd}
-            >
-              Add Device
-            </UrsorButton>
-          </Stack>
-        }
       >
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="150px" rowGap="12px" columnGap="12px">
@@ -117,6 +96,29 @@ const MobileFilterPageDevicesSection = (props: {
             </Typography>
           </Stack>
         )}
+        <Stack direction="row" spacing="12px" pt="14px">
+          <UrsorButton
+            size="small"
+            variant="secondary"
+            endIcon={ChevronRightIcon}
+            iconSize={16}
+            onClick={() => setDevicesGridDialogOpen(true)}
+            width="100%"
+          >
+            View all
+          </UrsorButton>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="small"
+            endIcon={PlusIcon}
+            iconSize={16}
+            onClick={props.onAdd}
+            width="100%"
+          >
+            Add Device
+          </UrsorButton>
+        </Stack>
       </AstroBentoCard>
       <MobileAllDevicesDialog
         title={`${props.devices.length} ${

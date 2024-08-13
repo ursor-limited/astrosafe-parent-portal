@@ -15,7 +15,10 @@ import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import ApiController from "@/app/api";
 import MostVisitedSitesSection from "./MostVisitedSitesSection";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import { useWindowSize } from "usehooks-ts";
 dayjs.extend(advancedFormat);
+
+const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1260;
 
 export interface IVisitedSite {
   url: string;
@@ -161,6 +164,13 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       setRangeEndDayIndex(selectedDayIndex - 3);
     }
   }, [selectedDayIndex, times]);
+
+  const { width } = useWindowSize();
+  const [switchToColumn, setSwitchToColumn] = useState<boolean>(false);
+  useEffect(() => {
+    setSwitchToColumn(width < SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD);
+  }, [width]);
+
   return (
     <Stack spacing="24px" pb="32px">
       <Stack direction="row" justifyContent="space-between">
@@ -210,8 +220,8 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
           }
         />
       </Stack>
-      <Stack height="290px" spacing="28px" direction="row">
-        <Stack width="54%" flex={1}>
+      <Stack spacing="28px" direction={switchToColumn ? "column" : "row"}>
+        <Stack width={switchToColumn ? "100%" : "54%"} height="290px">
           <AstroBentoCard
             title={`${Math.floor(timeSpent / 60)}h ${Math.floor(
               timeSpent % 60
@@ -242,7 +252,7 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
             </Stack>
           </AstroBentoCard>
         </Stack>
-        <Stack flex={1}>
+        <Stack height="290px">
           <MostVisitedSitesSection sites={visitedSites} />
         </Stack>
       </Stack>

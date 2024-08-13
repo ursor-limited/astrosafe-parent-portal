@@ -20,7 +20,7 @@ import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import UsersTable from "../components/UsersTable";
 import DevicesTable from "../components/DevicesTable";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
-import AccountPageHeader from "../components/AccountPageHeader";
+import MobileAccountPageHeader from "../components/MobileAccountPageHeader";
 
 const AccountPageMobileBody = (props: {
   user: IUser;
@@ -48,9 +48,8 @@ const AccountPageMobileBody = (props: {
       </UrsorButton>
     }
     header={
-      <AccountPageHeader
+      <MobileAccountPageHeader
         setUpgradeDialogOpen={props.setUpgradeDialogOpen}
-        isMobile
       />
     }
   >
