@@ -207,8 +207,8 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
           url: dg.domain,
           title: dg.rows[0]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
-          searchedAt: dg.rows[0]?.searchedAt ?? "",
-          finishedAt: dg.rows[dg.rows.length - 1]?.finishedAt ?? "",
+          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
+          finishedAt: dg.rows[0]?.finishedAt ?? "",
         },
         rows: dg.rows,
       }))

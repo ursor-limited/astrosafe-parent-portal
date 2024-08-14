@@ -166,7 +166,7 @@ export interface IDomainGroup {
   rows: IHistoryItem[];
 }
 
-const HistoryPageContents = (props: { isMobile: boolean }) => {
+const HistoryPageContents = () => {
   const [nPages, setNPages] = useState<number>(1);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
@@ -209,8 +209,8 @@ const HistoryPageContents = (props: { isMobile: boolean }) => {
           url: dg.domain,
           title: dg.rows[0]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
-          searchedAt: dg.rows[0]?.searchedAt ?? "",
-          finishedAt: dg.rows[dg.rows.length - 1]?.finishedAt ?? "",
+          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
+          finishedAt: dg.rows[0]?.finishedAt ?? "",
         },
         rows: dg.rows,
       }))
@@ -218,7 +218,7 @@ const HistoryPageContents = (props: { isMobile: boolean }) => {
   }, [history]);
 
   return (
-    <PageLayout headerButtonId="history" mobile={props.isMobile}>
+    <PageLayout title="History" headerButtonId="history">
       <Stack>
         <Stack spacing="16px">
           {domainGroups.map((dg, i) => (

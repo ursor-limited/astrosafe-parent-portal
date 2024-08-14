@@ -1,24 +1,26 @@
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import { Stack } from "@mui/system";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import ApiController, { getAbsoluteUrl } from "../api";
+import { cleanUrl, DUMMY_DEVICE_ID, IDevice } from "../home/HomePageContents";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { Stack } from "@mui/system";
+import { DynamicContainer, PALETTE, Typography } from "ui";
 import Image from "next/image";
-import { PALETTE, Typography } from "ui";
+import Link from "next/link";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import { useEffect, useState } from "react";
-import DynamicContainer from "@/app/components/DynamicContainer";
-import Link from "next/link";
+import PageLayout from "../components/PageLayout";
+import PageSelector from "../components/PageSelector";
+import _ from "lodash";
 import {
   IDomainGroup,
   IHistoryItem,
   ISimplisticDomainGroup,
   PAGE_LENGTH,
-} from "./HistorySection";
-import ApiController from "@/app/api";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import _ from "lodash";
-import { cleanUrl } from "./MobileInsightsTab";
-import PageSelector from "@/app/components/PageSelector";
+} from "./DesktopHistoryPageContents";
+dayjs.extend(utc);
 
 const MobileHistoryRow = (props: IHistoryItem) => {
   const [duration, setDuration] = useState<number>(0); // seconds
@@ -31,32 +33,6 @@ const MobileHistoryRow = (props: IHistoryItem) => {
   );
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
-      {/* <Stack spacing="4px">
-        <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
-        </Typography>
-        <Stack
-          direction="row"
-          spacing="4px"
-          alignItems="center"
-          sx={{
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[4],
-              },
-            },
-          }}
-        >
-          <ClockIcon height="12px" width="12px" />
-          <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
-            {duration < 60
-              ? `${duration}s`
-              : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
-                  (duration % (60 * 60)) / 60
-                )}m`}
-          </Typography>
-        </Stack>
-      </Stack> */}
       <Stack direction="row" spacing="12px" alignItems="center">
         <Stack
           borderRadius="8px"
@@ -145,7 +121,7 @@ const MobileHistoryRow = (props: IHistoryItem) => {
 const MobileHistoryDomainRow = (props: IDomainGroup) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
-    <DynamicContainer duration={650} fullWidth>
+    <DynamicContainer duration={650} width="100%">
       <Stack spacing="5px" py="8px">
         <Stack
           justifyContent="space-between"
@@ -193,24 +169,21 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
   );
 };
 
-const MobileHistorySection = (props: {
-  deviceId: IDevice["id"];
-  date: string;
-}) => {
+const MobileHistoryPageContents = () => {
   const [nPages, setNPages] = useState<number>(1);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
   useEffect(() => {
     ApiController.getHistory(
-      props.deviceId,
-      props.date,
+      DUMMY_DEVICE_ID,
+      dayjs().utc().format("YYYY-MM-DD"),
       pageIndex + 1,
       PAGE_LENGTH
     ).then((response) => {
       setHistory(response.history);
       setNPages(response.pages);
     });
-  }, [props.deviceId, props.date, pageIndex]);
+  }, [pageIndex]);
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
   useEffect(() => {
@@ -239,8 +212,8 @@ const MobileHistorySection = (props: {
           url: dg.domain,
           title: dg.rows[0]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
-          searchedAt: dg.rows[0]?.searchedAt ?? "",
-          finishedAt: dg.rows[dg.rows.length - 1]?.finishedAt ?? "",
+          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
+          finishedAt: dg.rows[0]?.finishedAt ?? "",
         },
         rows: dg.rows,
       }))
@@ -248,23 +221,25 @@ const MobileHistorySection = (props: {
   }, [history]);
 
   return (
-    <AstroBentoCard title="Browser history" notCollapsible>
-      <Stack spacing="16px">
-        {domainGroups.map((dg, i) => (
-          <MobileHistoryDomainRow key={i} {...dg} />
-        ))}
-      </Stack>
-      {nPages > 1 ? (
-        <Stack pt="24px" pb="9px">
-          <PageSelector
-            pageIndex={pageIndex}
-            setPageIndex={setPageIndex}
-            nPages={nPages}
-          />
+    <PageLayout title="History" headerButtonId="history" mobile>
+      <Stack px="20px">
+        <Stack>
+          {domainGroups.map((dg, i) => (
+            <MobileHistoryDomainRow key={i} {...dg} />
+          ))}
         </Stack>
-      ) : null}
-    </AstroBentoCard>
+        {nPages > 1 ? (
+          <Stack pt="24px" pb="9px">
+            <PageSelector
+              pageIndex={pageIndex}
+              setPageIndex={setPageIndex}
+              nPages={nPages}
+            />
+          </Stack>
+        ) : null}
+      </Stack>
+    </PageLayout>
   );
 };
 
-export default MobileHistorySection;
+export default MobileHistoryPageContents;

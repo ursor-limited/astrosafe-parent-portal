@@ -7,6 +7,7 @@ import LandingView from "./LandingView";
 import dynamic from "next/dynamic";
 import MobileLandingView from "./MobileLandingView";
 import useNativeDeviceId from "./useNativeDeviceId";
+import { Typography } from "ui";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -16,6 +17,7 @@ const DynamicallyLoadedPortal = dynamic(
 export const OVERALL_X_PADDING = "20px";
 
 const PageLayout = (props: {
+  title?: string;
   headerButtonId: NavbarButton;
   mobile?: boolean;
   openConnect?: boolean;
@@ -68,9 +70,14 @@ const PageLayout = (props: {
         spacing="20px"
         height="100%"
         overflow="scroll"
-        pt="20px"
+        pt="32px"
         boxSizing="border-box"
       >
+        {props.title ? (
+          <Stack px="20px">
+            <Typography variant="h5">{props.title}</Typography>
+          </Stack>
+        ) : null}
         {props.children}
       </Stack>
       {landingViewOpen ? (
