@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
+import HistoryIcon from "@/images/icons/HistoryIcon.svg";
 import PageLayout from "../components/PageLayout";
 import PageSelector from "../components/PageSelector";
 import _ from "lodash";
@@ -20,7 +21,108 @@ import {
   ISimplisticDomainGroup,
   PAGE_LENGTH,
 } from "./DesktopHistoryPageContents";
+import { getIsToday, getIsYesterday } from "./HistoryPageContents_legacy";
 dayjs.extend(utc);
+
+const DateCard = (props: {
+  date: string;
+  history: IHistoryItem[];
+  mobile?: boolean;
+}) => {
+  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
+  useEffect(() => {
+    const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
+      props.history,
+      (acc, cur) => {
+        const currentDomain = new URL(cur.url).hostname;
+        const latestGroup = acc[acc.length - 1];
+
+        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
+        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+
+        const latestDomain = latestGroup?.domain;
+        return currentDomain === latestDomain
+          ? [
+              ...acc.slice(0, -1),
+              { domain: latestDomain, rows: [...latestGroup.rows, cur] },
+            ]
+          : [...acc, { domain: currentDomain, rows: [cur] }];
+      },
+      [] as ISimplisticDomainGroup[]
+    );
+    setDomainGroups(
+      simplisticDomainGroups.map((dg) => ({
+        domain: {
+          url: dg.domain,
+          title: dg.rows[0]?.title ?? "",
+          faviconUrl: dg.rows[0]?.faviconUrl ?? "",
+          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
+          finishedAt: dg.rows[0]?.finishedAt ?? "",
+        },
+        rows: dg.rows,
+      }))
+    );
+  }, [props.history]);
+  const [expanded, setExpanded] = useState<boolean>(true);
+  return (
+    <DynamicContainer duration={650} width="100%">
+      <Stack
+        p={props.mobile ? "12px" : "20px"}
+        borderRadius="20px"
+        bgcolor="rgb(255,255,255)"
+        spacing="20px"
+      >
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          onClick={() => setExpanded(!expanded)}
+        >
+          <Stack direction="row" spacing="8px" alignItems="center">
+            <HistoryIcon width="20px" height="20px" />
+            <Stack direction="row" spacing="5px">
+              {dayjs().diff(props.date, "days") < 8 ? (
+                <Typography bold variant="medium">
+                  {getIsToday(props.date)
+                    ? "Today"
+                    : getIsYesterday(props.date)
+                    ? "Yesterday"
+                    : `${dayjs(props.date).format("dddd")}`}
+                </Typography>
+              ) : (
+                <Typography bold>
+                  {dayjs(props.date).format("Do MMMM")}
+                </Typography>
+              )}
+            </Stack>
+          </Stack>
+          <Stack
+            sx={{
+              svg: {
+                transform: `rotate(${expanded ? 180 : 0}deg)`,
+                transition: "0.2s",
+                path: {
+                  fill: PALETTE.secondary.grey[4],
+                },
+              },
+            }}
+            minWidth="30px"
+            alignItems="flex-end"
+          >
+            <ChevronDownIcon width="24px" height="24px" />
+          </Stack>
+        </Stack>
+        {expanded ? (
+          <Stack>
+            {domainGroups.map((dg, i) => (
+              <MobileHistoryDomainRow key={i} {...dg} />
+            ))}
+          </Stack>
+        ) : null}
+      </Stack>
+    </DynamicContainer>
+  );
+};
 
 const MobileHistoryRow = (props: IHistoryItem) => {
   const [duration, setDuration] = useState<number>(0); // seconds
@@ -174,58 +276,40 @@ const MobileHistoryPageContents = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
   useEffect(() => {
-    ApiController.getHistory(
-      DUMMY_DEVICE_ID,
-      dayjs().utc().format("YYYY-MM-DD"),
-      pageIndex + 1,
-      PAGE_LENGTH
-    ).then((response) => {
-      setHistory(response.history);
-      setNPages(response.pages);
-    });
+    ApiController.getHistory(DUMMY_DEVICE_ID, pageIndex + 1, PAGE_LENGTH).then(
+      (response) => {
+        setHistory(response.history);
+        setNPages(response.pages);
+      }
+    );
   }, [pageIndex]);
 
-  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
+  const [dateGroupedHistory, setDateGroupedHistory] = useState<
+    {
+      date: string;
+      history: IHistoryItem[];
+    }[]
+  >([]);
   useEffect(() => {
-    const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
-      history,
-      (acc, cur) => {
-        const currentDomain = new URL(cur.url).hostname;
-        const latestGroup = acc[acc.length - 1];
-
-        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
-
-        const latestDomain = latestGroup?.domain;
-        return currentDomain === latestDomain
-          ? [
-              ...acc.slice(0, -1),
-              { domain: latestDomain, rows: [...latestGroup.rows, cur] },
-            ]
-          : [...acc, { domain: currentDomain, rows: [cur] }];
-      },
-      [] as ISimplisticDomainGroup[]
+    const groups = _.groupBy(history, (x) =>
+      dayjs(x.searchedAt).utc().format("YYYY-MM-DD")
     );
-    setDomainGroups(
-      simplisticDomainGroups.map((dg) => ({
-        domain: {
-          url: dg.domain,
-          title: dg.rows[0]?.title ?? "",
-          faviconUrl: dg.rows[0]?.faviconUrl ?? "",
-          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
-          finishedAt: dg.rows[0]?.finishedAt ?? "",
-        },
-        rows: dg.rows,
-      }))
+    setDateGroupedHistory(
+      _(groups)
+        .keys()
+        .map((date) => ({ date, history: groups[date] }))
+        .sortBy((x) => new Date(x.date))
+        .reverse()
+        .value()
     );
   }, [history]);
-
+  console.log(dateGroupedHistory, "lol");
   return (
     <PageLayout title="History" headerButtonId="history" mobile>
-      <Stack px="20px">
-        <Stack>
-          {domainGroups.map((dg, i) => (
-            <MobileHistoryDomainRow key={i} {...dg} />
+      <Stack px="20px" pb="20px">
+        <Stack spacing="20px">
+          {dateGroupedHistory.map((dg, i) => (
+            <DateCard key={i} {...dg} />
           ))}
         </Stack>
         {nPages > 1 ? (

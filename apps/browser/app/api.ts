@@ -93,13 +93,12 @@ class ApiController {
 
   static async getHistory(
     deviceId: IDevice["id"],
-    date: string,
     pageIndex: number,
     pageSize: number,
     searchTerm?: string
   ) {
     return get(
-      `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}${
+      `devices/${deviceId}/history?page=${pageIndex}&limit=${pageSize}${
         searchTerm ? `&search=${searchTerm}` : ""
       }`
     ).then((response: any) => response.json());

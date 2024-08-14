@@ -16,7 +16,7 @@ import PageSelector from "../components/PageSelector";
 import _ from "lodash";
 dayjs.extend(utc);
 
-export const PAGE_LENGTH = 55;
+export const PAGE_LENGTH = 70;
 
 export interface IHistoryItem {
   url: string;
@@ -171,15 +171,12 @@ const HistoryPageContents = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
   useEffect(() => {
-    ApiController.getHistory(
-      DUMMY_DEVICE_ID,
-      dayjs().utc().format("YYYY-MM-DD"),
-      pageIndex + 1,
-      PAGE_LENGTH
-    ).then((response) => {
-      setHistory(response.history);
-      setNPages(response.pages);
-    });
+    ApiController.getHistory(DUMMY_DEVICE_ID, pageIndex + 1, PAGE_LENGTH).then(
+      (response) => {
+        setHistory(response.history);
+        setNPages(response.pages);
+      }
+    );
   }, [pageIndex]);
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
