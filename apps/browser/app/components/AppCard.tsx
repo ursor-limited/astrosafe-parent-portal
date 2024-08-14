@@ -15,7 +15,7 @@ export interface IApp {
   id: number;
   title: string;
   url: string;
-  logoUrl: string;
+  imageUrl: string;
   description: string;
 }
 
@@ -49,10 +49,10 @@ const AppCard = (props: IPlatformCardProps) => {
         boxShadow="0 0 6px rgba(0,0,0,0.08)"
       >
         <Image
-          src={props.app.logoUrl}
+          src={props.app.imageUrl}
           style={{ objectFit: "cover" }}
           fill
-          alt="image card image"
+          alt="app logo"
         />
       </Stack>
       <Typography variant="small" bold maxLines={2}>

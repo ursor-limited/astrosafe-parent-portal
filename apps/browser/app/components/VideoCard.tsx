@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Stack } from "@mui/system";
 import Play from "@/images/play.svg";
 import { IVideo } from "../home/HomePageContents";
+import { PALETTE } from "ui";
 
 const IMAGE_HEIGHT = 144;
 
@@ -34,16 +35,20 @@ const VideoCard = (
         position="relative"
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
-        <Image
-          src={props.thumbnailUrl}
-          style={{
-            objectFit: "cover",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          fill
-          alt="image card image"
-        />
+        {props.thumbnailUrl ? (
+          <Image
+            src={props.thumbnailUrl}
+            style={{
+              objectFit: "cover",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            fill
+            alt="video card image"
+          />
+        ) : (
+          <Stack flex={1} bgcolor={PALETTE.secondary.grey[2]} />
+        )}
         <Stack
           position="absolute"
           top={0}

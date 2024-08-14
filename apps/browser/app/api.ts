@@ -103,6 +103,16 @@ class ApiController {
       }`
     ).then((response: any) => response.json());
   }
+
+  static async getApps(
+    deviceId: IDevice["id"],
+    pageIndex: number,
+    pageSize: number,
+  ) {
+    return get(
+      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}`
+    ).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;
