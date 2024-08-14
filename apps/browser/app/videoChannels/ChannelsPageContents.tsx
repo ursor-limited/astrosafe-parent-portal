@@ -187,7 +187,7 @@ export default function ChannelsContents(props: { mobile: boolean }) {
                               {...(x as IVideo)}
                               onClick={() => null}
                               favorite={!!favorites.find((f) => f.id === x.id)}
-                              setFavorite={() => flipFavorite(x.id, "video")}
+                              flipFavorite={() => flipFavorite(x.id, "video")}
                             />
                           </UrsorFadeIn>
                         </Stack>
