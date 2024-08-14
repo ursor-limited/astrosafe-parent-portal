@@ -44,7 +44,7 @@ export const DeviceCardFilterSection = (props: {
     <UrsorPopover
       open={open}
       content={
-        <Stack bgcolor="rgb(255,255,255)" borderRadius="12px" spacing="12px">
+        <Stack bgcolor="rgb(255,255,255)" borderRadius="12px" spacing="8px">
           {allFilters.map((f, i) => (
             <Stack
               key={i}

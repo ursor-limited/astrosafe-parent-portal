@@ -150,7 +150,11 @@ const DevicePageAppsTab = (props: {
       <Stack pb="32px">
         <AstroCard>
           <Stack px="16px" pt="16px" justifyContent="center">
-            <Stack direction="row" spacing="12px">
+            <Stack
+              direction="row"
+              spacing="12px"
+              justifyContent="space-between"
+            >
               <Stack overflow="scroll">
                 <Stack direction="row" spacing="12px" pb="20px">
                   {[
