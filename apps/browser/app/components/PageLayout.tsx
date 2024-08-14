@@ -1,6 +1,5 @@
 import { Stack } from "@mui/system";
 import ConnectBar from "./ConnectBar";
-import { PALETTE, Typography } from "ui";
 import Navbar, { NavbarButton } from "./Navbar";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";

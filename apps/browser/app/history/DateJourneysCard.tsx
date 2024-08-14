@@ -1,6 +1,10 @@
 import { Stack } from "@mui/system";
 import JourneyCard from "./JourneyCard";
-import { IJourney, getIsToday, getIsYesterday } from "./HistoryPageContents";
+import {
+  IJourney,
+  getIsToday,
+  getIsYesterday,
+} from "./HistoryPageContents_legacy";
 import HistoryIcon from "@/images/icons/HistoryIcon.svg";
 import dayjs from "dayjs";
 import { Typography } from "ui";

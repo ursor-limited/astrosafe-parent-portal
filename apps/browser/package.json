@@ -21,6 +21,7 @@
     "@svgr/webpack": "^8.1.0",
     "Check": "link:@mui/icons-material/Check",
     "DoDisturb": "link:@mui/icons-material/DoDisturb",
+    "advancedFormat.js": "link:dayjs/plugin/advancedFormat.js",
     "axios": "^1.6.0",
     "axios-retry": "^3.8.1",
     "dayjs": "^1.11.10",

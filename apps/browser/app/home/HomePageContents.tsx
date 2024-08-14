@@ -76,6 +76,8 @@ export interface IDevice {
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
+  createdAt: string;
+  // filterId: IFilter["id"]; // not needed on the kids side
 }
 
 export interface IFilterUrl {

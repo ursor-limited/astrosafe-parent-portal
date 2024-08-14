@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
-import { IJourney } from "./HistoryPageContents";
+import { IJourney } from "./HistoryPageContents_legacy";
 import Image from "next/image";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import dayjs from "dayjs";
