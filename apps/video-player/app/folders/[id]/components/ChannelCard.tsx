@@ -9,7 +9,6 @@ const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
   props: Omit<IChannel, "createdAt"> & {
-    // onClick: () => void;
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;

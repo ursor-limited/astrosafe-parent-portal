@@ -19,7 +19,8 @@ import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
 import CreationAnimationDialog from "./CreationAnimationDialog";
-import MobileLoginToParentPortalDialog from "./MobileLoginToParentPortalDialog";
+
+const N_APPS = 60;
 
 export const cleanUrl = (url: string) =>
   url.replace("http://", "").replace("https://", "").replace("www.", "");
@@ -131,11 +132,14 @@ export default function HomePageContents(props: {
     undefined
   );
 
-  const [services, setServices] = useState<IApp[]>([]);
-  // useEffect(() => {
-  //   deviceId &&
-  //     ApiController.getDeviceServices(deviceId).then((s) => setServices(s));
-  // }, [deviceId]);
+  const [apps, setApps] = useState<IApp[]>([]);
+  const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
+
+  useEffect(() => {
+    ApiController.getApps(DUMMY_DEVICE_ID, 1, N_APPS).then((response) => {
+      setApps(_.sortBy(response.apps, (a) => a.id));
+    });
+  }, []);
 
   const [folders, setFolders] = useState<IContentBucket[] | undefined>();
   useEffect(() => {
@@ -158,22 +162,24 @@ export default function HomePageContents(props: {
       ApiController.getFolder(selectedFolderId).then((f: IContentBucket) => {
         //setFolder(f);
         setCurrentFolderContents(
-          _.sortBy(
-            [
-              ...f.links.map((l) => ({
-                type: "link" as AstroContent,
-                details: l,
-              })),
-              ...f.videos.map((v) => ({
-                type: "video" as AstroContent,
-                details: v,
-              })),
-              ...f.channels.map((c) => ({
-                type: "channel" as AstroContent,
-                details: c,
-              })),
-            ],
-            (c) => c.details.createdAt
+          _.reverse(
+            _.sortBy(
+              [
+                ...f.links.map((l) => ({
+                  type: "link" as AstroContent,
+                  details: l,
+                })),
+                ...f.videos.map((v) => ({
+                  type: "video" as AstroContent,
+                  details: v,
+                })),
+                ...f.channels.map((c) => ({
+                  type: "channel" as AstroContent,
+                  details: c,
+                })),
+              ],
+              (c) => c.details.createdAt
+            )
           )
         );
       }),
@@ -221,7 +227,7 @@ export default function HomePageContents(props: {
               boxSizing="border-box"
             >
               {[
-                ...services.map((a, i) => (
+                ...apps.map((a, i) => (
                   <Stack key={a.id} onClick={() => setSelectedFolderId(a.id)}>
                     <UrsorFadeIn duration={1200} delay={i * 70}>
                       <AppCard
@@ -235,6 +241,13 @@ export default function HomePageContents(props: {
                 <Stack key="padding" minWidth="8px" />,
               ]}
             </Stack>
+          </Stack>
+          <Stack px="20px" width="100%" boxSizing="border-box">
+            <Stack
+              height="1px"
+              width="100%"
+              bgcolor={PALETTE.secondary.grey[2]}
+            />
           </Stack>
           <Stack overflow="scroll">
             <Stack
@@ -260,7 +273,7 @@ export default function HomePageContents(props: {
               ))}
             </Stack>
           </Stack>
-          <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
+          <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING} pb="100px">
             <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
               {currentFolderContents.length > 0 ? (
                 <Stack flex={1} direction="row" spacing="20px">
@@ -393,7 +406,7 @@ export default function HomePageContents(props: {
         open={deviceReadyDialogOpen}
         onClose={() => setDeviceReadyDialogOpen(false)}
       />
-      <MobileLoginToParentPortalDialog open={true} onClose={() => null} />
+      {/* <MobileLoginToParentPortalDialog open={loginTo} onClose={() => null} /> */}
     </>
   );
 }
