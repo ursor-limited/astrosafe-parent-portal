@@ -142,11 +142,11 @@ const MobileHistoryRow = (props: IHistoryItem) => {
   );
 };
 
-const HistoryDomainRow = (props: IDomainGroup) => {
+const MobileHistoryDomainRow = (props: IDomainGroup) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <DynamicContainer duration={650} fullWidth>
-      <Stack spacing="12px">
+      <Stack spacing="5px" py="8px">
         <Stack
           justifyContent="space-between"
           alignItems="center"
@@ -251,7 +251,7 @@ const MobileHistorySection = (props: {
     <AstroBentoCard title="Browser history" notCollapsible>
       <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
-          <HistoryDomainRow key={i} {...dg} />
+          <MobileHistoryDomainRow key={i} {...dg} />
         ))}
       </Stack>
       {nPages > 1 ? (
