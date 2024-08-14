@@ -4,6 +4,7 @@ import XIcon from "@/images/icons/X.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import {
   AstroContent,
+  DUMMY_DEVICE_ID,
   IChannel,
   IContentBucket,
   IContentCard,
@@ -17,6 +18,8 @@ import ChannelCard from "../../../../components/ChannelCard";
 import AppCard, { IApp } from "../../../../components/AppCard";
 import ContentSelectionViewDesktopBody from "./body-desktop";
 import ContentSelectionViewMobileBody from "./body-mobile";
+
+const N_APPS = 8;
 
 export const VideoSelectionView = (props: {
   onNext: () => void;
@@ -90,46 +93,12 @@ export const AppsSelectionView = (props: {
   onNext: () => void;
   isMobile?: boolean;
 }) => {
-  const [apps, setApps] = useState<IApp[]>([
-    {
-      id: 1,
-      title: "Boo",
-      url: "hs.fi",
-      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
-      description: "Boo",
-    },
-    {
-      id: 2,
-      title: "Boo",
-      url: "hs.fi",
-      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
-      description: "Boo",
-    },
-    {
-      id: 3,
-      title: "Boo",
-      url: "hs.fi",
-      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
-      description: "Boo",
-    },
-    {
-      id: 4,
-      title: "Boo",
-      url: "hs.fi",
-      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
-      description: "Boo",
-    },
-  ]);
-  //   const loadFolder = useCallback(
-  //     () =>
-  //       ApiController.getFolder(1).then((f: IContentBucket) => {
-  //         setApps(_.sortBy(f.channels, (a) => a.id));
-  //       }),
-  //     []
-  //   );
-  //   useEffect(() => {
-  //     loadFolder();
-  //   }, [loadFolder]);
+  const [apps, setApps] = useState<IApp[]>([]);
+  useEffect(() => {
+    ApiController.getApps(DUMMY_DEVICE_ID, 1, N_APPS).then((response) => {
+      setApps(_.sortBy(response.apps, (a) => a.id));
+    });
+  }, []);
   return (
     <ContentSelectionView
       cards={apps.map((app) => (

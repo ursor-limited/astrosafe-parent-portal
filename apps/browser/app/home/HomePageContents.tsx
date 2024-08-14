@@ -127,14 +127,7 @@ export default function HomePageContents(props: {
     1
   );
 
-  const [schoolId, setSchoolId] = useLocalStorage<string | undefined>(
-    "schoolId",
-    undefined
-  );
-
   const [apps, setApps] = useState<IApp[]>([]);
-  const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
-
   useEffect(() => {
     ApiController.getApps(DUMMY_DEVICE_ID, 1, N_APPS).then((response) => {
       setApps(_.sortBy(response.apps, (a) => a.id));
