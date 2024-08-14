@@ -230,7 +230,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                         opacity: props.open && !props.fadedOut ? 1 : 0,
                         transition: "0.3s",
                         animation: props.animation,
-                        boxShadow: "0 0 90px rgba(0,0,0,0.2)",
+                        boxShadow: "0 0 90px rgba(0,0,0,0.15)",
                       }}
                       height="100%"
                       maxHeight={

@@ -36,6 +36,45 @@ export interface IApp {
   enabled: boolean;
 }
 
+export const AppsLegend = (props: { small?: boolean }) => (
+  <Stack direction="row" spacing="20px">
+    <Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={props.small ? "7px" : "10px"}
+      >
+        <Typography variant={props.small ? "small" : "normal"} bold>
+          Enabled
+        </Typography>
+        <Stack
+          height={props.small ? "12px" : "16px"}
+          width={props.small ? "12px" : "16px"}
+          borderRadius="100%"
+          bgcolor={PALETTE.system.green}
+        />
+      </Stack>
+    </Stack>
+    <Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={props.small ? "7px" : "10px"}
+      >
+        <Typography variant={props.small ? "small" : "normal"} bold>
+          Disabled
+        </Typography>
+        <Stack
+          height={props.small ? "12px" : "16px"}
+          width={props.small ? "12px" : "16px"}
+          borderRadius="100%"
+          bgcolor={PALETTE.secondary.grey[3]}
+        />
+      </Stack>
+    </Stack>
+  </Stack>
+);
+
 const DevicePageAppsTab = (props: {
   deviceId: IDevice["id"];
   isMobile?: boolean;
@@ -82,17 +121,30 @@ const DevicePageAppsTab = (props: {
     [apps, searchValue]
   );
 
+  const [nonEmptyCategories, setNonEmptyCategories] = useState<
+    IFilterSubcategory[]
+  >([]);
+  useEffect(
+    () =>
+      setNonEmptyCategories(
+        categories.filter((c) =>
+          apps.find((a) => a.categoryId === c.categoryId)
+        )
+      ),
+    [categories, apps]
+  );
+
   const notificationCtx = useContext(NotificationContext);
 
   return (
     <ProfilePageTabLayout
       title="Apps"
-      rightSideElement={!props.isMobile ? <FilterLegend /> : undefined}
+      rightSideElement={!props.isMobile ? <AppsLegend /> : undefined}
       explanation="Donkey Kong 64 is a sequel to the Donkey Kong Country trilogy and is so far the only game in the series without the word 'Country' in the title alongside Chunky Kong's only significant video game appearance. It received generally positive reviews with an average score of 88% according to gamerankings."
     >
       {props.isMobile ? (
         <Stack alignItems="flex-end">
-          <FilterLegend small={props.isMobile} />
+          <AppsLegend small={props.isMobile} />
         </Stack>
       ) : null}
       <Stack pb="32px">
@@ -129,7 +181,7 @@ const DevicePageAppsTab = (props: {
                         All
                       </Typography>
                     </Stack>,
-                    ...categories.map((c) => (
+                    ...nonEmptyCategories.map((c) => (
                       <Stack
                         key={c.categoryId}
                         height="32px"
