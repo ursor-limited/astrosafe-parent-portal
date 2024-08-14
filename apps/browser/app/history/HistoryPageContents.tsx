@@ -1,152 +1,242 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "ui";
-import _ from "lodash";
-import { useRouter } from "next/navigation";
-import ConnectBar from "../components/ConnectBar";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import ApiController, { getAbsoluteUrl } from "../api";
+import { cleanUrl, DUMMY_DEVICE_ID, IDevice } from "../home/HomePageContents";
 import dayjs from "dayjs";
-import JourneyCard from "./JourneyCard";
-import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import UrsorFadeIn from "../components/UrsorFadeIn";
-import HistoryIcon from "@/images/icons/HistoryIcon.svg";
-import DateJourneysCard from "./DateJourneysCard";
+import utc from "dayjs/plugin/utc";
+import { Stack } from "@mui/system";
+import { DynamicContainer, PALETTE, Typography } from "ui";
+import Image from "next/image";
+import Link from "next/link";
+import ClockIcon from "@/images/icons/ClockIcon.svg";
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import PageLayout from "../components/PageLayout";
-dayjs.extend(advancedFormat);
+import PageSelector from "../components/PageSelector";
+import _ from "lodash";
+dayjs.extend(utc);
 
-export const getIsPast = (date: string | number) => dayjs(date) < dayjs();
+export const PAGE_LENGTH = 55;
 
-export const getIsToday = (date: string | number) =>
-  dayjs(date) < dayjs().endOf("day") && dayjs(date) >= dayjs().startOf("day");
-
-export const getIsTomorrow = (date: string | number) =>
-  dayjs(date) < dayjs().add(1, "days").endOf("day") &&
-  dayjs(date) >= dayjs().add(1, "days").startOf("day");
-
-export const getIsYesterday = (date: string | number) =>
-  dayjs(date) < dayjs().subtract(1, "days").endOf("day") &&
-  dayjs(date) >= dayjs().subtract(1, "days").startOf("day");
-
-export interface IJourney {
-  datetime: string;
-  deviceId: string;
+export interface IHistoryItem {
+  url: string;
   title: string;
-  urls: {
-    title: string;
-    favIconUrl?: string;
-    timestamp: string;
-    domain: string;
-  }[];
+  faviconUrl: string;
+  searchedAt: string;
+  finishedAt: string;
 }
 
-const DUMMY_JOURNEYS: { datetime: string; journeys: IJourney[] }[] = [
-  {
-    //@ts-ignore
-    datetime: "2024-05-30T19:11:54.561+00:00",
-    journeys: [
-      {
-        datetime: "2024-05-30T16:11:54.561+00:00",
-        deviceId: "659685e649ded4f6a4e28c53",
-        title: "How to make risotto",
-        urls: [
-          {
-            title: "Boo",
-            timestamp: "2024-05-30T19:11:54.561+00:00",
-            favIconUrl:
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-            domain: "nintendo.com",
-          },
-          {
-            title: "Hooooo boo",
-            timestamp: "2024-05-30T10:11:54.561+00:00",
-            favIconUrl:
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-            domain: "lego.com",
-          },
-        ],
-      },
-      {
-        datetime: "2024-05-30T15:11:54.561+00:00",
-        deviceId: "659685e649ded4f6a4e28c53",
-        title: "How to make chili con carne",
-        urls: [
-          {
-            title: "Aeeeeee",
-            timestamp: "2024-06-01T15:11:54.561+00:00",
-            favIconUrl:
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-            domain: "boo.com",
-          },
-          {
-            title: "Paaaaaah",
-            timestamp: "2024-06-01T15:11:54.561+00:00",
-            favIconUrl:
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-            domain: "lego.com",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    datetime: "2024-06-01T15:11:54.561+00:00",
-    journeys: [
-      {
-        datetime: "2024-05-30T15:11:54.561+00:00",
-        deviceId: "659685e649ded4f6a4e28c53",
-        title: "How to make chili con carne",
-        urls: [
-          {
-            title: "Aeeeeee",
-            timestamp: "2024-05-30T15:11:54.561+00:00",
-            favIconUrl:
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-            domain: "boo.com",
-          },
-          {
-            title: "Paaaaaah",
-            timestamp: "2024-05-30T15:11:54.561+00:00",
-            favIconUrl:
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-            domain: "lego.com",
-          },
-        ],
-      },
-    ],
-  },
-];
-
-export const OVERALL_X_PADDING = "20px";
-
-export default function JourneyPageContents(props: { mobile: boolean }) {
-  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
-    "deviceId",
-    undefined
+const HistoryRow = (props: IHistoryItem) => {
+  const [duration, setDuration] = useState<number>(0); // seconds
+  useEffect(
+    () =>
+      setDuration(
+        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
+      ),
+    [props.searchedAt, props.finishedAt]
   );
+  return (
+    <Stack direction="row" spacing="40px" alignItems="center">
+      <Stack width="94px">
+        <Typography bold color={PALETTE.secondary.grey[4]}>
+          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+        </Typography>
+      </Stack>
+      <Stack direction="row" spacing="8px" alignItems="center">
+        <Stack
+          borderRadius="3px"
+          overflow="hidden"
+          boxShadow="0 0 10px rgba(0,0,0,0.1)"
+        >
+          <Image
+            height={20}
+            width={20}
+            src={props.faviconUrl}
+            alt="favicon url"
+          />
+        </Stack>
+        <Typography bold>{props.title}</Typography>
+        <Typography bold color={PALETTE.secondary.grey[4]}>
+          -
+        </Typography>
+        <Link
+          href={getAbsoluteUrl(cleanUrl(props.url))}
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
+          <Stack
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.7 },
+            }}
+          >
+            <Typography bold color={PALETTE.secondary.grey[4]}>
+              {cleanUrl(props.url).replace(/\/$/, "")}
+            </Typography>
+          </Stack>
+        </Link>
+        <Typography bold color={PALETTE.secondary.grey[4]}>
+          -
+        </Typography>
+        {duration ? (
+          <Stack
+            direction="row"
+            spacing="8px"
+            alignItems="center"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.grey[4],
+                },
+              },
+            }}
+          >
+            <ClockIcon height="16px" width="16px" />
+            <Typography color={PALETTE.secondary.grey[4]} bold>
+              {duration < 60
+                ? `${duration}s`
+                : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
+                    (duration % (60 * 60)) / 60
+                  )}m`}
+            </Typography>
+          </Stack>
+        ) : null}
+      </Stack>
+    </Stack>
+  );
+};
 
-  useEffect(() => setDeviceId(1), []);
+const HistoryDomainRow = (props: IDomainGroup) => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+  return (
+    <DynamicContainer duration={650} width="100%">
+      <Stack spacing="12px">
+        <Stack
+          justifyContent="space-between"
+          alignItems="center"
+          direction="row"
+          sx={{
+            cursor: "pointer",
+            transition: "0.2s",
+            "&:hover": { opacity: 0.6 },
+          }}
+          onClick={() => setExpanded(!expanded)}
+        >
+          <HistoryRow {...props.domain} />
+          <Stack
+            sx={{
+              transform: `rotate(${expanded ? 180 : 0}deg)`,
+              transition: "0.2s",
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.grey[4],
+                },
+              },
+            }}
+          >
+            <ChevronDownIcon width="20px" height="20px" />
+          </Stack>
+        </Stack>
+        {expanded ? (
+          <Stack
+            borderRadius="12px"
+            bgcolor={PALETTE.secondary.grey[1]}
+            pl="28px"
+            py="12px"
+            spacing="16px"
+          >
+            {props.rows.map((row, i) => (
+              <HistoryRow key={i} {...row} />
+            ))}
+          </Stack>
+        ) : null}
+      </Stack>
+    </DynamicContainer>
+  );
+};
 
-  const router = useRouter();
+export interface ISimplisticDomainGroup {
+  domain: string;
+  rows: IHistoryItem[];
+}
 
-  const [dateJourneys, setDateJourneys] =
-    useState<{ datetime: string; journeys: IJourney[] }[]>(DUMMY_JOURNEYS);
+export interface IDomainGroup {
+  domain: IHistoryItem;
+  rows: IHistoryItem[];
+}
+
+const HistoryPageContents = (props: { isMobile: boolean }) => {
+  const [nPages, setNPages] = useState<number>(1);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [history, setHistory] = useState<IHistoryItem[]>([]);
+  useEffect(() => {
+    ApiController.getHistory(
+      DUMMY_DEVICE_ID,
+      dayjs().utc().format("YYYY-MM-DD"),
+      pageIndex + 1,
+      PAGE_LENGTH
+    ).then((response) => {
+      setHistory(response.history);
+      setNPages(response.pages);
+    });
+  }, [pageIndex]);
+
+  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
+  useEffect(() => {
+    const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
+      history,
+      (acc, cur) => {
+        const currentDomain = new URL(cur.url).hostname;
+        const latestGroup = acc[acc.length - 1];
+
+        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
+        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+
+        const latestDomain = latestGroup?.domain;
+        return currentDomain === latestDomain
+          ? [
+              ...acc.slice(0, -1),
+              { domain: latestDomain, rows: [...latestGroup.rows, cur] },
+            ]
+          : [...acc, { domain: currentDomain, rows: [cur] }];
+      },
+      [] as ISimplisticDomainGroup[]
+    );
+    setDomainGroups(
+      simplisticDomainGroups.map((dg) => ({
+        domain: {
+          url: dg.domain,
+          title: dg.rows[0]?.title ?? "",
+          faviconUrl: dg.rows[0]?.faviconUrl ?? "",
+          searchedAt: dg.rows[0]?.searchedAt ?? "",
+          finishedAt: dg.rows[dg.rows.length - 1]?.finishedAt ?? "",
+        },
+        rows: dg.rows,
+      }))
+    );
+  }, [history]);
 
   return (
-    <PageLayout headerButtonId="history" mobile={props.mobile}>
-      <Stack spacing="10px" px={OVERALL_X_PADDING}>
-        {dateJourneys.map((dateGroup, i) => (
-          <UrsorFadeIn key={i} duration={800} delay={i * 120}>
-            <DateJourneysCard
-              date={dateGroup.datetime}
-              journeys={dateGroup.journeys}
-              mobile={props.mobile}
+    <PageLayout headerButtonId="history" mobile={props.isMobile}>
+      <Stack>
+        <Stack spacing="16px">
+          {domainGroups.map((dg, i) => (
+            <HistoryDomainRow key={i} {...dg} />
+          ))}
+        </Stack>
+        {nPages > 1 ? (
+          <Stack pt="24px" pb="9px">
+            <PageSelector
+              pageIndex={pageIndex}
+              setPageIndex={setPageIndex}
+              nPages={nPages}
             />
-          </UrsorFadeIn>
-        ))}
+          </Stack>
+        ) : null}
       </Stack>
     </PageLayout>
   );
-}
+};
+
+export default HistoryPageContents;

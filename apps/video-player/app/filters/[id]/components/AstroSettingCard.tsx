@@ -14,7 +14,7 @@ export interface IAstroSettingCardProps {
 
 const AstroSettingCard = (props: IAstroSettingCardProps) => (
   <Stack
-    height="72px"
+    height="54px"
     bgcolor="rgb(255,255,255)"
     borderRadius="12px"
     border={`1px solid ${PALETTE.secondary.grey[2]}`}

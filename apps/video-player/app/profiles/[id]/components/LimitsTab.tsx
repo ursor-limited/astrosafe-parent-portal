@@ -40,8 +40,8 @@ export type Weekday = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 export const DAILY_LIMIT_INCREMENT = 15; // minutes
 
 const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
-const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1506;
-const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1110;
+const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1450;
+const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1080;
 
 export interface ITimeLimit {
   id: number;

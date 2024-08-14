@@ -90,6 +90,20 @@ class ApiController {
   ) {
     return dellete(`devices/${id}/favorites/${contentType}/${contentId}`);
   }
+
+  static async getHistory(
+    deviceId: IDevice["id"],
+    date: string,
+    pageIndex: number,
+    pageSize: number,
+    searchTerm?: string
+  ) {
+    return get(
+      `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}${
+        searchTerm ? `&search=${searchTerm}` : ""
+      }`
+    ).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;

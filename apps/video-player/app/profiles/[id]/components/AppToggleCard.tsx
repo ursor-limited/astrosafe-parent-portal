@@ -11,81 +11,78 @@ const AppToggleCard = (
   props: IApp & {
     callback: () => void;
   }
-) => {
-  console.log(props, "dkkdkdkdkdkdk");
-  return (
-    <Stack
-      bgcolor="rgb(255,255,255)"
-      borderRadius="12px"
-      border={`1px solid ${PALETTE.secondary.grey[2]}`}
-      p="16px"
-      boxSizing="border-box"
-      alignItems="space-between"
-      justifyContent="center"
-      height="130px"
-    >
-      <Stack justifyContent="space-between" spacing="12px" flex={1}>
-        <Stack
-          justifyContent="space-between"
-          direction="row"
-          alignItems="center"
-        >
-          <Stack spacing="16px" direction="row">
-            <Stack position="relative">
-              {props.enabled ? (
-                <Stack
-                  position="absolute"
-                  top="-6px"
-                  right="-10px"
-                  width="20px"
-                  height="20px"
-                  bgcolor={PALETTE.secondary.green[4]}
-                  sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
-                  borderRadius="100%"
-                  overflow="hidden"
-                  border="1.5px solid white"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <CheckIcon width="12px" height="12px" />
-                </Stack>
-              ) : null}
+) => (
+  <Stack
+    bgcolor="rgb(255,255,255)"
+    borderRadius="12px"
+    border={`1px solid ${PALETTE.secondary.grey[2]}`}
+    p="16px"
+    boxSizing="border-box"
+    alignItems="space-between"
+    justifyContent="center"
+    height="130px"
+  >
+    <Stack justifyContent="space-between" spacing="12px" flex={1}>
+      <Stack justifyContent="space-between" direction="row" alignItems="center">
+        <Stack spacing="16px" direction="row" flex={1} overflow="hidden">
+          <Stack position="relative">
+            {props.enabled ? (
               <Stack
-                borderRadius="8px"
+                position="absolute"
+                top="-6px"
+                right="-10px"
+                width="20px"
+                height="20px"
+                bgcolor={PALETTE.secondary.green[4]}
+                sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
+                borderRadius="100%"
                 overflow="hidden"
-                boxShadow="0 0 16px rgba(0,0,0,0.08)"
+                border="1.5px solid white"
+                justifyContent="center"
+                alignItems="center"
               >
-                <Image
-                  src={props.imageUrl}
-                  height={41}
-                  width={41}
-                  alt="platform image"
-                />
+                <CheckIcon width="12px" height="12px" />
               </Stack>
-            </Stack>
-            <Stack>
-              <Typography maxLines={1} bold>
-                {props.title}
-              </Typography>
-              <Typography
-                variant="small"
-                bold
-                color={PALETTE.secondary.grey[3]}
-              >
-                {cleanUrl(props.url).replace(/\/$/, "")}
-              </Typography>
+            ) : null}
+            <Stack
+              borderRadius="8px"
+              overflow="hidden"
+              boxShadow="0 0 16px rgba(0,0,0,0.08)"
+            >
+              <Image
+                src={props.imageUrl}
+                height={41}
+                width={41}
+                alt="platform image"
+              />
             </Stack>
           </Stack>
-          <AstroSwitch on={props.enabled} callback={props.callback} />
+          <Stack overflow="hidden">
+            <Typography maxLines={1} bold>
+              {props.title}
+            </Typography>
+            <Typography
+              variant="small"
+              bold
+              color={PALETTE.secondary.grey[3]}
+              maxLines={1}
+              sx={{
+                wordBreak: "break-all",
+              }}
+            >
+              {cleanUrl(props.url).replace(/\/$/, "")}
+            </Typography>
+          </Stack>
         </Stack>
-        <Stack flex={1}>
-          <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
-            {props.description}
-          </Typography>
-        </Stack>
+        <AstroSwitch on={props.enabled} callback={props.callback} />
+      </Stack>
+      <Stack flex={1}>
+        <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
+          {props.description}
+        </Typography>
       </Stack>
     </Stack>
-  );
-};
+  </Stack>
+);
 
 export default AppToggleCard;

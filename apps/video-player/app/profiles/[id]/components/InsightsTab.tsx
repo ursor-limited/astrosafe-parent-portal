@@ -252,7 +252,7 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
             </Stack>
           </AstroBentoCard>
         </Stack>
-        <Stack height="290px">
+        <Stack height="290px" flex={1}>
           <MostVisitedSitesSection sites={visitedSites} />
         </Stack>
       </Stack>

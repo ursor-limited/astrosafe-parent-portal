@@ -11,14 +11,15 @@ import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
-import ApiController, { getAbsoluteUrl } from "@/app/api";
+import { IFilter } from "@/app/filters/contents/common";
+import ApiController from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "./DeviceCard";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export const MobileDeviceCardFilterRow = (props: {
   filterId: IFilter["id"];
@@ -38,7 +39,7 @@ export const MobileDeviceCardFilterRow = (props: {
             <Stack
               key={i}
               sx={{
-                opacity: props.filterId != f.id ? 0.6 : 1,
+                opacity: props.filterId != f.id ? 0.55 : 1,
                 pointerEvents: props.filterId == f.id ? "none" : undefined,
                 cursor: "pointer",
                 "&:hover": { opacity: 0.7 },
@@ -52,7 +53,23 @@ export const MobileDeviceCardFilterRow = (props: {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="small">{f.title}</Typography>
+              <Stack
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.secondary.orange[3],
+                    },
+                  },
+                }}
+                spacing="6px"
+                alignItems="center"
+                direction="row"
+              >
+                <FilterIcon height="16px" width="16px" />
+                <Typography variant="small" bold>
+                  {f.title}
+                </Typography>
+              </Stack>
               {props.filterId === f.id ? (
                 <CheckCircleFillIcon height="16px" width="16px" />
               ) : null}
@@ -220,9 +237,12 @@ const MobileDeviceCard = (
     [props.config?.browsingAllowed]
   );
   const router = useRouter();
+  const notificationCtx = useContext(NotificationContext);
   const onClick = () => router.push(`/profiles/${props.id}`);
   const changeFilter = (id: IFilter["id"]) =>
-    ApiController.addFilterToDevice(id, props.id).then(props.onUpdate);
+    ApiController.addFilterToDevice(id, props.id)
+      .then(props.onUpdate)
+      .then(() => notificationCtx.success("Changed Filter"));
   return (
     <AstroCard>
       <Stack
@@ -338,7 +358,12 @@ const MobileDeviceCard = (
                 iconColor={PALETTE.primary.navy}
               />
               <Stack
-                onClick={() => router.push(`/profiles/${props.id}?tab=limits`)}
+                onClick={props.onClickViewScreenTime}
+                sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
+                }}
               >
                 <MobileDeviceCardRow
                   text={`${Math.floor(
@@ -359,7 +384,13 @@ const MobileDeviceCard = (
                   rightSideElement={<PencilIcon width="16px" height="16px" />}
                 />
               </Stack>
-              <Stack>
+              <Stack
+                sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
+                }}
+              >
                 <MobileDeviceCardFilterRow
                   filterId={props.filterId}
                   changeFilter={changeFilter}
