@@ -5,7 +5,6 @@ import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import useColumnWidth from "../components/useColumnWidth";
 import _ from "lodash";
-import VideoChannelCard from "../components/VideoChannelCard";
 import Image from "next/image";
 import PageLayout, { OVERALL_X_PADDING } from "../components/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
@@ -19,6 +18,7 @@ import {
 } from "../home/HomePageContents";
 import VideoCard from "../components/VideoCard";
 import { PALETTE, Typography } from "ui";
+import ChannelCard from "../components/ChannelCard";
 
 const DUMMY_VIDEOS = [
   {
@@ -155,13 +155,13 @@ export default function ChannelsContents(props: { mobile: boolean }) {
             boxSizing="border-box"
           >
             {[
-              ...videoChannels.map((vc, i) => (
-                <Stack key={vc.id} onClick={() => setSelectedChannelId(vc.id)}>
+              ...videoChannels.map((c, i) => (
+                <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
                   <UrsorFadeIn duration={1200} delay={i * 70}>
-                    <VideoChannelCard
-                      key={vc.id}
-                      videoChannel={vc}
-                      clickCallback={() => setSelectedChannelId(vc.id)}
+                    <ChannelCard
+                      key={c.id}
+                      {...c}
+                      onClick={() => setSelectedChannelId(c.id)}
                     />
                   </UrsorFadeIn>
                 </Stack>
@@ -187,7 +187,7 @@ export default function ChannelsContents(props: { mobile: boolean }) {
                               {...(x as IVideo)}
                               onClick={() => null}
                               favorite={!!favorites.find((f) => f.id === x.id)}
-                              setFavorite={() => flipFavorite(x.id, "video")}
+                              flipFavorite={() => flipFavorite(x.id, "video")}
                             />
                           </UrsorFadeIn>
                         </Stack>

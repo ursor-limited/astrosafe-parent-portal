@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import {
@@ -134,7 +134,7 @@ export default function FavoritesPageContents(props: {
                                       f.type === "video"
                                   )
                                 }
-                                setFavorite={() =>
+                                flipFavorite={() =>
                                   flipFavorite(x.details.id, "video")
                                 }
                               />

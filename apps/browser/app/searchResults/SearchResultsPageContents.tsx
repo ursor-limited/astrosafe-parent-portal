@@ -4,17 +4,24 @@ import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import _ from "lodash";
-import BrowserLinkCard from "../components/BrowserLinkCard";
-import { BrowserContent, IBrowserContent } from "../home/AstroContentColumns";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
 import Image from "next/image";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
-import { ILink, IVideo } from "../home/HomePageContents";
+import {
+  AstroContent,
+  DUMMY_DEVICE_ID,
+  IChannel,
+  IContent,
+  ILesson,
+  ILink,
+  IVideo,
+} from "../home/HomePageContents";
 import LinkCard from "../components/LinkCard";
 import VideoCard from "../components/VideoCard";
+import ApiController from "../api";
 
 const SearchResultsCategoryButton = (props: {
   text: string;
@@ -53,44 +60,6 @@ const SearchResultsCategoryButton = (props: {
   </Stack>
 );
 
-const DUMMY_VIDEOS = [
-  {
-    id: "6658dd53d54478910600b2ac",
-    title: "Coolest kids",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
-  },
-  {
-    id: "6659d2b1b66f5d5ee1349b01",
-    title: "Star Wars",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
-  },
-  {
-    id: "6659d2b4b886df523356cb13",
-    title: "Pokemon",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
-  },
-];
-
 interface ISearchResult {
   title: string;
   description: string;
@@ -104,7 +73,7 @@ const AstroContentRow = (props: {
 }) => {
   const [allContentDetails, setAllContentDetails] = useState<
     {
-      type: BrowserContent;
+      type: AstroContent;
       details: ILink | IVideo;
     }[]
   >([]);
@@ -117,7 +86,7 @@ const AstroContentRow = (props: {
           l.title.toLowerCase().includes(props.filter.toLowerCase())
       )
       .map((l) => ({
-        type: "link" as BrowserContent,
+        type: "link" as AstroContent,
         details: l,
       }));
     const videoDetails = props.videos
@@ -127,7 +96,7 @@ const AstroContentRow = (props: {
           v.title.toLowerCase().includes(props.filter.toLowerCase())
       )
       .map((v) => ({
-        type: "video" as BrowserContent,
+        type: "video" as AstroContent,
         details: v,
       }));
     const all = [
@@ -140,6 +109,32 @@ const AstroContentRow = (props: {
     ];
     setAllContentDetails(all);
   }, [props.links, props.videos, props.filter]);
+
+  const [favorites, setFavorites] = useState<
+    {
+      id: IContent["id"];
+      type: AstroContent;
+    }[]
+  >([]);
+  useEffect(() => {
+    ApiController.getFavorites(DUMMY_DEVICE_ID).then((f) =>
+      setFavorites([
+        ...f.videos.map((v: IVideo) => ({ type: "video", id: v.id })),
+        ...f.links.map((l: ILink) => ({ type: "link", id: l.id })),
+        ...f.channels.map((c: IChannel) => ({ type: "channel", id: c.id })),
+        ...f.lessons.map((l: ILesson) => ({ type: "lesson", id: l.id })),
+      ])
+    );
+  }, []);
+  const flipFavorite = (id: IContent["id"], type: AstroContent) => {
+    if (favorites.find((f) => f.id === id && f.type === type)) {
+      setFavorites(favorites.filter((f) => !(f.id === id && f.type === type)));
+      ApiController.removeFavorite(DUMMY_DEVICE_ID, id, type);
+    } else {
+      setFavorites([...favorites, { id, type }]);
+      ApiController.setFavorite(DUMMY_DEVICE_ID, id, type);
+    }
+  };
 
   const router = useRouter();
 
@@ -157,12 +152,24 @@ const AstroContentRow = (props: {
             >
               {c.type === "link" ? (
                 <LinkCard
-                  {...c.details}
+                  {...(c.details as ILink)}
+                  favorite={
+                    !!favorites.find(
+                      (f) => f.id === c.details.id && f.type === "link"
+                    )
+                  }
+                  flipFavorite={() => flipFavorite(c.details.id, "link")}
                   onClick={() => router.push(c.details.url)}
                 />
               ) : c.type === "video" ? (
                 <VideoCard
                   {...c.details}
+                  favorite={
+                    !!favorites.find(
+                      (f) => f.id === c.details.id && f.type === "video"
+                    )
+                  }
+                  flipFavorite={() => flipFavorite(c.details.id, "link")}
                   onClick={() => router.push(c.details.url)}
                 />
               ) : null}
