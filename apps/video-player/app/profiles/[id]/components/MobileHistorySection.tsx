@@ -19,14 +19,13 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import _ from "lodash";
 import { cleanUrl } from "./MobileInsightsTab";
 import PageSelector from "@/app/components/PageSelector";
+import { SearchInput } from "@/app/components/SearchInput";
 
 const MobileHistoryRow = (props: IHistoryItem) => {
   const [duration, setDuration] = useState<number>(0); // seconds
   useEffect(
     () =>
-      setDuration(
-        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
-      ),
+      setDuration(dayjs(props.finishedAt).diff(props.searchedAt, "seconds")),
     [props.searchedAt, props.finishedAt]
   );
   return (
@@ -114,27 +113,33 @@ const MobileHistoryRow = (props: IHistoryItem) => {
             >
               -
             </Typography>
-            <Stack
-              direction="row"
-              spacing="4px"
-              alignItems="center"
-              sx={{
-                svg: {
-                  path: {
-                    fill: PALETTE.secondary.grey[4],
+            {duration ? (
+              <Stack
+                direction="row"
+                spacing="4px"
+                alignItems="center"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
                   },
-                },
-              }}
-            >
-              <ClockIcon height="12px" width="12px" />
-              <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
-                {duration < 60
-                  ? `${duration}s`
-                  : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
-                      (duration % (60 * 60)) / 60
-                    )}m`}
-              </Typography>
-            </Stack>
+                }}
+              >
+                <ClockIcon height="12px" width="12px" />
+                <Typography
+                  variant="tiny"
+                  color={PALETTE.secondary.grey[4]}
+                  bold
+                >
+                  {duration < 60
+                    ? `${duration}s`
+                    : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
+                        (duration % (60 * 60)) / 60
+                      )}m`}
+                </Typography>
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
       </Stack>
@@ -200,17 +205,20 @@ const MobileHistorySection = (props: {
   const [nPages, setNPages] = useState<number>(1);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  useEffect(() => setPageIndex(0), [searchValue]);
   useEffect(() => {
     ApiController.getHistory(
       props.deviceId,
       props.date,
       pageIndex + 1,
-      PAGE_LENGTH
+      PAGE_LENGTH,
+      searchValue
     ).then((response) => {
       setHistory(response.history);
       setNPages(response.pages);
     });
-  }, [props.deviceId, props.date, pageIndex]);
+  }, [props.deviceId, props.date, pageIndex, searchValue]);
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
   useEffect(() => {
@@ -239,8 +247,8 @@ const MobileHistorySection = (props: {
           url: dg.domain,
           title: dg.rows[0]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
-          searchedAt: dg.rows[0]?.searchedAt ?? "",
-          finishedAt: dg.rows[dg.rows.length - 1]?.finishedAt ?? "",
+          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
+          finishedAt: dg.rows[0]?.finishedAt ?? "",
         },
         rows: dg.rows,
       }))
@@ -248,10 +256,22 @@ const MobileHistorySection = (props: {
   }, [history]);
 
   return (
-    <AstroBentoCard title="Browser history" notCollapsible>
+    <AstroBentoCard
+      title="Browser history"
+      notCollapsible
+      isMobile
+      topRightStuff={
+        <SearchInput
+          value={searchValue}
+          callback={setSearchValue}
+          clearCallback={() => setSearchValue("")}
+          grey
+        />
+      }
+    >
       <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
-          <MobileHistoryDomainRow key={i} {...dg} />
+          <MobileHistoryDomainRow key={`${i}${pageIndex}`} {...dg} />
         ))}
       </Stack>
       {nPages > 1 ? (

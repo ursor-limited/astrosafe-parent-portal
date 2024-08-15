@@ -99,6 +99,7 @@ const MostVisitedSitesSection = (props: {
         title="Most visited sites today"
         notCollapsible
         paddingBottom="0"
+        isMobile={props.isMobile}
         topRightStuff={
           <UrsorButton
             size="small"

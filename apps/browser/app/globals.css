@@ -17,20 +17,30 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  /* background-image: url('background.png') */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {display:none;}
+@-moz-document url-prefix() {
+  html,
+  body {
+    scrollbar-width: none;
+  }
 }
 
-div:not(textarea)::-webkit-scrollbar {
-  display: none;
+body {
+  color: rgb(var(--foreground-rgb));
+  /* needed for mozilla */
+  scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 7px;
+    /* needed for safari */
+  display: none;
 }
-::-webkit-scrollbar-thumb {
+
+/* ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, .5);
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-}
+} */

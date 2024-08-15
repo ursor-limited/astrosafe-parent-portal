@@ -87,7 +87,7 @@ export default function FavoritesPageContents(props: {
         <Typography variant="h5">Favorites</Typography>
       </Stack>
       <Stack spacing="20px" flex={1}>
-        <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
+        <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING} pb="108px">
           <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
             {favorites.length > 0 ? (
               <Stack flex={1} direction="row" spacing="20px">

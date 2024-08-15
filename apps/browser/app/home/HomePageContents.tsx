@@ -19,6 +19,7 @@ import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
 import CreationAnimationDialog from "./CreationAnimationDialog";
+import Link from "next/link";
 
 const N_APPS = 60;
 
@@ -130,7 +131,12 @@ export default function HomePageContents(props: {
   const [apps, setApps] = useState<IApp[]>([]);
   useEffect(() => {
     ApiController.getApps(DUMMY_DEVICE_ID, 1, N_APPS).then((response) => {
-      setApps(_.sortBy(response.apps, (a) => a.id));
+      setApps(
+        _.sortBy(
+          response.apps.filter((a: IApp) => a.enabled),
+          (a) => a.id
+        )
+      );
     });
   }, []);
 
@@ -212,7 +218,11 @@ export default function HomePageContents(props: {
         openConnect={props.openConnect}
       >
         <Stack spacing="20px" flex={1}>
-          <Stack overflow="scroll" height="162px">
+          <Stack
+            overflow="scroll"
+            height="162px"
+            sx={{ scrollbarWidth: "none" }}
+          >
             <Stack
               direction="row"
               spacing="12px"
@@ -223,11 +233,17 @@ export default function HomePageContents(props: {
                 ...apps.map((a, i) => (
                   <Stack key={a.id} onClick={() => setSelectedFolderId(a.id)}>
                     <UrsorFadeIn duration={1200} delay={i * 70}>
-                      <AppCard
-                        key={a.id}
-                        app={a}
-                        clickCallback={() => router.push(getAbsoluteUrl(a.url))}
-                      />
+                      <Link
+                        href={getAbsoluteUrl(cleanUrl(a.url))}
+                        target="_blank"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <AppCard
+                          key={a.id}
+                          app={a}
+                          clickCallback={() => null}
+                        />
+                      </Link>
                     </UrsorFadeIn>
                   </Stack>
                 )),
@@ -266,7 +282,7 @@ export default function HomePageContents(props: {
               ))}
             </Stack>
           </Stack>
-          <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING} pb="100px">
+          <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING} pb="108px">
             <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
               {currentFolderContents.length > 0 ? (
                 <Stack flex={1} direction="row" spacing="20px">
@@ -279,64 +295,73 @@ export default function HomePageContents(props: {
                               delay={300 + (j * 150 + i * 80)}
                               duration={800}
                             >
-                              {x.type === "link" ? (
-                                <LinkCard
-                                  {...(x.details as ILink)}
-                                  onClick={() =>
-                                    router.push(
-                                      getAbsoluteUrl(cleanUrl(x.details.url))
-                                    )
-                                  }
-                                  favorite={
-                                    !!favorites.find(
-                                      (f) =>
-                                        f.id === x.details.id &&
-                                        f.type === "link"
-                                    )
-                                  }
-                                  flipFavorite={() =>
-                                    flipFavorite(x.details.id, "link")
-                                  }
-                                />
-                              ) : x.type === "video" ? (
-                                <VideoCard
-                                  {...(x.details as IVideo)}
-                                  onClick={() =>
-                                    router.push(
-                                      getAbsoluteUrl(cleanUrl(x.details.url))
-                                    )
-                                  }
-                                  favorite={
-                                    !!favorites.find(
-                                      (f) =>
-                                        f.id === x.details.id &&
-                                        f.type === "video"
-                                    )
-                                  }
-                                  flipFavorite={() =>
-                                    flipFavorite(x.details.id, "video")
-                                  }
-                                />
-                              ) : x.type === "channel" ? (
-                                <ChannelCard
-                                  {...(x.details as IChannel)}
-                                  onClick={() =>
-                                    router.push(
-                                      getAbsoluteUrl(cleanUrl(x.details.url))
-                                    )
-                                  }
-                                  favorite={
-                                    !!favorites.find(
-                                      (f) =>
-                                        f.id === x.details.id &&
-                                        f.type === "channel"
-                                    )
-                                  }
-                                  setFavorite={() =>
-                                    flipFavorite(x.details.id, "channel")
-                                  }
-                                />
-                              ) : null}
+                              <Link
+                                href={getAbsoluteUrl(cleanUrl(x.details.url))}
+                                target="_blank"
+                                style={{ textDecoration: "none" }}
+                              >
+                                {x.type === "link" ? (
+                                  <LinkCard
+                                    {...(x.details as ILink)}
+                                    onClick={
+                                      () => null
+                                      // router.push(
+                                      //   getAbsoluteUrl(cleanUrl(x.details.url))
+                                      // )
+                                    }
+                                    favorite={
+                                      !!favorites.find(
+                                        (f) =>
+                                          f.id === x.details.id &&
+                                          f.type === "link"
+                                      )
+                                    }
+                                    flipFavorite={() =>
+                                      flipFavorite(x.details.id, "link")
+                                    }
+                                  />
+                                ) : x.type === "video" ? (
+                                  <VideoCard
+                                    {...(x.details as IVideo)}
+                                    onClick={
+                                      () => null
+                                      // router.push(
+                                      //   getAbsoluteUrl(cleanUrl(x.details.url))
+                                      // )
+                                    }
+                                    favorite={
+                                      !!favorites.find(
+                                        (f) =>
+                                          f.id === x.details.id &&
+                                          f.type === "video"
+                                      )
+                                    }
+                                    flipFavorite={() =>
+                                      flipFavorite(x.details.id, "video")
+                                    }
+                                  />
+                                ) : x.type === "channel" ? (
+                                  <ChannelCard
+                                    {...(x.details as IChannel)}
+                                    onClick={
+                                      () => null
+                                      // router.push(
+                                      //   getAbsoluteUrl(cleanUrl(x.details.url))
+                                      // )
+                                    }
+                                    favorite={
+                                      !!favorites.find(
+                                        (f) =>
+                                          f.id === x.details.id &&
+                                          f.type === "channel"
+                                      )
+                                    }
+                                    setFavorite={() =>
+                                      flipFavorite(x.details.id, "channel")
+                                    }
+                                  />
+                                ) : null}
+                              </Link>
                             </UrsorFadeIn>
                           </Stack>
                         ))}

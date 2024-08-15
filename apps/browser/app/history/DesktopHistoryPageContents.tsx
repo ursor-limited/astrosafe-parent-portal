@@ -30,16 +30,14 @@ const HistoryRow = (props: IHistoryItem) => {
   const [duration, setDuration] = useState<number>(0); // seconds
   useEffect(
     () =>
-      setDuration(
-        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
-      ),
+      setDuration(dayjs(props.finishedAt).diff(props.searchedAt, "seconds")),
     [props.searchedAt, props.finishedAt]
   );
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
         <Typography bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+          {dayjs(props.searchedAt).format("hh:mm:HHa")}
         </Typography>
       </Stack>
       <Stack direction="row" spacing="8px" alignItems="center">
@@ -219,7 +217,7 @@ const HistoryPageContents = () => {
       <Stack>
         <Stack spacing="16px">
           {domainGroups.map((dg, i) => (
-            <HistoryDomainRow key={i} {...dg} />
+            <HistoryDomainRow key={`${i}${pageIndex}`} {...dg} />
           ))}
         </Stack>
         {nPages > 1 ? (

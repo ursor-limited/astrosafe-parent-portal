@@ -128,9 +128,7 @@ const MobileHistoryRow = (props: IHistoryItem) => {
   const [duration, setDuration] = useState<number>(0); // seconds
   useEffect(
     () =>
-      setDuration(
-        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
-      ),
+      setDuration(dayjs(props.finishedAt).diff(props.searchedAt, "seconds")),
     [props.searchedAt, props.finishedAt]
   );
   return (
@@ -183,7 +181,7 @@ const MobileHistoryRow = (props: IHistoryItem) => {
 
           <Stack direction="row" spacing="8px" alignItems="center">
             <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-              {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+              {dayjs(props.searchedAt).format("hh:mm:HHa")}
             </Typography>
             <Typography
               bold
@@ -192,27 +190,33 @@ const MobileHistoryRow = (props: IHistoryItem) => {
             >
               -
             </Typography>
-            <Stack
-              direction="row"
-              spacing="4px"
-              alignItems="center"
-              sx={{
-                svg: {
-                  path: {
-                    fill: PALETTE.secondary.grey[4],
+            {duration ? (
+              <Stack
+                direction="row"
+                spacing="4px"
+                alignItems="center"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
                   },
-                },
-              }}
-            >
-              <ClockIcon height="12px" width="12px" />
-              <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
-                {duration < 60
-                  ? `${duration}s`
-                  : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
-                      (duration % (60 * 60)) / 60
-                    )}m`}
-              </Typography>
-            </Stack>
+                }}
+              >
+                <ClockIcon height="12px" width="12px" />
+                <Typography
+                  variant="tiny"
+                  color={PALETTE.secondary.grey[4]}
+                  bold
+                >
+                  {duration < 60
+                    ? `${duration}s`
+                    : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
+                        (duration % (60 * 60)) / 60
+                      )}m`}
+                </Typography>
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
       </Stack>
@@ -303,13 +307,12 @@ const MobileHistoryPageContents = () => {
         .value()
     );
   }, [history]);
-  console.log(dateGroupedHistory, "lol");
   return (
     <PageLayout title="History" headerButtonId="history" mobile>
-      <Stack px="20px" pb="20px">
+      <Stack px="20px" pb="40px">
         <Stack spacing="20px">
           {dateGroupedHistory.map((dg, i) => (
-            <DateCard key={i} {...dg} />
+            <DateCard key={`${i}${pageIndex}`} {...dg} />
           ))}
         </Stack>
         {nPages > 1 ? (

@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
@@ -53,7 +53,8 @@ const ContentCard = (props: {
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
-  const [pinned, setPinned] = useState<boolean>(false);
+  const [favorite, setFavorite] = useState<boolean>(false);
+  useEffect(() => setFavorite(!!props.favorite), [props.favorite]);
   return (
     <Stack
       position="relative"
@@ -70,13 +71,12 @@ const ContentCard = (props: {
           zIndex={3}
           right="12px"
           top="12px"
-          onClick={props.flipFavorite}
+          onClick={() => {
+            props.flipFavorite?.();
+            setFavorite(!favorite);
+          }}
         >
-          <FavoriteStar
-            id={props.id}
-            type={props.type}
-            filled={!!props.favorite}
-          />
+          <FavoriteStar id={props.id} type={props.type} filled={favorite} />
         </Stack>
       ) : null}
       <Stack
