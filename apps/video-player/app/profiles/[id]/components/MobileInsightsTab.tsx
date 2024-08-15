@@ -145,13 +145,14 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
                 times={times}
                 selected={dayjs()
                   .utc()
-                  .subtract(selectedDayIndex)
+                  .subtract(selectedDayIndex, "days")
                   .format("YYYY-MM-DD")}
                 setSelectedDatetime={(datetime) =>
-                  dayjs().utc().diff(datetime, "days")
+                  setSelectedDayIndex(dayjs().utc().diff(datetime, "days"))
                 }
                 labelFontSize="small"
                 barsXPadding={12}
+                barWidth={22}
               />
             ) : null}
           </Stack>
