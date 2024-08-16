@@ -2,8 +2,12 @@ import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import ApiController from "@/app/api";
-import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
+import {
+  IChannel,
+  IContentBucket,
+} from "@/app/profiles/[id]/components/ContentTab";
 import { PALETTE } from "ui";
+import { useRouter } from "next/navigation";
 
 const IMAGE_HEIGHT = 160;
 
@@ -16,13 +20,24 @@ const ChannelCard = (
     onOpenEditingDialog?: () => void;
     isMobile?: boolean;
     twoLineTitleSectionHeight?: boolean;
+    folderId?: IContentBucket["id"];
   }
 ) => {
+  const router = useRouter();
   return (
     <ContentCard
       type="channel"
       title={props.title}
-      url={props.url}
+      onClick={
+        props.noPointerEvents
+          ? undefined
+          : () =>
+              router.push(
+                `/channel/${props.id}${
+                  props.folderId ? `?folderId=${props.folderId}` : ""
+                }`
+              )
+      }
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}

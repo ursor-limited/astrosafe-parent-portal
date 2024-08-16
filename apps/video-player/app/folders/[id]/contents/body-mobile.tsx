@@ -173,6 +173,7 @@ const FolderPageMobileBody = (props: {
                               props.setChannelEditingDialogId(x.content.id)
                             }
                             isMobile
+                            folderId={props.folderId}
                           />
                         ) : null}
                       </UrsorFadeIn>

@@ -150,17 +150,17 @@ export default function ProfilePage(props: {
     [props.deviceId, device]
   );
 
-  // useEffect(() => {
-  //   const socket = new WebSocket(
-  //     `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
-  //   );
-  //   socket.addEventListener("message", (event) => {
-  //     if (!event.data) return;
-  //     const data = JSON.parse(event.data);
-  //     props.deviceId === data.deviceId &&
-  //       setDeviceOnlineStatus(data.deviceId, data.online);
-  //   });
-  // }, []);
+  useEffect(() => {
+    const socket = new WebSocket(
+      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+    );
+    socket.addEventListener("message", (event) => {
+      if (!event.data) return;
+      const data = JSON.parse(event.data);
+      props.deviceId === data.deviceId &&
+        setDeviceOnlineStatus(data.deviceId, data.online);
+    });
+  }, [setDeviceOnlineStatus]);
 
   return device ? (
     <>

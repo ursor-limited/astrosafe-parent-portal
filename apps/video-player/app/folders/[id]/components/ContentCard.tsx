@@ -21,10 +21,63 @@ export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   link: "Link",
 };
 
+const ContentCardCore = (props: {
+  onClick?: () => void;
+  type: AstroContent;
+  title: IContent["title"];
+  twoLineTitleSectionHeight?: boolean;
+  children: React.ReactNode;
+}) => {
+  const Icon = CONTENT_BRANDING[props.type].icon;
+  return (
+    <Stack
+      onClick={props.onClick}
+      sx={{
+        cursor: "pointer",
+        transition: "0.2s",
+        "&:hover": { opacity: 0.6 },
+      }}
+      spacing="6px"
+    >
+      {props.children}
+      <Stack
+        width="calc(100% - 24px)"
+        minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
+      >
+        <Typography bold maxLines={2}>
+          {props.title}
+        </Typography>
+      </Stack>
+      <Stack
+        height="24px"
+        px="8px"
+        alignItems="center"
+        sx={{
+          svg: { path: { fill: CONTENT_BRANDING[props.type].color } },
+        }}
+        bgcolor={PALETTE.secondary.grey[1]}
+        direction="row"
+        spacing="8px"
+        borderRadius="12px"
+        width="fit-content"
+      >
+        <Icon height="16px" width="16px" />
+        <Typography
+          variant="tiny"
+          bold
+          color={CONTENT_BRANDING[props.type].color}
+        >
+          {CONTENT_DISPLAY_NAMES[props.type]}
+        </Typography>
+      </Stack>
+    </Stack>
+  );
+};
+
 const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
-  url: IContent["url"];
+  url?: IContent["url"];
   onClick?: () => void;
   noPointerEvents?: boolean;
   noMenu?: boolean;
@@ -34,7 +87,6 @@ const ContentCard = (props: {
   twoLineTitleSectionHeight?: boolean;
   children: React.ReactNode;
 }) => {
-  const Icon = CONTENT_BRANDING[props.type].icon;
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   return (
     <>
@@ -71,56 +123,33 @@ const ContentCard = (props: {
             />
           ) : null}
         </Stack>
-        <Link
-          href={getAbsoluteUrl(cleanUrl(props.url))}
-          target="_blank"
-          style={{
-            textDecoration: "none",
-          }}
-          rel="noreferrer"
-        >
-          <Stack
-            onClick={props.onClick}
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
+        {props.url ? (
+          <Link
+            href={getAbsoluteUrl(cleanUrl(props.url))}
+            target="_blank"
+            style={{
+              textDecoration: "none",
             }}
-            spacing="6px"
+            rel="noreferrer"
+          >
+            <ContentCardCore
+              type={props.type}
+              title={props.title}
+              twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
+            >
+              {props.children}
+            </ContentCardCore>
+          </Link>
+        ) : (
+          <ContentCardCore
+            onClick={props.onClick}
+            type={props.type}
+            title={props.title}
+            twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
           >
             {props.children}
-            <Stack
-              width="calc(100% - 24px)"
-              minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
-            >
-              <Typography bold maxLines={2}>
-                {props.title}
-              </Typography>
-            </Stack>
-            <Stack
-              height="24px"
-              px="8px"
-              alignItems="center"
-              sx={{
-                svg: { path: { fill: CONTENT_BRANDING[props.type].color } },
-              }}
-              bgcolor={PALETTE.secondary.grey[1]}
-              direction="row"
-              spacing="8px"
-              borderRadius="12px"
-              width="fit-content"
-            >
-              <Icon height="16px" width="16px" />
-              <Typography
-                variant="tiny"
-                bold
-                color={CONTENT_BRANDING[props.type].color}
-              >
-                {CONTENT_DISPLAY_NAMES[props.type]}
-              </Typography>
-            </Stack>
-          </Stack>
-        </Link>
+          </ContentCardCore>
+        )}
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

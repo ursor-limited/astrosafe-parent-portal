@@ -3,7 +3,7 @@ import UrsorFadeIn from "./UrsorFadeIn";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 
-export const EmptyStateIllustration = (props: {
+const EmptyStateIllustration = (props: {
   paddingTop?: number;
   children: React.ReactNode;
 }) => (
@@ -45,3 +45,5 @@ export const EmptyStateIllustration = (props: {
     </UrsorFadeIn>
   </Stack>
 );
+
+export default EmptyStateIllustration;
