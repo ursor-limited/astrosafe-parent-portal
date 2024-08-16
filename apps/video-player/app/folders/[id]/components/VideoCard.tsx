@@ -49,7 +49,7 @@ const VideoCard = (
               alignItems: "center",
             }}
             fill
-            alt="image card image"
+            alt="video card image"
           />
         ) : (
           <Stack flex={1} bgcolor={PALETTE.secondary.grey[2]} />

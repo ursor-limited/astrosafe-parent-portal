@@ -138,46 +138,46 @@ const FolderPageMobileBody = (props: {
               <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
                   <Stack key={`${x.content.id}${x.type}`}>
-                    <Link
+                    {/* <Link
                       href={getAbsoluteUrl(cleanUrl(x.content.url))}
                       target="_blank"
                       style={{
                         textDecoration: "none",
                       }}
                       rel="noreferrer"
-                    >
-                      <UrsorFadeIn delay={i * 80} duration={800}>
-                        {x.type === "link" ? (
-                          <LinkCard
-                            {...(x.content as ILink)}
-                            onDelete={props.loadFolderAndContents}
-                            onOpenEditingDialog={() =>
-                              props.setLinkEditingDialogId(x.content.id)
-                            }
-                            isMobile
-                          />
-                        ) : x.type === "video" ? (
-                          <VideoCard
-                            {...(x.content as IVideo)}
-                            onDelete={props.loadFolderAndContents}
-                            onOpenEditingDialog={() =>
-                              props.setVideoEditingDialogId(x.content.id)
-                            }
-                            isMobile
-                          />
-                        ) : x.type === "channel" ? (
-                          <ChannelCard
-                            {...(x.content as IChannel)}
-                            onDelete={props.loadFolderAndContents}
-                            onOpenEditingDialog={() =>
-                              props.setChannelEditingDialogId(x.content.id)
-                            }
-                            isMobile
-                            folderId={props.folderId}
-                          />
-                        ) : null}
-                      </UrsorFadeIn>
-                    </Link>
+                    > */}
+                    <UrsorFadeIn delay={i * 80} duration={800}>
+                      {x.type === "link" ? (
+                        <LinkCard
+                          {...(x.content as ILink)}
+                          onDelete={props.loadFolderAndContents}
+                          onOpenEditingDialog={() =>
+                            props.setLinkEditingDialogId(x.content.id)
+                          }
+                          isMobile
+                        />
+                      ) : x.type === "video" ? (
+                        <VideoCard
+                          {...(x.content as IVideo)}
+                          onDelete={props.loadFolderAndContents}
+                          onOpenEditingDialog={() =>
+                            props.setVideoEditingDialogId(x.content.id)
+                          }
+                          isMobile
+                        />
+                      ) : x.type === "channel" ? (
+                        <ChannelCard
+                          {...(x.content as IChannel)}
+                          onDelete={props.loadFolderAndContents}
+                          onOpenEditingDialog={() =>
+                            props.setChannelEditingDialogId(x.content.id)
+                          }
+                          isMobile
+                          folderId={props.folderId}
+                        />
+                      ) : null}
+                    </UrsorFadeIn>
+                    {/* </Link> */}
                   </Stack>
                 ))}
               </Stack>

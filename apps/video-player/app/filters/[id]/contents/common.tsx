@@ -345,6 +345,7 @@ export default function FilterPage(props: {
             .then(loadFilter)
             .then(() => notificationCtx.success("Renamed Filter"))
         }
+        isMobile={props.isMobile}
       />
       {changeFilterDialogOpenForDevice ? (
         <ChangeFilterDialog

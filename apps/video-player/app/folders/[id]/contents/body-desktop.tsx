@@ -25,10 +25,7 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import { useWindowSize } from "usehooks-ts";
-import { getAbsoluteUrl } from "@/app/api";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
-import Link from "next/link";
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 

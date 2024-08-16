@@ -565,6 +565,10 @@ class ApiController {
   static async getChannel(id: IChannel['id']) {
     return get(`content/channels/${id}`).then((response: any) => response.json());
   }
+
+  static async changeChannelName(id: IChannel["id"], title: IChannel["title"]) {
+    return put(`content/channels/${id}`, { title });
+  }
 }
 
 export default ApiController;

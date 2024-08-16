@@ -1,47 +1,43 @@
-import PageLayout from "@/app/components/PageLayout";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import { Stack } from "@mui/system";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { IEnrichedContentBucket } from "./common";
+import { IVideo } from "../../../profiles/[id]/components/ContentTab";
+import { Stack } from "@mui/system";
+import DynamicCardGrid from "../../../components/DynamicCardGrid";
+import UrsorFadeIn from "../../../components/UrsorFadeIn";
+import VideoCard from "../../../folders/[id]/components/VideoCard";
+import EmptyStateIllustration from "../../../components/EmptyStateIllustration";
+import { ITitleRowItem } from "../../../components/TitleRow";
+import { IActionPopupItem } from "../../../components/ActionPopup";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
-import { UrsorButton } from "ui";
-import FolderCard from "@/app/components/FolderCard";
-import { EmptyStateIllustration } from "@/app/components/EmptyStateIllustration";
 
-const AllFoldersPageMobileBody = (props: {
-  folders: IEnrichedContentBucket[];
-  createFolder: () => void;
+const ChannelPageMobileBody = (props: {
+  videos: IVideo[];
   onUpdate: () => void;
+  setVideoEditingDialogId: (id: IVideo["id"]) => void;
+  titleRow: ITitleRowItem[];
+  actions: IActionPopupItem[];
+  onBack: () => void;
 }) => {
   const router = useRouter();
   return (
     <MobilePageLayout
-      title="My Folders"
+      titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={props.onBack}
       selectedPage="content"
-      topRightElement={
-        <UrsorButton
-          dark
-          variant="tertiary"
-          size="small"
-          endIcon={PlusIcon}
-          onClick={props.createFolder}
-        >
-          Create a Folder
-        </UrsorButton>
-      }
+      actions={props.actions}
     >
-      {props.folders.length > 0 ? (
-        <Stack pt="20px">
-          <Stack spacing="36px">
-            {props.folders.map((f, i) => (
-              <UrsorFadeIn key={f.id} duration={800} delay={i * 90} fullWidth>
-                <FolderCard
-                  {...f}
-                  clickCallback={() => router.push(`/folders/${f.id}`)}
-                  editingCallback={props.onUpdate}
-                  deletionCallback={props.onUpdate}
-                  isMobile
+      {props.videos.length > 0 ? (
+        <Stack pb="33px">
+          <Stack spacing="20px">
+            {props.videos.map((v, i) => (
+              <UrsorFadeIn key={v.id} duration={800} delay={i * 90}>
+                <VideoCard
+                  {...v}
+                  onDelete={props.onUpdate}
+                  onOpenEditingDialog={() =>
+                    props.setVideoEditingDialogId(v.id)
+                  }
+                  twoLineTitleSectionHeight
                 />
               </UrsorFadeIn>
             ))}
@@ -49,11 +45,11 @@ const AllFoldersPageMobileBody = (props: {
         </Stack>
       ) : (
         <EmptyStateIllustration paddingTop={20}>
-          No Folders yet
+          No Videos in this Channel
         </EmptyStateIllustration>
       )}
     </MobilePageLayout>
   );
 };
 
-export default AllFoldersPageMobileBody;
+export default ChannelPageMobileBody;

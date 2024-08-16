@@ -8,12 +8,14 @@ import UrsorFadeIn from "../../../components/UrsorFadeIn";
 import VideoCard from "../../../folders/[id]/components/VideoCard";
 import EmptyStateIllustration from "../../../components/EmptyStateIllustration";
 import { ITitleRowItem } from "../../../components/TitleRow";
+import { IActionPopupItem } from "../../../components/ActionPopup";
 
 const ChannelPageDesktopBody = (props: {
   videos: IVideo[];
   onUpdate: () => void;
   setVideoEditingDialogId: (id: IVideo["id"]) => void;
   titleRow: ITitleRowItem[];
+  actions: IActionPopupItem[];
 }) => {
   const router = useRouter();
   return (
@@ -22,6 +24,7 @@ const ChannelPageDesktopBody = (props: {
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="content"
+      actions={props.actions}
       maxWidth={834}
       scrollable
     >

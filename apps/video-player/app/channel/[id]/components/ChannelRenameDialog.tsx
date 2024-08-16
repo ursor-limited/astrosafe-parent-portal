@@ -1,14 +1,15 @@
-import UrsorDialog from "@/app/components/UrsorDialog";
+import React from "react";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import { Typography, UrsorButton, UrsorInputField } from "ui";
+import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
-import { IFilter } from "../../contents/common";
+import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
+import UrsorDialog from "@/app/components/UrsorDialog";
 
-const FilterRenameDialog = (props: {
+const ChannelRenameDialog = (props: {
   open: boolean;
   onClose: () => void;
-  name: IFilter["title"];
+  name: IChannel["title"];
   onSubmit: (name: string) => void;
   isMobile?: boolean;
 }) => {
@@ -18,7 +19,7 @@ const FilterRenameDialog = (props: {
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title="Rename Filter"
+      title="Rename Channel"
       width="422px"
       height="226px"
       isMobile={props.isMobile}
@@ -51,4 +52,4 @@ const FilterRenameDialog = (props: {
   );
 };
 
-export default FilterRenameDialog;
+export default ChannelRenameDialog;
