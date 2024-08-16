@@ -27,6 +27,14 @@ export default function ChannelsContents(props: { mobile: boolean }) {
   );
 
   const [channels, setChannels] = useState<IChannel[]>([]);
+  const [selectedChannelId, setSelectedChannelId] = useState<
+    IChannel["id"] | undefined
+  >(undefined);
+  useEffect(() => {
+    !channels.find((vc) => vc.id === selectedChannelId) &&
+      setSelectedChannelId(channels[0]?.id);
+  }, [channels, selectedChannelId]);
+
   useEffect(
     () =>
       ApiController.getChannels(DUMMY_DEVICE_ID).then(setChannels(c.videos)),
@@ -40,14 +48,6 @@ export default function ChannelsContents(props: { mobile: boolean }) {
       }),
     [selectedChannelId]
   );
-
-  const [selectedChannelId, setSelectedChannelId] = useState<
-    IChannel["id"] | undefined
-  >(undefined);
-  useEffect(() => {
-    !channels.find((vc) => vc.id === selectedChannelId) &&
-      setSelectedChannelId(channels[0]?.id);
-  }, [channels, selectedChannelId]);
 
   const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
   useEffect(

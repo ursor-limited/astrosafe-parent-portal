@@ -1,5 +1,6 @@
 import {
   AstroContent,
+  IChannel,
   IContent,
   IContentBucket,
   IDevice,
@@ -112,6 +113,10 @@ class ApiController {
     return get(
       `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}`
     ).then((response: any) => response.json());
+  }
+
+  static async getChannel(id: IChannel['id']) {
+    return get(`content/channels/${id}`).then((response: any) => response.json());
   }
 }
 
