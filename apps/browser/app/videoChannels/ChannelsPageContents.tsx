@@ -20,51 +20,34 @@ import VideoCard from "../components/VideoCard";
 import { PALETTE, Typography } from "ui";
 import ChannelCard from "../components/ChannelCard";
 
-const DUMMY_VIDEOS = [
-  {
-    id: "6658dd53d54478910600b2ac",
-    title: "Coolest kids",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
-  },
-  {
-    id: "6659d2b1b66f5d5ee1349b01",
-    title: "Star Wars",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
-  },
-  {
-    id: "6659d2b4b886df523356cb13",
-    title: "Pokemon",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
-  },
-];
-
 export default function ChannelsContents(props: { mobile: boolean }) {
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
 
-  const [videoChannels, setVideoChannels] = useState<IChannel[]>([]); //@ts-ignore
-  const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
-  useEffect(() => {
-    // deviceId &&
-    //   ApiController.get(deviceId).then((vc) =>
-    //     setVideoChannels(vc)
-    //   );
-  }, [deviceId]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
+  useEffect(
+    () =>
+      ApiController.getChannels(DUMMY_DEVICE_ID).then(setChannels(c.videos)),
+    [selectedChannelId]
+  );
+  const [videos, setVideos] = useState<IVideo[]>([]);
+  useEffect(
+    () =>
+      ApiController.getChannel(selectedChannelId).then((c) => {
+        setVideos(c.videos);
+      }),
+    [selectedChannelId]
+  );
 
   const [selectedChannelId, setSelectedChannelId] = useState<
     IChannel["id"] | undefined
   >(undefined);
   useEffect(() => {
-    !videoChannels.find((vc) => vc.id === selectedChannelId) &&
-      setSelectedChannelId(videoChannels[0]?.id);
-  }, [videoChannels, selectedChannelId]);
+    !channels.find((vc) => vc.id === selectedChannelId) &&
+      setSelectedChannelId(channels[0]?.id);
+  }, [channels, selectedChannelId]);
 
   const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
   useEffect(

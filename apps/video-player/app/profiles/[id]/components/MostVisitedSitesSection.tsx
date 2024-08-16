@@ -8,6 +8,7 @@ import Image from "next/image";
 import _ from "lodash";
 import AllMostVisitedSitesDialog from "./AllMostVisitedSitesDialog";
 import { cleanUrl } from "./MobileInsightsTab";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {
@@ -111,12 +112,13 @@ const MostVisitedSitesSection = (props: {
         }
       >
         {_.reverse(props.sites.slice(-3)).map((site, i) => (
-          <VisitedSiteRow
-            key={i}
-            {...site}
-            maxScreenTime={_.max(props.sites.map((s) => s.screenTime)) ?? 1}
-            borderTop={i > 0}
-          />
+          <UrsorFadeIn key={site.url} delay={i * 90} duration={800}>
+            <VisitedSiteRow
+              {...site}
+              maxScreenTime={_.max(props.sites.map((s) => s.screenTime)) ?? 1}
+              borderTop={i > 0}
+            />
+          </UrsorFadeIn>
         ))}
       </AstroBentoCard>
       <AllMostVisitedSitesDialog
