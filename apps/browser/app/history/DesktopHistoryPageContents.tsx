@@ -34,7 +34,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
         props.duration ||
           dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
       );
-  }, [duration, props.searchedAt, props.finishedAt]);
+  }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
