@@ -153,7 +153,7 @@ export default function FavoritesPageContents(props: {
                                       f.type === "channel"
                                   )
                                 }
-                                setFavorite={() =>
+                                flipFavorite={() =>
                                   flipFavorite(x.details.id, "channel")
                                 }
                               />
