@@ -113,7 +113,7 @@ class ApiController {
   }
 
   static async getFolderDevices(id: IContentBucket["id"]) {
-    return get(`devices?contentBucketId=${id}`).then((response: any) =>
+    return get(`devices?contentBucketId=${id}&includeConfig=true`).then((response: any) =>
       response.json()
     );
   }
@@ -304,7 +304,7 @@ class ApiController {
   }
 
   static async getFilterDevices(id: IFilter["id"]) {
-    return get(`devices?filterId=${id}`).then((response: any) =>
+    return get(`devices?filterId=${id}&includeConfig=true`).then((response: any) =>
       response.json()
     );
   }
