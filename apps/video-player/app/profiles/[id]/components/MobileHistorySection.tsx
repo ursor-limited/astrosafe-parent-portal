@@ -21,13 +21,15 @@ import { cleanUrl } from "./MobileInsightsTab";
 import PageSelector from "@/app/components/PageSelector";
 import { SearchInput } from "@/app/components/SearchInput";
 
-const MobileHistoryRow = (props: IHistoryItem) => {
+const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
-  useEffect(
-    () =>
-      setDuration(dayjs(props.finishedAt).diff(props.searchedAt, "seconds")),
-    [props.searchedAt, props.finishedAt]
-  );
+  useEffect(() => {
+    !duration &&
+      setDuration(
+        props.duration ||
+          dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
+      );
+  }, [duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
       {/* <Stack spacing="4px">
@@ -163,7 +165,14 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          <MobileHistoryRow {...props.domain} />
+          <MobileHistoryRow
+            {...props.domain}
+            duration={_.sum(
+              props.rows.map((r) =>
+                dayjs(r.finishedAt).diff(r.searchedAt, "seconds")
+              )
+            )}
+          />
           <Stack
             sx={{
               svg: {

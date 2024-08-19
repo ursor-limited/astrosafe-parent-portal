@@ -25,13 +25,15 @@ export interface IHistoryItem {
   finishedAt: string;
 }
 
-const HistoryRow = (props: IHistoryItem) => {
+const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
-  useEffect(
-    () =>
-      setDuration(dayjs(props.finishedAt).diff(props.searchedAt, "seconds")),
-    [props.searchedAt, props.finishedAt]
-  );
+  useEffect(() => {
+    !duration &&
+      setDuration(
+        props.duration ||
+          dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
+      );
+  }, [duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
@@ -120,7 +122,14 @@ const HistoryDomainRow = (props: IDomainGroup) => {
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          <HistoryRow {...props.domain} />
+          <HistoryRow
+            {...props.domain}
+            duration={_.sum(
+              props.rows.map((r) =>
+                dayjs(r.finishedAt).diff(r.searchedAt, "seconds")
+              )
+            )}
+          />
           <Stack
             sx={{
               transform: `rotate(${expanded ? 180 : 0}deg)`,

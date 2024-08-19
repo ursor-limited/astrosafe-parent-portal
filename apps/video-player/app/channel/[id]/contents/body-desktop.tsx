@@ -30,7 +30,7 @@ const ChannelPageDesktopBody = (props: {
     >
       {props.videos.length > 0 ? (
         <Stack pt="20px" pb="33px" pl="51px">
-          <DynamicCardGrid cardWidth="292px" rowGap="20px" columnGap="20px">
+          <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
             {props.videos.map((v, i) => (
               <UrsorFadeIn key={v.id} duration={800} delay={i * 90}>
                 <VideoCard

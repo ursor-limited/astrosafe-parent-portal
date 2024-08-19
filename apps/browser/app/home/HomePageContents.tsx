@@ -314,7 +314,7 @@ export default function HomePageContents(props: {
                                     flipFavorite={() =>
                                       flipFavorite(x.details.id, "link")
                                     }
-                                  />{" "}
+                                  />
                                 </Link>
                               ) : x.type === "video" ? (
                                 <Link
