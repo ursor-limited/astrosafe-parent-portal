@@ -24,7 +24,7 @@ const AppToggleCard = (
   >
     <Stack justifyContent="space-between" spacing="12px" flex={1}>
       <Stack justifyContent="space-between" direction="row" alignItems="center">
-        <Stack spacing="16px" direction="row" flex={1} overflow="hidden">
+        <Stack spacing="16px" direction="row" flex={1}>
           <Stack position="relative">
             {props.enabled ? (
               <Stack
