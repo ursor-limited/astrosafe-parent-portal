@@ -1,5 +1,7 @@
+import _ from "lodash";
 import {
   AstroContent,
+  IChannel,
   IContent,
   IContentBucket,
   IDevice,
@@ -107,11 +109,28 @@ class ApiController {
   static async getApps(
     deviceId: IDevice["id"],
     pageIndex: number,
-    pageSize: number,
+    pageSize: number
   ) {
     return get(
       `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}`
     ).then((response: any) => response.json());
+  }
+
+  static async getChannel(id: IChannel["id"]) {
+    return get(`content/channels/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getChannels(deviceId: IDevice["id"]) {
+    return get(`content/buckets?deviceId=${deviceId}&includeContent=true`)
+      .then((response: any) => response.json())
+      .then(
+        (response: any) =>
+          _.compact(
+            response.flatMap((folder: any) => folder?.content?.channels)
+          ) as IChannel[]
+      );
   }
 }
 

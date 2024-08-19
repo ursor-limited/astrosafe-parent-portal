@@ -8,9 +8,10 @@ import _ from "lodash";
 import Image from "next/image";
 import PageLayout, { OVERALL_X_PADDING } from "../components/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import ApiController from "../api";
+import ApiController, { getAbsoluteUrl } from "../api";
 import {
   AstroContent,
+  cleanUrl,
   DUMMY_DEVICE_ID,
   IChannel,
   IContent,
@@ -19,66 +20,49 @@ import {
 import VideoCard from "../components/VideoCard";
 import { PALETTE, Typography } from "ui";
 import ChannelCard from "../components/ChannelCard";
+import Link from "next/link";
 
-const DUMMY_VIDEOS = [
-  {
-    id: "6658dd53d54478910600b2ac",
-    title: "Coolest kids",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
-  },
-  {
-    id: "6659d2b1b66f5d5ee1349b01",
-    title: "Star Wars",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
-  },
-  {
-    id: "6659d2b4b886df523356cb13",
-    title: "Pokemon",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
-  },
-];
-
-export default function ChannelsContents(props: { mobile: boolean }) {
+export default function ChannelsContents(props: {
+  id?: IChannel["id"];
+  mobile: boolean;
+}) {
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
 
-  const [videoChannels, setVideoChannels] = useState<IChannel[]>([]); //@ts-ignore
-  const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
-  useEffect(() => {
-    // deviceId &&
-    //   ApiController.get(deviceId).then((vc) =>
-    //     setVideoChannels(vc)
-    //   );
-  }, [deviceId]);
-
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [selectedChannelId, setSelectedChannelId] = useState<
     IChannel["id"] | undefined
   >(undefined);
   useEffect(() => {
-    !videoChannels.find((vc) => vc.id === selectedChannelId) &&
-      setSelectedChannelId(videoChannels[0]?.id);
-  }, [videoChannels, selectedChannelId]);
+    !selectedChannelId && setSelectedChannelId(props.id || channels[0]?.id);
+  }, [channels, props.id]);
 
-  const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
-  useEffect(
-    () => setFilteredVideos(videos?.filter((v) => v.id === selectedChannelId)),
-    [videos, selectedChannelId]
-  );
+  useEffect(() => {
+    ApiController.getChannels(DUMMY_DEVICE_ID).then(setChannels);
+  }, []);
+  const [videos, setVideos] = useState<IVideo[]>([]);
+  useEffect(() => {
+    selectedChannelId &&
+      ApiController.getChannel(selectedChannelId).then((c) => {
+        setVideos(c.videos);
+      });
+  }, [selectedChannelId]);
+
+  // const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
+  // useEffect(
+  //   () => setFilteredVideos(videos?.filter((v) => v.id === selectedChannelId)),
+  //   [videos, selectedChannelId]
+  // );
 
   const [cardColumns, setCardColumns] = useState<IVideo[][]>([]);
 
-  const { nColumns, setColumnsContainerRef } = useColumnWidth();
+  const { nColumns, setColumnsContainerRef } = useColumnWidth(320);
 
   useEffect(() => {
     const allContentDetails = _.reverse(
-      _.sortBy(filteredVideos, (c) => new Date(c.createdAt)).slice()
+      _.sortBy(videos, (c) => new Date(c.createdAt)).slice()
     );
     const chunked = _.chunk(allContentDetails, nColumns);
     setCardColumns(
@@ -86,7 +70,7 @@ export default function ChannelsContents(props: { mobile: boolean }) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [filteredVideos, nColumns]);
+  }, [videos, nColumns]);
 
   const [favorites, setFavorites] = useState<
     {
@@ -146,23 +130,38 @@ export default function ChannelsContents(props: { mobile: boolean }) {
       //   },
       // ]}
     >
-      <Stack spacing="24px">
+      <Stack spacing="24px" pb="100px">
         <Stack overflow="scroll">
           <Stack
             direction="row"
-            spacing="12px"
+            spacing="20px"
             px={OVERALL_X_PADDING}
             boxSizing="border-box"
           >
             {[
-              ...videoChannels.map((c, i) => (
-                <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
+              ...channels.map((c, i) => (
+                <Stack
+                  key={c.id}
+                  onClick={() => setSelectedChannelId(c.id)}
+                  py="2px"
+                >
                   <UrsorFadeIn duration={1200} delay={i * 70}>
-                    <ChannelCard
+                    <Stack
                       key={c.id}
-                      {...c}
-                      onClick={() => setSelectedChannelId(c.id)}
-                    />
+                      width="250px"
+                      sx={{
+                        outline:
+                          selectedChannelId === c.id
+                            ? `2px solid ${PALETTE.secondary.purple[2]}`
+                            : undefined,
+                      }}
+                      borderRadius="12px"
+                    >
+                      <ChannelCard
+                        {...c}
+                        onClick={() => setSelectedChannelId(c.id)}
+                      />
+                    </Stack>
                   </UrsorFadeIn>
                 </Stack>
               )),
@@ -170,6 +169,21 @@ export default function ChannelsContents(props: { mobile: boolean }) {
             ]}
           </Stack>
         </Stack>
+        <Stack px="20px" width="100%" boxSizing="border-box">
+          <Stack
+            height="1px"
+            width="100%"
+            bgcolor={PALETTE.secondary.grey[2]}
+          />
+        </Stack>
+
+        {selectedChannelId ? (
+          <Stack px="22px">
+            <Typography variant="h5">
+              {channels.find((c) => c.id === selectedChannelId)?.title}
+            </Typography>
+          </Stack>
+        ) : null}
         <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
           <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
             {cardColumns.length > 0 ? (
@@ -183,12 +197,20 @@ export default function ChannelsContents(props: { mobile: boolean }) {
                             delay={300 + (j * 150 + i * 80)}
                             duration={800}
                           >
-                            <VideoCard
-                              {...(x as IVideo)}
-                              onClick={() => null}
-                              favorite={!!favorites.find((f) => f.id === x.id)}
-                              flipFavorite={() => flipFavorite(x.id, "video")}
-                            />
+                            <Link
+                              href={getAbsoluteUrl(cleanUrl(x.url))}
+                              target="_blank"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <VideoCard
+                                {...(x as IVideo)}
+                                onClick={() => null}
+                                favorite={
+                                  !!favorites.find((f) => f.id === x.id)
+                                }
+                                flipFavorite={() => flipFavorite(x.id, "video")}
+                              />
+                            </Link>
                           </UrsorFadeIn>
                         </Stack>
                       ))}

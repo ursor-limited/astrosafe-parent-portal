@@ -17,6 +17,7 @@ import _ from "lodash";
 import {
   IAllowedTime,
   IRequestedSite,
+  ITimeLimit,
 } from "./profiles/[id]/components/LimitsTab";
 import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
 import { IApp } from "./profiles/[id]/components/AppsTab";
@@ -85,17 +86,17 @@ const dellete = (route: string) =>
   );
 
 class ApiController {
-  static async getDevice(id: number) {
+  static async getDevice(id: IDevice['id']) {
     return get(`devices/${id}`).then((response: any) => response.json());
   }
 
-  static async getEnrichedDevice(id: number) {
+  static async getEnrichedDevice(id: IDevice['id']) {
     return get(
       `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json());
   }
 
-  static async getDeviceWithTimesAndConfig(id: number) {
+  static async getDeviceWithTimesAndConfig(id: IDevice['id']) {
     return get(
       `devices/${id}?includeTimeLimits=true&includeAllowedTimes=true&includeConfig=true`
     ).then((response: any) => response.json());
@@ -156,19 +157,19 @@ class ApiController {
     return dellete(`content/buckets/${id}`);
   }
 
-  static async getFolder(id: number) {
+  static async getFolder(id: IContentBucket['id']) {
     return get(`content/buckets/${id}`).then((response: any) =>
       response.json()
     );
   }
 
-  static async getEnrichedFolders(id: number) {
+  static async getEnrichedFolders(id: IGroup['id']) {
     return get(`content/buckets?groupId=${id}&includePreview=true`).then(
       (response: any) => response.json()
     );
   }
 
-  static async renameFolder(id: number, title: IContentBucket["title"]) {
+  static async renameFolder(id: IContentBucket['id'], title: IContentBucket["title"]) {
     return put(`content/buckets/${id}`, { title });
   }
 
@@ -410,7 +411,7 @@ class ApiController {
   }
 
   static async getRequestedSites(deviceId: IDevice["id"]) {
-    return get(`devices/${deviceId}/requests`).then((response: any) =>
+    return get(`devices/${deviceId}/requests?status=pending`).then((response: any) =>
       response.json()
     );
   }
@@ -435,7 +436,7 @@ class ApiController {
     );
   }
 
-  static async setTimeLimit(limitId: number, timeLimit: number) {
+  static async setTimeLimit(limitId: ITimeLimit['id'], timeLimit: ITimeLimit['allowedMinutes']) {
     return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
   }
 
@@ -559,6 +560,14 @@ class ApiController {
     displayName: IUser["displayName"]
   ) {
     return put(`users/${id}`, { realName, displayName });
+  }
+
+  static async getChannel(id: IChannel['id']) {
+    return get(`content/channels/${id}`).then((response: any) => response.json());
+  }
+
+  static async changeChannelName(id: IChannel["id"], title: IChannel["title"]) {
+    return put(`content/channels/${id}`, { title });
   }
 }
 

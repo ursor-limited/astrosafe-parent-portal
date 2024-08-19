@@ -13,6 +13,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "./MobileInsightsTab";
 import PageSelector from "@/app/components/PageSelector";
+import { SearchInput } from "@/app/components/SearchInput";
 
 export const PAGE_LENGTH = 55;
 
@@ -24,20 +25,20 @@ export interface IHistoryItem {
   finishedAt: string;
 }
 
-const HistoryRow = (props: IHistoryItem) => {
+const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
-  useEffect(
-    () =>
+  useEffect(() => {
+    !duration &&
       setDuration(
-        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
-      ),
-    [props.searchedAt, props.finishedAt]
-  );
+        props.duration ||
+          dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
+      );
+  }, [duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
         <Typography bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+          {dayjs(props.searchedAt).format("hh:mm:HHa")}
         </Typography>
       </Stack>
       <Stack direction="row" spacing="8px" alignItems="center">
@@ -121,7 +122,14 @@ const HistoryDomainRow = (props: IDomainGroup) => {
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          <HistoryRow {...props.domain} />
+          <HistoryRow
+            {...props.domain}
+            duration={_.sum(
+              props.rows.map((r) =>
+                dayjs(r.finishedAt).diff(r.searchedAt, "seconds")
+              )
+            )}
+          />
           <Stack
             sx={{
               transform: `rotate(${expanded ? 180 : 0}deg)`,
@@ -168,17 +176,20 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
   const [nPages, setNPages] = useState<number>(1);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  useEffect(() => setPageIndex(0), [searchValue]);
   useEffect(() => {
     ApiController.getHistory(
       props.deviceId,
       props.date,
       pageIndex + 1,
-      PAGE_LENGTH
+      PAGE_LENGTH,
+      searchValue
     ).then((response) => {
       setHistory(response.history);
       setNPages(response.pages);
     });
-  }, [props.deviceId, props.date, pageIndex]);
+  }, [props.deviceId, props.date, pageIndex, searchValue]);
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
   useEffect(() => {
@@ -205,7 +216,7 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
       simplisticDomainGroups.map((dg) => ({
         domain: {
           url: dg.domain,
-          title: dg.rows[0]?.title ?? "",
+          title: dg.rows[dg.rows.length - 1]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
           searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
           finishedAt: dg.rows[0]?.finishedAt ?? "",
@@ -216,10 +227,21 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
   }, [history]);
 
   return (
-    <AstroBentoCard title="Browser history" notCollapsible>
+    <AstroBentoCard
+      title="Browser history"
+      notCollapsible
+      topRightStuff={
+        <SearchInput
+          value={searchValue}
+          callback={setSearchValue}
+          clearCallback={() => setSearchValue("")}
+          grey
+        />
+      }
+    >
       <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
-          <HistoryDomainRow key={i} {...dg} />
+          <HistoryDomainRow key={`${i}${pageIndex}${props.date}`} {...dg} />
         ))}
       </Stack>
       {nPages > 1 ? (

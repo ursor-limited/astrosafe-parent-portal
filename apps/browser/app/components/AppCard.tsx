@@ -17,6 +17,7 @@ export interface IApp {
   url: string;
   imageUrl: string;
   description: string;
+  enabled: boolean;
 }
 
 export interface IPlatformCardProps {

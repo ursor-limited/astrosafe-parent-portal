@@ -25,10 +25,7 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import { useWindowSize } from "usehooks-ts";
-import { getAbsoluteUrl } from "@/app/api";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
-import Link from "next/link";
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 
@@ -196,15 +193,11 @@ const FolderPageDesktopBody = (props: {
                             ) : x.type === "channel" ? (
                               <ChannelCard
                                 {...(x.content as IChannel)}
-                                // onClick={() =>
-                                //   router.push(
-                                //     getAbsoluteUrl(cleanUrl(x.content.url))
-                                //   )
-                                // }
                                 onDelete={props.loadFolderAndContents}
                                 onOpenEditingDialog={() =>
                                   props.setChannelEditingDialogId(x.content.id)
                                 }
+                                folderId={props.folderId}
                               />
                             ) : null}
                           </UrsorFadeIn>

@@ -13,11 +13,11 @@ import AllDevicesPageDesktopBody from "./desktop-body";
 import AllDevicesPageMobileBody from "./mobile-body";
 import { IAllowedTime, ITimeLimit } from "../[id]/components/LimitsTab";
 import { IFilter } from "@/app/filters/contents/common";
+import useDeviceOnlineStatus from "../components/useDeviceOnlineStatus";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
 export type IEnrichedDevice = IDevice & {
-  online?: boolean;
   screenTime?: {
     allowed: number;
     current: number;
@@ -50,40 +50,13 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
   >();
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
 
-  const setDeviceOnlineStatus = useCallback(
-    (deviceId: IDevice["id"], online: IEnrichedDevice["online"]) => {
-      deviceId &&
-        setDevices((prev) =>
-          prev.map((device) =>
-            device.id === deviceId ? { ...device, online } : device
-          )
-        );
-    },
-    []
-  );
-
-  useEffect(() => {
-    const socket = new WebSocket(
-      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
-    );
-    const handleMessage = (event: any) => {
-      if (!event.data) return;
-      const data = JSON.parse(event.data);
-      console.log(data);
-      data.deviceId && setDeviceOnlineStatus(data.deviceId, data.online);
-    };
-    socket.addEventListener("message", handleMessage);
-    return () => {
-      socket.removeEventListener("message", handleMessage); // Remove the event listener
-      // socket.close(); // Close the WebSocket connection
-    };
-  }, [setDeviceOnlineStatus]);
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
 
   return (
     <>
       {props.isMobile ? (
         <AllDevicesPageMobileBody
-          devices={devices}
+          devices={cuttingEdgeOnlineStatusDevices}
           filters={filters}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}
@@ -91,7 +64,7 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
         />
       ) : (
         <AllDevicesPageDesktopBody
-          devices={devices}
+          devices={cuttingEdgeOnlineStatusDevices}
           filters={filters}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}

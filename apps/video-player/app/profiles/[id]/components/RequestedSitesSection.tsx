@@ -26,8 +26,13 @@ const RequestedSiteRow = (
     overflow="hidden"
   >
     <Stack direction="row" spacing="10px" alignItems="center" flex={1}>
-      <Stack borderRadius="100%" overflow="hidden" minWidth="20px">
-        <Stack height="32px" width="32px" borderRadius="100%" overflow="hidden">
+      <Stack borderRadius="100%" overflow="hidden" minWidth="32px">
+        <Stack
+          minHeight="32px"
+          minWidth="32px"
+          borderRadius="100%"
+          overflow="hidden"
+        >
           {props.faviconUrl ? (
             <Image
               src={props.faviconUrl}
@@ -38,8 +43,13 @@ const RequestedSiteRow = (
           ) : null}
         </Stack>
       </Stack>
-      <Stack sx={{ transform: "translateY(-2px)" }} flex={1}>
-        <Typography bold noWrap>
+      <Stack
+        sx={{ transform: "translateY(-2px)" }}
+        flex={1}
+        // maxWidth={0}
+        // minWidth="100%"
+      >
+        <Typography bold maxLines={1}>
           {props.title}
         </Typography>
         <Stack flex={1}>
@@ -47,8 +57,7 @@ const RequestedSiteRow = (
             variant="tiny"
             bold
             color={PALETTE.secondary.grey[3]}
-            noWrap
-            sx={{ minWidth: "100%", maxWidth: 0 }}
+            maxLines={1}
           >
             {props.url}
           </Typography>

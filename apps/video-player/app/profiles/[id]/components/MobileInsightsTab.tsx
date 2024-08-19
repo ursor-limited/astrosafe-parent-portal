@@ -37,13 +37,19 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       setTimes(stats.screenTime);
       setVisitedSites(
         _.sortBy(
-          stats.visitedWebsites?.[stats.visitedWebsites.length - 1]?.websites ||
-            [],
+          stats.visitedWebsites?.find(
+            (w: any) =>
+              w.date ===
+              dayjs()
+                .utc()
+                .subtract(selectedDayIndex, "days")
+                .format("YYYY-MM-DD")
+          )?.websites || [],
           (t) => t.screenTime
         )
       );
     });
-  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex]);
+  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
 
   const [timeSpent, setTimeSpent] = useState<number>(0);
   useEffect(
@@ -145,13 +151,14 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
                 times={times}
                 selected={dayjs()
                   .utc()
-                  .subtract(selectedDayIndex)
+                  .subtract(selectedDayIndex, "days")
                   .format("YYYY-MM-DD")}
                 setSelectedDatetime={(datetime) =>
-                  dayjs().utc().diff(datetime, "days")
+                  setSelectedDayIndex(dayjs().utc().diff(datetime, "days"))
                 }
                 labelFontSize="small"
                 barsXPadding={12}
+                barWidth={22}
               />
             ) : null}
           </Stack>

@@ -6,8 +6,7 @@ import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "./common";
 import FolderCard from "@/app/components/FolderCard";
-import { EmptyStateIllustration } from "@/app/components/EmptyStateIllustration";
-import { PALETTE, Typography } from "ui";
+import EmptyStateIllustration from "@/app/components/EmptyStateIllustration";
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[];

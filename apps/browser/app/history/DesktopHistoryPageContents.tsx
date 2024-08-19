@@ -26,20 +26,20 @@ export interface IHistoryItem {
   finishedAt: string;
 }
 
-const HistoryRow = (props: IHistoryItem) => {
+const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
-  useEffect(
-    () =>
+  useEffect(() => {
+    !duration &&
       setDuration(
-        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
-      ),
-    [props.searchedAt, props.finishedAt]
-  );
+        props.duration ||
+          dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
+      );
+  }, [duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
         <Typography bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+          {dayjs(props.searchedAt).format("hh:mm:HHa")}
         </Typography>
       </Stack>
       <Stack direction="row" spacing="8px" alignItems="center">
@@ -123,7 +123,14 @@ const HistoryDomainRow = (props: IDomainGroup) => {
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          <HistoryRow {...props.domain} />
+          <HistoryRow
+            {...props.domain}
+            duration={_.sum(
+              props.rows.map((r) =>
+                dayjs(r.finishedAt).diff(r.searchedAt, "seconds")
+              )
+            )}
+          />
           <Stack
             sx={{
               transform: `rotate(${expanded ? 180 : 0}deg)`,
@@ -204,7 +211,7 @@ const HistoryPageContents = () => {
       simplisticDomainGroups.map((dg) => ({
         domain: {
           url: dg.domain,
-          title: dg.rows[0]?.title ?? "",
+          title: dg.rows[dg.rows.length - 1]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
           searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
           finishedAt: dg.rows[0]?.finishedAt ?? "",
@@ -219,7 +226,7 @@ const HistoryPageContents = () => {
       <Stack>
         <Stack spacing="16px">
           {domainGroups.map((dg, i) => (
-            <HistoryDomainRow key={i} {...dg} />
+            <HistoryDomainRow key={`${i}${pageIndex}`} {...dg} />
           ))}
         </Stack>
         {nPages > 1 ? (

@@ -125,13 +125,19 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       setTimes(stats.screenTime);
       setVisitedSites(
         _.sortBy(
-          stats.visitedWebsites?.[stats.visitedWebsites.length - 1]?.websites ||
-            [],
+          stats.visitedWebsites?.find(
+            (w: any) =>
+              w.date ===
+              dayjs()
+                .utc()
+                .subtract(selectedDayIndex, "days")
+                .format("YYYY-MM-DD")
+          )?.websites || [],
           (t) => t.screenTime
         )
       );
     });
-  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex]);
+  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
 
   const [timeSpent, setTimeSpent] = useState<number>(0);
   useEffect(

@@ -1,4 +1,3 @@
-import PageLayout from "@/app/components/PageLayout";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
@@ -7,7 +6,7 @@ import { IEnrichedContentBucket } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { UrsorButton } from "ui";
 import FolderCard from "@/app/components/FolderCard";
-import { EmptyStateIllustration } from "@/app/components/EmptyStateIllustration";
+import EmptyStateIllustration from "@/app/components/EmptyStateIllustration";
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[];

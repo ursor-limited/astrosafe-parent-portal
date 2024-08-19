@@ -8,11 +8,16 @@ async function ChannelsPage({
   searchParams,
 }: {
   params: { videoId: string };
-  searchParams: { share: string };
+  searchParams: { id?: string };
 }) {
   const mobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return <ChannelsPageContents mobile={mobile} />;
+  return (
+    <ChannelsPageContents
+      mobile={mobile}
+      id={searchParams.id ? parseInt(searchParams.id) : undefined}
+    />
+  );
 }
 
 export default ChannelsPage;

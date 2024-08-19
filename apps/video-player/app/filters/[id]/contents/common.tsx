@@ -40,11 +40,11 @@ export interface IDevice {
   backgroundColor: string;
   profileAvatarUrl: string;
   lastOnline: string;
-  connected: boolean;
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
   createdAt: string;
+  online: boolean;
   filterId: IFilter["id"];
 }
 
@@ -345,6 +345,7 @@ export default function FilterPage(props: {
             .then(loadFilter)
             .then(() => notificationCtx.success("Renamed Filter"))
         }
+        isMobile={props.isMobile}
       />
       {changeFilterDialogOpenForDevice ? (
         <ChangeFilterDialog
