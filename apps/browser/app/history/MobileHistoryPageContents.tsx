@@ -132,7 +132,7 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
         props.duration ||
           dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
       );
-  }, [duration, props.searchedAt, props.finishedAt]);
+  }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
       <Stack direction="row" spacing="12px" alignItems="center">
