@@ -24,11 +24,10 @@ import { SearchInput } from "@/app/components/SearchInput";
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
   useEffect(() => {
-    !duration &&
-      setDuration(
-        props.duration ||
-          dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
-      );
+    setDuration(
+      props.duration ||
+        dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
+    );
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
