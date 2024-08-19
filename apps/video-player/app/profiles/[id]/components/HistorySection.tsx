@@ -207,7 +207,7 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
       simplisticDomainGroups.map((dg) => ({
         domain: {
           url: dg.domain,
-          title: dg.rows[0]?.title ?? "",
+          title: dg.rows[dg.rows.length - 1]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
           searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
           finishedAt: dg.rows[0]?.finishedAt ?? "",
@@ -232,7 +232,7 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
     >
       <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
-          <HistoryDomainRow key={`${i}${pageIndex}`} {...dg} />
+          <HistoryDomainRow key={`${i}${pageIndex}${props.date}`} {...dg} />
         ))}
       </Stack>
       {nPages > 1 ? (

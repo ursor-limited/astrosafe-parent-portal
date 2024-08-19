@@ -411,7 +411,7 @@ class ApiController {
   }
 
   static async getRequestedSites(deviceId: IDevice["id"]) {
-    return get(`devices/${deviceId}/requests`).then((response: any) =>
+    return get(`devices/${deviceId}/requests?status=pending`).then((response: any) =>
       response.json()
     );
   }

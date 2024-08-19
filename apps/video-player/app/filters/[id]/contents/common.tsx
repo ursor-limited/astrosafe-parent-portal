@@ -40,11 +40,11 @@ export interface IDevice {
   backgroundColor: string;
   profileAvatarUrl: string;
   lastOnline: string;
-  connected: boolean;
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
   createdAt: string;
+  online: boolean;
   filterId: IFilter["id"];
 }
 

@@ -245,7 +245,7 @@ const MobileHistorySection = (props: {
       simplisticDomainGroups.map((dg) => ({
         domain: {
           url: dg.domain,
-          title: dg.rows[0]?.title ?? "",
+          title: dg.rows[dg.rows.length - 1]?.title ?? "",
           faviconUrl: dg.rows[0]?.faviconUrl ?? "",
           searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
           finishedAt: dg.rows[0]?.finishedAt ?? "",

@@ -74,7 +74,7 @@ export interface IDevice {
   backgroundColor: string;
   profileAvatarUrl: string;
   lastOnline: string;
-  connected: boolean;
+  online: boolean;
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];

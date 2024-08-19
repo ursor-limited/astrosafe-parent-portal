@@ -4,7 +4,6 @@ import FolderCard from "../../../components/FolderCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IDevice } from "@/app/filters/[id]/contents/common";

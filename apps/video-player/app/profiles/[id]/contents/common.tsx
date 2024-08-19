@@ -23,6 +23,7 @@ import NotificationContext from "@/app/components/NotificationContext";
 import FolderCreationDialog from "@/app/folders/[id]/components/FolderCreationDialog";
 import { IContentBucket } from "../components/ContentTab";
 import { IApp } from "../components/AppsTab";
+import useDeviceOnlineStatus from "../../components/useDeviceOnlineStatus";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -39,6 +40,10 @@ export default function ProfilePage(props: {
       ApiController.getEnrichedDevice(props.deviceId).then((d) => setDevice(d)),
     [props.deviceId]
   );
+
+  const [cuttingEdgeOnlineStatusDevice]: IEnrichedDevice[] =
+    useDeviceOnlineStatus(device ? [device] : []);
+
   useEffect(() => {
     loadDevice();
   }, [loadDevice]);
@@ -91,7 +96,7 @@ export default function ProfilePage(props: {
               alt="profile avatar"
             />
           </Stack>
-          {device?.connected ? (
+          {cuttingEdgeOnlineStatusDevice?.online ? (
             <Stack
               height="11px"
               width="11px"
@@ -126,12 +131,6 @@ export default function ProfilePage(props: {
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
-    // {
-    //   text: "Disconnect",
-    //   kallback: () => setDisconnectDialogOpen(true),
-    //   icon: PlugIcon,
-    //   color: PALETTE.system.red,
-    // },
   ];
 
   const notificationCtx = useContext(NotificationContext);
@@ -143,30 +142,11 @@ export default function ProfilePage(props: {
       notificationCtx.success("Created Folder and added it to the Device.");
     });
 
-  const setDeviceOnlineStatus = useCallback(
-    (deviceId: IDevice["id"], online: IEnrichedDevice["online"]) => {
-      device && deviceId === props.deviceId && setDevice({ ...device, online });
-    },
-    [props.deviceId, device]
-  );
-
-  useEffect(() => {
-    const socket = new WebSocket(
-      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
-    );
-    socket.addEventListener("message", (event) => {
-      if (!event.data) return;
-      const data = JSON.parse(event.data);
-      props.deviceId === data.deviceId &&
-        setDeviceOnlineStatus(data.deviceId, data.online);
-    });
-  }, [setDeviceOnlineStatus]);
-
   return device ? (
     <>
       {props.isMobile ? (
         <ProfilePageMobileBody
-          device={device}
+          device={cuttingEdgeOnlineStatusDevice || device}
           titleRow={titleRow}
           actions={actions}
           folders={deviceFolders}
@@ -177,7 +157,7 @@ export default function ProfilePage(props: {
         />
       ) : (
         <ProfilePageDesktopBody
-          device={device}
+          device={cuttingEdgeOnlineStatusDevice || device}
           titleRow={titleRow}
           actions={actions}
           folders={deviceFolders}
