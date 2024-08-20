@@ -20,6 +20,7 @@ import _ from "lodash";
 import { cleanUrl } from "./MobileInsightsTab";
 import PageSelector from "@/app/components/PageSelector";
 import { SearchInput } from "@/app/components/SearchInput";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
@@ -279,7 +280,9 @@ const MobileHistorySection = (props: {
     >
       <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
-          <MobileHistoryDomainRow key={`${i}${pageIndex}`} {...dg} />
+          <UrsorFadeIn key={`${i}${pageIndex}`} delay={i * 70} duration={600}>
+            <MobileHistoryDomainRow {...dg} />
+          </UrsorFadeIn>
         ))}
       </Stack>
       {nPages > 1 ? (

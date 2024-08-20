@@ -14,6 +14,7 @@ import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import PageLayout from "../components/PageLayout";
 import PageSelector from "../components/PageSelector";
 import _ from "lodash";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 dayjs.extend(utc);
 
 export const PAGE_LENGTH = 70;
@@ -225,7 +226,9 @@ const HistoryPageContents = () => {
       <Stack>
         <Stack spacing="16px">
           {domainGroups.map((dg, i) => (
-            <HistoryDomainRow key={`${i}${pageIndex}`} {...dg} />
+            <UrsorFadeIn key={`${i}${pageIndex}`} delay={i * 70} duration={600}>
+              <HistoryDomainRow {...dg} />
+            </UrsorFadeIn>
           ))}
         </Stack>
         {nPages > 1 ? (

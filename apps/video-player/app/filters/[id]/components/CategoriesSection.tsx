@@ -93,6 +93,14 @@ const CategoryCard = (
       ),
     [props.subCategories, props.allowedCategories]
   );
+  const [nAllowedCategories, setNAllowedCategories] = useState<number>(0);
+  useEffect(() => {
+    setNAllowedCategories(
+      props.subCategories.filter((sc) =>
+        props.allowedCategories.includes(sc.id)
+      ).length ?? 0
+    );
+  }, [props.allowedCategories]);
   return (
     <AstroCard key={props.categoryId}>
       <DynamicContainer duration={600}>
@@ -109,7 +117,9 @@ const CategoryCard = (
                 variant="small"
                 color={PALETTE.secondary.grey[3]}
               >
-                32 Categories allowed
+                {`${nAllowedCategories} ${
+                  nAllowedCategories === 1 ? "Category" : "Categories"
+                } allowed`}
               </Typography>
             </Stack>
             <Stack direction="row" spacing="20px">

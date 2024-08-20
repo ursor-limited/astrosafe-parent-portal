@@ -30,6 +30,7 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import useDeviceOnlineStatus from "@/app/profiles/components/useDeviceOnlineStatus";
 
 export const FOLDER_DELETION_DIALOG_SUBTITLE =
   "If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.";
@@ -89,6 +90,7 @@ export default function FolderPage(props: {
   useEffect(() => {
     loadDevices();
   }, [loadDevices]);
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
 
   const { folder, contents, loadFolderAndContents } = useLoadFolderAndContents(
     props.folderId
@@ -199,7 +201,7 @@ export default function FolderPage(props: {
           folder={folder}
           contents={filteredContents}
           allFolders={allFolders}
-          devices={devices}
+          devices={cuttingEdgeOnlineStatusDevices}
           setCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
@@ -225,7 +227,7 @@ export default function FolderPage(props: {
           folder={folder}
           contents={filteredContents}
           allFolders={allFolders}
-          devices={devices}
+          devices={cuttingEdgeOnlineStatusDevices}
           setContentCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {

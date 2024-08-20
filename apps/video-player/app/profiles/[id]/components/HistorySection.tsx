@@ -14,6 +14,7 @@ import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "./MobileInsightsTab";
 import PageSelector from "@/app/components/PageSelector";
 import { SearchInput } from "@/app/components/SearchInput";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const PAGE_LENGTH = 55;
 
@@ -240,7 +241,13 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
     >
       <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
-          <HistoryDomainRow key={`${i}${pageIndex}${props.date}`} {...dg} />
+          <UrsorFadeIn
+            key={`${i}${pageIndex}${props.date}`}
+            delay={i * 70}
+            duration={600}
+          >
+            <HistoryDomainRow {...dg} />
+          </UrsorFadeIn>
         ))}
       </Stack>
       {nPages > 1 ? (

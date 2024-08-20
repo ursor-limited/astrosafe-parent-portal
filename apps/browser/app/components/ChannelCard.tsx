@@ -8,7 +8,7 @@ const IMAGE_HEIGHT = 160;
 const ChannelCard = (
   props: Omit<IChannel, "createdAt"> & {
     favorite?: boolean;
-    setFavorite?: () => void;
+    flipFavorite?: () => void;
     onClick?: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
@@ -23,7 +23,7 @@ const ChannelCard = (
       title={props.title}
       onClick={props.onClick}
       favorite={props.favorite}
-      flipFavorite={props.setFavorite}
+      flipFavorite={props.flipFavorite}
     >
       <Stack
         height={IMAGE_HEIGHT}

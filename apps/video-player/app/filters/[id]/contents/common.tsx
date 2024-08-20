@@ -24,6 +24,7 @@ import FilterRenameDialog from "../components/FilterRenameDialog";
 import ChangeFilterDialog from "../components/ChangeFilterDialog";
 import { Stack } from "@mui/system";
 import _ from "lodash";
+import useDeviceOnlineStatus from "@/app/profiles/components/useDeviceOnlineStatus";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -120,6 +121,7 @@ export default function FilterPage(props: {
   useEffect(() => {
     loadDevices();
   }, [loadDevices]);
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
@@ -271,7 +273,7 @@ export default function FilterPage(props: {
           filter={filter}
           flipCategory={flipCategory}
           flipSubcategory={flipSubcategory}
-          devices={devices}
+          devices={cuttingEdgeOnlineStatusDevices}
           actions={actions}
           categories={categories}
           allowedCategories={allowedSubcategories}
@@ -296,7 +298,7 @@ export default function FilterPage(props: {
           filter={filter}
           flipCategory={flipCategory}
           flipSubcategory={flipSubcategory}
-          devices={devices}
+          devices={cuttingEdgeOnlineStatusDevices}
           actions={actions}
           categories={categories}
           allowedCategories={allowedSubcategories}
@@ -323,7 +325,7 @@ export default function FilterPage(props: {
           onClose={() => setAddDeviceDialogOpen(false)}
           title="Apply to a Device"
           subtitle={["Replace a Device's current Filter", "with this one."]}
-          addedDevices={devices}
+          addedDevices={cuttingEdgeOnlineStatusDevices}
           onAdd={applyFilterToDevice}
           isMobile={props.isMobile}
         />

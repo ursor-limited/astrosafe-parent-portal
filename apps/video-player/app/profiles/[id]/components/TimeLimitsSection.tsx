@@ -30,14 +30,16 @@ const TimeLimitsSection = (props: {
         transition: "0.2s",
       }}
     >
-      {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => (
+      {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
         <TimeLimitRow
           key={day}
           dayName={day}
-          decrement={() => props.decrement(i)}
-          increment={() => props.increment(i)}
+          decrement={() => props.decrement(day === "sun" ? 0 : i + 1)}
+          increment={() => props.increment(day === "sun" ? 0 : i + 1)}
           allowedMinutes={
-            props.timeLimits.find((l) => l.day === i)?.allowedMinutes ?? 0
+            props.timeLimits.find((l) =>
+              day === "sun" ? l.day === 0 : l.day === i + 1
+            )?.allowedMinutes ?? 0
           }
         />
       ))}

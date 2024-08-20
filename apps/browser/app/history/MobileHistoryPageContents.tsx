@@ -22,6 +22,7 @@ import {
   PAGE_LENGTH,
 } from "./DesktopHistoryPageContents";
 import { getIsToday, getIsYesterday } from "./HistoryPageContents_legacy";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 dayjs.extend(utc);
 
 const DateCard = (props: {
@@ -115,7 +116,9 @@ const DateCard = (props: {
         {expanded ? (
           <Stack>
             {domainGroups.map((dg, i) => (
-              <MobileHistoryDomainRow key={i} {...dg} />
+              <UrsorFadeIn key={`${i}`} delay={i * 70} duration={600}>
+                <MobileHistoryDomainRow {...dg} />
+              </UrsorFadeIn>
             ))}
           </Stack>
         ) : null}
