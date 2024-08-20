@@ -335,6 +335,7 @@ const DevicePageLimitsTab = (props: {
                 }}
               />
             }
+            isMobile={props.isMobile}
             timeLimits={timeLimits}
             increment={(day) => {
               const limitId = timeLimits.find((l) => l.day === day)?.id;
