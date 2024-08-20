@@ -57,7 +57,12 @@ export const InfoButton = (props: IInfoButtonProps) => {
           spacing="6px"
           alignItems="center"
         >
-          <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
+          <Typography
+            variant="small"
+            bold
+            color={PALETTE.secondary.grey[3]}
+            maxLines={1}
+          >
             {props.title}
           </Typography>
           <InfoIcon width="14px" height="14px" />

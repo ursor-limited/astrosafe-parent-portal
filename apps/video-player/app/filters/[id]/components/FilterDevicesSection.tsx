@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const FilterPageDevicesSection = (props: {
   devices: IDevice[];
@@ -33,6 +34,7 @@ const FilterPageDevicesSection = (props: {
             ? "Filter applied to this Device"
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }
+        info={INFOS.filterDevice}
         notCollapsible
         topRightStuff={
           <Stack direction="row" spacing="12px">

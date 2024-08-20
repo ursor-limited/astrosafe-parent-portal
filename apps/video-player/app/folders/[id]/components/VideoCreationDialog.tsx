@@ -9,6 +9,7 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const VideoCreationDialog = (props: {
   open: boolean;
@@ -72,6 +73,7 @@ const VideoCreationDialog = (props: {
         (props.updateDetails?.callback ? submitUpdate : submitCreation)();
         props.onClose();
       }}
+      info={INFOS.addVideo}
       type="video"
       setTitle={(t) => {
         setTitle(t);
