@@ -1,25 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "../../../../../packages/ui";
 import ApiController from "../../api";
 import { DUMMY_DEVICE_ID } from "../../home/HomePageContents";
 import { useRouter } from "next/navigation";
 
 const ApprovalPageContents = (props: { url: string; isMobile?: boolean }) => {
-  const [status, setStatus] = useState<"pending" | "denied">("pending");
-  useEffect(() => {
+  const router = useRouter();
+  const [status, setStatus] = useState<"pending" | "denied" | "approved">(
+    "pending"
+  );
+  const load = useCallback(() => {
     const domain = new URL(props.url).hostname;
     ApiController.getRequestedSites(DUMMY_DEVICE_ID).then((sites) => {
       const newStatus = sites.find((s) => new URL(s.url).hostname === domain)
         ?.status;
-      newStatus && setStatus(newStatus);
+      if (newStatus === "approved") {
+        router.push(props.url);
+      } else {
+        newStatus && setStatus(newStatus);
+      }
     });
   }, [props.url]);
-  const router = useRouter();
+  useEffect(() => {
+    load();
+  }, [load]);
   return (
     <Stack
       spacing="12px"
@@ -78,11 +86,12 @@ const ApprovalPageContents = (props: { url: string; isMobile?: boolean }) => {
         </Stack>
       </Stack>
       {status === "pending" ? (
-        <Link href={props.url} style={{ textDecoration: "none" }}>
-          <UrsorButton backgroundColor={PALETTE.secondary.orange[3]}>
-            Try again
-          </UrsorButton>
-        </Link>
+        <UrsorButton
+          backgroundColor={PALETTE.secondary.orange[3]}
+          onClick={load}
+        >
+          Try again
+        </UrsorButton>
       ) : (
         <UrsorButton
           backgroundColor={PALETTE.secondary.purple[2]}
