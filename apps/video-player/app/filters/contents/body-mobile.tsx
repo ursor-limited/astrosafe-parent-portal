@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import FilterCard from "../[id]/components/FilterCard";
 import { IGroupFilter } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 export const GRID_SPACING = "20px";
 
@@ -25,6 +26,7 @@ export default function AllFiltersPageMobileBody(props: {
   return (
     <MobilePageLayout
       title="My Filters"
+      info={INFOS.filters}
       selectedPage="filters"
       topRightElement={
         <UrsorButton

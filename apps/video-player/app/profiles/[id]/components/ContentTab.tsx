@@ -12,7 +12,9 @@ import { useContext, useState } from "react";
 import NotificationContext from "@/app/components/NotificationContext";
 import FolderDeviceRemovalConfirmationDialog from "@/app/folders/[id]/components/FolderDeviceRemovalConfirmationDialog";
 import Image from "next/image";
-import ProfilePageTabLayout from "../components/ProfilePageTabLayout";
+import ProfilePageTabLayout, {
+  INFOS,
+} from "../components/ProfilePageTabLayout";
 
 export type AstroContent = "video" | "channel" | "link";
 
@@ -79,7 +81,7 @@ const DevicePageContentTab = (props: {
         </UrsorButton>
       }
       mobile={props.isMobile}
-      explanation="Mario Kario 64 is the first game of the Super Mario franchise to let more than two people play simultaneously. It is also the first Mario Kart game to use three-dimensional graphics for its environment design, such as the addition of elevation, advanced collision physics, expanded camera controls, real walls that can obscure views, and increased aesthetic fidelity."
+      info={INFOS.folders}
     >
       {props.folders.length > 0 ? (
         <Stack pt="20px">

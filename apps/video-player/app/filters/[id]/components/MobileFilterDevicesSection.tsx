@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
 import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const MobileFilterPageDevicesSection = (props: {
   devices: IDevice[];
@@ -33,6 +34,7 @@ const MobileFilterPageDevicesSection = (props: {
             ? "Filter applied to this Device"
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }
+        info={INFOS.filterDevice}
         isMobile
         notCollapsible
       >

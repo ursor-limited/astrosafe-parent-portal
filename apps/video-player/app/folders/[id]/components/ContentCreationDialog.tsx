@@ -14,12 +14,14 @@ import { CONTENT_DISPLAY_NAMES } from "./ContentCard";
 import { LabeledInputField } from "ui/labeled-input-field";
 import { AstroContent } from "@/app/profiles/[id]/components/ContentTab";
 import { IFilterUrl } from "@/app/filters/contents/common";
+import { IInfoButtonProps } from "@/app/components/InfoButton";
 
 export interface IContentCreationDialogProps {
   open: boolean;
   type: AstroContent;
   title: IFilterUrl["title"];
   setTitle: (title: IFilterUrl["title"]) => void;
+  info?: IInfoButtonProps;
   url: IFilterUrl["url"];
   setUrl: (url: IFilterUrl["url"]) => void;
   onUrlFieldBlur?: () => void;
@@ -41,6 +43,7 @@ export default function ContentCreationDialog(
       title={`${props.editing ? "Edit" : "Add a"} ${
         CONTENT_DISPLAY_NAMES[props.type]
       }`}
+      info={props.info}
       dynamicHeight
       maxWidth="780px"
       isMobile={isMobile}

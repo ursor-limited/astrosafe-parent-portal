@@ -13,6 +13,7 @@ import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const MobileDevicesSection = (props: {
   title: string;
@@ -37,7 +38,12 @@ const MobileDevicesSection = (props: {
 
   return (
     <>
-      <AstroBentoCard title={props.title} notCollapsible isMobile>
+      <AstroBentoCard
+        title={props.title}
+        notCollapsible
+        isMobile
+        info={INFOS.folderDevice}
+      >
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="150px" rowGap="12px" columnGap="12px">
             {props.devices.map((d, i) => (

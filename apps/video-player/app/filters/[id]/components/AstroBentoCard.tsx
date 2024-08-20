@@ -31,21 +31,35 @@ export const AstroBentoCard = (props: {
       <Stack>
         <Stack justifyContent="space-between" direction="row">
           <Stack spacing={props.isMobile ? "6px" : undefined}>
-            <Stack
-              direction="row"
-              sx={
-                props.iconColor
-                  ? { svg: { path: { fill: props.iconColor } } }
-                  : undefined
-              }
-              alignItems="center"
-              spacing="8px"
-            >
-              {props.icon ? <props.icon height="20px" width="20px" /> : null}
-              <Typography variant={props.isMobile ? "normal" : "large"} bold>
-                {props.title}
-              </Typography>
-              {props.info ? <InfoButton {...props.info} /> : null}
+            <Stack>
+              <Stack
+                direction="row"
+                sx={
+                  props.iconColor
+                    ? { svg: { path: { fill: props.iconColor } } }
+                    : undefined
+                }
+                alignItems="center"
+                spacing="6px"
+              >
+                {props.icon ? <props.icon height="20px" width="20px" /> : null}
+                <Typography variant={props.isMobile ? "normal" : "large"} bold>
+                  {props.title}
+                </Typography>
+                {props.info && !props.isMobile ? (
+                  <Stack
+                    pl="12px"
+                    height="100%"
+                    justifyContent="flex-end"
+                    sx={{ transform: "translateY(-2px)" }}
+                  >
+                    <InfoButton small {...props.info} />
+                  </Stack>
+                ) : null}
+              </Stack>
+              {props.info && props.isMobile ? (
+                <InfoButton small {...props.info} />
+              ) : null}
             </Stack>
             {props.subtitle ? (
               <Typography color={PALETTE.secondary.grey[4]} variant="small">

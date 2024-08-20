@@ -18,6 +18,7 @@ import {
 } from "../../contents/common";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import { useRouter } from "next/navigation";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;

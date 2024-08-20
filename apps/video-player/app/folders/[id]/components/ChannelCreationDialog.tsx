@@ -11,6 +11,7 @@ import InfoButton from "@/app/components/InfoButton";
 import { IEnrichedContentBucket } from "../../contents/common";
 import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const ChannelCreationDialog = (props: {
   open: boolean;
@@ -82,12 +83,12 @@ const ChannelCreationDialog = (props: {
         (props.updateDetails?.callback ? submitUpdate : submitCreation)();
         props.onClose();
       }}
+      info={INFOS.addChannel}
       type="channel"
       setTitle={setTitle}
       title={title}
       setUrl={setUrl}
       url={url}
-      // onUrlFieldBlur={loadPreview}
       buttonDisabled={!checked && !props.updateDetails}
       editing={!!props.updateDetails}
       extraBottomElement={
@@ -118,13 +119,6 @@ const ChannelCreationDialog = (props: {
                 "I'm aware that I'm adding all Videos from this Channel to the Folder."
               }
             </Typography>
-            <Stack>
-              <InfoButton
-                title="Boo"
-                body="Kirby is so much better than Jigglypuff"
-                rightAlign
-              />
-            </Stack>
           </Stack>
         ) : null
       }

@@ -9,6 +9,7 @@ import {
   ILink,
 } from "@/app/profiles/[id]/components/ContentTab";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const LinkCreationDialog = (props: {
   open: boolean;
@@ -71,6 +72,7 @@ const LinkCreationDialog = (props: {
         props.onClose();
       }}
       type="link"
+      info={INFOS.addLink}
       editing={!!props.updateDetails}
       setTitle={(t) => {
         setTitle(t);

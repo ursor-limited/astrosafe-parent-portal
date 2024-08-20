@@ -140,7 +140,10 @@ const DevicePageAppsTab = (props: {
     <ProfilePageTabLayout
       title="Apps"
       rightSideElement={!props.isMobile ? <AppsLegend /> : undefined}
-      explanation="Donkey Kong 64 is a sequel to the Donkey Kong Country trilogy and is so far the only game in the series without the word 'Country' in the title alongside Chunky Kong's only significant video game appearance. It received generally positive reviews with an average score of 88% according to gamerankings."
+      info={{
+        title: "How do apps work?",
+        text: "Apps provide quick access on your kid's Browser to hand-picked resources that provide a lot of value. Toggle them on and they'll be accessible on your kid's Device and we'll make sure the Filter doesn't interfere with access to them. Please note that we do override the Filter to allow access to the Apps that you select! So if you have social media access turned off but toggle on a social media app we will allow access to it.",
+      }}
     >
       {props.isMobile ? (
         <Stack alignItems="flex-end">

@@ -8,6 +8,8 @@ import { ButtonVariant, UrsorButton } from "ui/ursor-button";
 import { PALETTE, Typography } from "ui";
 import { UrsorTypographyVariant } from "ui/typography";
 import dynamic from "next/dynamic";
+import InfoButton, { IInfoButtonProps } from "./InfoButton";
+import { INFOS } from "../profiles/[id]/components/ProfilePageTabLayout";
 
 const ByteStepper = dynamic(
   () => import("./ByteStepper"),
@@ -75,6 +77,7 @@ export interface IUrsorDialogProps {
   children?: React.ReactNode; // the contents
   fitContent?: boolean;
   isMobile?: boolean;
+  info?: IInfoButtonProps;
 }
 
 export const fadeIn = keyframes`
@@ -280,7 +283,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                 </Stack>
               ) : null}
               {props.title ? (
-                <Stack maxWidth={props.titleMaxWidth}>
+                <Stack maxWidth={props.titleMaxWidth} spacing="3px">
                   <Typography
                     variant={props.isMobile ? "h5" : props.titleSize || "h4"}
                     bold
@@ -289,8 +292,17 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                   >
                     {props.title}
                   </Typography>
+                  {/* {!props.isMobile && props.info ? (
+                    <Stack position="relative" width={0} overflow="visible">
+                      <Stack position="absolute" left={0} bottom={0}>
+                        <InfoButton {...props.info} />
+                      </Stack>
+                    </Stack>
+                  ) : null} */}
+                  {props.info ? <InfoButton {...props.info} /> : null}
                 </Stack>
               ) : null}
+              {/* {props.info ? <InfoButton {...props.info} /> : null} */}
               {props.subtitle ? (
                 <Stack alignItems="center" pt="6px">
                   {windowWidth < 750 ? (

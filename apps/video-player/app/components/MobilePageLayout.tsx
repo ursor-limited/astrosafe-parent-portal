@@ -8,10 +8,12 @@ import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
 import MobileSideBar, { AstroPage } from "./MobileSideBar";
 import { ITitleRowItem } from "./TitleRow";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
+import InfoButton, { IInfoButtonProps } from "./InfoButton";
 
 const MobilePageLayout = (props: {
   title?: string;
   titleRow?: ITitleRowItem;
+  info?: IInfoButtonProps;
   actions?: IActionPopupItem[];
   topRightElement?: React.ReactNode;
   selectedPage: AstroPage;
@@ -31,48 +33,50 @@ const MobilePageLayout = (props: {
         boxSizing="border-box"
       >
         {props.header ? <Stack pb="24px">{props.header}</Stack> : null}
-        <Stack
-          pb="24px"
-          justifyContent="space-between"
-          alignItems="center"
-          direction="row"
-        >
-          <Stack direction="row" spacing="12px" alignItems="center">
-            <Stack onClick={() => setSideBarOpen(true)}>
-              <ThreeBarsIcon height="20px" width="20px" />
-            </Stack>
-            {props.titleBackButtonCallback ? (
-              <Stack width="25px">
-                <Stack
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
-                  }}
-                  onClick={props.titleBackButtonCallback}
-                  justifyContent="center"
-                >
-                  <ChevronLeftIcon height="24px" width="24px" />
-                </Stack>
+        <Stack pb="24px" spacing="4px">
+          <Stack
+            justifyContent="space-between"
+            alignItems="center"
+            direction="row"
+          >
+            <Stack direction="row" spacing="12px" alignItems="center">
+              <Stack onClick={() => setSideBarOpen(true)}>
+                <ThreeBarsIcon height="20px" width="20px" />
               </Stack>
+              {props.titleBackButtonCallback ? (
+                <Stack width="25px">
+                  <Stack
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.6 },
+                      transition: "0.2s",
+                    }}
+                    onClick={props.titleBackButtonCallback}
+                    justifyContent="center"
+                  >
+                    <ChevronLeftIcon height="24px" width="24px" />
+                  </Stack>
+                </Stack>
+              ) : null}
+              {props.title ? (
+                <Typography bold variant="medium">
+                  {props.title}
+                </Typography>
+              ) : null}
+              {props.titleRow ? <MobileTitleRow item={props.titleRow} /> : null}
+            </Stack>
+            {props.topRightElement}
+            {props.actions ? (
+              <UrsorActionButton
+                actions={props.actions}
+                iconSize="14px"
+                size="32px"
+                background="transparent"
+                border
+              />
             ) : null}
-            {props.title ? (
-              <Typography bold variant="medium">
-                {props.title}
-              </Typography>
-            ) : null}
-            {props.titleRow ? <MobileTitleRow item={props.titleRow} /> : null}
           </Stack>
-          {props.topRightElement}
-          {props.actions ? (
-            <UrsorActionButton
-              actions={props.actions}
-              iconSize="14px"
-              size="32px"
-              background="transparent"
-              border
-            />
-          ) : null}
+          {props.info ? <InfoButton {...props.info} /> : null}
         </Stack>
         {props.children}
       </Stack>

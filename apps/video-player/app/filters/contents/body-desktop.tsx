@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import PageLayout from "../../components/PageLayout";
 import FilterCard from "../[id]/components/FilterCard";
 import { IFilter, IGroupFilter } from "./common";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 export const GRID_SPACING = "20px";
 
@@ -24,6 +25,7 @@ export default function AllFiltersPageDesktopBody(props: {
     <PageLayout
       title="My Filters"
       titleBackButton={true}
+      info={INFOS.filters}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="filters"

@@ -162,7 +162,10 @@ const DevicePageLimitsTab = (props: {
   return (
     <ProfilePageTabLayout
       title="Limits"
-      explanation="The Legend of Zelda: Ocarina of Time is the fifth main installment of The Legend of Zelda series and the first to be released for the Nintendo 64. It was one of the most highly anticipated games of its age, and is listed among the greatest video games ever created by numerous websites and magazines."
+      info={{
+        title: "How do limits work?",
+        text: "For each day you can choose what time you want the Browser to be accessible and set the total amount of time you want your child to be able to spend online. If you don't want to use these features just toggle them off in the top right corner of their respective box!",
+      }}
     >
       <Stack spacing="24px" pb="33px">
         {requestedSites.length > 0 ? (
