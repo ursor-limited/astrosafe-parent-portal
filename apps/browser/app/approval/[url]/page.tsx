@@ -6,7 +6,12 @@ import ApprovalPageContents from "./ApprovalPageContents";
 async function ApprovalPage({ params }: { params: { url: string } }) {
   const mobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return <ApprovalPageContents mobile={mobile} url={params.url} />;
+  return (
+    <ApprovalPageContents
+      isMobile={mobile}
+      url={decodeURIComponent(params.url)}
+    />
+  );
 }
 
 export default ApprovalPage;

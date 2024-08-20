@@ -132,6 +132,12 @@ class ApiController {
           ) as IChannel[]
       );
   }
+
+  static async getRequestedSites(deviceId: IDevice["id"]) {
+    return get(`devices/${deviceId}/requests`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;
