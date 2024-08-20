@@ -3,9 +3,9 @@
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "../../../../../packages/ui";
-import ApiController from "../../api";
-import { DUMMY_DEVICE_ID } from "../../home/HomePageContents";
+import { PALETTE, Typography, UrsorButton } from "../../../../packages/ui";
+import ApiController from "../api";
+import { DUMMY_DEVICE_ID } from "../home/HomePageContents";
 import { useRouter } from "next/navigation";
 
 const ApprovalPageContents = (props: { url: string; isMobile?: boolean }) => {
