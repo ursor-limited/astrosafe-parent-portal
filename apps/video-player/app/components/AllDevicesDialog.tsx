@@ -10,6 +10,8 @@ import { Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import { SearchInput } from "./SearchInput";
 import DeviceCard from "../profiles/components/DeviceCard";
+import InfoButton from "./InfoButton";
+import { INFOS } from "../profiles/[id]/components/ProfilePageTabLayout";
 
 const AllDevicesDialog = (props: {
   title: string;
@@ -57,7 +59,10 @@ const AllDevicesDialog = (props: {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="h5">{props.title}</Typography>
+          <Stack direction="row" spacing="8px">
+            <Typography variant="h5">{props.title}</Typography>
+            <InfoButton {...INFOS.folderDevice} />
+          </Stack>
           <Stack direction="row" spacing="12px" alignItems="center">
             <UrsorButton
               dark

@@ -14,6 +14,7 @@ import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
 import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const DevicesSection = (props: {
   title: string;
@@ -40,6 +41,7 @@ const DevicesSection = (props: {
     <>
       <AstroBentoCard
         title={props.title}
+        info={INFOS.folderDevice}
         notCollapsible
         topRightStuff={
           <Stack direction="row" spacing="12px">

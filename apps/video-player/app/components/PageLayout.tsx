@@ -11,11 +11,7 @@ import { IActionPopupItem } from "./ActionPopup";
 import UrsorActionButton from "./UrsorActionButton";
 import TitleRow, { ITitleRowItem } from "./TitleRow";
 import Sidebar, { SideBarItemId, WIDTH as SIDEBAR_WIDTH } from "./Sidebar";
-import {
-  INFOS,
-  IProfilePageInfoButtonDetails,
-} from "../profiles/[id]/components/ProfilePageTabLayout";
-import InfoButton from "./InfoButton";
+import InfoButton, { IInfoButtonProps } from "./InfoButton";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -32,7 +28,7 @@ export interface IPageLayoutProps {
   dark?: boolean;
   title: string;
   titleRow?: ITitleRowItem[];
-  info?: IProfilePageInfoButtonDetails;
+  info?: IInfoButtonProps;
   description?: string;
   dotColor?: string;
   titleBackButton?: boolean;
@@ -174,7 +170,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                         <UrsorFadeIn delay={200} duration={600}>
                           <Stack
                             direction="row"
-                            spacing="24px"
+                            spacing="20px"
                             alignItems="flex-end"
                             width="100%"
                             overflow="hidden"
@@ -220,7 +216,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                             ) : null}
                             {props.info ? (
                               <Stack sx={{ transform: "translateY(-3px)" }}>
-                                <InfoButton {...INFOS.folders} />
+                                <InfoButton {...props.info} />
                               </Stack>
                             ) : null}
                           </Stack>

@@ -7,6 +7,7 @@ import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { UrsorButton } from "ui";
 import FolderCard from "@/app/components/FolderCard";
 import EmptyStateIllustration from "@/app/components/EmptyStateIllustration";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[];
@@ -17,6 +18,7 @@ const AllFoldersPageMobileBody = (props: {
   return (
     <MobilePageLayout
       title="My Folders"
+      info={INFOS.folders}
       selectedPage="content"
       topRightElement={
         <UrsorButton

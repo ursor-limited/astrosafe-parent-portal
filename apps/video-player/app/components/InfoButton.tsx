@@ -9,6 +9,7 @@ export interface IInfoButtonProps {
   title: string;
   text: string;
   rightAlign?: boolean;
+  small?: boolean;
 }
 
 export const InfoButton = (props: IInfoButtonProps) => {
@@ -56,10 +57,10 @@ export const InfoButton = (props: IInfoButtonProps) => {
           spacing="6px"
           alignItems="center"
         >
-          <Typography bold color={PALETTE.secondary.grey[3]}>
+          <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
             {props.title}
           </Typography>
-          <InfoIcon width="16px" height="16px" />
+          <InfoIcon width="14px" height="14px" />
         </Stack>
       </Stack>
     </UrsorPopover>
