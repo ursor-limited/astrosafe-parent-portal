@@ -16,8 +16,9 @@ const ApprovalPageContents = (props: { url: string; isMobile?: boolean }) => {
   const load = useCallback(() => {
     const domain = new URL(props.url).hostname;
     ApiController.getRequestedSites(DUMMY_DEVICE_ID).then((sites) => {
-      const newStatus = sites.find((s) => new URL(s.url).hostname === domain)
-        ?.status;
+      const newStatus = sites.find(
+        (s: any) => new URL(s.url).hostname === domain
+      )?.status;
       if (newStatus === "approved") {
         router.push(props.url);
       } else {
