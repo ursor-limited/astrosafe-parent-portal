@@ -11,6 +11,11 @@ import { IActionPopupItem } from "./ActionPopup";
 import UrsorActionButton from "./UrsorActionButton";
 import TitleRow, { ITitleRowItem } from "./TitleRow";
 import Sidebar, { SideBarItemId, WIDTH as SIDEBAR_WIDTH } from "./Sidebar";
+import {
+  INFOS,
+  IProfilePageInfoButtonDetails,
+} from "../profiles/[id]/components/ProfilePageTabLayout";
+import InfoButton from "./InfoButton";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -27,6 +32,7 @@ export interface IPageLayoutProps {
   dark?: boolean;
   title: string;
   titleRow?: ITitleRowItem[];
+  info?: IProfilePageInfoButtonDetails;
   description?: string;
   dotColor?: string;
   titleBackButton?: boolean;
@@ -168,7 +174,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                         <UrsorFadeIn delay={200} duration={600}>
                           <Stack
                             direction="row"
-                            spacing="30px"
+                            spacing="24px"
                             alignItems="flex-end"
                             width="100%"
                             overflow="hidden"
@@ -199,17 +205,24 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                               ) : null}
                             </Stack>
 
-                            <Stack
-                              style={{
-                                paddingBottom: "3px",
-                                // overflow: "hidden",
-                              }}
-                              //overflow="hidden"
-                              position="relative"
-                              overflow="visible"
-                            >
-                              {props.titleRowLefthandElement}
-                            </Stack>
+                            {props.titleRowLefthandElement ? (
+                              <Stack
+                                style={{
+                                  paddingBottom: "3px",
+                                  // overflow: "hidden",
+                                }}
+                                //overflow="hidden"
+                                position="relative"
+                                overflow="visible"
+                              >
+                                {props.titleRowLefthandElement}
+                              </Stack>
+                            ) : null}
+                            {props.info ? (
+                              <Stack sx={{ transform: "translateY(-3px)" }}>
+                                <InfoButton {...INFOS.folders} />
+                              </Stack>
+                            ) : null}
                           </Stack>
                         </UrsorFadeIn>
                       </Stack>

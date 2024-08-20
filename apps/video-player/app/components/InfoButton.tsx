@@ -1,19 +1,17 @@
-import InfoIcon from "@/images/icons/InfoIcon.svg";
+import React from "react";
 import { Stack } from "@mui/system";
-import UrsorPopover from "./UrsorPopover";
 import { useState } from "react";
-import { Typography } from "ui";
+import { PALETTE, Typography } from "ui";
+import InfoIcon from "@/images/icons/InfoIcon.svg";
+import UrsorPopover from "./UrsorPopover";
 
 export interface IInfoButtonProps {
   title: string;
-  body: string;
+  text: string;
+  rightAlign?: boolean;
 }
 
-const InfoButton = (props: {
-  title: string;
-  body: string;
-  rightAlign?: boolean;
-}) => {
+export const InfoButton = (props: IInfoButtonProps) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <UrsorPopover
@@ -27,10 +25,7 @@ const InfoButton = (props: {
           spacing="6px"
           maxWidth="333px"
         >
-          <Typography variant="small" bold>
-            {props.title}
-          </Typography>
-          <Typography variant="small">{props.body}</Typography>
+          <Typography variant="small">{props.text}</Typography>
         </Stack>
       }
       closeCallback={() => setOpen(false)}
@@ -46,7 +41,26 @@ const InfoButton = (props: {
           transition: "0.2s",
         }}
       >
-        <InfoIcon width="16px" height="16px" />
+        <Stack
+          sx={{
+            cursor: "pointer",
+            transition: "0.2s",
+            "&:hover": { opacity: 0.8 },
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[3],
+              },
+            },
+          }}
+          direction="row"
+          spacing="6px"
+          alignItems="center"
+        >
+          <Typography bold color={PALETTE.secondary.grey[3]}>
+            {props.title}
+          </Typography>
+          <InfoIcon width="16px" height="16px" />
+        </Stack>
       </Stack>
     </UrsorPopover>
   );

@@ -1,76 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
-import UrsorPopover from "@/app/components/UrsorPopover";
-import InfoIcon from "@/images/icons/InfoIcon.svg";
+import { Typography } from "ui";
+import InfoButton, { IInfoButtonProps } from "@/app/components/InfoButton";
 
-const InfoButton = (props: {
-  //   title: string;
-  //   body: string;
-  text: string;
-  rightAlign?: boolean;
-}) => {
-  const [open, setOpen] = useState<boolean>(false);
-  return (
-    <UrsorPopover
-      open={open}
-      content={
-        <Stack
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          p="16px"
-          boxSizing="border-box"
-          spacing="6px"
-          maxWidth="333px"
-        >
-          {/* <Typography variant="small" bold>
-            {props.title}
-          </Typography> */}
-          <Typography variant="small">{props.text}</Typography>
-        </Stack>
-      }
-      closeCallback={() => setOpen(false)}
-      placement={props.rightAlign ? "right" : "left"}
-      noPadding
-      zIndex={9999}
-    >
-      <Stack
-        onClick={() => setOpen(true)}
-        sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.6 },
-          transition: "0.2s",
-        }}
-      >
-        <Stack
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.8 },
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[3],
-              },
-            },
-          }}
-          direction="row"
-          spacing="6px"
-          alignItems="center"
-        >
-          <Typography bold color={PALETTE.secondary.grey[3]}>
-            How to use
-          </Typography>
-          <InfoIcon width="16px" height="16px" />
-        </Stack>
-      </Stack>
-    </UrsorPopover>
-  );
+export const INFOS: Record<string, IInfoButtonProps> = {
+  folders: {
+    title: "What are Content Folders?",
+    text: "A Folder is a collection of Links, Videos, and Video Channels that can be assigned to Devices. Once assigned to the Device they will be discover this Content from their homepage. Please note that the Folder will override the Filters and allow access to the sites you add to make it easy to share Content with your kids without worrying about Filter settings.",
+  },
 };
 
 const ProfilePageTabLayout = (props: {
   title: string;
   rightSideElement?: React.ReactNode;
-  explanation: string;
+  info: IInfoButtonProps;
   mobile?: boolean;
   children: React.ReactNode;
 }) => (
@@ -79,11 +22,11 @@ const ProfilePageTabLayout = (props: {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" alignItems="center" spacing="16px">
           <Typography variant="h5">{props.title}</Typography>
-          {!props.mobile ? <InfoButton text={props.explanation} /> : null}
+          {!props.mobile ? <InfoButton {...props.info} /> : null}
         </Stack>
         {props.rightSideElement}
       </Stack>
-      {props.mobile ? <InfoButton text={props.explanation} /> : null}
+      {props.mobile ? <InfoButton {...props.info} /> : null}
     </Stack>
     {props.children}
   </Stack>

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "./common";
 import FolderCard from "@/app/components/FolderCard";
 import EmptyStateIllustration from "@/app/components/EmptyStateIllustration";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[];
@@ -17,6 +18,7 @@ const AllFoldersPageDesktopBody = (props: {
   return (
     <PageLayout
       title="My Content"
+      info={INFOS.folders}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="content"
