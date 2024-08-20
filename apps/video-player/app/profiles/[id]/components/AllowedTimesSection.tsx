@@ -24,7 +24,7 @@ const AllowedTimesSection = (props: {
     subtitle="Select when you want the Browser to be online. Turn this off to remove schedules."
     info={{
       title: "Set when the Browser can be used",
-      body: "Select the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.",
+      text: "Select the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.",
     }}
     notCollapsible
     topRightStuff={props.topRightElement}

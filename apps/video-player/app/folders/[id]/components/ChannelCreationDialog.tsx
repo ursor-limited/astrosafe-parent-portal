@@ -119,13 +119,6 @@ const ChannelCreationDialog = (props: {
                 "I'm aware that I'm adding all Videos from this Channel to the Folder."
               }
             </Typography>
-            <Stack>
-              <InfoButton
-                title="Boo"
-                body="Kirby is so much better than Jigglypuff"
-                rightAlign
-              />
-            </Stack>
           </Stack>
         ) : null
       }

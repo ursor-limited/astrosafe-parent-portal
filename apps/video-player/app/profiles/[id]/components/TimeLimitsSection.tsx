@@ -17,7 +17,7 @@ const TimeLimitsSection = (props: {
     notCollapsible
     info={{
       title: "Setting your daily limits",
-      body: "This is the total amount of time you are happy with being spent on the Browser for the specific day. Turn this off to remove all time limits.",
+      text: "This is the total amount of time you are happy with being spent on the Browser for the specific day. Turn this off to remove all time limits.",
     }}
     topRightStuff={props.topRightElement}
   >
