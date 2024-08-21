@@ -481,7 +481,7 @@
 //     pdf.save(`${worksheet?.title}${showAnswers ? " Answers" : ""}.pdf`);
 //   };
 
-//   const { loginWithPopup, loginWithRedirect } = useAuth()
+//   const { login } = useAuth()
 
 //   const notificationCtx = useContext(NotificationContext);
 
@@ -1013,7 +1013,7 @@
 //       <WorksheetSignupPromptDialog
 //         open={signupPromptDialogOpen}
 //         closeCallback={() => setSignupPromptDialogOpen(false)}
-//         callback={() => loginWithPopup()}
+//         callback={() => login()}
 //         mobile={false}
 //       />
 //       {editingDialogOpen ? (

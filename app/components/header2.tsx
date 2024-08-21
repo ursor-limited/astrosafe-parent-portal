@@ -22,7 +22,7 @@ import { useUserContext } from './UserContext';
 import UpgradePromptDialog from './UpgradeDialog';
 import { useWindowSize } from 'usehooks-ts';
 import DynamicContainer from './DynamicContainer';
-import { useAuth0 } from '@auth0/auth0-react';
+import useAuth from '@/app/hooks/useAuth';
 import ProfileButton from './ProfileButton';
 
 const UrsorPopover = dynamic(
@@ -218,7 +218,7 @@ const ProductsPopoverContents = (props: {
   mobile?: boolean;
   noSignIn?: boolean;
 }) => {
-  const { loginWithRedirect, user } = useAuth();
+  const { login, user } = useAuth();
   const router = useRouter();
   return (
     <Stack
@@ -372,7 +372,7 @@ const ProductsPopoverContents = (props: {
           </UrsorButton>
         ) : null}
         {!user && props.mobile && !props.noSignIn ? (
-          <UrsorButton width='100%' onClick={loginWithRedirect}>
+          <UrsorButton width='100%' onClick={login}>
             Sign in
           </UrsorButton>
         ) : null}
@@ -421,7 +421,7 @@ export const Header = (props: {
   createNewButton?: boolean;
   hidePopupDashboardButton?: boolean;
 }) => {
-  const { user, loginWithPopup, loginWithRedirect, logout } = useAuth();
+  const { user, login, logout } = useAuth();
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const safeTubeUser = useUserContext();
@@ -468,7 +468,7 @@ export const Header = (props: {
             dark
             variant="tertiary"
             onClick={() => {
-              //props.mobile ? loginWithRedirect() : loginWithPopup();
+              //props.mobile ? loginWithRedirect() : login();
               mixpanel.track("clicked header sign up");
             }}
             endIcon={PersonIcon}
@@ -519,7 +519,7 @@ export const Header = (props: {
                   dark
                   variant='tertiary'
                   onClick={() => {
-                    loginWithPopup();
+                    login();
                     //mixpanel.track("clicked header sign up");
                   }}
                   endIcon={PersonIcon}
@@ -533,7 +533,7 @@ export const Header = (props: {
               {/* <UrsorButton
               dark
               variant="tertiary"
-              onClick={loginWithPopup}
+              onClick={login}
               endIcon={PersonIcon}
             >
               Login

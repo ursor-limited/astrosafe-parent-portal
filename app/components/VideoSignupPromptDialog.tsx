@@ -16,7 +16,7 @@ const VideoSignupPromptDialog = (props: {
   //signinCallback: () => void;
   mobile?: boolean;
 }) => {
-  const { loginWithPopup, loginWithRedirect } = useAuth();
+  const { login } = useAuth();
   const [freeVideoCreationCount, setFreeVideoCreationCount] =
     useLocalStorage<number>('freeVideoCreationCount', 0);
   return (
@@ -43,7 +43,7 @@ const VideoSignupPromptDialog = (props: {
         text: 'Sign in',
         callback: () => {
           props.closeCallback();
-          props.mobile ? loginWithPopup() : loginWithPopup();
+          props.mobile ? login() : login();
           //props.signinCallback();
           mixpanel.track('clicked signup button', {
             freeVideoCreationCount,

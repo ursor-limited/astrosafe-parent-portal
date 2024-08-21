@@ -29,7 +29,7 @@ const WorksheetSignupPromptDialog = (props: {
       //   text: "Sign in",
       //   callback: () => {
       //     props.closeCallback();
-      //     props.mobile ? loginWithPopup() : loginWithPopup();
+      //     props.mobile ? login() : login();
       //     //props.signinCallback();
       //     // mixpanel.track("clicked signup button", {
       //     //   freeWorksheetCreationCount,

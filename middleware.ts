@@ -1,8 +1,31 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { BACKEND_URL } from './app/api';
-import { getUserInfo } from './app/auth';
 
 const UNPROTECTED_ROUTES: string[] = [];
+
+const getUserInfo = async (
+  accessToken: string,
+  refreshToken: string
+): Promise<any> => {
+  const resp = await fetch('http://localhost:8000/users/self', {
+    headers: {
+      Cookie: `access_token=${accessToken};refresh_token=${refreshToken}`, // Yes, I know. Setting cookies manually is fetch is slop but it's the slop we need for Next.js
+    },
+  });
+
+  const data = await resp.json();
+
+  return data;
+};
+
+const BACKEND_URLS = {
+  local: 'http://localhost:8000',
+  development: 'https://api.astrosafe.co',
+  preview: 'https://api.astrosafe.co',
+  production: 'https://api.astrosafe.co',
+};
+
+const BACKEND_URL =
+  BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV as keyof typeof BACKEND_URLS];
 
 export async function middleware(request: NextRequest) {
   const { origin, pathname } = request.nextUrl;

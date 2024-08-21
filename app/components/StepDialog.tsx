@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import UrsorDialog, {
   BODY_FADE_DURATION,
   IDialogButtonDetails,
-} from "./UrsorDialog";
-import _ from "lodash";
-import { ButtonVariant } from "ui/ursor-button";
+} from './UrsorDialog';
+import _ from 'lodash';
+import { ButtonVariant } from '@/ui/ursor-button';
 
 export interface IStepDialogButtonDetails {
   text?: string;
@@ -58,7 +58,7 @@ export default function StepDialog(props: IStepDialogProps) {
   const getEnrichedButtonDetails: (
     details?: IStepDialogButtonDetails
   ) => IDialogButtonDetails = (details) => ({
-    text: details?.text ?? (step < props.steps.length - 1 ? "Next" : "Close"),
+    text: details?.text ?? (step < props.steps.length - 1 ? 'Next' : 'Close'),
     callback: async () => {
       setLoading(true);
       if (!details?.callback || (await details?.callback?.())) {
@@ -79,7 +79,7 @@ export default function StepDialog(props: IStepDialogProps) {
       title={props.steps[bodyStep].title}
       subtitle={props.steps[bodyStep].subtitle}
       supertitle={props.steps[bodyStep].supertitle}
-      titleMaxWidth="80%"
+      titleMaxWidth='80%'
       open={props.open}
       step={step}
       nSteps={props.steps.length}
