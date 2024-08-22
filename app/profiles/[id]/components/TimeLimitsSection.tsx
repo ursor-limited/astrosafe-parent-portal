@@ -14,12 +14,12 @@ const TimeLimitsSection = (props: {
 }) => (
   <AstroBentoCard
     title="Daily limits"
-    subtitle="Set a daily browsing limit"
     notCollapsible
     info={{
       title: "Setting your daily limits",
       text: "This is the total amount of time you are happy with being spent on the Browser for the specific day. Turn this off to remove all time limits.",
     }}
+    infoButtonBelowTitle
     isMobile={props.isMobile}
     topRightStuff={props.topRightElement}
   >

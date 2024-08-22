@@ -14,7 +14,7 @@ import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 export const GRID_SPACING = "20px";
 
-export const DUMMY_GROUP_ID = 1;
+export const DUMMY_GROUP_ID = 2;
 
 export default function AllFiltersPageDesktopBody(props: {
   filters: IGroupFilter[];
@@ -36,7 +36,7 @@ export default function AllFiltersPageDesktopBody(props: {
       }}
       maxWidth={834}
     >
-      <Stack px="50px">
+      <Stack pl="50px">
         <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
           {props.filters.map((f, i) => (
             <Stack
