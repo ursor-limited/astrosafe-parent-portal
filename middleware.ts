@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-const UNPROTECTED_ROUTES: string[] = [];
-
 const getUserInfo = async (
   accessToken: string,
   refreshToken: string
@@ -27,6 +25,8 @@ const BACKEND_URLS = {
 const BACKEND_URL =
   BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV as keyof typeof BACKEND_URLS];
 
+const UNPROTECTED_ROUTES: string[] = [];
+
 export async function middleware(request: NextRequest) {
   const { origin, pathname } = request.nextUrl;
 
@@ -40,11 +40,7 @@ export async function middleware(request: NextRequest) {
       `${BACKEND_URL}/login?origin_uri=${originUri}`
     );
 
-  console.log(accessToken);
-
   const userInfo = await getUserInfo(accessToken, refreshToken!);
-
-  console.log(userInfo);
 
   if (
     !UNPROTECTED_ROUTES.some((item) => originUri.startsWith(item)) &&
