@@ -1,24 +1,24 @@
-import { Stack } from '@mui/system';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import PlugIcon from '@/images/icons/PlugIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import DeviceInstructionsView from '../components/DeviceInstructionsView';
-import UrsorActionButton from '@/app/components/UrsorActionButton';
-import { PALETTE, UrsorButton } from '@/ui';
-import { useRouter } from 'next/navigation';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
-import DeviceCard from '../components/DeviceCard';
-import { IFilter } from '@/app/filters/contents/common';
+import { Stack } from "@mui/system";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import PlugIcon from "@/images/icons/PlugIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import DeviceInstructionsView from "../components/DeviceInstructionsView";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import { PALETTE, UrsorButton } from "@/ui";
+import { useRouter } from "next/navigation";
+import MobilePageLayout from "@/app/components/MobilePageLayout";
+import DeviceCard from "../components/DeviceCard";
+import { IFilter } from "@/app/filters/contents/common";
 
 const AllDevicesPageMobileBody = (props: {
   devices: IDevice[];
   filters: IFilter[];
   setConnectDialogOpen: () => void;
   //setDownloadDialogOpen: () => void;
-  setRenameDeviceDialogId: (id: IDevice['id']) => void;
-  setDisconnectDialogOpen: (id: IDevice['id']) => void;
+  setRenameDeviceDialogId: (id: IDevice["id"]) => void;
+  setDisconnectDialogOpen: (id: IDevice["id"]) => void;
 }) => {
   const router = useRouter();
   return (
@@ -42,10 +42,10 @@ const AllDevicesPageMobileBody = (props: {
     //   scrollable
     // >
     <MobilePageLayout
-      title='My Kids'
-      selectedPage='profiles'
+      title="My Kids"
+      selectedPage="profiles"
       topRightElement={
-        <Stack direction='row' spacing='8px'>
+        <Stack direction="row" spacing="8px">
           {/* <UrsorButton
             size="small"
             endIcon={PlusIcon}
@@ -55,10 +55,10 @@ const AllDevicesPageMobileBody = (props: {
             Get Browser
           </UrsorButton> */}
           <UrsorButton
-            size='small'
+            size="small"
             endIcon={PlusIcon}
             dark
-            variant='tertiary'
+            variant="tertiary"
             onClick={props.setConnectDialogOpen}
           >
             Add a Device
@@ -68,28 +68,27 @@ const AllDevicesPageMobileBody = (props: {
     >
       <Stack flex={1}>
         {props.devices.length > 0 ? (
-          <Stack spacing='12px'>
+          <Stack spacing="12px">
             {props.devices.map((d) => (
               <DeviceCard
                 key={d.id}
                 {...d}
                 showBrowsing
-                url='https://bind_this_up.com'
                 filterName={
-                  props.filters.find((f) => f.id === d.filterId)?.title ?? ''
+                  props.filters.find((f) => f.id === d.filterId)?.title ?? ""
                 }
                 button={
                   <UrsorActionButton
-                    size='16px'
-                    iconSize='16px'
+                    size="16px"
+                    iconSize="16px"
                     actions={[
                       {
-                        text: 'Open',
+                        text: "Open",
                         kallback: () => router.push(`/profiles/${d.id}`),
                         icon: ArrowUpRightIcon,
                       },
                       {
-                        text: 'Edit name',
+                        text: "Edit name",
                         kallback: () => props.setRenameDeviceDialogId(d.id),
                         icon: PencilIcon,
                       },

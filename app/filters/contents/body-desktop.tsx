@@ -36,7 +36,7 @@ export default function AllFiltersPageDesktopBody(props: {
       }}
       maxWidth={834}
     >
-      <Stack px="50px">
+      <Stack pl="50px">
         <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
           {props.filters.map((f, i) => (
             <Stack
