@@ -40,7 +40,11 @@ export async function middleware(request: NextRequest) {
       `${BACKEND_URL}/login?origin_uri=${originUri}`
     );
 
+  console.log(accessToken);
+
   const userInfo = await getUserInfo(accessToken, refreshToken!);
+
+  console.log(userInfo);
 
   if (
     !UNPROTECTED_ROUTES.some((item) => originUri.startsWith(item)) &&
