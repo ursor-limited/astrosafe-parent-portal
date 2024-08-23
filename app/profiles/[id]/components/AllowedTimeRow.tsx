@@ -1,11 +1,11 @@
-import { Stack } from '@mui/system';
-import { useCallback, useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { IAllowedTime, getISODateString } from './LimitsTab';
-import _ from 'lodash';
-import dayjs from 'dayjs';
-import useNewSegmentTimes from './useNewSegmentTimes';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import { Stack } from "@mui/system";
+import { useCallback, useEffect, useState } from "react";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import { IAllowedTime, getISODateString } from "./LimitsTab";
+import _ from "lodash";
+import dayjs from "dayjs";
+import useNewSegmentTimes from "./useNewSegmentTimes";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 const DISPLAY_INTERVAL = 2; // hours
 // const MIN = 0;
@@ -71,28 +71,28 @@ const BrowsingTimeSelectorRange = (props: {
   }, [dot1X, dot2X, props.lineWidth, draggingDot1, draggingDot2]);
 
   useEffect(() => {
-    window.addEventListener('mouseup', handleDraggingEnd);
+    window.addEventListener("mouseup", handleDraggingEnd);
     return () => {
-      window.removeEventListener('mouseup', handleDraggingEnd);
+      window.removeEventListener("mouseup", handleDraggingEnd);
     };
   }, [handleDraggingEnd]);
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <>
-      <Stack position='absolute' left={dot1X} zIndex={3}>
-        <Stack flex={1} position='relative'>
+      <Stack position="absolute" left={dot1X} zIndex={3}>
+        <Stack flex={1} position="relative">
           <Stack
-            position='absolute'
+            position="absolute"
             top={0}
             left={0}
             sx={{
-              transform: 'translate(-50%, -35%)',
-              cursor: draggingDot1 ? 'grabbing' : 'grab',
+              transform: "translate(-50%, -35%)",
+              cursor: draggingDot1 ? "grabbing" : "grab",
             }}
-            height='14px'
-            width='14px'
+            height="14px"
+            width="14px"
             bgcolor={PALETTE.secondary.blue[2]}
-            borderRadius='100%'
+            borderRadius="100%"
             onMouseDown={(e) => {
               setDraggingDot1(true);
               e.preventDefault();
@@ -100,20 +100,20 @@ const BrowsingTimeSelectorRange = (props: {
           />
         </Stack>
       </Stack>
-      <Stack position='absolute' left={dot2X} zIndex={3}>
-        <Stack flex={1} position='relative'>
+      <Stack position="absolute" left={dot2X} zIndex={3}>
+        <Stack flex={1} position="relative">
           <Stack
-            position='absolute'
+            position="absolute"
             top={0}
             left={0}
             sx={{
-              transform: 'translate(-50%, -35%)',
-              cursor: draggingDot2 ? 'grabbing' : 'grab',
+              transform: "translate(-50%, -35%)",
+              cursor: draggingDot2 ? "grabbing" : "grab",
             }}
-            height='14px'
-            width='14px'
+            height="14px"
+            width="14px"
             bgcolor={PALETTE.secondary.blue[2]}
-            borderRadius='100%'
+            borderRadius="100%"
             onMouseDown={(e) => {
               setDraggingDot2(true);
               e.preventDefault();
@@ -122,11 +122,11 @@ const BrowsingTimeSelectorRange = (props: {
         </Stack>
       </Stack>
       <Stack
-        position='absolute'
+        position="absolute"
         left={Math.min(dot1X, dot2X)}
         width={Math.abs(dot2X - dot1X)}
-        height='20px'
-        alignItems='center'
+        height="20px"
+        alignItems="center"
         zIndex={2}
         onMouseEnter={() => {
           setHovering(true);
@@ -136,34 +136,34 @@ const BrowsingTimeSelectorRange = (props: {
         }}
       >
         <Stack
-          height='4px'
-          width='100%'
+          height="4px"
+          width="100%"
           bgcolor={PALETTE.secondary.blue[1]}
-          position='relative'
+          position="relative"
         >
           {!props.noDeletion ? (
             <Stack
-              position='absolute'
+              position="absolute"
               left={props.mouseX - props.lineLeftX - dot1X}
-              top='-26px'
+              top="-26px"
               zIndex={3}
               sx={{
-                transform: 'translate(-50%)',
+                transform: "translate(-50%)",
                 opacity: hovering && !draggingDot1 && !draggingDot2 ? 1 : 0,
-                transition: '0.2s',
+                transition: "0.2s",
                 svg: {
                   path: {
                     fill: PALETTE.system.red,
                   },
                 },
-                cursor: 'pointer',
-                '&:hover': { opacity: 0.6 },
-                pointerEvents: hovering ? undefined : 'none',
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                pointerEvents: hovering ? undefined : "none",
               }}
-              pb='6px'
+              pb="6px"
               onClick={props.delete}
             >
-              <TrashcanIcon height='20px' width='20px' />
+              <TrashcanIcon height="20px" width="20px" />
             </Stack>
           ) : null}
         </Stack>
@@ -174,8 +174,8 @@ const BrowsingTimeSelectorRange = (props: {
 
 const BrowsingTimeSelector = (props: {
   ranges?: IAllowedTime[];
-  setRangeTimes: (id: IAllowedTime['id'], start: string, end: string) => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
+  setRangeTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
 }) => {
@@ -196,9 +196,9 @@ const BrowsingTimeSelector = (props: {
     setMouseX(event.pageX);
   }, []);
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [handleMouseMove]);
 
@@ -209,14 +209,14 @@ const BrowsingTimeSelector = (props: {
   );
 
   return (
-    <Stack width='100%' height='22px'>
+    <Stack width="100%" height="22px">
       <Stack
-        width='100%'
-        height='4px'
+        width="100%"
+        height="4px"
         bgcolor={PALETTE.secondary.grey[2]}
-        borderRadius='2px'
+        borderRadius="2px"
         ref={setLineRef}
-        position='relative'
+        position="relative"
       >
         {props.ranges?.map((allowedTimeRange, i) => {
           const decimalStartTime =
@@ -257,38 +257,40 @@ const BrowsingTimeSelector = (props: {
             />
           );
         })}
-        <Stack flex={1} justifyContent='space-between' direction='row'>
-          {[
-            ...Array(
-              1 + 24 / (DISPLAY_INTERVAL * (props.halveLabelFrequency ? 2 : 1))
-            ).keys(),
-          ].map((i) => (
-            <Stack
-              key={i}
-              height='4px'
-              width='2px'
-              bgcolor={
-                i > 0 && i < 24 / DISPLAY_INTERVAL
-                  ? PALETTE.secondary.grey[3]
-                  : undefined
-              }
-              position='relative'
-            >
-              <Stack
-                position='absolute'
-                bottom='-20px'
-                sx={{ transform: 'translateX(-50%)' }}
-              >
-                <Typography
-                  sx={{ fontSize: props.smallerLabelFont ? 8 : 10 }}
-                  variant='tiny'
-                  bold
-                >{`${(i * DISPLAY_INTERVAL) % 12 || 12}:00${
-                  i * DISPLAY_INTERVAL >= 12 ? 'pm' : 'am'
-                }`}</Typography>
-              </Stack>
-            </Stack>
-          ))}
+        <Stack flex={1} justifyContent="space-between" direction="row">
+          {[...Array(1 + 24 / DISPLAY_INTERVAL).keys()]
+            .filter((x) => !props.halveLabelFrequency || (x - 1) % 2)
+            .map((i) => i * DISPLAY_INTERVAL)
+            .map((hour) => {
+              return (
+                <Stack
+                  key={`${hour}${props.halveLabelFrequency}`}
+                  height="4px"
+                  width="2px"
+                  bgcolor={
+                    PALETTE.secondary.grey[3]
+                    // i > 0 && i < 24 / DISPLAY_INTERVAL
+                    //   ? PALETTE.secondary.grey[3]
+                    //   : undefined
+                  }
+                  position="relative"
+                >
+                  <Stack
+                    position="absolute"
+                    bottom="-20px"
+                    sx={{ transform: "translateX(-50%)" }}
+                  >
+                    <Typography
+                      sx={{ fontSize: props.smallerLabelFont ? 8 : 10 }}
+                      variant="tiny"
+                      bold
+                    >{`${hour % 12 || 12}:00${
+                      hour === 24 || hour < 12 ? "am" : "pm"
+                    }`}</Typography>
+                  </Stack>
+                </Stack>
+              );
+            })}
         </Stack>
       </Stack>
     </Stack>
@@ -300,11 +302,11 @@ const AllowedTimeRow = (props: {
   times: IAllowedTime[];
   addAllowedTime: (startTime: number, endTime: number) => void;
   reset: () => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   setAllowedTimes: (
-    id: IAllowedTime['id'],
-    startTime: IAllowedTime['startTime'],
-    endTime: IAllowedTime['endTime']
+    id: IAllowedTime["id"],
+    startTime: IAllowedTime["startTime"],
+    endTime: IAllowedTime["endTime"]
   ) => void;
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
@@ -317,8 +319,8 @@ const AllowedTimeRow = (props: {
   const { newSegmentTimes, clearNewSegmentTimes } =
     useNewSegmentTimes(sortedTimes);
   return (
-    <Stack direction='row' alignItems='center'>
-      <Stack width='120px'>
+    <Stack direction="row" alignItems="center">
+      <Stack width="120px">
         <Typography bold color={PALETTE.secondary.grey[3]}>
           {_.capitalize(props.dayName)}
         </Typography>
@@ -330,11 +332,11 @@ const AllowedTimeRow = (props: {
         smallerLabelFont={props.smallerLabelFont}
         halveLabelFrequency={props.halveLabelFrequency}
       />
-      <Stack pl='60px' direction='row' spacing='8px'>
+      <Stack pl="60px" direction="row" spacing="8px">
         <UrsorButton
-          size='small'
-          variant='secondary'
-          backgroundColor='rgb(255,255,255)'
+          size="small"
+          variant="secondary"
+          backgroundColor="rgb(255,255,255)"
           onClick={() => {
             newSegmentTimes &&
               props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
@@ -345,8 +347,8 @@ const AllowedTimeRow = (props: {
           Add
         </UrsorButton>
         <UrsorButton
-          size='small'
-          variant='secondary'
+          size="small"
+          variant="secondary"
           backgroundColor={PALETTE.secondary.grey[1]}
           borderColor={PALETTE.secondary.grey[1]}
           onClick={props.reset}
