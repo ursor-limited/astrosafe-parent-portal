@@ -119,19 +119,6 @@ const DevicePageAppsTab = (props: {
     [apps, searchValue]
   );
 
-  const [nonEmptyCategories, setNonEmptyCategories] = useState<
-    IFilterSubcategory[]
-  >([]);
-  useEffect(
-    () =>
-      setNonEmptyCategories(
-        categories.filter((c) =>
-          apps.find((a) => a.categoryId === c.categoryId)
-        )
-      ),
-    [categories, apps]
-  );
-
   const notificationCtx = useContext(NotificationContext);
 
   return (
@@ -186,7 +173,7 @@ const DevicePageAppsTab = (props: {
                         All
                       </Typography>
                     </Stack>,
-                    ...nonEmptyCategories.map((c) => (
+                    ...categories.map((c) => (
                       <Stack
                         key={c.categoryId}
                         height="32px"
