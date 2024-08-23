@@ -58,7 +58,8 @@ const VideoCreationDialog = (props: {
       props.updateDetails.video.id,
       title,
       url,
-      thumbnailUrl
+      props.folderId
+      //thumbnailUrl
     )
       .then(props.updateDetails?.callback)
       .then(() => notificationCtx.success("Updated Video"));

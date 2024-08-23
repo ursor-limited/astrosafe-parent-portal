@@ -129,7 +129,7 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
             direction="row"
             spacing={props.isMobile ? "6px" : "12px"}
             sx={
-              !(isLast && x.options?.length === 0)
+              !isLast || (x.options && x.options?.length > 0)
                 ? {
                     cursor: "pointer",
                     transition: "0.2s",

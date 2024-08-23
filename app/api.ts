@@ -235,9 +235,10 @@ class ApiController {
     id: IVideo['id'],
     title: IVideo['title'],
     url: IVideo['url'],
-    thumbnailUrl: IVideo['thumbnailUrl']
+    contentBucketId: IContentBucket['id']
+    //thumbnailUrl: IVideo['thumbnailUrl']
   ) {
-    return put(`content/videos/${id}`, { title, url, thumbnailUrl });
+    return put(`content/videos/${id}`, { title, url, contentBucketId });
   }
 
   static async deleteVideo(id: IVideo['id']) {
@@ -454,6 +455,12 @@ class ApiController {
 
   static async getVideoPreview(url: IVideo['url']) {
     return get(`content/videos/preview/${url}`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getChannelPreview(url: IChannel['url']) {
+    return get(`content/channels/preview/${url}`).then((response: any) =>
       response.json()
     );
   }
