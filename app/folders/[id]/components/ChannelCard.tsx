@@ -20,6 +20,7 @@ const ChannelCard = (
     onOpenEditingDialog?: () => void;
     isMobile?: boolean;
     twoLineTitleSectionHeight?: boolean;
+    folderId?: IContentBucket["id"];
   }
 ) => {
   const router = useRouter();
