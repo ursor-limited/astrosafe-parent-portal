@@ -235,13 +235,19 @@ class ApiController {
     id: IVideo["id"],
     title: IVideo["title"],
     url: IVideo["url"],
-    thumbnailUrl: IVideo["thumbnailUrl"]
+    contentBucketId?: IContentBucket["id"],
+    isChannel?: boolean
+    //thumbnailUrl: IVideo['thumbnailUrl']
   ) {
-    return put(`content/videos/${id}`, { title, url, thumbnailUrl });
+    return put(`content/videos/${id}${isChannel ? "?isChannel=true" : ""}`, {
+      title,
+      url,
+      contentBucketId,
+    });
   }
 
-  static async deleteVideo(id: IVideo["id"]) {
-    return dellete(`content/videos/${id}`);
+  static async deleteVideo(id: IVideo["id"], isChannel?: boolean) {
+    return dellete(`content/videos/${id}${isChannel ? "?isChannel=true" : ""}`);
   }
 
   static async createChannel(
@@ -454,6 +460,12 @@ class ApiController {
 
   static async getVideoPreview(url: IVideo["url"]) {
     return get(`content/videos/preview/${url}`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getChannelPreview(url: IChannel["url"]) {
+    return get(`content/channels/preview/${url}`).then((response: any) =>
       response.json()
     );
   }

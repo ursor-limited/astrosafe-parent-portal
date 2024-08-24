@@ -21,6 +21,7 @@ export interface IContent {
   title: string;
   url: string;
   createdAt: string;
+  contentBucketId: IContentBucket["id"];
 }
 
 export interface IContentBucket {
@@ -42,6 +43,7 @@ export interface IChannel extends IContent {
 }
 export interface IVideo extends IContent {
   thumbnailUrl: string;
+  channelId?: IChannel["id"];
 }
 export interface ILesson extends IContent {
   imageUrls: string[];

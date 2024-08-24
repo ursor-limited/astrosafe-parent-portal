@@ -282,9 +282,6 @@ export const Captioned = (props: {
 );
 
 export default function LandingPageContents(props: IAstroLandingPage) {
-  // const fuck = getSelectorsByUserAgent(headers().get("user-agent") ?? "");
-  // const isMobile = !!fuck.isMobile;
-  // const isMobile = false;
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);

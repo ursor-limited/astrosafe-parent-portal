@@ -15,7 +15,7 @@ import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 export const GRID_SPACING = "20px";
 
-export const DUMMY_GROUP_ID = 1;
+export const DUMMY_GROUP_ID = 2;
 
 export default function AllFiltersPageMobileBody(props: {
   filters: IGroupFilter[];

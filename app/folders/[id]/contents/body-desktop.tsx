@@ -197,7 +197,6 @@ const FolderPageDesktopBody = (props: {
                                 onOpenEditingDialog={() =>
                                   props.setChannelEditingDialogId(x.content.id)
                                 }
-                                folderId={props.folderId}
                               />
                             ) : null}
                           </UrsorFadeIn>

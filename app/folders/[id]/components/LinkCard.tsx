@@ -1,17 +1,14 @@
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
-import ApiController, { getAbsoluteUrl } from "@/app/api";
+import ApiController from "@/app/api";
 import { ILink } from "@/app/profiles/[id]/components/ContentTab";
 import { PALETTE } from "@/ui";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
-import { useRouter } from "next/navigation";
 
 const IMAGE_HEIGHT = 227;
 
 const LinkCard = (
-  props: Omit<ILink, "createdAt"> & {
-    // onClick: () => void;
+  props: Partial<Omit<ILink, "createdAt">> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -20,7 +17,6 @@ const LinkCard = (
     twoLineTitleSectionHeight?: boolean;
   }
 ) => {
-  const router = useRouter();
   return (
     <ContentCard
       type="link"
@@ -28,7 +24,9 @@ const LinkCard = (
       url={props.url}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
-      onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
+      onDelete={() =>
+        props.id && ApiController.deleteLink(props.id).then(props.onDelete)
+      }
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
       isMobile={props.isMobile}
       twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}

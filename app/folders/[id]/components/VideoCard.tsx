@@ -9,8 +9,7 @@ import { PALETTE } from "@/ui";
 const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
-  props: Omit<IVideo, "createdAt"> & {
-    // onClick: () => void;
+  props: Partial<Omit<IVideo, "createdAt">> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -27,7 +26,12 @@ const VideoCard = (
       url={props.url}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
-      onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}
+      onDelete={() =>
+        props.id &&
+        ApiController.deleteVideo(props.id, !!props.channelId).then(
+          props.onDelete
+        )
+      }
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
       isMobile={props.isMobile}
       twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}

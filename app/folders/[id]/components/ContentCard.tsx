@@ -24,7 +24,7 @@ export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
 const ContentCardCore = (props: {
   onClick?: () => void;
   type: AstroContent;
-  title: IContent["title"];
+  title?: IContent["title"];
   twoLineTitleSectionHeight?: boolean;
   children: React.ReactNode;
 }) => {
@@ -76,7 +76,7 @@ const ContentCardCore = (props: {
 
 const ContentCard = (props: {
   type: AstroContent;
-  title: IContent["title"];
+  title?: IContent["title"];
   url?: IContent["url"];
   onClick?: () => void;
   noPointerEvents?: boolean;
@@ -134,7 +134,7 @@ const ContentCard = (props: {
           >
             <ContentCardCore
               type={props.type}
-              title={props.title}
+              title={props?.title}
               twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
             >
               {props.children}
@@ -144,7 +144,7 @@ const ContentCard = (props: {
           <ContentCardCore
             onClick={props.onClick}
             type={props.type}
-            title={props.title}
+            title={props?.title}
             twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
           >
             {props.children}

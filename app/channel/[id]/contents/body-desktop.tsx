@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/navigation";
 import { IVideo } from "../../../profiles/[id]/components/ContentTab";
 import PageLayout from "../../../components/PageLayout";
 import { Stack } from "@mui/system";
@@ -16,11 +15,12 @@ const ChannelPageDesktopBody = (props: {
   setVideoEditingDialogId: (id: IVideo["id"]) => void;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
+  onBack: () => void;
 }) => {
-  const router = useRouter();
   return (
     <PageLayout
       titleRow={props.titleRow}
+      titleBackButtonCallback={props.onBack}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="content"

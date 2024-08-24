@@ -121,7 +121,7 @@ const DevicesSection = (props: {
         title={`${props.devices.length} ${
           props.devices.length === 1 ? "Device has" : "Devices have"
         } access to this Folder`}
-        devices={props.devices.slice(0, 4)}
+        devices={props.devices?.slice(0, 4) || []}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
         onAdd={() => {

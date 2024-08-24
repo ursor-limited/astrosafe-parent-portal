@@ -7,11 +7,10 @@ import ApiController, { getAbsoluteUrl } from "@/app/api";
 import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import { PALETTE, Typography } from "@/ui";
-import InfoButton from "@/app/components/InfoButton";
 import { IEnrichedContentBucket } from "../../contents/common";
 import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const ChannelCreationDialog = (props: {
   open: boolean;
@@ -40,7 +39,7 @@ const ChannelCreationDialog = (props: {
   const submitCreation = () =>
     ApiController.createChannel(
       title,
-      url,
+      getAbsoluteUrl(cleanUrl(url)),
       bannerUrl,
       profileUrl,
       props.folderId
@@ -51,7 +50,7 @@ const ChannelCreationDialog = (props: {
     ApiController.updateChannel(
       props.updateDetails.channel.id,
       title,
-      url,
+      getAbsoluteUrl(cleanUrl(url)),
       bannerUrl,
       profileUrl
     )
@@ -63,17 +62,17 @@ const ChannelCreationDialog = (props: {
   const [manuallyChangedTitle, setManuallyChangedTitle] =
     useState<boolean>(false);
 
-  // const loadPreview = () => {
-  //   ApiController.getLinkPreview(
-  //     encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
-  //   )
-  //     .then((result) => {
-  //       result.title && !manuallyChangedTitle && setTitle(result.title);
-  //       result.bannerUrl && setBannerUrl(result.bannerUrl);
-  //       result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl);
-  //     })
-  //     .catch(() => null);
-  // };
+  const loadPreview = () => {
+    ApiController.getChannelPreview(
+      encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
+    )
+      .then((result) => {
+        result.title && !manuallyChangedTitle && setTitle(result.title);
+        result.bannerUrl && setBannerUrl(result.bannerUrl);
+        result.profileUrl && setProfileUrl(result.profileUrl);
+      })
+      .catch(() => null);
+  };
 
   return (
     <ContentCreationDialog
@@ -85,10 +84,14 @@ const ChannelCreationDialog = (props: {
       }}
       info={INFOS.addChannel}
       type="channel"
-      setTitle={setTitle}
+      setTitle={(t) => {
+        setTitle(t);
+        setManuallyChangedTitle(true);
+      }}
       title={title}
       setUrl={setUrl}
       url={url}
+      onUrlFieldBlur={loadPreview}
       buttonDisabled={!checked && !props.updateDetails}
       editing={!!props.updateDetails}
       extraBottomElement={

@@ -67,6 +67,7 @@ const DeletionDialog = (props: {
               );
             }}
             backgroundColor={PALETTE.system.red}
+            hoverOpacity={0.7}
           >
             Delete
           </UrsorButton>
