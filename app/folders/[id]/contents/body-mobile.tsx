@@ -1,35 +1,35 @@
-import { Stack } from '@mui/system';
-import { CONTENT_BRANDING, IContentCard } from './common';
-import { PALETTE, Typography } from '@/ui';
-import { SearchInput } from '@/app/components/SearchInput';
-import SortButton from '@/app/components/SortButton';
-import { AddContentButton } from '../components/AddContentButton';
-import LinkCard from '../components/LinkCard';
-import VideoCard from '../components/VideoCard';
-import ChannelCard from '../components/ChannelCard';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
-import Image from 'next/image';
-import MobileDevicesSection from '../components/MobileDevicesSection';
-import TitleRow, { ITitleRowItem } from '@/app/components/TitleRow';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import ApiController, { getAbsoluteUrl } from '@/app/api';
+import { Stack } from "@mui/system";
+import { CONTENT_BRANDING, IContentCard } from "./common";
+import { PALETTE, Typography } from "@/ui";
+import { SearchInput } from "@/app/components/SearchInput";
+import SortButton from "@/app/components/SortButton";
+import { AddContentButton } from "../components/AddContentButton";
+import LinkCard from "../components/LinkCard";
+import VideoCard from "../components/VideoCard";
+import ChannelCard from "../components/ChannelCard";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import Image from "next/image";
+import MobileDevicesSection from "../components/MobileDevicesSection";
+import TitleRow, { ITitleRowItem } from "@/app/components/TitleRow";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import MobilePageLayout from "@/app/components/MobilePageLayout";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
 import {
   AstroContent,
   IChannel,
   IContentBucket,
   ILink,
   IVideo,
-} from '@/app/profiles/[id]/components/ContentTab';
-import { IActionPopupItem } from '@/app/components/ActionPopup';
-import Link from 'next/link';
-import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
-import { useRouter } from 'next/navigation';
+} from "@/app/profiles/[id]/components/ContentTab";
+import { IActionPopupItem } from "@/app/components/ActionPopup";
+import Link from "next/link";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { useRouter } from "next/navigation";
 
 const FolderPageMobileBody = (props: {
-  folderId: IContentBucket['id'];
+  folderId: IContentBucket["id"];
   folder?: IContentBucket;
   contents: IContentCard[];
   allFolders: IContentBucket[];
@@ -40,11 +40,11 @@ const FolderPageMobileBody = (props: {
   onRemoveDevice: () => void;
   searchValue: string;
   setSearchValue: (value: string) => void;
-  selectedContentType: AstroContent | 'all';
-  setSelectedContentType: (type: AstroContent | 'all') => void;
-  setLinkEditingDialogId: (id: ILink['id']) => void;
-  setVideoEditingDialogId: (id: IVideo['id']) => void;
-  setChannelEditingDialogId: (id: IChannel['id']) => void;
+  selectedContentType: AstroContent | "all";
+  setSelectedContentType: (type: AstroContent | "all") => void;
+  setLinkEditingDialogId: (id: ILink["id"]) => void;
+  setVideoEditingDialogId: (id: IVideo["id"]) => void;
+  setChannelEditingDialogId: (id: IChannel["id"]) => void;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
 }) => {
@@ -52,65 +52,65 @@ const FolderPageMobileBody = (props: {
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => router.push('/folders')}
-      selectedPage='content'
+      titleBackButtonCallback={() => router.push("/folders")}
+      selectedPage="content"
       actions={props.actions}
     >
-      <Stack spacing='24px' pb='32px'>
+      <Stack spacing="24px" pb="32px">
         <MobileDevicesSection
           title={`${props.devices.length} ${
-            props.devices.length === 1 ? 'Device has' : 'Devices have'
+            props.devices.length === 1 ? "Device has" : "Devices have"
           } access to this Folder`}
           devices={props.devices}
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}
-          onRemove={(id: IDevice['id']) =>
+          onRemove={(id: IDevice["id"]) =>
             ApiController.removeFolderFromDevice(props.folderId, id).then(
               props.onRemoveDevice
             )
           }
         />
-        <Stack justifyContent='center'>
+        <Stack justifyContent="center">
           <Stack
-            width='100%'
-            height='1px'
+            width="100%"
+            height="1px"
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack justifyContent='space-between' spacing='8px'>
-          <Typography variant='medium' bold>{`${props.contents.length} item${
-            props.contents.length === 1 ? '' : 's'
+        <Stack justifyContent="space-between" spacing="8px">
+          <Typography variant="medium" bold>{`${props.contents.length} item${
+            props.contents.length === 1 ? "" : "s"
           } in this Folder`}</Typography>
-          <Stack direction='row' spacing='12px' alignItems='center'>
+          <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
-              value={props.searchValue ?? ''}
+              value={props.searchValue ?? ""}
               callback={(value: string) => {
                 props.setSearchValue(value);
               }}
-              clearCallback={() => props.setSearchValue('')}
+              clearCallback={() => props.setSearchValue("")}
               shadow
               fullWidth
-              iconSize='18px'
+              iconSize="18px"
             />
             <SortButton
               noText
               selected={props.selectedContentType}
               callback={(id) =>
-                props.setSelectedContentType(id as AstroContent | 'all')
+                props.setSelectedContentType(id as AstroContent | "all")
               }
-              types={['all', 'link', 'video', 'channel']}
+              types={["all", "link", "video", "channel"]}
               displayNames={{
-                all: 'All',
-                video: 'Video',
-                channel: 'Channel',
-                link: 'Link',
+                all: "All",
+                video: "Video",
+                channel: "Channel",
+                link: "Link",
               }}
-              width='120px'
+              width="120px"
             />
           </Stack>
         </Stack>
-        <Stack spacing='12px'>
-          {['link', 'video', 'channel'].map((c) => (
+        <Stack spacing="12px">
+          {["link", "video", "channel"].map((c) => (
             <Stack
               key={c}
               onClick={() => props.setCreationDialogOpen(c as AstroContent)}
@@ -127,15 +127,15 @@ const FolderPageMobileBody = (props: {
         </Stack>
 
         <Stack
-          bgcolor='rgb(255,255,255)'
-          borderRadius='12px'
+          bgcolor="rgb(255,255,255)"
+          borderRadius="12px"
           border={`1px solid ${PALETTE.secondary.grey[2]}`}
-          p='16px'
-          boxSizing='border-box'
+          p="16px"
+          boxSizing="border-box"
         >
-          <Stack overflow='hidden' flex={1}>
+          <Stack overflow="hidden" flex={1}>
             {props.contents.length > 0 ? (
-              <Stack flex={1} spacing='12px'>
+              <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
                   <Stack key={`${x.content.id}${x.type}`}>
                     {/* <Link
@@ -147,7 +147,7 @@ const FolderPageMobileBody = (props: {
                       rel="noreferrer"
                     > */}
                     <UrsorFadeIn delay={i * 80} duration={800}>
-                      {x.type === 'link' ? (
+                      {x.type === "link" ? (
                         <LinkCard
                           {...(x.content as ILink)}
                           onDelete={props.loadFolderAndContents}
@@ -156,7 +156,7 @@ const FolderPageMobileBody = (props: {
                           }
                           isMobile
                         />
-                      ) : x.type === 'video' ? (
+                      ) : x.type === "video" ? (
                         <VideoCard
                           {...(x.content as IVideo)}
                           onDelete={props.loadFolderAndContents}
@@ -165,7 +165,7 @@ const FolderPageMobileBody = (props: {
                           }
                           isMobile
                         />
-                      ) : x.type === 'channel' ? (
+                      ) : x.type === "channel" ? (
                         <ChannelCard
                           {...(x.content as IChannel)}
                           onDelete={props.loadFolderAndContents}
@@ -183,21 +183,21 @@ const FolderPageMobileBody = (props: {
               </Stack>
             ) : (
               <Stack
-                height='457px'
-                justifyContent='center'
-                alignItems='center'
-                spacing='13px'
+                height="457px"
+                justifyContent="center"
+                alignItems="center"
+                spacing="13px"
               >
                 <Image
-                  src='https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png'
+                  src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
                   width={179}
                   height={152}
-                  alt='empty state illustration'
+                  alt="empty state illustration"
                 />
-                <Stack width='444px'>
+                <Stack width="444px">
                   <Typography
                     color={PALETTE.secondary.grey[3]}
-                    sx={{ textAlign: 'center' }}
+                    sx={{ textAlign: "center" }}
                     bold
                   >
                     This Folder is currently empty. Click one of the buttons

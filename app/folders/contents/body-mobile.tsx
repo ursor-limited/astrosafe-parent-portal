@@ -1,13 +1,13 @@
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import { Stack } from '@mui/system';
-import { useRouter } from 'next/navigation';
-import { IEnrichedContentBucket } from './common';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
-import { UrsorButton } from '@/ui';
-import FolderCard from '@/app/components/FolderCard';
-import EmptyStateIllustration from '@/app/components/EmptyStateIllustration';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { Stack } from "@mui/system";
+import { useRouter } from "next/navigation";
+import { IEnrichedContentBucket } from "./common";
+import MobilePageLayout from "@/app/components/MobilePageLayout";
+import { UrsorButton } from "@/ui";
+import FolderCard from "@/app/components/FolderCard";
+import EmptyStateIllustration from "@/app/components/EmptyStateIllustration";
+import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[];
@@ -17,14 +17,14 @@ const AllFoldersPageMobileBody = (props: {
   const router = useRouter();
   return (
     <MobilePageLayout
-      title='My Folders'
+      title="My Folders"
       info={INFOS.folders}
-      selectedPage='content'
+      selectedPage="content"
       topRightElement={
         <UrsorButton
           dark
-          variant='tertiary'
-          size='small'
+          variant="tertiary"
+          size="small"
           endIcon={PlusIcon}
           onClick={props.createFolder}
         >
@@ -33,8 +33,8 @@ const AllFoldersPageMobileBody = (props: {
       }
     >
       {props.folders.length > 0 ? (
-        <Stack pt='20px'>
-          <Stack spacing='36px'>
+        <Stack pt="20px">
+          <Stack spacing="36px">
             {props.folders.map((f, i) => (
               <UrsorFadeIn key={f.id} duration={800} delay={i * 90} fullWidth>
                 <FolderCard
