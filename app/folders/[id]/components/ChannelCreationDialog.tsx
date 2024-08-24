@@ -39,7 +39,7 @@ const ChannelCreationDialog = (props: {
   const submitCreation = () =>
     ApiController.createChannel(
       title,
-      url,
+      getAbsoluteUrl(cleanUrl(url)),
       bannerUrl,
       profileUrl,
       props.folderId
@@ -50,7 +50,7 @@ const ChannelCreationDialog = (props: {
     ApiController.updateChannel(
       props.updateDetails.channel.id,
       title,
-      url,
+      getAbsoluteUrl(cleanUrl(url)),
       bannerUrl,
       profileUrl
     )

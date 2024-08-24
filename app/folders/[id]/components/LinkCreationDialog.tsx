@@ -48,16 +48,19 @@ const LinkCreationDialog = (props: {
   const notificationCtx = useContext(NotificationContext);
 
   const submitCreation = () =>
-    ApiController.createLink(title, url, thumbnailUrl, props.folderId).then(
-      props.creationCallback
-    );
+    ApiController.createLink(
+      title,
+      getAbsoluteUrl(cleanUrl(url)),
+      thumbnailUrl,
+      props.folderId
+    ).then(props.creationCallback);
 
   const submitUpdate = () =>
     props.updateDetails?.link.id &&
     ApiController.updateLink(
       props.updateDetails.link.id,
       title,
-      url,
+      getAbsoluteUrl(cleanUrl(url)),
       thumbnailUrl
     )
       .then(props.updateDetails?.callback)

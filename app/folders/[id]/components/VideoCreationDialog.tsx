@@ -20,6 +20,7 @@ const VideoCreationDialog = (props: {
     video: IVideo;
     callback?: () => void;
   };
+  belongsToChannel?: boolean;
 }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
@@ -48,17 +49,21 @@ const VideoCreationDialog = (props: {
   const notificationCtx = useContext(NotificationContext);
 
   const submitCreation = () =>
-    ApiController.createVideo(title, url, thumbnailUrl, props.folderId).then(
-      props.creationCallback
-    );
+    ApiController.createVideo(
+      title,
+      getAbsoluteUrl(cleanUrl(url)),
+      thumbnailUrl,
+      props.folderId
+    ).then(props.creationCallback);
 
   const submitUpdate = () =>
     props.updateDetails?.video.id &&
     ApiController.updateVideo(
       props.updateDetails.video.id,
       title,
-      url,
-      props.folderId
+      getAbsoluteUrl(cleanUrl(url)),
+      !props.belongsToChannel ? props.folderId : undefined,
+      props.belongsToChannel
       //thumbnailUrl
     )
       .then(props.updateDetails?.callback)

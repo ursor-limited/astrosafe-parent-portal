@@ -16,22 +16,19 @@ import VideoCreationDialog from "../../../folders/[id]/components/VideoCreationD
 import { PALETTE } from "@/ui";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ChannelRenameDialog from "../components/ChannelRenameDialog";
-import { channel } from "diagnostics_channel";
 import NotificationContext from "@/app/components/NotificationContext";
 import ChannelPageMobileBody from "./body-mobile";
 
-const ChannelPage = (props: {
-  id: IChannel["id"];
-  folderId?: IContentBucket["id"];
-  isMobile: boolean;
-}) => {
+const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
   const router = useRouter();
   const [title, setTitle] = useState<IChannel["title"]>("");
+  const [folderId, setFolderId] = useState<IContentBucket["id"] | undefined>();
   const [videos, setVideos] = useState<IVideo[]>([]);
   const load = useCallback(
     () =>
       ApiController.getChannel(props.id).then((c) => {
         setTitle(c.title);
+        setFolderId(c.contentBucketId);
         setVideos(c.videos);
       }),
     [props.id]
@@ -42,8 +39,8 @@ const ChannelPage = (props: {
 
   const [folder, setFolder] = useState<IContentBucket | undefined>();
   useEffect(() => {
-    props.folderId && ApiController.getFolder(props.folderId).then(setFolder);
-  }, [props.folderId]);
+    folderId && ApiController.getFolder(folderId).then(setFolder);
+  }, [folderId]);
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     IVideo["id"] | undefined
@@ -58,7 +55,7 @@ const ChannelPage = (props: {
           },
           {
             text: folder?.title ?? "",
-            callback: () => router.push(`/folders/${props.folderId}`),
+            callback: () => router.push(`/folders/${folderId}`),
           },
         ]
       : []),
@@ -88,7 +85,7 @@ const ChannelPage = (props: {
 
   const deleteChannel = () =>
     ApiController.deleteChannel(props.id).then(() =>
-      router.push(props.folderId ? `/folders/${props.folderId}` : "/folders")
+      router.push(folderId ? `/folders/${folderId}` : "/folders")
     );
 
   return (
@@ -101,9 +98,7 @@ const ChannelPage = (props: {
           setVideoEditingDialogId={setVideoEditingDialogId}
           actions={actions}
           onBack={() =>
-            router.push(
-              props.folderId ? `/folders/${props.folderId}` : "/folders"
-            )
+            router.push(folderId ? `/folders/${folderId}` : "/folders")
           }
         />
       ) : (
@@ -113,20 +108,24 @@ const ChannelPage = (props: {
           titleRow={titleRow}
           setVideoEditingDialogId={setVideoEditingDialogId}
           actions={actions}
+          onBack={() =>
+            router.push(folderId ? `/folders/${folderId}` : "/folders")
+          }
         />
       )}
-      {videoEditingDialogId ? (
+      {videoEditingDialogId && folderId ? (
         <VideoCreationDialog
           open={true}
           onClose={() => {
             setVideoEditingDialogId(undefined);
           }}
-          folderId={props.folderId}
+          folderId={folderId}
           creationCallback={load}
           updateDetails={{
-            video: videos.find((v) => v.id === videoEditingDialogId),
+            video: videos.find((v) => v.id === videoEditingDialogId)!,
             callback: load,
           }}
+          belongsToChannel
         />
       ) : null}
       <DeletionDialog
