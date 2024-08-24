@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import React, { useContext, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
-import ApiController from '../../../api';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import React, { useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import ApiController from "../../../api";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import {
   IChannel,
   IContentBucket,
   IVideo,
-} from '../../../profiles/[id]/components/ContentTab';
-import ChannelPageDesktopBody from './body-desktop';
-import VideoCreationDialog from '../../../folders/[id]/components/VideoCreationDialog';
-import { PALETTE } from '@/ui';
-import DeletionDialog from '@/app/components/DeletionDialog';
-import ChannelRenameDialog from '../components/ChannelRenameDialog';
-import { channel } from 'diagnostics_channel';
-import NotificationContext from '@/app/components/NotificationContext';
-import ChannelPageMobileBody from './body-mobile';
+} from "../../../profiles/[id]/components/ContentTab";
+import ChannelPageDesktopBody from "./body-desktop";
+import VideoCreationDialog from "../../../folders/[id]/components/VideoCreationDialog";
+import { PALETTE } from "@/ui";
+import DeletionDialog from "@/app/components/DeletionDialog";
+import ChannelRenameDialog from "../components/ChannelRenameDialog";
+import { channel } from "diagnostics_channel";
+import NotificationContext from "@/app/components/NotificationContext";
+import ChannelPageMobileBody from "./body-mobile";
 
 const ChannelPage = (props: {
-  id: IChannel['id'];
-  folderId?: IContentBucket['id'];
+  id: IChannel["id"];
+  folderId?: IContentBucket["id"];
   isMobile: boolean;
 }) => {
   const router = useRouter();
-  const [title, setTitle] = useState<IChannel['title']>('');
+  const [title, setTitle] = useState<IChannel["title"]>("");
   const [videos, setVideos] = useState<IVideo[]>([]);
   const load = useCallback(
     () =>
@@ -46,18 +46,18 @@ const ChannelPage = (props: {
   }, [props.folderId]);
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
-    IVideo['id'] | undefined
+    IVideo["id"] | undefined
   >();
 
   const titleRow = [
     ...(folder
       ? [
           {
-            text: 'My Folders',
-            callback: () => router.push('/folders'),
+            text: "My Folders",
+            callback: () => router.push("/folders"),
           },
           {
-            text: folder?.title ?? '',
+            text: folder?.title ?? "",
             callback: () => router.push(`/folders/${props.folderId}`),
           },
         ]
@@ -72,12 +72,12 @@ const ChannelPage = (props: {
 
   const actions = [
     {
-      text: 'Edit name',
+      text: "Edit name",
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
     {
-      text: 'Delete',
+      text: "Delete",
       kallback: () => setDeletionDialogOpen(true),
       icon: TrashcanIcon,
       color: PALETTE.system.red,
@@ -88,7 +88,7 @@ const ChannelPage = (props: {
 
   const deleteChannel = () =>
     ApiController.deleteChannel(props.id).then(() =>
-      router.push(props.folderId ? `/folders/${props.folderId}` : '/folders')
+      router.push(props.folderId ? `/folders/${props.folderId}` : "/folders")
     );
 
   return (
@@ -102,7 +102,7 @@ const ChannelPage = (props: {
           actions={actions}
           onBack={() =>
             router.push(
-              props.folderId ? `/folders/${props.folderId}` : '/folders'
+              props.folderId ? `/folders/${props.folderId}` : "/folders"
             )
           }
         />
@@ -131,9 +131,9 @@ const ChannelPage = (props: {
       ) : null} */}
       <DeletionDialog
         open={deletionDialogOpen}
-        type='channel'
+        type="channel"
         onClose={() => setDeletionDialogOpen(false)}
-        subtitle='If you remove this Channel, all of its Videos too will be deleted.'
+        subtitle="If you remove this Channel, all of its Videos too will be deleted."
         onSubmit={deleteChannel}
         isMobile={props.isMobile}
       />
@@ -144,7 +144,7 @@ const ChannelPage = (props: {
         onSubmit={(title) =>
           ApiController.changeChannelName(props.id, title)
             .then(load)
-            .then(() => notificationCtx.success('Renamed Channel'))
+            .then(() => notificationCtx.success("Renamed Channel"))
         }
         isMobile={props.isMobile}
       />
