@@ -1,36 +1,36 @@
-'use client';
+"use client";
 
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import AstroLandingPage from './AstroLandingPage';
-import WonderingIllustration from '@/images/WonderingIllustration.png';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import _ from 'lodash';
-import LandingPageViewport from './LandingPageViewport';
-import ExplainerCard from './ExplainerCard';
-import OtherPageCard from './OtherPageCard';
-import { IntroSteps } from './IntroSteps';
+import { Stack } from "@mui/system";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import AstroLandingPage from "./AstroLandingPage";
+import WonderingIllustration from "@/images/WonderingIllustration.png";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import _ from "lodash";
+import LandingPageViewport from "./LandingPageViewport";
+import ExplainerCard from "./ExplainerCard";
+import OtherPageCard from "./OtherPageCard";
+import { IntroSteps } from "./IntroSteps";
 import {
   WorksheetTopic,
   WorksheetComponent,
   ISpecificWorksheetSettings,
-} from '../../../components/WorksheetGenerator';
-import Image from 'next/image';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+} from "../../../components/WorksheetGenerator";
+import Image from "next/image";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 //import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
-import dynamic from 'next/dynamic';
-import CheckIcon from '@/images/icons/CheckIcon.svg';
-import { headers } from 'next/headers';
-import { getSelectorsByUserAgent } from 'react-device-detect';
-import { useEffect, useState } from 'react';
-import { useWindowSize } from 'usehooks-ts';
-import { VisualLinkCards } from './VisualLinkCards';
-import ValueProposition, { IValuePropositionItem } from './ValueProposition';
-import { Keywords } from './Keywords';
+import dynamic from "next/dynamic";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
+import { headers } from "next/headers";
+import { getSelectorsByUserAgent } from "react-device-detect";
+import { useEffect, useState } from "react";
+import { useWindowSize } from "usehooks-ts";
+import { VisualLinkCards } from "./VisualLinkCards";
+import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
+import { Keywords } from "./Keywords";
 import MultiplicationTableColumns, {
   IMultiplicationTableColumns,
-} from '@/app/components/MultiplicationTableColumns';
-import { useRouter } from 'next/navigation';
+} from "@/app/components/MultiplicationTableColumns";
+import { useRouter } from "next/navigation";
 
 export interface IAstroLandingPage {
   urlId: string;
@@ -43,7 +43,7 @@ export interface IAstroLandingPage {
     worksheetId: WorksheetComponent;
     title: string;
     nProblems: number;
-    specificSettings?: Omit<ISpecificWorksheetSettings, 'max' | 'random'> & {
+    specificSettings?: Omit<ISpecificWorksheetSettings, "max" | "random"> & {
       topic: WorksheetTopic;
     };
   };
@@ -163,12 +163,12 @@ export interface IAstroLandingPage {
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
 const PrintableMultiplicationTable = dynamic(
-  () => import('./PrintableMultiplicationTable'),
+  () => import("./PrintableMultiplicationTable"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
 const WorksheetGenerator = dynamic(
-  () => import('../../../components/WorksheetGenerator'),
+  () => import("../../../components/WorksheetGenerator"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -177,38 +177,38 @@ export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
 }) => (
   <Stack
-    position='absolute'
+    position="absolute"
     top={0}
-    width='100vw'
-    height='100vh'
-    justifyContent='center'
-    alignItems='center'
+    width="100vw"
+    height="100vh"
+    justifyContent="center"
+    alignItems="center"
     sx={{
-      pointerEvents: 'none',
-      filter: 'grayscale(1)',
+      pointerEvents: "none",
+      filter: "grayscale(1)",
     }}
     zIndex={999}
   >
     <UrsorFadeIn delay={500} duration={800}>
-      <Stack position='relative' spacing='18px' pt={`${props.paddingTop}px`}>
+      <Stack position="relative" spacing="18px" pt={`${props.paddingTop}px`}>
         <Stack sx={{ opacity: 0.3 }}>
           <Image
             height={207}
             width={217}
             src={WonderingIllustration}
-            alt='Empty state illustration'
+            alt="Empty state illustration"
           />
         </Stack>
         <Stack
-          width='100%'
-          alignItems='center'
-          position='absolute'
+          width="100%"
+          alignItems="center"
+          position="absolute"
           top={`${170 + (props.paddingTop ?? 0)}px`}
         >
           <Typography
             bold
             color={PALETTE.secondary.grey[3]}
-            sx={{ textAlign: 'center' }}
+            sx={{ textAlign: "center" }}
           >
             {props.children}
           </Typography>
@@ -232,37 +232,37 @@ export const Captioned = (props: {
 }) => (
   <Stack
     flex={props.noFlex ? undefined : 1}
-    spacing='6px'
+    spacing="6px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,
-      pointerEvents: props.disabled ? 'none' : undefined,
+      pointerEvents: props.disabled ? "none" : undefined,
     }}
-    position='relative'
+    position="relative"
     height={props.height}
   >
-    <Stack direction='row' justifyContent='space-between'>
+    <Stack direction="row" justifyContent="space-between">
       {props.text ? (
-        <Typography variant='small' color={PALETTE.secondary.grey[4]}>
+        <Typography variant="small" color={PALETTE.secondary.grey[4]}>
           {props.text}
         </Typography>
       ) : null}
       {props.checkbox ? (
-        <Stack direction='row' spacing='6px' alignItems='center'>
-          <Typography variant='small' color={PALETTE.secondary.grey[4]}>
+        <Stack direction="row" spacing="6px" alignItems="center">
+          <Typography variant="small" color={PALETTE.secondary.grey[4]}>
             {props.checkbox.text}
           </Typography>
           <Stack
-            width='13px'
-            height='13px'
+            width="13px"
+            height="13px"
             border={`2px solid ${PALETTE.secondary.grey[5]}`}
-            borderRadius='6px'
-            justifyContent='center'
-            alignItems='center'
+            borderRadius="6px"
+            justifyContent="center"
+            alignItems="center"
             onClick={props.checkbox.callback}
             sx={{
-              cursor: 'pointer',
-              '&:hover': { opacity: 0.6 },
-              transition: '0.2s',
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
               svg: {
                 path: {
                   fill: PALETTE.secondary.grey[5],
@@ -271,7 +271,7 @@ export const Captioned = (props: {
             }}
           >
             {props.checkbox.on ? (
-              <CheckIcon height='11px' width='11px' />
+              <CheckIcon height="11px" width="11px" />
             ) : null}
           </Stack>
         </Stack>
@@ -299,7 +299,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.howItWorks
           ? [
               <LandingPageViewport
-                key='howItWorks'
+                key="howItWorks"
                 supertitle={props.howItWorks.supertitle}
                 title={props.howItWorks.title}
                 mobile={isMobile}
@@ -317,17 +317,17 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.worksheetPreview
           ? [
               <LandingPageViewport
-                key='worksheetPreview'
+                key="worksheetPreview"
                 supertitle={props.worksheetPreview.supertitle}
                 title={props.worksheetPreview.title}
                 mobile={isMobile}
               >
                 <Stack
-                  direction={isMobile ? 'column' : 'row'}
-                  spacing={isMobile ? '30px' : '45px'}
-                  alignItems={isMobile ? 'center' : undefined}
-                  overflow='hidden'
-                  pt='8px'
+                  direction={isMobile ? "column" : "row"}
+                  spacing={isMobile ? "30px" : "45px"}
+                  alignItems={isMobile ? "center" : undefined}
+                  overflow="hidden"
+                  pt="8px"
                 >
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
@@ -336,9 +336,9 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                       mobile={isMobile}
                     />
                   ) : null}
-                  <Stack spacing='10px' maxWidth='503px'>
+                  <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
-                      .split('\n')
+                      .split("\n")
                       .map((paragraph, i) => (
                         <Typography key={i} color={PALETTE.secondary.grey[4]}>
                           {paragraph}
@@ -352,51 +352,51 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.linkTable
           ? [
               <LandingPageViewport
-                key='linkTable'
+                key="linkTable"
                 supertitle={props.linkTable.supertitle}
                 title={props.linkTable.title}
                 subtitle={props.linkTable.body}
                 mobile={isMobile}
               >
                 <Stack
-                  width='990px'
-                  borderRadius='12px'
-                  overflow='hidden'
+                  width="990px"
+                  borderRadius="12px"
+                  overflow="hidden"
                   border={`1px solid ${PALETTE.secondary.grey[2]}`}
                 >
                   <Stack
                     bgcolor={PALETTE.secondary.purple[2]}
-                    justifyContent='center'
-                    alignItems='center'
-                    height='56px'
+                    justifyContent="center"
+                    alignItems="center"
+                    height="56px"
                   >
-                    <Typography htmlTag='h5' bold color='rgb(255,255,255)'>
+                    <Typography htmlTag="h5" bold color="rgb(255,255,255)">
                       {props.linkTable.tableHeading}
                     </Typography>
                   </Stack>
-                  <Stack spacing={isMobile ? '16px' : '22px'}>
+                  <Stack spacing={isMobile ? "16px" : "22px"}>
                     {_.chunk(props.linkTable.links, 2).map((pair, i) => (
                       <Stack
                         key={i}
-                        direction='row'
-                        height='57px'
-                        alignItems='center'
+                        direction="row"
+                        height="57px"
+                        alignItems="center"
                       >
                         <Stack
                           flex={1}
-                          height='100%'
-                          justifyContent='center'
-                          px='10px'
+                          height="100%"
+                          justifyContent="center"
+                          px="10px"
                           border={`1px solid ${PALETTE.secondary.grey[2]}`}
                         >
                           <a
-                            target='_blank'
+                            target="_blank"
                             href={pair[0].url}
                             style={{
-                              textDecoration: 'none',
+                              textDecoration: "none",
                               color: PALETTE.secondary.purple[2],
                             }}
-                            rel='noreferrer'
+                            rel="noreferrer"
                           >
                             <Stack flex={1}>
                               <Typography bold>{pair[0].text}</Typography>
@@ -406,20 +406,20 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                         {pair[1] ? (
                           <Stack
                             flex={1}
-                            height='100%'
-                            justifyContent='center'
-                            px='10px'
+                            height="100%"
+                            justifyContent="center"
+                            px="10px"
                             border={`1px solid ${PALETTE.secondary.grey[2]}`}
-                            borderLeft='none'
+                            borderLeft="none"
                           >
                             <a
-                              target='_blank'
+                              target="_blank"
                               href={pair[1].url}
                               style={{
-                                textDecoration: 'none',
+                                textDecoration: "none",
                                 color: PALETTE.secondary.purple[2],
                               }}
-                              rel='noreferrer'
+                              rel="noreferrer"
                             >
                               <Stack flex={1}>
                                 <Typography bold>{pair[1].text}</Typography>
@@ -437,7 +437,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.visualLinkCards
           ? [
               <LandingPageViewport
-                key='visualLinkCards'
+                key="visualLinkCards"
                 supertitle={props.visualLinkCards.supertitle}
                 title={props.visualLinkCards.title}
                 mobile={isMobile}
@@ -448,7 +448,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
           : []),
         ...(props.valueProposition
           ? [
-              <Stack key='valueProposition' py='60px' alignItems='center'>
+              <Stack key="valueProposition" py="60px" alignItems="center">
                 <ValueProposition
                   items={props.valueProposition.cards}
                   mobile={isMobile}
@@ -472,7 +472,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.printableChart
           ? [
               <LandingPageViewport
-                key='printableChart'
+                key="printableChart"
                 supertitle={props.printableChart.supertitle}
                 subtitle={props.printableChart.subtitle}
                 title={props.printableChart.title}
@@ -480,20 +480,20 @@ export default function LandingPageContents(props: IAstroLandingPage) {
               >
                 <Stack
                   sx={{
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.7 },
-                    transition: '0.2s',
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
                   }}
-                  pt={isMobile ? '12px' : undefined}
+                  pt={isMobile ? "12px" : undefined}
                 >
                   <UrsorButton
-                    size={isMobile ? 'small' : 'large'}
+                    size={isMobile ? "small" : "large"}
                     dark
-                    variant='tertiary'
+                    variant="tertiary"
                     endIcon={PencilIcon}
                     iconSize={isMobile ? 16 : 22}
-                    backgroundColor='linear-gradient(172deg, #F279C5, #1D62F6)'
-                    onClick={() => router.push('/dashboard')}
+                    backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                    onClick={() => router.push("/dashboard")}
                   >
                     Create a printable multiplication chart
                   </UrsorButton>
@@ -504,7 +504,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.createWorksheets
           ? [
               <LandingPageViewport
-                key='createWorksheets'
+                key="createWorksheets"
                 supertitle={props.createWorksheets.supertitle}
                 subtitle={props.createWorksheets.subtitle}
                 title={props.createWorksheets.title}
@@ -513,20 +513,20 @@ export default function LandingPageContents(props: IAstroLandingPage) {
               >
                 <Stack
                   sx={{
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.7 },
-                    transition: '0.2s',
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
                   }}
-                  pt={isMobile ? '12px' : undefined}
+                  pt={isMobile ? "12px" : undefined}
                 >
                   <UrsorButton
-                    size={isMobile ? 'small' : 'large'}
+                    size={isMobile ? "small" : "large"}
                     dark
-                    variant='tertiary'
+                    variant="tertiary"
                     endIcon={PencilIcon}
                     iconSize={isMobile ? 16 : 22}
-                    backgroundColor='linear-gradient(172deg, #F279C5, #1D62F6)'
-                    onClick={() => router.push('/dashboard')}
+                    backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                    onClick={() => router.push("/dashboard")}
                   >
                     Create your own worksheets
                   </UrsorButton>
@@ -537,7 +537,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.keywords
           ? [
               <LandingPageViewport
-                key='keywords'
+                key="keywords"
                 supertitle={props.keywords.supertitle}
                 title={props.keywords.title}
                 mobile={isMobile}
@@ -549,15 +549,15 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.explainerCards
           ? [
               <LandingPageViewport
-                key='explainerCards'
+                key="explainerCards"
                 supertitle={props.explainerCards.supertitle}
                 subtitle={props.explainerCards.body}
                 title={props.explainerCards.title}
                 mobile={isMobile}
               >
                 <Stack
-                  direction={isMobile ? 'column' : 'row'}
-                  spacing={isMobile ? '16px' : '22px'}
+                  direction={isMobile ? "column" : "row"}
+                  spacing={isMobile ? "16px" : "22px"}
                 >
                   <ExplainerCard
                     imageUrl={props.explainerCards?.cards?.[0]?.imageUrl}
@@ -585,17 +585,17 @@ export default function LandingPageContents(props: IAstroLandingPage) {
         ...(props.otherPages
           ? [
               <LandingPageViewport
-                key='otherPages'
+                key="otherPages"
                 supertitle={props.otherPages.supertitle}
                 title={props.otherPages.title}
                 mobile={isMobile}
               >
-                <Stack spacing={isMobile ? '14px' : '22px'}>
+                <Stack spacing={isMobile ? "14px" : "22px"}>
                   {_.chunk(props.otherPages.links, 2).map((pair, i) => (
                     <Stack
                       key={i}
-                      direction={isMobile ? 'column' : 'row'}
-                      spacing={isMobile ? '14px' : '22px'}
+                      direction={isMobile ? "column" : "row"}
+                      spacing={isMobile ? "14px" : "22px"}
                     >
                       <OtherPageCard
                         title={pair[0].title}
@@ -621,13 +621,13 @@ export default function LandingPageContents(props: IAstroLandingPage) {
           : []),
       ]}
     >
-      <Stack minHeight='540px' px='20px'>
+      <Stack minHeight="540px" px="20px">
         <WorksheetGenerator
           {...props.worksheetGenerator}
           fadeIn
           mobile={isMobile}
           glow
-          buttonText='Download'
+          buttonText="Download"
         />
       </Stack>
     </AstroLandingPage>
