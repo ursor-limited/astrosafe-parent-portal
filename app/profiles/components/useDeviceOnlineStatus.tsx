@@ -27,7 +27,6 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
     );
     const handleMessage = (event: any) => {
       if (!event.data) return;
-      console.log("JOFOFKOFK");
       const data = JSON.parse(event.data);
       data.deviceId && setDeviceOnlineStatus(data.deviceId, data.online);
     };
