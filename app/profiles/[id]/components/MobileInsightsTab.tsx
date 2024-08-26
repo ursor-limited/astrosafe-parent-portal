@@ -9,8 +9,6 @@ import AstroTimeChart from "./AstroTimeChart";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import HistorySection from "./HistorySection";
-import Link from "next/link";
 import CalendarButton from "@/app/components/CalendarButton";
 import { IDayScreenTime, IVisitedSite } from "./InsightsTab";
 import MobileHistorySection from "./MobileHistorySection";
