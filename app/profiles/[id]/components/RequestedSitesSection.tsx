@@ -1,11 +1,11 @@
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import Image from 'next/image';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { IRequestedSite } from './LimitsTab';
-import ApiController from '@/app/api';
-import { useContext } from 'react';
-import NotificationContext from '@/app/components/NotificationContext';
+import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
+import { Stack } from "@mui/system";
+import Image from "next/image";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import { IRequestedSite } from "./LimitsTab";
+import ApiController from "@/app/api";
+import { useContext } from "react";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const RequestedSiteRow = (
   props: IRequestedSite & {
@@ -14,37 +14,37 @@ const RequestedSiteRow = (
   }
 ) => (
   <Stack
-    direction='row'
-    height='58px'
-    alignItems='center'
-    px='16px'
-    justifyContent='space-between'
-    spacing='10px'
+    direction="row"
+    height="58px"
+    alignItems="center"
+    px="16px"
+    justifyContent="space-between"
+    spacing="10px"
     border={`2px solid ${PALETTE.secondary.orange[3]}`}
-    borderRadius='8px'
+    borderRadius="8px"
     bgcolor={PALETTE.secondary.orange[1]}
-    overflow='hidden'
+    overflow="hidden"
   >
-    <Stack direction='row' spacing='10px' alignItems='center' flex={1}>
-      <Stack borderRadius='100%' overflow='hidden' minWidth='32px'>
+    <Stack direction="row" spacing="10px" alignItems="center" flex={1}>
+      <Stack borderRadius="100%" overflow="hidden" minWidth="32px">
         <Stack
-          minHeight='32px'
-          minWidth='32px'
-          borderRadius='100%'
-          overflow='hidden'
+          minHeight="32px"
+          minWidth="32px"
+          borderRadius="100%"
+          overflow="hidden"
         >
           {props.faviconUrl ? (
             <Image
               src={props.faviconUrl}
               height={32}
               width={32}
-              alt='favicon'
+              alt="favicon"
             />
           ) : null}
         </Stack>
       </Stack>
       <Stack
-        sx={{ transform: 'translateY(-2px)' }}
+        sx={{ transform: "translateY(-2px)" }}
         flex={1}
         // maxWidth={0}
         // minWidth="100%"
@@ -54,7 +54,7 @@ const RequestedSiteRow = (
         </Typography>
         <Stack flex={1}>
           <Typography
-            variant='tiny'
+            variant="tiny"
             bold
             color={PALETTE.secondary.grey[3]}
             maxLines={1}
@@ -64,19 +64,19 @@ const RequestedSiteRow = (
         </Stack>
       </Stack>
     </Stack>
-    <Stack direction='row' spacing='6px'>
+    <Stack direction="row" spacing="6px">
       <UrsorButton
         dark
-        variant='tertiary'
-        size='small'
+        variant="tertiary"
+        size="small"
         onClick={props.onApprove}
       >
         Approve
       </UrsorButton>
       <UrsorButton
-        size='small'
-        backgroundColor='transparent'
-        variant='secondary'
+        size="small"
+        backgroundColor="transparent"
+        variant="secondary"
         onClick={props.onDeny}
       >
         Deny
@@ -91,11 +91,11 @@ const RequestedSitesSection = (props: {
 }) => {
   const notificationCtx = useContext(NotificationContext);
   return (
-    <Stack spacing='12px'>
-      <Typography variant='large' bold>{`${props.sites.length} requested site${
-        props.sites.length === 1 ? '' : 's'
+    <Stack spacing="12px">
+      <Typography variant="large" bold>{`${props.sites.length} requested site${
+        props.sites.length === 1 ? "" : "s"
       }`}</Typography>
-      <Stack spacing='12px'>
+      <Stack spacing="12px">
         {props.sites.slice(0, 3).map((s) => (
           <RequestedSiteRow
             key={s.id}
@@ -103,13 +103,13 @@ const RequestedSitesSection = (props: {
             onApprove={() =>
               ApiController.approveRequestedSite(s.id).then(() => {
                 props.onUpdate();
-                notificationCtx.success('Approved site');
+                notificationCtx.success("Approved site");
               })
             }
             onDeny={() =>
               ApiController.denyRequestedSite(s.id).then(() => {
                 props.onUpdate();
-                notificationCtx.negativeSuccess('Denied site');
+                notificationCtx.negativeSuccess("Denied site");
               })
             }
           />

@@ -1,83 +1,83 @@
-import React, { useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { AstroBentoCard } from '../../../filters/[id]/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import { IVisitedSite } from './InsightsTab';
-import Link from 'next/link';
-import Image from 'next/image';
-import _ from 'lodash';
-import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog';
-import { cleanUrl } from './MobileInsightsTab';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import React, { useState } from "react";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import { AstroBentoCard } from "../../../filters/[id]/components/AstroBentoCard";
+import { Stack } from "@mui/system";
+import { IVisitedSite } from "./InsightsTab";
+import Link from "next/link";
+import Image from "next/image";
+import _ from "lodash";
+import AllMostVisitedSitesDialog from "./AllMostVisitedSitesDialog";
+import { cleanUrl } from "./MobileInsightsTab";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {
-    maxScreenTime: IVisitedSite['screenTime'];
+    maxScreenTime: IVisitedSite["screenTime"];
     borderTop: boolean;
   }
 ) => (
   <Stack
-    height='73px'
+    height="73px"
     borderTop={
       props.borderTop ? `2px solid ${PALETTE.secondary.grey[2]}` : undefined
     }
     sx={{
-      cursor: 'pointer',
-      '&:hover': { opacity: 0.7 },
-      transition: '0.2s',
+      cursor: "pointer",
+      "&:hover": { opacity: 0.7 },
+      transition: "0.2s",
     }}
-    justifyContent='center'
+    justifyContent="center"
   >
     <Link
       href={props.url}
-      target='_blank'
+      target="_blank"
       style={{
-        textDecoration: 'none',
+        textDecoration: "none",
       }}
     >
-      <Stack flex={1} direction='row' spacing='12px' alignItems='center'>
+      <Stack flex={1} direction="row" spacing="12px" alignItems="center">
         <Stack
-          borderRadius='8px'
-          overflow='hidden'
+          borderRadius="8px"
+          overflow="hidden"
           minHeight={42}
           minWidth={42}
-          boxShadow='0 0 12px rgba(0,0,0,0.1)'
+          boxShadow="0 0 12px rgba(0,0,0,0.1)"
         >
-          <Image src={props.faviconUrl} height={42} width={42} alt='favicon' />
+          <Image src={props.faviconUrl} height={42} width={42} alt="favicon" />
         </Stack>
-        <Stack spacing='8px' width='100%'>
-          <Stack direction='row' spacing='8px' alignItems='center'>
+        <Stack spacing="8px" width="100%">
+          <Stack direction="row" spacing="8px" alignItems="center">
             <Typography
               bold
               maxLines={1}
               sx={{
-                wordBreak: 'break-all',
+                wordBreak: "break-all",
               }}
             >
               {props.title}
             </Typography>
-            <Stack minWidth='20%'>
+            <Stack minWidth="20%">
               <Typography
                 bold
                 color={PALETTE.secondary.grey[3]}
                 maxLines={1}
                 sx={{
-                  wordBreak: 'break-all',
+                  wordBreak: "break-all",
                 }}
               >
-                {cleanUrl(props.url).replace(/\/$/, '')}
+                {cleanUrl(props.url).replace(/\/$/, "")}
               </Typography>
             </Stack>
           </Stack>
-          <Stack direction='row' alignItems='center' spacing='12px'>
+          <Stack direction="row" alignItems="center" spacing="12px">
             <Stack
               width={`${(100 * props.screenTime) / props.maxScreenTime}%`}
-              height='8px'
+              height="8px"
               bgcolor={PALETTE.secondary.purple[1]}
-              borderRadius='4px'
+              borderRadius="4px"
             />
-            <Stack width='60px'>
-              <Typography bold variant='tiny'>{`${Math.floor(
+            <Stack width="60px">
+              <Typography bold variant="tiny">{`${Math.floor(
                 props.screenTime / 60
               )}h ${Math.floor(props.screenTime % 60)}m`}</Typography>
             </Stack>
@@ -97,14 +97,14 @@ const MostVisitedSitesSection = (props: {
   return (
     <>
       <AstroBentoCard
-        title='Most visited sites today'
+        title="Most visited sites today"
         notCollapsible
-        paddingBottom='0'
+        paddingBottom="0"
         isMobile={props.isMobile}
         topRightStuff={
           <UrsorButton
-            size='small'
-            variant='secondary'
+            size="small"
+            variant="secondary"
             onClick={() => setAllMostVisitedSitesDialogOpen(true)}
           >
             View all

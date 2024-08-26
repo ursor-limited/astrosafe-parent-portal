@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import UrsorDialog from '@/app/components/UrsorDialog';
-import { PALETTE, Typography } from '@/ui';
-import { getISODateString, IAllowedTime } from './LimitsTab';
-import { alpha, Stack } from '@mui/system';
-import dayjs from 'dayjs';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import useNewSegmentTimes from './useNewSegmentTimes';
-import _ from 'lodash';
-import XIcon from '@/images/icons/X.svg';
+import React, { useEffect, useState } from "react";
+import UrsorDialog from "@/app/components/UrsorDialog";
+import { PALETTE, Typography } from "@/ui";
+import { getISODateString, IAllowedTime } from "./LimitsTab";
+import { alpha, Stack } from "@mui/system";
+import dayjs from "dayjs";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import useNewSegmentTimes from "./useNewSegmentTimes";
+import _ from "lodash";
+import XIcon from "@/images/icons/X.svg";
 
 const DAY_FULL_NAMES = {
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 'Saturday',
-  0: 'Sunday',
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
+  0: "Sunday",
 };
 
 const TimeSelectionColumn = (props: {
-  day: IAllowedTime['day'];
-  time: IAllowedTime['startTime'];
-  setTime: (newTime: IAllowedTime['startTime']) => void;
+  day: IAllowedTime["day"];
+  time: IAllowedTime["startTime"];
+  setTime: (newTime: IAllowedTime["startTime"]) => void;
 }) => {
   const [gridRef, setGridRef] = useState<HTMLElement | null>(null);
   const [hideTopGradient, setHideTopGradient] = useState<boolean>(true);
@@ -35,53 +35,53 @@ const TimeSelectionColumn = (props: {
     }
   };
   return (
-    <Stack spacing='12px' alignItems='center'>
-      <Typography bold variant='h5' color={PALETTE.secondary.grey[5]}>
-        {dayjs(props.time).utc().format('hh:mma')}
+    <Stack spacing="12px" alignItems="center">
+      <Typography bold variant="h5" color={PALETTE.secondary.grey[5]}>
+        {dayjs(props.time).utc().format("hh:mma")}
       </Typography>
-      <Stack position='relative' overflow='hidden'>
+      <Stack position="relative" overflow="hidden">
         <Stack
-          position='absolute'
+          position="absolute"
           top={-1}
           left={0}
-          height='80px'
-          width='100%'
+          height="80px"
+          width="100%"
           sx={{
             opacity: hideTopGradient ? 0 : 1,
-            transition: '0.3s',
-            pointerEvents: 'none',
+            transition: "0.3s",
+            pointerEvents: "none",
             background: `linear-gradient(rgb(255,255,255), rgba(255,255,255,0))`,
-            transform: 'translateY(1px)',
+            transform: "translateY(1px)",
           }}
           zIndex={2}
         />
         <Stack
-          position='absolute'
+          position="absolute"
           bottom={-1}
           left={0}
-          height='80px'
-          width='100%'
+          height="80px"
+          width="100%"
           sx={{
             opacity: hideBottomGradient ? 0 : 1,
-            transition: '0.3s',
-            pointerEvents: 'none',
+            transition: "0.3s",
+            pointerEvents: "none",
             background: `linear-gradient(rgba(255,255,255,0), rgb(255,255,255))`,
-            transform: 'translateY(1px)',
+            transform: "translateY(1px)",
           }}
           zIndex={2}
         />
         <Stack
-          overflow='scroll'
+          overflow="scroll"
           ref={setGridRef}
           onScroll={handleScroll}
-          pt='10px'
+          pt="10px"
         >
-          <Stack height='170px' spacing='6px'>
+          <Stack height="170px" spacing="6px">
             {[
               ...[...Array((24 * 60) / 15).keys()].map((i) => (
                 <Stack
                   key={i}
-                  alignItems='center'
+                  alignItems="center"
                   onClick={() =>
                     props.setTime(
                       getISODateString(
@@ -98,14 +98,14 @@ const TimeSelectionColumn = (props: {
                       .hour(0)
                       .minute(0)
                       .millisecond(0)
-                      .add(i * 15, 'minutes')
-                      .format('hh:mm a')}
+                      .add(i * 15, "minutes")
+                      .format("hh:mm a")}
                   </Typography>
                 </Stack>
               )),
               <Stack
-                key='midnight'
-                alignItems='center'
+                key="midnight"
+                alignItems="center"
                 onClick={() =>
                   props.setTime(
                     getISODateString(props.day < 6 ? props.day + 1 : 0, 24, 0)
@@ -113,7 +113,7 @@ const TimeSelectionColumn = (props: {
                 }
               >
                 <Typography color={PALETTE.secondary.grey[5]}>
-                  {'00:00am'}
+                  {"00:00am"}
                 </Typography>
               </Stack>,
             ]}
@@ -125,33 +125,33 @@ const TimeSelectionColumn = (props: {
 };
 
 const MobileTimeSelectionDialog = (props: {
-  day: IAllowedTime['day'];
+  day: IAllowedTime["day"];
   open: boolean;
-  startTime: IAllowedTime['startTime'];
-  setStartTime: (time: IAllowedTime['startTime']) => void;
-  endTime: IAllowedTime['endTime'];
-  setEndTime: (time: IAllowedTime['endTime']) => void;
+  startTime: IAllowedTime["startTime"];
+  setStartTime: (time: IAllowedTime["startTime"]) => void;
+  endTime: IAllowedTime["endTime"];
+  setEndTime: (time: IAllowedTime["endTime"]) => void;
   onClose: () => void;
 }) => {
   return (
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title='Select times'
+      title="Select times"
       subtitle={[`Choose this browsing period's start and end time.`]}
-      width='422px'
+      width="422px"
       dynamicHeight
       isMobile
     >
-      <Stack direction='row' width='100%'>
-        <Stack flex={1} justifyContent='center'>
+      <Stack direction="row" width="100%">
+        <Stack flex={1} justifyContent="center">
           <TimeSelectionColumn
             day={props.day}
             time={props.startTime}
             setTime={props.setStartTime}
           />
         </Stack>
-        <Typography variant='h5' color={PALETTE.secondary.grey[3]}>
+        <Typography variant="h5" color={PALETTE.secondary.grey[3]}>
           to
         </Typography>
         <Stack flex={1}>
@@ -167,41 +167,41 @@ const MobileTimeSelectionDialog = (props: {
 };
 
 const MobileAllowedTimeRowDisplayButton = (props: {
-  day: IAllowedTime['day'];
+  day: IAllowedTime["day"];
   dayName: string;
-  startTime: IAllowedTime['startTime'];
-  setStartTime: (time: IAllowedTime['startTime']) => void;
-  endTime: IAllowedTime['endTime'];
-  setEndTime: (time: IAllowedTime['endTime']) => void;
+  startTime: IAllowedTime["startTime"];
+  setStartTime: (time: IAllowedTime["startTime"]) => void;
+  endTime: IAllowedTime["endTime"];
+  setEndTime: (time: IAllowedTime["endTime"]) => void;
 }) => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   return (
     <>
       <Stack
-        borderRadius='8px'
+        borderRadius="8px"
         bgcolor={PALETTE.secondary.grey[1]}
-        alignItems='center'
-        justifyContent='center'
-        direction='row'
-        height='39px'
-        width='210px'
-        px='14px'
-        boxSizing='border-box'
-        spacing='10px'
+        alignItems="center"
+        justifyContent="center"
+        direction="row"
+        height="39px"
+        width="210px"
+        px="14px"
+        boxSizing="border-box"
+        spacing="10px"
         onClick={() => setDialogOpen(true)}
       >
-        <Stack alignItems='center' direction='row' spacing='5px'>
+        <Stack alignItems="center" direction="row" spacing="5px">
           <Typography bold>
-            {dayjs(props.startTime).utc().format('hh:mma')}
+            {dayjs(props.startTime).utc().format("hh:mma")}
           </Typography>
           {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
         <Typography bold color={PALETTE.secondary.grey[3]}>
           to
         </Typography>
-        <Stack alignItems='center' direction='row' spacing='5px'>
+        <Stack alignItems="center" direction="row" spacing="5px">
           <Typography bold>
-            {dayjs(props.endTime).utc().format('hh:mma')}
+            {dayjs(props.endTime).utc().format("hh:mma")}
           </Typography>
           {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
@@ -222,15 +222,15 @@ const MobileAllowedTimeRowDisplayButton = (props: {
 };
 
 const MobileAllowedTimeRow = (props: {
-  day: IAllowedTime['day'];
+  day: IAllowedTime["day"];
   times: IAllowedTime[];
   addRange: (startTime: number, endTime: number) => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   reset: () => void;
   setRangeTimes: (
-    id: IAllowedTime['id'],
-    startTime: IAllowedTime['startTime'],
-    endTime: IAllowedTime['endTime']
+    id: IAllowedTime["id"],
+    startTime: IAllowedTime["startTime"],
+    endTime: IAllowedTime["endTime"]
   ) => void;
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
@@ -246,19 +246,19 @@ const MobileAllowedTimeRow = (props: {
   //@ts-ignore
   const dayName = DAY_FULL_NAMES[props.day];
   return (
-    <Stack spacing='4px'>
+    <Stack spacing="4px">
       <Typography bold color={PALETTE.secondary.grey[3]}>
         {dayName}
       </Typography>
-      <Stack direction='row'>
-        <Stack spacing='4px'>
+      <Stack direction="row">
+        <Stack spacing="4px">
           {sortedTimes.map((t) => (
             <Stack
               key={t.id}
-              direction='row'
-              spacing='10px'
-              alignItems='center'
-              justifyContent='space-between'
+              direction="row"
+              spacing="10px"
+              alignItems="center"
+              justifyContent="space-between"
             >
               <MobileAllowedTimeRowDisplayButton
                 day={props.day}
@@ -283,7 +283,7 @@ const MobileAllowedTimeRow = (props: {
                   }}
                   onClick={() => props.deleteRange(t.id)}
                 >
-                  <XIcon height='20px' width='20px' />
+                  <XIcon height="20px" width="20px" />
                 </Stack>
               ) : null}
             </Stack>
@@ -291,21 +291,21 @@ const MobileAllowedTimeRow = (props: {
         </Stack>
         <Stack
           flex={1}
-          justifyContent='flex-end'
-          alignItems='flex-end'
-          pb='3px'
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          pb="3px"
         >
           <Stack
-            width='30px'
-            height='30px'
+            width="30px"
+            height="30px"
             bgcolor={PALETTE.secondary.purple[2]}
-            borderRadius='100%'
-            justifyContent='center'
-            alignItems='center'
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
             sx={{
               svg: {
                 path: {
-                  fill: 'rgb(255,255,255)',
+                  fill: "rgb(255,255,255)",
                 },
               },
             }}
@@ -315,7 +315,7 @@ const MobileAllowedTimeRow = (props: {
               clearNewSegmentTimes();
             }}
           >
-            <PlusIcon height='20px' width='20px' />
+            <PlusIcon height="20px" width="20px" />
           </Stack>
         </Stack>
       </Stack>
