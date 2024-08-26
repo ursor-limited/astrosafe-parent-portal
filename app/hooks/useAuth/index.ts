@@ -9,11 +9,11 @@ const useAuth = () => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
 
   useEffect(() => {
-    const userInfoCookie = Cookies.get('userInfo');
+    const userInfo = localStorage.getItem('user_info');
 
-    if (!userInfoCookie) return;
+    if (!userInfo) return;
 
-    setUser(JSON.parse(userInfoCookie));
+    setUser(JSON.parse(userInfo));
   }, []);
 
   const login = () =>

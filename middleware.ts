@@ -40,7 +40,19 @@ export async function middleware(request: NextRequest) {
       `${BACKEND_URL}/login?origin_uri=${originUri}`
     );
 
+  const storedUserInfo = request.cookies.get('user_info')?.value;
+
+  if (storedUserInfo) return;
+
   const userInfo = await getUserInfo(accessToken, refreshToken!);
+
+  if (userInfo) {
+    const res = NextResponse.next();
+
+    res.cookies.set('user_info', JSON.stringify(userInfo));
+
+    return res;
+  }
 
   if (
     !UNPROTECTED_ROUTES.some((item) => originUri.startsWith(item)) &&
@@ -49,4 +61,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(
       `${BACKEND_URL}/login?origin_uri=${originUri}`
     );
+
+  return;
 }
