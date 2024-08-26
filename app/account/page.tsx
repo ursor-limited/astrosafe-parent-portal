@@ -5,8 +5,9 @@ import AccountPage from "./contents/common";
 import { UserProvider } from "../components/UserContext";
 
 async function Page() {
-  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
-    ?.isMobile;
+  const isMobile = getSelectorsByUserAgent(
+    headers().get("user-agent") ?? ""
+  )?.isMobile;
   return (
     <UserProvider>
       <AccountPage isMobile={isMobile} />
