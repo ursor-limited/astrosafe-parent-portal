@@ -20,6 +20,8 @@ export interface UserInfo {
   given_name: string;
   family_name: string;
   email: string;
+  group_id: number;
+  user_id: number;
 }
 
 export interface RealmAccess {

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
-  props: Omit<IChannel, "createdAt"> & {
+  props: Partial<Omit<IChannel, "createdAt">> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -31,16 +31,13 @@ const ChannelCard = (
       onClick={
         props.noPointerEvents
           ? undefined
-          : () =>
-              router.push(
-                `/channel/${props.id}${
-                  props.folderId ? `?folderId=${props.folderId}` : ""
-                }`
-              )
+          : () => router.push(`/channel/${props.id}`)
       }
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
-      onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
+      onDelete={() =>
+        props.id && ApiController.deleteChannel(props.id).then(props.onDelete)
+      }
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
       isMobile={props.isMobile}
       twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}

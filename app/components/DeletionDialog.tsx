@@ -1,41 +1,41 @@
-import NotificationContext from '@/app/components/NotificationContext';
-import UrsorDialog from '@/app/components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useContext, useState } from 'react';
-import { PALETTE, UrsorButton, UrsorInputField } from '@/ui';
-import { LabeledInputField } from '@/ui/labeled-input-field';
-import _ from 'lodash';
-import { AstroContent } from '../profiles/[id]/components/ContentTab';
+import NotificationContext from "@/app/components/NotificationContext";
+import UrsorDialog from "@/app/components/UrsorDialog";
+import { Stack } from "@mui/system";
+import { useContext, useState } from "react";
+import { PALETTE, UrsorButton, UrsorInputField } from "@/ui";
+import { LabeledInputField } from "@/ui/labeled-input-field";
+import _ from "lodash";
+import { AstroContent } from "../profiles/[id]/components/ContentTab";
 
-const INPUT_PHRASE = 'delete';
+const INPUT_PHRASE = "delete";
 
 const DeletionDialog = (props: {
   open: boolean;
-  type: AstroContent | 'Folder' | 'Filter';
+  type: AstroContent | "Folder" | "Filter";
   onClose: () => void;
   onSubmit: () => void;
   noConfirmation?: boolean;
   subtitle: string;
   isMobile?: boolean;
 }) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const notificationCtx = useContext(NotificationContext);
   return (
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title='Are you sure?'
+      title="Are you sure?"
       subtitle={[props.subtitle]}
-      width='422px'
+      width="422px"
       dynamicHeight
       isMobile={props.isMobile}
     >
       <Stack
         flex={1}
-        width='100%'
-        height='100%'
-        justifyContent='space-between'
-        spacing='32px'
+        width="100%"
+        height="100%"
+        justifyContent="space-between"
+        spacing="32px"
       >
         {!props.noConfirmation ? (
           <LabeledInputField
@@ -49,16 +49,16 @@ const DeletionDialog = (props: {
                 setInputValue(event.target.value)
               }
               placeholder={INPUT_PHRASE}
-              width='100%'
+              width="100%"
               leftAlign
             />
           </LabeledInputField>
         ) : null}
-        <Stack spacing='8px' width='100%'>
+        <Stack spacing="8px" width="100%">
           <UrsorButton
             dark
-            variant='tertiary'
-            width='100%'
+            variant="tertiary"
+            width="100%"
             disabled={!props.noConfirmation && inputValue !== INPUT_PHRASE}
             onClick={() => {
               props.onSubmit();
@@ -67,10 +67,11 @@ const DeletionDialog = (props: {
               );
             }}
             backgroundColor={PALETTE.system.red}
+            hoverOpacity={0.7}
           >
             Delete
           </UrsorButton>
-          <UrsorButton variant='secondary' width='100%' onClick={props.onClose}>
+          <UrsorButton variant="secondary" width="100%" onClick={props.onClose}>
             Keep
           </UrsorButton>
         </Stack>

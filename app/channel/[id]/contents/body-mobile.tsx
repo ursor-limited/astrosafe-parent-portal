@@ -2,7 +2,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { IVideo } from "../../../profiles/[id]/components/ContentTab";
 import { Stack } from "@mui/system";
-import DynamicCardGrid from "../../../components/DynamicCardGrid";
 import UrsorFadeIn from "../../../components/UrsorFadeIn";
 import VideoCard from "../../../folders/[id]/components/VideoCard";
 import EmptyStateIllustration from "../../../components/EmptyStateIllustration";

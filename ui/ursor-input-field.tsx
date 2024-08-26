@@ -67,7 +67,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
     type: props.password ? "password" : undefined,
     style: {
       paddingLeft: props.paddingLeft ?? "10px",
-      paddingRight: props.leftAlign ? "32px" : 0,
+      paddingRight: props.leftAlign ? "10px" : 0,
       textAlign: props.leftAlign ? "left" : "center",
       textOverflow: "ellipsis",
       fontSize: props.fontSize ?? FONT_SIZES.normal,
