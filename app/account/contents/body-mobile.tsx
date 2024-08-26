@@ -1,13 +1,13 @@
-import PageLayout from '@/app/components/PageLayout';
-import { Stack } from '@mui/system';
-import Image from 'next/image';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
-import LogOutIcon from '@/images/icons/LogOutIcon.svg';
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import PersonIcon from '@/images/icons/PersonIcon.svg';
+import PageLayout from "@/app/components/PageLayout";
+import { Stack } from "@mui/system";
+import Image from "next/image";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import LogOutIcon from "@/images/icons/LogOutIcon.svg";
+import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 import {
   AstroPlanState,
   IUser,
@@ -15,12 +15,12 @@ import {
   PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
-} from './common';
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
-import UsersTable from '../components/UsersTable';
-import DevicesTable from '../components/DevicesTable';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
-import MobileAccountPageHeader from '../components/MobileAccountPageHeader';
+} from "./common";
+import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
+import UsersTable from "../components/UsersTable";
+import DevicesTable from "../components/DevicesTable";
+import MobilePageLayout from "@/app/components/MobilePageLayout";
+import MobileAccountPageHeader from "../components/MobileAccountPageHeader";
 
 const AccountPageMobileBody = (props: {
   user: IUser;
@@ -33,13 +33,13 @@ const AccountPageMobileBody = (props: {
   onManagePlan: () => void;
 }) => (
   <MobilePageLayout
-    title='My Account'
-    selectedPage='account'
+    title="My Account"
+    selectedPage="account"
     topRightElement={
       <UrsorButton
-        size='small'
+        size="small"
         dark
-        variant='tertiary'
+        variant="tertiary"
         onClick={() => null}
         endIcon={LogOutIcon}
         iconSize={16}
@@ -53,14 +53,14 @@ const AccountPageMobileBody = (props: {
       />
     }
   >
-    <Stack spacing='12px'>
+    <Stack spacing="12px">
       <AstroBentoCard
-        title='My profile'
+        title="My profile"
         notCollapsible
         topRightStuff={
           <UrsorButton
-            size='small'
-            variant='secondary'
+            size="small"
+            variant="secondary"
             onClick={props.setEditDialogOpen}
             endIcon={PencilIcon}
             iconSize={13}
@@ -70,17 +70,17 @@ const AccountPageMobileBody = (props: {
         }
         isMobile
       >
-        <Stack direction='row' spacing='20px' flex={1}>
+        <Stack direction="row" spacing="20px" flex={1}>
           <UserInitialsCircle
-            name={props.user.realName ?? ''}
+            name={props.user.realName ?? ""}
             size={50}
             fontSize={18}
           />
-          <Stack direction='row' spacing='26px' minWidth='400px'>
-            <Stack width='100%' spacing='12px' alignItems='center'>
-              <Stack spacing='4px' width='100%'>
+          <Stack direction="row" spacing="26px" minWidth="400px">
+            <Stack width="100%" spacing="12px" alignItems="center">
+              <Stack spacing="4px" width="100%">
                 <Typography
-                  variant='tiny'
+                  variant="tiny"
                   bold
                   color={PALETTE.secondary.grey[3]}
                 >
@@ -88,9 +88,9 @@ const AccountPageMobileBody = (props: {
                 </Typography>
                 <Typography bold>{props.user.realName}</Typography>
               </Stack>
-              <Stack spacing='4px' width='100%'>
+              <Stack spacing="4px" width="100%">
                 <Typography
-                  variant='tiny'
+                  variant="tiny"
                   bold
                   color={PALETTE.secondary.grey[3]}
                 >
@@ -98,9 +98,9 @@ const AccountPageMobileBody = (props: {
                 </Typography>
                 <Typography bold>{props.user.displayName}</Typography>
               </Stack>
-              <Stack spacing='4px' width='100%'>
+              <Stack spacing="4px" width="100%">
                 <Typography
-                  variant='tiny'
+                  variant="tiny"
                   bold
                   color={PALETTE.secondary.grey[3]}
                 >
@@ -113,12 +113,12 @@ const AccountPageMobileBody = (props: {
         </Stack>
       </AstroBentoCard>
       <AstroBentoCard
-        title='My plan'
+        title="My plan"
         notCollapsible
         topRightStuff={
           <UrsorButton
-            size='small'
-            variant='secondary'
+            size="small"
+            variant="secondary"
             onClick={props.onManagePlan}
             endIcon={ChevronRightIcon}
             iconSize={14}
@@ -129,28 +129,28 @@ const AccountPageMobileBody = (props: {
         isMobile
       >
         <Stack
-          borderRadius='12px'
+          borderRadius="12px"
           sx={{
             background: VIBRANT_GRADIENT,
           }}
-          justifyContent='space-between'
-          p='20px'
+          justifyContent="space-between"
+          p="20px"
           flex={1}
         >
           <Stack
-            direction='row'
-            alignItems='center'
-            justifyContent='space-between'
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            <Typography variant='large' bold color='rgb(255,255,255)'>
+            <Typography variant="large" bold color="rgb(255,255,255)">
               {PLAN_DISPLAY_NAMES[props.planState]}
             </Typography>
-            {props.planState !== 'troomi' ? (
+            {props.planState !== "troomi" ? (
               <UrsorButton
                 dark
                 endIcon={VerifiedIcon}
-                size='small'
-                backgroundColor='rgb(255,255,255)'
+                size="small"
+                backgroundColor="rgb(255,255,255)"
                 fontColor={PALETTE.primary.navy}
                 hoverOpacity={0.7}
                 onClick={props.setUpgradeDialogOpen}
@@ -160,24 +160,24 @@ const AccountPageMobileBody = (props: {
               </UrsorButton>
             ) : null}
           </Stack>
-          <Stack pt='12px' direction='row' alignItems='center' spacing='24px'>
+          <Stack pt="12px" direction="row" alignItems="center" spacing="24px">
             <Stack flex={1}>
               {PLAN_BANNER_ITEMS[props.planState].map((item, i) => (
                 <Stack
                   key={i}
-                  direction='row'
-                  spacing='8px'
-                  alignItems='center'
+                  direction="row"
+                  spacing="8px"
+                  alignItems="center"
                   sx={{
                     svg: {
                       path: {
-                        fill: 'rgb(255,255,255)',
+                        fill: "rgb(255,255,255)",
                       },
                     },
                   }}
                 >
-                  <item.icon height='12px' width='12px' />
-                  <Typography variant='small' color='rgb(255,255,255)'>
+                  <item.icon height="12px" width="12px" />
+                  <Typography variant="small" color="rgb(255,255,255)">
                     {item.text}
                   </Typography>
                 </Stack>
@@ -186,26 +186,26 @@ const AccountPageMobileBody = (props: {
           </Stack>
         </Stack>
       </AstroBentoCard>
-      <AstroBentoCard title='Users in my space' notCollapsible isMobile>
-        <Stack spacing='12px'>
-          <Stack direction='row' spacing='12px'>
+      <AstroBentoCard title="Users in my space" notCollapsible isMobile>
+        <Stack spacing="12px">
+          <Stack direction="row" spacing="12px">
             <UrsorButton
               endIcon={PersonIcon}
-              size='small'
-              variant='secondary'
+              size="small"
+              variant="secondary"
               iconSize={16}
               onClick={props.setInviteDialogOpen}
-              width='100%'
+              width="100%"
             >
               Add an adult
             </UrsorButton>
             <UrsorButton
               endIcon={PhoneIcon}
-              size='small'
-              variant='secondary'
+              size="small"
+              variant="secondary"
               iconSize={16}
               onClick={props.setConnectDialogOpen}
-              width='100%'
+              width="100%"
             >
               Add a Device
             </UrsorButton>
@@ -216,20 +216,20 @@ const AccountPageMobileBody = (props: {
         </Stack>
       </AstroBentoCard>
 
-      <AstroBentoCard title='Boring bits' notCollapsible isMobile>
-        <Stack spacing='6px'>
+      <AstroBentoCard title="Boring bits" notCollapsible isMobile>
+        <Stack spacing="6px">
           <a
-            target='_blank'
-            href='https://www.astrosafe.co/terms-and-conditions'
+            target="_blank"
+            href="https://www.astrosafe.co/terms-and-conditions"
             style={{
-              textDecoration: 'none',
+              textDecoration: "none",
             }}
           >
             <Stack
               sx={{
-                cursor: 'pointer',
-                '&:hover': { opacity: 0.6 },
-                transition: '0.2s',
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
               }}
             >
               <Typography color={PALETTE.secondary.blue[3]}>
@@ -238,17 +238,17 @@ const AccountPageMobileBody = (props: {
             </Stack>
           </a>
           <a
-            target='_blank'
-            href='https://www.astrosafe.co/app/privacy-policy'
+            target="_blank"
+            href="https://www.astrosafe.co/app/privacy-policy"
             style={{
-              textDecoration: 'none',
+              textDecoration: "none",
             }}
           >
             <Stack
               sx={{
-                cursor: 'pointer',
-                '&:hover': { opacity: 0.6 },
-                transition: '0.2s',
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
               }}
             >
               <Typography color={PALETTE.secondary.blue[3]}>
@@ -259,13 +259,13 @@ const AccountPageMobileBody = (props: {
         </Stack>
       </AstroBentoCard>
       <AstroBentoCard
-        title='Feedback'
+        title="Feedback"
         notCollapsible
         topRightStuff={
           <UrsorButton
-            variant='secondary'
-            size='small'
-            onClick={() => window.open('mailto:hello@astrosafe.co')}
+            variant="secondary"
+            size="small"
+            onClick={() => window.open("mailto:hello@astrosafe.co")}
           >
             Send
           </UrsorButton>

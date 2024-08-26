@@ -1,20 +1,20 @@
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import { Stack } from '@mui/system';
-import { useRouter } from 'next/navigation';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { ITitleRowItem } from '@/app/components/TitleRow';
-import AstroTabSwitch from '../components/AstroTabSwitch';
-import { IActionPopupItem } from '@/app/components/ActionPopup';
-import DevicePageContentTab from '../components/ContentTab';
-import { useState } from 'react';
-import { AstroAccountTab } from './common';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
-import DevicePageLimitsTab from '../components/LimitsTab';
-import DevicePageMobileInsightsTab from '../components/MobileInsightsTab';
-import { IEnrichedContentBucket } from '@/app/folders/contents/common';
-import MobileDeviceCard from '../../components/MobileDeviceCard';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import DevicePageAppsTab from '../components/AppsTab';
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import { Stack } from "@mui/system";
+import { useRouter } from "next/navigation";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import { ITitleRowItem } from "@/app/components/TitleRow";
+import AstroTabSwitch from "../components/AstroTabSwitch";
+import { IActionPopupItem } from "@/app/components/ActionPopup";
+import DevicePageContentTab from "../components/ContentTab";
+import { useState } from "react";
+import { AstroAccountTab } from "./common";
+import MobilePageLayout from "@/app/components/MobilePageLayout";
+import DevicePageLimitsTab from "../components/LimitsTab";
+import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
+import { IEnrichedContentBucket } from "@/app/folders/contents/common";
+import MobileDeviceCard from "../../components/MobileDeviceCard";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import DevicePageAppsTab from "../components/AppsTab";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -28,26 +28,26 @@ const ProfilePageMobileBody = (props: {
 }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
-    props.tab ?? 'content'
+    props.tab ?? "content"
   );
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => router.push('/profiles')}
-      selectedPage='profiles'
+      titleBackButtonCallback={() => router.push("/profiles")}
+      selectedPage="profiles"
       actions={props.actions}
     >
-      <Stack spacing='24px' flex={1}>
+      <Stack spacing="24px" flex={1}>
         <MobileDeviceCard
           {...props.device}
-          onClickViewScreenTime={() => setSelectedTab('limits')}
+          onClickViewScreenTime={() => setSelectedTab("limits")}
           onUpdate={props.onUpdateDevice}
           noDeviceTypeUnderAvatar
         />
-        <Stack width='100%' alignItems='center' justifyContent='center'>
+        <Stack width="100%" alignItems="center" justifyContent="center">
           <Stack
-            height='1px'
-            width='100%'
+            height="1px"
+            width="100%"
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
@@ -56,28 +56,28 @@ const ProfilePageMobileBody = (props: {
           selected={selectedTab}
           items={[
             {
-              text: 'Content',
-              id: 'content',
+              text: "Content",
+              id: "content",
             },
             {
-              text: 'Apps',
-              id: 'apps',
+              text: "Apps",
+              id: "apps",
             },
             {
-              text: 'Insights',
-              id: 'insights',
+              text: "Insights",
+              id: "insights",
             },
             {
-              text: 'Limits',
-              id: 'limits',
+              text: "Limits",
+              id: "limits",
             },
           ]}
         />
-        {selectedTab === 'insights' ? (
+        {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab deviceId={props.device.id} />
-        ) : selectedTab === 'apps' ? (
+        ) : selectedTab === "apps" ? (
           <DevicePageAppsTab deviceId={props.device.id} isMobile />
-        ) : selectedTab === 'content' ? (
+        ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}
             deviceName={props.device.name}
@@ -86,7 +86,7 @@ const ProfilePageMobileBody = (props: {
             openAddFolderDialog={props.openAddFolderDialog}
             isMobile
           />
-        ) : selectedTab === 'limits' ? (
+        ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab deviceId={props.device.id} isMobile />
         ) : null}
       </Stack>

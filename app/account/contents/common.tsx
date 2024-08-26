@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import PeopleIcon from '@/images/icons/PeopleIcon.svg';
-import ClockIcon from '@/images/icons/ClockIcon.svg';
-import { Stack } from '@mui/system';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
-import _ from 'lodash';
-import EditProfileDialog from '../components/EditProfileDialog';
-import InviteDialog from '../components/InviteDialog';
-import { IGroup } from '../../folders/[id]/contents/common';
-import DeviceConnectDialog from '../../profiles/components/DeviceConnectDialog';
-import DownloadDialog from '../../profiles/components/DownloadDialog';
-import UpgradeDialog from '../../components/UpgradeDialog';
-import { DUMMY_GROUP_ID } from '../../filters/contents/body-desktop';
-import { useUserContext } from '../../components/UserContext';
-import ApiController from '../../api';
-import AccountPageDesktopBody from './body-desktop';
-import AccountPageMobileBody from './body-mobile';
-import TroomiManagePlanDialog from '../components/TroomiManagePlanDialog';
-import NotificationContext from '@/app/components/NotificationContext';
+import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
+import ClockIcon from "@/images/icons/ClockIcon.svg";
+import { Stack } from "@mui/system";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { PALETTE, Typography } from "@/ui";
+import _ from "lodash";
+import EditProfileDialog from "../components/EditProfileDialog";
+import InviteDialog from "../components/InviteDialog";
+import { IGroup } from "../../folders/[id]/contents/common";
+import DeviceConnectDialog from "../../profiles/components/DeviceConnectDialog";
+import DownloadDialog from "../../profiles/components/DownloadDialog";
+import UpgradeDialog from "../../components/UpgradeDialog";
+import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
+import { useUserContext } from "../../components/UserContext";
+import ApiController from "../../api";
+import AccountPageDesktopBody from "./body-desktop";
+import AccountPageMobileBody from "./body-mobile";
+import TroomiManagePlanDialog from "../components/TroomiManagePlanDialog";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export const DUMMY_USER_ID = 1;
 
@@ -30,15 +30,15 @@ export interface IUser {
   realName: string;
   displayName: string;
   email: string;
-  groupId: IGroup['id'];
+  groupId: IGroup["id"];
   createdAt: string;
 }
 
-export type AstroPlanState = 'freeTrial' | 'troomi';
+export type AstroPlanState = "freeTrial" | "troomi";
 
 export const PLAN_DISPLAY_NAMES: Record<AstroPlanState, string> = {
-  freeTrial: 'Free trial',
-  troomi: 'Troomi Plan',
+  freeTrial: "Free trial",
+  troomi: "Troomi Plan",
 };
 
 export const PLAN_BANNER_ITEMS: Record<
@@ -48,38 +48,38 @@ export const PLAN_BANNER_ITEMS: Record<
   freeTrial: [
     {
       icon: PhoneIcon,
-      text: 'Connect unlimited Devices',
+      text: "Connect unlimited Devices",
     },
     {
       icon: PeopleIcon,
-      text: 'Add unlimited parents or teachers',
+      text: "Add unlimited parents or teachers",
     },
     {
       icon: ClockIcon,
-      text: 'X days left',
+      text: "X days left",
     },
   ],
   troomi: [
     {
       icon: PhoneIcon,
-      text: 'Connect up to 10 Devices',
+      text: "Connect up to 10 Devices",
     },
     {
       icon: PeopleIcon,
-      text: 'Add unlimited parents or teachers',
+      text: "Add unlimited parents or teachers",
     },
   ],
 };
 
 export const getInitials = (name: string) =>
   name
-    ?.split(' ')
+    ?.split(" ")
     .map((x) => _.capitalize(x)[0])
     ?.slice(0, 2)
-    .join('');
+    .join("");
 
 export const UserInitialsCircle = (props: {
-  name: IUser['realName'];
+  name: IUser["realName"];
   size?: number;
   fontSize?: number;
 }) => (
@@ -89,17 +89,17 @@ export const UserInitialsCircle = (props: {
     minHeight={`${props.size || 132}px`}
     minWidth={`${props.size || 132}px`}
     bgcolor={PALETTE.secondary.blue[2]}
-    borderRadius='100%'
-    overflow='hidden'
-    justifyContent='center'
-    alignItems='center'
+    borderRadius="100%"
+    overflow="hidden"
+    justifyContent="center"
+    alignItems="center"
   >
     <Typography
-      variant='h2'
-      color='rgb(255,255,255)'
+      variant="h2"
+      color="rgb(255,255,255)"
       sx={props.fontSize ? { fontSize: props.fontSize } : undefined}
     >
-      {props.name ? getInitials(props.name) : ''}
+      {props.name ? getInitials(props.name) : ""}
     </Typography>
   </Stack>
 );
@@ -107,7 +107,7 @@ export const UserInitialsCircle = (props: {
 const AccountPage = (props: { isMobile: boolean }) => {
   const userCtx = useUserContext();
 
-  const [planState, setPlanState] = useState<AstroPlanState>('troomi');
+  const [planState, setPlanState] = useState<AstroPlanState>("troomi");
 
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState<boolean>(false);
@@ -167,7 +167,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
         nickName={userCtx.user.displayName}
         onSave={(name, nickname) =>
           ApiController.updateUser(DUMMY_USER_ID, name, nickname)
-            .then(() => notificationCtx.success('Updated your details'))
+            .then(() => notificationCtx.success("Updated your details"))
             .then(userCtx.refresh)
             .then(() => setEditDialogOpen(false))
         }
