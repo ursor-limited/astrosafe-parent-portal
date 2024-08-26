@@ -17,19 +17,21 @@ import { IFilter } from "@/app/filters/contents/common";
 import ApiController from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
 import UrsorPopover from "@/app/components/UrsorPopover";
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "./DeviceCard";
 import NotificationContext from "@/app/components/NotificationContext";
 import { getInitials } from "@/app/account/contents/common";
+import useAuth from "@/app/hooks/useAuth";
 
 export const MobileDeviceCardFilterRow = (props: {
   filterId: IFilter["id"];
   changeFilter: (id: IFilter["id"]) => void;
 }) => {
+  const { user } = useAuth();
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setAllFilters);
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupFilters(user.group_id).then(setAllFilters);
+  }, [user?.group_id]);
   const [open, setOpen] = useState<boolean>(false);
   return (
     <UrsorPopover

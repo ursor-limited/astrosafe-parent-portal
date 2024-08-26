@@ -331,10 +331,10 @@ class ApiController {
     );
   }
 
-  static async getFilterDevices(id: IFilter["id"]) {
-    return get(`devices?filterId=${id}&includeConfig=true`).then(
-      (response: any) => response.json()
-    );
+  static async getFilterDevices(id: IFilter["id"], groupId: IGroup["id"]) {
+    return get(
+      `devices?groupId=${groupId}&filterId=${id}&includeConfig=true`
+    ).then((response: any) => response.json());
   }
 
   static async addFilterToDevice(

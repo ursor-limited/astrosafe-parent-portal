@@ -1,12 +1,12 @@
-import PageLayout from '@/app/components/PageLayout';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
-import LogOutIcon from '@/images/icons/LogOutIcon.svg';
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import PersonIcon from '@/images/icons/PersonIcon.svg';
+import PageLayout from "@/app/components/PageLayout";
+import { Stack } from "@mui/system";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import LogOutIcon from "@/images/icons/LogOutIcon.svg";
+import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 import {
   AstroPlanState,
   IUser,
@@ -14,12 +14,12 @@ import {
   PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
-} from './common';
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
-import UsersTable from '../components/UsersTable';
-import DevicesTable from '../components/DevicesTable';
-import AccountPageHeader from '../components/AccountPageHeader';
-import { useWindowSize } from 'usehooks-ts';
+} from "./common";
+import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
+import UsersTable from "../components/UsersTable";
+import DevicesTable from "../components/DevicesTable";
+import AccountPageHeader from "../components/AccountPageHeader";
+import { useWindowSize } from "usehooks-ts";
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1408;
 
@@ -36,12 +36,12 @@ const AccountPageDesktopBody = (props: {
   const { width } = useWindowSize();
   return (
     <PageLayout
-      title='My Account'
-      bodyWidth='100%'
+      title="My Account"
+      bodyWidth="100%"
       fullHeight
-      selectedSidebarItemId='account'
+      selectedSidebarItemId="account"
       secondaryButton={{
-        text: 'Log out',
+        text: "Log out",
         callback: () => null,
         icon: LogOutIcon,
       }}
@@ -54,23 +54,23 @@ const AccountPageDesktopBody = (props: {
         />
       }
     >
-      <Stack pl='50px' spacing='12px' pb='31px'>
+      <Stack pl="50px" spacing="12px" pb="31px">
         <Stack
           direction={
-            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? 'column' : 'row'
+            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? "column" : "row"
           }
-          spacing='12px'
+          spacing="12px"
           height={
-            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? undefined : '248px'
+            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? undefined : "248px"
           }
         >
           <AstroBentoCard
-            title='My profile'
+            title="My profile"
             notCollapsible
             topRightStuff={
               <UrsorButton
-                size='small'
-                variant='secondary'
+                size="small"
+                variant="secondary"
                 onClick={props.setEditDialogOpen}
                 endIcon={PencilIcon}
                 iconSize={13}
@@ -79,13 +79,13 @@ const AccountPageDesktopBody = (props: {
               </UrsorButton>
             }
           >
-            <Stack direction='row' spacing='20px' alignItems='center' flex={1}>
-              <UserInitialsCircle name={props.user.realName ?? ''} />
-              <Stack direction='row' spacing='26px' minWidth='400px'>
-                <Stack width='100%' spacing='12px' alignItems='center'>
-                  <Stack spacing='4px' width='100%'>
+            <Stack direction="row" spacing="20px" alignItems="center" flex={1}>
+              <UserInitialsCircle name={props.user.realName ?? ""} />
+              <Stack direction="row" spacing="26px" minWidth="400px">
+                <Stack width="100%" spacing="12px" alignItems="center">
+                  <Stack spacing="4px" width="100%">
                     <Typography
-                      variant='tiny'
+                      variant="tiny"
                       bold
                       color={PALETTE.secondary.grey[3]}
                     >
@@ -93,9 +93,9 @@ const AccountPageDesktopBody = (props: {
                     </Typography>
                     <Typography bold>{props.user.realName}</Typography>
                   </Stack>
-                  <Stack spacing='4px' width='100%'>
+                  <Stack spacing="4px" width="100%">
                     <Typography
-                      variant='tiny'
+                      variant="tiny"
                       bold
                       color={PALETTE.secondary.grey[3]}
                     >
@@ -103,9 +103,9 @@ const AccountPageDesktopBody = (props: {
                     </Typography>
                     <Typography bold>{props.user.displayName}</Typography>
                   </Stack>
-                  <Stack spacing='4px' width='100%'>
+                  <Stack spacing="4px" width="100%">
                     <Typography
-                      variant='tiny'
+                      variant="tiny"
                       bold
                       color={PALETTE.secondary.grey[3]}
                     >
@@ -118,12 +118,12 @@ const AccountPageDesktopBody = (props: {
             </Stack>
           </AstroBentoCard>
           <AstroBentoCard
-            title='My plan'
+            title="My plan"
             notCollapsible
             topRightStuff={
               <UrsorButton
-                size='small'
-                variant='secondary'
+                size="small"
+                variant="secondary"
                 onClick={props.onManagePlan}
                 endIcon={ChevronRightIcon}
                 iconSize={14}
@@ -133,46 +133,46 @@ const AccountPageDesktopBody = (props: {
             }
           >
             <Stack
-              borderRadius='12px'
+              borderRadius="12px"
               sx={{
                 background: VIBRANT_GRADIENT,
               }}
-              justifyContent='space-between'
-              p='20px'
+              justifyContent="space-between"
+              p="20px"
               flex={1}
             >
-              <Typography variant='h4' color='rgb(255,255,255)'>
+              <Typography variant="h4" color="rgb(255,255,255)">
                 {PLAN_DISPLAY_NAMES[props.planState]}
               </Typography>
-              <Stack direction='row' alignItems='center' spacing='24px'>
+              <Stack direction="row" alignItems="center" spacing="24px">
                 <Stack flex={1}>
                   {PLAN_BANNER_ITEMS[props.planState].map((item, i) => (
                     <Stack
                       key={i}
-                      direction='row'
-                      spacing='8px'
-                      alignItems='center'
+                      direction="row"
+                      spacing="8px"
+                      alignItems="center"
                       sx={{
                         svg: {
                           path: {
-                            fill: 'rgb(255,255,255)',
+                            fill: "rgb(255,255,255)",
                           },
                         },
                       }}
                     >
-                      <item.icon height='12px' width='12px' />
-                      <Typography color='rgb(255,255,255)'>
+                      <item.icon height="12px" width="12px" />
+                      <Typography color="rgb(255,255,255)">
                         {item.text}
                       </Typography>
                     </Stack>
                   ))}
                 </Stack>
-                {props.planState !== 'troomi' ? (
-                  <Stack height='100%' justifyContent='flex-end'>
+                {props.planState !== "troomi" ? (
+                  <Stack height="100%" justifyContent="flex-end">
                     <UrsorButton
                       dark
                       endIcon={VerifiedIcon}
-                      backgroundColor='rgb(255,255,255)'
+                      backgroundColor="rgb(255,255,255)"
                       fontColor={PALETTE.primary.navy}
                       hoverOpacity={0.7}
                       onClick={props.setUpgradeDialogOpen}
@@ -186,14 +186,14 @@ const AccountPageDesktopBody = (props: {
           </AstroBentoCard>
         </Stack>
         <AstroBentoCard
-          title='Users in my space'
+          title="Users in my space"
           notCollapsible
           topRightStuff={
-            <Stack direction='row' spacing='12px'>
+            <Stack direction="row" spacing="12px">
               <UrsorButton
                 endIcon={PersonIcon}
-                size='small'
-                variant='secondary'
+                size="small"
+                variant="secondary"
                 iconSize={16}
                 onClick={props.setInviteDialogOpen}
               >
@@ -201,8 +201,8 @@ const AccountPageDesktopBody = (props: {
               </UrsorButton>
               <UrsorButton
                 endIcon={PhoneIcon}
-                size='small'
-                variant='secondary'
+                size="small"
+                variant="secondary"
                 iconSize={16}
                 onClick={props.setConnectDialogOpen}
               >
@@ -211,31 +211,31 @@ const AccountPageDesktopBody = (props: {
             </Stack>
           }
         >
-          <Stack spacing='24px'>
+          <Stack spacing="24px">
             <UsersTable users={props.allUsers} />
             <DevicesTable />
           </Stack>
         </AstroBentoCard>
         <Stack
           direction={
-            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? 'column' : 'row'
+            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? "column" : "row"
           }
-          spacing='12px'
+          spacing="12px"
         >
-          <AstroBentoCard title='Boring bits' notCollapsible>
-            <Stack spacing='6px'>
+          <AstroBentoCard title="Boring bits" notCollapsible>
+            <Stack spacing="6px">
               <a
-                target='_blank'
-                href='https://www.astrosafe.co/terms-and-conditions'
+                target="_blank"
+                href="https://www.astrosafe.co/terms-and-conditions"
                 style={{
-                  textDecoration: 'none',
+                  textDecoration: "none",
                 }}
               >
                 <Stack
                   sx={{
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.6 },
-                    transition: '0.2s',
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
                   }}
                 >
                   <Typography color={PALETTE.secondary.blue[3]}>
@@ -244,17 +244,17 @@ const AccountPageDesktopBody = (props: {
                 </Stack>
               </a>
               <a
-                target='_blank'
-                href='https://www.astrosafe.co/app/privacy-policy'
+                target="_blank"
+                href="https://www.astrosafe.co/app/privacy-policy"
                 style={{
-                  textDecoration: 'none',
+                  textDecoration: "none",
                 }}
               >
                 <Stack
                   sx={{
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.6 },
-                    transition: '0.2s',
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
                   }}
                 >
                   <Typography color={PALETTE.secondary.blue[3]}>
@@ -265,13 +265,13 @@ const AccountPageDesktopBody = (props: {
             </Stack>
           </AstroBentoCard>
           <AstroBentoCard
-            title='Feedback'
+            title="Feedback"
             notCollapsible
             topRightStuff={
               <UrsorButton
-                variant='secondary'
-                size='small'
-                onClick={() => window.open('mailto:hello@astrosafe.co')}
+                variant="secondary"
+                size="small"
+                onClick={() => window.open("mailto:hello@astrosafe.co")}
               >
                 Send
               </UrsorButton>

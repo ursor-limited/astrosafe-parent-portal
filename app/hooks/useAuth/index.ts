@@ -9,7 +9,7 @@ const useAuth = () => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('user_info');
+    const userInfo = Cookies.get('user_info');
 
     if (!userInfo) return;
 

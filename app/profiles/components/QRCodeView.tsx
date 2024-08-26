@@ -1,15 +1,16 @@
 import ApiController from "@/app/api";
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "@/ui";
+import useAuth from "@/app/hooks/useAuth";
 
 const QRCodeView = () => {
+  const { user } = useAuth();
   const [image, setImage] = useState<string>("");
   useEffect(() => {
-    ApiController.getQRCode(DUMMY_GROUP_ID).then(setImage);
-  }, []);
+    user?.group_id && ApiController.getQRCode(user.group_id).then(setImage);
+  }, [user?.group_id]);
   return (
     <Stack
       justifyContent="center"

@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import { PALETTE } from '@/ui';
-import FilterPageDesktopBody from './body-desktop';
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
+import { PALETTE } from "@/ui";
+import FilterPageDesktopBody from "./body-desktop";
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from '../../contents/common';
-import { useRouter } from 'next/navigation';
-import FilterPageMobileBody from './body-mobile';
-import ApiController from '@/app/api';
-import AddDeviceDialog from '@/app/folders/[id]/components/AddDeviceDialog';
-import { DUMMY_GROUP_ID } from '../../contents/body-mobile';
-import NotificationContext from '@/app/components/NotificationContext';
-import DeletionDialog from '@/app/components/DeletionDialog';
-import FilterRenameDialog from '../components/FilterRenameDialog';
-import ChangeFilterDialog from '../components/ChangeFilterDialog';
-import { Stack } from '@mui/system';
-import _ from 'lodash';
-import useDeviceOnlineStatus from '@/app/profiles/components/useDeviceOnlineStatus';
+} from "../../contents/common";
+import { useRouter } from "next/navigation";
+import FilterPageMobileBody from "./body-mobile";
+import ApiController from "@/app/api";
+import AddDeviceDialog from "@/app/folders/[id]/components/AddDeviceDialog";
+import NotificationContext from "@/app/components/NotificationContext";
+import DeletionDialog from "@/app/components/DeletionDialog";
+import FilterRenameDialog from "../components/FilterRenameDialog";
+import ChangeFilterDialog from "../components/ChangeFilterDialog";
+import { Stack } from "@mui/system";
+import _ from "lodash";
+import useDeviceOnlineStatus from "@/app/profiles/components/useDeviceOnlineStatus";
+import useAuth from "@/app/hooks/useAuth";
 
-export type DeviceType = 'chrome' | 'android' | 'ios';
+export type DeviceType = "chrome" | "android" | "ios";
 
 export interface IFilterException {
   domain: string;
@@ -39,14 +39,14 @@ export interface IDevice {
   id: number;
   name: string;
   backgroundColor: string;
-  profileAvatarUrl: string;
+  profileAvatarUrl?: string;
   lastOnline: string;
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
   createdAt: string;
   online: boolean;
-  filterId: IFilter['id'];
+  filterId: IFilter["id"];
 }
 
 export interface IDeviceConfig {
@@ -60,6 +60,8 @@ export default function FilterPage(props: {
   isMobile: boolean;
   filterId: number;
 }) {
+  const { user } = useAuth();
+
   const [filter, setFilter] = useState<IFilter | undefined>();
   const loadFilter = useCallback(
     () => ApiController.getFilter(props.filterId).then(setFilter),
@@ -93,7 +95,7 @@ export default function FilterPage(props: {
   }, []);
 
   const [allowedSubcategories, setAllowedSubcategories] = useState<
-    IFilterSubcategory['id'][]
+    IFilterSubcategory["id"][]
   >([]);
   useEffect(() => {
     ApiController.getFilterCategories(props.filterId).then((response) =>
@@ -114,10 +116,12 @@ export default function FilterPage(props: {
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
 
   const [devices, setDevices] = useState<IDevice[]>([]);
-  const loadDevices = useCallback(
-    () => ApiController.getFilterDevices(props.filterId).then(setDevices),
-    [props.filterId]
-  );
+  const loadDevices = useCallback(() => {
+    user?.group_id &&
+      ApiController.getFilterDevices(props.filterId, user.group_id).then(
+        setDevices
+      );
+  }, [props.filterId, user?.group_id]);
   useEffect(() => {
     loadDevices();
   }, [loadDevices]);
@@ -125,12 +129,13 @@ export default function FilterPage(props: {
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setAllFilters);
-  }, []);
+    user.group_id &&
+      ApiController.getGroupFilters(user.group_id).then(setAllFilters);
+  }, [user?.group_id]);
 
   const actions = [
     {
-      text: 'Edit name',
+      text: "Edit name",
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
@@ -140,11 +145,11 @@ export default function FilterPage(props: {
     //   icon: DuplicateIcon,
     // },
     {
-      text: 'Delete',
+      text: "Delete",
       kallback: () => {
         devices.length > 0
           ? notificationCtx.negativeSuccess(
-              'Cannot delete a Filter that is applied to Devices.'
+              "Cannot delete a Filter that is applied to Devices."
             )
           : setDeletionDialogOpen(true);
       },
@@ -157,11 +162,11 @@ export default function FilterPage(props: {
 
   const titleRow = [
     {
-      text: 'My Filters',
-      callback: () => router.push('/filters'),
+      text: "My Filters",
+      callback: () => router.push("/filters"),
     },
     {
-      text: filter?.title ?? '',
+      text: filter?.title ?? "",
       options: allFilters
         .filter((f) => f.id !== props.filterId)
         .map((f) => ({
@@ -175,10 +180,10 @@ export default function FilterPage(props: {
                   },
                 },
               }}
-              height='16px'
-              width='16px'
+              height="16px"
+              width="16px"
             >
-              <FilterIcon height='16px' width='16px' />
+              <FilterIcon height="16px" width="16px" />
             </Stack>
           ),
           callback: () => router.push(`/filters/${f.id}`),
@@ -197,10 +202,10 @@ export default function FilterPage(props: {
 
   const deleteFilter = () =>
     ApiController.removeFilter(props.filterId).then(() =>
-      router.push('/filters')
+      router.push("/filters")
     );
 
-  const flipSubcategory = (id: IFilterSubcategory['id']) => {
+  const flipSubcategory = (id: IFilterSubcategory["id"]) => {
     if (allowedSubcategories.includes(id)) {
       setAllowedSubcategories(allowedSubcategories.filter((sid) => sid !== id));
       ApiController.removeWhitelistSubcategory(props.filterId, id);
@@ -210,7 +215,7 @@ export default function FilterPage(props: {
     }
   };
 
-  const flipCategory = (id: IFilterCategory['categoryId']) => {
+  const flipCategory = (id: IFilterCategory["categoryId"]) => {
     const subcategoryIds = categories
       .find((cg) => cg.categoryId === id)
       ?.subCategories.map((c) => c.id);
@@ -241,28 +246,28 @@ export default function FilterPage(props: {
   const addBlockedSite = (url: string) =>
     ApiController.addBlockedSite(props.filterId, url)
       .then(loadBlockedSites)
-      .then(() => notificationCtx.success('Added blocked site.'));
+      .then(() => notificationCtx.success("Added blocked site."));
 
   const addAllowedSite = (url: string) =>
     ApiController.addAllowedSite(props.filterId, url)
       .then(loadAllowedSites)
-      .then(() => notificationCtx.success('Added allowed site.'));
+      .then(() => notificationCtx.success("Added allowed site."));
 
   const removeBlockedSite = (url: string) =>
     ApiController.removeBlockedSite(props.filterId, url)
       .then(loadBlockedSites)
-      .then(() => notificationCtx.negativeSuccess('Removed blocked site.'));
+      .then(() => notificationCtx.negativeSuccess("Removed blocked site."));
 
   const removeAllowedSite = (url: string) =>
     ApiController.removeAllowedSite(props.filterId, url)
       .then(loadAllowedSites)
-      .then(() => notificationCtx.negativeSuccess('Removed allowed site.'));
+      .then(() => notificationCtx.negativeSuccess("Removed allowed site."));
 
-  const applyFilterToDevice = (id: IDevice['id']) =>
+  const applyFilterToDevice = (id: IDevice["id"]) =>
     ApiController.addFilterToDevice(props.filterId, id).then(() => {
       setAddDeviceDialogOpen(false);
       loadDevices();
-      notificationCtx.success('Applied this Filter to Device.');
+      notificationCtx.success("Applied this Filter to Device.");
     });
 
   return filter ? (
@@ -321,10 +326,11 @@ export default function FilterPage(props: {
       {devices ? (
         <AddDeviceDialog
           open={addDeviceDialogOpen}
-          groupId={DUMMY_GROUP_ID}
+          groupId={user.group_id}
           onClose={() => setAddDeviceDialogOpen(false)}
-          title='Apply to a Device'
-          subtitle={["Replace a Device's current Filter", 'with this one.']}
+          title="Apply to a Device"
+          subtitle={["Replace a Device's current Filter", "with this one."]}
+          emptyText="This Filter is applied to all of your Devices"
           addedDevices={cuttingEdgeOnlineStatusDevices}
           onAdd={applyFilterToDevice}
           isMobile={props.isMobile}
@@ -332,9 +338,9 @@ export default function FilterPage(props: {
       ) : null}
       <DeletionDialog
         open={deletionDialogOpen}
-        type='Filter'
+        type="Filter"
         onClose={() => setDeletionDialogOpen(false)}
-        subtitle='If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default.'
+        subtitle="If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default."
         onSubmit={deleteFilter}
         isMobile={props.isMobile}
       />
@@ -345,7 +351,7 @@ export default function FilterPage(props: {
         onSubmit={(name) =>
           ApiController.changeFilterName(props.filterId, name)
             .then(loadFilter)
-            .then(() => notificationCtx.success('Renamed Filter'))
+            .then(() => notificationCtx.success("Renamed Filter"))
         }
         isMobile={props.isMobile}
       />
@@ -366,7 +372,7 @@ export default function FilterPage(props: {
               )
           }
           currentFilterId={props.filterId}
-          groupId={DUMMY_GROUP_ID}
+          groupId={user.group_id}
           deviceName={changeFilterDialogOpenForDevice.name}
           isMobile={props.isMobile}
         />

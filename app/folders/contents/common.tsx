@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import ApiController from "../../api";
 import { useCallback, useEffect, useState } from "react";
-import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
 import { IDevice } from "../../filters/[id]/contents/common";
 import AllFoldersPageDesktopBody from "./body-desktop";
 import AllFoldersPageMobileBody from "./body-mobile";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import FolderCreationDialog from "../[id]/components/FolderCreationDialog";
+import useAuth from "@/app/hooks/useAuth";
 
 export interface IEnrichedContentBucket {
   id: IContentBucket["id"];
@@ -24,20 +24,23 @@ export interface IEnrichedContentBucket {
 }
 
 const AllFoldersPage = (props: { isMobile: boolean }) => {
+  const { user } = useAuth();
   const router = useRouter();
   const [folders, setFolders] = useState<IEnrichedContentBucket[]>([]);
   const loadFolders = useCallback(
     () =>
-      ApiController.getEnrichedFolders(DUMMY_GROUP_ID).then((f) =>
+      user?.group_id &&
+      ApiController.getEnrichedFolders(user.group_id).then((f) =>
         setFolders(f)
       ),
-    []
+    [user?.group_id]
   );
   useEffect(() => {
     loadFolders();
   }, [loadFolders]);
   const createFolder = (title: IContentBucket["title"]) =>
-    ApiController.createFolder(title, DUMMY_GROUP_ID).then((response) =>
+    user?.group_id &&
+    ApiController.createFolder(title, user.group_id).then((response) =>
       router.push(`/folders/${response.contentBucketId}`)
     );
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);

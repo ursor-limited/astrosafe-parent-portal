@@ -1,19 +1,18 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import DeviceRenameDialog from "../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
 import DeviceConnectDialog from "../components/DeviceConnectDialog";
 import DownloadDialog from "../components/DownloadDialog";
 import ApiController from "../../api";
-import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
 import { IDevice, IDeviceConfig } from "../../filters/[id]/contents/common";
 import AllDevicesPageDesktopBody from "./desktop-body";
 import AllDevicesPageMobileBody from "./mobile-body";
 import { IAllowedTime, ITimeLimit } from "../[id]/components/LimitsTab";
 import { IFilter } from "@/app/filters/contents/common";
 import useDeviceOnlineStatus from "../components/useDeviceOnlineStatus";
+import useAuth from "@/app/hooks/useAuth";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -33,14 +32,17 @@ export type IEnrichedDevice = IDevice & {
 };
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
+  const { user } = useAuth();
   const [devices, setDevices] = useState<IEnrichedDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then(setDevices);
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupEnrichedDevices(user?.group_id).then(setDevices);
+  }, [user?.group_id]);
   const [filters, setFilters] = useState<IFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setFilters);
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupFilters(user.group_id).then(setFilters);
+  }, [user?.group_id]);
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
     IDevice["id"] | undefined
   >();
