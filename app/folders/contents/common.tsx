@@ -10,15 +10,16 @@ import AllFoldersPageMobileBody from "./body-mobile";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import FolderCreationDialog from "../[id]/components/FolderCreationDialog";
 
-const DEFAULT_TITLE = "Untitled Folder";
-
 export interface IEnrichedContentBucket {
   id: IContentBucket["id"];
   title: IContentBucket["title"];
   preview: {
-    deviceCount: number;
     thumbnailUrls: string[];
-    avatarUrls: IDevice["profileAvatarUrl"][];
+    devices: {
+      profileAvatarUrl: IDevice["profileAvatarUrl"];
+      name: IDevice["name"];
+    }[];
+    totalDeviceCount: number;
   };
 }
 

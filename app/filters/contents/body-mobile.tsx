@@ -52,11 +52,7 @@ export default function AllFiltersPageMobileBody(props: {
             onClick={() => router.push(`/filters/${f.id}`)}
           >
             <UrsorFadeIn duration={800} delay={i * 150}>
-              <FilterCard
-                {...f}
-                deviceImageUrls={f.profileAvatarUrls}
-                isMobile
-              />
+              <FilterCard {...f} isMobile />
             </UrsorFadeIn>
           </Stack>
         ))}

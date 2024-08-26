@@ -49,7 +49,7 @@ export default function AllFiltersPageDesktopBody(props: {
               onClick={() => router.push(`/filters/${f.id}`)}
             >
               <UrsorFadeIn duration={800} delay={i * 150}>
-                <FilterCard {...f} deviceImageUrls={f.profileAvatarUrls} />
+                <FilterCard {...f} />
               </UrsorFadeIn>
             </Stack>
           ))}

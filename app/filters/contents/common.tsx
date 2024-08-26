@@ -59,8 +59,11 @@ export interface IGroupFilter {
   id: IFilter["id"];
   title: IFilter["title"];
   official: IFilter["official"];
-  profileAvatarUrls: IDevice["profileAvatarUrl"][];
-  deviceCount: number;
+  devices: {
+    profileAvatarUrl: IDevice["profileAvatarUrl"];
+    name: IDevice["name"];
+  }[];
+  totalDeviceCount: number;
   whitelistedCategories: number;
   blacklistedWords: number;
 }

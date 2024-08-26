@@ -87,17 +87,16 @@ const TitleRowItemCore = (
               }}
               onClick={o.callback}
             >
-              {o.image ||
-                (o.imageUrl ? (
-                  <Stack borderRadius="100%" overflow="hidden">
-                    <Image
-                      src={o.imageUrl}
-                      height={20}
-                      width={20}
-                      alt="option image"
-                    />
-                  </Stack>
-                ) : null)}
+              {o.image || o.imageUrl ? (
+                <Stack borderRadius="100%" overflow="hidden">
+                  <Image
+                    src={o.imageUrl ?? ""}
+                    height={20}
+                    width={20}
+                    alt="option image"
+                  />
+                </Stack>
+              ) : null}
               <Typography bold>{o.text}</Typography>
             </Stack>
           ))}
@@ -129,7 +128,7 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
             direction="row"
             spacing={props.isMobile ? "6px" : "12px"}
             sx={
-              !isLast || (x.options && x.options?.length > 0)
+              !(isLast && x.options?.length === 0)
                 ? {
                     cursor: "pointer",
                     transition: "0.2s",

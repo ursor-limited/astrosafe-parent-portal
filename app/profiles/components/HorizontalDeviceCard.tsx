@@ -1,39 +1,40 @@
-import { Stack } from '@mui/system';
-import AstroCard from '../../filters/[id]/components/AstroCard';
-import Image from 'next/image';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import GlobeIcon from '@/images/icons/GlobeIcon.svg';
-import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
-import { DeviceType, IDevice } from '../../filters/[id]/contents/common';
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Stack } from "@mui/system";
+import AstroCard from "../../filters/[id]/components/AstroCard";
+import Image from "next/image";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
+import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
+import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   DeviceCardBrowsingStatusSection,
   DeviceCardCurrentUrlSection,
   DeviceCardScreenTimeSection,
   DeviceCardSection,
-} from './DeviceCard';
-import AstroSwitch from '@/app/components/AstroSwitch';
-import { IFilter } from '@/app/filters/contents/common';
-import { DUMMY_GROUP_ID } from '@/app/filters/contents/body-desktop';
-import ApiController from '@/app/api';
-import UrsorPopover from '@/app/components/UrsorPopover';
-import AstroSettingCard from '@/app/filters/[id]/components/AstroSettingCard';
-import { IEnrichedDevice } from '../contents/common';
-import NotificationContext from '@/app/components/NotificationContext';
+} from "./DeviceCard";
+import AstroSwitch from "@/app/components/AstroSwitch";
+import { IFilter } from "@/app/filters/contents/common";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
+import ApiController from "@/app/api";
+import UrsorPopover from "@/app/components/UrsorPopover";
+import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
+import { IEnrichedDevice } from "../contents/common";
+import NotificationContext from "@/app/components/NotificationContext";
+import { getInitials } from "@/app/account/contents/common";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
-  android: 'Android',
-  chrome: 'Chromebook',
-  ios: 'iOS',
+  android: "Android",
+  chrome: "Chromebook",
+  ios: "iOS",
 };
 
 export const DeviceCardFilterSection = (props: {
-  filterId: IFilter['id'];
-  changeFilter: (id: IFilter['id']) => void;
+  filterId: IFilter["id"];
+  changeFilter: (id: IFilter["id"]) => void;
 }) => {
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
@@ -44,16 +45,16 @@ export const DeviceCardFilterSection = (props: {
     <UrsorPopover
       open={open}
       content={
-        <Stack bgcolor='rgb(255,255,255)' borderRadius='12px' spacing='8px'>
+        <Stack bgcolor="rgb(255,255,255)" borderRadius="12px" spacing="8px">
           {allFilters.map((f, i) => (
             <Stack
               key={i}
               sx={{
                 opacity: props.filterId != f.id ? 0.6 : 1,
-                pointerEvents: props.filterId == f.id ? 'none' : undefined,
-                cursor: 'pointer',
-                '&:hover': { opacity: 0.7 },
-                transition: '0.2s',
+                pointerEvents: props.filterId == f.id ? "none" : undefined,
+                cursor: "pointer",
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
               }}
               onClick={() => {
                 setOpen(false);
@@ -71,13 +72,13 @@ export const DeviceCardFilterSection = (props: {
                       },
                     }}
                   >
-                    <FilterIcon height='20px' width='20px' />
+                    <FilterIcon height="20px" width="20px" />
                   </Stack>
                 }
                 title={f.title}
                 rightContent={
                   props.filterId == f.id ? (
-                    <CheckCircleFillIcon height='24px' width='24px' />
+                    <CheckCircleFillIcon height="24px" width="24px" />
                   ) : undefined
                 }
                 textColor={
@@ -95,19 +96,19 @@ export const DeviceCardFilterSection = (props: {
       flexButton
     >
       <Stack onClick={() => setOpen(true)} flex={1}>
-        <DeviceCardSection title='Filter'>
+        <DeviceCardSection title="Filter">
           <Stack
-            direction='row'
-            alignItems='center'
-            justifyContent='space-between'
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
             sx={{
-              cursor: 'pointer',
-              '&:hover': { opacity: 0.7 },
-              transition: '0.2s',
+              cursor: "pointer",
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
             }}
           >
             <Stack
-              spacing='8px'
+              spacing="8px"
               sx={{
                 svg: {
                   path: {
@@ -115,16 +116,16 @@ export const DeviceCardFilterSection = (props: {
                   },
                 },
               }}
-              direction='row'
+              direction="row"
             >
-              <Stack justifyContent='center'>
-                <FilterIcon direction='row' height='20px' width='20px' />
+              <Stack justifyContent="center">
+                <FilterIcon direction="row" height="20px" width="20px" />
               </Stack>
               <Typography bold color={PALETTE.secondary.grey[5]}>
                 {allFilters?.find((f) => f.id == props.filterId)?.title}
               </Typography>
             </Stack>
-            <ChevronDownIcon height='20px' width='20px' />
+            <ChevronDownIcon height="20px" width="20px" />
           </Stack>
         </DeviceCardSection>
       </Stack>
@@ -147,51 +148,59 @@ const HorizontalDeviceCard = (
   const onClick = () => router.push(`/profiles/${props.id}`);
 
   const notificationCtx = useContext(NotificationContext);
-  const changeFilter = (id: IFilter['id']) =>
+  const changeFilter = (id: IFilter["id"]) =>
     ApiController.addFilterToDevice(id, props.id)
       .then(props.onUpdate)
-      .then(() => notificationCtx.success('Changed Filter'));
+      .then(() => notificationCtx.success("Changed Filter"));
   return (
     <AstroCard>
-      <Stack direction='row' alignItems='center' px='16px' spacing='20px'>
+      <Stack direction="row" alignItems="center" px="16px" spacing="20px">
         <Stack
-          direction='row'
-          spacing='20px'
-          position='relative'
-          height='104px'
-          alignItems='center'
-          boxSizing='border-box'
+          direction="row"
+          spacing="20px"
+          position="relative"
+          height="104px"
+          alignItems="center"
+          boxSizing="border-box"
         >
-          <Stack position='relative'>
+          <Stack position="relative">
             <Stack
-              minHeight='70px'
-              minWidth='70px'
-              borderRadius='100%'
-              overflow='hidden'
-              bgcolor={props.backgroundColor}
+              minHeight="70px"
+              minWidth="70px"
+              borderRadius="100%"
+              overflow="hidden"
+              bgcolor={PALETTE.secondary.blue[2]}
+              justifyContent="center"
+              alignItems="center"
               onClick={onClick}
               sx={{
-                cursor: 'pointer',
-                transition: '0.2s',
-                '&:hover': { opacity: 0.6 },
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
               }}
             >
-              <Image
-                src={props.profileAvatarUrl}
-                height={70}
-                width={70}
-                alt='device profile'
-              />
+              {props.profileAvatarUrl ? (
+                <Image
+                  src={props.profileAvatarUrl}
+                  height={70}
+                  width={70}
+                  alt="device profile"
+                />
+              ) : (
+                <Typography color="rgb(255,255,255)" bold variant="h5">
+                  {getInitials(props.name)}
+                </Typography>
+              )}
             </Stack>
             <Stack
-              position='absolute'
+              position="absolute"
               bottom={-2}
               right={-2}
-              height='22px'
-              width='22px'
-              borderRadius='100%'
-              justifyContent='center'
-              alignItems='center'
+              height="22px"
+              width="22px"
+              borderRadius="100%"
+              justifyContent="center"
+              alignItems="center"
               bgcolor={
                 props.online && browsingEnabled
                   ? PALETTE.secondary.green[4]
@@ -201,28 +210,28 @@ const HorizontalDeviceCard = (
               sx={{
                 svg: {
                   path: {
-                    fill: 'rgb(255,255,255)',
+                    fill: "rgb(255,255,255)",
                   },
                 },
               }}
             >
               {props.online && browsingEnabled ? (
-                <GlobeIcon height='12px' width='12px' />
+                <GlobeIcon height="12px" width="12px" />
               ) : (
-                <StrikeThroughGlobeIcon height='12px' width='12px' />
+                <StrikeThroughGlobeIcon height="12px" width="12px" />
               )}
             </Stack>
           </Stack>
         </Stack>
-        <Stack spacing='12px' direction='row' flex={1}>
+        <Stack spacing="12px" direction="row" flex={1}>
           <DeviceCardCurrentUrlSection
             url={props.latestBrowsing?.url}
             title={props.latestBrowsing?.title}
             disabled={
               !browsingEnabled
-                ? 'browsingDisabled'
+                ? "browsingDisabled"
                 : !props.online
-                ? 'offline'
+                ? "offline"
                 : undefined
             }
             faviconUrl={props.latestBrowsing?.faviconUrl}
@@ -243,7 +252,7 @@ const HorizontalDeviceCard = (
               ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
               notificationCtx.success(
                 `Browsing is now ${
-                  !browsingEnabled ? 'enabled' : 'disabled'
+                  !browsingEnabled ? "enabled" : "disabled"
                 } on ${props.name}`
               );
             }}

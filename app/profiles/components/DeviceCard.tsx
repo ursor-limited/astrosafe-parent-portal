@@ -1,29 +1,30 @@
-import { Stack } from '@mui/system';
-import AstroCard from '../../filters/[id]/components/AstroCard';
-import Image from 'next/image';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import GlobeIcon from '@/images/icons/GlobeIcon.svg';
-import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import LinkExternalIcon from '@/images/icons/LinkExternalIcon.svg';
-import { DeviceType, IDevice } from '../../filters/[id]/contents/common';
-import AstroSwitch from '@/app/components/AstroSwitch';
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { IFilter, IFilterUrl } from '@/app/filters/contents/common';
-import Link from 'next/link';
-import ApiController, { getAbsoluteUrl } from '@/app/api';
-import { IEnrichedDevice } from '../contents/common';
-import { useElementSize } from 'usehooks-ts';
-import { cleanUrl } from '../[id]/components/MobileInsightsTab';
-import NotificationContext from '@/app/components/NotificationContext';
+import { Stack } from "@mui/system";
+import AstroCard from "../../filters/[id]/components/AstroCard";
+import Image from "next/image";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
+import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
+import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
+import AstroSwitch from "@/app/components/AstroSwitch";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
+import Link from "next/link";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
+import { IEnrichedDevice } from "../contents/common";
+import { useElementSize } from "usehooks-ts";
+import { cleanUrl } from "../[id]/components/MobileInsightsTab";
+import NotificationContext from "@/app/components/NotificationContext";
+import { getInitials } from "@/app/account/contents/common";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
-  android: 'Android',
-  chrome: 'Chromebook',
-  ios: 'iOS',
+  android: "Android",
+  chrome: "Chromebook",
+  ios: "iOS",
 };
 
 export const DeviceCardSection = (props: {
@@ -32,16 +33,16 @@ export const DeviceCardSection = (props: {
 }) => (
   <Stack
     flex={1}
-    height='72px'
-    minHeight='72px'
-    boxSizing='border-box'
-    px='12px'
-    py='10px'
-    justifyContent='space-between'
-    borderRadius='8px'
+    height="72px"
+    minHeight="72px"
+    boxSizing="border-box"
+    px="12px"
+    py="10px"
+    justifyContent="space-between"
+    borderRadius="8px"
     border={`1px solid ${PALETTE.secondary.grey[2]}`}
   >
-    <Typography variant='small' bold color={PALETTE.secondary.grey[3]}>
+    <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
       {props.title}
     </Typography>
     {props.children}
@@ -55,17 +56,17 @@ export const DeviceCardBrowsingStatusSection = (props: {
   const [setRef, size] = useElementSize();
   return (
     <Stack ref={setRef} flex={1}>
-      <DeviceCardSection title='Browsing status'>
+      <DeviceCardSection title="Browsing status">
         <Stack
-          direction='row'
-          alignItems='center'
-          justifyContent='space-between'
-          spacing='6px'
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing="6px"
         >
           <Stack
-            spacing='8px'
-            direction='row'
-            alignItems='center'
+            spacing="8px"
+            direction="row"
+            alignItems="center"
             sx={{
               svg: {
                 path: {
@@ -75,15 +76,15 @@ export const DeviceCardBrowsingStatusSection = (props: {
             }}
           >
             {(size.width ?? 0) > 276 ? (
-              <GlobeIcon height='20px' width='20px' />
+              <GlobeIcon height="20px" width="20px" />
             ) : null}
             <Typography
               bold
               color={PALETTE.secondary.grey[5]}
               maxLines={1}
-              sx={{ maxWidth: '100%', minWidth: 0 }}
+              sx={{ maxWidth: "100%", minWidth: 0 }}
             >
-              {`Browsing is ${props.browsingEnabled ? 'enabled' : 'disabled'}`}
+              {`Browsing is ${props.browsingEnabled ? "enabled" : "disabled"}`}
             </Typography>
           </Stack>
           <AstroSwitch
@@ -101,31 +102,31 @@ export const DeviceCardScreenTimeSection = (props: {
   elapsedTime: number;
   onClickView: () => void;
 }) => (
-  <DeviceCardSection title='Screen time left today'>
-    <Stack direction='row' alignItems='center' spacing='38px'>
+  <DeviceCardSection title="Screen time left today">
+    <Stack direction="row" alignItems="center" spacing="38px">
       <Stack
-        direction='row'
-        alignItems='center'
-        justifyContent='space-between'
-        spacing='8px'
-        width='100%'
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing="8px"
+        width="100%"
       >
         <Stack
           flex={1}
-          height='11px'
+          height="11px"
           bgcolor={PALETTE.secondary.grey[2]}
-          borderRadius='6px'
-          position='relative'
-          overflow='hidden'
+          borderRadius="6px"
+          position="relative"
+          overflow="hidden"
         >
           <Stack
-            height='100%'
+            height="100%"
             width={`${Math.min(
               100,
               (100 * props.elapsedTime) / props.totalTime
             )}%`}
             bgcolor={PALETTE.secondary.purple[1]}
-            borderRadius='6px'
+            borderRadius="6px"
           />
         </Stack>
         <Typography bold color={PALETTE.secondary.grey[3]}>
@@ -136,7 +137,7 @@ export const DeviceCardScreenTimeSection = (props: {
           )}m`}
         </Typography>
       </Stack>
-      <UrsorButton variant='secondary' size='small' onClick={props.onClickView}>
+      <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
         View
       </UrsorButton>
     </Stack>
@@ -144,14 +145,14 @@ export const DeviceCardScreenTimeSection = (props: {
 );
 
 export const DeviceCardCurrentUrlSection = (props: {
-  url?: IFilterUrl['url'];
-  title?: IFilterUrl['title'];
-  disabled?: 'offline' | 'browsingDisabled';
-  faviconUrl?: IFilterUrl['imageUrl'];
+  url?: IFilterUrl["url"];
+  title?: IFilterUrl["title"];
+  disabled?: "offline" | "browsingDisabled";
+  faviconUrl?: IFilterUrl["imageUrl"];
 }) => {
   const router = useRouter();
   return (
-    <DeviceCardSection title='Currently visiting'>
+    <DeviceCardSection title="Currently visiting">
       {/* <Link
       href={props.url ? getAbsoluteUrl(props.url) : undefined}
       target="_blank"
@@ -160,16 +161,16 @@ export const DeviceCardCurrentUrlSection = (props: {
       }}
     > */}
       <Stack
-        direction='row'
-        alignItems='center'
-        justifyContent='space-between'
-        spacing='8px'
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing="8px"
         sx={
           !props.disabled
             ? {
-                cursor: 'pointer',
-                transition: '0.2s',
-                '&:hover': { opacity: 0.7 },
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.7 },
                 svg: {
                   path: {
                     fill: PALETTE.secondary.purple[2],
@@ -184,19 +185,19 @@ export const DeviceCardCurrentUrlSection = (props: {
             : undefined
         }
       >
-        <Stack direction='row' spacing='8px'>
+        <Stack direction="row" spacing="8px">
           {!props.disabled && props.faviconUrl ? (
             <Stack
-              height='20px'
-              width='20px'
-              borderRadius='5px'
-              overflow='hidden'
+              height="20px"
+              width="20px"
+              borderRadius="5px"
+              overflow="hidden"
             >
               <Image
                 src={props.faviconUrl}
                 height={20}
                 width={20}
-                alt='favicon'
+                alt="favicon"
               />
             </Stack>
           ) : null}
@@ -209,15 +210,15 @@ export const DeviceCardCurrentUrlSection = (props: {
             }
             maxLines={1}
           >
-            {props.disabled === 'browsingDisabled'
-              ? 'Currently locked'
-              : props.disabled === 'offline'
-              ? 'Offline'
+            {props.disabled === "browsingDisabled"
+              ? "Currently locked"
+              : props.disabled === "offline"
+              ? "Offline"
               : props.title}
           </Typography>
         </Stack>
         {!props.disabled ? (
-          <LinkExternalIcon height='20px' width='20px' />
+          <LinkExternalIcon height="20px" width="20px" />
         ) : null}
       </Stack>
       {/* </Link> */}
@@ -227,7 +228,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 
 const DeviceCard = (
   props: IEnrichedDevice & {
-    filterName?: IFilter['title'];
+    filterName?: IFilter["title"];
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -248,16 +249,16 @@ const DeviceCard = (
   const notificationCtx = useContext(NotificationContext);
   return (
     <AstroCard>
-      <Stack p='20px' boxSizing='border-box' position='relative'>
+      <Stack p="20px" boxSizing="border-box" position="relative">
         {props.button ? (
           <Stack
-            position='absolute'
-            top='28px'
-            right='15px'
+            position="absolute"
+            top="28px"
+            right="15px"
             sx={{
-              cursor: 'pointer',
-              '&:hover': { opacity: 0.6 },
-              transition: '0.2s',
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
             }}
             zIndex={2}
           >
@@ -265,44 +266,52 @@ const DeviceCard = (
           </Stack>
         ) : null}
         <Stack
-          direction='row'
-          spacing='18px'
-          position='relative'
-          height={props.small ? '58px' : '90px'}
-          alignItems='center'
-          width='94%'
+          direction="row"
+          spacing="18px"
+          position="relative"
+          height={props.small ? "58px" : "90px"}
+          alignItems="center"
+          width="94%"
           onClick={props.onClick}
         >
-          <Stack position='relative'>
+          <Stack position="relative">
             <Stack
-              minHeight={props.small ? '40px' : '84px'}
-              minWidth={props.small ? '40px' : '84px'}
-              borderRadius='100%'
-              overflow='hidden'
-              bgcolor={props.backgroundColor}
+              minHeight={props.small ? "40px" : "84px"}
+              minWidth={props.small ? "40px" : "84px"}
+              borderRadius="100%"
+              overflow="hidden"
+              bgcolor={PALETTE.secondary.blue[2]}
+              justifyContent="center"
+              alignItems="center"
               onClick={onClick}
               sx={{
-                cursor: 'pointer',
-                transition: '0.2s',
-                '&:hover': { opacity: 0.6 },
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
               }}
             >
-              <Image
-                src={props.profileAvatarUrl}
-                height={props.small ? 40 : 84}
-                width={props.small ? 40 : 84}
-                alt='device profile'
-              />
+              {props.profileAvatarUrl ? (
+                <Image
+                  src={props.profileAvatarUrl}
+                  height={props.small ? 40 : 84}
+                  width={props.small ? 40 : 84}
+                  alt="device profile"
+                />
+              ) : (
+                <Typography color="rgb(255,255,255)" bold variant="h4">
+                  {getInitials(props.name)}
+                </Typography>
+              )}
             </Stack>
             <Stack
-              position='absolute'
+              position="absolute"
               bottom={-2}
               right={-2}
-              height='22px'
-              width='22px'
-              borderRadius='100%'
-              justifyContent='center'
-              alignItems='center'
+              height="22px"
+              width="22px"
+              borderRadius="100%"
+              justifyContent="center"
+              alignItems="center"
               bgcolor={
                 props.online && browsingEnabled
                   ? PALETTE.secondary.green[4]
@@ -312,51 +321,51 @@ const DeviceCard = (
               sx={{
                 svg: {
                   path: {
-                    fill: 'rgb(255,255,255)',
+                    fill: "rgb(255,255,255)",
                   },
                 },
               }}
             >
               {props.online && browsingEnabled ? (
-                <GlobeIcon height='12px' width='12px' />
+                <GlobeIcon height="12px" width="12px" />
               ) : (
-                <StrikeThroughGlobeIcon height='12px' width='12px' />
+                <StrikeThroughGlobeIcon height="12px" width="12px" />
               )}
             </Stack>
           </Stack>
-          <Stack justifyContent='center' spacing='4px'>
+          <Stack justifyContent="center" spacing="4px">
             <Stack
               onClick={onClick}
               sx={{
-                cursor: 'pointer',
-                transition: '0.2s',
-                '&:hover': { opacity: 0.6 },
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
               }}
             >
               <Typography
                 bold
-                variant='h5'
+                variant="h5"
                 maxLines={1}
-                sx={{ wordBreak: 'break-all' }}
+                sx={{ wordBreak: "break-all" }}
               >
                 {props.name}
               </Typography>
             </Stack>
-            <Stack direction='row' spacing='8px' alignItems='center'>
-              <PhoneIcon height='16px' width='16px' />
+            <Stack direction="row" spacing="8px" alignItems="center">
+              <PhoneIcon height="16px" width="16px" />
               <Typography maxLines={1}>
                 {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
               </Typography>
             </Stack>
             {props.filterName ? (
               <Stack
-                direction='row'
-                spacing='8px'
-                alignItems='center'
+                direction="row"
+                spacing="8px"
+                alignItems="center"
                 sx={{
-                  cursor: 'pointer',
-                  transition: '0.2s',
-                  '&:hover': { opacity: 0.7 },
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
                   svg: {
                     path: {
                       fill: PALETTE.system.orange,
@@ -365,7 +374,7 @@ const DeviceCard = (
                 }}
                 onClick={() => router.push(`/filters/${props.filterId}`)}
               >
-                <FilterIcon height='16px' width='16px' />
+                <FilterIcon height="16px" width="16px" />
                 <Typography maxLines={1}>{props.filterName}</Typography>
               </Stack>
             ) : null}
@@ -373,14 +382,14 @@ const DeviceCard = (
         </Stack>
         {!props.noExtras ? (
           <>
-            <Stack spacing='12px' pt='20px'>
+            <Stack spacing="12px" pt="20px">
               <DeviceCardCurrentUrlSection
                 url={props.latestBrowsing?.url}
                 disabled={
                   !browsingEnabled
-                    ? 'browsingDisabled'
+                    ? "browsingDisabled"
                     : !props.online
-                    ? 'offline'
+                    ? "offline"
                     : undefined
                 }
                 title={props.latestBrowsing?.title}
@@ -400,7 +409,7 @@ const DeviceCard = (
                   ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
                   notificationCtx.success(
                     `Browsing is now ${
-                      !browsingEnabled ? 'enabled' : 'disabled'
+                      !browsingEnabled ? "enabled" : "disabled"
                     } on ${props.name}`
                   );
                 }}
@@ -425,13 +434,13 @@ const DeviceCard = (
               </Typography>
               <ChevronRightIcon height="16px" width="16px" />
             </Stack> */}
-            <Stack pt='20px'>
+            <Stack pt="20px">
               <UrsorButton
-                variant='secondary'
+                variant="secondary"
                 endIcon={ChevronRightIcon}
                 onClick={() => router.push(`/profiles/${props.id}`)}
-                width='100%'
-                backgroundColor='white'
+                width="100%"
+                backgroundColor="white"
               >
                 Go to Device
               </UrsorButton>
