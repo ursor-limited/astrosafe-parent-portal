@@ -13,7 +13,6 @@ import { IGroup } from "../../folders/[id]/contents/common";
 import DeviceConnectDialog from "../../profiles/components/DeviceConnectDialog";
 import DownloadDialog from "../../profiles/components/DownloadDialog";
 import UpgradeDialog from "../../components/UpgradeDialog";
-import { useUserContext } from "../../components/UserContext";
 import ApiController from "../../api";
 import AccountPageDesktopBody from "./body-desktop";
 import AccountPageMobileBody from "./body-mobile";

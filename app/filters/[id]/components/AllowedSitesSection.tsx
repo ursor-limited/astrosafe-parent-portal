@@ -1,21 +1,21 @@
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
-import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsUpIcon from '@/images/icons/ThumbsUpIcon.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorInputField } from '@/ui';
+import DynamicCardGrid from "@/app/components/DynamicCardGrid";
+import { AstroBentoCard } from "./AstroBentoCard";
+import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import { Stack } from "@mui/system";
+import { PALETTE, Typography, UrsorInputField } from "@/ui";
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from '@/app/components/UrsorTable';
-import Image from 'next/image';
-import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import _ from 'lodash';
-import { IFilterUrl } from '../../contents/common';
-import FilterWhitelistExceptionDialog from './FilterWhitelistExceptionDialog';
-import ApiController from '@/app/api';
-import { IFilterException } from '../contents/common';
+} from "@/app/components/UrsorTable";
+import Image from "next/image";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import _ from "lodash";
+import { IFilterUrl } from "../../contents/common";
+import FilterWhitelistExceptionDialog from "./FilterWhitelistExceptionDialog";
+import ApiController from "@/app/api";
+import { IFilterException } from "../contents/common";
 
 export interface IAllowedSitesTableRowItems {
   title: string;
@@ -26,42 +26,42 @@ export interface IAllowedSitesTableRowItems {
 const FilterPageAllowedSitesSection = (props: {
   allowedSites: IFilterException[];
   add: (url: string) => void;
-  delete: (url: IFilterException['domain']) => void;
+  delete: (url: IFilterException["domain"]) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
-      name: 'title',
-      displayName: 'Title',
+      name: "title",
+      displayName: "Title",
       sortable: true,
       newTag: true,
       getAvatar: (i) => {
         return (
-          <Stack minWidth='20px' borderRadius='100%' overflow='hidden'>
+          <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <Image
-              src={props.allowedSites[parseInt(i)]?.favicon ?? ''}
+              src={props.allowedSites[parseInt(i)]?.favicon ?? ""}
               height={20}
               width={20}
-              alt='allowed site favicon'
+              alt="allowed site favicon"
             />
           </Stack>
         );
       },
     },
     {
-      name: 'domain',
-      displayName: 'Domain',
+      name: "domain",
+      displayName: "Domain",
       sortable: true,
     },
     ...(props.isMobile
       ? []
       : [
           {
-            name: 'createdAt',
-            displayName: 'Added on',
+            name: "createdAt",
+            displayName: "Added on",
             sortable: true,
-            itemDisplay: (createdAt: IFilterUrl['createdAt']) =>
-              dayjs(createdAt).format('MM/DD/YYYY'),
+            itemDisplay: (createdAt: IFilterUrl["createdAt"]) =>
+              dayjs(createdAt).format("MM/DD/YYYY"),
           },
         ]),
   ];
@@ -76,7 +76,7 @@ const FilterPageAllowedSitesSection = (props: {
         props.allowedSites?.map((a, i) => ({
           id: i.toString(),
           items: {
-            title: a.title ?? '',
+            title: a.title ?? "",
             domain: a.domain,
             createdAt: a.createdAt,
           },
@@ -94,13 +94,13 @@ const FilterPageAllowedSitesSection = (props: {
   const [filteredRows, setFilteredRows] = useState<
     IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   useEffect(() => {
     setFilteredRows(
       rows.filter((row) =>
         inputValue
-          ? [row.items.title, row.items.domain.replace('www.', '')]
-              .join('_')
+          ? [row.items.title, row.items.domain.replace("www.", "")]
+              .join("_")
               .toLowerCase()
               .includes(inputValue.toLowerCase())
           : true
@@ -108,15 +108,15 @@ const FilterPageAllowedSitesSection = (props: {
     );
   }, [rows, inputValue]);
 
-  const [sortedColumn, setSortedColumn] = useState<string>('createdAt');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [sortedColumn, setSortedColumn] = useState<string>("createdAt");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   useEffect(() => {
     if (!filteredRows) return;
     const sorted = _.sortBy(rows, (row) =>
       //@ts-ignore
       row.items?.[sortedColumn]?.toLowerCase()
     );
-    setSortedRows(sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted);
+    setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
   }, [rows, sortDirection, sortedColumn]);
 
   const [confirmationDialogOpen, setConfirmationDialogOpen] =
@@ -127,20 +127,20 @@ const FilterPageAllowedSitesSection = (props: {
       <AstroBentoCard
         icon={ThumbsUpIcon}
         title={`${props.allowedSites.length ?? 0} allowed site exception${
-          props.allowedSites.length === 1 ? '' : 's'
+          props.allowedSites.length === 1 ? "" : "s"
         }`}
-        subtitle='Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!'
+        subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!"
         isMobile={props.isMobile}
       >
-        <Stack spacing='20px'>
+        <Stack spacing="20px">
           <UrsorInputField
             value={inputValue}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setInputValue(event.target.value)
             }
             onEnterKey={() => setConfirmationDialogOpen(true)}
-            placeholder='Add a URL'
-            width='100%'
+            placeholder="Add a URL"
+            width="100%"
             leftAlign
             boldValue
           />
@@ -148,30 +148,30 @@ const FilterPageAllowedSitesSection = (props: {
             <UrsorTable
               columns={TABLE_COLUMNS}
               rows={sortedRows}
-              defaultSortedByColumn='createdAt'
+              defaultSortedByColumn="createdAt"
               defaultSortedAscending
               selectedSort={sortedColumn}
-              ascending={sortDirection === 'asc'}
+              ascending={sortDirection === "asc"}
               sortSelectionCallback={(columnId) => {
                 if (columnId === sortedColumn) {
-                  setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+                  setSortDirection(sortDirection === "asc" ? "desc" : "asc");
                 } else {
                   setSortedColumn(columnId);
-                  setSortDirection('asc');
+                  setSortDirection("asc");
                 }
               }}
               noHeaderGradient
               getActionButtonItems={(i) => [
                 {
                   icon: TrashcanIcon,
-                  text: 'Delete',
+                  text: "Delete",
                   kallback: () =>
                     props.delete(props.allowedSites[parseInt(i)].domain),
                   color: PALETTE.system.red,
                 },
               ]}
               rowClickCallback={(id) => null}
-              titleColumnWidth='20%'
+              titleColumnWidth="20%"
             />
           ) : null}
         </Stack>
@@ -181,7 +181,7 @@ const FilterPageAllowedSitesSection = (props: {
         onClose={() => setConfirmationDialogOpen(false)}
         onSubmit={() => {
           props.add(inputValue);
-          setInputValue('');
+          setInputValue("");
         }}
         isMobile={props.isMobile}
       />

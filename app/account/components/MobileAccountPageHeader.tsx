@@ -1,9 +1,9 @@
-import React from 'react';
-import { Stack } from '@mui/system';
-import { VIBRANT_GRADIENT } from '../contents/common';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
-import Image from 'next/image';
+import React from "react";
+import { Stack } from "@mui/system";
+import { VIBRANT_GRADIENT } from "../contents/common";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import Image from "next/image";
 
 const MobileAccountPageHeader = (props: {
   setUpgradeDialogOpen: () => void;
@@ -11,27 +11,27 @@ const MobileAccountPageHeader = (props: {
   smallerFont?: boolean;
 }) => (
   <Stack
-    minHeight={props.isMobile ? '107px' : '71px'}
-    direction='row'
-    alignItems='space-between'
+    minHeight={props.isMobile ? "107px" : "71px"}
+    direction="row"
+    alignItems="space-between"
     sx={{
       background: VIBRANT_GRADIENT,
     }}
-    borderRadius='12px'
-    overflow='hidden'
-    spacing={props.smallerFont || props.isMobile ? '12px' : undefined}
-    width='100%'
+    borderRadius="12px"
+    overflow="hidden"
+    spacing={props.smallerFont || props.isMobile ? "12px" : undefined}
+    width="100%"
   >
-    <Stack spacing='16px' direction='column' p='12px' boxSizing='border-box'>
-      <Typography bold color='rgb(255,255,255)'>
+    <Stack spacing="16px" direction="column" p="12px" boxSizing="border-box">
+      <Typography bold color="rgb(255,255,255)">
         Upgrade to a Family or School account to get unlimited access!
       </Typography>
       <UrsorButton
         dark
         endIcon={VerifiedIcon}
         iconSize={15}
-        size='small'
-        backgroundColor='rgb(255,255,255)'
+        size="small"
+        backgroundColor="rgb(255,255,255)"
         fontColor={PALETTE.primary.navy}
         hoverOpacity={0.7}
         onClick={props.setUpgradeDialogOpen}
@@ -39,12 +39,12 @@ const MobileAccountPageHeader = (props: {
         Upgrade
       </UrsorButton>
     </Stack>
-    <Stack justifyContent='flex-end' alignItems='flex-end'>
+    <Stack justifyContent="flex-end" alignItems="flex-end">
       <Image
-        src='https://ursorassets.s3.eu-west-1.amazonaws.com/ELLIPSE!.png'
+        src="https://ursorassets.s3.eu-west-1.amazonaws.com/ELLIPSE!.png"
         height={95}
         width={84}
-        alt='upgrade'
+        alt="upgrade"
       />
     </Stack>
   </Stack>
