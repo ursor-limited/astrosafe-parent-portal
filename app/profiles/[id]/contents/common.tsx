@@ -106,7 +106,12 @@ export default function ProfilePage(props: {
                 alt="device profile"
               />
             ) : (
-              <Typography color="rgb(255,255,255)" bold variant="small">
+              <Typography
+                color="rgb(255,255,255)"
+                bold
+                variant="small"
+                sx={{ transform: "translateY(0.5px)" }}
+              >
                 {getInitials(device?.name ?? "")}
               </Typography>
             )}
