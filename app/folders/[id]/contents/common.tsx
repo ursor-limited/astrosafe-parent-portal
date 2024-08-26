@@ -19,7 +19,6 @@ import useLoadFolderAndContents from "../components/useLoadFolderAndContents";
 import VideoCreationDialog from "../components/VideoCreationDialog";
 import FolderPageMobileBody from "./body-mobile";
 import FolderPageDesktopBody from "./body-desktop";
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import {
   AstroContent,
@@ -31,6 +30,7 @@ import {
 } from "@/app/profiles/[id]/components/ContentTab";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import useDeviceOnlineStatus from "@/app/profiles/components/useDeviceOnlineStatus";
+import useAuth from "@/app/hooks/useAuth";
 
 export const FOLDER_DELETION_DIALOG_SUBTITLE =
   "If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.";
@@ -80,6 +80,7 @@ export default function FolderPage(props: {
   isMobile: boolean;
 }) {
   const router = useRouter();
+  const { user } = useAuth();
 
   const [devices, setDevices] = useState<IDevice[]>([]);
   const loadDevices = useCallback(
@@ -131,8 +132,9 @@ export default function FolderPage(props: {
 
   const [allFolders, setFolders] = useState<IContentBucket[]>([]);
   useEffect(() => {
-    ApiController.getGroupFolders(DUMMY_GROUP_ID).then(setFolders);
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupFolders(user.group_id).then(setFolders);
+  }, [user?.group_id]);
 
   const [folderRenameDialogOpen, setFolderRenameDialogOpen] =
     useState<boolean>(false);
@@ -251,10 +253,11 @@ export default function FolderPage(props: {
       {devices ? (
         <AddDeviceDialog
           open={addDeviceDialogOpen}
-          groupId={DUMMY_GROUP_ID}
+          groupId={user?.group_id}
           onClose={() => setAddDeviceDialogOpen(false)}
           title="Share to a Device"
           subtitle={["Add Device access to this", "Content Folder."]}
+          emptyText="This Content Folder is on all of your Devices"
           addedDevices={devices}
           onAdd={(id) => {
             ApiController.addFolderToDevice(props.folderId, id).then(() => {

@@ -1,8 +1,7 @@
 import PageLayout from "@/app/components/PageLayout";
-import { IDevice } from "@/app/filters/[id]/contents/common";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
+import { PALETTE } from "@/ui";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";

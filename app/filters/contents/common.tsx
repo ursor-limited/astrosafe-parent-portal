@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import AllFiltersPageDesktopBody from "./body-desktop";
-import AllFiltersPageMobileBody, { DUMMY_GROUP_ID } from "./body-mobile";
+import AllFiltersPageMobileBody from "./body-mobile";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
 import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
 import { IDevice } from "../[id]/contents/common";
 import _ from "lodash";
+import useAuth from "@/app/hooks/useAuth";
 
 export interface IFilterCategory {
   categoryId: number;
@@ -59,19 +60,24 @@ export interface IGroupFilter {
   id: IFilter["id"];
   title: IFilter["title"];
   official: IFilter["official"];
-  profileAvatarUrls: IDevice["profileAvatarUrl"][];
-  deviceCount: number;
+  devices: {
+    profileAvatarUrl: IDevice["profileAvatarUrl"];
+    name: IDevice["name"];
+  }[];
+  totalDeviceCount: number;
   whitelistedCategories: number;
   blacklistedWords: number;
 }
 
 const AllFiltersPage = (props: { isMobile: boolean }) => {
+  const { user } = useAuth();
   const [filters, setFilters] = useState<IGroupFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then((filtahs) =>
-      setFilters(_.sortBy(filtahs, (f) => f.id))
-    );
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupFilters(user.group_id).then((filtahs) =>
+        setFilters(_.sortBy(filtahs, (f) => f.id))
+      );
+  }, [user?.group_id]);
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false);
   const router = useRouter();
@@ -92,7 +98,8 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
         open={filterCreationDialogOpen}
         onClose={() => setFilterCreationDialogOpen(false)}
         onSubmit={(title: IFilter["title"]) =>
-          ApiController.createFilter(DUMMY_GROUP_ID, title).then((f) =>
+          user?.group_id &&
+          ApiController.createFilter(user.group_id, title).then((f) =>
             router.push(`/filters/${f.filterId}`)
           )
         }

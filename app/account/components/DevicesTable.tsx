@@ -10,24 +10,29 @@ import _ from "lodash";
 import { DeviceType } from "../../profiles/contents/common";
 import { IDevice } from "../../filters/[id]/contents/common";
 import ApiController from "../../api";
-import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "@/app/profiles/components/DeviceCard";
+import { PALETTE } from "@/ui";
+import useAuth from "@/app/hooks/useAuth";
 
 interface IDevicesTableRowItems {
-  name: string;
-  type: DeviceType;
-  lastActive: string;
-  dateJoined: string;
-  profileAvatarUrl: string;
+  name: IDevice["name"];
+  type: IDevice["deviceType"];
+  lastActive: IDevice["lastOnline"];
+  dateJoined: IDevice["createdAt"];
+  profileAvatarUrl: IDevice["profileAvatarUrl"];
 }
 
 const DevicesTable = () => {
+  const { user } = useAuth();
   const [devices, setDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then((d) =>
-      setDevices(d)
-    );
-  }, []);
+    {
+      user?.group_id &&
+        ApiController.getGroupEnrichedDevices(user.group_id).then((d) =>
+          setDevices(d)
+        );
+    }
+  }, [user?.group_id]);
 
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
@@ -37,16 +42,25 @@ const DevicesTable = () => {
       newTag: true,
       getAvatar: (id) => {
         return (
-          <Stack borderRadius="100%" overflow="hidden">
-            <Image
-              src={
-                devices.find((d) => d.id.toString() === id)?.profileAvatarUrl ??
-                ""
-              }
-              height={20}
-              width={20}
-              alt="allowed site favicon"
-            />
+          <Stack
+            minWidth={20}
+            minHeight={20}
+            width={20}
+            height={20}
+            bgcolor={PALETTE.secondary.blue[2]}
+            borderRadius="100%"
+          >
+            {devices.find((d) => d.id.toString() === id)?.profileAvatarUrl ? (
+              <Image
+                src={
+                  devices.find((d) => d.id.toString() === id)
+                    ?.profileAvatarUrl ?? ""
+                }
+                height={20}
+                width={20}
+                alt="allowed site favicon"
+              />
+            ) : null}
           </Stack>
         );
       },
@@ -102,11 +116,9 @@ const DevicesTable = () => {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   useEffect(() => {
     if (!rows) return;
-    const sorted = _.sortBy(
-      rows,
-      (row) =>
-        //@ts-ignore
-        row.items?.[sortedColumn]?.toLowerCase()
+    const sorted = _.sortBy(rows, (row) =>
+      //@ts-ignore
+      row.items?.[sortedColumn]?.toLowerCase()
     );
     setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
   }, [rows, sortDirection, sortedColumn]);

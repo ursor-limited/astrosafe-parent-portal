@@ -13,13 +13,12 @@ import { IGroup } from "../../folders/[id]/contents/common";
 import DeviceConnectDialog from "../../profiles/components/DeviceConnectDialog";
 import DownloadDialog from "../../profiles/components/DownloadDialog";
 import UpgradeDialog from "../../components/UpgradeDialog";
-import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
-import { useUserContext } from "../../components/UserContext";
 import ApiController from "../../api";
 import AccountPageDesktopBody from "./body-desktop";
 import AccountPageMobileBody from "./body-mobile";
 import TroomiManagePlanDialog from "../components/TroomiManagePlanDialog";
 import NotificationContext from "@/app/components/NotificationContext";
+import useAuth from "@/app/hooks/useAuth";
 
 export const DUMMY_USER_ID = 1;
 
@@ -105,7 +104,7 @@ export const UserInitialsCircle = (props: {
 );
 
 const AccountPage = (props: { isMobile: boolean }) => {
-  const userCtx = useUserContext();
+  const { user } = useAuth();
 
   const [planState, setPlanState] = useState<AstroPlanState>("troomi");
 
@@ -117,13 +116,19 @@ const AccountPage = (props: { isMobile: boolean }) => {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
   const [allUsers, setAllUsers] = useState<IUser[]>([]);
-  const loadUsers = useCallback(
-    () => ApiController.getGroupUsers(DUMMY_GROUP_ID).then(setAllUsers),
-    []
-  );
+  const loadUsers = useCallback(() => {
+    user?.group_id &&
+      ApiController.getGroupUsers(user.group_id).then(setAllUsers);
+  }, [user?.group_id]);
   useEffect(() => {
     loadUsers();
   }, [loadUsers]);
+
+  const [currentUser, setCurrentUser] = useState<IUser | undefined>();
+  useEffect(() => {
+    user?.user_id &&
+      setCurrentUser(allUsers.find((u) => u.id === user.user_id));
+  }, [user?.user_id, allUsers]);
 
   const [troomiManagePlanDialogOpen, setTroomiManagePlanDialogOpen] =
     useState<boolean>(false);
@@ -135,11 +140,11 @@ const AccountPage = (props: { isMobile: boolean }) => {
 
   const notificationCtx = useContext(NotificationContext);
 
-  return userCtx.user ? (
+  return currentUser ? (
     <>
       {props.isMobile ? (
         <AccountPageMobileBody
-          user={userCtx.user}
+          user={currentUser}
           allUsers={allUsers}
           planState={planState}
           setUpgradeDialogOpen={() => setUpgradeDialogOpen(true)}
@@ -150,7 +155,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
         />
       ) : (
         <AccountPageDesktopBody
-          user={userCtx.user}
+          user={currentUser}
           allUsers={allUsers}
           planState={planState}
           setUpgradeDialogOpen={() => setUpgradeDialogOpen(true)}
@@ -163,12 +168,12 @@ const AccountPage = (props: { isMobile: boolean }) => {
       <EditProfileDialog
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
-        name={userCtx.user.realName}
-        nickName={userCtx.user.displayName}
+        name={currentUser.realName}
+        nickName={currentUser.displayName}
         onSave={(name, nickname) =>
           ApiController.updateUser(DUMMY_USER_ID, name, nickname)
             .then(() => notificationCtx.success("Updated your details"))
-            .then(userCtx.refresh)
+            .then(loadUsers)
             .then(() => setEditDialogOpen(false))
         }
         isMobile={props.isMobile}

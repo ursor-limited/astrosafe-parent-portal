@@ -302,10 +302,10 @@ const FolderCard = (
                 </Stack>
                 <Stack minWidth="27px" />
               </Stack>
-              {props.preview?.avatarUrls ? (
+              {props.preview?.devices ? (
                 <ProfileImageRow
-                  imageUrls={props.preview.avatarUrls}
-                  deviceCount={props.preview.deviceCount ?? 0}
+                  devices={props.preview?.devices}
+                  totalDeviceCount={props.preview.totalDeviceCount ?? 0}
                 />
               ) : null}
             </Stack>

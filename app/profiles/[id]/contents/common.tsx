@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import Image from "next/image";
 import { Stack } from "@mui/system";
@@ -9,7 +8,6 @@ import { PALETTE, Typography } from "@/ui";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import ApiController from "@/app/api";
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import ProfilePageDesktopBody from "./body-desktop";
 import DeviceRenameDialog from "../../components/DeviceRenameDialog";
@@ -22,8 +20,9 @@ import AddFolderDialog from "../components/AddFolderDialog";
 import NotificationContext from "@/app/components/NotificationContext";
 import FolderCreationDialog from "@/app/folders/[id]/components/FolderCreationDialog";
 import { IContentBucket } from "../components/ContentTab";
-import { IApp } from "../components/AppsTab";
 import useDeviceOnlineStatus from "../../components/useDeviceOnlineStatus";
+import { getInitials } from "@/app/account/contents/common";
+import useAuth from "@/app/hooks/useAuth";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -34,6 +33,7 @@ export default function ProfilePage(props: {
   isMobile: boolean;
   tab?: AstroAccountTab;
 }) {
+  const { user } = useAuth();
   const [device, setDevice] = useState<IEnrichedDevice | undefined>();
   const loadDevice = useCallback(
     () =>
@@ -60,10 +60,11 @@ export default function ProfilePage(props: {
 
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then((d) =>
-      setAllDevices(d)
-    );
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupEnrichedDevices(user.group_id).then((d) =>
+        setAllDevices(d)
+      );
+  }, [user?.group_id]);
 
   const [deviceFolders, setDeviceFolders] = useState<IEnrichedContentBucket[]>(
     []
@@ -88,13 +89,32 @@ export default function ProfilePage(props: {
       text: device?.name ?? "",
       image: (
         <Stack position="relative" borderRadius="100%">
-          <Stack borderRadius="100%" overflow="hidden">
-            <Image
-              height={props.isMobile ? 24 : 36}
-              width={props.isMobile ? 24 : 36}
-              src={device?.profileAvatarUrl ?? ""}
-              alt="profile avatar"
-            />
+          <Stack
+            borderRadius="100%"
+            overflow="hidden"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor={PALETTE.secondary.blue[2]}
+            height={props.isMobile ? 24 : 36}
+            width={props.isMobile ? 24 : 36}
+          >
+            {device?.profileAvatarUrl ? (
+              <Image
+                src={device?.profileAvatarUrl ?? ""}
+                height={props.isMobile ? 24 : 36}
+                width={props.isMobile ? 24 : 36}
+                alt="device profile"
+              />
+            ) : (
+              <Typography
+                color="rgb(255,255,255)"
+                bold
+                variant="small"
+                sx={{ transform: "translateY(0.5px)" }}
+              >
+                {getInitials(device?.name ?? "")}
+              </Typography>
+            )}
           </Stack>
           {cuttingEdgeOnlineStatusDevice?.online ? (
             <Stack
@@ -136,7 +156,8 @@ export default function ProfilePage(props: {
   const notificationCtx = useContext(NotificationContext);
 
   const createAndAddFolder = (title: IContentBucket["title"]) =>
-    ApiController.createFolder(title, DUMMY_GROUP_ID).then((response) => {
+    user?.group_id &&
+    ApiController.createFolder(title, user.group_id).then((response) => {
       ApiController.addFolderToDevice(response.contentBucketId, props.deviceId);
       router.push(`/folders/${response.contentBucketId}`);
       notificationCtx.success("Created Folder and added it to the Device.");
@@ -186,7 +207,7 @@ export default function ProfilePage(props: {
       />
       <AddFolderDialog
         open={addFolderDialogOpen}
-        groupId={DUMMY_GROUP_ID}
+        groupId={user?.group_id}
         onClose={() => setAddFolderDialogOpen(false)}
         addedFolders={deviceFolders}
         onAdd={(id) =>

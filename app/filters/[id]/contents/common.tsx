@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation";
 import FilterPageMobileBody from "./body-mobile";
 import ApiController from "@/app/api";
 import AddDeviceDialog from "@/app/folders/[id]/components/AddDeviceDialog";
-import { DUMMY_GROUP_ID } from "../../contents/body-mobile";
 import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import FilterRenameDialog from "../components/FilterRenameDialog";
@@ -25,6 +24,7 @@ import ChangeFilterDialog from "../components/ChangeFilterDialog";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import useDeviceOnlineStatus from "@/app/profiles/components/useDeviceOnlineStatus";
+import useAuth from "@/app/hooks/useAuth";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -39,7 +39,7 @@ export interface IDevice {
   id: number;
   name: string;
   backgroundColor: string;
-  profileAvatarUrl: string;
+  profileAvatarUrl?: string;
   lastOnline: string;
   deviceType: DeviceType;
   favorites: number[];
@@ -60,6 +60,8 @@ export default function FilterPage(props: {
   isMobile: boolean;
   filterId: number;
 }) {
+  const { user } = useAuth();
+
   const [filter, setFilter] = useState<IFilter | undefined>();
   const loadFilter = useCallback(
     () => ApiController.getFilter(props.filterId).then(setFilter),
@@ -114,10 +116,12 @@ export default function FilterPage(props: {
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
 
   const [devices, setDevices] = useState<IDevice[]>([]);
-  const loadDevices = useCallback(
-    () => ApiController.getFilterDevices(props.filterId).then(setDevices),
-    [props.filterId]
-  );
+  const loadDevices = useCallback(() => {
+    user?.group_id &&
+      ApiController.getFilterDevices(props.filterId, user.group_id).then(
+        setDevices
+      );
+  }, [props.filterId, user?.group_id]);
   useEffect(() => {
     loadDevices();
   }, [loadDevices]);
@@ -125,8 +129,9 @@ export default function FilterPage(props: {
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setAllFilters);
-  }, []);
+    user.group_id &&
+      ApiController.getGroupFilters(user.group_id).then(setAllFilters);
+  }, [user?.group_id]);
 
   const actions = [
     {
@@ -321,10 +326,11 @@ export default function FilterPage(props: {
       {devices ? (
         <AddDeviceDialog
           open={addDeviceDialogOpen}
-          groupId={DUMMY_GROUP_ID}
+          groupId={user.group_id}
           onClose={() => setAddDeviceDialogOpen(false)}
           title="Apply to a Device"
           subtitle={["Replace a Device's current Filter", "with this one."]}
+          emptyText="This Filter is applied to all of your Devices"
           addedDevices={cuttingEdgeOnlineStatusDevices}
           onAdd={applyFilterToDevice}
           isMobile={props.isMobile}
@@ -366,7 +372,7 @@ export default function FilterPage(props: {
               )
           }
           currentFilterId={props.filterId}
-          groupId={DUMMY_GROUP_ID}
+          groupId={user.group_id}
           deviceName={changeFilterDialogOpenForDevice.name}
           isMobile={props.isMobile}
         />

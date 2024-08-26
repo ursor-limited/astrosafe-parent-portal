@@ -7,7 +7,7 @@ import FilterIcon from "@/images/icons/FilterIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
+import { DeviceType } from "../../filters/[id]/contents/common";
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -16,14 +16,14 @@ import {
   DeviceCardScreenTimeSection,
   DeviceCardSection,
 } from "./DeviceCard";
-import AstroSwitch from "@/app/components/AstroSwitch";
 import { IFilter } from "@/app/filters/contents/common";
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import ApiController from "@/app/api";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
 import { IEnrichedDevice } from "../contents/common";
 import NotificationContext from "@/app/components/NotificationContext";
+import { getInitials } from "@/app/account/contents/common";
+import useAuth from "@/app/hooks/useAuth";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -35,10 +35,12 @@ export const DeviceCardFilterSection = (props: {
   filterId: IFilter["id"];
   changeFilter: (id: IFilter["id"]) => void;
 }) => {
+  const { user } = useAuth();
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setAllFilters);
-  }, []);
+    user?.group_id &&
+      ApiController.getGroupFilters(user.group_id).then(setAllFilters);
+  }, [user?.group_id]);
   const [open, setOpen] = useState<boolean>(false);
   return (
     <UrsorPopover
@@ -168,7 +170,9 @@ const HorizontalDeviceCard = (
               minWidth="70px"
               borderRadius="100%"
               overflow="hidden"
-              bgcolor={props.backgroundColor}
+              bgcolor={PALETTE.secondary.blue[2]}
+              justifyContent="center"
+              alignItems="center"
               onClick={onClick}
               sx={{
                 cursor: "pointer",
@@ -176,12 +180,18 @@ const HorizontalDeviceCard = (
                 "&:hover": { opacity: 0.6 },
               }}
             >
-              <Image
-                src={props.profileAvatarUrl}
-                height={70}
-                width={70}
-                alt="device profile"
-              />
+              {props.profileAvatarUrl ? (
+                <Image
+                  src={props.profileAvatarUrl}
+                  height={70}
+                  width={70}
+                  alt="device profile"
+                />
+              ) : (
+                <Typography color="rgb(255,255,255)" bold variant="h5">
+                  {getInitials(props.name)}
+                </Typography>
+              )}
             </Stack>
             <Stack
               position="absolute"

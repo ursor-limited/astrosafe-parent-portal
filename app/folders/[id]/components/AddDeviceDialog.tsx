@@ -11,6 +11,7 @@ import Image from "next/image";
 const AddDeviceDialog = (props: {
   title: string;
   subtitle: string[];
+  emptyText: string;
   open: boolean;
   onClose: () => void;
   onAdd: (id: IDevice["id"]) => void;
@@ -21,9 +22,10 @@ const AddDeviceDialog = (props: {
   const [searchValue, setSearchValue] = useState<string>("");
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupEnrichedDevices(props.groupId).then((d) =>
-      setAllDevices(d)
-    );
+    props.groupId &&
+      ApiController.getGroupEnrichedDevices(props.groupId).then((d) =>
+        setAllDevices(d)
+      );
   }, [props.groupId]);
 
   const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([]);
@@ -74,7 +76,7 @@ const AddDeviceDialog = (props: {
             bold
             sx={{ textAlign: "center" }}
           >
-            This Content Folder is on all of your Devices
+            {props.emptyText}
           </Typography>
         </Stack>
       ) : (
@@ -97,13 +99,16 @@ const AddDeviceDialog = (props: {
                 overflow="hidden"
                 minWidth={23}
                 minHeight={23}
+                bgcolor={PALETTE.secondary.blue[2]}
               >
-                <Image
-                  src={d.profileAvatarUrl}
-                  height={23}
-                  width={23}
-                  alt="avatar"
-                />
+                {d.profileAvatarUrl ? (
+                  <Image
+                    src={d.profileAvatarUrl}
+                    height={23}
+                    width={23}
+                    alt="avatar"
+                  />
+                ) : null}
               </Stack>
               <Typography maxLines={1} bold>
                 {d.name}

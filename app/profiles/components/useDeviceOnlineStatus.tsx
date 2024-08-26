@@ -1,10 +1,12 @@
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { IEnrichedDevice } from "../contents/common";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import useAuth from "@/app/hooks/useAuth";
 
 const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
+  const { user } = useAuth();
+
   const [cuttingEdgeOnlineStatusDevices, setCuttingEdgeOnlineStatusDevices] =
     useState<(IDevice | IEnrichedDevice)[]>([]);
   useEffect(() => setCuttingEdgeOnlineStatusDevices(devices), [devices.length]);
@@ -22,8 +24,9 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
   );
 
   useEffect(() => {
+    if (!user?.group_id) return;
     const socket = new WebSocket(
-      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+      `wss://api.astrosafe.co/sessions/groups/${user.group_id}`
     );
     const handleMessage = (event: any) => {
       if (!event.data) return;
@@ -34,7 +37,7 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
     return () => {
       socket.removeEventListener("message", handleMessage);
     };
-  }, [setDeviceOnlineStatus]);
+  }, [setDeviceOnlineStatus, user?.group_id]);
 
   return cuttingEdgeOnlineStatusDevices;
 };

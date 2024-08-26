@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
+import { Typography } from "@/ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
@@ -8,10 +8,8 @@ import AstroTimeChart from "./AstroTimeChart";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import HistorySection, { IHistoryItem } from "./HistorySection";
+import HistorySection from "./HistorySection";
 import CalendarButton from "@/app/components/CalendarButton";
-import { IFilterDomain, IFilterUrl } from "@/app/filters/contents/common";
-import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import ApiController from "@/app/api";
 import MostVisitedSitesSection from "./MostVisitedSitesSection";
 import { IDevice } from "@/app/filters/[id]/contents/common";
@@ -26,83 +24,6 @@ export interface IVisitedSite {
   faviconUrl: string;
   screenTime: number;
 }
-
-export const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
-  {
-    id: 1,
-    domain: "https://www.nationalreview.com/buuuuu/boooo",
-    title: "National Review",
-    faviconUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-    time: 3094,
-    urls: [
-      {
-        id: 1,
-        url: "https://www.nationalreview.com/",
-        title: "National Review",
-        imageUrl:
-          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-        createdAt: "2024-06-06",
-        groupId: DUMMY_GROUP_ID,
-      },
-      {
-        id: 2,
-        url: "https://www.nationalgeographic.com/",
-        title: "National Geographic",
-        imageUrl:
-          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-        createdAt: "2024-06-06",
-        groupId: DUMMY_GROUP_ID,
-      },
-      {
-        id: 3,
-        url: "https://www.nintendo.com/",
-        title: "Nintendo",
-        imageUrl:
-          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-        createdAt: "2024-06-06",
-        groupId: DUMMY_GROUP_ID,
-      },
-    ],
-  },
-  {
-    id: 2,
-    domain: "https://www.nationalreview.com/",
-    title: "National Review",
-    faviconUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-    time: 124,
-    urls: [
-      {
-        id: 1,
-        url: "https://www.nationalreview.com/",
-        title: "National Review",
-        imageUrl:
-          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-        createdAt: "2024-06-06",
-        groupId: DUMMY_GROUP_ID,
-      },
-      {
-        id: 2,
-        url: "https://www.nationalgeographic.com/",
-        title: "National Geographic",
-        imageUrl:
-          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-        createdAt: "2024-06-06",
-        groupId: DUMMY_GROUP_ID,
-      },
-      {
-        id: 3,
-        url: "https://www.nintendo.com/",
-        title: "Nintendo",
-        imageUrl:
-          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
-        createdAt: "2024-06-06",
-        groupId: DUMMY_GROUP_ID,
-      },
-    ],
-  },
-];
 
 export interface IDayScreenTime {
   date: string;

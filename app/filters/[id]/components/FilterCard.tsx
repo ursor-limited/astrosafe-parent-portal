@@ -8,7 +8,9 @@ import ProfileImageRow from "./ProfileImageRow";
 import { IGroupFilter } from "../../contents/common";
 
 const FilterCard = (
-  props: IGroupFilter & { deviceImageUrls: string[]; isMobile?: boolean }
+  props: IGroupFilter & {
+    isMobile?: boolean;
+  }
 ) => (
   <Stack
     height={props.isMobile ? "172px" : "213px"}
@@ -65,8 +67,8 @@ const FilterCard = (
       />
     </Stack>
     <ProfileImageRow
-      imageUrls={props.deviceImageUrls}
-      deviceCount={props.deviceCount}
+      devices={props.devices}
+      totalDeviceCount={props.totalDeviceCount}
     />
   </Stack>
 );

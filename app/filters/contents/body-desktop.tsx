@@ -14,8 +14,6 @@ import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
 
 export const GRID_SPACING = "20px";
 
-export const DUMMY_GROUP_ID = 2;
-
 export default function AllFiltersPageDesktopBody(props: {
   filters: IGroupFilter[];
   setCreateFilterDialogOpen: () => void;
@@ -49,7 +47,7 @@ export default function AllFiltersPageDesktopBody(props: {
               onClick={() => router.push(`/filters/${f.id}`)}
             >
               <UrsorFadeIn duration={800} delay={i * 150}>
-                <FilterCard {...f} deviceImageUrls={f.profileAvatarUrls} />
+                <FilterCard {...f} />
               </UrsorFadeIn>
             </Stack>
           ))}
