@@ -10,7 +10,6 @@ import PencilIcon from '@/images/icons/Pencil.svg';
 import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
 import ArrowUpRight from '@/images/icons/ArrowUpRight.svg';
 import DeletionDialog from '@/components/DeletionDialog';
-import { SECONDARY_COLOR_ORDER } from '@/components/PaletteButton';
 import { IEnrichedContentBucket } from '@/folders/contents/common';
 import ApiController from '@/api';
 import FolderRenameDialog from '@/folders/[id]/components/FolderRenameDialog';
@@ -18,6 +17,7 @@ import { IContentBucket } from '../profiles/[id]/components/ContentTab';
 import NotificationContext from '@/components/NotificationContext';
 import { FOLDER_DELETION_DIALOG_SUBTITLE } from '../folders/[id]/contents/common';
 import { IActionPopupItem } from './ActionPopup';
+import { SecondaryColor } from '@/ui/palette';
 
 export const spin = keyframes`
   from {
@@ -27,6 +27,17 @@ export const spin = keyframes`
     transform: rotate(360deg)
   }
 `;
+
+export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
+  'purple',
+  'pink',
+  'red',
+  'orange',
+  'yellow',
+  'grey',
+  'green',
+  'blue',
+];
 
 const FolderCard = (
   props: IEnrichedContentBucket & {

@@ -4,17 +4,12 @@ import ChevronLeft from '@/images/icons/ChevronLeft.svg';
 import { useWindowSize } from 'usehooks-ts';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import UrsorFadeIn from './UrsorFadeIn';
-import dynamic from 'next/dynamic';
 import { IActionPopupItem } from './ActionPopup';
 import UrsorActionButton from './UrsorActionButton';
 import TitleRow, { ITitleRowItem } from './TitleRow';
 import Sidebar, { SideBarItemId, WIDTH as SIDEBAR_WIDTH } from './Sidebar';
 import InfoButton, { IInfoButtonProps } from './InfoButton';
-
-const DynamicallyLoadedPortal = dynamic(
-  () => import('./DynamicallyLoadedPortal'),
-  { ssr: false } // not including this component on server-side due to its dependence on "document"
-);
+import Portal from './DynamicallyLoadedPortal';
 
 const PADDING_TOP = '51px';
 export const SIDEBAR_X_MARGIN = 48;
@@ -291,7 +286,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
           </Stack>
         </Stack>
         {props.maxWidth && width < props.maxWidth ? (
-          <DynamicallyLoadedPortal>
+          <Portal>
             <Stack
               top={0}
               left={0}
@@ -314,7 +309,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                 Please switch to a wider screen.
               </Typography>
             </Stack>
-          </DynamicallyLoadedPortal>
+          </Portal>
         ) : null}
       </>
     );

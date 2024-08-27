@@ -1,6 +1,5 @@
 import { Stack } from '@mui/system';
 import AstroCard from '../../filters/[id]/components/AstroCard';
-
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
 import PhoneIcon from '@/images/icons/PhoneIcon.svg';
@@ -13,7 +12,6 @@ import AstroSwitch from '@/components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IFilter, IFilterUrl } from '@/filters/contents/common';
-
 import ApiController, { getAbsoluteUrl } from '@/api';
 import { IEnrichedDevice } from '../contents/common';
 import { useElementSize } from 'usehooks-ts';

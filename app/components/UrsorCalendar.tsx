@@ -5,12 +5,6 @@ import ChevronIcon from '@/images/icons/ChevronLeftIcon.svg';
 import { PALETTE } from '@/ui';
 import dayjs from 'dayjs';
 import DynamicContainer from './DynamicContainer';
-import { Rubik } from 'next/font/google';
-
-const rubik = Rubik({
-  subsets: ['latin'],
-  weight: 'variable',
-});
 
 export interface IUrsorCalendarProps {
   value: Date;

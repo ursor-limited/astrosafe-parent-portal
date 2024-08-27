@@ -31,7 +31,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
   useEffect(() => {
     setDuration(
       props.duration ||
-        dayjs(props.finishedAt).diff(props.searchedAt, 's econds')
+        dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
     );
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
@@ -126,7 +126,7 @@ const HistoryDomainRow = (props: IDomainGroup) => {
             {...props.domain}
             duration={_.sum(
               props.rows.map((r) =>
-                dayjs(r.finishedAt).diff(r.searchedAt, 's econds')
+                dayjs(r.finishedAt).diff(r.searchedAt, 'seconds')
               )
             )}
           />

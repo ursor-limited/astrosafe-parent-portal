@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Stack, keyframes } from '@mui/system';
-import { useElementSize, useLocalStorage } from 'usehooks-ts';
+import { useElementSize } from 'usehooks-ts';
 import { PALETTE, Typography } from '@/ui';
 import BookIcon from '@/images/icons/BookIcon.svg';
 import GearIcon from '@/images/icons/GearIcon.svg';

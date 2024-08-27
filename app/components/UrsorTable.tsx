@@ -212,7 +212,7 @@ const UrsorTableBodyCell = (props: {
   React.useEffect(() => {
     if (
       props.newTagDatetime &&
-      -dayjs(props.newTagDatetime).diff(dayjs(), 's econds') < NEW_TAG_DURATION
+      -dayjs(props.newTagDatetime).diff(dayjs(), 'seconds') < NEW_TAG_DURATION
     ) {
       setNewTagOn(true);
       setTimeout(() => setNewTagOn(false), NEW_TAG_DURATION * 1000);
