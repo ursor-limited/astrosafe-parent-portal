@@ -2,7 +2,7 @@ import { Stack } from '@mui/system';
 import Play from '@/images/play.svg';
 import ApiController from '@/api';
 import ContentCard from './ContentCard';
-import { IVideo } from '@/app/profiles/[id]/components/ContentTab';
+import { IVideo } from '@/profiles/[id]/components/ContentTab';
 import { PALETTE } from '@/ui';
 
 const IMAGE_HEIGHT = 144;

@@ -52,7 +52,7 @@ export const SearchInput = (props: {
         style={{
           textAlign: 'left',
           textOverflow: 'ellipsis',
-          fontSize: FONT_SIZES['s mall'],
+          fontSize: FONT_SIZES['small'],
           color: PALETTE.font.dark,
           fontWeight: 480,
           lineHeight: '100%',

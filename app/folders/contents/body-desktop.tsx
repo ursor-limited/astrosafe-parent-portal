@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { IEnrichedContentBucket } from './common';
 import FolderCard from '@/components/FolderCard';
 import EmptyStateIllustration from '@/components/EmptyStateIllustration';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[];

@@ -8,13 +8,13 @@ import _ from 'lodash';
 import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import { useState } from 'react';
-import ApiController from '@/app/api';
+import ApiController from '@/api';
 import { IDevice } from '@/filters/[id]/contents/common';
-import { IContentBucket } from '@/app/profiles/[id]/components/ContentTab';
+import { IContentBucket } from '@/profiles/[id]/components/ContentTab';
 import AllDevicesDialog from '@/components/AllDevicesDialog';
-import DeviceCard from '@/app/profiles/components/DeviceCard';
+import DeviceCard from '@/profiles/components/DeviceCard';
 import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
 
 const DevicesSection = (props: {
   title: string;

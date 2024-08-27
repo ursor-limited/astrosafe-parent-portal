@@ -23,7 +23,7 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from '@/app/profiles/[id]/components/ContentTab';
+} from '@/profiles/[id]/components/ContentTab';
 import { useWindowSize } from 'usehooks-ts';
 import { IActionPopupItem } from '@/components/ActionPopup';
 

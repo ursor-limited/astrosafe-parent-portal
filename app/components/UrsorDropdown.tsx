@@ -64,7 +64,7 @@ export function UrsorDropdownListHeader(props: { title: string }) {
 }
 
 export function UrsorDropdownList(props: {
-  rows: (Pick<IUrsorDropdownRowProps, 'value' | 's econdaryValue' | 'icon'> & {
+  rows: (Pick<IUrsorDropdownRowProps, 'value' | 'secondaryValue' | 'icon'> & {
     id: string;
     callback: () => void;
   })[];
@@ -89,7 +89,7 @@ export function UrsorDropdownList(props: {
 }
 
 export interface IUrsorDropdownButtonProps {
-  rows: (Pick<IUrsorDropdownRowProps, 'value' | 's econdaryValue' | 'icon'> & {
+  rows: (Pick<IUrsorDropdownRowProps, 'value' | 'secondaryValue' | 'icon'> & {
     id: string;
     callback: () => void;
   })[];

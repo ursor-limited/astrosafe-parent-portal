@@ -1,5 +1,5 @@
-import NotificationContext from '@/app/components/NotificationContext';
-import UrsorDialog from '@/app/components/UrsorDialog';
+import NotificationContext from '@/components/NotificationContext';
+import UrsorDialog from '@/components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
 import { UrsorButton } from '@/ui';

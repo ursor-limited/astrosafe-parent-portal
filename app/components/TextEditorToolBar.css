@@ -1,5 +1,5 @@
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='12px']::before {
-  content: 's mall';
+  content: 'small';
   font-size: 14px !important;
 }
 

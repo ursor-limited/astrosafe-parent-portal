@@ -7,7 +7,7 @@ import VersionsIcon from '@/images/icons/VersionsIcon.svg';
 import XIcon from '@/images/icons/X.svg';
 import _ from 'lodash';
 
-import { UserInitialsCircle } from '@/app/account/contents/common';
+import { UserInitialsCircle } from '@/account/contents/common';
 import { useNavigate } from 'react-router-dom';
 
 export const astroPages = [

@@ -25,10 +25,10 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from '@/app/profiles/[id]/components/ContentTab';
+} from '@/profiles/[id]/components/ContentTab';
 import DeletionDialog from '@/components/DeletionDialog';
-import useDeviceOnlineStatus from '@/app/profiles/components/useDeviceOnlineStatus';
-import useAuth from '@/app/hooks/useAuth';
+import useDeviceOnlineStatus from '@/profiles/components/useDeviceOnlineStatus';
+import useAuth from '@/hooks/useAuth';
 
 export const FOLDER_DELETION_DIALOG_SUBTITLE =
   'If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.';

@@ -412,7 +412,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                         }
                         variant={
                           (props.secondaryButton as IDialogButtonDetails)
-                            .variant ?? 's econdary'
+                            .variant ?? 'secondary'
                         }
                         endIcon={SecondaryButtonEndIcon}
                         width="100%"

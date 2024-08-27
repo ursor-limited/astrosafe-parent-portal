@@ -21,8 +21,8 @@ import FilterRenameDialog from '../components/FilterRenameDialog';
 import ChangeFilterDialog from '../components/ChangeFilterDialog';
 import { Stack } from '@mui/system';
 import _ from 'lodash';
-import useDeviceOnlineStatus from '@/app/profiles/components/useDeviceOnlineStatus';
-import useAuth from '@/app/hooks/useAuth';
+import useDeviceOnlineStatus from '@/profiles/components/useDeviceOnlineStatus';
+import useAuth from '@/hooks/useAuth';
 
 export type DeviceType = 'chrome' | 'android' | 'ios';
 

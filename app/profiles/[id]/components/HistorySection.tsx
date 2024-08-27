@@ -7,7 +7,7 @@ import ClockIcon from '@/images/icons/ClockIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
 import { useEffect, useState } from 'react';
 import DynamicContainer from '@/components/DynamicContainer';
-import Link from 'next/link';
+
 import _ from 'lodash';
 import { IDevice } from '@/filters/[id]/contents/common';
 import ApiController, { getAbsoluteUrl } from '@/api';

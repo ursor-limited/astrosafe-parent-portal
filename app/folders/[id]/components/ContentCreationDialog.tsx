@@ -12,7 +12,7 @@ import { isMobile } from 'react-device-detect';
 import UrsorDialog from '@/components/UrsorDialog';
 import { CONTENT_DISPLAY_NAMES } from './ContentCard';
 import { LabeledInputField } from '@/ui/labeled-input-field';
-import { AstroContent } from '@/app/profiles/[id]/components/ContentTab';
+import { AstroContent } from '@/profiles/[id]/components/ContentTab';
 import { IFilterUrl } from '@/filters/contents/common';
 import { IInfoButtonProps } from '@/components/InfoButton';
 

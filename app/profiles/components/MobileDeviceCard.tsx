@@ -19,8 +19,8 @@ import { IEnrichedDevice } from '../contents/common';
 import UrsorPopover from '@/components/UrsorPopover';
 import { DEVICE_TYPE_DISPLAY_NAMES } from './DeviceCard';
 import NotificationContext from '@/components/NotificationContext';
-import { getInitials } from '@/app/account/contents/common';
-import useAuth from '@/app/hooks/useAuth';
+import { getInitials } from '@/account/contents/common';
+import useAuth from '@/hooks/useAuth';
 
 export const MobileDeviceCardFilterRow = (props: {
   filterId: IFilter['id'];

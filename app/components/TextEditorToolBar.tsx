@@ -16,7 +16,7 @@ export const getModules = (id: string) => ({
   clipboard: { matchVisual: false }, // needed to prevent space being inserted above lists
   toolbar: {
     container: `#${id}`,
-    size: ['s mall', 'medium', 'large'],
+    size: ['small', 'medium', 'large'],
     color: [
       '#7B61FF',
       '#00ff00',
@@ -67,7 +67,7 @@ const initQuill = async () => {
   if (Quill) {
     // Add sizes to whitelist and register them
     const Size = Quill.import('formats/size');
-    Size.whitelist = ['s mall', 'medium', 'large'];
+    Size.whitelist = ['small', 'medium', 'large'];
     Quill.register(Size, true);
 
     // const Color = Quill.import("formats/color");

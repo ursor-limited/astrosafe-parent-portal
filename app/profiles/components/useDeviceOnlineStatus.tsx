@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useCallback } from 'react';
 import { IEnrichedDevice } from '../contents/common';
 import { IDevice } from '@/filters/[id]/contents/common';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
   const { user } = useAuth();

@@ -10,7 +10,7 @@ import AllDevicesPageMobileBody from './mobile-body';
 import { IAllowedTime, ITimeLimit } from '../[id]/components/LimitsTab';
 import { IFilter } from '@/filters/contents/common';
 import useDeviceOnlineStatus from '../components/useDeviceOnlineStatus';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 export type DeviceType = 'chrome' | 'android' | 'ios';
 

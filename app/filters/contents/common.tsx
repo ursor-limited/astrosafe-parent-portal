@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FilterCreationDialog from '../[id]/components/FilterCreationDialog';
 import { IDevice } from '../[id]/contents/common';
 import _ from 'lodash';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 export interface IFilterCategory {
   categoryId: number;

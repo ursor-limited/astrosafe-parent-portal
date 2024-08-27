@@ -7,7 +7,7 @@ import MobilePageLayout from '@/components/MobilePageLayout';
 import { UrsorButton } from '@/ui';
 import FolderCard from '@/components/FolderCard';
 import EmptyStateIllustration from '@/components/EmptyStateIllustration';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[];

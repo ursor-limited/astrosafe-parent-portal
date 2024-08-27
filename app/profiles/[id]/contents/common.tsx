@@ -19,8 +19,8 @@ import NotificationContext from '@/components/NotificationContext';
 import FolderCreationDialog from '@/folders/[id]/components/FolderCreationDialog';
 import { IContentBucket } from '../components/ContentTab';
 import useDeviceOnlineStatus from '../../components/useDeviceOnlineStatus';
-import { getInitials } from '@/app/account/contents/common';
-import useAuth from '@/app/hooks/useAuth';
+import { getInitials } from '@/account/contents/common';
+import useAuth from '@/hooks/useAuth';
 
 export type DeviceType = 'chrome' | 'android' | 'ios';
 

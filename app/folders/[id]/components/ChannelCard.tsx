@@ -5,7 +5,7 @@ import ApiController from '@/api';
 import {
   IChannel,
   IContentBucket,
-} from '@/app/profiles/[id]/components/ContentTab';
+} from '@/profiles/[id]/components/ContentTab';
 import { PALETTE } from '@/ui';
 import { useNavigate } from 'react-router-dom';
 

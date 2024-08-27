@@ -13,13 +13,13 @@ import AstroSwitch from '@/components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IFilter, IFilterUrl } from '@/filters/contents/common';
-import Link from 'next/link';
+
 import ApiController, { getAbsoluteUrl } from '@/api';
 import { IEnrichedDevice } from '../contents/common';
 import { useElementSize } from 'usehooks-ts';
 import { cleanUrl } from '../[id]/components/MobileInsightsTab';
 import NotificationContext from '@/components/NotificationContext';
-import { getInitials } from '@/app/account/contents/common';
+import { getInitials } from '@/account/contents/common';
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: 'Android',

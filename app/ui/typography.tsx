@@ -26,7 +26,7 @@ export type UrsorTypographyVariant =
   | 'large'
   | 'medium'
   | 'normal'
-  | 's mall'
+  | 'small'
   | 'tiny';
 
 export const FONT_SIZES: Record<UrsorTypographyVariant, number> = {

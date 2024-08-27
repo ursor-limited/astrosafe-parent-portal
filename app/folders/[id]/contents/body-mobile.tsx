@@ -22,10 +22,10 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from '@/app/profiles/[id]/components/ContentTab';
+} from '@/profiles/[id]/components/ContentTab';
 import { IActionPopupItem } from '@/components/ActionPopup';
-import Link from 'next/link';
-import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
+
+import { cleanUrl } from '@/profiles/[id]/components/MobileInsightsTab';
 import { useNavigate } from 'react-router-dom';
 
 const FolderPageMobileBody = (props: {

@@ -11,9 +11,9 @@ import { IDevice } from '../contents/common';
 import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import MobileDeviceCard from '@/app/profiles/components/MobileDeviceCard';
+import MobileDeviceCard from '@/profiles/components/MobileDeviceCard';
 import MobileAllDevicesDialog from '@/components/MobileAllDevicesDialog';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
 
 const MobileFilterPageDevicesSection = (props: {
   devices: IDevice[];

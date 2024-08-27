@@ -2,7 +2,6 @@ import { Stack } from '@mui/system';
 import ArrowUpRight from '@/images/icons/ArrowUpRight.svg';
 import _ from 'lodash';
 import { PALETTE, Typography } from '@/ui';
-import Link from 'next/link';
 
 export interface IMultiplicationTableColumns {
   multipliers: number[][];

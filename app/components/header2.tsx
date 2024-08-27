@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import Link from 'next/link';
+
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import Logo from '@/images/logo.svg';
 import ChecklistIcon from '@/images/icons/ChecklistIcon.svg';
@@ -20,7 +20,7 @@ import { useUserContext } from './UserContext';
 import UpgradePromptDialog from './UpgradeDialog';
 import { useWindowSize } from 'usehooks-ts';
 import DynamicContainer from './DynamicContainer';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 import ProfileButton from './ProfileButton';
 
 const UrsorPopover = dynamic(

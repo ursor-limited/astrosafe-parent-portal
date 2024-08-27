@@ -16,7 +16,7 @@ import AccountPageDesktopBody from './body-desktop';
 import AccountPageMobileBody from './body-mobile';
 import TroomiManagePlanDialog from '../components/TroomiManagePlanDialog';
 import NotificationContext from '@/components/NotificationContext';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 export const DUMMY_USER_ID = 1;
 

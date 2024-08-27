@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import { PALETTE, Typography } from '@/ui';
 import PeopleIcon from '@/images/icons/PeopleIcon.svg';
 import { IDevice } from '../contents/common';
-import { getInitials } from '@/app/account/contents/common';
+import { getInitials } from '@/account/contents/common';
 
 const ProfileImageRow = (props: {
   devices: {

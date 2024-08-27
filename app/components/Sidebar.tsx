@@ -163,7 +163,7 @@ const SidebarItem = (props: {
       {props.children}
       {!props.noText ? (
         <Typography
-          variant={props.small ? 'tiny' : 's mall'}
+          variant={props.small ? 'tiny' : 'small'}
           bold
           color={
             props.selected

@@ -8,12 +8,12 @@ import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import { useState } from 'react';
 import { IDevice } from '@/filters/[id]/contents/common';
-import { IContentBucket } from '@/app/profiles/[id]/components/ContentTab';
+import { IContentBucket } from '@/profiles/[id]/components/ContentTab';
 import MobileAllDevicesDialog from '@/components/MobileAllDevicesDialog';
-import MobileDeviceCard from '@/app/profiles/components/MobileDeviceCard';
+import MobileDeviceCard from '@/profiles/components/MobileDeviceCard';
 import DynamicCardGrid from '@/components/DynamicCardGrid';
 import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
 
 const MobileDevicesSection = (props: {
   title: string;

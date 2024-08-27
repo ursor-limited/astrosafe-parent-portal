@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { UserInfo } from '@/app/auth/model';
+import { UserInfo } from '@/auth/model';
 import { BACKEND_URL } from '@/api';
 import { useNavigate } from 'react-router-dom';
-import { getUserInfo } from '@/app/auth';
+import { getUserInfo } from '@/auth';
 
 const useAuth = () => {
   // If you"re able to access this hook the user info should always be set as the middleware handles checking the auth state!!

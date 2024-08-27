@@ -1,7 +1,6 @@
 import { Stack } from '@mui/system';
 import Kitemark from '@/images/kiteMark.svg';
 
-import Link from 'next/link';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import FooterBackground from '@/images/footerBackground.png';
 import FooterScreenshot from '@/images/footerScreenshot.png';

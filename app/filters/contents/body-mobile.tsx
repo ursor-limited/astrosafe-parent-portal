@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import FilterCard from '../[id]/components/FilterCard';
 import { IGroupFilter } from './common';
 import MobilePageLayout from '@/components/MobilePageLayout';
-import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
 
 export const GRID_SPACING = '20px';
 

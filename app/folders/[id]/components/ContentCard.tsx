@@ -7,13 +7,10 @@ import PencilIcon from '@/images/icons/Pencil.svg';
 import { useState } from 'react';
 import UrsorActionButton from '@/components/UrsorActionButton';
 import DeletionDialog from '@/components/DeletionDialog';
-import {
-  AstroContent,
-  IContent,
-} from '@/app/profiles/[id]/components/ContentTab';
-import Link from 'next/link';
-import { getAbsoluteUrl } from '@/app/api';
-import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
+import { AstroContent, IContent } from '@/profiles/[id]/components/ContentTab';
+
+import { getAbsoluteUrl } from '@/api';
+import { cleanUrl } from '@/profiles/[id]/components/MobileInsightsTab';
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: 'Video',

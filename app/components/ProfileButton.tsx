@@ -2,13 +2,13 @@ import { Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
 import { ASTRO_MAGICAL_GRADIENT } from './header2';
 import { PALETTE, Typography } from '@/ui';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 import { useState } from 'react';
 import ListUnorderedIcon from '@/images/icons/ListUnorderedIcon.svg';
 import CreditCardIcon from '@/images/icons/CreditCard.svg';
 import LogOutIcon from '@/images/icons/LogOutIcon.svg';
 import { useNavigate } from 'react-router-dom';
-import Link from 'next/link';
+
 import { useUserContext } from './UserContext';
 import { useLocalStorage } from 'usehooks-ts';
 

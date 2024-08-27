@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 
 import { useEffect, useState } from 'react';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 const QRCodeView = () => {
   const { user } = useAuth();

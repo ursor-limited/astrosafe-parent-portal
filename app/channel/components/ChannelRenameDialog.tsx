@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { UrsorButton, UrsorInputField } from '@/ui';
 import { LabeledInputField } from '@/ui/labeled-input-field';
-import { IChannel } from '@/app/profiles/[id]/components/ContentTab';
+import { IChannel } from '@/profiles/[id]/components/ContentTab';
 import UrsorDialog from '@/components/UrsorDialog';
 
 const ChannelRenameDialog = (props: {

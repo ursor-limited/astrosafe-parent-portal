@@ -2,7 +2,7 @@ import ContentCard from './ContentCard';
 
 import { Stack } from '@mui/system';
 import ApiController from '@/api';
-import { ILink } from '@/app/profiles/[id]/components/ContentTab';
+import { ILink } from '@/profiles/[id]/components/ContentTab';
 import { PALETTE } from '@/ui';
 
 const IMAGE_HEIGHT = 227;

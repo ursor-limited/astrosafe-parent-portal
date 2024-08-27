@@ -22,8 +22,8 @@ import UrsorPopover from '@/components/UrsorPopover';
 import AstroSettingCard from '@/filters/[id]/components/AstroSettingCard';
 import { IEnrichedDevice } from '../contents/common';
 import NotificationContext from '@/components/NotificationContext';
-import { getInitials } from '@/app/account/contents/common';
-import useAuth from '@/app/hooks/useAuth';
+import { getInitials } from '@/account/contents/common';
+import useAuth from '@/hooks/useAuth';
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: 'Android',

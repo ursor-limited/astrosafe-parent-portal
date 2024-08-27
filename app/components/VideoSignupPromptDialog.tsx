@@ -1,7 +1,7 @@
 import UrsorDialog from './UrsorDialog';
 import ChevronRight from '@/images/icons/ChevronRight.svg';
 import PersonIcon from '@/images/icons/PersonIcon.svg';
-import useAuth from '@/app/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 import mixpanel from 'mixpanel-browser';
 import { useLocalStorage } from 'usehooks-ts';
 

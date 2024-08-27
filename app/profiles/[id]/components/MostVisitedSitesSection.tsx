@@ -3,7 +3,6 @@ import { PALETTE, Typography, UrsorButton } from '@/ui';
 import { AstroBentoCard } from '../../../filters/[id]/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import { IVisitedSite } from './InsightsTab';
-import Link from 'next/link';
 
 import _ from 'lodash';
 import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog';
