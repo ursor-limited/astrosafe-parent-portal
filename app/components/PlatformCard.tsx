@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Stack } from '@mui/system';
 import { PALETTE, Typography } from '@/ui';
-import { IApp } from '../profiles/[id]/components/AppsTab';
+import { IApp } from '../profile/components/AppsTab';
 
 const PADDING = '8px';
 export const MIN_WIDTH = '175px';

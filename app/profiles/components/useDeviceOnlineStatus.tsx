@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCallback } from 'react';
 import { IEnrichedDevice } from '../contents/common';
-import { IDevice } from '@/filters/[id]/contents/common';
+import { IDevice } from '@/filter/contents/common';
 import useAuth from '@/hooks/useAuth';
 
 const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
@@ -9,6 +9,7 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
 
   const [cuttingEdgeOnlineStatusDevices, setCuttingEdgeOnlineStatusDevices] =
     useState<(IDevice | IEnrichedDevice)[]>([]);
+
   useEffect(() => setCuttingEdgeOnlineStatusDevices(devices), [devices.length]);
 
   const setDeviceOnlineStatus = useCallback(

@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { IDevice } from '../filters/[id]/contents/common';
+import { IDevice } from '../filter/contents/common';
 import DynamicCardGrid from './DynamicCardGrid';
 import UrsorFadeIn from './UrsorFadeIn';
 import XIcon from '@/images/icons/X.svg';
@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { SearchInput } from './SearchInput';
 import DeviceCard from '../profiles/components/DeviceCard';
 import InfoButton from './InfoButton';
-import { INFOS } from '../profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '../profile/components/ProfilePageTabLayout';
 
 const AllDevicesDialog = (props: {
   title: string;

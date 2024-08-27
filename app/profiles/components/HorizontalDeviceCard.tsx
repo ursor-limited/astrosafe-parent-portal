@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import AstroCard from '../../filters/[id]/components/AstroCard';
+import AstroCard from '../../filter/components/AstroCard';
 
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
@@ -7,7 +7,7 @@ import FilterIcon from '@/images/icons/FilterIcon.svg';
 import GlobeIcon from '@/images/icons/GlobeIcon.svg';
 import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
-import { DeviceType } from '../../filters/[id]/contents/common';
+import { DeviceType } from '../../filter/contents/common';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -19,7 +19,7 @@ import {
 import { IFilter } from '@/filters/contents/common';
 import ApiController from '@/api';
 import UrsorPopover from '@/components/UrsorPopover';
-import AstroSettingCard from '@/filters/[id]/components/AstroSettingCard';
+import AstroSettingCard from '@/filter/components/AstroSettingCard';
 import { IEnrichedDevice } from '../contents/common';
 import NotificationContext from '@/components/NotificationContext';
 import { getInitials } from '@/account/contents/common';

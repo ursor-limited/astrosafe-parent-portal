@@ -9,7 +9,7 @@ import { PALETTE, Typography } from '@/ui';
 import { UrsorTypographyVariant } from '@/ui/typography';
 import dynamic from 'next/dynamic';
 import InfoButton, { IInfoButtonProps } from './InfoButton';
-import { INFOS } from '../profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '../profile/components/ProfilePageTabLayout';
 
 const ByteStepper = dynamic(
   () => import('./ByteStepper'),

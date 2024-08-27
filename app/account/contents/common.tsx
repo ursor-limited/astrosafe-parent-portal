@@ -7,7 +7,7 @@ import { PALETTE, Typography } from '@/ui';
 import _ from 'lodash';
 import EditProfileDialog from '../components/EditProfileDialog';
 import InviteDialog from '../components/InviteDialog';
-import { IGroup } from '../../folders/[id]/contents/common';
+import { IGroup } from '../../folder/contents/common';
 import DeviceConnectDialog from '../../profiles/components/DeviceConnectDialog';
 import DownloadDialog from '../../profiles/components/DownloadDialog';
 import UpgradeDialog from '../../components/UpgradeDialog';

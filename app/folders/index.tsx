@@ -3,7 +3,7 @@ import AllFoldersPage from './contents/common';
 import { isMobile } from 'react-device-detect';
 import RootLayout from '@/layout';
 
-const Folder = () => {
+const Folders = () => {
   return (
     <RootLayout>
       <AllFoldersPage isMobile={isMobile} />
@@ -11,4 +11,4 @@ const Folder = () => {
   );
 };
 
-export default Folder;
+export default Folders;

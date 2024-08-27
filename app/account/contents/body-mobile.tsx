@@ -16,7 +16,7 @@ import {
   UserInitialsCircle,
   VIBRANT_GRADIENT,
 } from './common';
-import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
+import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
 import UsersTable from '../components/UsersTable';
 import DevicesTable from '../components/DevicesTable';
 import MobilePageLayout from '@/components/MobilePageLayout';

@@ -1,5 +1,5 @@
 import UrsorDialog from '@/components/UrsorDialog';
-import { IDevice } from '@/filters/[id]/contents/common';
+import { IDevice } from '@/filter/contents/common';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { UrsorButton, UrsorInputField } from '@/ui';

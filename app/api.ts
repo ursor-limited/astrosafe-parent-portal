@@ -1,6 +1,6 @@
 import { IUser } from './account/contents/common';
-import { IGroup } from './folders/[id]/contents/common';
-import { IDevice, IFilterException } from './filters/[id]/contents/common';
+import { IGroup } from './folder/contents/common';
+import { IDevice, IFilterException } from './filter/contents/common';
 import {
   IFilter,
   IFilterSubcategory,
@@ -12,15 +12,15 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from './profiles/[id]/components/ContentTab';
+} from './profile/components/ContentTab';
 import _ from 'lodash';
 import {
   IAllowedTime,
   IRequestedSite,
   ITimeLimit,
-} from './profiles/[id]/components/LimitsTab';
-import { cleanUrl } from './profiles/[id]/components/MobileInsightsTab';
-import { IApp } from './profiles/[id]/components/AppsTab';
+} from './profile/components/LimitsTab';
+import { cleanUrl } from './profile/components/MobileInsightsTab';
+import { IApp } from './profile/components/AppsTab';
 
 export interface IVideoComment {
   id: string;
@@ -36,16 +36,15 @@ const BACKEND_URLS = {
 };
 
 export const BACKEND_URL =
-  BACKEND_URLS[
-    process.env.NEXT_PUBLIC_VERCEL_ENV as keyof typeof BACKEND_URLS
-  ] || 'https://api.astrosafe.co';
+  BACKEND_URLS[process.env.REACT_ENV as keyof typeof BACKEND_URLS] ||
+  'https://api.astrosafe.co';
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -55,7 +54,7 @@ const get = (route: string) =>
 const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
     {
       method: 'POST',
       headers: {
@@ -70,7 +69,7 @@ const post = (route: string, body?: any) =>
 const put = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
     {
       method: 'PUT',
       headers: {
@@ -84,7 +83,7 @@ const put = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
     {
       method: 'PATCH',
       headers: {
@@ -98,7 +97,7 @@ const patch = (route: string, body: any) =>
 const dellete = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
     {
       method: 'DELETE',
       headers: { 'Access-Control-Allow-Origin': '*' },

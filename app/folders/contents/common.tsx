@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import ApiController from '../../api';
 import { useCallback, useEffect, useState } from 'react';
-import { IDevice } from '../../filters/[id]/contents/common';
+import { IDevice } from '../../filter/contents/common';
 import AllFoldersPageDesktopBody from './body-desktop';
 import AllFoldersPageMobileBody from './body-mobile';
-import { IContentBucket } from '@/profiles/[id]/components/ContentTab';
-import FolderCreationDialog from '../[id]/components/FolderCreationDialog';
+import { IContentBucket } from '@/profile/components/ContentTab';
+import FolderCreationDialog from '../../folder/components/FolderCreationDialog';
 import useAuth from '@/hooks/useAuth';
 
 export interface IEnrichedContentBucket {

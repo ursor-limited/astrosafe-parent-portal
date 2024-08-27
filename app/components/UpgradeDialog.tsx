@@ -37,11 +37,11 @@ interface IAstroProduct {
 export const PRODUCT_DETAILS: IAstroProduct[] = [
   {
     monthlyId:
-      process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+      process.env.REACT_ENV === 'production'
         ? 'prod_PlC9OCbk8oBkWW'
         : 'prod_QBufh97tFHY0PT',
     annualId:
-      process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+      process.env.REACT_ENV === 'production'
         ? 'prod_PlWrHG8V57yjrn'
         : 'prod_QBufh97tFHY0PT',
     plan: 'home',
@@ -67,11 +67,11 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
   },
   {
     monthlyId:
-      process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+      process.env.REACT_ENV === 'production'
         ? 'prod_QAEaFpLDEJnlli'
         : 'prod_QBufZ1xT1eUOx8',
     annualId:
-      process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+      process.env.REACT_ENV === 'production'
         ? 'prod_QAEYttD39HvFKz'
         : 'prod_QBufZ1xT1eUOx8',
     plan: 's chool',

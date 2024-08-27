@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { PALETTE, UrsorButton, UrsorInputField } from '@/ui';
 import { LabeledInputField } from '@/ui/labeled-input-field';
 import _ from 'lodash';
-import { AstroContent } from '../profiles/[id]/components/ContentTab';
+import { AstroContent } from '../profile/components/ContentTab';
 
 const INPUT_PHRASE = 'delete';
 

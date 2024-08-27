@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { IDevice } from '../filters/[id]/contents/common';
+import { IDevice } from '../filter/contents/common';
 import UrsorFadeIn from './UrsorFadeIn';
 import XIcon from '@/images/icons/X.svg';
 import PlusIcon from '@/images/icons/PlusIcon.svg';

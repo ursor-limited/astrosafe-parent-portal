@@ -4,7 +4,7 @@ import { Stack } from '@mui/system';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import PencilIcon from '@/images/icons/Pencil.svg';
 import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
-import { IDevice } from '@/filters/[id]/contents/common';
+import { IDevice } from '@/filter/contents/common';
 import UrsorActionButton from '@/components/UrsorActionButton';
 import { useNavigate } from 'react-router-dom';
 import DeviceCard from '../components/DeviceCard';

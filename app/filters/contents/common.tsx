@@ -3,8 +3,8 @@ import AllFiltersPageDesktopBody from './body-desktop';
 import AllFiltersPageMobileBody from './body-mobile';
 import ApiController from '@/api';
 import { useNavigate } from 'react-router-dom';
-import FilterCreationDialog from '../[id]/components/FilterCreationDialog';
-import { IDevice } from '../[id]/contents/common';
+import FilterCreationDialog from '../../filter/components/FilterCreationDialog';
+import { IDevice } from '../../filter/contents/common';
 import _ from 'lodash';
 import useAuth from '@/hooks/useAuth';
 

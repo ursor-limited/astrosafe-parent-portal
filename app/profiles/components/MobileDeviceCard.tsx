@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import AstroCard from '../../filters/[id]/components/AstroCard';
+import AstroCard from '../../filter/components/AstroCard';
 
 import { PALETTE, Typography } from '@/ui';
 import ClockIcon from '@/images/icons/ClockIcon.svg';

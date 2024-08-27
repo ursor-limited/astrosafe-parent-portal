@@ -3,7 +3,7 @@ import PlusIcon from '@/images/icons/PlusIcon.svg';
 import PlugIcon from '@/images/icons/PlugIcon.svg';
 import PencilIcon from '@/images/icons/Pencil.svg';
 import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
-import { IDevice } from '@/filters/[id]/contents/common';
+import { IDevice } from '@/filter/contents/common';
 import DeviceInstructionsView from '../components/DeviceInstructionsView';
 import UrsorActionButton from '@/components/UrsorActionButton';
 import { PALETTE, UrsorButton } from '@/ui';

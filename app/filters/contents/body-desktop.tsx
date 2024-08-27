@@ -6,9 +6,9 @@ import _ from 'lodash';
 import DynamicCardGrid from '../../components/DynamicCardGrid';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '../../components/PageLayout';
-import FilterCard from '../[id]/components/FilterCard';
+import FilterCard from '../../filter/components/FilterCard';
 import { IFilter, IGroupFilter } from './common';
-import { INFOS } from '@/profiles/[id]/components/ProfilePageTabLayout';
+import { INFOS } from '@/profile/components/ProfilePageTabLayout';
 
 export const GRID_SPACING = '20px';
 
