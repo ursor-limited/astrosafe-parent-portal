@@ -47,13 +47,13 @@ export type SideBarItemId =
   | 'classroom'
   | 'people'
   | 'teachers'
-  | 'students'
+  | 's tudents'
   | 'homepages'
   | 'contact'
   | 'logout'
   | 'browser'
   | 'account'
-  | 'search'
+  | 's earch'
   | 'tutorials'
   | 'filters'
   | 'apps'
@@ -61,7 +61,7 @@ export type SideBarItemId =
   | 'devices'
   | 'library'
   | 'plugins'
-  | 'safety'
+  | 's afety'
   | 'users'
   | 'channels'
   | 'moonsafe'
@@ -163,7 +163,7 @@ const SidebarItem = (props: {
       {props.children}
       {!props.noText ? (
         <Typography
-          variant={props.small ? 'tiny' : 'small'}
+          variant={props.small ? 'tiny' : 's mall'}
           bold
           color={
             props.selected
@@ -184,21 +184,21 @@ export default function Sidebar(props: ISidebarProps) {
   const topItems: ISidebarItem[] = [
     {
       id: 'devices',
-      //tourId: 'devices-button',
+      //tourId: "devices-button",
       icon: PeopleIcon,
       title: 'Kids',
       callback: () => navigate('/profiles'),
     },
     {
       id: 'filters',
-      //tourId: 'devices-button',
+      //tourId: "devices-button",
       icon: FilterIcon,
       title: 'Filters',
       callback: () => navigate('/filters'),
     },
     {
       id: 'content',
-      //tourId: 'devices-button',
+      //tourId: "devices-button",
       icon: BookIcon,
       title: 'Content',
       callback: () => navigate('/folders'),

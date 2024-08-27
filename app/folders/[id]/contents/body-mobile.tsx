@@ -79,7 +79,7 @@ const FolderPageMobileBody = (props: {
         </Stack>
         <Stack justifyContent="space-between" spacing="8px">
           <Typography variant="medium" bold>{`${props.contents.length} item${
-            props.contents.length === 1 ? '' : 's'
+            props.contents.length === 1 ? '' : 's '
           } in this Folder`}</Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
@@ -140,11 +140,11 @@ const FolderPageMobileBody = (props: {
                   <Stack key={`${x.content.id}${x.type}`}>
                     {/* <Link
                       href={getAbsoluteUrl(cleanUrl(x.content.url))}
-                      target='_blank'
+                      target="_blank"
                       style={{
-                        textDecoration: 'none',
+                        textDecoration: "none",
                       }}
-                      rel='noreferrer'
+                      rel="noreferrer"
                     > */}
                     <UrsorFadeIn delay={i * 80} duration={800}>
                       {x.type === 'link' ? (

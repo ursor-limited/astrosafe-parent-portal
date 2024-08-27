@@ -2,7 +2,7 @@ import { Stack } from '@mui/system';
 import VideoCard from './VideoCard';
 import { useContext, useEffect, useState } from 'react';
 import ApiController, { getAbsoluteUrl } from '@/app/api';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 import ContentCreationDialog from './ContentCreationDialog';
 import {
   IContentBucket,

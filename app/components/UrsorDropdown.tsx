@@ -18,23 +18,23 @@ interface IUrsorDropdownRowProps {
 export function UrsorDropdownListRow(props: IUrsorDropdownRowProps) {
   return (
     <Stack
-      width='100%'
-      direction='row'
-      spacing='7px'
+      width="100%"
+      direction="row"
+      spacing="7px"
       height={ROW_HEIGHT}
       px={X_PADDING}
       // onClick={() => props.callback?.()}
-      alignItems='center'
+      alignItems="center"
       sx={{
         cursor: 'pointer',
       }}
       bgcolor={props.hovering ? PALETTE.secondary.grey[1] : 'rgba(255,255,255)'}
     >
       {props.icon ? props.icon : null}
-      <Stack width='100%' minWidth={0}>
+      <Stack width="100%" minWidth={0}>
         <Typography
           noWrap
-          variant='small'
+          variant="small"
           sx={{ lineHeight: '100%' }}
           color={
             props.hovering ? PALETTE.secondary.purple[2] : PALETTE.font.dark
@@ -43,7 +43,7 @@ export function UrsorDropdownListRow(props: IUrsorDropdownRowProps) {
           {props.value}
         </Typography>
         {props.secondaryValue ? (
-          <Typography noWrap variant='tiny' color={PALETTE.secondary.grey[3]}>
+          <Typography noWrap variant="tiny" color={PALETTE.secondary.grey[3]}>
             {props.secondaryValue}
           </Typography>
         ) : null}
@@ -54,24 +54,24 @@ export function UrsorDropdownListRow(props: IUrsorDropdownRowProps) {
 
 export function UrsorDropdownListHeader(props: { title: string }) {
   return (
-    <Stack direction='row' spacing='5px' alignItems='center' px={X_PADDING}>
-      <Typography variant='tiny' color={PALETTE.secondary.grey[3]}>
+    <Stack direction="row" spacing="5px" alignItems="center" px={X_PADDING}>
+      <Typography variant="tiny" color={PALETTE.secondary.grey[3]}>
         {props.title}
       </Typography>
-      <Box height='1px' width='100%' bgcolor={PALETTE.secondary.grey[3]} />
+      <Box height="1px" width="100%" bgcolor={PALETTE.secondary.grey[3]} />
     </Stack>
   );
 }
 
 export function UrsorDropdownList(props: {
-  rows: (Pick<IUrsorDropdownRowProps, 'value' | 'secondaryValue' | 'icon'> & {
+  rows: (Pick<IUrsorDropdownRowProps, 'value' | 's econdaryValue' | 'icon'> & {
     id: string;
     callback: () => void;
   })[];
 }) {
   const [hoverRowId, setHoverRowId] = useState<string | undefined>(undefined);
   return (
-    <Stack width='100%' maxHeight={LIST_MAX_HEIGHT}>
+    <Stack width="100%" maxHeight={LIST_MAX_HEIGHT}>
       {props.rows.map((row) => (
         <Box
           key={row.id}
@@ -89,7 +89,7 @@ export function UrsorDropdownList(props: {
 }
 
 export interface IUrsorDropdownButtonProps {
-  rows: (Pick<IUrsorDropdownRowProps, 'value' | 'secondaryValue' | 'icon'> & {
+  rows: (Pick<IUrsorDropdownRowProps, 'value' | 's econdaryValue' | 'icon'> & {
     id: string;
     callback: () => void;
   })[];
@@ -104,7 +104,7 @@ export function UrsorDropdownButton(props: IUrsorDropdownButtonProps) {
       open={popupOpen}
       content={<UrsorDropdownList rows={props.rows} />}
       closeCallback={() => setPopupOpen(false)}
-      floatButton='duplicate'
+      floatButton="duplicate"
       // animation={`${fadingOut ? fadeOut : fadeIn} ${
       //   FADE_DURATION / 1000
       // }s ease-out forwards`}

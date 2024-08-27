@@ -5,8 +5,8 @@ import _ from 'lodash';
 import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
 import PencilIcon from '@/images/icons/Pencil.svg';
 import { useState } from 'react';
-import UrsorActionButton from '@/app/components/UrsorActionButton';
-import DeletionDialog from '@/app/components/DeletionDialog';
+import UrsorActionButton from '@/components/UrsorActionButton';
+import DeletionDialog from '@/components/DeletionDialog';
 import {
   AstroContent,
   IContent,

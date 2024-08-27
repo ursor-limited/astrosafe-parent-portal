@@ -20,18 +20,18 @@ const UsersTable = (props: { users: IUser[] }) => {
     {
       name: 'name',
       displayName: `${props.users.length ?? 0} Adult${
-        props.users.length === 1 ? '' : 's'
+        props.users.length === 1 ? '' : 's '
       }`,
       sortable: true,
       newTag: true,
       getAvatar: (id) => {
         return (
           <Stack
-            borderRadius='100%'
-            overflow='hidden'
+            borderRadius="100%"
+            overflow="hidden"
             bgcolor={PALETTE.secondary.blue[2]}
-            minWidth='20px'
-            minHeight='20px'
+            minWidth="20px"
+            minHeight="20px"
           />
         );
       },
@@ -88,7 +88,7 @@ const UsersTable = (props: { users: IUser[] }) => {
     <UrsorTable
       columns={TABLE_COLUMNS}
       rows={sortedRows}
-      defaultSortedByColumn='createdAt'
+      defaultSortedByColumn="createdAt"
       defaultSortedAscending
       selectedSort={sortedColumn}
       ascending={sortDirection === 'asc'}

@@ -31,7 +31,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
   useEffect(() => {
     setDuration(
       props.duration ||
-        dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
+        dayjs(props.finishedAt).diff(props.searchedAt, 's econds')
     );
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
@@ -126,7 +126,7 @@ const HistoryDomainRow = (props: IDomainGroup) => {
             {...props.domain}
             duration={_.sum(
               props.rows.map((r) =>
-                dayjs(r.finishedAt).diff(r.searchedAt, 'seconds')
+                dayjs(r.finishedAt).diff(r.searchedAt, 's econds')
               )
             )}
           />
@@ -200,7 +200,7 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
         const latestGroup = acc[acc.length - 1];
 
         const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+        if (latestUrl === cur.url) return acc; // don"t show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
         const latestDomain = latestGroup?.domain;
         return currentDomain === latestDomain

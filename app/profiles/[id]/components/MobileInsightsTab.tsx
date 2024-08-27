@@ -163,66 +163,66 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
         </AstroBentoCard>
 
         {/* <AstroBentoCard
-          title='Most visited sites today'
+          title="Most visited sites today"
           notCollapsible
-          paddingBottom='0'
+          paddingBottom="0"
           topRightStuff={
-            <UrsorButton size='small' variant='secondary'>
+            <UrsorButton size="small" variant="secondary">
               View all
             </UrsorButton>
           }
           isMobile
         >
-          <Stack pb='14px' spacing='12px'>
+          <Stack pb="14px" spacing="12px">
             {DUMMY_MOST_VISITED.map((site, i) => (
               <Stack
                 key={site.id}
                 borderTop={
                   i > 0 ? `2px solid ${PALETTE.secondary.grey[2]}` : undefined
                 }
-                pt={i > 0 ? '12px' : undefined}
+                pt={i > 0 ? "12px" : undefined}
                 sx={{
-                  cursor: 'pointer',
-                  '&:hover': { opacity: 0.7 },
-                  transition: '0.2s',
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.7 },
+                  transition: "0.2s",
                 }}
-                justifyContent='center'
+                justifyContent="center"
               >
                 <Link
                   key={site.id}
                   href={site.url}
-                  target='_blank'
+                  target="_blank"
                   style={{
-                    textDecoration: 'none',
+                    textDecoration: "none",
                   }}
                 >
                   <Stack
                     flex={1}
-                    direction='row'
-                    spacing='8px'
-                    alignItems='center'
+                    direction="row"
+                    spacing="8px"
+                    alignItems="center"
                   >
                     <Stack
-                      borderRadius='12px'
-                      overflow='hidden'
-                      minWidth='56px'
-                      minHeight='56px'
+                      borderRadius="12px"
+                      overflow="hidden"
+                      minWidth="56px"
+                      minHeight="56px"
                     >
                       <img
                         src={site.imageUrl}
                         height={56}
                         width={56}
-                        alt='favicon'
+                        alt="favicon"
                       />
                     </Stack>
-                    <Stack spacing='8px' width='100%'>
-                      <Stack justifyContent='center'>
-                        <Typography bold variant='small' maxLines={1}>
+                    <Stack spacing="8px" width="100%">
+                      <Stack justifyContent="center">
+                        <Typography bold variant="small" maxLines={1}>
                           {site.title}
                         </Typography>
                         <Typography
                           bold
-                          variant='tiny'
+                          variant="tiny"
                           color={PALETTE.secondary.grey[3]}
                           maxLines={1}
                         >
@@ -230,22 +230,22 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
                         </Typography>
                       </Stack>
                       <Stack
-                        direction='row'
-                        alignItems='center'
-                        spacing='6px'
-                        width='90%'
+                        direction="row"
+                        alignItems="center"
+                        spacing="6px"
+                        width="90%"
                       >
                         <Stack
                           width={`${
                             (100 * site.time) /
                             (_.max(DUMMY_MOST_VISITED.map((s) => s.time)) ?? 1)
                           }%`}
-                          height='8px'
+                          height="8px"
                           bgcolor={PALETTE.secondary.purple[1]}
-                          borderRadius='4px'
+                          borderRadius="4px"
                         />
-                        <Stack width='50px'>
-                          <Typography bold variant='tiny'>{`${Math.floor(
+                        <Stack width="50px">
+                          <Typography bold variant="tiny">{`${Math.floor(
                             site.time / 3600
                           )}h ${Math.floor(
                             (site.time % 3600) / 60
@@ -272,7 +272,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
       </Stack>
       {/* <MobileAllDevicesDialog
         title={`${props.devices.length} ${
-          props.devices.length === 1 ? 'Device has' : 'Devices have'
+          props.devices.length === 1 ? "Device has" : "Devices have"
         } this Filter applied.`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}

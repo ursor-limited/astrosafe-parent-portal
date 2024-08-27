@@ -13,12 +13,12 @@ const MultiplicationTableColumns = (
   props: IMultiplicationTableColumns & { mobile: boolean }
 ) => {
   return (
-    <Stack spacing='12px'>
+    <Stack spacing="12px">
       {props.multipliers.map((row, i) => (
         <Stack
           key={i}
           direction={props.mobile ? 'column' : 'row'}
-          spacing='12px'
+          spacing="12px"
         >
           {row.map((x) => (
             <Link
@@ -27,7 +27,7 @@ const MultiplicationTableColumns = (
               style={{ textDecoration: 'none' }}
             >
               <Stack
-                width='210px'
+                width="210px"
                 sx={{
                   cursor: 'pointer',
                   '&:hover': { opacity: 0.6 },
@@ -36,10 +36,10 @@ const MultiplicationTableColumns = (
               >
                 <Stack
                   bgcolor={PALETTE.secondary.purple[1]}
-                  borderRadius='12px 12px 0 0'
-                  height='58px'
-                  justifyContent='center'
-                  alignItems='center'
+                  borderRadius="12px 12px 0 0"
+                  height="58px"
+                  justifyContent="center"
+                  alignItems="center"
                   sx={{
                     svg: {
                       path: {
@@ -47,29 +47,29 @@ const MultiplicationTableColumns = (
                       },
                     },
                   }}
-                  direction='row'
-                  spacing='12px'
+                  direction="row"
+                  spacing="12px"
                 >
                   <Typography
                     bold
-                    variant='large'
-                    color='rgb(255,255,255)'
+                    variant="large"
+                    color="rgb(255,255,255)"
                   >{`${x} times table`}</Typography>
-                  <ArrowUpRight height='22px' width='22px' />
+                  <ArrowUpRight height="22px" width="22px" />
                 </Stack>
                 {_.range(1, 11).map((y) => (
                   <Stack
                     key={y}
-                    height='58px'
-                    justifyContent='center'
-                    alignItems='center'
+                    height="58px"
+                    justifyContent="center"
+                    alignItems="center"
                     border={`1px solid ${PALETTE.secondary.grey[2]}`}
-                    borderTop='none'
+                    borderTop="none"
                     borderRadius={
                       y === props.range[1] ? '0 0 12px 12px' : undefined
                     }
-                    spacing='8px'
-                    direction='row'
+                    spacing="8px"
+                    direction="row"
                   >
                     <Typography bold color={PALETTE.secondary.purple[1]}>
                       {y}

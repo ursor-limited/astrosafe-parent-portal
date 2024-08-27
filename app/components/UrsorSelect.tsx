@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 
 const UrsorPopover = dynamic(
   () => import('@/components/UrsorPopover'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 export interface IUrsorSelectItem {
@@ -75,7 +75,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
               : undefined
           }
           pb={i === 0 ? '6px' : 0}
-          //pt={i > 0 ? '10px' : 0}
+          //pt={i > 0 ? "10px" : 0}
         >
           <Typography
             bold
@@ -139,7 +139,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
               pointerEvents: 'none',
             }
           : {
-              //pointerEvents: props.disabled ? 'none' : undefined,
+              //pointerEvents: props.disabled ? "none" : undefined,
               transition: '0.2s',
               '&:hover': { opacity: 0.7 },
             }
@@ -215,13 +215,13 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
               <X
                 onClick={props.clearAllCallback}
                 style={{
-                  transform: 'scale(0.7)',
+                  transform: 's cale(0.7)',
                 }}
               />
             ) : (
               <ChevronDown
                 style={{
-                  transform: 'scale(0.7)',
+                  transform: 's cale(0.7)',
                 }}
               />
             )}

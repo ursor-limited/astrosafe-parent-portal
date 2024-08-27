@@ -57,7 +57,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     icon: VideoCameraIcon,
   },
   // lesson: {
-  //   title: 'Add Lesson',
+  //   title: "Add Lesson",
   //   color: PALETTE.secondary.green[5],
   //   icon: VersionsIcon,
   // },
@@ -179,7 +179,7 @@ export default function FolderPage(props: {
       icon: PencilIcon,
     },
     // {
-    //   text: 'Duplicate',
+    //   text: "Duplicate",
     //   kallback: () => null,
     //   icon: DuplicateIcon,
     // },

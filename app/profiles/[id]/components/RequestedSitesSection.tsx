@@ -42,7 +42,7 @@ const RequestedSiteRow = (
         sx={{ transform: 'translateY(-2px)' }}
         flex={1}
         // maxWidth={0}
-        // minWidth='100%'
+        // minWidth="100%"
       >
         <Typography bold maxLines={1}>
           {props.title}
@@ -88,7 +88,7 @@ const RequestedSitesSection = (props: {
   return (
     <Stack spacing="12px">
       <Typography variant="large" bold>{`${props.sites.length} requested site${
-        props.sites.length === 1 ? '' : 's'
+        props.sites.length === 1 ? '' : 's '
       }`}</Typography>
       <Stack spacing="12px">
         {props.sites.slice(0, 3).map((s) => (

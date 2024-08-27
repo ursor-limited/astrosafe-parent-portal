@@ -6,20 +6,20 @@ const AstroTabSwitch = (props: {
   select: (id: string) => void;
   selected: string;
 }) => (
-  <Stack direction='row' spacing='12px'>
+  <Stack direction="row" spacing="12px">
     {props.items.map((item) => (
       <Stack
         key={item.id}
-        height='32px'
-        px='12px'
-        boxSizing='border-box'
+        height="32px"
+        px="12px"
+        boxSizing="border-box"
         onClick={() => props.select(item.id)}
-        borderRadius='8px'
-        justifyContent='center'
-        bgcolor='rgb(255,255,255)'
+        borderRadius="8px"
+        justifyContent="center"
+        bgcolor="rgb(255,255,255)"
       >
         <Typography
-          variant='small'
+          variant="small"
           bold
           color={
             props.selected === item.id ? PALETTE.secondary.purple[2] : undefined

@@ -19,8 +19,8 @@ export interface IPlatformCardProps {
 const PlatformCard = (props: IPlatformCardProps) => {
   return (
     <Stack
-      height='162px'
-      width='124px'
+      height="162px"
+      width="124px"
       sx={{
         cursor: 'pointer',
         '&:hover': { opacity: 0.6 },
@@ -28,9 +28,9 @@ const PlatformCard = (props: IPlatformCardProps) => {
       }}
       borderRadius={BORDER_RADIUS}
       p={PADDING}
-      bgcolor='#ffffff'
-      boxSizing='border-box'
-      spacing='8px'
+      bgcolor="#ffffff"
+      boxSizing="border-box"
+      spacing="8px"
     >
       <Stack
         sx={{
@@ -44,10 +44,10 @@ const PlatformCard = (props: IPlatformCardProps) => {
             : undefined,
         }}
         height={IMAGE_HEIGHT}
-        width='100%'
-        borderRadius='8px'
+        width="100%"
+        borderRadius="8px"
       />
-      <Typography variant='small' bold maxLines={2}>
+      <Typography variant="small" bold maxLines={2}>
         {props.app.title}
       </Typography>
     </Stack>

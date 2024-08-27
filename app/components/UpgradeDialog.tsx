@@ -22,7 +22,7 @@ export const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
 interface IAstroProduct {
   monthlyId: string;
   annualId: string;
-  plan: 'home' | 'school';
+  plan: 'home' | 's chool';
   items: string[];
   title: string;
   subtitle: string;
@@ -74,13 +74,13 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
         ? 'prod_QAEYttD39HvFKz'
         : 'prod_QBufZ1xT1eUOx8',
-    plan: 'school',
+    plan: 's chool',
     items: [
       '10 devices monitored',
       'Unlimited parents/teachers',
       'All features included',
     ],
-    title: 'School',
+    title: 's chool',
     subtitle: 'Ideal for Schools',
     monthlyPrices: {
       USD: 59.99,
@@ -168,7 +168,7 @@ export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
 
 export const getPaymentUrl = (
   email: string,
-  plan: 'home' | 'school',
+  plan: 'home' | 's chool',
   frequency: 'monthly' | 'annual'
 ) =>
   `${
@@ -464,7 +464,7 @@ const UpgradeDialog = (props: {
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
             navigate(
-              user?.email ? getPaymentUrl(user.email, 'school', frequency) : ''
+              user?.email ? getPaymentUrl(user.email, 's chool', frequency) : ''
             );
             setUpgradedNotificationPending(true);
           }}

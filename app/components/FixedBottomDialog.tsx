@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 
 const DynamicallyLoadedPortal = dynamic(
   () => import('./DynamicallyLoadedPortal'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 export const CHANGES_SAVED_NOTIFICATION_DURATION = 2600;

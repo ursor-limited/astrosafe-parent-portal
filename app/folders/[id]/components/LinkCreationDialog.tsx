@@ -3,7 +3,7 @@ import ContentCreationDialog from './ContentCreationDialog';
 import { useContext, useEffect, useState } from 'react';
 import LinkCard from './LinkCard';
 import ApiController, { getAbsoluteUrl } from '@/app/api';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 import {
   IContentBucket,
   ILink,

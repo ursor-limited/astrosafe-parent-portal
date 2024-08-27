@@ -1,4 +1,4 @@
-import PageLayout from '@/app/components/PageLayout';
+import PageLayout from '@/components/PageLayout';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
@@ -277,7 +277,7 @@ const AccountPageDesktopBody = (props: {
               </UrsorButton>
             }
           >
-            <Typography>{`We'd love to hear your thoughts! Please send us through any ideas you have about the app, or let us know if you encounter any bugs or hiccups!`}</Typography>
+            <Typography>{`We"d love to hear your thoughts! Please send us through any ideas you have about the app, or let us know if you encounter any bugs or hiccups!`}</Typography>
           </AstroBentoCard>
         </Stack>
       </Stack>

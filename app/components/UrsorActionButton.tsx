@@ -29,14 +29,14 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
       open={open}
       items={props.actions}
       closeCallback={() => setOpen(false)}
-      placement='right'
+      placement="right"
       zIndex={9999}
     >
       <Stack
         height={props.size ?? '40px'}
         width={props.size ?? '40px'}
-        justifyContent='center'
-        alignItems='center'
+        justifyContent="center"
+        alignItems="center"
         sx={{
           background: props.background || 'rgb(255,255,255)',
           cursor: 'pointer',
@@ -53,7 +53,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
             },
           },
         }}
-        borderRadius='100%'
+        borderRadius="100%"
         border={
           props.border
             ? `2px solid ${
@@ -62,7 +62,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
               }`
             : undefined
         }
-        boxSizing='border-box'
+        boxSizing="border-box"
         onClick={() => {
           if (props.notClickable) return;
           setOpen(!open);

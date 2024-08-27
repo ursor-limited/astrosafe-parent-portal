@@ -34,9 +34,9 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
 
   return (
     <Box
-      p='10px'
-      pb='5px'
-      width='320px'
+      p="10px"
+      pb="5px"
+      width="320px"
       sx={{
         '.react-calendar__tile': {
           color: PALETTE.font.dark,
@@ -126,11 +126,11 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
             setViewMonthStartDate(x.activeStartDate)
           }
           value={props.value}
-          prevLabel={<ChevronIcon height='20px' width='20px' />}
+          prevLabel={<ChevronIcon height="20px" width="20px" />}
           nextLabel={
             <ChevronIcon
-              height='20px'
-              width='20px'
+              height="20px"
+              width="20px"
               style={{ transform: 'rotate(180deg)' }}
             />
           }
@@ -145,7 +145,7 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
               : ''
           }
           maxDate={new Date()}
-          minDetail='month'
+          minDetail="month"
         />
       </DynamicContainer>
     </Box>

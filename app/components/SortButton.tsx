@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 
 const UrsorPopover = dynamic(
   () => import('@/components/UrsorPopover'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 export interface IClassSortButtonProps<T extends string> {
@@ -75,7 +75,7 @@ const SortButton = <T extends string>(
         >
           {props.noText
             ? props.displayNames[props.selected]
-            : `${props.text || 'Sort by'}: ${
+            : `${props.text || 's ort by'}: ${
                 props.displayNames[props.selected]
               }`}
         </UrsorButton>

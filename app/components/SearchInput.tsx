@@ -22,13 +22,13 @@ export const SearchInput = (props: {
     <Stack
       height={props.height || '28px'}
       width={props.fullWidth ? '100%' : '160px'}
-      direction='row'
-      borderRadius='8px'
-      alignItems='center'
+      direction="row"
+      borderRadius="8px"
+      alignItems="center"
       bgcolor={props.grey ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)'}
-      px='10px'
-      spacing='8px'
-      boxSizing='border-box'
+      px="10px"
+      spacing="8px"
+      boxSizing="border-box"
       sx={{
         svg: {
           path: {
@@ -52,7 +52,7 @@ export const SearchInput = (props: {
         style={{
           textAlign: 'left',
           textOverflow: 'ellipsis',
-          fontSize: FONT_SIZES['small'],
+          fontSize: FONT_SIZES['s mall'],
           color: PALETTE.font.dark,
           fontWeight: 480,
           lineHeight: '100%',
@@ -73,7 +73,7 @@ export const SearchInput = (props: {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           props.callback(event.target.value);
         }}
-        placeholder='Search'
+        placeholder="Search"
         onBlur={() => setActive(false)}
         onFocus={() => setActive(true)}
       />
@@ -87,7 +87,7 @@ export const SearchInput = (props: {
         }}
         onClick={props.clearCallback}
       >
-        <XIcon width='16px' height='16px' />
+        <XIcon width="16px" height="16px" />
       </Stack>
     </Stack>
   );

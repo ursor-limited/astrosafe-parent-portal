@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserInfo } from '@/app/auth';
 
 const useAuth = () => {
-  // If you're able to access this hook the user info should always be set as the middleware handles checking the auth state!!
+  // If you"re able to access this hook the user info should always be set as the middleware handles checking the auth state!!
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
 
   const navigate = useNavigate();

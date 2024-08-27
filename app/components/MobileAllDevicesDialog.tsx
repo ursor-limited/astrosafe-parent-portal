@@ -50,23 +50,23 @@ const MobileAllDevicesDialog = (props: {
         '.MuiBackdrop-root': BACKDROP_STYLE,
       }}
     >
-      <Stack spacing='32px' flex={1}>
+      <Stack spacing="32px" flex={1}>
         <Stack
-          justifyContent='space-between'
-          alignItems='center'
-          spacing='12px'
+          justifyContent="space-between"
+          alignItems="center"
+          spacing="12px"
         >
-          <Stack direction='row'>
-            <Typography variant='large' bold>
+          <Stack direction="row">
+            <Typography variant="large" bold>
               {props.title}
             </Typography>
             <Stack
-              width='40px'
-              alignItems='flex-end'
-              pt='3px'
+              width="40px"
+              alignItems="flex-end"
+              pt="3px"
               onClick={props.onClose}
             >
-              <XIcon height='22px' width='22px' />
+              <XIcon height="22px" width="22px" />
             </Stack>
           </Stack>
           <SearchInput
@@ -75,10 +75,10 @@ const MobileAllDevicesDialog = (props: {
             clearCallback={() => setSearchValue('')}
             grey
             fullWidth
-            iconSize='18px'
+            iconSize="18px"
           />
         </Stack>
-        <DynamicCardGrid cardWidth='150px' columnGap='12px' rowGap='12px'>
+        <DynamicCardGrid cardWidth="150px" columnGap="12px" rowGap="12px">
           {filteredDevices.map((d, i) => (
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
               <MobileDeviceCard
@@ -96,9 +96,9 @@ const MobileAllDevicesDialog = (props: {
       </Stack>
       <UrsorButton
         dark
-        variant='tertiary'
+        variant="tertiary"
         onClick={props.onAdd}
-        width='100%'
+        width="100%"
         endIcon={PlusIcon}
       >
         Add Device

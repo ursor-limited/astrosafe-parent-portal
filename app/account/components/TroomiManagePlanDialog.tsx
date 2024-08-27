@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from '@mui/system';
 import _ from 'lodash';
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 
 const INPUT_PHRASE = 'delete';
 

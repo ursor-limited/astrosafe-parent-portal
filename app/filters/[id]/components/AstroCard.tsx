@@ -1,5 +1,5 @@
-import { Stack } from "@mui/system';
-import { PALETTE } from "@/ui';
+import { Stack } from '@mui/system';
+import { PALETTE } from '@/ui';
 
 const AstroCard = (props: { children: React.ReactNode }) => (
   <Stack

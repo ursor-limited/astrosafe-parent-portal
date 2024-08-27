@@ -27,19 +27,19 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   useEffect(() => {
     setDuration(
       props.duration ||
-        dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
+        dayjs(props.finishedAt).diff(props.searchedAt, 's econds')
     );
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
-      {/* <Stack spacing='4px'>
-        <Typography variant='tiny' bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format('hh:mm:HHa')}
+      {/* <Stack spacing="4px">
+        <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
+          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
         </Typography>
         <Stack
-          direction='row'
-          spacing='4px'
-          alignItems='center'
+          direction="row"
+          spacing="4px"
+          alignItems="center"
           sx={{
             svg: {
               path: {
@@ -48,8 +48,8 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
             },
           }}
         >
-          <ClockIcon height='12px' width='12px' />
-          <Typography variant='tiny' color={PALETTE.secondary.grey[4]} bold>
+          <ClockIcon height="12px" width="12px" />
+          <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
             {duration < 60
               ? `${duration}s`
               : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
@@ -169,7 +169,7 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
             {...props.domain}
             duration={_.sum(
               props.rows.map((r) =>
-                dayjs(r.finishedAt).diff(r.searchedAt, 'seconds')
+                dayjs(r.finishedAt).diff(r.searchedAt, 's econds')
               )
             )}
           />
@@ -238,7 +238,7 @@ const MobileHistorySection = (props: {
         const latestGroup = acc[acc.length - 1];
 
         const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+        if (latestUrl === cur.url) return acc; // don"t show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
         const latestDomain = latestGroup?.domain;
         return currentDomain === latestDomain

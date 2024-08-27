@@ -79,7 +79,7 @@ export default function StepDialog(props: IStepDialogProps) {
       title={props.steps[bodyStep].title}
       subtitle={props.steps[bodyStep].subtitle}
       supertitle={props.steps[bodyStep].supertitle}
-      titleMaxWidth='80%'
+      titleMaxWidth="80%"
       open={props.open}
       step={step}
       nSteps={props.steps.length}

@@ -35,7 +35,7 @@ const AllDevicesPageDesktopBody = (props: {
         icon: PlusIcon,
       }}
       //   secondaryButton={{
-      //     text: 'Get Browser',
+      //     text: "Get Browser",
       //     callback: props.setDownloadDialogOpen,
       //     icon: DownloadIcon,
       //   }}
@@ -69,7 +69,7 @@ const AllDevicesPageDesktopBody = (props: {
                           icon: PencilIcon,
                         },
                         // {
-                        //   text: 'Disconnect',
+                        //   text: "Disconnect",
                         //   kallback: () => props.setDisconnectDialogOpen(d.id),
                         //   icon: PlugIcon,
                         //   color: PALETTE.system.red,

@@ -106,15 +106,15 @@ const disabledRowItemStyle = {
 };
 
 const headerRowStyle = {
-  // '& th': {
-  //   //paddingTop: '0px',
-  //   //paddingBottom: '15px',
+  // "& th": {
+  //   //paddingTop: "0px",
+  //   //paddingBottom: "15px",
   //   border: BORDER,
   // },
-  // '& th:first-of-type': {
+  // "& th:first-of-type": {
   //   borderTopLeftRadius: ROUNDING,
   // },
-  // '& th:last-of-type': {
+  // "& th:last-of-type": {
   //   borderTopRightRadius: ROUNDING,
   // },
   position: 'relative',
@@ -122,7 +122,7 @@ const headerRowStyle = {
 };
 
 const bodyCellStyle = {
-  //overflow: 'visible',
+  //overflow: "visible",
   '& td': {
     maxWidth: '450px',
     paddingTop: BODY_CELL_Y_PADDING,
@@ -137,31 +137,31 @@ const bodyCellStyle = {
   '& td:last-of-type': {
     borderLeft: 0,
   },
-  // '& td:last-of-type': {
+  // "& td:last-of-type": {
   //   borderRight: BORDER,
   // },
-  // '& td:last-of-type': {
+  // "& td:last-of-type": {
   //   borderRight: BORDER,
   // },
-  // '& tr:first-of-type': {
-  //   '& td': {
+  // "& tr:first-of-type": {
+  //   "& td": {
   //     borderTop: BORDER,
   //   },
-  //   '& td:first-of-type': {
+  //   "& td:first-of-type": {
   //     borderTopLeftRadius: ROUNDING,
   //   },
-  //   '& td:last-of-type': {
+  //   "& td:last-of-type": {
   //     borderTopRightRadius: ROUNDING,
   //   },
   // },
-  // '& tr:last-of-type': {
-  //   '& td': {
+  // "& tr:last-of-type": {
+  //   "& td": {
   //     borderBottom: BORDER,
   //   },
-  //   // '& td:first-of-type': {
+  //   // "& td:first-of-type": {
   //   //   borderBottomLeftRadius: ROUNDING,
   //   // },
-  //   '& td:last-of-type': {
+  //   "& td:last-of-type": {
   //     borderBottom: 0,
   //   },
   // },
@@ -212,7 +212,7 @@ const UrsorTableBodyCell = (props: {
   React.useEffect(() => {
     if (
       props.newTagDatetime &&
-      -dayjs(props.newTagDatetime).diff(dayjs(), 'seconds') < NEW_TAG_DURATION
+      -dayjs(props.newTagDatetime).diff(dayjs(), 's econds') < NEW_TAG_DURATION
     ) {
       setNewTagOn(true);
       setTimeout(() => setNewTagOn(false), NEW_TAG_DURATION * 1000);
@@ -242,7 +242,7 @@ const UrsorTableBodyCell = (props: {
           svg: { path: { fill: PALETTE.font.dark } },
         }}
         justifyContent="flex-end"
-        overflow={typeof props.item === 'string' ? 'hidden' : undefined}
+        overflow={typeof props.item === 's tring' ? 'hidden' : undefined}
       >
         <Stack
           direction="row"
@@ -252,7 +252,7 @@ const UrsorTableBodyCell = (props: {
           alignItems="center"
           width="100%"
           minWidth={props.columnName === 'title' ? '200px' : undefined}
-          //maxWidth={typeof props.item === 'string' ? '500px' : undefined}
+          //maxWidth={typeof props.item === "string" ? "500px" : undefined}
         >
           <Stack
             width="100%"
@@ -260,8 +260,8 @@ const UrsorTableBodyCell = (props: {
             spacing="10px"
             alignItems="center"
             // sx={{
-            //   ...(props.columnName === 'name'
-            //     ? { maxWidth: 0, minWidth: '100%' }
+            //   ...(props.columnName === "name"
+            //     ? { maxWidth: 0, minWidth: "100%" }
             //     : {}),
             // }}
             onClick={props.onClick}
@@ -270,7 +270,7 @@ const UrsorTableBodyCell = (props: {
               <Box
                 onClick={props.checkbox.callback}
                 sx={{
-                  //width: props.checkbox.checked || props.rowHovering ? '20px' : 0,
+                  //width: props.checkbox.checked || props.rowHovering ? "20px" : 0,
                   opacity: props.checkbox.checked || props.rowHovering ? 1 : 0,
                   '&:hover': {
                     opacity: 0.5,
@@ -290,14 +290,14 @@ const UrsorTableBodyCell = (props: {
               overflow="hidden"
             >
               {props.avatar}
-              {typeof props.item === 'string' ||
+              {typeof props.item === 's tring' ||
               typeof props.item === 'number' ? (
                 <Stack
                   width="100%"
                   sx={{
                     ...(props.disabled ? disabledRowItemStyle : {}),
-                    // ...(props.columnName === 'title'
-                    //   ? { maxWidth: 0, minWidth: '100%' }
+                    // ...(props.columnName === "title"
+                    //   ? { maxWidth: 0, minWidth: "100%" }
                     //   : {}),
                   }}
                 >
@@ -314,7 +314,7 @@ const UrsorTableBodyCell = (props: {
                         opacity: props.faded ? 0.4 : 1,
                         maxWidth:
                           props.columnName === 'title'
-                            ? 0 //</a>'90%'
+                            ? 0 //</a>"90%"
                             : props.columnName === 'domain' ||
                               props.columnName === 'url'
                             ? '200px'
@@ -392,8 +392,8 @@ export default function UrsorTable<T extends Record<string, any>>(
   //   props.defaultSortedByColumn ||
   //     props.columns.find((col) => col.sortable)?.name
   // );
-  // const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(
-  //   props.defaultSortedAscending ? 'asc' : 'desc'
+  // const [sortDirection, setSortDirection] = useState<"asc" | "desc">(
+  //   props.defaultSortedAscending ? "asc" : "desc"
   // );
   // const [sortedRows, setSortedRows] = useState<IUrsorTableRow<T>[]>([]);
   // useEffect(() => {
@@ -402,7 +402,7 @@ export default function UrsorTable<T extends Record<string, any>>(
   //       row.items[sortedColumn].toLowerCase()
   //     );
   //     setSortedRows(
-  //       sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted
+  //       sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted
   //     );
   //   } else {
   //     setSortedRows(props.rows);
@@ -414,7 +414,7 @@ export default function UrsorTable<T extends Record<string, any>>(
       hoveredRow === null || index === hoveredRow ? null : fadedRowStyle;
     return {
       height: ROW_HEIGHT,
-      //background: '#1A415A',
+      //background: "#1A415A",
       transition: '0.2s',
       ...highlightStyle,
       position: 'relative',
@@ -435,7 +435,7 @@ export default function UrsorTable<T extends Record<string, any>>(
       callback: () => void;
     },
     button?: JSX.Element
-    // sorted?: 'asc' | 'desc',
+    // sorted?: "asc" | "desc",
     // sortCallback?: () => void
   ) => {
     //@ts-ignore
@@ -542,9 +542,9 @@ export default function UrsorTable<T extends Record<string, any>>(
                           props.sortSelectionCallback(column.name);
                           // setSortDirection(
                           //   column.name !== sortedColumn ||
-                          //     sortDirection === 'asc'
-                          //     ? 'desc'
-                          //     : 'asc'
+                          //     sortDirection === "asc"
+                          //     ? "desc"
+                          //     : "asc"
                           // );
                           // setSortedColumn(column.name);
                         },

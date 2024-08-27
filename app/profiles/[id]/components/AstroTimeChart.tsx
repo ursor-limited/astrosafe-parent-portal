@@ -118,7 +118,7 @@ const AstroTimeChart = (props: {
                     sx={
                       {
                         // transform: `translateX(-${
-                        //   props.limitReachedXTranslation ?? '8.5'
+                        //   props.limitReachedXTranslation ?? "8.5"
                         // }px)`,
                       }
                     }

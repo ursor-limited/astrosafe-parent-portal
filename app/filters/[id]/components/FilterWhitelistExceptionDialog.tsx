@@ -1,8 +1,8 @@
-import NotificationContext from "@/app/components/NotificationContext';
-import UrsorDialog from "@/app/components/UrsorDialog';
-import { Stack } from "@mui/system';
-import { useContext, useState } from "react';
-import { UrsorButton } from "@/ui';
+import NotificationContext from '@/app/components/NotificationContext';
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { Stack } from '@mui/system';
+import { useContext, useState } from 'react';
+import { UrsorButton } from '@/ui';
 
 const FilterWhitelistExceptionDialog = (props: {
   open: boolean;
@@ -16,7 +16,7 @@ const FilterWhitelistExceptionDialog = (props: {
       onCloseCallback={props.onClose}
       title="Are you sure?"
       subtitle={[
-        "This will override our Filters and give all of the assigned Devices access to this site. They will be able to access this site until it is removed or they change Filter.",
+        'This will override our Filters and give all of the assigned Devices access to this site. They will be able to access this site until it is removed or they change Filter.',
       ]}
       width="422px"
       dynamicHeight

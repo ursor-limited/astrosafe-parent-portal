@@ -66,7 +66,7 @@ const DevicePageContentTab = (props: {
   return (
     <ProfilePageTabLayout
       title={`${props.folders.length} Content Folder${
-        props.folders.length === 1 ? '' : 's'
+        props.folders.length === 1 ? '' : 's '
       }`}
       rightSideElement={
         <UrsorButton
@@ -97,7 +97,7 @@ const DevicePageContentTab = (props: {
                   deletionCallback={props.onUpdate}
                   // extraActions={[
                   //   {
-                  //     text: 'Remove Device',
+                  //     text: "Remove Device",
                   //     kallback: () =>
                   //       setFolderDeviceRemovalConfirmationDialogId(f.id),
                   //     icon: PhoneIcon,

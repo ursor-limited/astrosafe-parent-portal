@@ -25,7 +25,7 @@ import ProfileButton from './ProfileButton';
 
 const UrsorPopover = dynamic(
   () => import('@/components/UrsorPopover'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 export const HEADER_HEIGHT = 86;
@@ -162,7 +162,7 @@ const ProductsPopoverColumn = (props: {
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent={props.spaceBetween ? 'space-between' : undefined}
+          justifyContent={props.spaceBetween ? 's pace-between' : undefined}
           spacing="8px"
           onClick={() => !props.alwaysOpen && setOpen(!open)}
           sx={{
@@ -329,7 +329,7 @@ const ProductsPopoverContents = (props: {
                 url: 'https://www.astrosafe.co/tools/15-minutes-meditation-for-family-time-and-kids',
               },
               {
-                text: 'Safe search engine',
+                text: 's afe search engine',
                 url: 'https://www.astrosafe.co/tools/kids-safe-search-engine',
               },
             ]}
@@ -464,10 +464,10 @@ export const Header = (props: {
           {/* {props.showSigninButton ? (
           <UrsorButton
             dark
-            variant='tertiary'
+            variant="tertiary"
             onClick={() => {
               //props.mobile ? loginWithRedirect() : login();
-              mixpanel.track('clicked header sign up');
+              mixpanel.track("clicked header sign up");
             }}
             endIcon={PersonIcon}
           >
@@ -518,7 +518,7 @@ export const Header = (props: {
                   variant="tertiary"
                   onClick={() => {
                     login();
-                    //mixpanel.track('clicked header sign up');
+                    //mixpanel.track("clicked header sign up");
                   }}
                   endIcon={PersonIcon}
                   fontSize="16px"
@@ -530,7 +530,7 @@ export const Header = (props: {
               ) : null}
               {/* <UrsorButton
               dark
-              variant='tertiary'
+              variant="tertiary"
               onClick={login}
               endIcon={PersonIcon}
             >

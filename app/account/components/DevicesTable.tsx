@@ -37,7 +37,9 @@ const DevicesTable = () => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
       name: 'name',
-      displayName: `${devices.length} Device${devices.length === 1 ? '' : 's'}`,
+      displayName: `${devices.length} Device${
+        devices.length === 1 ? '' : 's '
+      }`,
       sortable: true,
       newTag: true,
       getAvatar: (id) => {
@@ -77,7 +79,7 @@ const DevicesTable = () => {
       sortable: true,
       itemDisplay: (lastActive) => {
         const hours = dayjs().diff(lastActive, 'hours');
-        return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+        return `${hours} hour${hours === 1 ? '' : 's '} ago`;
       },
     },
     {

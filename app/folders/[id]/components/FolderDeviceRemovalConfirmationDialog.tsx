@@ -1,4 +1,4 @@
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 import { IDevice } from '@/filters/[id]/contents/common';
 import { Stack } from '@mui/system';
 import { Typography, UrsorButton } from '@/ui';

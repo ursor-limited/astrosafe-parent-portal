@@ -13,7 +13,7 @@ import InfoButton, { IInfoButtonProps } from './InfoButton';
 
 const DynamicallyLoadedPortal = dynamic(
   () => import('./DynamicallyLoadedPortal'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 const PADDING_TOP = '51px';
@@ -99,7 +99,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
               height: props.scrollable ? undefined : '100%',
               width: '100%',
             }}
-            overflow={props.scrollable ? 'scroll' : 'hidden'}
+            overflow={props.scrollable ? 's croll' : 'hidden'}
             spacing="20px"
             pr={`${SIDEBAR_X_MARGIN}px`}
             pt={PADDING_TOP}
@@ -203,9 +203,9 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                               <Stack
                                 style={{
                                   paddingBottom: '3px',
-                                  // overflow: 'hidden',
+                                  // overflow: "hidden",
                                 }}
-                                //overflow='hidden'
+                                //overflow="hidden"
                                 position="relative"
                                 overflow="visible"
                               >
@@ -280,8 +280,8 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
             </Stack>
             <Stack
               // sx={{
-              //   display: 'flex',
-              //   justifyContent: 'center',
+              //   display: "flex",
+              //   justifyContent: "center",
               // }}
               width={props.bodyWidth ?? '100%'}
               height="100%" // cannot scroll without this

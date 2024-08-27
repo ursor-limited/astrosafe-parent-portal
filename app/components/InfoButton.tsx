@@ -19,14 +19,14 @@ export const InfoButton = (props: IInfoButtonProps) => {
       open={open}
       content={
         <Stack
-          bgcolor='rgb(255,255,255)'
-          borderRadius='12px'
-          p='16px'
-          boxSizing='border-box'
-          spacing='6px'
-          maxWidth='333px'
+          bgcolor="rgb(255,255,255)"
+          borderRadius="12px"
+          p="16px"
+          boxSizing="border-box"
+          spacing="6px"
+          maxWidth="333px"
         >
-          <Typography variant='small'>{props.text}</Typography>
+          <Typography variant="small">{props.text}</Typography>
         </Stack>
       }
       closeCallback={() => setOpen(false)}
@@ -53,19 +53,19 @@ export const InfoButton = (props: IInfoButtonProps) => {
               },
             },
           }}
-          direction='row'
-          spacing='6px'
-          alignItems='center'
+          direction="row"
+          spacing="6px"
+          alignItems="center"
         >
           <Typography
-            variant='small'
+            variant="small"
             bold
             color={PALETTE.secondary.grey[3]}
             maxLines={1}
           >
             {props.title}
           </Typography>
-          <InfoIcon width='14px' height='14px' />
+          <InfoIcon width="14px" height="14px" />
         </Stack>
       </Stack>
     </UrsorPopover>

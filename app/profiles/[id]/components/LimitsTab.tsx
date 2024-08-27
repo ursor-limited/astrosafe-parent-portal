@@ -1,21 +1,21 @@
-import { Stack } from '@mui/system';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import SearchIcon from '@/images/icons/SearchIcon.svg';
-import _ from 'lodash';
-import AstroSwitch from '@/components/AstroSwitch';
-import RequestedSitesSection from './RequestedSitesSection';
-import ApiController from '@/api';
-import { IDevice, IDeviceConfig } from '@/filters/[id]/contents/common';
-import { IEnrichedDevice } from '../../contents/common';
-import TimeLimitsSection from './TimeLimitsSection';
-import AllowedTimesSection from './AllowedTimesSection';
-import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import { useWindowSize } from 'usehooks-ts';
-import MobileAllowedTimesSection from './MobileAllowedTimesSection';
-import ProfilePageTabLayout from './ProfilePageTabLayout';
-import NotificationContext from '@/components/NotificationContext';
+import { Stack } from "@mui/system";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { PALETTE, Typography, UrsorButton } from "@/ui";
+import SearchIcon from "@/images/icons/SearchIcon.svg";
+import _ from "lodash";
+import AstroSwitch from "@/components/AstroSwitch";
+import RequestedSitesSection from "./RequestedSitesSection";
+import ApiController from "@/api";
+import { IDevice, IDeviceConfig } from "@/filters/[id]/contents/common";
+import { IEnrichedDevice } from "../../contents/common";
+import TimeLimitsSection from "./TimeLimitsSection";
+import AllowedTimesSection from "./AllowedTimesSection";
+import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { useWindowSize } from "usehooks-ts";
+import MobileAllowedTimesSection from "./MobileAllowedTimesSection";
+import ProfilePageTabLayout from "./ProfilePageTabLayout";
+import NotificationContext from "@/components/NotificationContext";
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
@@ -35,7 +35,7 @@ export interface IRequestedSite {
   faviconUrl: string;
 }
 
-export type Weekday = 'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat';
+export type Weekday = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 
 export const DAILY_LIMIT_INCREMENT = 15; // minutes
 
@@ -57,7 +57,7 @@ export interface IAllowedTime {
 }
 
 const DevicePageLimitsTab = (props: {
-  deviceId: IDevice['id'];
+  deviceId: IDevice["id"];
   isMobile?: boolean;
 }) => {
   const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
@@ -79,7 +79,7 @@ const DevicePageLimitsTab = (props: {
   }, [loadData]);
 
   const addAllowedTime = (
-    day: IAllowedTime['day'],
+    day: IAllowedTime["day"],
     startTime: number,
     endTime: number
   ) => {
@@ -95,11 +95,11 @@ const DevicePageLimitsTab = (props: {
     ).then(loadData);
   };
 
-  const reset = (day: IAllowedTime['day']) => {
+  const reset = (day: IAllowedTime["day"]) => {
     ApiController.resetAllowedTimes(props.deviceId, day).then(loadData);
   };
 
-  const deleteRange = (id: IAllowedTime['id']) => {
+  const deleteRange = (id: IAllowedTime["id"]) => {
     ApiController.removeAllowedTimeRange(id).then(loadData);
   };
 
@@ -161,39 +161,39 @@ const DevicePageLimitsTab = (props: {
 
   return (
     <ProfilePageTabLayout
-      title='Limits'
+      title="Limits"
       info={{
-        title: 'How do limits work?',
-        text: 'For each day you can choose what time you want the Browser to be accessible and set the total amount of time you want your child to be able to spend online. If you don't want to use these features just toggle them off in the top right corner of their respective box!',
+        title: "How do limits work?",
+        text: "For each day you can choose what time you want the Browser to be accessible and set the total amount of time you want your child to be able to spend online. If you don"t want to use these features just toggle them off in the top right corner of their respective box!",
       }}
     >
-      <Stack spacing='24px' pb='33px'>
+      <Stack spacing="24px" pb="33px">
         {requestedSites.length > 0 ? (
           <RequestedSitesSection
             sites={requestedSites}
             onUpdate={loadRequestedSites}
           />
         ) : null}
-        {/* <Typography variant='h5'>Device controls</Typography> */}
-        {/* <Stack direction='row' spacing='24px'>
+        {/* <Typography variant="h5">Device controls</Typography> */}
+        {/* <Stack direction="row" spacing="24px">
         <AstroBentoCard
-          title='General settings'
-          subtitle='Control features for your Browser'
+          title="General settings"
+          subtitle="Control features for your Browser"
           notCollapsible
         >
-          <Stack spacing='12px'>
+          <Stack spacing="12px">
             <AstroToggleCard
               on={browsingEnabled}
               callback={() => setBrowsingEnabled(!browsingEnabled)}
-              title={`Browsing is ${browsingEnabled ? 'enabled' : 'disabled'}`}
+              title={`Browsing is ${browsingEnabled ? "enabled" : "disabled"}`}
               subtitle={`Your kids can${
-                browsingEnabled ? '' : 'not'
+                browsingEnabled ? "" : "not"
               } access the Browser on this Device`}
               image={
                 <Stack
                   sx={{ svg: { path: { fill: PALETTE.secondary.purple[2] } } }}
                 >
-                  <GlobeIcon height='36px' width='36px' />
+                  <GlobeIcon height="36px" width="36px" />
                 </Stack>
               }
             />
@@ -201,32 +201,32 @@ const DevicePageLimitsTab = (props: {
               on={videoEnabled}
               callback={() => setVideoEnabled(!videoEnabled)}
               title={`Video content is ${
-                browsingEnabled ? 'enabled' : 'disabled'
+                browsingEnabled ? "enabled" : "disabled"
               }`}
               subtitle={`Your kids can${
-                browsingEnabled ? '' : 'not'
+                browsingEnabled ? "" : "not"
               } access video content on this Device`}
               image={
                 <Stack sx={{ svg: { path: { fill: PALETTE.system.red } } }}>
-                  <CirclePlayIcon height='36px' width='36px' />
+                  <CirclePlayIcon height="36px" width="36px" />
                 </Stack>
               }
             />
           </Stack>
         </AstroBentoCard>
         <AstroBentoCard
-          title='Search and Filter settings'
-          subtitle='Select a safety filter and search setting for this device'
+          title="Search and Filter settings"
+          subtitle="Select a safety filter and search setting for this device"
           notCollapsible
         >
-          <Stack spacing='12px'>
+          <Stack spacing="12px">
             <AstroDropdownCard
               title={
-                DUMMY_FILTERS.find((f) => f.id === selectedFilter)?.title ?? ''
+                DUMMY_FILTERS.find((f) => f.id === selectedFilter)?.title ?? ""
               }
               subtitle={
                 DUMMY_FILTERS.find((f) => f.id === selectedFilter)?.subtitle ??
-                ''
+                ""
               }
               items={DUMMY_FILTERS}
               image={DUMMY_FILTERS.find((f) => f.id === selectedFilter)?.image}
@@ -235,11 +235,11 @@ const DevicePageLimitsTab = (props: {
             />
             <AstroDropdownCard
               title={
-                DUMMY_SEARCHES.find((f) => f.id === selectedSearch)?.title ?? ''
+                DUMMY_SEARCHES.find((f) => f.id === selectedSearch)?.title ?? ""
               }
               subtitle={
                 DUMMY_SEARCHES.find((f) => f.id === selectedSearch)?.subtitle ??
-                ''
+                ""
               }
               items={DUMMY_SEARCHES}
               image={DUMMY_SEARCHES.find((f) => f.id === selectedSearch)?.image}
@@ -249,8 +249,8 @@ const DevicePageLimitsTab = (props: {
           </Stack>
         </AstroBentoCard>
       </Stack> */}
-        <Stack direction={switchToColumn ? 'column' : 'row'} spacing='24px'>
-          <Stack width={switchToColumn ? undefined : '70%'}>
+        <Stack direction={switchToColumn ? "column" : "row"} spacing="24px">
+          <Stack width={switchToColumn ? undefined : "70%"}>
             {props.isMobile ? (
               <MobileAllowedTimesSection
                 topRightElement={
@@ -293,7 +293,7 @@ const DevicePageLimitsTab = (props: {
                       );
                       notificationCtx.success(
                         `Switched allowed times ${
-                          allowedTimesEnabled ? 'off' : 'on'
+                          allowedTimesEnabled ? "off" : "on"
                         } on this Device`
                       );
                     }}
@@ -329,7 +329,7 @@ const DevicePageLimitsTab = (props: {
                   );
                   notificationCtx.success(
                     `Switched time limits ${
-                      timeLimitsEnabled ? 'off' : 'on'
+                      timeLimitsEnabled ? "off" : "on"
                     } on this Device`
                   );
                 }}

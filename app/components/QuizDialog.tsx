@@ -36,7 +36,7 @@ export const quizQuestionTypes = [
 export type QuizQuestionType = (typeof quizQuestionTypes)[number];
 
 export const QUESTION_TYPE_DISPLAY_NAMES: Record<QuizQuestionType, string> = {
-  multipleChoice: 'Single choice',
+  multipleChoice: 's ingle choice',
   trueMaltipleChoice: 'Multiple choice',
 };
 
@@ -289,9 +289,9 @@ const QuizDialog = (props: {
   // const submitCreation = () =>
   //   ApiController.createQuiz(
   //     title,
-  //     userDetails?.id ?? '',
+  //     userDetails?.id ?? "",
   //     questions.map((q) => ({
-  //       ..._.omit(q, 'id'),
+  //       ..._.omit(q, "id"),
   //       options: q.options?.map((o) => o.value) || [],
   //       correctOptions: q.correctOptions.map(
   //         (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
@@ -309,7 +309,7 @@ const QuizDialog = (props: {
   //     title,
   //     description,
   //     questions: questions.map((q) => ({
-  //       ..._.omit(q, 'id'),
+  //       ..._.omit(q, "id"),
   //       options: q.options?.map((o) => o.value) || [],
   //       correctOptions: q.correctOptions.map(
   //         (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
@@ -320,11 +320,11 @@ const QuizDialog = (props: {
   //       props.editingCallback?.();
   //       props.closeCallback();
   //     })
-  //     .then(() => notificationCtx.success('Updated Quiz'));
+  //     .then(() => notificationCtx.success("Updated Quiz"));
 
   // const [listEndRef, setListEndRef] = useState<HTMLElement | null>(null);
   // const scrollToBottom = useCallback(() => {
-  //   listEndRef?.scrollIntoView({ behavior: 'smooth' });
+  //   listEndRef?.scrollIntoView({ behavior: "smooth" });
   // }, [listEndRef]);
 
   return (
@@ -333,12 +333,12 @@ const QuizDialog = (props: {
         // <MobileVideoCreationDialog {...props} />
         // <UrsorDialog
         //   open={props.open}
-        //   width='930px'
-        //   maxWidth='930px'
+        //   width="930px"
+        //   maxWidth="930px"
         //   noPadding
-        //   height='552px'
-        //   paddingY={isMobile ? '0px' : '40px'}
-        //   paddingX={isMobile ? undefined : '40px'}
+        //   height="552px"
+        //   paddingY={isMobile ? "0px" : "40px"}
+        //   paddingX={isMobile ? undefined : "40px"}
         //   noCloseButton
         // >
         <Dialog
@@ -356,7 +356,7 @@ const QuizDialog = (props: {
             },
           }}
           sx={{
-            // py: '10px',
+            // py: "10px",
             '.MuiBackdrop-root': BACKDROP_STYLE,
           }}
         >
@@ -407,42 +407,42 @@ const QuizDialog = (props: {
                   />
                 </Captioned>
                 {/* <Stack
-                width='100%'
+                width="100%"
                 bgcolor={PALETTE.secondary.grey[1]}
-                borderRadius='12px'
-                p='12px'
+                borderRadius="12px"
+                p="12px"
               >
-                <Typography bold variant='small'>
+                <Typography bold variant="small">
                   Questions
                 </Typography>
-                <Stack spacing='6px'>
+                <Stack spacing="6px">
                   {questions.map((q) => (
                     <Stack
                       key={q.id}
-                      height='72px'
-                      borderRadius='8px'
-                      p='8px'
-                      boxSizing='border-box'
-                      justifyContent='space-between'
+                      height="72px"
+                      borderRadius="8px"
+                      p="8px"
+                      boxSizing="border-box"
+                      justifyContent="space-between"
                       onClick={() => setSelectedQuestion(q)}
-                      bgcolor='rgb(255,255,255)'
+                      bgcolor="rgb(255,255,255)"
                     >
-                      <Stack direction='row' justifyContent='space-between'>
+                      <Stack direction="row" justifyContent="space-between">
                         <Typography
-                          variant='small'
+                          variant="small"
                           bold
                           color={PALETTE.secondary.grey[5]}
                         >
                           {q.type}
                         </Typography>
-                        <GrabberIcon width='16px' height='16px' />
+                        <GrabberIcon width="16px" height="16px" />
                       </Stack>
                       <Typography
-                        variant='small'
+                        variant="small"
                         bold
                         color={PALETTE.secondary.grey[q.value ? 5 : 3]}
                       >
-                        {q.value || 'Question'}
+                        {q.value || "Question"}
                       </Typography>
                     </Stack>
                   ))}
@@ -586,7 +586,7 @@ const QuizDialog = (props: {
                         }
                       />
                     ))}
-                    {/* <Stack alignItems='center' ref={setListEndRef}>
+                    {/* <Stack alignItems="center" ref={setListEndRef}>
                       <CircularPlusButton
                         onClick={() => {
                           setTimeout(() => scrollToBottom(), 300);

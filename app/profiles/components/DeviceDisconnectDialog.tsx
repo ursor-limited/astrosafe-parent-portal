@@ -27,7 +27,7 @@ const DeviceDisconnectDialog = (props: {
     >
       <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
         <LabeledInputField
-          label={`Type '${INPUT_PHRASE}' to remove this device`}
+          label={`Type "${INPUT_PHRASE}" to remove this device`}
         >
           <UrsorInputField
             value={inputValue}

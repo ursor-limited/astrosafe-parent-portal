@@ -1,4 +1,4 @@
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
 import { UrsorButton, UrsorInputField } from '@/ui';

@@ -4,14 +4,14 @@ import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import _ from 'lodash';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import { useState } from 'react';
 import { IDevice } from '@/filters/[id]/contents/common';
 import { IContentBucket } from '@/app/profiles/[id]/components/ContentTab';
-import MobileAllDevicesDialog from '@/app/components/MobileAllDevicesDialog';
+import MobileAllDevicesDialog from '@/components/MobileAllDevicesDialog';
 import MobileDeviceCard from '@/app/profiles/components/MobileDeviceCard';
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import DynamicCardGrid from '@/components/DynamicCardGrid';
 import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
 import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
@@ -30,7 +30,7 @@ const MobileDevicesSection = (props: {
   const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
     useState<number | undefined>();
 
-  // const removeDevice = (id: IDevice['id']) =>
+  // const removeDevice = (id: IDevice["id"]) =>
   //   ApiController.removeFolderFromDevice(props.folderId, id);
   // .then(
   //     props.onRemove

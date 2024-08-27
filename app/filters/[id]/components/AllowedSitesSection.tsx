@@ -127,7 +127,7 @@ const FilterPageAllowedSitesSection = (props: {
       <AstroBentoCard
         icon={ThumbsUpIcon}
         title={`${props.allowedSites.length ?? 0} allowed site exception${
-          props.allowedSites.length === 1 ? '' : 's'
+          props.allowedSites.length === 1 ? '' : 's '
         }`}
         subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!"
         isMobile={props.isMobile}

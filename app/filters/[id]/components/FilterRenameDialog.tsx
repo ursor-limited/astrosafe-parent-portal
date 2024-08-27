@@ -1,18 +1,18 @@
-import UrsorDialog from "@/app/components/UrsorDialog';
-import { Stack } from "@mui/system';
-import { useEffect, useState } from "react';
-import { Typography, UrsorButton, UrsorInputField } from "@/ui';
-import { LabeledInputField } from "@/ui/labeled-input-field';
-import { IFilter } from "../../contents/common';
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { Typography, UrsorButton, UrsorInputField } from '@/ui';
+import { LabeledInputField } from '@/ui/labeled-input-field';
+import { IFilter } from '../../contents/common';
 
 const FilterRenameDialog = (props: {
   open: boolean;
   onClose: () => void;
-  name: IFilter["title"];
+  name: IFilter['title'];
   onSubmit: (name: string) => void;
   isMobile?: boolean;
 }) => {
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>('');
   useEffect(() => setName(props.name), [props.name]);
   return (
     <UrsorDialog

@@ -1,6 +1,6 @@
-import UrsorDialog from "@/app/components/UrsorDialog';
-import { Stack } from "@mui/system';
-import { UrsorButton } from "@/ui';
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { Stack } from '@mui/system';
+import { UrsorButton } from '@/ui';
 
 const FilterBlacklistExceptionDialog = (props: {
   open: boolean;
@@ -14,7 +14,7 @@ const FilterBlacklistExceptionDialog = (props: {
       onCloseCallback={props.onClose}
       title="Are you sure?"
       subtitle={[
-        "This will override our Filters and remove access to this site from all of the assigned Devices. They will not be able to access this site until it is removed or they change Filter.",
+        'This will override our Filters and remove access to this site from all of the assigned Devices. They will not be able to access this site until it is removed or they change Filter.',
       ]}
       width="422px"
       dynamicHeight

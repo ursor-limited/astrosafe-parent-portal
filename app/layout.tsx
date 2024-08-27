@@ -6,9 +6,9 @@ import NotificationProvider from './components/NotificationProvider';
 import UrsorNotificationBar from './components/UrsorNotificationBar';
 
 // export const metadata: Metadata = {
-//   title: 'SafeTube - A Safe video player for teachers and schools',
+//   title: "SafeTube - A Safe video player for teachers and schools",
 //   description:
-//     'The safe video player for classrooms to access youtube and vimeo videos safely. Students get access to distraction free video links.',
+//     "The safe video player for classrooms to access youtube and vimeo videos safely. Students get access to distraction free video links.",
 // };
 
 export default function RootLayout({
@@ -35,17 +35,17 @@ export default function RootLayout({
           bgcolor={PALETTE.secondary.grey[1]}
         >
           {/* <Stack
-            position='absolute'
+            position="absolute"
             top={0}
             left={0}
-            width='100%'
-            height='114%'
+            width="100%"
+            height="114%"
             zIndex={-1}
           >
             <img
               src={Background.src}
-              alt='Astro background'
-              layout='fill'
+              alt="Astro background"
+              layout="fill"
               style={{
                 zIndex: -1,
               }}

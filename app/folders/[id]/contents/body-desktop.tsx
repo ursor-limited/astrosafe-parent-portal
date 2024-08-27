@@ -98,7 +98,7 @@ const FolderPageDesktopBody = (props: {
           alignItems="center"
         >
           <Typography variant="large" bold>{`${props.contents.length} item${
-            props.contents.length === 1 ? '' : 's'
+            props.contents.length === 1 ? '' : 's '
           } in this Folder`}</Typography>
           <Stack
             direction="row"

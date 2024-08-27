@@ -12,7 +12,7 @@ import UrsorFadeIn from '@/components/UrsorFadeIn';
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {
-    maxScreenTime: IVisitedSite['screenTime'];
+    maxScreenTime: IVisitedSite['s creenTime'];
     borderTop: boolean;
   }
 ) => (

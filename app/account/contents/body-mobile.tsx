@@ -272,7 +272,7 @@ const AccountPageMobileBody = (props: {
         }
         isMobile
       >
-        <Typography>{`We'd love to hear your thoughts! Please send us through any ideas you have about the app, or let us know if you encounter any bugs or hiccups!`}</Typography>
+        <Typography>{`We"d love to hear your thoughts! Please send us through any ideas you have about the app, or let us know if you encounter any bugs or hiccups!`}</Typography>
       </AstroBentoCard>
     </Stack>
   </MobilePageLayout>

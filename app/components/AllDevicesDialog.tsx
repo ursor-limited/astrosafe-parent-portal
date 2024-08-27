@@ -53,21 +53,21 @@ const AllDevicesDialog = (props: {
         '.MuiBackdrop-root': BACKDROP_STYLE,
       }}
     >
-      <Stack spacing='32px'>
+      <Stack spacing="32px">
         <Stack
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <Stack direction='row' spacing='8px'>
-            <Typography variant='h5'>{props.title}</Typography>
+          <Stack direction="row" spacing="8px">
+            <Typography variant="h5">{props.title}</Typography>
             <InfoButton {...INFOS.folderDevice} />
           </Stack>
-          <Stack direction='row' spacing='12px' alignItems='center'>
+          <Stack direction="row" spacing="12px" alignItems="center">
             <UrsorButton
               dark
-              variant='tertiary'
-              size='small'
+              variant="tertiary"
+              size="small"
               endIcon={PlusIcon}
               onClick={props.onAdd}
             >
@@ -81,7 +81,7 @@ const AllDevicesDialog = (props: {
             />
           </Stack>
         </Stack>
-        <DynamicCardGrid cardWidth='292px' rowGap='8px' columnGap='20px'>
+        <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
           {filteredDevices.map((d, i) => (
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
               <DeviceCard

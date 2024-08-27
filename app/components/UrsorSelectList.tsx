@@ -20,12 +20,12 @@ export interface IUrsorSelectListProps {
 export default function UrsorSelectList(props: IUrsorSelectListProps) {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <Stack spacing='6px'>
+    <Stack spacing="6px">
       {props.items.map((item) => (
         <Stack
-          direction='row'
-          spacing='8px'
-          alignItems='center'
+          direction="row"
+          spacing="8px"
+          alignItems="center"
           justifyContent={props.centerAlign ? 'center' : undefined}
           key={item.id}
           onClick={() => {
@@ -45,7 +45,7 @@ export default function UrsorSelectList(props: IUrsorSelectListProps) {
           }}
         >
           {item.icon}
-          <Typography variant='small' bold>
+          <Typography variant="small" bold>
             {item.value}
           </Typography>
         </Stack>

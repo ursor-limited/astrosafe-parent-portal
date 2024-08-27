@@ -1,28 +1,28 @@
-import { AstroBentoCard } from "./AstroBentoCard';
-import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg';
-import { Stack } from "@mui/system';
-import { PALETTE, Typography } from "@/ui';
-import AstroSwitch from "@/app/components/AstroSwitch';
-import UrsorFadeIn from "@/app/components/UrsorFadeIn';
+import { AstroBentoCard } from './AstroBentoCard';
+import ThumbsUpIcon from '@/images/icons/ThumbsUpIcon.svg';
+import { Stack } from '@mui/system';
+import { PALETTE, Typography } from '@/ui';
+import AstroSwitch from '@/app/components/AstroSwitch';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from "../../contents/common';
-import { FilterLegend } from "./CategoriesSection';
+} from '../../contents/common';
+import { FilterLegend } from './CategoriesSection';
 
 const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterUrl["id"][];
+  allowedCategories: IFilterUrl['id'][];
   flipCategory: (id: number) => void;
-  flipSubcategory: (id: IFilterCategory["categoryId"]) => void;
+  flipSubcategory: (id: IFilterCategory['categoryId']) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
     title={`${props.allowedCategories.length} allowed ${
-      props.allowedCategories.length === 1 ? "Category" : "Categories"
+      props.allowedCategories.length === 1 ? 'Category' : 'Categories'
     }`}
     subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
     isMobile

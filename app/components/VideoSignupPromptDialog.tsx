@@ -25,7 +25,7 @@ const VideoSignupPromptDialog = (props: {
       title={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? 'Create an Account'
-          : 'Store all your videos in one place'
+          : 's tore all your videos in one place'
       }
       subtitle={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
@@ -40,7 +40,7 @@ const VideoSignupPromptDialog = (props: {
       }
       open={props.open}
       button={{
-        text: 'Sign in',
+        text: 's ign in',
         callback: () => {
           props.closeCallback();
           props.mobile ? login() : login();
@@ -55,7 +55,7 @@ const VideoSignupPromptDialog = (props: {
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? undefined
           : {
-              text: 'Skip to video',
+              text: 's kip to video',
               callback: () => {
                 mixpanel.track('clicked skip', {
                   freeVideoCreationCount,

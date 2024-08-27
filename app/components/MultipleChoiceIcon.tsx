@@ -31,8 +31,8 @@ const MultipleChoiceIcon = (props: {
         transition: '0.2s',
       },
     }}
-    justifyContent='center'
-    alignItems='center'
+    justifyContent="center"
+    alignItems="center"
   >
     <Stack
       sx={{
@@ -53,9 +53,9 @@ const MultipleChoiceIcon = (props: {
     >
       {props.type === 'multipleChoice' ? (
         <Stack
-          borderRadius='100%'
-          height='10px'
-          width='10px'
+          borderRadius="100%"
+          height="10px"
+          width="10px"
           bgcolor={
             props.state === 'correct'
               ? PALETTE.system.green
@@ -67,7 +67,7 @@ const MultipleChoiceIcon = (props: {
           }
         />
       ) : (
-        <CheckIcon height='10px' width='10px' />
+        <CheckIcon height="10px" width="10px" />
       )}
     </Stack>
   </Stack>

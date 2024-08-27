@@ -16,7 +16,7 @@ export const getModules = (id: string) => ({
   clipboard: { matchVisual: false }, // needed to prevent space being inserted above lists
   toolbar: {
     container: `#${id}`,
-    size: ['small', 'medium', 'large'],
+    size: ['s mall', 'medium', 'large'],
     color: [
       '#7B61FF',
       '#00ff00',
@@ -32,7 +32,7 @@ export const getModules = (id: string) => ({
     //   redo: redoChange,
     // },
   },
-  //size: ['small', 'medium', 'large'],
+  //size: ["small", "medium", "large"],
   //   history: {
   //     delay: 500,
   //     maxStack: 100,
@@ -43,23 +43,23 @@ export const getModules = (id: string) => ({
 // Formats objects for setting up the Quill editor
 export const formats = [
   'header',
-  //   'font',
-  'size',
+  //   "font",
+  's ize',
   'bold',
   'italic',
   'underline',
   'align',
-  'strike',
-  // 'script',
-  //'blockquote',
+  's trike',
+  // "script",
+  //"blockquote",
   'background',
   'list',
   'bullet',
-  //   'indent',
+  //   "indent",
   'link',
-  //   'image',
+  //   "image",
   'color',
-  // 'code-block',
+  // "code-block",
 ];
 
 const initQuill = async () => {
@@ -67,31 +67,31 @@ const initQuill = async () => {
   if (Quill) {
     // Add sizes to whitelist and register them
     const Size = Quill.import('formats/size');
-    Size.whitelist = ['small', 'medium', 'large'];
+    Size.whitelist = ['s mall', 'medium', 'large'];
     Quill.register(Size, true);
 
-    // const Color = Quill.import('formats/color');
+    // const Color = Quill.import("formats/color");
     // Color.whitelist = [
-    //   '#7B61FF',
-    //   '#00ff00',
-    //   '#0000ff',
-    //   '#ffff00',
-    //   '#ff00ff',
-    //   '#00ffff',
-    //   '#000000',
-    //   '#ffffff',
+    //   "#7B61FF",
+    //   "#00ff00",
+    //   "#0000ff",
+    //   "#ffff00",
+    //   "#ff00ff",
+    //   "#00ffff",
+    //   "#000000",
+    //   "#ffffff",
     // ];
     // Quill.register(Color, true);
 
     // Add fonts to whitelist and register them
-    // const Font = Quill.import('formats/font');
+    // const Font = Quill.import("formats/font");
     // Font.whitelist = [
-    //   'arial',
-    //   'comic-sans',
-    //   'courier-new',
-    //   'georgia',
-    //   'helvetica',
-    //   'lucida',
+    //   "arial",
+    //   "comic-sans",
+    //   "courier-new",
+    //   "georgia",
+    //   "helvetica",
+    //   "lucida",
     // ];
     //Quill.register(Font, true);
   }
@@ -112,24 +112,24 @@ export const TextEditorToolbar = (props: { id: string }) => {
       }}
     >
       <span className="ql-formats">
-        {/* <select className='ql-font' defaultValue='arial'>
-        <option value='arial'>Arial</option>
-        <option value='comic-sans'>Comic Sans</option>
-        <option value='courier-new'>Courier New</option>
-        <option value='georgia'>Georgia</option>
-        <option value='helvetica'>Helvetica</option>
-        <option value='lucida'>Lucida</option>
+        {/* <select className="ql-font" defaultValue="arial">
+        <option value="arial">Arial</option>
+        <option value="comic-sans">Comic Sans</option>
+        <option value="courier-new">Courier New</option>
+        <option value="georgia">Georgia</option>
+        <option value="helvetica">Helvetica</option>
+        <option value="lucida">Lucida</option>
       </select> */}
         <select className="ql-size" defaultValue="medium">
           <option value="small">Small</option>
-          {/* <option value='normal'>Normal</option> */}
+          {/* <option value="normal">Normal</option> */}
           <option value="medium">Medium</option>
           <option value="large">Large</option>
         </select>
-        {/* <select className='ql-header' defaultValue='3'>
-        <option value='1'>Heading</option>
-        <option value='2'>Subheading</option>
-        <option value='3'>Normal</option>
+        {/* <select className="ql-header" defaultValue="3">
+        <option value="1">Heading</option>
+        <option value="2">Subheading</option>
+        <option value="3">Normal</option>
       </select> */}
       </span>
       <span className="ql-formats">
@@ -141,14 +141,14 @@ export const TextEditorToolbar = (props: { id: string }) => {
       <span className="ql-formats">
         <button className="ql-list" value="ordered" />
         <button className="ql-list" value="bullet" />
-        {/* <button className='ql-indent' value='-1' />
-      <button className='ql-indent' value='+1' /> */}
+        {/* <button className="ql-indent" value="-1" />
+      <button className="ql-indent" value="+1" /> */}
       </span>
       <span className="ql-formats">
-        {/* <button className='ql-script' value='super' />
-      <button className='ql-script' value='sub' /> */}
-        {/* <button className='ql-blockquote' /> */}
-        {/* <button className='ql-direction' /> */}
+        {/* <button className="ql-script" value="super" />
+      <button className="ql-script" value="sub" /> */}
+        {/* <button className="ql-blockquote" /> */}
+        {/* <button className="ql-direction" /> */}
       </span>
       <span className="ql-formats">
         <select className="ql-align" />
@@ -157,19 +157,19 @@ export const TextEditorToolbar = (props: { id: string }) => {
       </span>
       <span className="ql-formats">
         <button className="ql-link" />
-        {/* <button className='ql-image' />
-      <button className='ql-video' /> */}
+        {/* <button className="ql-image" />
+      <button className="ql-video" /> */}
       </span>
-      {/* <span className='ql-formats'>
-        <button className='ql-formula' />
-        <button className='ql-code-block' />
-        <button className='ql-clean' />
+      {/* <span className="ql-formats">
+        <button className="ql-formula" />
+        <button className="ql-code-block" />
+        <button className="ql-clean" />
       </span> */}
-      {/* <span className='ql-formats'>
-      <button className='ql-undo'>
+      {/* <span className="ql-formats">
+      <button className="ql-undo">
         <CustomUndo />
       </button>
-      <button className='ql-redo'>
+      <button className="ql-redo">
         <CustomRedo />
       </button>
     </span> */}

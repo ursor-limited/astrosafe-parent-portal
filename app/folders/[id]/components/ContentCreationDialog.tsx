@@ -112,7 +112,7 @@ export default function ContentCreationDialog(
           disabled={props.buttonDisabled || !props.title || !props.url}
         >
           {props.editing
-            ? 'Save changes'
+            ? 's ave changes'
             : `Add ${CONTENT_DISPLAY_NAMES[props.type]}`}
         </UrsorButton>
       </Stack>

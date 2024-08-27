@@ -1,22 +1,22 @@
-import React from "react';
-import { Stack } from "@mui/system';
-import { useEffect, useState } from "react';
-import { PALETTE, Typography } from "@/ui';
-import { IFilter } from "../../contents/common';
-import { IGroup } from "../../../folders/[id]/contents/common';
-import ApiController from "../../../api';
-import UrsorDialog from "../../../components/UrsorDialog';
-import { IDevice } from "../contents/common';
-import FilterIcon from "@/images/icons/FilterIcon.svg';
+import React from 'react';
+import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { PALETTE, Typography } from '@/ui';
+import { IFilter } from '../../contents/common';
+import { IGroup } from '../../../folders/[id]/contents/common';
+import ApiController from '../../../api';
+import UrsorDialog from '../../../components/UrsorDialog';
+import { IDevice } from '../contents/common';
+import FilterIcon from '@/images/icons/FilterIcon.svg';
 
 const ChangeFilterDialog = (props: {
   open: boolean;
   onClose: () => void;
-  submitChange: (id: IFilter["id"]) => void;
-  currentFilterId: IFilter["id"];
-  groupId: IGroup["id"];
+  submitChange: (id: IFilter['id']) => void;
+  currentFilterId: IFilter['id'];
+  groupId: IGroup['id'];
   isMobile?: boolean;
-  deviceName: IDevice["name"];
+  deviceName: IDevice['name'];
 }) => {
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
@@ -27,7 +27,7 @@ const ChangeFilterDialog = (props: {
       open={props.open}
       onCloseCallback={props.onClose}
       title="Change Filter"
-      subtitle={["Change the Filter of", props.deviceName]}
+      subtitle={['Change the Filter of', props.deviceName]}
       width="434px"
       dynamicHeight
       isMobile={props.isMobile}
@@ -42,9 +42,9 @@ const ChangeFilterDialog = (props: {
               spacing="8px"
               px="8px"
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.7 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.7 },
                 svg: {
                   path: {
                     fill: PALETTE.secondary.orange[3],

@@ -13,22 +13,22 @@ export const AddContentButton = (props: {
 }) => {
   return (
     <Stack
-      direction='row'
+      direction="row"
       width={props.fullWidth ? '100%' : props.mobile ? undefined : '294px'}
-      minHeight='40px'
-      borderRadius='8px'
+      minHeight="40px"
+      borderRadius="8px"
       boxShadow={
         props.strongShadow
           ? '0 0 16px rgba(0,0,0,0.05)'
           : '0 0 16px rgba(0,0,0,0.02)'
       }
-      bgcolor='rgb(255,255,255)'
-      position='relative'
+      bgcolor="rgb(255,255,255)"
+      position="relative"
     >
       <Stack
-        width='100%'
-        height='100%'
-        position='absolute'
+        width="100%"
+        height="100%"
+        position="absolute"
         top={0}
         left={0}
         onClick={props.onClick}
@@ -39,13 +39,13 @@ export const AddContentButton = (props: {
         }}
       />
 
-      <Stack direction='row' spacing='14px' flex={1}>
+      <Stack direction="row" spacing="14px" flex={1}>
         <Stack
-          width='44px'
-          height='100%'
-          alignItems='center'
-          justifyContent='center'
-          borderRadius='4px 0 0 4px'
+          width="44px"
+          height="100%"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="4px 0 0 4px"
           sx={{
             cursor: 'pointer',
             '&:hover': { opacity: 0.6 },
@@ -58,19 +58,19 @@ export const AddContentButton = (props: {
           }}
           bgcolor={props.color}
         >
-          <props.icon height='20px' width='20px' />
+          <props.icon height="20px" width="20px" />
         </Stack>
-        <Stack flex={1} py='11px' justifyContent='center'>
-          <Stack width='fit-content'>
+        <Stack flex={1} py="11px" justifyContent="center">
+          <Stack width="fit-content">
             <Typography bold color={props.color}>
               {props.title}
             </Typography>
           </Stack>
         </Stack>
         <Stack
-          height='100%'
-          justifyContent='center'
-          pr='15px'
+          height="100%"
+          justifyContent="center"
+          pr="15px"
           sx={{
             svg: {
               path: {
@@ -79,7 +79,7 @@ export const AddContentButton = (props: {
             },
           }}
         >
-          <PlusIcon height='24px' width='24px' />
+          <PlusIcon height="24px" width="24px" />
         </Stack>
       </Stack>
     </Stack>

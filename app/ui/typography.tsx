@@ -1,33 +1,33 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment -- 'no time to fix' */
+/* eslint-disable @typescript-eslint/ban-ts-comment -- "no time to fix" */
 
-import React from "react';
-import type { SxProps } from "@mui/system';
-import { Box } from "@mui/system';
-import { PALETTE } from "./palette';
+import React from 'react';
+import type { SxProps } from '@mui/system';
+import { Box } from '@mui/system';
+import { PALETTE } from './palette';
 
 export const DEFAULT_FONT_WEIGHT = 360;
 export const BOLD_FONT_WEIGHT = 500;
 
 export const getMaxLinesStyle = (n: number) => ({
-  display: "-webkit-box",
-  overflow: "hidden",
-  WebkitBoxOrient: "vertical",
+  display: '-webkit-box',
+  overflow: 'hidden',
+  WebkitBoxOrient: 'vertical',
   WebkitLineClamp: n,
   //wordBreak: "break-word",
 });
 
 export type UrsorTypographyVariant =
-  | "h0"
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "large"
-  | "medium"
-  | "normal"
-  | "small"
-  | "tiny';
+  | 'h0'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'large'
+  | 'medium'
+  | 'normal'
+  | 's mall'
+  | 'tiny';
 
 export const FONT_SIZES: Record<UrsorTypographyVariant, number> = {
   h0: 80,
@@ -58,12 +58,12 @@ export const LINE_HEIGHTS: Record<UrsorTypographyVariant, number> = {
 };
 
 const DEFAULT_BOLD: UrsorTypographyVariant[] = [
-  "h0",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
+  'h0',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
 ];
 
 export interface TypographyProps {
@@ -85,7 +85,7 @@ export function Typography(props: TypographyProps): JSX.Element {
     <Box
       color={props.color || PALETTE.font.dark}
       fontSize={`${
-        (props.scale || 1) * FONT_SIZES[props.variant ?? "normal"]
+        (props.scale || 1) * FONT_SIZES[props.variant ?? 'normal']
       }px`}
       fontWeight={
         props.bold || (props.variant && DEFAULT_BOLD.includes(props.variant))
@@ -93,7 +93,7 @@ export function Typography(props: TypographyProps): JSX.Element {
           : DEFAULT_FONT_WEIGHT
       }
       lineHeight={`${
-        (props.scale || 1) * LINE_HEIGHTS[props.variant ?? "normal"]
+        (props.scale || 1) * LINE_HEIGHTS[props.variant ?? 'normal']
       }px`}
       maxWidth="fit-content"
       onClick={props.onClick}
@@ -107,23 +107,23 @@ export function Typography(props: TypographyProps): JSX.Element {
           : null),
         ...(props.noWrap
           ? {
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }
           : null),
         ...(props.maxLines ? getMaxLinesStyle(props.maxLines) : null),
-        transition: "0.2s",
+        transition: '0.2s',
       }}
     >
       {props.htmlTag ? (
         <props.htmlTag
           style={{
-            fontFamily: "inherit",
-            fontSize: "inherit",
-            fontWeight: "inherit",
-            lineHeight: "inherit",
-            display: "contents",
+            fontFamily: 'inherit',
+            fontSize: 'inherit',
+            fontWeight: 'inherit',
+            lineHeight: 'inherit',
+            display: 'contents',
           }}
         >
           {props.children}

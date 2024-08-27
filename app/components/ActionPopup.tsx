@@ -24,12 +24,12 @@ export const PopupList = (props: {
           props.closeCallback();
           item.kallback();
         }}
-        direction='row'
-        spacing='8px'
-        alignItems='center'
+        direction="row"
+        spacing="8px"
+        alignItems="center"
       >
         {item.icon ? <item.icon height={ICON_SIZE} width={ICON_SIZE} /> : null}
-        <Typography color={item.color} variant='normal' bold>
+        <Typography color={item.color} variant="normal" bold>
           {item.text}
         </Typography>
       </Stack>

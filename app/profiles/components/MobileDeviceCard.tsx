@@ -134,27 +134,27 @@ export const MobileDeviceCardRow = (props: {
 //   elapsedTime: number;
 //   onClickView: () => void;
 // }) => (
-//   <DeviceCardSection title='Screen time left today'>
-//     <Stack direction='row' alignItems='center' spacing='38px'>
+//   <DeviceCardSection title="Screen time left today">
+//     <Stack direction="row" alignItems="center" spacing="38px">
 //       <Stack
-//         direction='row'
-//         alignItems='center'
-//         justifyContent='space-between'
-//         spacing='8px'
-//         width='100%'
+//         direction="row"
+//         alignItems="center"
+//         justifyContent="space-between"
+//         spacing="8px"
+//         width="100%"
 //       >
 //         <Stack
 //           flex={1}
-//           height='11px'
+//           height="11px"
 //           bgcolor={PALETTE.secondary.grey[2]}
-//           borderRadius='6px'
-//           position='relative'
+//           borderRadius="6px"
+//           position="relative"
 //         >
 //           <Stack
-//             height='100%'
+//             height="100%"
 //             width={`${(100 * props.elapsedTime) / props.totalTime}%`}
 //             bgcolor={PALETTE.secondary.purple[1]}
-//             borderRadius='6px'
+//             borderRadius="6px"
 //           />
 //         </Stack>
 //         <Typography bold color={PALETTE.secondary.grey[3]}>
@@ -163,7 +163,7 @@ export const MobileDeviceCardRow = (props: {
 //           )}h ${Math.floor((props.totalTime - props.elapsedTime) % 60)}m`}
 //         </Typography>
 //       </Stack>
-//       <UrsorButton variant='secondary' size='small' onClick={props.onClickView}>
+//       <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
 //         View
 //       </UrsorButton>
 //     </Stack>
@@ -171,27 +171,27 @@ export const MobileDeviceCardRow = (props: {
 // );
 
 // export const DeviceCardCurrentUrlSection = (props: {
-//   url: IFilterUrl['url'];
-//   title: IFilterUrl['title'];
-//   faviconUrl: IFilterUrl['imageUrl'];
+//   url: IFilterUrl["url"];
+//   title: IFilterUrl["title"];
+//   faviconUrl: IFilterUrl["imageUrl"];
 // }) => (
-//   <DeviceCardSection title='Browsing status'>
+//   <DeviceCardSection title="Browsing status">
 //     <Link
 //       href={getAbsoluteUrl(props.url)}
-//       target='_blank'
+//       target="_blank"
 //       style={{
-//         textDecoration: 'none',
+//         textDecoration: "none",
 //       }}
 //     >
 //       <Stack
-//         direction='row'
-//         alignItems='center'
-//         justifyContent='space-between'
-//         spacing='8px'
+//         direction="row"
+//         alignItems="center"
+//         justifyContent="space-between"
+//         spacing="8px"
 //         sx={{
-//           cursor: 'pointer',
-//           transition: '0.2s',
-//           '&:hover': { opacity: 0.7 },
+//           cursor: "pointer",
+//           transition: "0.2s",
+//           "&:hover": { opacity: 0.7 },
 //           svg: {
 //             path: {
 //               fill: PALETTE.secondary.purple[2],
@@ -199,25 +199,25 @@ export const MobileDeviceCardRow = (props: {
 //           },
 //         }}
 //       >
-//         <Stack direction='row' spacing='8px'>
+//         <Stack direction="row" spacing="8px">
 //           <Stack
-//             height='20px'
-//             width='20px'
-//             borderRadius='5px'
-//             overflow='hidden'
+//             height="20px"
+//             width="20px"
+//             borderRadius="5px"
+//             overflow="hidden"
 //           >
 //             <img
 //               src={props.faviconUrl}
 //               height={20}
 //               width={20}
-//               alt='favicon'
+//               alt="favicon"
 //             />
 //           </Stack>
 //           <Typography bold color={PALETTE.secondary.purple[2]} maxLines={1}>
 //             {props.title}
 //           </Typography>
 //         </Stack>
-//         <LinkExternalIcon height='20px' width='20px' />
+//         <LinkExternalIcon height="20px" width="20px" />
 //       </Stack>
 //     </Link>
 //   </DeviceCardSection>

@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat.js';
 import HistorySection from './HistorySection';
-import CalendarButton from '@/app/components/CalendarButton';
+import CalendarButton from '@/components/CalendarButton';
 import ApiController from '@/app/api';
 import MostVisitedSitesSection from './MostVisitedSitesSection';
 import { IDevice } from '@/filters/[id]/contents/common';

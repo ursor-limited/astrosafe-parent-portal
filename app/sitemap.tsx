@@ -19,7 +19,7 @@ async function fetchAndRenameSitemap(sitemapUrl: string): Promise<ISitemap[]> {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(sitemapText, 'text/xml');
 
-    // Find and replace 'proxy.' with 'www.'
+    // Find and replace "proxy." with "www."
     const urls = xmlDoc.getElementsByTagName('url');
     const urlArray = [];
     for (let i = 0; i < urls.length; i++) {

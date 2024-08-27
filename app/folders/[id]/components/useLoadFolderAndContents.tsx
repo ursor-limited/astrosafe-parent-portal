@@ -29,7 +29,7 @@ const useLoadFolderAndContents = (folderId: IContentBucket['id']) => {
                 type: 'channel' as AstroContent,
                 content: c,
               })),
-              // ...f.Lessons.map((l) => ({ type: 'lesson', content: l })),
+              // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
             ],
             (c) => c.content.createdAt
           )

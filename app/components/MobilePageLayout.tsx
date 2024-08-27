@@ -25,26 +25,26 @@ const MobilePageLayout = (props: {
   return (
     <>
       <Stack
-        height='100%'
-        width='100%'
-        overflow='scroll'
-        px='12px'
-        py='24px'
-        boxSizing='border-box'
+        height="100%"
+        width="100%"
+        overflow="scroll"
+        px="12px"
+        py="24px"
+        boxSizing="border-box"
       >
-        {props.header ? <Stack pb='24px'>{props.header}</Stack> : null}
-        <Stack pb='24px' spacing='4px'>
+        {props.header ? <Stack pb="24px">{props.header}</Stack> : null}
+        <Stack pb="24px" spacing="4px">
           <Stack
-            justifyContent='space-between'
-            alignItems='center'
-            direction='row'
+            justifyContent="space-between"
+            alignItems="center"
+            direction="row"
           >
-            <Stack direction='row' spacing='12px' alignItems='center'>
+            <Stack direction="row" spacing="12px" alignItems="center">
               <Stack onClick={() => setSideBarOpen(true)}>
-                <ThreeBarsIcon height='20px' width='20px' />
+                <ThreeBarsIcon height="20px" width="20px" />
               </Stack>
               {props.titleBackButtonCallback ? (
-                <Stack width='25px'>
+                <Stack width="25px">
                   <Stack
                     sx={{
                       cursor: 'pointer',
@@ -52,14 +52,14 @@ const MobilePageLayout = (props: {
                       transition: '0.2s',
                     }}
                     onClick={props.titleBackButtonCallback}
-                    justifyContent='center'
+                    justifyContent="center"
                   >
-                    <ChevronLeftIcon height='24px' width='24px' />
+                    <ChevronLeftIcon height="24px" width="24px" />
                   </Stack>
                 </Stack>
               ) : null}
               {props.title ? (
-                <Typography bold variant='medium'>
+                <Typography bold variant="medium">
                   {props.title}
                 </Typography>
               ) : null}
@@ -69,9 +69,9 @@ const MobilePageLayout = (props: {
             {props.actions ? (
               <UrsorActionButton
                 actions={props.actions}
-                iconSize='14px'
-                size='32px'
-                background='transparent'
+                iconSize="14px"
+                size="32px"
+                background="transparent"
                 border
               />
             ) : null}

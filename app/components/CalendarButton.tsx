@@ -29,19 +29,19 @@ const CalendarButton = (props: {
         />
       }
       closeCallback={() => setOpen(false)}
-      placement='right'
+      placement="right"
       noPadding
     >
       <Stack
-        bgcolor='rgb(255,255,255)'
-        height='32px'
-        alignItems='center'
-        borderRadius='8px'
-        pl='12px'
-        pr='8px'
-        boxSizing='border-box'
-        spacing='8px'
-        direction='row'
+        bgcolor="rgb(255,255,255)"
+        height="32px"
+        alignItems="center"
+        borderRadius="8px"
+        pl="12px"
+        pr="8px"
+        boxSizing="border-box"
+        spacing="8px"
+        direction="row"
         sx={{
           cursor: 'pointer',
           transition: '0.2s',
@@ -49,10 +49,10 @@ const CalendarButton = (props: {
         }}
         onClick={() => setOpen(true)}
       >
-        <Typography variant='small' bold>
+        <Typography variant="small" bold>
           Select date
         </Typography>
-        <ChevronDownIcon height='20px' width='20px' />
+        <ChevronDownIcon height="20px" width="20px" />
       </Stack>
     </UrsorPopover>
   );

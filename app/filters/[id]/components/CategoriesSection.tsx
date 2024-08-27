@@ -1,19 +1,19 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid';
-import { AstroBentoCard } from "./AstroBentoCard';
-import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg';
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg';
-import LockIcon from "@/images/icons/LockIcon.svg';
-import { Stack } from "@mui/system';
-import { DynamicContainer, PALETTE, Typography } from "@/ui';
-import AstroSwitch from "@/app/components/AstroSwitch';
-import UrsorFadeIn from "@/app/components/UrsorFadeIn';
+import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import { AstroBentoCard } from './AstroBentoCard';
+import ThumbsUpIcon from '@/images/icons/ThumbsUpIcon.svg';
+import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import LockIcon from '@/images/icons/LockIcon.svg';
+import { Stack } from '@mui/system';
+import { DynamicContainer, PALETTE, Typography } from '@/ui';
+import AstroSwitch from '@/app/components/AstroSwitch';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
-} from "../../contents/common';
-import AstroCard from "./AstroCard';
-import { useEffect, useState } from "react';
+} from '../../contents/common';
+import AstroCard from './AstroCard';
+import { useEffect, useState } from 'react';
 
 export const FilterLegend = (props: { small?: boolean }) => (
   <Stack direction="row" spacing="20px">
@@ -21,14 +21,14 @@ export const FilterLegend = (props: { small?: boolean }) => (
       <Stack
         direction="row"
         alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
+        spacing={props.small ? '7px' : '10px'}
       >
-        <Typography variant={props.small ? "small" : "normal"} bold>
+        <Typography variant={props.small ? 's mall' : 'normal'} bold>
           Allowed
         </Typography>
         <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
+          height={props.small ? '12px' : '16px'}
+          width={props.small ? '12px' : '16px'}
           borderRadius="100%"
           bgcolor={PALETTE.system.green}
         />
@@ -38,14 +38,14 @@ export const FilterLegend = (props: { small?: boolean }) => (
       <Stack
         direction="row"
         alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
+        spacing={props.small ? '7px' : '10px'}
       >
-        <Typography variant={props.small ? "small" : "normal"} bold>
+        <Typography variant={props.small ? 's mall' : 'normal'} bold>
           Blocked
         </Typography>
         <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
+          height={props.small ? '12px' : '16px'}
+          width={props.small ? '12px' : '16px'}
           borderRadius="100%"
           bgcolor={PALETTE.secondary.grey[3]}
         />
@@ -55,14 +55,14 @@ export const FilterLegend = (props: { small?: boolean }) => (
       <Stack
         direction="row"
         alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
+        spacing={props.small ? '7px' : '10px'}
       >
-        <Typography variant={props.small ? "small" : "normal"} bold>
+        <Typography variant={props.small ? 's mall' : 'normal'} bold>
           Custom
         </Typography>
         <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
+          height={props.small ? '12px' : '16px'}
+          width={props.small ? '12px' : '16px'}
           borderRadius="100%"
           bgcolor={PALETTE.system.orange}
         />
@@ -73,23 +73,23 @@ export const FilterLegend = (props: { small?: boolean }) => (
 
 const CategoryCard = (
   props: IFilterCategory & {
-    flipCategory: (id: IFilterCategory["categoryId"]) => void;
-    flipSubcategory: (id: IFilterSubcategory["id"]) => void;
-    allowedCategories: IFilterSubcategory["id"][];
+    flipCategory: (id: IFilterCategory['categoryId']) => void;
+    flipSubcategory: (id: IFilterSubcategory['id']) => void;
+    allowedCategories: IFilterSubcategory['id'][];
   }
 ) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
-  const [status, setStatus] = useState<"on" | "off" | "custom">("off");
+  const [status, setStatus] = useState<'on' | 'off' | 'custom'>('off');
   useEffect(
     () =>
       setStatus(
         props.subCategories.every((c) => props.allowedCategories.includes(c.id))
-          ? "on"
+          ? 'on'
           : props.subCategories.some((c) =>
               props.allowedCategories.includes(c.id)
             )
-          ? "custom"
-          : "off"
+          ? 'custom'
+          : 'off'
       ),
     [props.subCategories, props.allowedCategories]
   );
@@ -118,19 +118,19 @@ const CategoryCard = (
                 color={PALETTE.secondary.grey[3]}
               >
                 {`${nAllowedCategories} ${
-                  nAllowedCategories === 1 ? "Category" : "Categories"
+                  nAllowedCategories === 1 ? 'Category' : 'Categories'
                 } allowed`}
               </Typography>
             </Stack>
             <Stack direction="row" spacing="20px">
               <Stack
                 sx={{
-                  pointerEvents: props.permanentlyBlocked ? "none" : undefined,
+                  pointerEvents: props.permanentlyBlocked ? 'none' : undefined,
                 }}
               >
                 <AstroSwitch
-                  on={status === "on"}
-                  compromise={status === "custom"}
+                  on={status === 'on'}
+                  compromise={status === 'custom'}
                   callback={() => props.flipCategory(props.categoryId)}
                   icon={props.permanentlyBlocked ? LockIcon : undefined}
                 />
@@ -138,9 +138,9 @@ const CategoryCard = (
               <Stack
                 sx={{
                   transform: `rotate(${collapsed ? 0 : 180}deg)`,
-                  transition: "0.2s",
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
+                  transition: '0.2s',
+                  cursor: 'pointer',
+                  '&:hover': { opacity: 0.6 },
                 }}
                 onClick={() => setCollapsed(!collapsed)}
               >
@@ -164,11 +164,11 @@ const CategoryCard = (
                     direction="row"
                     onClick={() => props.flipSubcategory(sc.id)}
                     sx={{
-                      cursor: "pointer",
-                      transition: "0.2s",
-                      "&:hover": { opacity: 0.7 },
+                      cursor: 'pointer',
+                      transition: '0.2s',
+                      '&:hover': { opacity: 0.7 },
                       pointerEvents: props.permanentlyBlocked
-                        ? "none"
+                        ? 'none'
                         : undefined,
                     }}
                   >
@@ -198,14 +198,14 @@ const CategoryCard = (
 const FilterPageCategoriesSection = (props: {
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterSubcategory["id"][];
-  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
-  flipCategory: (id: IFilterCategory["categoryId"]) => void;
+  allowedCategories: IFilterSubcategory['id'][];
+  flipSubcategory: (id: IFilterSubcategory['id']) => void;
+  flipCategory: (id: IFilterCategory['categoryId']) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
     title={`${props.allowedCategories.length} allowed ${
-      props.allowedCategories.length === 1 ? "Category" : "Categories"
+      props.allowedCategories.length === 1 ? 'Category' : 'Categories'
     }`}
     subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
     topRightStuff={<FilterLegend />}

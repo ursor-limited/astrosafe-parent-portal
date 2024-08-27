@@ -1,11 +1,11 @@
-import { AstroBentoCard } from "./AstroBentoCard';
-import StopIcon from "@/images/icons/StopIcon.svg';
-import XIcon from "@/images/icons/X.svg';
-import { Stack } from "@mui/system';
-import { PALETTE, Typography, UrsorInputField } from "@/ui';
-import { useState } from "react';
-import _ from "lodash';
-import { Grid } from "@mui/material';
+import { AstroBentoCard } from './AstroBentoCard';
+import StopIcon from '@/images/icons/StopIcon.svg';
+import XIcon from '@/images/icons/X.svg';
+import { Stack } from '@mui/system';
+import { PALETTE, Typography, UrsorInputField } from '@/ui';
+import { useState } from 'react';
+import _ from 'lodash';
+import { Grid } from '@mui/material';
 
 const BlockedWordTag = (props: { word: string; onClick: () => void }) => (
   <Stack
@@ -24,9 +24,9 @@ const BlockedWordTag = (props: { word: string; onClick: () => void }) => (
     </Typography>
     <Stack
       sx={{
-        cursor: "pointer",
-        "&:hover": { opacity: 0.6 },
-        transition: "0.2s",
+        cursor: 'pointer',
+        '&:hover': { opacity: 0.6 },
+        transition: '0.2s',
       }}
       onClick={props.onClick}
     >
@@ -41,13 +41,13 @@ const SearchWordsSection = (props: {
   removeWord: (word: string) => void;
   isMobile?: boolean;
 }) => {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
   return (
     <AstroBentoCard
       icon={StopIcon}
       iconColor={PALETTE.system.red}
       title={`${props.blockedSearchWords.length} blocked search word${
-        props.blockedSearchWords.length === 1 ? "" : "s"
+        props.blockedSearchWords.length === 1 ? '' : 's '
       }`}
       subtitle="Enter words that you want to be blocked or flagged if they are entered in the search engine on the Device."
       isMobile={props.isMobile}
@@ -60,7 +60,7 @@ const SearchWordsSection = (props: {
           }
           onEnterKey={() => {
             props.addWord(inputValue);
-            setInputValue("");
+            setInputValue('');
           }}
           placeholder="Add a word to block"
           width="100%"

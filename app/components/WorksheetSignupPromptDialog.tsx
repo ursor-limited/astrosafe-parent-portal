@@ -24,12 +24,12 @@ const WorksheetSignupPromptDialog = (props: {
       ]}
       open={props.open}
       // button={{
-      //   text: 'Sign in',
+      //   text: "Sign in",
       //   callback: () => {
       //     props.closeCallback();
       //     props.mobile ? login() : login();
       //     //props.signinCallback();
-      //     // mixpanel.track('clicked signup button', {
+      //     // mixpanel.track("clicked signup button", {
       //     //   freeWorksheetCreationCount,
       //     // });
       //   },
@@ -70,7 +70,7 @@ const WorksheetSignupPromptDialog = (props: {
             width={727}
             height={454}
             priority={true}
-            //objectFit='contain'
+            //objectFit="contain"
             alt="worksheet signup dialog screenshot"
           />
         </Stack>

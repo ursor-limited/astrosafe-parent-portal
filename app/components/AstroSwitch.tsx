@@ -24,9 +24,9 @@ const AstroSwitch = (props: {
           : PALETTE.secondary.grey[3]
       }
       borderRadius={props.small ? '8px' : '20px'}
-      px='2px'
-      boxSizing='border-box'
-      justifyContent='center'
+      px="2px"
+      boxSizing="border-box"
+      justifyContent="center"
       onMouseEnter={() => {
         setHovering(true);
       }}
@@ -41,7 +41,7 @@ const AstroSwitch = (props: {
       <Stack
         height={props.small ? '13px' : '24px'}
         width={props.small ? '13px' : '24px'}
-        borderRadius='100%'
+        borderRadius="100%"
         sx={{
           background: 'rgb(255,255,255)',
           opacity: hovering ? 0.7 : 1,
@@ -63,10 +63,10 @@ const AstroSwitch = (props: {
             },
           },
         }}
-        justifyContent='center'
-        alignItems='center'
+        justifyContent="center"
+        alignItems="center"
       >
-        {props.icon ? <props.icon height='14px' width='14px' /> : null}
+        {props.icon ? <props.icon height="14px" width="14px" /> : null}
       </Stack>
     </Stack>
   );

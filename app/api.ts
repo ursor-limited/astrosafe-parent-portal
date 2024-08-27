@@ -239,7 +239,7 @@ class ApiController {
     url: IVideo['url'],
     contentBucketId?: IContentBucket['id'],
     isChannel?: boolean
-    //thumbnailUrl: IVideo['thumbnailUrl']
+    //thumbnailUrl: IVideo["thumbnailUrl"]
   ) {
     return put(`content/videos/${id}${isChannel ? '?isChannel=true' : ''}`, {
       title,

@@ -11,14 +11,14 @@ const PageSelector = (props: {
 }) => {
   return (
     <Stack
-      direction='row'
-      spacing='4px'
-      alignItems='center'
-      justifyContent='center'
+      direction="row"
+      spacing="4px"
+      alignItems="center"
+      justifyContent="center"
     >
       {[
         <Stack
-          key='left'
+          key="left"
           sx={{
             cursor: 'pointer',
             transition: '0.2s',
@@ -27,12 +27,12 @@ const PageSelector = (props: {
             opacity: props.pageIndex === 0 ? 0.3 : 1,
           }}
           onClick={() => props.setPageIndex(props.pageIndex - 1)}
-          width='30px'
-          height='30px'
-          justifyContent='center'
-          alignItems='center'
+          width="30px"
+          height="30px"
+          justifyContent="center"
+          alignItems="center"
         >
-          <ChevronLeftIcon height='15px' width='15px' />
+          <ChevronLeftIcon height="15px" width="15px" />
         </Stack>,
         ...[...Array(props.nPages).keys()].map((i) => (
           <Stack
@@ -44,10 +44,10 @@ const PageSelector = (props: {
               pointerEvents: props.pageIndex === i ? 'none' : undefined,
             }}
             onClick={() => props.setPageIndex(i)}
-            width='30px'
-            height='30px'
-            justifyContent='center'
-            alignItems='center'
+            width="30px"
+            height="30px"
+            justifyContent="center"
+            alignItems="center"
           >
             <Typography
               bold
@@ -63,7 +63,7 @@ const PageSelector = (props: {
           </Stack>
         )),
         <Stack
-          key='right'
+          key="right"
           sx={{
             cursor: 'pointer',
             transition: '0.2s',
@@ -73,12 +73,12 @@ const PageSelector = (props: {
             opacity: props.pageIndex === props.nPages - 1 ? 0.3 : 1,
           }}
           onClick={() => props.setPageIndex(props.pageIndex + 1)}
-          width='30px'
-          height='30px'
-          justifyContent='center'
-          alignItems='center'
+          width="30px"
+          height="30px"
+          justifyContent="center"
+          alignItems="center"
         >
-          <ChevronRightIcon height='15px' width='15px' />
+          <ChevronRightIcon height="15px" width="15px" />
         </Stack>,
       ]}
     </Stack>

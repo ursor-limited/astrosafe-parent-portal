@@ -126,9 +126,9 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
         ref={setReferenceElement}
         flex={props.flexButton ? 1 : undefined}
         // zIndex={
-        //   props.open && props.floatButton === 'zIndex'
+        //   props.open && props.floatButton === "zIndex"
         //     ? zIndices.POPUP + 1
-        //     : 'inherit'
+        //     : "inherit"
         // }
         sx={{
           pointerEvents: props.disabled //|| (props.open && !props.noFloatButton)
@@ -138,7 +138,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
           zIndex: 2,
         }}
         width={props.fieldWidth}
-        // width={props.width || 'fit-content'}
+        // width={props.width || "fit-content"}
       >
         {props.children}
       </Stack>
@@ -150,7 +150,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 <Backdrop
                   sx={{
                     background: 'transparent',
-                    //backdropFilter: 'blur(3px)',
+                    //backdropFilter: "blur(3px)",
                     zIndex: props.zIndex || 2,
                   }}
                   open={props.open}
@@ -165,7 +165,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 zIndex={props.zIndex || 3}
               >
                 <Stack
-                  //spacing={props.margin ?? '10px'}
+                  //spacing={props.margin ?? "10px"}
                   pt={props.margin ?? '8px'}
                   // sx={{
                   //   // transform: `translateY(${
@@ -194,7 +194,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                         opacity: props.noFloatButton ? 0 : 1,
                         pointerEvents: props.clickableFloatedButton
                           ? undefined
-                          : 'none',
+                          : "none",
                       }}
                     >
                       {props.children}
@@ -204,9 +204,9 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                     <Box
                       width={width}
                       sx={{
-                        pointerEvents: props.open ? 'auto' : 'none',
+                        pointerEvents: props.open ? "auto" : "none",
                         opacity: props.open ? 1 : 0,
-                        transition: '0.3s',
+                        transition: "0.3s",
                         //animation: props.animation,
                       }}
                     >

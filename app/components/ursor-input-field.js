@@ -87,7 +87,7 @@ export default function UrsorInputField(props) {
       inputProps={inputProps}
       endAdornment={
         props.endIcon ? (
-          <InputAdornment sx={{ pr: '11px' }} position='end'>
+          <InputAdornment sx={{ pr: '11px' }} position="end">
             {props.endIcon}
           </InputAdornment>
         ) : null

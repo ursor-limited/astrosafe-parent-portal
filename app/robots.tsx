@@ -24,7 +24,7 @@ export default function robots(): MetadataRoute.Robots {
 }
 
 // export default function handler(req: any, res: any) {
-//     if (process.env.VERCEL_ENV === 'production') {
+//     if (process.env.VERCEL_ENV === "production") {
 //         const robotsProd = `
 //         # *
 //         User-agent: *

@@ -23,18 +23,18 @@ const AllDevicesPageMobileBody = (props: {
   const navigate = useNavigate();
   return (
     // <PageLayout
-    //   title='My Devices'
+    //   title="My Devices"
     //   titleBackButton={true}
-    //   bodyWidth='100%'
+    //   bodyWidth="100%"
     //   fullHeight
-    //   selectedSidebarItemId='devices'
+    //   selectedSidebarItemId="devices"
     //   button={{
-    //     text: 'Add a Device',
+    //     text: "Add a Device",
     //     callback: props.setConnectDialogOpen,
     //     icon: PlusIcon,
     //   }}
     //   secondaryButton={{
-    //     text: 'Get Browser',
+    //     text: "Get Browser",
     //     callback: props.setDownloadDialogOpen,
     //     icon: DownloadIcon,
     //   }}
@@ -47,9 +47,9 @@ const AllDevicesPageMobileBody = (props: {
       topRightElement={
         <Stack direction="row" spacing="8px">
           {/* <UrsorButton
-            size='small'
+            size="small"
             endIcon={PlusIcon}
-            variant='secondary'
+            variant="secondary"
             onClick={props.setDownloadDialogOpen}
           >
             Get Browser
@@ -93,7 +93,7 @@ const AllDevicesPageMobileBody = (props: {
                         icon: PencilIcon,
                       },
                       // {
-                      //   text: 'Disconnect',
+                      //   text: "Disconnect",
                       //   kallback: () => props.setDisconnectDialogOpen(d.id),
                       //   icon: PlugIcon,
                       //   color: PALETTE.system.red,

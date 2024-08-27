@@ -22,8 +22,8 @@ const AllowedTimesSection = (props: {
   <AstroBentoCard
     title="Time scheduler"
     info={{
-      title: 'Set when the Browser can be used',
-      text: 'Select the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.',
+      title: 's et when the Browser can be used',
+      text: 's elect the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.',
     }}
     infoButtonBelowTitle
     notCollapsible
@@ -39,17 +39,17 @@ const AllowedTimesSection = (props: {
           transition: '0.2s',
         }}
       >
-        {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map((day, i) => (
+        {['mon', 'tue', 'wed', 'thu', 'fri', 's at', 's un'].map((day, i) => (
           <AllowedTimeRow
             key={day}
             dayName={day}
             times={props.allowedTimes.filter((t) =>
-              day === 'sun' ? t.day === 0 : t.day === i + 1
+              day === 's un' ? t.day === 0 : t.day === i + 1
             )}
             deleteRange={props.deleteRange}
-            reset={() => props.reset(day === 'sun' ? 0 : i + 1)}
+            reset={() => props.reset(day === 's un' ? 0 : i + 1)}
             addAllowedTime={(startTime, endTime) =>
-              props.addTimeLimit(day === 'sun' ? 0 : i + 1, startTime, endTime)
+              props.addTimeLimit(day === 's un' ? 0 : i + 1, startTime, endTime)
             }
             setAllowedTimes={props.setAllowedTimes}
             halveLabelFrequency={props.halveLabelFrequency}

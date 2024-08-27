@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 
 const UrsorPopover = dynamic(
   () => import('@/components/UrsorPopover'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
@@ -29,7 +29,7 @@ const ColorSelectionCircle = (props: {
   <Stack
     sx={{
       cursor: 'pointer',
-      '&:hover': { transform: 'scale(1.2)' },
+      '&:hover': { transform: 's cale(1.2)' },
       transition: '0.2s',
     }}
     height="27px"
@@ -129,25 +129,25 @@ const PaletteButton = (props: {
               height="18px"
               width="18px"
               border="2px solid rgba(0,0,0,0.06)"
-              //boxShadow='0 0 15px rgba(0,0,0,0.23)'
+              //boxShadow="0 0 15px rgba(0,0,0,0.23)"
             />
           }
         />
         {/* <Stack
-          height='29px'
-          width='29px'
-          border='5px solid rgb(255,255,255)'
-          borderRadius='100%'
-          boxSizing='border-box'
+          height="29px"
+          width="29px"
+          border="5px solid rgb(255,255,255)"
+          borderRadius="100%"
+          boxSizing="border-box"
           bgcolor={props.selected}
           sx={{
-            '&:hover': {
+            "&:hover": {
               opacity: 0.7,
             },
-            transition: '0.2s',
-            cursor: 'pointer',
+            transition: "0.2s",
+            cursor: "pointer",
           }}
-          boxShadow={'0 0 20px rgba(0,0,0,0.08)'}
+          boxShadow={"0 0 20px rgba(0,0,0,0.08)"}
           onClick={() => setOpen(true)}
         /> */}
       </UrsorPopover>

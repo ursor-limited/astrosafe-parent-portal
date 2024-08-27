@@ -95,8 +95,8 @@ const AddFolderDialog = (props: {
                 onClick={() => props.onAdd(d.id)}
               >
                 {/* <Stack
-                borderRadius='100%'
-                overflow='hidden'
+                borderRadius="100%"
+                overflow="hidden"
                 minWidth={23}
                 minHeight={23}
               >
@@ -104,7 +104,7 @@ const AddFolderDialog = (props: {
                   src={d.profileAvatarUrl}
                   height={23}
                   width={23}
-                  alt='avatar'
+                  alt="avatar"
                 />
               </Stack> */}
                 <Typography maxLines={1} bold>

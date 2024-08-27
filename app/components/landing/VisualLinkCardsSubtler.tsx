@@ -51,7 +51,7 @@ const VisualLinkCardSubtler = (
             src={props.imageUrl}
             style={{
               objectFit: 'cover',
-              //transform: props.mobile ? 'scale(0.75)' : undefined,
+              //transform: props.mobile ? "scale(0.75)" : undefined,
             }}
             fill
             alt="visual link card image"

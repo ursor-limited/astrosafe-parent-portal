@@ -1,9 +1,9 @@
-import { Stack } from "@mui/system';
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg';
-import { useState } from "react';
-import DynamicContainer from "@/app/components/DynamicContainer';
-import InfoButton, { IInfoButtonProps } from "@/app/components/InfoButton';
-import { PALETTE, Typography } from "@/ui';
+import { Stack } from '@mui/system';
+import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import { useState } from 'react';
+import DynamicContainer from '@/app/components/DynamicContainer';
+import InfoButton, { IInfoButtonProps } from '@/app/components/InfoButton';
+import { PALETTE, Typography } from '@/ui';
 
 export const AstroBentoCard = (props: {
   title: string;
@@ -31,7 +31,7 @@ export const AstroBentoCard = (props: {
     >
       <Stack>
         <Stack justifyContent="space-between" direction="row">
-          <Stack spacing={props.isMobile ? "6px" : undefined}>
+          <Stack spacing={props.isMobile ? '6px' : undefined}>
             <Stack>
               <Stack
                 direction="row"
@@ -44,7 +44,7 @@ export const AstroBentoCard = (props: {
                 spacing="6px"
               >
                 {props.icon ? <props.icon height="20px" width="20px" /> : null}
-                <Typography variant={props.isMobile ? "normal" : "large"} bold>
+                <Typography variant={props.isMobile ? 'normal' : 'large'} bold>
                   {props.title}
                 </Typography>
                 {props.info &&
@@ -54,7 +54,7 @@ export const AstroBentoCard = (props: {
                     pl="12px"
                     height="100%"
                     justifyContent="flex-end"
-                    sx={{ transform: "translateY(-2px)" }}
+                    sx={{ transform: 'translateY(-2px)' }}
                   >
                     <InfoButton small {...props.info} />
                   </Stack>
@@ -76,9 +76,9 @@ export const AstroBentoCard = (props: {
               <Stack
                 sx={{
                   transform: `rotate(${collapsed ? 0 : 180}deg)`,
-                  transition: "0.2s",
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
+                  transition: '0.2s',
+                  cursor: 'pointer',
+                  '&:hover': { opacity: 0.6 },
                 }}
                 onClick={() => setCollapsed(!collapsed)}
               >

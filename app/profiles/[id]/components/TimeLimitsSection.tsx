@@ -16,7 +16,7 @@ const TimeLimitsSection = (props: {
     title="Daily limits"
     notCollapsible
     info={{
-      title: 'Setting your daily limits',
+      title: 's etting your daily limits',
       text: 'This is the total amount of time you are happy with being spent on the Browser for the specific day. Turn this off to remove all time limits.',
     }}
     infoButtonBelowTitle
@@ -32,15 +32,15 @@ const TimeLimitsSection = (props: {
         transition: '0.2s',
       }}
     >
-      {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map((day, i) => (
+      {['mon', 'tue', 'wed', 'thu', 'fri', 's at', 's un'].map((day, i) => (
         <TimeLimitRow
           key={day}
           dayName={day}
-          decrement={() => props.decrement(day === 'sun' ? 0 : i + 1)}
-          increment={() => props.increment(day === 'sun' ? 0 : i + 1)}
+          decrement={() => props.decrement(day === 's un' ? 0 : i + 1)}
+          increment={() => props.increment(day === 's un' ? 0 : i + 1)}
           allowedMinutes={
             props.timeLimits.find((l) =>
-              day === 'sun' ? l.day === 0 : l.day === i + 1
+              day === 's un' ? l.day === 0 : l.day === i + 1
             )?.allowedMinutes ?? 0
           }
         />

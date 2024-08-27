@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 import { PALETTE, Typography } from '@/ui';
 import { getISODateString, IAllowedTime } from './LimitsTab';
 import { alpha, Stack } from '@mui/system';
@@ -15,8 +15,8 @@ const DAY_FULL_NAMES = {
   3: 'Wednesday',
   4: 'Thursday',
   5: 'Friday',
-  6: 'Saturday',
-  0: 'Sunday',
+  6: 's aturday',
+  0: 's unday',
 };
 
 const TimeSelectionColumn = (props: {
@@ -194,7 +194,7 @@ const MobileAllowedTimeRowDisplayButton = (props: {
           <Typography bold>
             {dayjs(props.startTime).utc().format('hh:mma')}
           </Typography>
-          {/* <PencilIcon height='16px' width='16px' /> */}
+          {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
         <Typography bold color={PALETTE.secondary.grey[3]}>
           to
@@ -203,7 +203,7 @@ const MobileAllowedTimeRowDisplayButton = (props: {
           <Typography bold>
             {dayjs(props.endTime).utc().format('hh:mma')}
           </Typography>
-          {/* <PencilIcon height='16px' width='16px' /> */}
+          {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
       </Stack>
       {dialogOpen ? (

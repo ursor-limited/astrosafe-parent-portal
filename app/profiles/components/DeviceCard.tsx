@@ -155,9 +155,9 @@ export const DeviceCardCurrentUrlSection = (props: {
     <DeviceCardSection title="Currently visiting">
       {/* <Link
       href={props.url ? getAbsoluteUrl(props.url) : undefined}
-      target='_blank'
+      target="_blank"
       style={{
-        textDecoration: 'none',
+        textDecoration: "none",
       }}
     > */}
       <Stack
@@ -415,22 +415,22 @@ const DeviceCard = (
             </Stack>
 
             {/* <Stack
-              minHeight='70px'
+              minHeight="70px"
               sx={{
-                cursor: 'pointer',
-                '&:hover': { opacity: 0.6 },
-                transition: '0.2s',
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
               }}
-              alignItems='center'
-              justifyContent='center'
-              direction='row'
-              spacing='8px'
+              alignItems="center"
+              justifyContent="center"
+              direction="row"
+              spacing="8px"
               onClick={() => navigate(`/profiles/${props.id}`)}
             >
-              <Typography bold variant='small' color={PALETTE.primary.indigo}>
+              <Typography bold variant="small" color={PALETTE.primary.indigo}>
                 Go to Device
               </Typography>
-              <ChevronRightIcon height='16px' width='16px' />
+              <ChevronRightIcon height="16px" width="16px" />
             </Stack> */}
             <Stack pt="20px">
               <UrsorButton

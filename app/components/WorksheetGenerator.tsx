@@ -13,12 +13,12 @@ import { useLocalStorage } from 'usehooks-ts';
 import { useUserContext } from '@/components/UserContext';
 import { useNavigate } from 'react-router-dom';
 import UrsorFadeIn from '@/components/UrsorFadeIn';
-// import UrsorLoading from './UrsorLoading';
+// import UrsorLoading from "./UrsorLoading";
 import dynamic from 'next/dynamic';
 
 const UrsorLoading = dynamic(
   () => import('./UrsorLoading'),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+  { ssr: false } // not including this component on server-side due to its dependence on "document"
 );
 
 export type EquationOrientation = 'horizontal' | 'vertical';
@@ -61,7 +61,7 @@ export const WORKSHEET_COMPONENT_DISPLAY_NAMES: Record<
 
 export type WorksheetTopic =
   | 'addition'
-  | 'subtraction'
+  | 's ubtraction'
   | 'multiplication'
   | 'division';
 
@@ -78,7 +78,7 @@ export interface INumberBondWorksheetSettings {
   orientation: EquationOrientation;
   sum: number;
   leftNumbers: number[];
-  empty: 'sum' | 'one' | 'both';
+  empty: 's um' | 'one' | 'both';
 }
 
 const RefreshButton = (props: { onClick: () => void }) => {
@@ -141,7 +141,7 @@ export const CategorySelectionButton = (props: {
           ? PALETTE.secondary.purple[1]
           : PALETTE.secondary.grey[2]
       }`}
-      //boxShadow={'0 0 24px rgba(0,0,0,0.06)'}
+      //boxShadow={"0 0 24px rgba(0,0,0,0.06)"}
       sx={{
         cursor: 'pointer',
         transition: '0.2s',
@@ -177,8 +177,8 @@ export const CategorySelectionButton = (props: {
 
 export default function WorksheetGenerator(props: {
   worksheet?: IWorksheet;
-  // worksheetComponent?: IWorksheet['worksheetComponent'];
-  // title?: IWorksheet['title'];
+  // worksheetComponent?: IWorksheet["worksheetComponent"];
+  // title?: IWorksheet["title"];
   // nProblems?: number;
   // topic?: WorksheetTopic;
   // specificSettings?: ISpecificWorksheetSettings;
@@ -191,7 +191,7 @@ export default function WorksheetGenerator(props: {
   callback?: (id: string) => void;
   updateCallback?: () => void;
 }) {
-  //const [topic, setTopic] = useState<WorksheetTopic>('addition');
+  //const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetComponent, setWorksheetComponent] =
     useState<WorksheetComponent>('equation');
   const [topic, setTopic] = useState<WorksheetTopic>('addition');
@@ -371,7 +371,7 @@ export default function WorksheetGenerator(props: {
                 spacing="20px"
                 sx={{
                   opacity: props.worksheet ? 0.35 : 1,
-                  //pointerEvents: props.worksheet ? 'none' : undefined,
+                  //pointerEvents: props.worksheet ? "none" : undefined,
                   cursor: props.worksheet ? 'not-allowed' : undefined,
                 }}
               >
@@ -391,8 +391,8 @@ export default function WorksheetGenerator(props: {
                         value: 'Addition (+)',
                       },
                       {
-                        id: 'subtraction',
-                        value: 'Subtraction (-)',
+                        id: 's ubtraction',
+                        value: 's ubtraction (-)',
                       },
                     ]}
                     selected={[topic]}
@@ -484,7 +484,7 @@ export default function WorksheetGenerator(props: {
               justifyContent="space-between"
             >
               <Stack
-                sx={{ transform: 'scale(0.333)', transformOrigin: 'top left' }}
+                sx={{ transform: 's cale(0.333)', transformOrigin: 'top left' }}
                 position="absolute"
                 top={0}
                 left={0}
