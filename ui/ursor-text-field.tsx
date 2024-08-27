@@ -1,11 +1,9 @@
-"use client";
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
-import { useState } from "react";
-import { TextField } from "@mui/material";
-import { PALETTE } from "./palette";
-import { FONT_SIZES, LINE_HEIGHTS } from "./typography";
-import { Stack } from "@mui/system";
+import { useState } from 'react';
+import { TextField } from '@mui/material';
+import { PALETTE } from './palette';
+import { FONT_SIZES, LINE_HEIGHTS } from './typography';
+import { Stack } from '@mui/system';
 
 const N_ROWS = 3;
 const BOLD_FONT_WEIGHT = 450;
@@ -43,8 +41,8 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
   return (
     <Stack
       sx={{
-        ".MuiFormControl-root": {
-          paddingY: "4px",
+        '.MuiFormControl-root': {
+          paddingY: '4px',
         },
       }}
       flex={props.flex ? 1 : undefined}
@@ -53,15 +51,15 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         inputProps={{
           style: {
             fontSize: props.fontSize ?? FONT_SIZES.normal,
-            textAlign: props.centerAlign ? "center" : undefined,
+            textAlign: props.centerAlign ? 'center' : undefined,
             color: props.color ?? PALETTE.font.dark,
-            padding: "0 !important",
+            padding: '0 !important',
             lineHeight: `${LINE_HEIGHTS.normal}px`,
             fontWeight: props.boldValue ? BOLD_FONT_WEIGHT : undefined,
             height: props.height,
           },
           form: {
-            autoComplete: "off",
+            autoComplete: 'off',
           },
         }}
         multiline
@@ -83,26 +81,26 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         placeholder={props.placeholder}
         rows={N_ROWS}
         sx={{
-          ".MuiInputBase-root": {
+          '.MuiInputBase-root': {
             paddingY: 0,
-            paddingLeft: "12px",
-            paddingRight: "12px",
-            fontFamily: "inherit",
+            paddingLeft: '12px',
+            paddingRight: '12px',
+            fontFamily: 'inherit',
           },
-          "::-webkit-scrollbar": {
-            display: "block !important",
+          '::-webkit-scrollbar': {
+            display: 'block !important',
           },
-          overflow: "hidden",
+          overflow: 'hidden',
           width: props.width,
           height: props.height,
-          borderRadius: "8px",
+          borderRadius: '8px',
           outline: props.outline,
           background: props.white
-            ? "rgb(255,255,255)"
+            ? 'rgb(255,255,255)'
             : props.backgroundColor ?? PALETTE.secondary.grey[1],
           backdropFilter: props.backgroundBlur,
-          "& fieldset": { border: "none" },
-          transition: "0.2s",
+          '& fieldset': { border: 'none' },
+          transition: '0.2s',
           border: !props.noBorder
             ? `2px solid ${
                 // eslint-disable-next-line no-nested-ternary -- idiotic rule
@@ -110,7 +108,7 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
                   ? PALETTE.secondary.purple[2]
                   : hovering
                   ? PALETTE.secondary.purple[1]
-                  : "transparent"
+                  : 'transparent'
               }`
             : undefined,
         }}

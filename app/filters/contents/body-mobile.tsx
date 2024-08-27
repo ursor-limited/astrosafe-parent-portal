@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { UrsorButton } from '@/ui';

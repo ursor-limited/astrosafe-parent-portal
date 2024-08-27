@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import CirclePlayIcon from '@/images/icons/CirclePlay.svg';
 import LinkIcon from '@/images/icons/LinkIcon.svg';

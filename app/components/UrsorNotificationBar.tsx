@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { Box, Stack } from '@mui/material';
 import { useContext } from 'react';
@@ -38,32 +36,32 @@ export default function UrsorNotificationBar(
 
   return (
     <Stack
-      position='absolute'
+      position="absolute"
       left={0}
       right={0}
-      margin='auto auto'
+      margin="auto auto"
       py={isMobile ? '8px' : 0}
       minHeight={HEIGHT}
       width={WIDTH}
-      maxWidth='calc(90% - 28px)'
+      maxWidth="calc(90% - 28px)"
       bgcolor={
         notificationCtx.type && notificationCtx.message
           ? COLORS[notificationCtx.type]
           : 'transparent'
       }
-      justifyContent='center'
-      alignItems='center'
+      justifyContent="center"
+      alignItems="center"
       zIndex={999999}
-      borderRadius='12px'
+      borderRadius="12px"
       top={visible ? TOP_PADDING : `-${HEIGHT}`}
       sx={{ transition: '0.5s', willChange: 'transform' }}
     >
       <Stack
-        position='absolute'
-        width='100%'
-        height='100%'
-        justifyContent='center'
-        alignItems='center'
+        position="absolute"
+        width="100%"
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
       >
         <Typography
           bold

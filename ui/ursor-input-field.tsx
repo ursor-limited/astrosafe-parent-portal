@@ -1,14 +1,12 @@
-"use client";
-
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
-import { Input, InputAdornment } from "@mui/material";
-import { PALETTE } from "./palette";
-import { FONT_SIZES } from "./typography";
-import { useState } from "react";
+import { Input, InputAdornment } from '@mui/material';
+import { PALETTE } from './palette';
+import { FONT_SIZES } from './typography';
+import { useState } from 'react';
 
-export const DEFAULT_WIDTH = "536px";
-export const HEIGHT = "40px";
-export const BORDER_RADIUS = "8px";
+export const DEFAULT_WIDTH = '536px';
+export const HEIGHT = '40px';
+export const BORDER_RADIUS = '8px';
 export const BOLD_FONT_WEIGHT = 450;
 
 export interface UrsorInputFieldProps {
@@ -40,7 +38,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
   const [active, setActive] = useState(false);
 
   const customSx = {
-    width: props.width ?? "100%",
+    width: props.width ?? '100%',
     height: props.height ?? HEIGHT,
     minHeight: props.height ?? HEIGHT,
     borderRadius: props.borderRadius ?? BORDER_RADIUS,
@@ -51,36 +49,36 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
         ? PALETTE.secondary.purple[2]
         : hovering
         ? PALETTE.secondary.purple[1]
-        : "transparent"
+        : 'transparent'
     }`,
-    transition: "0.2s",
+    transition: '0.2s',
     // : props.border
     // ? `1.4px solid ${PALETTE.secondary.grey[2]}`
     // : null,
-    boxSizing: "border-box",
+    boxSizing: 'border-box',
     outline: props.outline,
     backdropFilter: props.backgroundBlur,
-    fontFamily: "inherit",
+    fontFamily: 'inherit',
   };
 
   const inputProps = {
-    type: props.password ? "password" : undefined,
+    type: props.password ? 'password' : undefined,
     style: {
-      paddingLeft: props.paddingLeft ?? "10px",
-      paddingRight: props.leftAlign ? "10px" : 0,
-      textAlign: props.leftAlign ? "left" : "center",
-      textOverflow: "ellipsis",
+      paddingLeft: props.paddingLeft ?? '10px',
+      paddingRight: props.leftAlign ? '10px' : 0,
+      textAlign: props.leftAlign ? 'left' : 'center',
+      textOverflow: 'ellipsis',
       fontSize: props.fontSize ?? FONT_SIZES.normal,
       color: props.color ?? PALETTE.font.dark,
       fontWeight:
         props.boldValue || (props.value && !props.noBold)
           ? BOLD_FONT_WEIGHT
-          : "unset",
-      lineHeight: "100%",
-      transition: "0.2s",
+          : 'unset',
+      lineHeight: '100%',
+      transition: '0.2s',
     },
     form: {
-      autoComplete: "off",
+      autoComplete: 'off',
     },
   };
 
@@ -90,7 +88,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       autoFocus={props.autoFocus}
       endAdornment={
         props.endIcon ? (
-          <InputAdornment position="end" sx={{ pr: "11px" }}>
+          <InputAdornment position="end" sx={{ pr: '11px' }}>
             {props.endIcon}
           </InputAdornment>
         ) : null
@@ -107,7 +105,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
         setActive(true);
       }}
       onKeyPress={(event) => {
-        if (event.key === "Enter") {
+        if (event.key === 'Enter') {
           props.onEnterKey?.();
         }
       }}

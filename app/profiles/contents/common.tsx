@@ -1,20 +1,18 @@
-"use client";
+import React, { useCallback, useEffect, useState } from 'react';
+import DeviceRenameDialog from '../components/DeviceRenameDialog';
+import DeviceDisconnectDialog from '../components/DeviceDisconnectDialog';
+import DeviceConnectDialog from '../components/DeviceConnectDialog';
+import DownloadDialog from '../components/DownloadDialog';
+import ApiController from '../../api';
+import { IDevice, IDeviceConfig } from '../../filters/[id]/contents/common';
+import AllDevicesPageDesktopBody from './desktop-body';
+import AllDevicesPageMobileBody from './mobile-body';
+import { IAllowedTime, ITimeLimit } from '../[id]/components/LimitsTab';
+import { IFilter } from '@/app/filters/contents/common';
+import useDeviceOnlineStatus from '../components/useDeviceOnlineStatus';
+import useAuth from '@/app/hooks/useAuth';
 
-import React, { useCallback, useEffect, useState } from "react";
-import DeviceRenameDialog from "../components/DeviceRenameDialog";
-import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
-import DeviceConnectDialog from "../components/DeviceConnectDialog";
-import DownloadDialog from "../components/DownloadDialog";
-import ApiController from "../../api";
-import { IDevice, IDeviceConfig } from "../../filters/[id]/contents/common";
-import AllDevicesPageDesktopBody from "./desktop-body";
-import AllDevicesPageMobileBody from "./mobile-body";
-import { IAllowedTime, ITimeLimit } from "../[id]/components/LimitsTab";
-import { IFilter } from "@/app/filters/contents/common";
-import useDeviceOnlineStatus from "../components/useDeviceOnlineStatus";
-import useAuth from "@/app/hooks/useAuth";
-
-export type DeviceType = "chrome" | "android" | "ios";
+export type DeviceType = 'chrome' | 'android' | 'ios';
 
 export type IEnrichedDevice = IDevice & {
   screenTime?: {
@@ -44,11 +42,11 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
       ApiController.getGroupFilters(user.group_id).then(setFilters);
   }, [user?.group_id]);
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
-    IDevice["id"] | undefined
+    IDevice['id'] | undefined
   >();
   const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);
   const [disconnectDeviceDialogId, setDisconnectDeviceDialogId] = useState<
-    IDevice["id"] | undefined
+    IDevice['id'] | undefined
   >();
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
 
@@ -81,7 +79,7 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
             ApiController.renameDevice(renameDeviceDialogId, name).then();
             setRenameDeviceDialogId(undefined);
           }}
-          name={devices.find((d) => d.id === renameDeviceDialogId)?.name ?? ""}
+          name={devices.find((d) => d.id === renameDeviceDialogId)?.name ?? ''}
         />
       ) : null}
       {disconnectDeviceDialogId ? (

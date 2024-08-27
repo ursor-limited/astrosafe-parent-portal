@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack } from '@mui/system';
 import Kitemark from '@/images/kiteMark.svg';
 import Image from 'next/image';

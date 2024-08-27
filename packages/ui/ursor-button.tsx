@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-sort-props -- want to have paddings in the current order */
-"use client";
-import { Stack, keyframes } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { PALETTE } from "./palette";
-import { Typography } from "./typography";
+
+import { Stack, keyframes } from '@mui/system';
+import React, { useEffect, useState } from 'react';
+import { PALETTE } from './palette';
+import { Typography } from './typography';
 
 export const spin = keyframes`
 from {
@@ -15,12 +15,12 @@ to {
 `;
 
 // tertiary is implemented here only for dark mode; the light mode implementation is in UrsorMagicalButton
-export type ButtonVariant = "primary" | "secondary" | "tertiary";
-export type ButtonSize = "large" | "medium" | "small" | "tiny";
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+export type ButtonSize = 'large' | 'medium' | 'small' | 'tiny';
 
-type ButtonState = "enabled" | "hover" | "pressed";
+type ButtonState = 'enabled' | 'hover' | 'pressed';
 
-type Mode = "light" | "dark";
+type Mode = 'light' | 'dark';
 
 export const HEIGHTS: Record<ButtonSize, number> = {
   large: 52,
@@ -70,7 +70,7 @@ export const BACKGROUND_COLORS: Record<
   },
   dark: {
     primary: {
-      enabled: "rgb(255,255,255)",
+      enabled: 'rgb(255,255,255)',
       hover: PALETTE.secondary.purple[2],
       pressed: PALETTE.secondary.grey[1],
     },
@@ -164,19 +164,19 @@ export interface UrsorButtonProps {
 }
 
 export function UrsorButton(props: UrsorButtonProps): JSX.Element {
-  const mode = props.dark ? "dark" : "light";
-  const variant = props.variant ?? "primary";
-  const size = props.size ?? "medium";
+  const mode = props.dark ? 'dark' : 'light';
+  const variant = props.variant ?? 'primary';
+  const size = props.size ?? 'medium';
   const [hovering, setHovering] = useState<boolean>(false);
   const [pressed, setPressed] = useState<boolean>(false);
-  const [state, setState] = useState<ButtonState>("enabled");
+  const [state, setState] = useState<ButtonState>('enabled');
   useEffect(() => {
     if (pressed) {
-      setState("pressed");
+      setState('pressed');
     } else if (hovering) {
-      setState("hover");
+      setState('hover');
     } else {
-      setState("enabled");
+      setState('enabled');
     }
   }, [hovering, pressed]);
   return (
@@ -220,20 +220,20 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       boxShadow={
         // eslint-disable-next-line no-nested-ternary -- no tyme to fiks dis
         props.strongShadow
-          ? "0 0 25px rgba(0,0,0,0.08)"
+          ? '0 0 25px rgba(0,0,0,0.08)'
           : props.shadow
-          ? "0 0 20px rgba(0,0,0,0.05)"
+          ? '0 0 20px rgba(0,0,0,0.05)'
           : undefined
       }
       sx={{
-        cursor: "pointer",
-        pointerEvents: props.disabled ? "none" : undefined,
-        transition: "0.2s",
+        cursor: 'pointer',
+        pointerEvents: props.disabled ? 'none' : undefined,
+        transition: '0.2s',
         background: props.backgroundColor,
         // eslint-disable-next-line no-nested-ternary -- annoying
         opacity: props.disabled
           ? 0.35
-          : state === "hover"
+          : state === 'hover'
           ? props.hoverOpacity
           : undefined,
         svg: {
@@ -245,16 +245,16 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
                 props.fontColor ||
                 FONT_COLORS[mode][variant]?.[state] ||
                 PALETTE.font.light,
-            transition: "0.2s",
+            transition: '0.2s',
           },
         },
       }}
-      width={props.width || "fit-content"}
+      width={props.width || 'fit-content'}
     >
       {props.startIcon ? (
         <props.startIcon
-          height={props.iconSize || ICON_SIZES[props.size || "medium"]}
-          width={props.iconSize || ICON_SIZES[props.size || "medium"]}
+          height={props.iconSize || ICON_SIZES[props.size || 'medium']}
+          width={props.iconSize || ICON_SIZES[props.size || 'medium']}
         />
       ) : null}
       <Typography
@@ -266,7 +266,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         }
         noWrap
         sx={{
-          transition: "0.2s",
+          transition: '0.2s',
           paddingY: props.paddingY,
           ...(props.fontSize ? { fontSize: props.fontSize } : {}),
         }}
@@ -276,8 +276,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       </Typography>
       {props.endIcon ? (
         <props.endIcon
-          height={props.iconSize || ICON_SIZES[props.size || "medium"]}
-          width={props.iconSize || ICON_SIZES[props.size || "medium"]}
+          height={props.iconSize || ICON_SIZES[props.size || 'medium']}
+          width={props.iconSize || ICON_SIZES[props.size || 'medium']}
         />
       ) : null}
     </Stack>

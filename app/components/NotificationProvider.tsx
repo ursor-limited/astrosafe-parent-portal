@@ -1,13 +1,11 @@
-"use client";
-
-import React, { createContext, useEffect, useState } from "react";
-import NotificationContext from "./NotificationContext";
+import React, { createContext, useEffect, useState } from 'react';
+import NotificationContext from './NotificationContext';
 
 export interface INotificationProviderProps {
   children: React.ReactNode;
 }
 
-export type NotificationType = "success" | "negativeSuccess" | "error";
+export type NotificationType = 'success' | 'negativeSuccess' | 'error';
 
 export default function NotificationProvider(
   props: INotificationProviderProps
@@ -17,18 +15,18 @@ export default function NotificationProvider(
   const success = (text: string) => {
     window.scroll(0, 0);
     setMessage(text);
-    setType("success");
+    setType('success');
   };
   const negativeSuccess = (text: string) => {
     window.scroll(0, 0);
     setMessage(text);
-    setType("negativeSuccess");
+    setType('negativeSuccess');
   };
   const error = (text: string) => {
-    if (process.env.REACT_APP_BUILD_ENV !== "prod") {
+    if (process.env.REACT_APP_BUILD_ENV !== 'prod') {
       window.scroll(0, 0);
       setMessage(text);
-      setType("error");
+      setType('error');
     }
   };
   useEffect(() => {

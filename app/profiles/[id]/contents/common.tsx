@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PencilIcon from '@/images/icons/Pencil.svg';
 

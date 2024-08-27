@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';

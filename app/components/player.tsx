@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack, keyframes } from '@mui/system';
 import Play from '@/images/play.svg';
 import Sync from '@/images/icons/Sync.svg';
@@ -357,24 +355,24 @@ const Player = (props: {
       height={fullScreen ? '100vh' : `${props.height}px`}
       minWidth={fullScreen ? '100vw' : `${props.width}px`}
       minHeight={fullScreen ? '100vh' : `${props.height}px`}
-      marginLeft='auto'
-      marginRight='auto'
+      marginLeft="auto"
+      marginRight="auto"
       left={0}
       right={0}
-      spacing='12px'
+      spacing="12px"
       onMouseEnter={() => setOverlayHovering(true)}
       onMouseLeave={() => setOverlayHovering(false)}
       onMouseMove={() => setOverlayHovering(true)}
-      justifyContent='center'
-      alignItems='center'
+      justifyContent="center"
+      alignItems="center"
     >
       <Stack
         width={fullScreen ? videoWidth || '100vw' : `${props.width}px`}
         height={fullScreen ? videoHeight || '100vh' : `${props.height}px`}
         boxShadow={!playing ? '0 0 65px rgba(255,255,255,0.2)' : undefined}
         borderRadius={props.borderRadius || (fullScreen ? 0 : BORDER_RADIUS)}
-        overflow='hidden'
-        position='relative'
+        overflow="hidden"
+        position="relative"
         sx={{
           cursor: 'pointer',
         }}
@@ -384,19 +382,19 @@ const Player = (props: {
             onMouseEnter={() => setOverlayHovering(true)}
             onMouseLeave={() => setOverlayHovering(false)}
             id={props.playerId}
-            title='Player'
+            title="Player"
             width={fullScreen ? '100%' : props.width}
             height={fullScreen ? '100%' : props.height}
             src={url}
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;'
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;"
             frameBorder={0}
           />
         ) : null}
         <Stack
-          position='absolute'
+          position="absolute"
           top={0}
-          width='100%'
-          height='100%'
+          width="100%"
+          height="100%"
           sx={{
             pointerEvents:
               youtubePauseOverlay || mouseIsOutsideWindow ? undefined : 'none',
@@ -409,13 +407,13 @@ const Player = (props: {
           //onClick={(event) => iframe?.dispatchEvent(event)}
         />
         <Stack
-          position='absolute'
+          position="absolute"
           top={0}
           borderRadius={
             fullScreen ? undefined : props.borderRadius || BORDER_RADIUS
           }
-          width='100%'
-          height='100%'
+          width="100%"
+          height="100%"
           bgcolor={`rgba(0,0,0,${overlayHovering ? 0.6 : 0.72})`}
           sx={{
             transition: '0.2s',
@@ -425,8 +423,8 @@ const Player = (props: {
               !props.noBackdrop && hasBegunPlaying ? 'blur(13px)' : undefined,
             //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don't use blur when the playing has not yet been started
           }}
-          justifyContent='center'
-          alignItems='center'
+          justifyContent="center"
+          alignItems="center"
           onClick={resume}
         >
           <Stack
@@ -453,7 +451,7 @@ const Player = (props: {
           onClick={() =>
             props.provider === 'vimeo' ? player?.pause() : player?.pauseVideo()
           }
-          position='absolute'
+          position="absolute"
           top={0}
           right={0}
           //right={0}
@@ -480,13 +478,13 @@ const Player = (props: {
               },
             },
           }}
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         />
 
         <Stack
-          position='absolute'
+          position="absolute"
           right={0}
           bottom={0}
           width={
@@ -498,9 +496,9 @@ const Player = (props: {
         />
         {!props.noKitemark ? (
           <Stack
-            position='absolute'
-            left='20px'
-            top='20px'
+            position="absolute"
+            left="20px"
+            top="20px"
             sx={{
               transform: `rotate(${!playing ? 360 : 0}deg) translateX(${
                 !playing ? 0 : -150
@@ -520,7 +518,7 @@ const Player = (props: {
               },
             }}
             flex={1}
-            overflow='visible'
+            overflow="visible"
             onMouseEnter={() => setStarHovering(true)}
             onMouseLeave={() => setStarHovering(false)}
           >
@@ -537,28 +535,28 @@ const Player = (props: {
           </Stack>
         ) : null}
         <Stack
-          position='absolute'
-          top='19px'
-          left='55px'
+          position="absolute"
+          top="19px"
+          left="55px"
           sx={{
             opacity: starHovering ? 1 : 0,
             transition: '0.8s',
             pointerEvents: 'none',
           }}
         >
-          <Typography color='rgba(255,255,255)'>
+          <Typography color="rgba(255,255,255)">
             Here at Astro, we&apos;re on a mission to create a safer and more
             delightful internet. 😊
           </Typography>
         </Stack>
 
         <Stack
-          direction='row'
-          spacing='11px'
-          position='absolute'
-          top='18px'
-          right='0px'
-          pr='19px'
+          direction="row"
+          spacing="11px"
+          position="absolute"
+          top="18px"
+          right="0px"
+          pr="19px"
           sx={{
             opacity: !playing || overlayHovering ? 1 : 0,
             svg: {

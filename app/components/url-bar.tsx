@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack } from '@mui/system';
 import { Typography, UrsorButton } from '@/ui';
 import Image from 'next/image';
@@ -17,17 +15,17 @@ const UrlBar = (props: { mobile: boolean }) => {
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
   return currentPageUrl ? (
     <Stack
-      width='100%'
+      width="100%"
       spacing={props.mobile ? '6px' : '20px'}
       height={props.mobile ? undefined : '76px'}
-      px='28px'
-      py='8px'
+      px="28px"
+      py="8px"
       bgcolor={hovering ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.15)'}
-      borderRadius='14px'
+      borderRadius="14px"
       direction={props.mobile ? undefined : 'row'}
-      justifyContent='space-between'
-      alignItems='center'
-      overflow='hidden'
+      justifyContent="space-between"
+      alignItems="center"
+      overflow="hidden"
       onClick={() => {
         setCopied(true);
         navigator.clipboard.writeText(currentPageUrl.split('?')[0]);
@@ -65,8 +63,8 @@ const UrlBar = (props: { mobile: boolean }) => {
       </Typography>
 
       {copied ? (
-        <Stack height='40px' justifyContent='center'>
-          <Typography noWrap bold color='rgba(255,255,255,0.7)'>
+        <Stack height="40px" justifyContent="center">
+          <Typography noWrap bold color="rgba(255,255,255,0.7)">
             Copied to Clipboard
           </Typography>
         </Stack>
@@ -81,9 +79,9 @@ const UrlBar = (props: { mobile: boolean }) => {
           <UrsorButton
             endIcon={Clipboard}
             dark
-            variant='tertiary'
+            variant="tertiary"
             onClick={() => null}
-            backgroundColor='linear-gradient(150deg, #F279C5, #FD9B41)'
+            backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
           >
             Share safe video link
           </UrsorButton>

@@ -1,5 +1,3 @@
-'use client';
-
 import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
 import CheckIcon from '@/images/icons/CheckIcon.svg';
 import { Stack, alpha } from '@mui/system';

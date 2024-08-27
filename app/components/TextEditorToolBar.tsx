@@ -1,9 +1,7 @@
-"use client";
-
 /* from https://medium.com/@mircea.calugaru/react-quill-editor-with-full-toolbar-options-and-custom-buttons-undo-redo-176d79f8d375 */
 
-import React, { useEffect } from "react";
-import "./TextEditorToolBar.css";
+import React, { useEffect } from 'react';
+import './TextEditorToolBar.css';
 
 // // Undo and redo functions for Custom Toolbar
 // function undoChange() {
@@ -18,16 +16,16 @@ export const getModules = (id: string) => ({
   clipboard: { matchVisual: false }, // needed to prevent space being inserted above lists
   toolbar: {
     container: `#${id}`,
-    size: ["small", "medium", "large"],
+    size: ['small', 'medium', 'large'],
     color: [
-      "#7B61FF",
-      "#00ff00",
-      "#0000ff",
-      "#ffff00",
-      "#ff00ff",
-      "#00ffff",
-      "#000000",
-      "#ffffff",
+      '#7B61FF',
+      '#00ff00',
+      '#0000ff',
+      '#ffff00',
+      '#ff00ff',
+      '#00ffff',
+      '#000000',
+      '#ffffff',
     ],
     // handlers: {
     //   undo: undoChange,
@@ -44,32 +42,32 @@ export const getModules = (id: string) => ({
 
 // Formats objects for setting up the Quill editor
 export const formats = [
-  "header",
+  'header',
   //   "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "align",
-  "strike",
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'align',
+  'strike',
   // "script",
   //"blockquote",
-  "background",
-  "list",
-  "bullet",
+  'background',
+  'list',
+  'bullet',
   //   "indent",
-  "link",
+  'link',
   //   "image",
-  "color",
+  'color',
   // "code-block",
 ];
 
 const initQuill = async () => {
-  const Quill = (await import("react-quill")).Quill;
+  const Quill = (await import('react-quill')).Quill;
   if (Quill) {
     // Add sizes to whitelist and register them
-    const Size = Quill.import("formats/size");
-    Size.whitelist = ["small", "medium", "large"];
+    const Size = Quill.import('formats/size');
+    Size.whitelist = ['small', 'medium', 'large'];
     Quill.register(Size, true);
 
     // const Color = Quill.import("formats/color");
@@ -108,9 +106,9 @@ export const TextEditorToolbar = (props: { id: string }) => {
     <div
       id={props.id}
       style={{
-        background: "rgb(255,255,255)",
-        fontFamily: "unset",
-        borderRadius: "12px 12px 0 0",
+        background: 'rgb(255,255,255)',
+        fontFamily: 'unset',
+        borderRadius: '12px 12px 0 0',
       }}
     >
       <span className="ql-formats">

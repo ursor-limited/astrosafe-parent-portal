@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
 import { PALETTE, Typography } from '@/ui';

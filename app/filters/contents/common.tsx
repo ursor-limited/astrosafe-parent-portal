@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import AllFiltersPageDesktopBody from './body-desktop';
 import AllFiltersPageMobileBody from './body-mobile';

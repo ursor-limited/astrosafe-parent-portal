@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/system';
 import FilterPageAllowedSitesSection from '../components/AllowedSitesSection';

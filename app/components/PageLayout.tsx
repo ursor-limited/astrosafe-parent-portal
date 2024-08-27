@@ -1,5 +1,3 @@
-'use client';
-
 import React, { forwardRef } from 'react';
 import { Box, Stack } from '@mui/material';
 import ChevronLeft from '@/images/icons/ChevronLeft.svg';
@@ -74,10 +72,10 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
     return (
       <>
         <Stack
-          direction='row'
-          height='100vh'
-          width='100vw'
-          overflow='hidden'
+          direction="row"
+          height="100vh"
+          width="100vw"
+          overflow="hidden"
           sx={{
             background: PALETTE.secondary.grey[1],
           }}
@@ -85,10 +83,10 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
           {!props.noSidebar ? (
             <Stack
               minWidth={`calc(${SIDEBAR_WIDTH} + ${SIDEBAR_X_MARGIN}px)`}
-              alignItems='flex-end'
+              alignItems="flex-end"
               py={SIDEBAR_Y_MARGIN}
-              mr='5px'
-              justifyContent='center'
+              mr="5px"
+              justifyContent="center"
             >
               <Sidebar
                 selectedItemId={props.selectedSidebarItemId}
@@ -102,43 +100,43 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
               width: '100%',
             }}
             overflow={props.scrollable ? 'scroll' : 'hidden'}
-            spacing='20px'
+            spacing="20px"
             pr={`${SIDEBAR_X_MARGIN}px`}
             pt={PADDING_TOP}
             ref={ref}
             onScroll={props.onScroll}
           >
             {props.header ? (
-              <Stack pl='50px' pb='24px'>
+              <Stack pl="50px" pb="24px">
                 {props.header}
               </Stack>
             ) : null}
             <Stack
-              spacing='30px'
-              justifyContent='space-between'
+              spacing="30px"
+              justifyContent="space-between"
               pl={`${SIDEBAR_X_MARGIN}px`}
             >
               <Stack
-                direction='row'
-                width='100%'
-                justifyContent='space-between'
-                spacing='18px'
+                direction="row"
+                width="100%"
+                justifyContent="space-between"
+                spacing="18px"
               >
                 <Stack
-                  direction='row'
-                  spacing='30px'
-                  alignItems='flex-end'
+                  direction="row"
+                  spacing="30px"
+                  alignItems="flex-end"
                   //flex={1}
-                  width='100%'
+                  width="100%"
                 >
                   <Stack
                     flex={1}
-                    direction='row'
-                    justifyContent='space-between'
+                    direction="row"
+                    justifyContent="space-between"
                   >
-                    <Stack direction='row' spacing='15px' alignItems='center'>
+                    <Stack direction="row" spacing="15px" alignItems="center">
                       {props.titleBackButtonCallback ? (
-                        <Stack width='25px'>
+                        <Stack width="25px">
                           <Stack
                             sx={{
                               cursor: 'pointer',
@@ -146,41 +144,41 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                               transition: '0.2s',
                             }}
                             onClick={props.titleBackButtonCallback}
-                            justifyContent='center'
+                            justifyContent="center"
                           >
-                            <ChevronLeft height='32px' width='32px' />
+                            <ChevronLeft height="32px" width="32px" />
                           </Stack>
                         </Stack>
                       ) : null}
                       <Stack
-                        direction='row'
-                        spacing='12px'
-                        alignItems='center'
-                        overflow='hidden'
+                        direction="row"
+                        spacing="12px"
+                        alignItems="center"
+                        overflow="hidden"
                       >
                         {props.dotColor ? (
                           <Box
-                            height='23px'
-                            width='23px'
-                            minWidth='23px'
+                            height="23px"
+                            width="23px"
+                            minWidth="23px"
                             bgcolor={props.dotColor}
-                            borderRadius='100%'
+                            borderRadius="100%"
                           />
                         ) : null}
                         <UrsorFadeIn delay={200} duration={600}>
                           <Stack
-                            direction='row'
-                            spacing='20px'
-                            alignItems='flex-end'
-                            width='100%'
-                            overflow='hidden'
+                            direction="row"
+                            spacing="20px"
+                            alignItems="flex-end"
+                            width="100%"
+                            overflow="hidden"
                           >
-                            <Stack overflow='hidden' spacing='5px'>
+                            <Stack overflow="hidden" spacing="5px">
                               {props.titleRow ? (
                                 <TitleRow items={props.titleRow} />
                               ) : (
                                 <Typography
-                                  variant='h3'
+                                  variant="h3"
                                   color={
                                     props.dark
                                       ? PALETTE.font.light
@@ -193,7 +191,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                               )}
                               {props.description ? (
                                 <Typography
-                                  variant='small'
+                                  variant="small"
                                   color={PALETTE.secondary.grey[4]}
                                 >
                                   {props.description}
@@ -208,8 +206,8 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                                   // overflow: "hidden",
                                 }}
                                 //overflow="hidden"
-                                position='relative'
-                                overflow='visible'
+                                position="relative"
+                                overflow="visible"
                               >
                                 {props.titleRowLefthandElement}
                               </Stack>
@@ -232,10 +230,10 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                         duration={1100}
                       >
                         <Stack
-                          direction='row'
-                          spacing='16px'
-                          position='relative'
-                          alignItems='center'
+                          direction="row"
+                          spacing="16px"
+                          position="relative"
+                          alignItems="center"
                         >
                           {props.buttonRowExtraElement}
                           {props.secondaryButton ? (
@@ -243,7 +241,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                               <UrsorButton
                                 onClick={props.secondaryButton.callback}
                                 endIcon={props.secondaryButton.icon}
-                                variant='secondary'
+                                variant="secondary"
                                 disabled={props.button?.disabled}
                               >
                                 {props.secondaryButton.text}
@@ -256,7 +254,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                                 onClick={props.button.callback}
                                 endIcon={props.button.icon}
                                 dark
-                                variant='tertiary'
+                                variant="tertiary"
                                 disabled={props.button?.disabled}
                               >
                                 {props.button.text}
@@ -268,8 +266,8 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                             <UrsorActionButton
                               actions={props.actions}
                               large
-                              iconSize='18px'
-                              background='transparent'
+                              iconSize="18px"
+                              background="transparent"
                               border
                             />
                           ) : null}
@@ -286,7 +284,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
               //   justifyContent: "center",
               // }}
               width={props.bodyWidth ?? '100%'}
-              height='100%' // cannot scroll without this
+              height="100%" // cannot scroll without this
             >
               {props.children}
             </Stack>
@@ -297,22 +295,22 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
             <Stack
               top={0}
               left={0}
-              position='absolute'
-              width='100%'
-              height='100%'
-              justifyContent='center'
-              alignItems='center'
+              position="absolute"
+              width="100%"
+              height="100%"
+              justifyContent="center"
+              alignItems="center"
               sx={{
                 backdropFilter: 'blur(5px)',
               }}
-              bgcolor='rgba(0,0,0,0.5)'
+              bgcolor="rgba(0,0,0,0.5)"
               zIndex={9999}
-              spacing='3px'
+              spacing="3px"
             >
-              <Typography bold color='rgba(255,255,255,0.93)'>
+              <Typography bold color="rgba(255,255,255,0.93)">
                 This screen is too narrow to have a proper Astro experience.
               </Typography>
-              <Typography bold color='rgba(255,255,255,0.93)'>
+              <Typography bold color="rgba(255,255,255,0.93)">
                 Please switch to a wider screen.
               </Typography>
             </Stack>

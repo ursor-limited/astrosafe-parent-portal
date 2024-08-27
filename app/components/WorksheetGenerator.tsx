@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack, alpha } from '@mui/system';
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from '@/ui';
 import { Captioned } from '../tools/multiplication-chart/[urlId]/LandingPageContents';

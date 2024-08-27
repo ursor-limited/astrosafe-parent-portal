@@ -6,9 +6,6 @@ import { getSelectorsByUserAgent } from 'react-device-detect';
 import FolderPageMobileBody from './contents/body-mobile';
 
 async function Page({ params }: { params: { id: string } }) {
-  const isMobile = getSelectorsByUserAgent(
-    headers().get('user-agent') ?? ''
-  )?.isMobile;
   return <FolderPage folderId={parseInt(params.id)} isMobile={isMobile} />;
 }
 

@@ -1,11 +1,9 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { Box, Stack, keyframes } from "@mui/system";
-import { Backdrop } from "@mui/material";
-import { createPortal } from "react-dom";
-import { usePopper } from "react-popper";
-import { useWindowSize } from "usehooks-ts";
+import React, { useEffect, useState } from 'react';
+import { Box, Stack, keyframes } from '@mui/system';
+import { Backdrop } from '@mui/material';
+import { createPortal } from 'react-dom';
+import { usePopper } from 'react-popper';
+import { useWindowSize } from 'usehooks-ts';
 
 export const fadeIn = keyframes`
 from {
@@ -25,13 +23,13 @@ to {
 }
 `;
 
-export const DEFAULT_CORNER_RADIUS = "12px";
-export const PADDING = "16px";
+export const DEFAULT_CORNER_RADIUS = '12px';
+export const PADDING = '16px';
 
 /* We unfortunately have two methods of raising the reference element above the backdrop. 
    Disadvantage of raising the z-index: does not work when it is inside a dialog, which has its own z stack.
    Disadvantage of duplicating: in some cases it can get misaligned from the original. */
-type ButtonFloat = "zIndex" | "duplicate";
+type ButtonFloat = 'zIndex' | 'duplicate';
 
 export interface IUrsorPopoverProps {
   open: boolean;
@@ -41,7 +39,7 @@ export interface IUrsorPopoverProps {
   closeCallback: () => void;
   maxHeight?: string;
   yOffset?: number; // px
-  placement?: "right" | "left";
+  placement?: 'right' | 'left';
   cornerRadius?: string;
   floatButton?: ButtonFloat; // whether to keep the button above the backdrop
   noFloatButton?: boolean;
@@ -75,12 +73,12 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   const [popperElement, setPopperElement] = React.useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement:
-      props.placement === "left" || props.buttonWidth
-        ? `${props.top ? "top" : "bottom"}-start`
-        : props.placement === "right"
-        ? `${props.top ? "top" : "bottom"}-end`
-        : `${props.top ? "top" : "bottom"}`,
-    modifiers: [{ name: "flip", enabled: props.flip }],
+      props.placement === 'left' || props.buttonWidth
+        ? `${props.top ? 'top' : 'bottom'}-start`
+        : props.placement === 'right'
+        ? `${props.top ? 'top' : 'bottom'}-end`
+        : `${props.top ? 'top' : 'bottom'}`,
+    modifiers: [{ name: 'flip', enabled: props.flip }],
   });
 
   const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
@@ -89,7 +87,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   useEffect(
     () =>
       setIsFlipped(
-        !!attributes.popper?.["data-popper-placement"].includes("top")
+        !!attributes.popper?.['data-popper-placement'].includes('top')
       ),
     [attributes.popper]
   );
@@ -134,8 +132,8 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
         // }
         sx={{
           pointerEvents: props.disabled //|| (props.open && !props.noFloatButton)
-            ? "none"
-            : "auto",
+            ? 'none'
+            : 'auto',
           //opacity: props.open && !props.noFloatButton ? 0 : 1,
           zIndex: 2,
         }}
@@ -151,7 +149,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
               {!props.noBackdrop ? (
                 <Backdrop
                   sx={{
-                    background: "transparent",
+                    background: 'transparent',
                     //backdropFilter: "blur(3px)",
                     zIndex: props.zIndex || 2,
                   }}
@@ -168,7 +166,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
               >
                 <Stack
                   //spacing={props.margin ?? "10px"}
-                  pt={props.margin ?? "8px"}
+                  pt={props.margin ?? '8px'}
                   // sx={{
                   //   // transform: `translateY(${
                   //   //   (isFlipped ? -1 : 1) * (props.margin ?? 0)
@@ -177,17 +175,17 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   // }}
                   justifyContent="center"
                   alignItems={
-                    props.placement === "right"
-                      ? "flex-end"
-                      : props.placement === "left"
-                      ? "flex-start"
-                      : "center"
+                    props.placement === 'right'
+                      ? 'flex-end'
+                      : props.placement === 'left'
+                      ? 'flex-start'
+                      : 'center'
                   }
                   ref={setButtonRef}
                   sx={{
                     opacity: 0,
                     animation: `${fadeIn} 0.2s ease-out`,
-                    animationFillMode: "forwards",
+                    animationFillMode: 'forwards',
                   }}
                 >
                   {/* {!isFlipped ? (
@@ -225,12 +223,12 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
                       p={props.noCard || props.noPadding ? undefined : PADDING}
                       sx={{
-                        background: props.noCard ? undefined : "white",
-                        pointerEvents: props.open ? "auto" : "none",
+                        background: props.noCard ? undefined : 'white',
+                        pointerEvents: props.open ? 'auto' : 'none',
                         opacity: props.open && !props.fadedOut ? 1 : 0,
-                        transition: "0.3s",
+                        transition: '0.3s',
                         animation: props.animation,
-                        boxShadow: "0 0 90px rgba(0,0,0,0.15)",
+                        boxShadow: '0 0 90px rgba(0,0,0,0.15)',
                       }}
                       height="100%"
                       maxHeight={

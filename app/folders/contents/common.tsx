@@ -1,5 +1,3 @@
-'use client';
-
 import { useNavigate } from 'react-router-dom';
 import ApiController from '../../api';
 import { useCallback, useEffect, useState } from 'react';

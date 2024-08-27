@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { Stack, keyframes } from '@mui/system';
 import { useElementSize, useLocalStorage } from 'usehooks-ts';

@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from '@/ui';
 import PeopleIcon from '@/images/icons/PeopleIcon.svg';

@@ -1,5 +1,3 @@
-'use client';
-
 import UrsorDialog from './UrsorDialog';
 import PersonIcon from '@/images/icons/PersonIcon.svg';
 import Image from 'next/image';

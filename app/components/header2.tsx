@@ -1,5 +1,3 @@
-'use client';
-
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { PALETTE, Typography, UrsorButton } from '@/ui';

@@ -11,9 +11,6 @@ async function Page({
   params: { id: string };
   searchParams: { tab: AstroAccountTab };
 }) {
-  const isMobile = getSelectorsByUserAgent(
-    headers().get('user-agent') ?? ''
-  )?.isMobile;
   return (
     <ProfilePage
       deviceId={parseInt(params.id)}

@@ -1,9 +1,7 @@
-"use client";
-
-import React from "react";
-import { useLottie } from "lottie-react";
-import byteLoading from "../../lotties/byteLoading.json";
-import { Box } from "@mui/material";
+import React from 'react';
+import { useLottie } from 'lottie-react';
+import byteLoading from '../../lotties/byteLoading.json';
+import { Box } from '@mui/material';
 
 export default function UrsorLoading(props: { size?: string }) {
   const options = {
@@ -12,11 +10,11 @@ export default function UrsorLoading(props: { size?: string }) {
     autoplay: true,
   };
 
-  const { View } = useLottie(options, { height: props.size ?? "80px" });
+  const { View } = useLottie(options, { height: props.size ?? '80px' });
 
   return (
     <Box
-      height={props.size ?? "80px"}
+      height={props.size ?? '80px'}
       display="flex"
       justifyContent="center"
       alignItems="center"

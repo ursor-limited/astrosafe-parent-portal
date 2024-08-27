@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
