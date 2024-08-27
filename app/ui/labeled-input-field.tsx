@@ -1,6 +1,6 @@
-import { Stack } from "@mui/system";
-import { PALETTE } from "./palette";
-import { Typography } from "./typography";
+import { Stack } from "@mui/system';
+import { PALETTE } from "./palette';
+import { Typography } from "./typography';
 
 export function LabeledInputField(props: {
   label?: string;

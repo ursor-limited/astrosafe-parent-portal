@@ -1,31 +1,31 @@
-import { Stack } from "@mui/system";
-import ContentCreationDialog from "./ContentCreationDialog";
-import { useContext, useEffect, useState } from "react";
-import ChannelCard from "./ChannelCard";
-import NotificationContext from "@/app/components/NotificationContext";
-import ApiController, { getAbsoluteUrl } from "@/app/api";
-import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";
-import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
-import { PALETTE, Typography } from "@/ui";
-import { IEnrichedContentBucket } from "../../contents/common";
-import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { Stack } from '@mui/system';
+import ContentCreationDialog from './ContentCreationDialog';
+import { useContext, useEffect, useState } from 'react';
+import ChannelCard from './ChannelCard';
+import NotificationContext from '@/app/components/NotificationContext';
+import ApiController, { getAbsoluteUrl } from '@/app/api';
+import CheckboxIcon from '@/images/icons/CheckboxIcon.svg';
+import EmptyCheckboxIcon from '@/images/icons/EmptyCheckboxIcon.svg';
+import { PALETTE, Typography } from '@/ui';
+import { IEnrichedContentBucket } from '../../contents/common';
+import { IChannel } from '@/app/profiles/[id]/components/ContentTab';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
+import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
 
 const ChannelCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  folderId: IEnrichedContentBucket["id"];
+  folderId: IEnrichedContentBucket['id'];
   creationCallback: () => void;
   updateDetails?: {
     channel: IChannel;
     callback?: () => void;
   };
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [url, setUrl] = useState<string>("");
-  const [profileUrl, setProfileUrl] = useState<string>("");
-  const [bannerUrl, setBannerUrl] = useState<string>("");
+  const [title, setTitle] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+  const [profileUrl, setProfileUrl] = useState<string>('');
+  const [bannerUrl, setBannerUrl] = useState<string>('');
   useEffect(() => {
     props.updateDetails && setTitle(props.updateDetails?.channel.title);
     props.updateDetails && setUrl(props.updateDetails?.channel.url);
@@ -55,7 +55,7 @@ const ChannelCreationDialog = (props: {
       profileUrl
     )
       .then(props.updateDetails?.callback)
-      .then(() => notificationCtx.success("Updated Channel"));
+      .then(() => notificationCtx.success('Updated Channel'));
 
   const [checked, setChecked] = useState<boolean>(false);
 
@@ -83,7 +83,7 @@ const ChannelCreationDialog = (props: {
         props.onClose();
       }}
       info={INFOS.addChannel}
-      type="channel"
+      type='channel'
       setTitle={(t) => {
         setTitle(t);
         setManuallyChangedTitle(true);
@@ -96,13 +96,13 @@ const ChannelCreationDialog = (props: {
       editing={!!props.updateDetails}
       extraBottomElement={
         !props.updateDetails ? (
-          <Stack direction="row" spacing="8px">
+          <Stack direction='row' spacing='8px'>
             <Stack
-              pt="3px"
+              pt='3px'
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.7 },
+                transition: '0.2s',
                 svg: {
                   path: {
                     fill: PALETTE.secondary.purple[2],
@@ -112,14 +112,14 @@ const ChannelCreationDialog = (props: {
               onClick={() => setChecked(!checked)}
             >
               {checked ? (
-                <CheckboxIcon width="20px" height="20px" />
+                <CheckboxIcon width='20px' height='20px' />
               ) : (
-                <EmptyCheckboxIcon width="20px" height="20px" />
+                <EmptyCheckboxIcon width='20px' height='20px' />
               )}
             </Stack>
-            <Typography variant="small" bold>
+            <Typography variant='small' bold>
               {
-                "I'm aware that I'm adding all Videos from this Channel to the Folder."
+                'I'm aware that I'm adding all Videos from this Channel to the Folder.'
               }
             </Typography>
           </Stack>
@@ -128,7 +128,7 @@ const ChannelCreationDialog = (props: {
     >
       <Stack
         sx={{
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       >
         <ChannelCard

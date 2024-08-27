@@ -156,7 +156,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
       }}
     >
       <Stack
-        position='relative'
+        position="relative"
         p={
           props.noPadding
             ? undefined
@@ -167,13 +167,13 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         px={props.paddingX}
         py={props.paddingY}
         pt={props.paddingTop || `calc(${PADDING} - 4px)`}
-        borderRadius='25px'
+        borderRadius="25px"
         overflow={props.scrollable ? 'scroll' : 'hidden'}
         flex={1}
       >
         {props.backButtonCallback ? (
           <Box
-            position='absolute'
+            position="absolute"
             top={props.isMobile ? PADDING_MOBILE : PADDING}
             left={props.isMobile ? PADDING_MOBILE : PADDING}
             onClick={props.backButtonCallback}
@@ -184,14 +184,14 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               zIndex: Z_INDEX,
             }}
           >
-            <ChevronLeft height='27px' />
+            <ChevronLeft height="27px" />
           </Box>
         ) : null}
         {_.isNumber(props.step) && props.nSteps ? (
           <Stack
-            width='100%'
-            alignItems='center'
-            position='relative'
+            width="100%"
+            alignItems="center"
+            position="relative"
             marginBottom={STEPPER_TITLE_SEPARATION}
             sx={{
               transform: 'translateY(1px)',
@@ -202,7 +202,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         ) : null}
         {props.onCloseCallback && !props.noCloseButton ? (
           <Box
-            position='absolute'
+            position="absolute"
             top={props.isMobile ? '29px' : '34px'}
             right={props.isMobile ? '20px' : '34px'}
             onClick={props.onCloseCallback}
@@ -222,22 +222,22 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             props.isMobile ? '24px' : props.bunchedUpContent ? '12px' : '25px'
           }
           justifyContent={props.bunchedUpContent ? undefined : 'space-between'}
-          alignItems='center'
+          alignItems="center"
           sx={_.isNumber(props.step) ? animation : null}
-          overflow='hidden'
+          overflow="hidden"
         >
           {props.subtitle || props.title || props.supertitle ? (
             <Stack
               spacing={props.isMobile ? '0px' : '12px'}
-              width='100%'
-              alignItems='center'
-              textAlign='center'
-              boxSizing='border-box'
+              width="100%"
+              alignItems="center"
+              textAlign="center"
+              boxSizing="border-box"
             >
               {props.supertitle ? (
-                <Stack direction='row' width='100%'>
+                <Stack direction="row" width="100%">
                   {props.supertitle ? (
-                    <Stack width='100%' alignItems='center'>
+                    <Stack width="100%" alignItems="center">
                       <Typography
                         variant={props.title ? 'medium' : 'large'}
                         bold
@@ -248,34 +248,34 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     </Stack>
                   ) : null}
                   {/* <Stack
-                    width="100%"
-                    position="relative"
-                    sx={{ transform: "translateX(-24px)" }}
+                    width='100%'
+                    position='relative'
+                    sx={{ transform: 'translateX(-24px)' }}
                   >
                     <Stack
-                      position="absolute"
+                      position='absolute'
                       right={
                         props.xButtonRight || (props.isMobile ? undefined : 0)
                       }
                       top={
                         props.xButtonTop ||
-                        (props.isMobile ? undefined : "17px")
+                        (props.isMobile ? undefined : '17px')
                       }
                     >
                       {props.onCloseCallback ? (
                         <Box
-                          position="absolute"
-                          // top={props.noPadding ? "10px" : PADDING}
-                          // right={props.noPadding ? "10px" : PADDING}
+                          position='absolute'
+                          // top={props.noPadding ? '10px' : PADDING}
+                          // right={props.noPadding ? '10px' : PADDING}
                           onClick={props.onCloseCallback}
                           sx={{
-                            cursor: "pointer",
-                            "&:hover": { opacity: 0.6 },
-                            transition: "0.2s",
+                            cursor: 'pointer',
+                            '&:hover': { opacity: 0.6 },
+                            transition: '0.2s',
                             zIndex: Z_INDEX,
                           }}
                         >
-                          <X height={props.isMobile ? "26px" : "27px"} />
+                          <X height={props.isMobile ? '26px' : '27px'} />
                         </Box>
                       ) : null}
                     </Stack>
@@ -283,7 +283,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                 </Stack>
               ) : null}
               {props.title ? (
-                <Stack maxWidth={props.titleMaxWidth} spacing='3px'>
+                <Stack maxWidth={props.titleMaxWidth} spacing="3px">
                   <Typography
                     variant={props.isMobile ? 'h5' : props.titleSize || 'h4'}
                     bold
@@ -293,8 +293,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     {props.title}
                   </Typography>
                   {/* {!props.isMobile && props.info ? (
-                    <Stack position="relative" width={0} overflow="visible">
-                      <Stack position="absolute" left={0} bottom={0}>
+                    <Stack position='relative' width={0} overflow='visible'>
+                      <Stack position='absolute' left={0} bottom={0}>
                         <InfoButton {...props.info} />
                       </Stack>
                     </Stack>
@@ -304,7 +304,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               ) : null}
               {/* {props.info ? <InfoButton {...props.info} /> : null} */}
               {props.subtitle ? (
-                <Stack alignItems='center' pt='6px'>
+                <Stack alignItems="center" pt="6px">
                   {windowWidth < 750 ? (
                     <Typography
                       variant={props.isMobile ? 'normal' : 'medium'}
@@ -316,7 +316,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     props.subtitle.map((sentence, index) => (
                       <Typography
                         key={index}
-                        variant='medium'
+                        variant="medium"
                         sx={{ textAlign: 'center' }}
                       >
                         {sentence}
@@ -329,18 +329,18 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           ) : null}
           <Stack
             flex={1}
-            width='100%'
+            width="100%"
             minHeight={0}
             maxHeight={props.bunchedUpContent ? 0 : undefined}
-            alignItems='center'
-            justifyContent='start'
+            alignItems="center"
+            justifyContent="start"
             overflow={props.noOverflowHidden ? undefined : 'hidden'}
           >
             {props.children}
           </Stack>
 
           {props.button || props.secondaryButton ? (
-            <Stack spacing='8px' width='300px' maxWidth='100%'>
+            <Stack spacing="8px" width="300px" maxWidth="100%">
               {!!props.button ? (
                 React.isValidElement(props.button) ? (
                   props.button
@@ -361,7 +361,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                       'primary'
                     }
                     endIcon={PrimaryButtonEndIcon}
-                    width='100%'
+                    width="100%"
                   >
                     {(props.button as IDialogButtonDetails).text}
                   </UrsorButton>
@@ -371,13 +371,13 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               props.secondaryButton ||
               props.googleButton ||
               !props.noCloseButton ? (
-                <Stack spacing='12px' width='100%' alignItems='center'>
+                <Stack spacing="12px" width="100%" alignItems="center">
                   {/* {!!props.googleButton ? (
                   React.isValidElement(props.googleButton) ? (
                     props.googleButton
                   ) : (
                     <UrsorButton
-                      variant="google"
+                      variant='google'
                       disabled={
                         (props.googleButton as IDialogButtonDetails).disabled ||
                         bodyFadeout
@@ -415,7 +415,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                             .variant ?? 'secondary'
                         }
                         endIcon={SecondaryButtonEndIcon}
-                        width='100%'
+                        width="100%"
                       >
                         {(props.secondaryButton as IDialogButtonDetails).text}
                       </UrsorButton>

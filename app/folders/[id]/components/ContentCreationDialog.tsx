@@ -9,12 +9,12 @@ import {
 } from '@/ui';
 import _ from 'lodash';
 import { isMobile } from 'react-device-detect';
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 import { CONTENT_DISPLAY_NAMES } from './ContentCard';
 import { LabeledInputField } from '@/ui/labeled-input-field';
 import { AstroContent } from '@/app/profiles/[id]/components/ContentTab';
-import { IFilterUrl } from '@/app/filters/contents/common';
-import { IInfoButtonProps } from '@/app/components/InfoButton';
+import { IFilterUrl } from '@/filters/contents/common';
+import { IInfoButtonProps } from '@/components/InfoButton';
 
 export interface IContentCreationDialogProps {
   open: boolean;
@@ -45,53 +45,53 @@ export default function ContentCreationDialog(
       }`}
       info={props.info}
       dynamicHeight
-      maxWidth='780px'
+      maxWidth="780px"
       isMobile={isMobile}
     >
       <Stack
-        boxSizing='border-box'
+        boxSizing="border-box"
         flex={1}
-        width='100%'
-        alignItems='center'
-        spacing='24px'
+        width="100%"
+        alignItems="center"
+        spacing="24px"
       >
         <Stack
           direction={isMobile ? 'column' : 'row'}
-          width='100%'
-          height='100%'
-          spacing='32px'
-          justifyContent='space-between'
+          width="100%"
+          height="100%"
+          spacing="32px"
+          justifyContent="space-between"
         >
-          <Stack flex={1} spacing='20px' overflow='hidden'>
-            <LabeledInputField label='URL'>
+          <Stack flex={1} spacing="20px" overflow="hidden">
+            <LabeledInputField label="URL">
               <UrsorInputField
                 value={props.url}
-                placeholder='Set a URL'
+                placeholder="Set a URL"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   props.setUrl(event.target.value);
                 }}
                 leftAlign
-                width='100%'
+                width="100%"
                 onBlur={props.onUrlFieldBlur}
               />
             </LabeledInputField>
-            <LabeledInputField label='Title'>
+            <LabeledInputField label="Title">
               <UrsorInputField
                 value={props.title}
-                placeholder='Set a title'
+                placeholder="Set a title"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   props.setTitle(event.target.value);
                 }}
                 leftAlign
-                width='100%'
+                width="100%"
               />
             </LabeledInputField>
             {props.extraBottomElement ? (
               <Stack>
-                <Stack height='20px'>
+                <Stack height="20px">
                   <Stack
-                    height='2px'
-                    width='100%'
+                    height="2px"
+                    width="100%"
                     bgcolor={PALETTE.secondary.grey[2]}
                   />
                 </Stack>
@@ -100,14 +100,14 @@ export default function ContentCreationDialog(
             ) : null}
           </Stack>
           {!isMobile ? (
-            <Stack width='1px' bgcolor={PALETTE.secondary.grey[2]} />
+            <Stack width="1px" bgcolor={PALETTE.secondary.grey[2]} />
           ) : null}
           <Stack width={isMobile ? '100%' : '299px'}>{props.children}</Stack>
         </Stack>
         <UrsorButton
           width={isMobile ? '100%' : '358px'}
           dark
-          variant='tertiary'
+          variant="tertiary"
           onClick={props.onSubmit}
           disabled={props.buttonDisabled || !props.title || !props.url}
         >

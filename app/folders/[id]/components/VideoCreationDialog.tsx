@@ -1,20 +1,20 @@
-import { Stack } from "@mui/system";
-import VideoCard from "./VideoCard";
-import { useContext, useEffect, useState } from "react";
-import ApiController, { getAbsoluteUrl } from "@/app/api";
-import NotificationContext from "@/app/components/NotificationContext";
-import ContentCreationDialog from "./ContentCreationDialog";
+import { Stack } from '@mui/system';
+import VideoCard from './VideoCard';
+import { useContext, useEffect, useState } from 'react';
+import ApiController, { getAbsoluteUrl } from '@/app/api';
+import NotificationContext from '@/app/components/NotificationContext';
+import ContentCreationDialog from './ContentCreationDialog';
 import {
   IContentBucket,
   IVideo,
-} from "@/app/profiles/[id]/components/ContentTab";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+} from '@/app/profiles/[id]/components/ContentTab';
+import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const VideoCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  folderId: IContentBucket["id"];
+  folderId: IContentBucket['id'];
   creationCallback: () => void;
   updateDetails?: {
     video: IVideo;
@@ -22,9 +22,9 @@ const VideoCreationDialog = (props: {
   };
   belongsToChannel?: boolean;
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [url, setUrl] = useState<string>("");
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
+  const [title, setTitle] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
   useEffect(() => {
     props.updateDetails && setTitle(props.updateDetails?.video.title);
     props.updateDetails && setUrl(props.updateDetails?.video.url);
@@ -67,7 +67,7 @@ const VideoCreationDialog = (props: {
       //thumbnailUrl
     )
       .then(props.updateDetails?.callback)
-      .then(() => notificationCtx.success("Updated Video"));
+      .then(() => notificationCtx.success('Updated Video'));
 
   return (
     <ContentCreationDialog
@@ -93,7 +93,7 @@ const VideoCreationDialog = (props: {
     >
       <Stack
         sx={{
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       >
         <VideoCard

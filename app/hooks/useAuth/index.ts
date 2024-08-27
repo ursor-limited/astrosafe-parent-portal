@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { UserInfo } from '@/app/auth/model';
-import { BACKEND_URL } from '@/app/api';
+import { BACKEND_URL } from '@/api';
 import { useNavigate } from 'react-router-dom';
 import { getUserInfo } from '@/app/auth';
 

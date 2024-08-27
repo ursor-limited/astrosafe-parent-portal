@@ -1,29 +1,29 @@
-import { Stack } from "@mui/system";
-import ContentCreationDialog from "./ContentCreationDialog";
-import { useContext, useEffect, useState } from "react";
-import LinkCard from "./LinkCard";
-import ApiController, { getAbsoluteUrl } from "@/app/api";
-import NotificationContext from "@/app/components/NotificationContext";
+import { Stack } from '@mui/system';
+import ContentCreationDialog from './ContentCreationDialog';
+import { useContext, useEffect, useState } from 'react';
+import LinkCard from './LinkCard';
+import ApiController, { getAbsoluteUrl } from '@/app/api';
+import NotificationContext from '@/app/components/NotificationContext';
 import {
   IContentBucket,
   ILink,
-} from "@/app/profiles/[id]/components/ContentTab";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+} from '@/app/profiles/[id]/components/ContentTab';
+import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const LinkCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  folderId: IContentBucket["id"];
+  folderId: IContentBucket['id'];
   creationCallback: () => void;
   updateDetails?: {
     link: ILink;
     callback?: () => void;
   };
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [url, setUrl] = useState<string>("");
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
+  const [title, setTitle] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
   useEffect(() => {
     props.updateDetails && setTitle(props.updateDetails?.link.title);
     props.updateDetails && setUrl(props.updateDetails?.link.url);
@@ -64,7 +64,7 @@ const LinkCreationDialog = (props: {
       thumbnailUrl
     )
       .then(props.updateDetails?.callback)
-      .then(() => notificationCtx.success("Updated Link"));
+      .then(() => notificationCtx.success('Updated Link'));
 
   return (
     <ContentCreationDialog
@@ -88,7 +88,7 @@ const LinkCreationDialog = (props: {
     >
       <Stack
         sx={{
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       >
         <LinkCard

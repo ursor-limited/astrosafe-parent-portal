@@ -1,12 +1,12 @@
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { IEnrichedContentBucket } from './common';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
+import MobilePageLayout from '@/components/MobilePageLayout';
 import { UrsorButton } from '@/ui';
-import FolderCard from '@/app/components/FolderCard';
-import EmptyStateIllustration from '@/app/components/EmptyStateIllustration';
+import FolderCard from '@/components/FolderCard';
+import EmptyStateIllustration from '@/components/EmptyStateIllustration';
 import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const AllFoldersPageMobileBody = (props: {

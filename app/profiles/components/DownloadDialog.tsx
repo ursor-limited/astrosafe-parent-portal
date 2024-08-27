@@ -1,4 +1,4 @@
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 import DownloadIcon from '@/images/icons/DownloadIcon.svg';
 import { Stack } from '@mui/system';
 
@@ -29,33 +29,33 @@ const PLATFORMS: { name: string; logoUrl: string; url: string }[] = [
 
 const DownloadCard = (props: { imageUrl: string; name: string }) => (
   <Stack
-    width="200px"
-    height="207px"
+    width='200px'
+    height='207px'
     bgcolor={PALETTE.secondary.grey[1]}
-    borderRadius="12px"
-    p="12px"
-    boxSizing="border-box"
-    justifyContent="space-between"
-    alignItems="center"
+    borderRadius='12px'
+    p='12px'
+    boxSizing='border-box'
+    justifyContent='space-between'
+    alignItems='center'
   >
     <Stack
-      borderRadius="8px"
-      bgcolor="rgb(255,255,255)"
-      width="100%"
-      alignItems="center"
+      borderRadius='8px'
+      bgcolor='rgb(255,255,255)'
+      width='100%'
+      alignItems='center'
     >
-      <img src={props.imageUrl} height={83} width={83} alt="platform logo" />
+      <img src={props.imageUrl} height={83} width={83} alt='platform logo' />
     </Stack>
-    <Typography bold variant="medium">
+    <Typography bold variant='medium'>
       {props.name}
     </Typography>
     <UrsorButton
-      size="small"
+      size='small'
       endIcon={DownloadIcon}
       iconSize={16}
       dark
-      variant="tertiary"
-      width="123px"
+      variant='tertiary'
+      width='123px'
     >
       Download
     </UrsorButton>
@@ -70,20 +70,20 @@ const DownloadDialog = (props: {
   <UrsorDialog
     open={props.open}
     onCloseCallback={props.onClose}
-    title="Download Browser App"
+    title='Download Browser App'
     subtitle={[
       'Download the version of AstroSafe that matches',
-      "your kid's Device.",
+      'your kid's Device.',
     ]}
-    width="926px"
-    height="510px"
+    width='926px'
+    height='510px'
     isMobile={props.isMobile}
     scrollable
   >
     <Stack
       spacing={props.isMobile ? '12px' : '20px'}
       direction={props.isMobile ? 'column' : 'row'}
-      alignItems="center"
+      alignItems='center'
       flex={1}
     >
       {PLATFORMS.map((p) => (

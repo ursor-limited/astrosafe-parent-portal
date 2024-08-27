@@ -145,12 +145,12 @@ const ProfileButton = (props: { light?: boolean }) => {
 
             {/* {userCtx.schoolIsSubscribed ? (
               <Link
-                target="_blank"
-                href={process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""}
+                target='_blank'
+                href={process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ''}
                 style={{
-                  textDecoration: "none",
+                  textDecoration: 'none',
                 }}
-                rel="noreferrer"
+                rel='noreferrer'
               >
                 <ProfilePopupButton
                   callback={() =>
@@ -159,13 +159,13 @@ const ProfileButton = (props: { light?: boolean }) => {
                           !userCtx.schoolIsSubscribed
                             ? null
                             : userCtx.user.subscriptionDeletionDate
-                            ? "renewed"
-                            : "cancelled"
+                            ? 'renewed'
+                            : 'cancelled'
                         )
                       : null
                   }
                   icon={CreditCardIcon}
-                  text="Manage plan"
+                  text='Manage plan'
                 />
               </Link>
             ) : null} */}

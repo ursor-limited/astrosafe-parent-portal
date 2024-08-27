@@ -24,7 +24,7 @@ import useAuth from '@/app/hooks/useAuth';
 import ProfileButton from './ProfileButton';
 
 const UrsorPopover = dynamic(
-  () => import('@/app/components/UrsorPopover'),
+  () => import('@/components/UrsorPopover'),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -464,10 +464,10 @@ export const Header = (props: {
           {/* {props.showSigninButton ? (
           <UrsorButton
             dark
-            variant="tertiary"
+            variant='tertiary'
             onClick={() => {
               //props.mobile ? loginWithRedirect() : login();
-              mixpanel.track("clicked header sign up");
+              mixpanel.track('clicked header sign up');
             }}
             endIcon={PersonIcon}
           >
@@ -518,7 +518,7 @@ export const Header = (props: {
                   variant="tertiary"
                   onClick={() => {
                     login();
-                    //mixpanel.track("clicked header sign up");
+                    //mixpanel.track('clicked header sign up');
                   }}
                   endIcon={PersonIcon}
                   fontSize="16px"
@@ -530,7 +530,7 @@ export const Header = (props: {
               ) : null}
               {/* <UrsorButton
               dark
-              variant="tertiary"
+              variant='tertiary'
               onClick={login}
               endIcon={PersonIcon}
             >

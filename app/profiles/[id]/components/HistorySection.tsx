@@ -1,4 +1,4 @@
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 
@@ -6,15 +6,15 @@ import { PALETTE, Typography } from '@/ui';
 import ClockIcon from '@/images/icons/ClockIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
 import { useEffect, useState } from 'react';
-import DynamicContainer from '@/app/components/DynamicContainer';
+import DynamicContainer from '@/components/DynamicContainer';
 import Link from 'next/link';
 import _ from 'lodash';
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import ApiController, { getAbsoluteUrl } from '@/app/api';
+import { IDevice } from '@/filters/[id]/contents/common';
+import ApiController, { getAbsoluteUrl } from '@/api';
 import { cleanUrl } from './MobileInsightsTab';
-import PageSelector from '@/app/components/PageSelector';
-import { SearchInput } from '@/app/components/SearchInput';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import PageSelector from '@/components/PageSelector';
+import { SearchInput } from '@/components/SearchInput';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 
 export const PAGE_LENGTH = 55;
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment -- 'no time to fix' */
 /* eslint-disable no-multi-assign -- 'no time to fix' */
-import type { RefObject } from "react";
-import { useEffect, useRef, useState } from "react";
+import type { RefObject } from "react';
+import { useEffect, useRef, useState } from "react';
 
 /* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
 export function useResizeObserver(ref: RefObject<Element>): JSX.Element {

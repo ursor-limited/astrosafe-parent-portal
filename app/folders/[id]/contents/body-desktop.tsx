@@ -1,9 +1,9 @@
-import PageLayout from '@/app/components/PageLayout';
+import PageLayout from '@/components/PageLayout';
 import { Stack } from '@mui/system';
 import DevicesSection from '../components/DevicesSection';
 import { PALETTE, Typography } from '@/ui';
-import { SearchInput } from '@/app/components/SearchInput';
-import SortButton from '@/app/components/SortButton';
+import { SearchInput } from '@/components/SearchInput';
+import SortButton from '@/components/SortButton';
 import { AddContentButton } from '../components/AddContentButton';
 import { CONTENT_BRANDING, IContentCard } from './common';
 
@@ -12,11 +12,11 @@ import VideoCard from '../components/VideoCard';
 import LinkCard from '../components/LinkCard';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
-import useColumnWidth from '@/app/components/useColumnWidth';
+import useColumnWidth from '@/components/useColumnWidth';
 import { useNavigate } from 'react-router-dom';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
-import { ITitleRowItem } from '@/app/components/TitleRow';
-import { IDevice } from '@/app/filters/[id]/contents/common';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
+import { ITitleRowItem } from '@/components/TitleRow';
+import { IDevice } from '@/filters/[id]/contents/common';
 import {
   AstroContent,
   IChannel,
@@ -25,7 +25,7 @@ import {
   IVideo,
 } from '@/app/profiles/[id]/components/ContentTab';
 import { useWindowSize } from 'usehooks-ts';
-import { IActionPopupItem } from '@/app/components/ActionPopup';
+import { IActionPopupItem } from '@/components/ActionPopup';
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 

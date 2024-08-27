@@ -7,7 +7,7 @@ import { Typography } from '@/ui';
 import dynamic from 'next/dynamic';
 
 const UrsorPopover = dynamic(
-  () => import('@/app/components/UrsorPopover'),
+  () => import('@/components/UrsorPopover'),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -45,16 +45,16 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
     undefined
   );
   const list = (
-    <Stack width={props.width} px='20px' pt='10px' pb='5px'>
+    <Stack width={props.width} px="20px" pt="10px" pb="5px">
       {props.listButtons?.map((lb, i) => (
         <Stack
-          key='button'
+          key="button"
           onClick={() => {
             lb.callback();
             setOpen(false);
           }}
           height={i > 0 ? '43px' : '38px'}
-          alignItems='center'
+          alignItems="center"
           onMouseEnter={() => setHoveringRowId('button')}
           onMouseLeave={() => setHoveringRowId('button')}
           sx={{
@@ -67,15 +67,15 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
               },
             },
           }}
-          direction='row'
-          spacing='8px'
+          direction="row"
+          spacing="8px"
           borderBottom={
             props.items.length > 0
               ? `2px solid ${PALETTE.secondary.grey[1]}`
               : undefined
           }
           pb={i === 0 ? '6px' : 0}
-          //pt={i > 0 ? "10px" : 0}
+          //pt={i > 0 ? '10px' : 0}
         >
           <Typography
             bold
@@ -84,7 +84,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
           >
             {lb.title}
           </Typography>
-          <lb.icon height='14px' width='14px' />
+          <lb.icon height="14px" width="14px" />
         </Stack>
       ))}
       {props.items.map((item) => (
@@ -94,8 +94,8 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
             props.callback(item.id);
             !props.keepOpenOnSelect && setOpen(false);
           }}
-          height='38px'
-          justifyContent='center'
+          height="38px"
+          justifyContent="center"
           onMouseEnter={() => setHoveringRowId(item.id)}
           onMouseLeave={() => setHoveringRowId(item.id)}
           sx={{
@@ -131,15 +131,15 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
 
   return (
     <Stack
-      justifyContent='center'
-      alignItems='center'
+      justifyContent="center"
+      alignItems="center"
       sx={
         props.disabled
           ? {
               pointerEvents: 'none',
             }
           : {
-              //pointerEvents: props.disabled ? "none" : undefined,
+              //pointerEvents: props.disabled ? 'none' : undefined,
               transition: '0.2s',
               '&:hover': { opacity: 0.7 },
             }
@@ -161,21 +161,21 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
       >
         <Stack
           sx={{ cursor: 'pointer' }}
-          position='relative'
-          width='100%'
-          height='44px'
-          direction='row'
+          position="relative"
+          width="100%"
+          height="44px"
+          direction="row"
           bgcolor={props.white ? 'rgb(255,255,255)' : PALETTE.secondary.grey[1]}
-          borderRadius='8px'
-          pl='12px'
-          boxSizing='border-box'
-          alignItems='center'
+          borderRadius="8px"
+          pl="12px"
+          boxSizing="border-box"
+          alignItems="center"
           //onClick={() => setOpen(true)}
         >
           <Stack
-            height='100%'
-            width='100%'
-            justifyContent='center'
+            height="100%"
+            width="100%"
+            justifyContent="center"
             onClick={() => setOpen(true)}
           >
             <Typography
@@ -191,10 +191,10 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
           </Stack>
 
           <Stack
-            height='100%'
-            width='35px'
-            justifyContent='center'
-            pr='6px'
+            height="100%"
+            width="35px"
+            justifyContent="center"
+            pr="6px"
             sx={{
               '&:hover': { opacity: 0.5 },
               transition: '0.2s',

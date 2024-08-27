@@ -1,24 +1,24 @@
-import NotificationContext from "@/app/components/NotificationContext";
-import UrsorDialog from "@/app/components/UrsorDialog";
-import { Stack } from "@mui/system";
-import { useContext, useState } from "react";
-import { PALETTE, UrsorButton, UrsorInputField } from "@/ui";
-import { LabeledInputField } from "@/ui/labeled-input-field";
-import _ from "lodash";
-import { AstroContent } from "../profiles/[id]/components/ContentTab";
+import NotificationContext from '@/app/components/NotificationContext';
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { Stack } from '@mui/system';
+import { useContext, useState } from 'react';
+import { PALETTE, UrsorButton, UrsorInputField } from '@/ui';
+import { LabeledInputField } from '@/ui/labeled-input-field';
+import _ from 'lodash';
+import { AstroContent } from '../profiles/[id]/components/ContentTab';
 
-const INPUT_PHRASE = "delete";
+const INPUT_PHRASE = 'delete';
 
 const DeletionDialog = (props: {
   open: boolean;
-  type: AstroContent | "Folder" | "Filter";
+  type: AstroContent | 'Folder' | 'Filter';
   onClose: () => void;
   onSubmit: () => void;
   noConfirmation?: boolean;
   subtitle: string;
   isMobile?: boolean;
 }) => {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
   const notificationCtx = useContext(NotificationContext);
   return (
     <UrsorDialog
@@ -39,7 +39,7 @@ const DeletionDialog = (props: {
       >
         {!props.noConfirmation ? (
           <LabeledInputField
-            label={`Type "${INPUT_PHRASE}" to delete this ${_.capitalize(
+            label={`Type '${INPUT_PHRASE}' to delete this ${_.capitalize(
               props.type
             )}`}
           >

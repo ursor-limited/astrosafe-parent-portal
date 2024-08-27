@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { UrsorButton, UrsorInputField } from '@/ui';
 import { LabeledInputField } from '@/ui/labeled-input-field';
 import { IChannel } from '@/app/profiles/[id]/components/ContentTab';
-import UrsorDialog from '@/app/components/UrsorDialog';
+import UrsorDialog from '@/components/UrsorDialog';
 
 const ChannelRenameDialog = (props: {
   open: boolean;
@@ -19,27 +19,27 @@ const ChannelRenameDialog = (props: {
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title='Rename Channel'
-      width='422px'
-      height='226px'
+      title="Rename Channel"
+      width="422px"
+      height="226px"
       isMobile={props.isMobile}
     >
-      <Stack flex={1} width='100%' height='100%' justifyContent='space-between'>
-        <LabeledInputField label='Name'>
+      <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
+        <LabeledInputField label="Name">
           <UrsorInputField
             value={name}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setName(event.target.value)
             }
-            placeholder='Choose a new name'
-            width='100%'
+            placeholder="Choose a new name"
+            width="100%"
             leftAlign
           />
         </LabeledInputField>
         <UrsorButton
           dark
-          variant='tertiary'
-          width='100%'
+          variant="tertiary"
+          width="100%"
           onClick={() => {
             props.onSubmit(name);
             props.onClose();

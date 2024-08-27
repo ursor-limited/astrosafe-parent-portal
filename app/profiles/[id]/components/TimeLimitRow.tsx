@@ -1,14 +1,14 @@
-import { Stack } from "@mui/system";
-import TimeMinusIcon from "@/images/icons/TimeMinusIcon.svg";
-import TimePlusIcon from "@/images/icons/TimePlusIcon.svg";
-import { PALETTE, Typography } from "@/ui";
-import _ from "lodash";
-import { DAILY_LIMIT_INCREMENT, ITimeLimit } from "./LimitsTab";
-import { useEffect, useState } from "react";
+import { Stack } from '@mui/system';
+import TimeMinusIcon from '@/images/icons/TimeMinusIcon.svg';
+import TimePlusIcon from '@/images/icons/TimePlusIcon.svg';
+import { PALETTE, Typography } from '@/ui';
+import _ from 'lodash';
+import { DAILY_LIMIT_INCREMENT, ITimeLimit } from './LimitsTab';
+import { useEffect, useState } from 'react';
 
 const TimeLimitRow = (props: {
   dayName: string;
-  allowedMinutes: ITimeLimit["allowedMinutes"];
+  allowedMinutes: ITimeLimit['allowedMinutes'];
   decrement: () => void;
   increment: () => void;
 }) => {
@@ -28,11 +28,11 @@ const TimeLimitRow = (props: {
       <Stack direction="row" spacing="6px" alignItems="center">
         <Stack
           sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
+            cursor: 'pointer',
+            '&:hover': { opacity: 0.6 },
+            transition: '0.2s',
             opacity: decrementDisabled ? 0.3 : 1,
-            pointerEvents: decrementDisabled ? "none" : undefined,
+            pointerEvents: decrementDisabled ? 'none' : undefined,
           }}
           onClick={props.decrement}
         >
@@ -41,15 +41,15 @@ const TimeLimitRow = (props: {
         <Stack width="86px" alignItems="center">
           <Typography variant="large" bold>{`${Math.floor(
             Math.min((props.allowedMinutes ?? 0) / 60)
-          )}:${(props.allowedMinutes ?? 0) % 60 || "00"} hr`}</Typography>
+          )}:${(props.allowedMinutes ?? 0) % 60 || '00'} hr`}</Typography>
         </Stack>
         <Stack
           sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
+            cursor: 'pointer',
+            '&:hover': { opacity: 0.6 },
+            transition: '0.2s',
             opacity: incrementDisabled ? 0.3 : 1,
-            pointerEvents: incrementDisabled ? "none" : undefined,
+            pointerEvents: incrementDisabled ? 'none' : undefined,
           }}
           onClick={props.increment}
         >

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import AllFiltersPageDesktopBody from './body-desktop';
 import AllFiltersPageMobileBody from './body-mobile';
-import ApiController from '@/app/api';
+import ApiController from '@/api';
 import { useNavigate } from 'react-router-dom';
 import FilterCreationDialog from '../[id]/components/FilterCreationDialog';
 import { IDevice } from '../[id]/contents/common';

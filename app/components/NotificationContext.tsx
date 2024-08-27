@@ -1,5 +1,5 @@
-import React, { createContext } from "react";
-import { NotificationType } from "./NotificationProvider";
+import React, { createContext } from 'react';
+import { NotificationType } from './NotificationProvider';
 
 export interface INotificationProviderProps {
   children: React.ReactNode;

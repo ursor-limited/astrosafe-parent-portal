@@ -1,6 +1,6 @@
-import React from "react";
-import { useRef } from "react";
-import { useResizeObserver } from "./useResizeObserver";
+import React from 'react';
+import { useRef } from 'react';
+import { useResizeObserver } from './useResizeObserver';
 
 export interface IDynamicContainerProps {
   duration: number; // ms
@@ -18,18 +18,18 @@ export default function DynamicContainer(props: IDynamicContainerProps) {
       style={{
         transition: `${props.duration}ms`,
         height: `${rect?.height}px`,
-        width: props.fullWidth ? "100%" : `${rect?.width}px`,
-        maxWidth: props.fullWidth ? "100%" : `${rect?.width}px`,
-        overflowY: "hidden",
+        width: props.fullWidth ? '100%' : `${rect?.width}px`,
+        maxWidth: props.fullWidth ? '100%' : `${rect?.width}px`,
+        overflowY: 'hidden',
       }}
     >
       <div
         ref={content}
         style={{
-          width: props.fullWidth ? "100%" : "fit-content",
-          maxWidth: props.fullWidth ? "100%" : "fit-content",
-          height: "fit-content",
-          overflow: "visible",
+          width: props.fullWidth ? '100%' : 'fit-content',
+          maxWidth: props.fullWidth ? '100%' : 'fit-content',
+          height: 'fit-content',
+          overflow: 'visible',
         }}
       >
         {props.children}

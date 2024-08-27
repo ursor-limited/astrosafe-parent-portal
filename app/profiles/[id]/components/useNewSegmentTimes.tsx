@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { IAllowedTime } from "./LimitsTab";
-import dayjs from "dayjs";
-import _ from "lodash";
+import { useEffect, useState } from 'react';
+import { IAllowedTime } from './LimitsTab';
+import dayjs from 'dayjs';
+import _ from 'lodash';
 
 const MIN_ALLOWED_TIME_ADDITION_PERIOD = 0.75; // hour
 

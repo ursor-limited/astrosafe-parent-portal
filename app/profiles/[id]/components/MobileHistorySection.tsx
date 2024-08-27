@@ -1,4 +1,4 @@
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 
@@ -6,7 +6,7 @@ import { PALETTE, Typography } from '@/ui';
 import ClockIcon from '@/images/icons/ClockIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
 import { useEffect, useState } from 'react';
-import DynamicContainer from '@/app/components/DynamicContainer';
+import DynamicContainer from '@/components/DynamicContainer';
 import Link from 'next/link';
 import {
   IDomainGroup,
@@ -14,13 +14,13 @@ import {
   ISimplisticDomainGroup,
   PAGE_LENGTH,
 } from './HistorySection';
-import ApiController from '@/app/api';
-import { IDevice } from '@/app/filters/[id]/contents/common';
+import ApiController from '@/api';
+import { IDevice } from '@/filters/[id]/contents/common';
 import _ from 'lodash';
 import { cleanUrl } from './MobileInsightsTab';
-import PageSelector from '@/app/components/PageSelector';
-import { SearchInput } from '@/app/components/SearchInput';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import PageSelector from '@/components/PageSelector';
+import { SearchInput } from '@/components/SearchInput';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
@@ -32,14 +32,14 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
-      {/* <Stack spacing="4px">
-        <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+      {/* <Stack spacing='4px'>
+        <Typography variant='tiny' bold color={PALETTE.secondary.grey[4]}>
+          {dayjs(props.searchedAt).utc().format('hh:mm:HHa')}
         </Typography>
         <Stack
-          direction="row"
-          spacing="4px"
-          alignItems="center"
+          direction='row'
+          spacing='4px'
+          alignItems='center'
           sx={{
             svg: {
               path: {
@@ -48,8 +48,8 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
             },
           }}
         >
-          <ClockIcon height="12px" width="12px" />
-          <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
+          <ClockIcon height='12px' width='12px' />
+          <Typography variant='tiny' color={PALETTE.secondary.grey[4]} bold>
             {duration < 60
               ? `${duration}s`
               : `${Math.floor(duration / (60 * 60))}h ${Math.floor(

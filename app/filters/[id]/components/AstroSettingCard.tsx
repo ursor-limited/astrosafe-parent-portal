@@ -1,4 +1,4 @@
-import AstroSwitch from '@/app/components/AstroSwitch';
+import AstroSwitch from '@/components/AstroSwitch';
 import { Stack } from '@mui/system';
 
 import React from 'react';

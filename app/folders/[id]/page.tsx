@@ -1,6 +1,6 @@
 import React from 'react';
 import FolderPage from './contents/common';
-import { UserProvider } from '@/app/components/UserContext';
+import { UserProvider } from '@/components/UserContext';
 import { headers } from 'next/headers';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import FolderPageMobileBody from './contents/body-mobile';

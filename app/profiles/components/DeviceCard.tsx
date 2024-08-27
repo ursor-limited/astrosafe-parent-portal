@@ -9,16 +9,16 @@ import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
 import FilterIcon from '@/images/icons/FilterIcon.svg';
 import LinkExternalIcon from '@/images/icons/LinkExternalIcon.svg';
 import { DeviceType, IDevice } from '../../filters/[id]/contents/common';
-import AstroSwitch from '@/app/components/AstroSwitch';
+import AstroSwitch from '@/components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IFilter, IFilterUrl } from '@/app/filters/contents/common';
+import { IFilter, IFilterUrl } from '@/filters/contents/common';
 import Link from 'next/link';
-import ApiController, { getAbsoluteUrl } from '@/app/api';
+import ApiController, { getAbsoluteUrl } from '@/api';
 import { IEnrichedDevice } from '../contents/common';
 import { useElementSize } from 'usehooks-ts';
 import { cleanUrl } from '../[id]/components/MobileInsightsTab';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 import { getInitials } from '@/app/account/contents/common';
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
@@ -155,9 +155,9 @@ export const DeviceCardCurrentUrlSection = (props: {
     <DeviceCardSection title="Currently visiting">
       {/* <Link
       href={props.url ? getAbsoluteUrl(props.url) : undefined}
-      target="_blank"
+      target='_blank'
       style={{
-        textDecoration: "none",
+        textDecoration: 'none',
       }}
     > */}
       <Stack
@@ -415,22 +415,22 @@ const DeviceCard = (
             </Stack>
 
             {/* <Stack
-              minHeight="70px"
+              minHeight='70px'
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.6 },
+                transition: '0.2s',
               }}
-              alignItems="center"
-              justifyContent="center"
-              direction="row"
-              spacing="8px"
+              alignItems='center'
+              justifyContent='center'
+              direction='row'
+              spacing='8px'
               onClick={() => navigate(`/profiles/${props.id}`)}
             >
-              <Typography bold variant="small" color={PALETTE.primary.indigo}>
+              <Typography bold variant='small' color={PALETTE.primary.indigo}>
                 Go to Device
               </Typography>
-              <ChevronRightIcon height="16px" width="16px" />
+              <ChevronRightIcon height='16px' width='16px' />
             </Stack> */}
             <Stack pt="20px">
               <UrsorButton

@@ -1,4 +1,4 @@
-import PageLayout from '@/app/components/PageLayout';
+import PageLayout from '@/components/PageLayout';
 import { Stack } from '@mui/system';
 
 import { PALETTE, Typography, UrsorButton } from '@/ui';
@@ -16,10 +16,10 @@ import {
   UserInitialsCircle,
   VIBRANT_GRADIENT,
 } from './common';
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import UsersTable from '../components/UsersTable';
 import DevicesTable from '../components/DevicesTable';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
+import MobilePageLayout from '@/components/MobilePageLayout';
 import MobileAccountPageHeader from '../components/MobileAccountPageHeader';
 
 const AccountPageMobileBody = (props: {

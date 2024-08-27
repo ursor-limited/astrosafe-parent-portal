@@ -1,12 +1,12 @@
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
-import PageLayout from '@/app/components/PageLayout';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import DynamicCardGrid from '@/components/DynamicCardGrid';
+import PageLayout from '@/components/PageLayout';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { IEnrichedContentBucket } from './common';
-import FolderCard from '@/app/components/FolderCard';
-import EmptyStateIllustration from '@/app/components/EmptyStateIllustration';
+import FolderCard from '@/components/FolderCard';
+import EmptyStateIllustration from '@/components/EmptyStateIllustration';
 import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const AllFoldersPageDesktopBody = (props: {

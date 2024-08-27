@@ -1,13 +1,13 @@
-import ApiController from '@/app/api';
-import { SearchInput } from '@/app/components/SearchInput';
-import UrsorDialog from '@/app/components/UrsorDialog';
+import ApiController from '@/api';
+import { SearchInput } from '@/components/SearchInput';
+import UrsorDialog from '@/components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { IDevice } from '@/app/filters/[id]/contents/common';
+import { IDevice } from '@/filters/[id]/contents/common';
 import { IContentBucket } from './ContentTab';
-import { IGroup } from '@/app/folders/[id]/contents/common';
-import { IEnrichedContentBucket } from '@/app/folders/contents/common';
+import { IGroup } from '@/folders/[id]/contents/common';
+import { IEnrichedContentBucket } from '@/folders/contents/common';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 
 const AddFolderDialog = (props: {
@@ -95,8 +95,8 @@ const AddFolderDialog = (props: {
                 onClick={() => props.onAdd(d.id)}
               >
                 {/* <Stack
-                borderRadius="100%"
-                overflow="hidden"
+                borderRadius='100%'
+                overflow='hidden'
                 minWidth={23}
                 minHeight={23}
               >
@@ -104,7 +104,7 @@ const AddFolderDialog = (props: {
                   src={d.profileAvatarUrl}
                   height={23}
                   width={23}
-                  alt="avatar"
+                  alt='avatar'
                 />
               </Stack> */}
                 <Typography maxLines={1} bold>

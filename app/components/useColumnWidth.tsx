@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useWindowSize } from "usehooks-ts";
+import { useEffect, useState } from 'react';
+import { useWindowSize } from 'usehooks-ts';
 
 export const MIN_COLUMN_WIDTH = 245;
 export const MAX_COLUMN_WIDTH = 402;

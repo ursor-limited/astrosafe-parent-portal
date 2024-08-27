@@ -1,5 +1,5 @@
 import React from 'react';
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import DynamicCardGrid from '@/components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
 import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
@@ -8,11 +8,11 @@ import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import _ from 'lodash';
 import { IDevice } from '../contents/common';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import MobileDeviceCard from '@/app/profiles/components/MobileDeviceCard';
-import MobileAllDevicesDialog from '@/app/components/MobileAllDevicesDialog';
+import MobileAllDevicesDialog from '@/components/MobileAllDevicesDialog';
 import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const MobileFilterPageDevicesSection = (props: {

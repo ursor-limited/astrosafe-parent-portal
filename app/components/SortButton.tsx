@@ -7,7 +7,7 @@ import UrsorSelectList from './UrsorSelectList';
 import dynamic from 'next/dynamic';
 
 const UrsorPopover = dynamic(
-  () => import('@/app/components/UrsorPopover'),
+  () => import('@/components/UrsorPopover'),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -45,28 +45,28 @@ const SortButton = <T extends string>(
         />
       }
       closeCallback={() => setOpen(false)}
-      placement='right'
+      placement="right"
       disabled={props.disabled}
       buttonWidth
     >
       {props.iconOnly ? (
         <Stack
-          height='28px'
-          width='28px'
-          borderRadius='28px'
-          justifyContent='center'
-          alignItems='center'
+          height="28px"
+          width="28px"
+          borderRadius="28px"
+          justifyContent="center"
+          alignItems="center"
         >
-          <FilterIcon height='14px' width='14px' />
+          <FilterIcon height="14px" width="14px" />
         </Stack>
       ) : (
         <UrsorButton
-          size='small'
+          size="small"
           dark
           endIcon={FilterIcon}
           onClick={() => setOpen(true)}
           shadow
-          backgroundColor='rgb(255,255,255)'
+          backgroundColor="rgb(255,255,255)"
           fontColor={PALETTE.secondary.grey[5]}
           iconColor={PALETTE.secondary.grey[5]}
           iconSize={16}

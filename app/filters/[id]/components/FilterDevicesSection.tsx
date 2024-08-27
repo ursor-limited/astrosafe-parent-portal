@@ -1,4 +1,4 @@
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import DynamicCardGrid from '@/components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
 import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
@@ -7,10 +7,10 @@ import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import _ from 'lodash';
 import { IDevice } from '../contents/common';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import AllDevicesDialog from '@/app/components/AllDevicesDialog';
+import AllDevicesDialog from '@/components/AllDevicesDialog';
 import DeviceCard from '@/app/profiles/components/DeviceCard';
 import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 

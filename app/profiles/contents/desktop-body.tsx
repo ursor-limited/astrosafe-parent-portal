@@ -1,17 +1,17 @@
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
-import PageLayout from '@/app/components/PageLayout';
+import DynamicCardGrid from '@/components/DynamicCardGrid';
+import PageLayout from '@/components/PageLayout';
 import { Stack } from '@mui/system';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import PencilIcon from '@/images/icons/Pencil.svg';
 import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import UrsorActionButton from '@/app/components/UrsorActionButton';
+import { IDevice } from '@/filters/[id]/contents/common';
+import UrsorActionButton from '@/components/UrsorActionButton';
 import { useNavigate } from 'react-router-dom';
 import DeviceCard from '../components/DeviceCard';
 import QRCodeView from '../components/QRCodeView';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { IEnrichedDevice } from './common';
-import { IFilter } from '@/app/filters/contents/common';
+import { IFilter } from '@/filters/contents/common';
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IEnrichedDevice[];
@@ -35,7 +35,7 @@ const AllDevicesPageDesktopBody = (props: {
         icon: PlusIcon,
       }}
       //   secondaryButton={{
-      //     text: "Get Browser",
+      //     text: 'Get Browser',
       //     callback: props.setDownloadDialogOpen,
       //     icon: DownloadIcon,
       //   }}
@@ -69,7 +69,7 @@ const AllDevicesPageDesktopBody = (props: {
                           icon: PencilIcon,
                         },
                         // {
-                        //   text: "Disconnect",
+                        //   text: 'Disconnect',
                         //   kallback: () => props.setDisconnectDialogOpen(d.id),
                         //   icon: PlugIcon,
                         //   color: PALETTE.system.red,

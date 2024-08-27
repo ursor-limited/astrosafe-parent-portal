@@ -6,7 +6,7 @@ export type SecondaryColor =
   | "green"
   | "grey"
   | "red"
-  | "yellow";
+  | "yellow';
 
 export const PALETTE: {
   primary: {

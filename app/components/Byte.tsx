@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useLottie } from "lottie-react";
-import byteAppear from "@/lotties/byteAppear.json";
-import byteDisappear from "@/lotties/byteDisappear.json";
-import byteCelebration from "@/lotties/byteCelebration.json";
-import { Box } from "@mui/system";
+import React, { useEffect, useState } from 'react';
+import { useLottie } from 'lottie-react';
+import byteAppear from '@/lotties/byteAppear.json';
+import byteDisappear from '@/lotties/byteDisappear.json';
+import byteCelebration from '@/lotties/byteCelebration.json';
+import { Box } from '@mui/system';
 
 const HEIGHT = 45;
 
-export type ByteAnimation = "appear" | "disappear" | "celebration";
+export type ByteAnimation = 'appear' | 'disappear' | 'celebration';
 const JSONS: Record<ByteAnimation, any> = {
   appear: byteAppear,
   disappear: byteDisappear,
@@ -43,7 +43,7 @@ export default function Byte(props: IStepsByteControllerProps) {
       setTimeout(() => setAnimation(props.animation), props.delay ?? 0);
   }, [props.animation]);
 
-  const noTransitionFromNull: ByteAnimation[] = ["disappear"];
+  const noTransitionFromNull: ByteAnimation[] = ['disappear'];
 
   const callbacks: Record<ByteAnimation, () => void> = {
     appear: () => null,

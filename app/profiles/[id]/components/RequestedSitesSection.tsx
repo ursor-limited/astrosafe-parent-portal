@@ -1,11 +1,11 @@
-import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import { IRequestedSite } from './LimitsTab';
-import ApiController from '@/app/api';
+import ApiController from '@/api';
 import { useContext } from 'react';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 
 const RequestedSiteRow = (
   props: IRequestedSite & {
@@ -42,7 +42,7 @@ const RequestedSiteRow = (
         sx={{ transform: 'translateY(-2px)' }}
         flex={1}
         // maxWidth={0}
-        // minWidth="100%"
+        // minWidth='100%'
       >
         <Typography bold maxLines={1}>
           {props.title}

@@ -6,7 +6,7 @@ import { PALETTE, Typography, UrsorInputField } from '@/ui';
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from '@/app/components/UrsorTable';
+} from '@/components/UrsorTable';
 
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';

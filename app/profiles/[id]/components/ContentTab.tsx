@@ -1,16 +1,16 @@
-import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import DynamicCardGrid from '@/components/DynamicCardGrid';
 import { Stack } from '@mui/system';
 import FolderCard from '../../../components/FolderCard';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 import { useNavigate } from 'react-router-dom';
-import { IEnrichedContentBucket } from '@/app/folders/contents/common';
+import { IEnrichedContentBucket } from '@/folders/contents/common';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import ApiController from '@/app/api';
+import { IDevice } from '@/filters/[id]/contents/common';
+import ApiController from '@/api';
 import { useContext, useState } from 'react';
-import NotificationContext from '@/app/components/NotificationContext';
-import FolderDeviceRemovalConfirmationDialog from '@/app/folders/[id]/components/FolderDeviceRemovalConfirmationDialog';
+import NotificationContext from '@/components/NotificationContext';
+import FolderDeviceRemovalConfirmationDialog from '@/folders/[id]/components/FolderDeviceRemovalConfirmationDialog';
 
 import ProfilePageTabLayout, { INFOS } from './ProfilePageTabLayout';
 
@@ -97,7 +97,7 @@ const DevicePageContentTab = (props: {
                   deletionCallback={props.onUpdate}
                   // extraActions={[
                   //   {
-                  //     text: "Remove Device",
+                  //     text: 'Remove Device',
                   //     kallback: () =>
                   //       setFolderDeviceRemovalConfirmationDialogId(f.id),
                   //     icon: PhoneIcon,

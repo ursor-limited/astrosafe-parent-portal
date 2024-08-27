@@ -1,4 +1,4 @@
-import UrsorParticles from '@/app/components/UrsorParticles';
+import UrsorParticles from '@/components/UrsorParticles';
 import { Stack, alpha } from '@mui/system';
 
 import { useNavigate } from 'react-router-dom';

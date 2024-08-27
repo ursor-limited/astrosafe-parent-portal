@@ -184,21 +184,21 @@ export default function Sidebar(props: ISidebarProps) {
   const topItems: ISidebarItem[] = [
     {
       id: 'devices',
-      //tourId: "devices-button",
+      //tourId: 'devices-button',
       icon: PeopleIcon,
       title: 'Kids',
       callback: () => navigate('/profiles'),
     },
     {
       id: 'filters',
-      //tourId: "devices-button",
+      //tourId: 'devices-button',
       icon: FilterIcon,
       title: 'Filters',
       callback: () => navigate('/filters'),
     },
     {
       id: 'content',
-      //tourId: "devices-button",
+      //tourId: 'devices-button',
       icon: BookIcon,
       title: 'Content',
       callback: () => navigate('/folders'),

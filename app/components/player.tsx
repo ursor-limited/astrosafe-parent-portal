@@ -85,22 +85,22 @@ const Player = (props: {
     if (status !== 'PLAYING') {
       setPlaying(false);
       setYoutubePauseOverlay(true);
-      //status === "ENDED" && setEnded(true);
+      //status === 'ENDED' && setEnded(true);
     } else {
       setTimeout(() => setYoutubePauseOverlay(false), 500);
     }
   }
 
   // useEffect(
-  //   () => setYoutubePauseOverlay(provider === "youtube" && !playing),
+  //   () => setYoutubePauseOverlay(provider === 'youtube' && !playing),
   //   [playing, provider]
   // );
 
   const onYoutubeReady = () => {
     //@ts-ignore
     new window.YT.Player(props.playerId, {
-      // height: "390",
-      // width: "640",
+      // height: '390',
+      // width: '640',
       //videoId,
       events: {
         onReady: onPlayerReady,
@@ -144,10 +144,10 @@ const Player = (props: {
             }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join('&')}`
           : // `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
             //   // don't use nocookie, as it forces the youtube logo in there
-            //   props.startTime ? `start=${props.startTime}&` : ""
+            //   props.startTime ? `start=${props.startTime}&` : ''
             // }${
-            //   props.endTime ? `end=${props.endTime}&` : ""
-            // }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+            //   props.endTime ? `end=${props.endTime}&` : ''
+            // }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join('&')}`
             // props.startTime
             // ? `${props.url}#t=${props.startTime}`
             // :
@@ -421,7 +421,7 @@ const Player = (props: {
             pointerEvents: playing && !ended ? 'none' : undefined,
             backdropFilter:
               !props.noBackdrop && hasBegunPlaying ? 'blur(13px)' : undefined,
-            //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don't use blur when the playing has not yet been started
+            //player?.playerInfo?.playerState !== 5 ? 'blur(13px)' : undefined, // don't use blur when the playing has not yet been started
           }}
           justifyContent="center"
           alignItems="center"
@@ -456,7 +456,7 @@ const Player = (props: {
           right={0}
           //right={0}
           width={
-            url?.includes('vimeo') ? '62px' : '100%' //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
+            url?.includes('vimeo') ? '62px' : '100%' //overallHovering ? '100%' : 0 //overallHovering && props.playing && props.fullScreen ? '100%' : '80px'
           }
           borderRadius={
             url?.includes('vimeo')
@@ -465,13 +465,13 @@ const Player = (props: {
           }
           height={url?.includes('vimeo') ? '130px' : '60px'}
           sx={{
-            //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
+            //transform: `translateY(${overallHovering ? 0 : '-60px'})`,
             opacity: overlayHovering && playing ? 1 : 0,
             transition: !overlayHovering || !playing ? '0.2s' : 0,
             transitionDelay: !overlayHovering || !playing ? '0.3s' : 0,
-            //backdropFilter: "blur(30px)",
-            //transitionDelay: "500ms",
-            //transitionTimingFunction: "ease-out",
+            //backdropFilter: 'blur(30px)',
+            //transitionDelay: '500ms',
+            //transitionTimingFunction: 'ease-out',
             svg: {
               path: {
                 fill: 'rgba(255,255,255,0.75)', //PALETTE.font.light,

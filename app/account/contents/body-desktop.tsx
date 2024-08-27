@@ -1,12 +1,12 @@
-import PageLayout from "@/app/components/PageLayout";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import LogOutIcon from "@/images/icons/LogOutIcon.svg";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
+import PageLayout from '@/app/components/PageLayout';
+import { Stack } from '@mui/system';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
+import LogOutIcon from '@/images/icons/LogOutIcon.svg';
+import PhoneIcon from '@/images/icons/PhoneIcon.svg';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import PersonIcon from '@/images/icons/PersonIcon.svg';
 import {
   AstroPlanState,
   IUser,
@@ -14,12 +14,12 @@ import {
   PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
-} from "./common";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import UsersTable from "../components/UsersTable";
-import DevicesTable from "../components/DevicesTable";
-import AccountPageHeader from "../components/AccountPageHeader";
-import { useWindowSize } from "usehooks-ts";
+} from './common';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
+import UsersTable from '../components/UsersTable';
+import DevicesTable from '../components/DevicesTable';
+import AccountPageHeader from '../components/AccountPageHeader';
+import { useWindowSize } from 'usehooks-ts';
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1408;
 
@@ -41,7 +41,7 @@ const AccountPageDesktopBody = (props: {
       fullHeight
       selectedSidebarItemId="account"
       secondaryButton={{
-        text: "Log out",
+        text: 'Log out',
         callback: () => null,
         icon: LogOutIcon,
       }}
@@ -57,11 +57,11 @@ const AccountPageDesktopBody = (props: {
       <Stack pl="50px" spacing="12px" pb="31px">
         <Stack
           direction={
-            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? "column" : "row"
+            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? 'column' : 'row'
           }
           spacing="12px"
           height={
-            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? undefined : "248px"
+            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? undefined : '248px'
           }
         >
           <AstroBentoCard
@@ -80,7 +80,7 @@ const AccountPageDesktopBody = (props: {
             }
           >
             <Stack direction="row" spacing="20px" alignItems="center" flex={1}>
-              <UserInitialsCircle name={props.user.realName ?? ""} />
+              <UserInitialsCircle name={props.user.realName ?? ''} />
               <Stack direction="row" spacing="26px" minWidth="400px">
                 <Stack width="100%" spacing="12px" alignItems="center">
                   <Stack spacing="4px" width="100%">
@@ -155,7 +155,7 @@ const AccountPageDesktopBody = (props: {
                       sx={{
                         svg: {
                           path: {
-                            fill: "rgb(255,255,255)",
+                            fill: 'rgb(255,255,255)',
                           },
                         },
                       }}
@@ -167,7 +167,7 @@ const AccountPageDesktopBody = (props: {
                     </Stack>
                   ))}
                 </Stack>
-                {props.planState !== "troomi" ? (
+                {props.planState !== 'troomi' ? (
                   <Stack height="100%" justifyContent="flex-end">
                     <UrsorButton
                       dark
@@ -218,7 +218,7 @@ const AccountPageDesktopBody = (props: {
         </AstroBentoCard>
         <Stack
           direction={
-            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? "column" : "row"
+            width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? 'column' : 'row'
           }
           spacing="12px"
         >
@@ -228,14 +228,14 @@ const AccountPageDesktopBody = (props: {
                 target="_blank"
                 href="https://www.astrosafe.co/terms-and-conditions"
                 style={{
-                  textDecoration: "none",
+                  textDecoration: 'none',
                 }}
               >
                 <Stack
                   sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.6 },
+                    transition: '0.2s',
                   }}
                 >
                   <Typography color={PALETTE.secondary.blue[3]}>
@@ -247,14 +247,14 @@ const AccountPageDesktopBody = (props: {
                 target="_blank"
                 href="https://www.astrosafe.co/app/privacy-policy"
                 style={{
-                  textDecoration: "none",
+                  textDecoration: 'none',
                 }}
               >
                 <Stack
                   sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.6 },
+                    transition: '0.2s',
                   }}
                 >
                   <Typography color={PALETTE.secondary.blue[3]}>
@@ -271,7 +271,7 @@ const AccountPageDesktopBody = (props: {
               <UrsorButton
                 variant="secondary"
                 size="small"
-                onClick={() => window.open("mailto:hello@astrosafe.co")}
+                onClick={() => window.open('mailto:hello@astrosafe.co')}
               >
                 Send
               </UrsorButton>

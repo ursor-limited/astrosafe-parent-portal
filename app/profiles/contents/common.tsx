@@ -8,7 +8,7 @@ import { IDevice, IDeviceConfig } from '../../filters/[id]/contents/common';
 import AllDevicesPageDesktopBody from './desktop-body';
 import AllDevicesPageMobileBody from './mobile-body';
 import { IAllowedTime, ITimeLimit } from '../[id]/components/LimitsTab';
-import { IFilter } from '@/app/filters/contents/common';
+import { IFilter } from '@/filters/contents/common';
 import useDeviceOnlineStatus from '../components/useDeviceOnlineStatus';
 import useAuth from '@/app/hooks/useAuth';
 

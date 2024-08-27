@@ -1,19 +1,19 @@
-import { Stack } from "@mui/system";
-import { Typography } from "@/ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import _ from "lodash";
-import AstroTimeChart from "./AstroTimeChart";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import HistorySection from "./HistorySection";
-import CalendarButton from "@/app/components/CalendarButton";
-import ApiController from "@/app/api";
-import MostVisitedSitesSection from "./MostVisitedSitesSection";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import { useWindowSize } from "usehooks-ts";
+import { Stack } from '@mui/system';
+import { Typography } from '@/ui';
+import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import ChevronLeftIcon from '@/images/icons/ChevronLeft.svg';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
+import _ from 'lodash';
+import AstroTimeChart from './AstroTimeChart';
+import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat.js';
+import HistorySection from './HistorySection';
+import CalendarButton from '@/app/components/CalendarButton';
+import ApiController from '@/app/api';
+import MostVisitedSitesSection from './MostVisitedSitesSection';
+import { IDevice } from '@/filters/[id]/contents/common';
+import { useWindowSize } from 'usehooks-ts';
 dayjs.extend(advancedFormat);
 
 const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1260;
@@ -31,7 +31,7 @@ export interface IDayScreenTime {
   timeLimitReached: boolean;
 }
 
-const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
+const DevicePageInsightsTab = (props: { deviceId: IDevice['id'] }) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([]);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0); // days from today
   const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0);
@@ -40,8 +40,8 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
   useEffect(() => {
     ApiController.getStats(
       props.deviceId,
-      dayjs().utc().subtract(rangeStartDayIndex, "days").format("YYYY-MM-DD"),
-      dayjs().utc().subtract(rangeEndDayIndex, "days").format("YYYY-MM-DD")
+      dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'),
+      dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')
     ).then((stats) => {
       setTimes(stats.screenTime);
       setVisitedSites(
@@ -51,8 +51,8 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
               w.date ===
               dayjs()
                 .utc()
-                .subtract(selectedDayIndex, "days")
-                .format("YYYY-MM-DD")
+                .subtract(selectedDayIndex, 'days')
+                .format('YYYY-MM-DD')
           )?.websites || [],
           (t) => t.screenTime
         )
@@ -69,8 +69,8 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
             t.date ===
             dayjs()
               .utc()
-              .subtract(selectedDayIndex, "days")
-              .format("YYYY-MM-DD")
+              .subtract(selectedDayIndex, 'days')
+              .format('YYYY-MM-DD')
         )?.screenTime ?? 0
       ),
     [times, selectedDayIndex]
@@ -104,9 +104,9 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
         <Stack direction="row" spacing="10px" alignItems="center">
           <Stack
             sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
+              cursor: 'pointer',
+              transition: '0.2s',
+              '&:hover': { opacity: 0.6 },
             }}
             onClick={() => setSelectedDayIndex(selectedDayIndex + 1)}
           >
@@ -115,25 +115,25 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
           <Typography variant="h5">
             {`${
               selectedDayIndex === 0
-                ? "Today"
+                ? 'Today'
                 : selectedDayIndex === 1
-                ? "Yesterday"
+                ? 'Yesterday'
                 : `${dayjs()
                     .utc()
-                    .subtract(selectedDayIndex, "days")
-                    .format("dddd")}`
+                    .subtract(selectedDayIndex, 'days')
+                    .format('dddd')}`
             }, ${dayjs()
               .utc()
-              .subtract(selectedDayIndex, "days")
-              .format("Do MMMM")}`}
+              .subtract(selectedDayIndex, 'days')
+              .format('Do MMMM')}`}
           </Typography>
           <Stack
             sx={{
               opacity: selectedDayIndex === 0 ? 0.3 : 1,
-              pointerEvents: selectedDayIndex === 0 ? "none" : undefined,
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
+              pointerEvents: selectedDayIndex === 0 ? 'none' : undefined,
+              cursor: 'pointer',
+              transition: '0.2s',
+              '&:hover': { opacity: 0.6 },
             }}
             onClick={() => setSelectedDayIndex(selectedDayIndex - 1)}
           >
@@ -141,14 +141,14 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
           </Stack>
         </Stack>
         <CalendarButton
-          value={dayjs().utc().subtract(selectedDayIndex, "days").toDate()}
+          value={dayjs().utc().subtract(selectedDayIndex, 'days').toDate()}
           setValue={(date: Date) =>
-            setSelectedDayIndex(dayjs().diff(date, "days"))
+            setSelectedDayIndex(dayjs().diff(date, 'days'))
           }
         />
       </Stack>
-      <Stack spacing="28px" direction={switchToColumn ? "column" : "row"}>
-        <Stack width={switchToColumn ? "100%" : "54%"} height="290px">
+      <Stack spacing="28px" direction={switchToColumn ? 'column' : 'row'}>
+        <Stack width={switchToColumn ? '100%' : '54%'} height="290px">
           <AstroBentoCard
             title={`${Math.floor(timeSpent / 60)}h ${Math.floor(
               timeSpent % 60
@@ -169,10 +169,10 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
                   times={times}
                   selected={dayjs()
                     .utc()
-                    .subtract(selectedDayIndex, "days")
-                    .format("YYYY-MM-DD")}
+                    .subtract(selectedDayIndex, 'days')
+                    .format('YYYY-MM-DD')}
                   setSelectedDatetime={(datetime) =>
-                    setSelectedDayIndex(dayjs().utc().diff(datetime, "days"))
+                    setSelectedDayIndex(dayjs().utc().diff(datetime, 'days'))
                   }
                 />
               ) : null}
@@ -187,8 +187,8 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
         deviceId={props.deviceId}
         date={dayjs()
           .utc()
-          .subtract(selectedDayIndex, "days")
-          .format("YYYY-MM-DD")}
+          .subtract(selectedDayIndex, 'days')
+          .format('YYYY-MM-DD')}
       />
     </Stack>
   );

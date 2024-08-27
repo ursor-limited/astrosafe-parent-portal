@@ -5,7 +5,7 @@ import { Dialog } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { IVisitedSite } from './InsightsTab';
 import { Typography } from '@/ui';
-import { SearchInput } from '@/app/components/SearchInput';
+import { SearchInput } from '@/components/SearchInput';
 import { VisitedSiteRow } from './MostVisitedSitesSection';
 import XIcon from '@/images/icons/X.svg';
 import _ from 'lodash';
@@ -50,27 +50,27 @@ const AllMostVisitedSitesDialog = (props: {
         '.MuiBackdrop-root': BACKDROP_STYLE,
       }}
     >
-      <Stack spacing='32px'>
+      <Stack spacing="32px">
         <Stack
           direction={props.isMobile ? 'column' : 'row'}
-          justifyContent='space-between'
+          justifyContent="space-between"
           spacing={props.isMobile ? '6px' : undefined}
         >
-          <Stack direction='row' justifyContent='space-between'>
+          <Stack direction="row" justifyContent="space-between">
             <Typography bold variant={props.isMobile ? 'large' : 'h5'}>
               Most visited sites today
             </Typography>
             <Stack
-              width='40px'
-              alignItems='flex-end'
-              pt='3px'
+              width="40px"
+              alignItems="flex-end"
+              pt="3px"
               onClick={props.onClose}
             >
-              <XIcon height='22px' width='22px' />
+              <XIcon height="22px" width="22px" />
             </Stack>
           </Stack>
 
-          <Stack direction='row' spacing='0px' alignItems='center'>
+          <Stack direction="row" spacing="0px" alignItems="center">
             <SearchInput
               value={searchValue}
               callback={setSearchValue}
@@ -81,12 +81,12 @@ const AllMostVisitedSitesDialog = (props: {
             />
             {!props.isMobile ? (
               <Stack
-                width='40px'
-                alignItems='flex-end'
-                pt='3px'
+                width="40px"
+                alignItems="flex-end"
+                pt="3px"
                 onClick={props.onClose}
               >
-                <XIcon height='22px' width='22px' />
+                <XIcon height="22px" width="22px" />
               </Stack>
             ) : null}
           </Stack>

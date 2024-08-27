@@ -1,6 +1,6 @@
 export default function handler(req: any, res: any) {
-    if (process.env.VERCEL_ENV === "production") {
-        const robotsProd = `
+  if (process.env.VERCEL_ENV === 'production') {
+    const robotsProd = `
         # *
         User-agent: *
         Allow: /
@@ -11,10 +11,10 @@ export default function handler(req: any, res: any) {
         # Sitemaps
         Sitemap: https://astrosafe.co/sitemap.xml
         `;
-        res.send(robotsProd);
-        return
-    } else {
-        const robotsDev = `
+    res.send(robotsProd);
+    return;
+  } else {
+    const robotsDev = `
         # *
         User-agent: *
         Disallow: /
@@ -22,7 +22,7 @@ export default function handler(req: any, res: any) {
         # Host
         Host: https://dev.astrosafe.co
         `;
-        res.send(robotsDev);
-        return
-    }
+    res.send(robotsDev);
+    return;
+  }
 }

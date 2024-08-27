@@ -1,15 +1,15 @@
-// import { Stack } from "@mui/system";
-// import UrsorDialog from "./UrsorDialog";
-// import { useContext, useEffect, useState } from "react";
+// import { Stack } from '@mui/system';
+// import UrsorDialog from './UrsorDialog';
+// import { useContext, useEffect, useState } from 'react';
 // import { PALETTE, Typography, UrsorButton } from '@/ui';
-// import _, { uniqueId } from "lodash";
-// import { isMobile } from "react-device-detect";
-// import NotificationContext from "./NotificationContext";
-// import AstroText from "../dashboard_DESTINED_FOR_THE_FURNACE/AstroText";
-// import PencilIcon from "@/images/icons/Pencil.svg";
-// import TextEditorToolbar from "./TextEditorToolBar";
-// import ApiController from "../api";
-// import { useUserContext } from "./UserContext";
+// import _, { uniqueId } from 'lodash';
+// import { isMobile } from 'react-device-detect';
+// import NotificationContext from './NotificationContext';
+// import AstroText from '../dashboard_DESTINED_FOR_THE_FURNACE/AstroText';
+// import PencilIcon from '@/images/icons/Pencil.svg';
+// import TextEditorToolbar from './TextEditorToolBar';
+// import ApiController from '../api';
+// import { useUserContext } from './UserContext';
 
 // export interface IText {
 //   id: string;
@@ -27,7 +27,7 @@
 //   updateCallback?: () => void;
 //   mobile?: boolean;
 // }) => {
-//   const [value, setValue] = useState<string>("");
+//   const [value, setValue] = useState<string>('');
 //   useEffect(() => {
 //     props.text?.value && setValue(props.text.value);
 //   }, [props.text]);
@@ -36,7 +36,7 @@
 
 //   const userDetails = useUserContext().user;
 
-//   const [quillId, setQuillId] = useState<string>("");
+//   const [quillId, setQuillId] = useState<string>('');
 //   useEffect(() => setQuillId(`a${crypto.randomUUID()}`), []); // the queryselector id cannot start with a digit
 
 //   const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
@@ -49,8 +49,8 @@
 //         props.creationCallback?.(text);
 //         props.closeCallback();
 //       })
-//       .then(() => notificationCtx.success("Created Text"))
-//       .then(() => setValue(""));
+//       .then(() => notificationCtx.success('Created Text'))
+//       .then(() => setValue(''));
 //   };
 
 //   const getCreationDetails = () => ({
@@ -69,8 +69,8 @@
 //         props.updateCallback?.();
 //         props.closeCallback();
 //       })
-//       .then(() => notificationCtx.success("Updated Text"))
-//       .then(() => setValue(""));
+//       .then(() => notificationCtx.success('Updated Text'))
+//       .then(() => setValue(''));
 
 //   return (
 //     <>
@@ -79,35 +79,35 @@
 //           isMobile
 //             ? undefined
 //             : props.text
-//             ? "Edit Text"
-//             : "Add a Text to your Lesson"
+//             ? 'Edit Text'
+//             : 'Add a Text to your Lesson'
 //         }
 //         open={props.open}
 //         onCloseCallback={props.closeCallback}
-//         width="836px"
-//         maxWidth="836px"
+//         width='836px'
+//         maxWidth='836px'
 //         noPadding
-//         paddingTop={props.mobile ? undefined : "52px"}
-//         paddingX={isMobile ? undefined : "32px"}
+//         paddingTop={props.mobile ? undefined : '52px'}
+//         paddingX={isMobile ? undefined : '32px'}
 //         noCloseButton={props.mobile}
 //       >
 //         <Stack
 //           flex={1}
-//           width="100%"
-//           alignItems="center"
-//           pb="24px"
-//           spacing="20px"
-//           p={props.mobile ? "16px" : undefined}
-//           boxSizing="border-box"
+//           width='100%'
+//           alignItems='center'
+//           pb='24px'
+//           spacing='20px'
+//           p={props.mobile ? '16px' : undefined}
+//           boxSizing='border-box'
 //         >
 //           <Stack
-//             width="100%"
+//             width='100%'
 //             flex={1}
 //             sx={{
-//               ".ql-editor": {
-//                 ".ql-size-large": { fontSize: "20px" },
-//                 fontSize: "16px",
-//                 ".ql-size-small": { fontSize: "14px" },
+//               '.ql-editor': {
+//                 '.ql-size-large': { fontSize: '20px' },
+//                 fontSize: '16px',
+//                 '.ql-size-small': { fontSize: '14px' },
 //                 strong: { fontWeight: 500 },
 //               },
 //             }}
@@ -123,7 +123,7 @@
 //           </Stack>
 //           <UrsorButton
 //             dark
-//             variant="tertiary"
+//             variant='tertiary'
 //             endIcon={PencilIcon}
 //             disabled={!value}
 //             onClick={() =>
@@ -132,7 +132,7 @@
 //                 : !alreadySubmitting && submitCreation()
 //             }
 //           >
-//             {props.text?.id ? "Update" : "Add"}
+//             {props.text?.id ? 'Update' : 'Add'}
 //           </UrsorButton>
 //         </Stack>
 //       </UrsorDialog>

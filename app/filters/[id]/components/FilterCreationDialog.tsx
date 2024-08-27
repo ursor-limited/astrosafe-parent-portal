@@ -1,9 +1,9 @@
-import UrsorDialog from "@/app/components/UrsorDialog";
-import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
-import { UrsorButton, UrsorInputField } from "@/ui";
-import { LabeledInputField } from "@/ui/labeled-input-field";
-import { IFilter } from "../../contents/common";
+import UrsorDialog from "@/app/components/UrsorDialog';
+import { Stack } from "@mui/system';
+import { useEffect, useState } from "react';
+import { UrsorButton, UrsorInputField } from "@/ui';
+import { LabeledInputField } from "@/ui/labeled-input-field';
+import { IFilter } from "../../contents/common';
 
 const FilterCreationDialog = (props: {
   open: boolean;

@@ -1,7 +1,7 @@
 /* from https://blog.alexdevero.com/react-file-dropzone/ */
 
-import { Box, Stack } from "@mui/system";
-import React, { forwardRef } from "react";
+import { Box, Stack } from '@mui/system';
+import React, { forwardRef } from 'react';
 
 // Define interface for component props/api:
 export interface DropZoneProps {
@@ -103,18 +103,18 @@ export const DropZone = forwardRef(
     React.useEffect(() => {
       const tempZoneRef = dropZoneRef?.current;
       if (tempZoneRef) {
-        tempZoneRef.addEventListener("dragenter", handleDragIn);
-        tempZoneRef.addEventListener("dragleave", handleDragOut);
-        tempZoneRef.addEventListener("dragover", handleDrag);
-        tempZoneRef.addEventListener("drop", handleDrop);
+        tempZoneRef.addEventListener('dragenter', handleDragIn);
+        tempZoneRef.addEventListener('dragleave', handleDragOut);
+        tempZoneRef.addEventListener('dragover', handleDrag);
+        tempZoneRef.addEventListener('drop', handleDrop);
       }
 
       // Remove listeners from dropzone on unmount:
       return () => {
-        tempZoneRef?.removeEventListener("dragenter", handleDragIn);
-        tempZoneRef?.removeEventListener("dragleave", handleDragOut);
-        tempZoneRef?.removeEventListener("dragover", handleDrag);
-        tempZoneRef?.removeEventListener("drop", handleDrop);
+        tempZoneRef?.removeEventListener('dragenter', handleDragIn);
+        tempZoneRef?.removeEventListener('dragleave', handleDragOut);
+        tempZoneRef?.removeEventListener('dragover', handleDrag);
+        tempZoneRef?.removeEventListener('drop', handleDrop);
       };
     }, []);
 
@@ -126,8 +126,8 @@ export const DropZone = forwardRef(
         height="100%"
         position="relative"
         sx={{
-          "&:hover": { opacity: 0.5 },
-          transition: "0.2s",
+          '&:hover': { opacity: 0.5 },
+          transition: '0.2s',
         }}
         alignItems="center"
       >
@@ -135,11 +135,11 @@ export const DropZone = forwardRef(
           ref={ref}
           id="upload-button"
           style={{
-            cursor: "pointer",
+            cursor: 'pointer',
             opacity: 0,
-            position: "absolute",
-            width: "100%",
-            height: "100%",
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
           }}
           type="file"
           accept="image/*"
@@ -152,6 +152,6 @@ export const DropZone = forwardRef(
   }
 );
 
-DropZone.displayName = "DropZone";
+DropZone.displayName = 'DropZone';
 
 export default DropZone;

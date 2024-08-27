@@ -1,8 +1,8 @@
-import { Box, Stack } from "@mui/system";
-import React, { forwardRef, useEffect, useState } from "react";
-import Resizer from "react-image-file-resizer";
-import Dropzone from "./Dropzone";
-import ApiController from "../api";
+import { Box, Stack } from '@mui/system';
+import React, { forwardRef, useEffect, useState } from 'react';
+import Resizer from 'react-image-file-resizer';
+import Dropzone from './Dropzone';
+import ApiController from '../api';
 
 const MAX_FILE_SIZE = 3200000; // 3mb
 const COMPRESSION_FILE_SIZE_THRESHOLD = 50000;
@@ -28,15 +28,15 @@ export interface ILessonImageUploaderProps {
   children?: React.ReactNode;
 }
 
-const getDownloadUrl = (signedUrl: string) => signedUrl?.split("?")[0];
+const getDownloadUrl = (signedUrl: string) => signedUrl?.split('?')[0];
 
 const dataURItoFile = (dataURI: string) => {
   // convert base64 to raw binary data held in a string
   // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-  const byteString = atob(dataURI.split(",")[1]);
+  const byteString = atob(dataURI.split(',')[1]);
 
   // separate out the mime component
-  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+  const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
   // write the bytes of the string to an ArrayBuffer
   const ab = new ArrayBuffer(byteString.length);
@@ -44,7 +44,7 @@ const dataURItoFile = (dataURI: string) => {
   for (var i = 0; i < byteString.length; i++) {
     ia[i] = byteString.charCodeAt(i);
   }
-  return new File([ab], "image.png", { type: mimeString });
+  return new File([ab], 'image.png', { type: mimeString });
 };
 
 const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
@@ -56,11 +56,11 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
       file,
       IMAGE_MAX_WIDTH,
       IMAGE_MAX_HEIGHT,
-      "PNG",
+      'PNG',
       IMAGE_QUALITY,
       0,
       (uri) => setFile(dataURItoFile(uri.toString())),
-      "base64",
+      'base64',
       IMAGE_MIN_WIDTH,
       IMAGE_MIN_HEIGHT
     );
@@ -69,7 +69,7 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
   const setResizedFile = (file: File) => {
     if (
       file.size > COMPRESSION_FILE_SIZE_THRESHOLD &&
-      !["image/gif", "image/svg+xml"].includes(file.type)
+      !['image/gif', 'image/svg+xml'].includes(file.type)
     ) {
       // if it's bigger than 100kb
       resizeFile(file);
@@ -87,7 +87,7 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
   //   }
   //   props.previewUrlCallback(URL.createObjectURL(file));
   //   ApiController.getS3ImageUploadParams(
-  //     file!.name.split(".")[file!.name.split(".").length - 1],
+  //     file!.name.split('.')[file!.name.split('.').length - 1],
   //     file!.type
   //   ).then(({ signedUrl }) =>
   //     props.downloadUrlCallback(getDownloadUrl(signedUrl), () =>
@@ -100,10 +100,10 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
     <Stack
       flex={1}
       sx={{
-        cursor: "pointer",
+        cursor: 'pointer',
         opacity: isDragActive ? 0.5 : 1,
-        transition: "0.2s",
-        willChange: "opacity",
+        transition: '0.2s',
+        willChange: 'opacity',
       }}
     >
       <Dropzone
@@ -118,6 +118,6 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
   );
 });
 
-ImageUploader.displayName = "ImageUploader";
+ImageUploader.displayName = 'ImageUploader';
 
 export default ImageUploader;

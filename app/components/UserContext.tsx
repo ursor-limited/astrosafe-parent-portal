@@ -63,14 +63,14 @@ const UserProvider = (props: IUserProviderProps) => {
   //     props.checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
   //   );
   //   if (user?.email && !signedIn) {
-  //     notificationCtx.success("Signed in");
+  //     notificationCtx.success('Signed in');
   //     setSignedIn(true);
   //   }
   // }, [user?.email, isLoading, upgradedNotificationPending]);
 
   // useEffect(() => {
   //   user?.email &&
-  //     BrowserApiController.checkTeacherExists(user?.email, user.name ?? "");
+  //     BrowserApiController.checkTeacherExists(user?.email, user.name ?? '');
   // }, [user?.email]);
 
   // const loadUser = () => {
@@ -85,7 +85,7 @@ const UserProvider = (props: IUserProviderProps) => {
   //               .then(() =>
   //                 BrowserApiController.createTeacher(
   //                   user.email!,
-  //                   user.name ?? ""
+  //                   user.name ?? ''
   //                 )
   //               )
   //       )
@@ -112,7 +112,7 @@ const UserProvider = (props: IUserProviderProps) => {
 
   // useEffect(() => {
   //   if (signedIn && upgradedNotificationPending && user?.subscribed) {
-  //     notificationCtx.success("Upgraded");
+  //     notificationCtx.success('Upgraded');
   //     setUpgradedNotificationPending(false);
   //   }
   // }, [use?.subscribed]);
@@ -128,7 +128,7 @@ const UserProvider = (props: IUserProviderProps) => {
   //   safeTubeUser &&
   //     !safeTubeUser?.subscribed &&
   //     user?.email &&
-  //     BrowserApiController.getUserSchoolOwnerEmail(user?.email ?? "").then(
+  //     BrowserApiController.getUserSchoolOwnerEmail(user?.email ?? '').then(
   //       //@ts-ignore
   //       (response) =>
   //         ApiController.getUser(response?.ownerEmail).then(
@@ -142,7 +142,7 @@ const UserProvider = (props: IUserProviderProps) => {
   // >();
   // useEffect(() => {
   //   BrowserApiController.getUser(
-  //     teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
+  //     teachers.find((t) => t.id === school?.ownerId)?.email ?? ''
   //   ).then((user) => setSafetubeSchoolOwner(user));
   // }, [school?.ownerId, teachers]);
 
@@ -159,15 +159,15 @@ const UserProvider = (props: IUserProviderProps) => {
   //   if (!signedIn) return;
   //   if (
   //     safeTubeUser?.subscriptionDeletionDate &&
-  //     subscriptionStatusChangePossible === "cancelled"
+  //     subscriptionStatusChangePossible === 'cancelled'
   //   ) {
-  //     notificationCtx.success("Canceled subscription.");
+  //     notificationCtx.success('Canceled subscription.');
   //     setSubscriptionStatusChangePossible(null);
   //   } else if (
   //     !safeTubeUser?.subscriptionDeletionDate &&
-  //     subscriptionStatusChangePossible === "renewed"
+  //     subscriptionStatusChangePossible === 'renewed'
   //   ) {
-  //     notificationCtx.success("Renewed subscription.");
+  //     notificationCtx.success('Renewed subscription.');
   //     setSubscriptionStatusChangePossible(null);
   //   }
   // }, [

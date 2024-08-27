@@ -8,7 +8,7 @@ import Link from 'next/link';
 import _ from 'lodash';
 import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog';
 import { cleanUrl } from './MobileInsightsTab';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {

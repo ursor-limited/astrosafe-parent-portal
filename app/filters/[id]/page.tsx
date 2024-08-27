@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProvider } from '@/app/components/UserContext';
+import { UserProvider } from '@/components/UserContext';
 import { headers } from 'next/headers';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import FilterPage from './contents/common';

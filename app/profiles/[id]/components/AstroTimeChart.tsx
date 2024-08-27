@@ -35,26 +35,26 @@ const AstroTimeChart = (props: {
     <Stack
       flex={1}
       px={props.barsXPadding ? `${props.barsXPadding}px` : '24px'}
-      position='relative'
-      mr='56px !important'
+      position="relative"
+      mr="56px !important"
     >
-      <Stack top={0} left={0} width='100%' height='100%' position='absolute'>
-        <Stack flex={1} justifyContent='space-between' pb='28px'>
+      <Stack top={0} left={0} width="100%" height="100%" position="absolute">
+        <Stack flex={1} justifyContent="space-between" pb="28px">
           {_.reverse([...Array(nHorizontalLines + 1).keys()]).map((i) => (
             <Stack
               key={i}
-              height='2px'
-              width='100%'
+              height="2px"
+              width="100%"
               bgcolor={PALETTE.secondary.grey[2]}
-              position='relative'
+              position="relative"
               sx={{
                 opacity: nHorizontalLines > 9 && i % 2 ? 0 : 1,
               }}
             >
               <Stack
-                width='30px'
-                right='-42px'
-                position='absolute'
+                width="30px"
+                right="-42px"
+                position="absolute"
                 sx={{ transform: 'translateY(-50%)' }}
               >
                 <Typography bold color={PALETTE.secondary.grey[3]}>{`${
@@ -65,14 +65,14 @@ const AstroTimeChart = (props: {
           ))}
         </Stack>
       </Stack>
-      <Stack direction='row' flex={1} justifyContent='space-between' zIndex={2}>
+      <Stack direction="row" flex={1} justifyContent="space-between" zIndex={2}>
         {props.times.map((dayTime, i) => (
           <Stack
             key={dayTime.date}
-            alignItems='center'
-            width='60px'
-            justifyContent='flex-end'
-            spacing='6px'
+            alignItems="center"
+            width="60px"
+            justifyContent="flex-end"
+            spacing="6px"
             sx={
               props.selected !== dayTime.date
                 ? {
@@ -89,7 +89,7 @@ const AstroTimeChart = (props: {
                 (100 * dayTime.screenTime) / 60 / (yInterval * nHorizontalLines)
               }%`}
               width={props.barWidth ?? '32px'}
-              borderRadius='4px 4px 0 0'
+              borderRadius="4px 4px 0 0"
               bgcolor={
                 props.selected === dayTime.date
                   ? PALETTE.secondary.purple[2]
@@ -98,33 +98,33 @@ const AstroTimeChart = (props: {
               sx={{
                 transition: '0.2s',
               }}
-              position='relative'
+              position="relative"
             >
               {dayTime.timeLimitReached ? (
                 <Stack
-                  position='absolute'
+                  position="absolute"
                   left={0}
                   right={0}
-                  margin='0 auto'
+                  margin="0 auto"
                   width={0}
-                  overflow='visible'
-                  alignItems='center'
+                  overflow="visible"
+                  alignItems="center"
                 >
                   <Stack
-                    width='50px'
-                    justifyContent='center'
-                    position='absolute'
-                    top='-25px'
+                    width="50px"
+                    justifyContent="center"
+                    position="absolute"
+                    top="-25px"
                     sx={
                       {
                         // transform: `translateX(-${
-                        //   props.limitReachedXTranslation ?? "8.5"
+                        //   props.limitReachedXTranslation ?? '8.5'
                         // }px)`,
                       }
                     }
                   >
                     <Typography
-                      variant='tiny'
+                      variant="tiny"
                       bold
                       color={PALETTE.secondary.grey[3]}
                       sx={{
@@ -153,8 +153,8 @@ const AstroTimeChart = (props: {
                 )}
               </Typography>
               <Stack
-                width='100%'
-                height='2px'
+                width="100%"
+                height="2px"
                 bgcolor={
                   props.selected === dayTime.date
                     ? PALETTE.secondary.purple[2]

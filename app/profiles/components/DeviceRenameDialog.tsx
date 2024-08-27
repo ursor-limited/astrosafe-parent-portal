@@ -1,5 +1,5 @@
-import UrsorDialog from '@/app/components/UrsorDialog';
-import { IDevice } from '@/app/filters/[id]/contents/common';
+import UrsorDialog from '@/components/UrsorDialog';
+import { IDevice } from '@/filters/[id]/contents/common';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { UrsorButton, UrsorInputField } from '@/ui';
@@ -18,35 +18,35 @@ const DeviceRenameDialog = (props: {
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title='Rename Device'
+      title="Rename Device"
       subtitle={['Give this Device a new name', 'of your choice.']}
-      width='422px'
+      width="422px"
       height={props.isMobile ? undefined : '343px'}
       dynamicHeight={props.isMobile}
       isMobile={props.isMobile}
     >
       <Stack
         flex={1}
-        width='100%'
-        height='100%'
-        justifyContent='space-between'
+        width="100%"
+        height="100%"
+        justifyContent="space-between"
         spacing={props.isMobile ? '12px' : undefined}
       >
-        <LabeledInputField label='Name'>
+        <LabeledInputField label="Name">
           <UrsorInputField
             value={name}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setName(event.target.value)
             }
-            placeholder='Write a new name'
-            width='100%'
+            placeholder="Write a new name"
+            width="100%"
             leftAlign
           />
         </LabeledInputField>
         <UrsorButton
           dark
-          variant='tertiary'
-          width='100%'
+          variant="tertiary"
+          width="100%"
           onClick={() => props.onSubmit(name)}
         >
           Save

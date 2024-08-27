@@ -8,7 +8,7 @@ import DynamicCardGrid from '../../components/DynamicCardGrid';
 import { useNavigate } from 'react-router-dom';
 import FilterCard from '../[id]/components/FilterCard';
 import { IGroupFilter } from './common';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
+import MobilePageLayout from '@/components/MobilePageLayout';
 import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 export const GRID_SPACING = '20px';

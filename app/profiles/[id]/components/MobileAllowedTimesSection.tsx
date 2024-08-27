@@ -1,9 +1,9 @@
-import React from "react";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import { Stack } from "@mui/system";
-import _ from "lodash";
-import { IAllowedTime } from "./LimitsTab";
-import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
+import React from 'react';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
+import { Stack } from '@mui/system';
+import _ from 'lodash';
+import { IAllowedTime } from './LimitsTab';
+import MobileAllowedTimeRow from './MobileAllowedTimeRow';
 
 // const AllowedTimesSectionTimeSelector = () => {
 //   const [open, setOpen] = useState<boolean>(false);
@@ -14,9 +14,9 @@ import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
 //       closeCallback={() => setOpen(false)}
 //       placement=''
 //     >
-//       <Stack alignItems="center" direction="row" spacing="5px">
-//         <Typography bold>{dayjs(t.startTime).format("hh:mma")}</Typography>
-//         <PencilIcon height="16px" width="16px" />
+//       <Stack alignItems='center' direction='row' spacing='5px'>
+//         <Typography bold>{dayjs(t.startTime).format('hh:mma')}</Typography>
+//         <PencilIcon height='16px' width='16px' />
 //       </Stack>
 //     </UrsorPopover>
 //   );
@@ -25,13 +25,13 @@ import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
 const MobileAllowedTimesSection = (props: {
   allowedTimes: IAllowedTime[];
   setAllowedTime: (
-    id: IAllowedTime["id"],
-    startTime: IAllowedTime["startTime"],
-    endTime: IAllowedTime["endTime"]
+    id: IAllowedTime['id'],
+    startTime: IAllowedTime['startTime'],
+    endTime: IAllowedTime['endTime']
   ) => void;
-  deleteRange: (id: IAllowedTime["id"]) => void;
+  deleteRange: (id: IAllowedTime['id']) => void;
   addTimeLimit: (day: number, startTime: number, endTime: number) => void;
-  reset: (day: IAllowedTime["day"]) => void;
+  reset: (day: IAllowedTime['day']) => void;
   topRightElement?: React.ReactNode;
   smallerLabelFont?: boolean;
   disabled: boolean;
@@ -39,8 +39,8 @@ const MobileAllowedTimesSection = (props: {
   <AstroBentoCard
     title="Time scheduler"
     info={{
-      title: "Set when the Browser can be used",
-      text: "Select the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.",
+      title: 'Set when the Browser can be used',
+      text: 'Select the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.',
     }}
     notCollapsible
     isMobile
@@ -52,20 +52,20 @@ const MobileAllowedTimesSection = (props: {
         pb="12px"
         sx={{
           opacity: props.disabled ? 0.4 : 1,
-          pointerEvents: props.disabled ? "none" : undefined,
-          transition: "0.2s",
+          pointerEvents: props.disabled ? 'none' : undefined,
+          transition: '0.2s',
         }}
       >
-        {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
+        {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map((day, i) => (
           <MobileAllowedTimeRow
             key={day}
-            day={day === "sun" ? 0 : i + 1}
+            day={day === 'sun' ? 0 : i + 1}
             times={props.allowedTimes.filter((t) =>
-              day === "sun" ? t.day === 0 : t.day === i + 1
+              day === 'sun' ? t.day === 0 : t.day === i + 1
             )}
-            reset={() => props.reset(day === "sun" ? 0 : i + 1)}
+            reset={() => props.reset(day === 'sun' ? 0 : i + 1)}
             addRange={(startTime, endTime) =>
-              props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
+              props.addTimeLimit(day === 'sun' ? 0 : i + 1, startTime, endTime)
             }
             setRangeTimes={props.setAllowedTime}
             deleteRange={props.deleteRange}

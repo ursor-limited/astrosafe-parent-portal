@@ -1,21 +1,21 @@
-import { Backdrop } from "@mui/material";
-import { Stack, keyframes } from "@mui/system";
-import React, { useCallback, useState } from "react";
-import { BORDER_RADIUS } from "./UrsorDialog";
-import { HIDE_SCROLLBAR } from "./DynamicCardGrid";
-import dynamic from "next/dynamic";
+import { Backdrop } from '@mui/material';
+import { Stack, keyframes } from '@mui/system';
+import React, { useCallback, useState } from 'react';
+import { BORDER_RADIUS } from './UrsorDialog';
+import { HIDE_SCROLLBAR } from './DynamicCardGrid';
+import dynamic from 'next/dynamic';
 
 const DynamicallyLoadedPortal = dynamic(
-  () => import("./DynamicallyLoadedPortal"),
+  () => import('./DynamicallyLoadedPortal'),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
 export const CHANGES_SAVED_NOTIFICATION_DURATION = 2600;
-const SLIDE_IN_BEZIER = "cubic-bezier(.16,.98,.39,.98)";
-const SLIDE_OUT_BEZIER = "cubic-bezier(.51,-0.07,.57,-0.05)";
+const SLIDE_IN_BEZIER = 'cubic-bezier(.16,.98,.39,.98)';
+const SLIDE_OUT_BEZIER = 'cubic-bezier(.51,-0.07,.57,-0.05)';
 export const SLIDE_IN_DURATION = 900;
 const SLIDE_OUT_DURATION = 750;
-const TOP_MARGIN = "75px";
+const TOP_MARGIN = '75px';
 
 export const slideIn = keyframes`
 from {
@@ -60,15 +60,15 @@ export default function FixedBottomDialog(props: IFixedBottomDialog) {
         width="100%"
         height="100%"
         sx={{
-          pointerEvents: props.open ? undefined : "none",
+          pointerEvents: props.open ? undefined : 'none',
         }}
         role="presentation"
       >
         <Backdrop
           onClick={onClose}
           sx={{
-            background: "rgba(0, 0, 0, 0.2)",
-            backdropFilter: "blur(3px)",
+            background: 'rgba(0, 0, 0, 0.2)',
+            backdropFilter: 'blur(3px)',
             zIndex: 999,
           }}
           open={props.open && !slidingOut}
@@ -98,7 +98,7 @@ export default function FixedBottomDialog(props: IFixedBottomDialog) {
               flex={1}
               width="100%"
               sx={{
-                transform: "translateY(1000px)",
+                transform: 'translateY(1000px)',
                 animation: `${slidingOut ? slideOut : slideIn} ${
                   slidingOut ? SLIDE_OUT_DURATION : SLIDE_IN_DURATION
                 }ms ${
@@ -106,10 +106,10 @@ export default function FixedBottomDialog(props: IFixedBottomDialog) {
                 } forwards`,
               }}
               position="relative"
-              pb={!props.noScroll ? "100px" : undefined} // prevents seeing the bottom edge during the animation
+              pb={!props.noScroll ? '100px' : undefined} // prevents seeing the bottom edge during the animation
               borderRadius={`${BORDER_RADIUS} ${BORDER_RADIUS} 0 0`}
-              bgcolor={props.backgroundColor || "rgb(255,255,255)"}
-              overflow={props.noScroll ? "hidden" : undefined}
+              bgcolor={props.backgroundColor || 'rgb(255,255,255)'}
+              overflow={props.noScroll ? 'hidden' : undefined}
             >
               {props.children}
             </Stack>

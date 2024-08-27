@@ -22,15 +22,15 @@ export const FloatingIntroCards = (props: {
   greyCards?: boolean;
   spacing: string;
 }) => (
-  <Stack position="relative" width="100%">
+  <Stack position='relative' width='100%'>
     {props.fadedEdges ? (
       <>
         <Stack
-          position="absolute"
+          position='absolute'
           right={0}
           top={0}
-          width="230px"
-          height="100%"
+          width='230px'
+          height='100%'
           sx={{
             background: `linear-gradient(-90deg, ${
               PALETTE.secondary.grey[1]
@@ -39,11 +39,11 @@ export const FloatingIntroCards = (props: {
           zIndex={2}
         />
         <Stack
-          position="absolute"
+          position='absolute'
           left={0}
           top={0}
-          width="230px"
-          height="100%"
+          width='230px'
+          height='100%'
           sx={{
             background: `linear-gradient(90deg, ${
               PALETTE.secondary.grey[1]
@@ -53,21 +53,21 @@ export const FloatingIntroCards = (props: {
         />
       </>
     ) : null}
-    <Stack left={0} position="absolute" width="100%">
-      <Stack position="relative" width="100%" height="100px">
+    <Stack left={0} position='absolute' width='100%'>
+      <Stack position='relative' width='100%' height='100px'>
         <img
-          src="https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png"
-          //style={{ objectFit: "cover" }}
+          src='https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png'
+          //style={{ objectFit: 'cover' }}
           fill
-          alt="wave"
+          alt='wave'
         />
       </Stack>
     </Stack>
     <Stack
-      direction="row"
-      width="100%"
+      direction='row'
+      width='100%'
       spacing={props.spacing}
-      justifyContent="center"
+      justifyContent='center'
     >
       <Stack
         sx={{
@@ -79,13 +79,13 @@ export const FloatingIntroCards = (props: {
       >
         <InstructionCard
           stepIndex={1}
-          text="Download the AstroSafe App on child's Device"
+          text='Download the AstroSafe App on child's Device'
           grey={props.greyCards}
         >
           <UrsorButton
             onClick={props.onOpen}
-            size="small"
-            variant="secondary"
+            size='small'
+            variant='secondary'
             endIcon={ChevronRightIcon}
             iconSize={16}
           >
@@ -108,7 +108,7 @@ export const FloatingIntroCards = (props: {
           grey={props.greyCards}
         >
           <Typography
-            variant="h3"
+            variant='h3'
             color={PALETTE.secondary.purple[2]}
             sx={{ transform: 'translateY(-3px)' }}
           >
@@ -127,7 +127,7 @@ export const FloatingIntroCards = (props: {
       >
         <InstructionCard
           stepIndex={3}
-          text="Delete all other Browsers on Device"
+          text='Delete all other Browsers on Device'
           grey={props.greyCards}
         />
       </Stack>
@@ -139,16 +139,16 @@ export const MobileIntroCards = (props: {
   onOpen: () => void;
   greyCards?: boolean;
 }) => (
-  <Stack position="relative" spacing="16px" alignItems="center">
+  <Stack position='relative' spacing='16px' alignItems='center'>
     <InstructionCard
       stepIndex={1}
-      text="Download the AstroSafe App on child's Device"
+      text='Download the AstroSafe App on child's Device'
       grey={props.greyCards}
     >
       <UrsorButton
         onClick={props.onOpen}
-        size="small"
-        variant="secondary"
+        size='small'
+        variant='secondary'
         endIcon={ChevronRightIcon}
         iconSize={16}
       >
@@ -161,7 +161,7 @@ export const MobileIntroCards = (props: {
       grey={props.greyCards}
     >
       <Typography
-        variant="h3"
+        variant='h3'
         color={PALETTE.secondary.purple[2]}
         sx={{ transform: 'translateY(-3px)' }}
       >
@@ -170,7 +170,7 @@ export const MobileIntroCards = (props: {
     </InstructionCard>
     <InstructionCard
       stepIndex={3}
-      text="Delete all other Browsers on Device"
+      text='Delete all other Browsers on Device'
       grey={props.greyCards}
     />
   </Stack>
@@ -183,35 +183,35 @@ const InstructionCard = (props: {
   children?: React.ReactNode;
 }) => (
   <Stack
-    width="260px"
-    borderRadius="12px"
+    width='260px'
+    borderRadius='12px'
     bgcolor={props.grey ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)'}
-    alignItems="center"
-    p="12px"
-    boxSizing="border-box"
-    justifyContent="space-between"
+    alignItems='center'
+    p='12px'
+    boxSizing='border-box'
+    justifyContent='space-between'
     // sx={{
-    //   cursor: "pointer",
-    //   "&:hover": { background: PALETTE.secondary.grey[2] },
-    //   transition: "0.2s",
+    //   cursor: 'pointer',
+    //   '&:hover': { background: PALETTE.secondary.grey[2] },
+    //   transition: '0.2s',
     // }}
-    spacing="5px"
+    spacing='5px'
   >
     <Typography
-      variant="small"
+      variant='small'
       bold
       color={PALETTE.secondary.grey[3]}
     >{`Step ${props.stepIndex}`}</Typography>
-    <Stack width="90%">
+    <Stack width='90%'>
       <Typography
-        variant="medium"
+        variant='medium'
         bold
         sx={{ textAlign: 'center', lineHeight: '25px' }}
       >
         {props.text}
       </Typography>
     </Stack>
-    {props.children ? <Stack pt="6px">{props.children}</Stack> : null}
+    {props.children ? <Stack pt='6px'>{props.children}</Stack> : null}
   </Stack>
 );
 
@@ -220,15 +220,15 @@ const DeviceInstructionsView = () => {
   return (
     <>
       <Stack
-        justifyContent="center"
-        alignItems="center"
-        width="100%"
-        height="100%"
-        position="relative"
+        justifyContent='center'
+        alignItems='center'
+        width='100%'
+        height='100%'
+        position='relative'
       >
         <Stack
-          spacing="8px"
-          alignItems="center"
+          spacing='8px'
+          alignItems='center'
           sx={{
             transform: 'translateY(-160px)',
           }}
@@ -241,24 +241,24 @@ const DeviceInstructionsView = () => {
               '-webkit-background-clip': 'text',
             }}
           >
-            <Typography variant="h4">Welcome to AstroSafe</Typography>
+            <Typography variant='h4'>Welcome to AstroSafe</Typography>
           </Stack>
-          <Stack width="444px">
+          <Stack width='444px'>
             <Typography
-              variant="medium"
+              variant='medium'
               bold
               sx={{ textAlign: 'center' }}
               color={PALETTE.secondary.grey[4]}
             >
               {
-                "Connect your child or student's device to start exploring the internet with them safely!"
+                'Connect your child or student's device to start exploring the internet with them safely!'
               }
             </Typography>
           </Stack>
         </Stack>
         <FloatingIntroCards
           onOpen={() => setDownloadDialogOpen(true)}
-          spacing="120px"
+          spacing='120px'
           fadedEdges
         />
       </Stack>

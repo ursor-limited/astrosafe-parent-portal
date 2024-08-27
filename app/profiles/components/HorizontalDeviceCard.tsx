@@ -16,12 +16,12 @@ import {
   DeviceCardScreenTimeSection,
   DeviceCardSection,
 } from './DeviceCard';
-import { IFilter } from '@/app/filters/contents/common';
-import ApiController from '@/app/api';
-import UrsorPopover from '@/app/components/UrsorPopover';
-import AstroSettingCard from '@/app/filters/[id]/components/AstroSettingCard';
+import { IFilter } from '@/filters/contents/common';
+import ApiController from '@/api';
+import UrsorPopover from '@/components/UrsorPopover';
+import AstroSettingCard from '@/filters/[id]/components/AstroSettingCard';
 import { IEnrichedDevice } from '../contents/common';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 import { getInitials } from '@/app/account/contents/common';
 import useAuth from '@/app/hooks/useAuth';
 

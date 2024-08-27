@@ -1,16 +1,16 @@
-import { AstroBentoCard } from "./AstroBentoCard";
-import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "@/ui";
-import AstroSwitch from "@/app/components/AstroSwitch";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { AstroBentoCard } from "./AstroBentoCard';
+import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg';
+import { Stack } from "@mui/system';
+import { PALETTE, Typography } from "@/ui';
+import AstroSwitch from "@/app/components/AstroSwitch';
+import UrsorFadeIn from "@/app/components/UrsorFadeIn';
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from "../../contents/common";
-import { FilterLegend } from "./CategoriesSection";
+} from "../../contents/common';
+import { FilterLegend } from "./CategoriesSection';
 
 const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter;

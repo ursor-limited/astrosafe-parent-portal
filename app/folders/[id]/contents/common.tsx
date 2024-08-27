@@ -10,14 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import AddDeviceDialog from '../components/AddDeviceDialog';
 import LinkCreationDialog from '../components/LinkCreationDialog';
 import ChannelCreationDialog from '../components/ChannelCreationDialog';
-import ApiController from '@/app/api';
+import ApiController from '@/api';
 import FolderRenameDialog from '../components/FolderRenameDialog';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 import useLoadFolderAndContents from '../components/useLoadFolderAndContents';
 import VideoCreationDialog from '../components/VideoCreationDialog';
 import FolderPageMobileBody from './body-mobile';
 import FolderPageDesktopBody from './body-desktop';
-import { IDevice } from '@/app/filters/[id]/contents/common';
+import { IDevice } from '@/filters/[id]/contents/common';
 import {
   AstroContent,
   IChannel,
@@ -26,7 +26,7 @@ import {
   ILink,
   IVideo,
 } from '@/app/profiles/[id]/components/ContentTab';
-import DeletionDialog from '@/app/components/DeletionDialog';
+import DeletionDialog from '@/components/DeletionDialog';
 import useDeviceOnlineStatus from '@/app/profiles/components/useDeviceOnlineStatus';
 import useAuth from '@/app/hooks/useAuth';
 
@@ -57,7 +57,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     icon: VideoCameraIcon,
   },
   // lesson: {
-  //   title: "Add Lesson",
+  //   title: 'Add Lesson',
   //   color: PALETTE.secondary.green[5],
   //   icon: VersionsIcon,
   // },
@@ -179,7 +179,7 @@ export default function FolderPage(props: {
       icon: PencilIcon,
     },
     // {
-    //   text: "Duplicate",
+    //   text: 'Duplicate',
     //   kallback: () => null,
     //   icon: DuplicateIcon,
     // },

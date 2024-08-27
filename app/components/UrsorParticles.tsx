@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+import React, { useCallback } from 'react';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
 
 export default function UrsorParticles(props: { number?: number }) {
   const particlesInit = useCallback(async (engine: any) => {
@@ -25,10 +25,10 @@ export default function UrsorParticles(props: { number?: number }) {
             },
           },
           color: {
-            value: "#ffffff",
+            value: '#ffffff',
           },
           shape: {
-            type: "polygon",
+            type: 'polygon',
             polygon: {
               sides: 6,
             },
@@ -56,14 +56,14 @@ export default function UrsorParticles(props: { number?: number }) {
           move: {
             enable: true,
             speed: 0.5,
-            direction: "none",
+            direction: 'none',
             angle: {
               offset: 45,
               value: 5,
             },
             random: true,
             straight: false,
-            out_mode: "out",
+            out_mode: 'out',
             bounce: false,
             attract: {
               enable: false,

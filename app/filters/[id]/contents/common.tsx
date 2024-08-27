@@ -13,10 +13,10 @@ import {
 } from '../../contents/common';
 import { useNavigate } from 'react-router-dom';
 import FilterPageMobileBody from './body-mobile';
-import ApiController from '@/app/api';
-import AddDeviceDialog from '@/app/folders/[id]/components/AddDeviceDialog';
-import NotificationContext from '@/app/components/NotificationContext';
-import DeletionDialog from '@/app/components/DeletionDialog';
+import ApiController from '@/api';
+import AddDeviceDialog from '@/folders/[id]/components/AddDeviceDialog';
+import NotificationContext from '@/components/NotificationContext';
+import DeletionDialog from '@/components/DeletionDialog';
 import FilterRenameDialog from '../components/FilterRenameDialog';
 import ChangeFilterDialog from '../components/ChangeFilterDialog';
 import { Stack } from '@mui/system';

@@ -12,9 +12,9 @@ import {
 import ChannelPageDesktopBody from './body-desktop';
 import VideoCreationDialog from '../../../folders/[id]/components/VideoCreationDialog';
 import { PALETTE } from '@/ui';
-import DeletionDialog from '@/app/components/DeletionDialog';
+import DeletionDialog from '@/components/DeletionDialog';
 import ChannelRenameDialog from '../components/ChannelRenameDialog';
-import NotificationContext from '@/app/components/NotificationContext';
+import NotificationContext from '@/components/NotificationContext';
 import ChannelPageMobileBody from './body-mobile';
 
 const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {

@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
-import { IContentCard } from "../contents/common";
-import ApiController from "@/app/api";
-import _ from "lodash";
+import { useCallback, useEffect, useState } from 'react';
+import { IContentCard } from '../contents/common';
+import ApiController from '@/app/api';
+import _ from 'lodash';
 import {
   AstroContent,
   IContentBucket,
-} from "@/app/profiles/[id]/components/ContentTab";
+} from '@/app/profiles/[id]/components/ContentTab';
 
-const useLoadFolderAndContents = (folderId: IContentBucket["id"]) => {
+const useLoadFolderAndContents = (folderId: IContentBucket['id']) => {
   const [folder, setFolder] = useState<IContentBucket | undefined>();
   const [contents, setContents] = useState<IContentCard[]>([]);
   const loadFolderAndContents = useCallback(
@@ -18,18 +18,18 @@ const useLoadFolderAndContents = (folderId: IContentBucket["id"]) => {
           _.sortBy(
             [
               ...f.links.map((l) => ({
-                type: "link" as AstroContent,
+                type: 'link' as AstroContent,
                 content: l,
               })),
               ...f.videos.map((v) => ({
-                type: "video" as AstroContent,
+                type: 'video' as AstroContent,
                 content: v,
               })),
               ...f.channels.map((c) => ({
-                type: "channel" as AstroContent,
+                type: 'channel' as AstroContent,
                 content: c,
               })),
-              // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
+              // ...f.Lessons.map((l) => ({ type: 'lesson', content: l })),
             ],
             (c) => c.content.createdAt
           )

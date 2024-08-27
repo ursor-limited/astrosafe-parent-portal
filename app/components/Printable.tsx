@@ -1,6 +1,6 @@
-import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { useReactToPrint } from "react-to-print";
+import { Box } from '@mui/system';
+import React, { useEffect, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 export interface IPrintableProps {
   dialogOpen: boolean;
@@ -12,7 +12,7 @@ export default function Printable(props: IPrintableProps) {
   const [printableCardGridRef, setPrintableCardGridRef] = useState(null);
   const openPrintCardGridDialog = useReactToPrint({
     content: () => printableCardGridRef,
-    documentTitle: "ASTRO Numbers",
+    documentTitle: 'ASTRO Numbers',
     onAfterPrint: props.closeCallback,
   });
 

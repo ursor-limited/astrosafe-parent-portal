@@ -1,7 +1,7 @@
 import ContentCard from './ContentCard';
 
 import { Stack } from '@mui/system';
-import ApiController from '@/app/api';
+import ApiController from '@/api';
 import {
   IChannel,
   IContentBucket,

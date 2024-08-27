@@ -1,21 +1,21 @@
 import { Stack } from '@mui/system';
 import { CONTENT_BRANDING, IContentCard } from './common';
 import { PALETTE, Typography } from '@/ui';
-import { SearchInput } from '@/app/components/SearchInput';
-import SortButton from '@/app/components/SortButton';
+import { SearchInput } from '@/components/SearchInput';
+import SortButton from '@/components/SortButton';
 import { AddContentButton } from '../components/AddContentButton';
 import LinkCard from '../components/LinkCard';
 import VideoCard from '../components/VideoCard';
 import ChannelCard from '../components/ChannelCard';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
 
 import MobileDevicesSection from '../components/MobileDevicesSection';
-import TitleRow, { ITitleRowItem } from '@/app/components/TitleRow';
+import TitleRow, { ITitleRowItem } from '@/components/TitleRow';
 import PencilIcon from '@/images/icons/Pencil.svg';
 import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
-import { IDevice } from '@/app/filters/[id]/contents/common';
-import ApiController, { getAbsoluteUrl } from '@/app/api';
+import MobilePageLayout from '@/components/MobilePageLayout';
+import { IDevice } from '@/filters/[id]/contents/common';
+import ApiController, { getAbsoluteUrl } from '@/api';
 import {
   AstroContent,
   IChannel,
@@ -23,7 +23,7 @@ import {
   ILink,
   IVideo,
 } from '@/app/profiles/[id]/components/ContentTab';
-import { IActionPopupItem } from '@/app/components/ActionPopup';
+import { IActionPopupItem } from '@/components/ActionPopup';
 import Link from 'next/link';
 import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
 import { useNavigate } from 'react-router-dom';
@@ -140,11 +140,11 @@ const FolderPageMobileBody = (props: {
                   <Stack key={`${x.content.id}${x.type}`}>
                     {/* <Link
                       href={getAbsoluteUrl(cleanUrl(x.content.url))}
-                      target="_blank"
+                      target='_blank'
                       style={{
-                        textDecoration: "none",
+                        textDecoration: 'none',
                       }}
-                      rel="noreferrer"
+                      rel='noreferrer'
                     > */}
                     <UrsorFadeIn delay={i * 80} duration={800}>
                       {x.type === 'link' ? (

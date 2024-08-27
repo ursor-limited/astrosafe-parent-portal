@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import Play from '@/images/play.svg';
-import ApiController from '@/app/api';
+import ApiController from '@/api';
 import ContentCard from './ContentCard';
 import { IVideo } from '@/app/profiles/[id]/components/ContentTab';
 import { PALETTE } from '@/ui';

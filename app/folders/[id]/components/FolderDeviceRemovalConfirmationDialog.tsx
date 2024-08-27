@@ -1,13 +1,13 @@
-import UrsorDialog from "@/app/components/UrsorDialog";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import { Stack } from "@mui/system";
-import { Typography, UrsorButton } from "@/ui";
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { IDevice } from '@/filters/[id]/contents/common';
+import { Stack } from '@mui/system';
+import { Typography, UrsorButton } from '@/ui';
 
 const FolderDeviceRemovalConfirmationDialog = (props: {
   open: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  deviceName: IDevice["name"];
+  deviceName: IDevice['name'];
   isMobile?: boolean;
 }) => {
   return (
@@ -20,11 +20,11 @@ const FolderDeviceRemovalConfirmationDialog = (props: {
       isMobile={props.isMobile}
     >
       <Stack alignItems="center" spacing="2px">
-        <Typography sx={{ textAlign: "center" }}>Removing</Typography>
-        <Typography sx={{ textAlign: "center" }} bold>
+        <Typography sx={{ textAlign: 'center' }}>Removing</Typography>
+        <Typography sx={{ textAlign: 'center' }} bold>
           {props.deviceName}
         </Typography>
-        <Typography sx={{ textAlign: "center" }}>
+        <Typography sx={{ textAlign: 'center' }}>
           from this Folder means that its Contents will no longer be accessible
           on that Device. Are you sure you want to remove it?
         </Typography>

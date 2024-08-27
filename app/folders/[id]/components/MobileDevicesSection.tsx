@@ -1,26 +1,26 @@
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import XIcon from "@/images/icons/X.svg";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import _ from "lodash";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import { useState } from "react";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
-import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
-import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import XIcon from '@/images/icons/X.svg';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import { Stack } from '@mui/system';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import _ from 'lodash';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import { AstroBentoCard } from '@/filters/[id]/components/AstroBentoCard';
+import { useState } from 'react';
+import { IDevice } from '@/filters/[id]/contents/common';
+import { IContentBucket } from '@/app/profiles/[id]/components/ContentTab';
+import MobileAllDevicesDialog from '@/app/components/MobileAllDevicesDialog';
+import MobileDeviceCard from '@/app/profiles/components/MobileDeviceCard';
+import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const MobileDevicesSection = (props: {
   title: string;
   devices: IDevice[];
-  folderId: IContentBucket["id"];
+  folderId: IContentBucket['id'];
   onAdd: () => void;
-  onRemove: (id: IDevice["id"]) => void;
+  onRemove: (id: IDevice['id']) => void;
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
 
@@ -30,7 +30,7 @@ const MobileDevicesSection = (props: {
   const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
     useState<number | undefined>();
 
-  // const removeDevice = (id: IDevice["id"]) =>
+  // const removeDevice = (id: IDevice['id']) =>
   //   ApiController.removeFolderFromDevice(props.folderId, id);
   // .then(
   //     props.onRemove
@@ -69,11 +69,11 @@ const MobileDevicesSection = (props: {
             justifyContent="center"
             alignItems="center"
             bgcolor={
-              hoveringOnButton ? PALETTE.secondary.grey[1] : "rgb(255,255,255)"
+              hoveringOnButton ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)'
             }
             sx={{
-              transition: "0.2s",
-              cursor: "pointer",
+              transition: '0.2s',
+              cursor: 'pointer',
               svg: {
                 path: {
                   fill: PALETTE.secondary.grey[4],
@@ -117,7 +117,7 @@ const MobileDevicesSection = (props: {
       </AstroBentoCard>
       <MobileAllDevicesDialog
         title={`${props.devices.length} ${
-          props.devices.length === 1 ? "Device has" : "Devices have"
+          props.devices.length === 1 ? 'Device has' : 'Devices have'
         } access to this Folder`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
@@ -134,7 +134,7 @@ const MobileDevicesSection = (props: {
           onSubmit={() => props.onRemove(removalConfirmationDialogId)}
           deviceName={
             props.devices.find((d) => d.id === removalConfirmationDialogId)
-              ?.name ?? ""
+              ?.name ?? ''
           }
           isMobile
         />

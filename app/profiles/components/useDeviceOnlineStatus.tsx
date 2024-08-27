@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useCallback } from "react";
-import { IEnrichedDevice } from "../contents/common";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import useAuth from "@/app/hooks/useAuth";
+import React, { useEffect, useState } from 'react';
+import { useCallback } from 'react';
+import { IEnrichedDevice } from '../contents/common';
+import { IDevice } from '@/filters/[id]/contents/common';
+import useAuth from '@/app/hooks/useAuth';
 
 const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
   const { user } = useAuth();
@@ -12,7 +12,7 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
   useEffect(() => setCuttingEdgeOnlineStatusDevices(devices), [devices.length]);
 
   const setDeviceOnlineStatus = useCallback(
-    (deviceId: IDevice["id"], online: IDevice["online"]) => {
+    (deviceId: IDevice['id'], online: IDevice['online']) => {
       deviceId &&
         setCuttingEdgeOnlineStatusDevices((prev) =>
           prev.map((device) =>
@@ -33,9 +33,9 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
       const data = JSON.parse(event.data);
       data.deviceId && setDeviceOnlineStatus(data.deviceId, data.online);
     };
-    socket.addEventListener("message", handleMessage);
+    socket.addEventListener('message', handleMessage);
     return () => {
-      socket.removeEventListener("message", handleMessage);
+      socket.removeEventListener('message', handleMessage);
     };
   }, [setDeviceOnlineStatus, user?.group_id]);
 

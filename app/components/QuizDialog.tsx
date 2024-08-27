@@ -59,12 +59,12 @@ const CircularPlusButton = (props: { onClick: () => void }) => {
       onMouseLeave={() => {
         setHovering(false);
       }}
-      height='26px'
-      width='26px'
-      borderRadius='100%'
+      height="26px"
+      width="26px"
+      borderRadius="100%"
       border={`2px solid ${PALETTE.secondary.purple[hovering ? 3 : 2]}`}
-      justifyContent='center'
-      alignItems='center'
+      justifyContent="center"
+      alignItems="center"
       sx={{
         cursor: 'pointer',
         svg: {
@@ -74,7 +74,7 @@ const CircularPlusButton = (props: { onClick: () => void }) => {
         },
       }}
     >
-      <PlusIcon height='20px' width='20px' />
+      <PlusIcon height="20px" width="20px" />
     </Stack>
   );
 };
@@ -95,16 +95,16 @@ const QuizDialogQuestionCard = (
   <DynamicContainer duration={500} fullWidth>
     <Stack
       bgcolor={PALETTE.secondary.grey[1]}
-      borderRadius='12px'
-      p='12px'
-      pb='8px'
-      boxSizing='border-box'
-      spacing='8px'
-      width='100%'
+      borderRadius="12px"
+      p="12px"
+      pb="8px"
+      boxSizing="border-box"
+      spacing="8px"
+      width="100%"
     >
-      <Stack direction='row' justifyContent='space-between'>
+      <Stack direction="row" justifyContent="space-between">
         <Typography
-          variant='small'
+          variant="small"
           color={PALETTE.secondary.grey[4]}
         >{`Question ${props.i + 1}`}</Typography>
         <Stack
@@ -116,7 +116,7 @@ const QuizDialogQuestionCard = (
           }}
           onClick={props.deleteQuestion}
         >
-          <TrashcanIcon width='16px' height='16px' />
+          <TrashcanIcon width="16px" height="16px" />
         </Stack>
       </Stack>
       <UrsorInputField
@@ -124,12 +124,12 @@ const QuizDialogQuestionCard = (
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           props.setValue(event.target.value)
         }
-        placeholder='Question'
-        width='100%'
-        backgroundColor='rgb(255,255,255)'
+        placeholder="Question"
+        width="100%"
+        backgroundColor="rgb(255,255,255)"
         leftAlign
         boldValue
-        height='44px'
+        height="44px"
       />
       <UrsorSelect
         items={quizQuestionTypes.map((qqt) => ({
@@ -138,26 +138,26 @@ const QuizDialogQuestionCard = (
         }))}
         selected={[props.type]}
         callback={(type) => props.setType(type as QuizQuestionType)}
-        fieldWidth='100%'
+        fieldWidth="100%"
         white
         zIndex={999999999}
         leftAlignPopover
       />
-      <Stack height='2px' width='100%' bgcolor={PALETTE.secondary.grey[2]} />
-      <Stack spacing='8px'>
+      <Stack height="2px" width="100%" bgcolor={PALETTE.secondary.grey[2]} />
+      <Stack spacing="8px">
         {props.options?.map((o) => (
-          <Stack key={o.id} direction='row' spacing='8px' alignItems='center'>
+          <Stack key={o.id} direction="row" spacing="8px" alignItems="center">
             <UrsorInputField
               value={o.value}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 props.setOption(o.id, event.target.value)
               }
-              placeholder='Option'
-              width='100%'
-              backgroundColor='rgb(255,255,255)'
+              placeholder="Option"
+              width="100%"
+              backgroundColor="rgb(255,255,255)"
               leftAlign
               boldValue
-              height='44px'
+              height="44px"
               endIcon={
                 <MultipleChoiceIcon
                   onClick={() => props.flipCorrect(o.id)}
@@ -182,17 +182,17 @@ const QuizDialogQuestionCard = (
               }}
               onClick={() => props.deleteOption(o.id)}
             >
-              <TrashcanIcon width='16px' height='16px' />
+              <TrashcanIcon width="16px" height="16px" />
             </Stack>
           </Stack>
         ))}
       </Stack>
       {props.options && props.options?.length < MAX_QUESTIONS ? (
         <Stack
-          direction='row'
-          spacing='8px'
-          height='44px'
-          alignItems='center'
+          direction="row"
+          spacing="8px"
+          height="44px"
+          alignItems="center"
           sx={{
             cursor: 'pointer',
             '&:hover': { opacity: 0.7 },
@@ -208,7 +208,7 @@ const QuizDialogQuestionCard = (
           <Typography bold color={PALETTE.secondary.grey[3]}>
             Add another
           </Typography>
-          <PlusIcon size='16px' height='16px' />
+          <PlusIcon size="16px" height="16px" />
         </Stack>
       ) : null}
     </Stack>
@@ -289,9 +289,9 @@ const QuizDialog = (props: {
   // const submitCreation = () =>
   //   ApiController.createQuiz(
   //     title,
-  //     userDetails?.id ?? "",
+  //     userDetails?.id ?? '',
   //     questions.map((q) => ({
-  //       ..._.omit(q, "id"),
+  //       ..._.omit(q, 'id'),
   //       options: q.options?.map((o) => o.value) || [],
   //       correctOptions: q.correctOptions.map(
   //         (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
@@ -309,7 +309,7 @@ const QuizDialog = (props: {
   //     title,
   //     description,
   //     questions: questions.map((q) => ({
-  //       ..._.omit(q, "id"),
+  //       ..._.omit(q, 'id'),
   //       options: q.options?.map((o) => o.value) || [],
   //       correctOptions: q.correctOptions.map(
   //         (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
@@ -320,11 +320,11 @@ const QuizDialog = (props: {
   //       props.editingCallback?.();
   //       props.closeCallback();
   //     })
-  //     .then(() => notificationCtx.success("Updated Quiz"));
+  //     .then(() => notificationCtx.success('Updated Quiz'));
 
   // const [listEndRef, setListEndRef] = useState<HTMLElement | null>(null);
   // const scrollToBottom = useCallback(() => {
-  //   listEndRef?.scrollIntoView({ behavior: "smooth" });
+  //   listEndRef?.scrollIntoView({ behavior: 'smooth' });
   // }, [listEndRef]);
 
   return (
@@ -333,12 +333,12 @@ const QuizDialog = (props: {
         // <MobileVideoCreationDialog {...props} />
         // <UrsorDialog
         //   open={props.open}
-        //   width="930px"
-        //   maxWidth="930px"
+        //   width='930px'
+        //   maxWidth='930px'
         //   noPadding
-        //   height="552px"
-        //   paddingY={isMobile ? "0px" : "40px"}
-        //   paddingX={isMobile ? undefined : "40px"}
+        //   height='552px'
+        //   paddingY={isMobile ? '0px' : '40px'}
+        //   paddingX={isMobile ? undefined : '40px'}
         //   noCloseButton
         // >
         <Dialog
@@ -356,108 +356,108 @@ const QuizDialog = (props: {
             },
           }}
           sx={{
-            // py: "10px",
+            // py: '10px',
             '.MuiBackdrop-root': BACKDROP_STYLE,
           }}
         >
-          <Stack flex={1} spacing='24px' p='40px' overflow='hidden'>
+          <Stack flex={1} spacing="24px" p="40px" overflow="hidden">
             <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='space-between'
-              width='100%'
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
             >
-              <Typography variant='h4'>
+              <Typography variant="h4">
                 {props.quiz ? 'Edit Quiz' : 'Create Quiz'}
               </Typography>
               <UrsorButton
                 dark
-                variant='tertiary'
+                variant="tertiary"
                 endIcon={PencilIcon}
                 //onClick={() => (props.quiz ? submitUpdate : submitCreation)()}
               >
                 {props.quiz ? 'Update' : 'Create'}
               </UrsorButton>
             </Stack>
-            <Stack direction='row' spacing='24px' overflow='hidden'>
-              <Stack width='312px' spacing='20px'>
-                <Captioned text='Title' noFlex>
+            <Stack direction="row" spacing="24px" overflow="hidden">
+              <Stack width="312px" spacing="20px">
+                <Captioned text="Title" noFlex>
                   <UrsorInputField
                     value={title}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                       setTitle(event.target.value)
                     }
-                    placeholder='Title'
-                    width='100%'
+                    placeholder="Title"
+                    width="100%"
                     leftAlign
                     boldValue
                   />
                 </Captioned>
-                <Captioned text='Description'>
+                <Captioned text="Description">
                   <UrsorTextField
                     value={description}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                       setDescription(event.target.value)
                     }
-                    placeholder='Optional'
-                    width='100%'
-                    height='172px'
+                    placeholder="Optional"
+                    width="100%"
+                    height="172px"
                     boldValue
                     flex
                   />
                 </Captioned>
                 {/* <Stack
-                width="100%"
+                width='100%'
                 bgcolor={PALETTE.secondary.grey[1]}
-                borderRadius="12px"
-                p="12px"
+                borderRadius='12px'
+                p='12px'
               >
-                <Typography bold variant="small">
+                <Typography bold variant='small'>
                   Questions
                 </Typography>
-                <Stack spacing="6px">
+                <Stack spacing='6px'>
                   {questions.map((q) => (
                     <Stack
                       key={q.id}
-                      height="72px"
-                      borderRadius="8px"
-                      p="8px"
-                      boxSizing="border-box"
-                      justifyContent="space-between"
+                      height='72px'
+                      borderRadius='8px'
+                      p='8px'
+                      boxSizing='border-box'
+                      justifyContent='space-between'
                       onClick={() => setSelectedQuestion(q)}
-                      bgcolor="rgb(255,255,255)"
+                      bgcolor='rgb(255,255,255)'
                     >
-                      <Stack direction="row" justifyContent="space-between">
+                      <Stack direction='row' justifyContent='space-between'>
                         <Typography
-                          variant="small"
+                          variant='small'
                           bold
                           color={PALETTE.secondary.grey[5]}
                         >
                           {q.type}
                         </Typography>
-                        <GrabberIcon width="16px" height="16px" />
+                        <GrabberIcon width='16px' height='16px' />
                       </Stack>
                       <Typography
-                        variant="small"
+                        variant='small'
                         bold
                         color={PALETTE.secondary.grey[q.value ? 5 : 3]}
                       >
-                        {q.value || "Question"}
+                        {q.value || 'Question'}
                       </Typography>
                     </Stack>
                   ))}
                 </Stack>
               </Stack> */}
               </Stack>
-              <Stack flex={1} spacing='8px' overflow='hidden'>
-                <Stack direction='row' justifyContent='space-between'>
-                  <Typography variant='small' color={PALETTE.secondary.grey[4]}>
+              <Stack flex={1} spacing="8px" overflow="hidden">
+                <Stack direction="row" justifyContent="space-between">
+                  <Typography variant="small" color={PALETTE.secondary.grey[4]}>
                     Questions
                   </Typography>
                   <UrsorButton
-                    size='small'
+                    size="small"
                     dark
-                    variant='tertiary'
+                    variant="tertiary"
                     endIcon={PlusIcon}
                     onClick={() => {
                       setQuestions([...questions, getNewQuestion()]);
@@ -468,8 +468,8 @@ const QuizDialog = (props: {
                     Add
                   </UrsorButton>
                 </Stack>
-                <Stack overflow='scroll' flex={1}>
-                  <Stack spacing='12px'>
+                <Stack overflow="scroll" flex={1}>
+                  <Stack spacing="12px">
                     {questions.map((q, i) => (
                       <QuizDialogQuestionCard
                         key={q.id}
@@ -586,7 +586,7 @@ const QuizDialog = (props: {
                         }
                       />
                     ))}
-                    {/* <Stack alignItems="center" ref={setListEndRef}>
+                    {/* <Stack alignItems='center' ref={setListEndRef}>
                       <CircularPlusButton
                         onClick={() => {
                           setTimeout(() => scrollToBottom(), 300);

@@ -1,19 +1,19 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { AstroBentoCard } from "./AstroBentoCard";
-import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import LockIcon from "@/images/icons/LockIcon.svg";
-import { Stack } from "@mui/system";
-import { DynamicContainer, PALETTE, Typography } from "@/ui";
-import AstroSwitch from "@/app/components/AstroSwitch";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import DynamicCardGrid from "@/app/components/DynamicCardGrid';
+import { AstroBentoCard } from "./AstroBentoCard';
+import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg';
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg';
+import LockIcon from "@/images/icons/LockIcon.svg';
+import { Stack } from "@mui/system';
+import { DynamicContainer, PALETTE, Typography } from "@/ui';
+import AstroSwitch from "@/app/components/AstroSwitch';
+import UrsorFadeIn from "@/app/components/UrsorFadeIn';
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
-} from "../../contents/common";
-import AstroCard from "./AstroCard";
-import { useEffect, useState } from "react";
+} from "../../contents/common';
+import AstroCard from "./AstroCard';
+import { useEffect, useState } from "react';
 
 export const FilterLegend = (props: { small?: boolean }) => (
   <Stack direction="row" spacing="20px">

@@ -106,15 +106,15 @@ const disabledRowItemStyle = {
 };
 
 const headerRowStyle = {
-  // "& th": {
-  //   //paddingTop: "0px",
-  //   //paddingBottom: "15px",
+  // '& th': {
+  //   //paddingTop: '0px',
+  //   //paddingBottom: '15px',
   //   border: BORDER,
   // },
-  // "& th:first-of-type": {
+  // '& th:first-of-type': {
   //   borderTopLeftRadius: ROUNDING,
   // },
-  // "& th:last-of-type": {
+  // '& th:last-of-type': {
   //   borderTopRightRadius: ROUNDING,
   // },
   position: 'relative',
@@ -122,7 +122,7 @@ const headerRowStyle = {
 };
 
 const bodyCellStyle = {
-  //overflow: "visible",
+  //overflow: 'visible',
   '& td': {
     maxWidth: '450px',
     paddingTop: BODY_CELL_Y_PADDING,
@@ -137,31 +137,31 @@ const bodyCellStyle = {
   '& td:last-of-type': {
     borderLeft: 0,
   },
-  // "& td:last-of-type": {
+  // '& td:last-of-type': {
   //   borderRight: BORDER,
   // },
-  // "& td:last-of-type": {
+  // '& td:last-of-type': {
   //   borderRight: BORDER,
   // },
-  // "& tr:first-of-type": {
-  //   "& td": {
+  // '& tr:first-of-type': {
+  //   '& td': {
   //     borderTop: BORDER,
   //   },
-  //   "& td:first-of-type": {
+  //   '& td:first-of-type': {
   //     borderTopLeftRadius: ROUNDING,
   //   },
-  //   "& td:last-of-type": {
+  //   '& td:last-of-type': {
   //     borderTopRightRadius: ROUNDING,
   //   },
   // },
-  // "& tr:last-of-type": {
-  //   "& td": {
+  // '& tr:last-of-type': {
+  //   '& td': {
   //     borderBottom: BORDER,
   //   },
-  //   // "& td:first-of-type": {
+  //   // '& td:first-of-type': {
   //   //   borderBottomLeftRadius: ROUNDING,
   //   // },
-  //   "& td:last-of-type": {
+  //   '& td:last-of-type': {
   //     borderBottom: 0,
   //   },
   // },
@@ -170,9 +170,9 @@ const bodyCellStyle = {
 const Checkbox = (props: { checked: boolean }) => (
   <Stack
     border={`2px solid ${PALETTE.font.dark}`}
-    borderRadius='3px'
-    height='18px'
-    width='18px'
+    borderRadius="3px"
+    height="18px"
+    width="18px"
     sx={{
       svg: {
         path: {
@@ -180,11 +180,11 @@ const Checkbox = (props: { checked: boolean }) => (
         },
       },
     }}
-    justifyContent='center'
-    alignItems='center'
+    justifyContent="center"
+    alignItems="center"
   >
     {props.checked ? (
-      <Box bgcolor='rgb(0,0,0)' height='7px' width='7px' borderRadius='100%' />
+      <Box bgcolor="rgb(0,0,0)" height="7px" width="7px" borderRadius="100%" />
     ) : null}
   </Stack>
 );
@@ -241,27 +241,27 @@ const UrsorTableBodyCell = (props: {
           position: 'relative',
           svg: { path: { fill: PALETTE.font.dark } },
         }}
-        justifyContent='flex-end'
+        justifyContent="flex-end"
         overflow={typeof props.item === 'string' ? 'hidden' : undefined}
       >
         <Stack
-          direction='row'
-          spacing='16px'
-          position='relative'
-          justifyContent='space-between'
-          alignItems='center'
-          width='100%'
+          direction="row"
+          spacing="16px"
+          position="relative"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
           minWidth={props.columnName === 'title' ? '200px' : undefined}
-          //maxWidth={typeof props.item === "string" ? "500px" : undefined}
+          //maxWidth={typeof props.item === 'string' ? '500px' : undefined}
         >
           <Stack
-            width='100%'
-            direction='row'
-            spacing='10px'
-            alignItems='center'
+            width="100%"
+            direction="row"
+            spacing="10px"
+            alignItems="center"
             // sx={{
-            //   ...(props.columnName === "name"
-            //     ? { maxWidth: 0, minWidth: "100%" }
+            //   ...(props.columnName === 'name'
+            //     ? { maxWidth: 0, minWidth: '100%' }
             //     : {}),
             // }}
             onClick={props.onClick}
@@ -270,7 +270,7 @@ const UrsorTableBodyCell = (props: {
               <Box
                 onClick={props.checkbox.callback}
                 sx={{
-                  //width: props.checkbox.checked || props.rowHovering ? "20px" : 0,
+                  //width: props.checkbox.checked || props.rowHovering ? '20px' : 0,
                   opacity: props.checkbox.checked || props.rowHovering ? 1 : 0,
                   '&:hover': {
                     opacity: 0.5,
@@ -282,27 +282,27 @@ const UrsorTableBodyCell = (props: {
               </Box>
             ) : null}
             <Stack
-              minWidth='100%'
+              minWidth="100%"
               maxWidth={0}
-              direction='row'
-              spacing='10px'
-              alignItems='center'
-              overflow='hidden'
+              direction="row"
+              spacing="10px"
+              alignItems="center"
+              overflow="hidden"
             >
               {props.avatar}
               {typeof props.item === 'string' ||
               typeof props.item === 'number' ? (
                 <Stack
-                  width='100%'
+                  width="100%"
                   sx={{
                     ...(props.disabled ? disabledRowItemStyle : {}),
-                    // ...(props.columnName === "title"
-                    //   ? { maxWidth: 0, minWidth: "100%" }
+                    // ...(props.columnName === 'title'
+                    //   ? { maxWidth: 0, minWidth: '100%' }
                     //   : {}),
                   }}
                 >
                   <a
-                    target='_blank'
+                    target="_blank"
                     href={props.url ? props.url : undefined}
                     style={{
                       textDecoration: 'none',
@@ -314,7 +314,7 @@ const UrsorTableBodyCell = (props: {
                         opacity: props.faded ? 0.4 : 1,
                         maxWidth:
                           props.columnName === 'title'
-                            ? 0 //</a>"90%"
+                            ? 0 //</a>'90%'
                             : props.columnName === 'domain' ||
                               props.columnName === 'url'
                             ? '200px'
@@ -334,7 +334,7 @@ const UrsorTableBodyCell = (props: {
             </Stack>
           </Stack>
           {props.button || props.listButton || props.actionButtonItems ? (
-            <Box width='fit-content'>
+            <Box width="fit-content">
               {props.button ? (
                 <Stack
                   onClick={props.button.callback}
@@ -346,18 +346,18 @@ const UrsorTableBodyCell = (props: {
                     transition: '0.2s',
                   }}
                 >
-                  <props.button.icon height='20px' width='20px' />
+                  <props.button.icon height="20px" width="20px" />
                 </Stack>
               ) : null}
               {props.listButton && props.listButton.rows.length > 1 ? (
                 <Stack
-                  direction='row'
-                  spacing='4px'
+                  direction="row"
+                  spacing="4px"
                   sx={{ opacity: props.rowHovering ? 1 : 0 }}
                 >
                   {props.listButton.showCount &&
                   props.listButton.rows.length > 1 ? (
-                    <Typography variant='medium' faded>{`+${
+                    <Typography variant="medium" faded>{`+${
                       props.listButton.rows.length - 1
                     }`}</Typography>
                   ) : null}
@@ -370,7 +370,7 @@ const UrsorTableBodyCell = (props: {
                 </Stack>
               ) : null}
               {props.actionButtonItems ? (
-                <Stack width='16px' sx={{ opacity: props.rowHovering ? 1 : 0 }}>
+                <Stack width="16px" sx={{ opacity: props.rowHovering ? 1 : 0 }}>
                   <UrsorActionButton actions={props.actionButtonItems} />
                 </Stack>
               ) : null}
@@ -392,8 +392,8 @@ export default function UrsorTable<T extends Record<string, any>>(
   //   props.defaultSortedByColumn ||
   //     props.columns.find((col) => col.sortable)?.name
   // );
-  // const [sortDirection, setSortDirection] = useState<"asc" | "desc">(
-  //   props.defaultSortedAscending ? "asc" : "desc"
+  // const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(
+  //   props.defaultSortedAscending ? 'asc' : 'desc'
   // );
   // const [sortedRows, setSortedRows] = useState<IUrsorTableRow<T>[]>([]);
   // useEffect(() => {
@@ -402,7 +402,7 @@ export default function UrsorTable<T extends Record<string, any>>(
   //       row.items[sortedColumn].toLowerCase()
   //     );
   //     setSortedRows(
-  //       sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted
+  //       sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted
   //     );
   //   } else {
   //     setSortedRows(props.rows);
@@ -414,7 +414,7 @@ export default function UrsorTable<T extends Record<string, any>>(
       hoveredRow === null || index === hoveredRow ? null : fadedRowStyle;
     return {
       height: ROW_HEIGHT,
-      //background: "#1A415A",
+      //background: '#1A415A',
       transition: '0.2s',
       ...highlightStyle,
       position: 'relative',
@@ -435,7 +435,7 @@ export default function UrsorTable<T extends Record<string, any>>(
       callback: () => void;
     },
     button?: JSX.Element
-    // sorted?: "asc" | "desc",
+    // sorted?: 'asc' | 'desc',
     // sortCallback?: () => void
   ) => {
     //@ts-ignore
@@ -456,7 +456,7 @@ export default function UrsorTable<T extends Record<string, any>>(
         // onMouseEnter={() => setHovering(true)}
         // onMouseLeave={() => setHovering(false)}
       >
-        <Stack direction='row' spacing='10px' alignItems='center'>
+        <Stack direction="row" spacing="10px" alignItems="center">
           {selectAll ? (
             <Box
               sx={{
@@ -470,8 +470,8 @@ export default function UrsorTable<T extends Record<string, any>>(
             </Box>
           ) : null}
           <Stack
-            direction='row'
-            spacing='8px'
+            direction="row"
+            spacing="8px"
             onClick={sort?.callback}
             sx={
               sort
@@ -482,13 +482,13 @@ export default function UrsorTable<T extends Record<string, any>>(
                   }
                 : undefined
             }
-            width='100%'
+            width="100%"
           >
-            <Typography variant='small' bold>
+            <Typography variant="small" bold>
               {displayName.toUpperCase()}
             </Typography>
             <Stack
-              justifyContent='center'
+              justifyContent="center"
               sx={{
                 transform: `rotate(${sort?.direction === 'asc' ? 180 : 0}deg)`,
                 transition: '0.2s',
@@ -501,7 +501,7 @@ export default function UrsorTable<T extends Record<string, any>>(
                 opacity: sort ? (sort?.direction ? 1 : 0.4) : 0,
               }}
             >
-              <ArrowDownIcon width='16px' height='16px' />
+              <ArrowDownIcon width="16px" height="16px" />
             </Stack>
           </Stack>
           {button}
@@ -542,9 +542,9 @@ export default function UrsorTable<T extends Record<string, any>>(
                           props.sortSelectionCallback(column.name);
                           // setSortDirection(
                           //   column.name !== sortedColumn ||
-                          //     sortDirection === "asc"
-                          //     ? "desc"
-                          //     : "asc"
+                          //     sortDirection === 'asc'
+                          //     ? 'desc'
+                          //     : 'asc'
                           // );
                           // setSortedColumn(column.name);
                         },
@@ -622,17 +622,17 @@ export default function UrsorTable<T extends Record<string, any>>(
                 ...(props.getActionButtonItems
                   ? [
                       <TableCell
-                        key='actionButton'
+                        key="actionButton"
                         sx={{
                           width: 0,
                         }}
                       >
                         {/* needed to align this in Safari */}
-                        <Stack alignItems='flex-end'>
+                        <Stack alignItems="flex-end">
                           <UrsorActionButton
-                            background='transparent'
-                            iconSize='16px'
-                            size='16px'
+                            background="transparent"
+                            iconSize="16px"
+                            size="16px"
                             actions={props.getActionButtonItems(row.id)}
                           />
                         </Stack>
@@ -642,7 +642,7 @@ export default function UrsorTable<T extends Record<string, any>>(
                 ...(props.getEndButton
                   ? [
                       <TableCell
-                        key='endButton'
+                        key="endButton"
                         sx={{
                           width: 0,
                           fontFamily: 'unset',

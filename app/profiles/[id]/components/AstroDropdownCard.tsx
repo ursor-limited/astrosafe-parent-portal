@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { PALETTE, Typography } from '@/ui';
 import ChevronDown from '@/images/icons/ChevronDown.svg';
 import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
-import UrsorPopover from '@/app/components/UrsorPopover';
+import UrsorPopover from '@/components/UrsorPopover';
 import AstroSettingCard, {
   IAstroSettingCardProps,
-} from '@/app/filters/[id]/components/AstroSettingCard';
+} from '@/filters/[id]/components/AstroSettingCard';
 
 const AstroDropdownCard = (props: {
   title: string;
@@ -21,7 +21,7 @@ const AstroDropdownCard = (props: {
     <UrsorPopover
       open={open}
       content={
-        <Stack bgcolor='rgb(255,255,255)' borderRadius='12px' spacing='12px'>
+        <Stack bgcolor="rgb(255,255,255)" borderRadius="12px" spacing="12px">
           {props.items.map((item, i) => (
             <Stack
               key={i}
@@ -43,7 +43,7 @@ const AstroDropdownCard = (props: {
                 subtitle={item.subtitle}
                 rightContent={
                   props.selected === item.id ? (
-                    <CheckCircleFillIcon height='24px' width='24px' />
+                    <CheckCircleFillIcon height="24px" width="24px" />
                   ) : undefined
                 }
                 textColor={
@@ -71,7 +71,7 @@ const AstroDropdownCard = (props: {
           image={props.image}
           title={props.title}
           subtitle={props.subtitle}
-          rightContent={<ChevronDown height='21px' width='21px' />}
+          rightContent={<ChevronDown height="21px" width="21px" />}
         />
       </Stack>
     </UrsorPopover>

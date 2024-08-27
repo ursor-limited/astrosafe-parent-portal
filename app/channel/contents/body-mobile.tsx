@@ -7,7 +7,7 @@ import VideoCard from '../../../folders/[id]/components/VideoCard';
 import EmptyStateIllustration from '../../../components/EmptyStateIllustration';
 import { ITitleRowItem } from '../../../components/TitleRow';
 import { IActionPopupItem } from '../../../components/ActionPopup';
-import MobilePageLayout from '@/app/components/MobilePageLayout';
+import MobilePageLayout from '@/components/MobilePageLayout';
 
 const ChannelPageMobileBody = (props: {
   videos: IVideo[];

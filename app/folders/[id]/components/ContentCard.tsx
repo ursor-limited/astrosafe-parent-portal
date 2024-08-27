@@ -1,30 +1,30 @@
-import { Stack } from "@mui/system";
-import { CONTENT_BRANDING } from "../contents/common";
-import { PALETTE, Typography } from "@/ui";
-import _ from "lodash";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import { useState } from "react";
-import UrsorActionButton from "@/app/components/UrsorActionButton";
-import DeletionDialog from "@/app/components/DeletionDialog";
+import { Stack } from '@mui/system';
+import { CONTENT_BRANDING } from '../contents/common';
+import { PALETTE, Typography } from '@/ui';
+import _ from 'lodash';
+import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import { useState } from 'react';
+import UrsorActionButton from '@/app/components/UrsorActionButton';
+import DeletionDialog from '@/app/components/DeletionDialog';
 import {
   AstroContent,
   IContent,
-} from "@/app/profiles/[id]/components/ContentTab";
-import Link from "next/link";
-import { getAbsoluteUrl } from "@/app/api";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+} from '@/app/profiles/[id]/components/ContentTab';
+import Link from 'next/link';
+import { getAbsoluteUrl } from '@/app/api';
+import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
-  video: "Video",
-  channel: "Channel",
-  link: "Link",
+  video: 'Video',
+  channel: 'Channel',
+  link: 'Link',
 };
 
 const ContentCardCore = (props: {
   onClick?: () => void;
   type: AstroContent;
-  title?: IContent["title"];
+  title?: IContent['title'];
   twoLineTitleSectionHeight?: boolean;
   children: React.ReactNode;
 }) => {
@@ -33,16 +33,16 @@ const ContentCardCore = (props: {
     <Stack
       onClick={props.onClick}
       sx={{
-        cursor: "pointer",
-        transition: "0.2s",
-        "&:hover": { opacity: 0.6 },
+        cursor: 'pointer',
+        transition: '0.2s',
+        '&:hover': { opacity: 0.6 },
       }}
       spacing="6px"
     >
       {props.children}
       <Stack
         width="calc(100% - 24px)"
-        minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
+        minHeight={props.twoLineTitleSectionHeight ? '44px' : '24px'}
       >
         <Typography bold maxLines={2}>
           {props.title}
@@ -76,8 +76,8 @@ const ContentCardCore = (props: {
 
 const ContentCard = (props: {
   type: AstroContent;
-  title?: IContent["title"];
-  url?: IContent["url"];
+  title?: IContent['title'];
+  url?: IContent['url'];
   onClick?: () => void;
   noPointerEvents?: boolean;
   noMenu?: boolean;
@@ -98,7 +98,7 @@ const ContentCard = (props: {
         p="4px"
         boxSizing="border-box"
         overflow="hidden"
-        sx={{ pointerEvents: props.noPointerEvents ? "none" : undefined }}
+        sx={{ pointerEvents: props.noPointerEvents ? 'none' : undefined }}
       >
         <Stack position="absolute" right="2px" bottom="32px">
           {!props.noMenu ? (
@@ -109,12 +109,12 @@ const ContentCard = (props: {
               background="transparent"
               actions={[
                 {
-                  text: "Edit",
+                  text: 'Edit',
                   kallback: props.onOpenEditingDialog,
                   icon: PencilIcon,
                 },
                 {
-                  text: "Delete",
+                  text: 'Delete',
                   kallback: () => setDeletionDialogOpen(true),
                   icon: TrashcanIcon,
                   color: PALETTE.system.red,
@@ -128,7 +128,7 @@ const ContentCard = (props: {
             href={getAbsoluteUrl(cleanUrl(props.url))}
             target="_blank"
             style={{
-              textDecoration: "none",
+              textDecoration: 'none',
             }}
             rel="noreferrer"
           >

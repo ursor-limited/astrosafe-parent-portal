@@ -1,7 +1,7 @@
 import { Stack, alpha } from '@mui/system';
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from '@/ui';
 import { Captioned } from '../tools/multiplication-chart/[urlId]/LandingPageContents';
-import UrsorSelect from '@/app/components/UrsorSelect';
+import UrsorSelect from '@/components/UrsorSelect';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import PageSelector from '../tools/multiplication-chart/[urlId]/PageSelector';
@@ -10,10 +10,10 @@ import SyncIcon from '@/images/icons/Sync.svg';
 import { WorksheetGeneratorEquationModule } from '../tools/multiplication-chart/[urlId]/WorksheetGeneratorEquationModule';
 import { WorksheetGeneratorNumberBondModule } from '../tools/multiplication-chart/[urlId]/WorksheetGeneratorNumberBondModule';
 import { useLocalStorage } from 'usehooks-ts';
-import { useUserContext } from '@/app/components/UserContext';
+import { useUserContext } from '@/components/UserContext';
 import { useNavigate } from 'react-router-dom';
-import UrsorFadeIn from '@/app/components/UrsorFadeIn';
-// import UrsorLoading from "./UrsorLoading";
+import UrsorFadeIn from '@/components/UrsorFadeIn';
+// import UrsorLoading from './UrsorLoading';
 import dynamic from 'next/dynamic';
 
 const UrsorLoading = dynamic(
@@ -141,7 +141,7 @@ export const CategorySelectionButton = (props: {
           ? PALETTE.secondary.purple[1]
           : PALETTE.secondary.grey[2]
       }`}
-      //boxShadow={"0 0 24px rgba(0,0,0,0.06)"}
+      //boxShadow={'0 0 24px rgba(0,0,0,0.06)'}
       sx={{
         cursor: 'pointer',
         transition: '0.2s',
@@ -177,8 +177,8 @@ export const CategorySelectionButton = (props: {
 
 export default function WorksheetGenerator(props: {
   worksheet?: IWorksheet;
-  // worksheetComponent?: IWorksheet["worksheetComponent"];
-  // title?: IWorksheet["title"];
+  // worksheetComponent?: IWorksheet['worksheetComponent'];
+  // title?: IWorksheet['title'];
   // nProblems?: number;
   // topic?: WorksheetTopic;
   // specificSettings?: ISpecificWorksheetSettings;
@@ -191,7 +191,7 @@ export default function WorksheetGenerator(props: {
   callback?: (id: string) => void;
   updateCallback?: () => void;
 }) {
-  //const [topic, setTopic] = useState<WorksheetTopic>("addition");
+  //const [topic, setTopic] = useState<WorksheetTopic>('addition');
   const [worksheetComponent, setWorksheetComponent] =
     useState<WorksheetComponent>('equation');
   const [topic, setTopic] = useState<WorksheetTopic>('addition');
@@ -371,7 +371,7 @@ export default function WorksheetGenerator(props: {
                 spacing="20px"
                 sx={{
                   opacity: props.worksheet ? 0.35 : 1,
-                  //pointerEvents: props.worksheet ? "none" : undefined,
+                  //pointerEvents: props.worksheet ? 'none' : undefined,
                   cursor: props.worksheet ? 'not-allowed' : undefined,
                 }}
               >
