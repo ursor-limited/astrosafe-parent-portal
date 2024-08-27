@@ -99,7 +99,7 @@
 //   const searchParams = useSearchParams();
 //   useEffect(() => {
 //     if (![...searchParams.entries()].length) {
-//       router.push(userDetails.user?.id ? "/dashboard" : "/tools/safetube");
+//       navigate(userDetails.user?.id ? "/dashboard" : "/tools/safetube");
 //     }
 //     setShowInvalidUrlView(!searchParams.get("url"));
 //   }, [searchParams]);
@@ -184,7 +184,7 @@
 //   //   }
 //   // }, [userDetails.user?.id, freeVideoIds.length]);
 
-//   const router = useRouter();
+//   const navigate = useNavigate()
 //   const submit = () => {
 //     setLoading(true);
 //     //mixpanel.track("video created");
@@ -211,7 +211,7 @@
 //         setFreeVideoCreationCount(freeVideoCreationCount + 1);
 //         setFreeVideoIds([...freeVideoIds, v.id]);
 //       }
-//       router.push(userDetails.user?.id ? "/dashboard" : `/video/${v.id}`);
+//       navigate(userDetails.user?.id ? "/dashboard" : `/video/${v.id}`);
 //       setLandInDashboardAfterCreation(false);
 //     });
 //   };
@@ -601,7 +601,7 @@
 //                         setEditing(!editing);
 //                       }}
 //                       endIcon={
-//                         <Image
+//                         <img
 //                           src={Pencil}
 //                           width={17}
 //                           height={17}
@@ -622,7 +622,7 @@
 //                         setCopiedUrl(true);
 //                       }}
 //                       endIcon={
-//                         <Image
+//                         <img
 //                           src={ArrowUpRight}
 //                           width={24}
 //                           height={24}
@@ -670,7 +670,7 @@
 //                   backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
 //                   hoverOpacity={0.7}
 //                   endIcon={
-//                     <Image
+//                     <img
 //                       src={ChevronLeft}
 //                       width={23}
 //                       height={23}

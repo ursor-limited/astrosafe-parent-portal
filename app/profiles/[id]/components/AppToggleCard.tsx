@@ -1,11 +1,11 @@
-import AstroSwitch from "@/app/components/AstroSwitch";
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import React from "react";
-import { PALETTE, Typography } from "@/ui";
-import CheckIcon from "@/images/icons/CheckIcon.svg";
-import { IApp } from "./AppsTab";
-import { cleanUrl } from "./MobileInsightsTab";
+import AstroSwitch from '@/app/components/AstroSwitch';
+import { Stack } from '@mui/system';
+
+import React from 'react';
+import { PALETTE, Typography } from '@/ui';
+import CheckIcon from '@/images/icons/CheckIcon.svg';
+import { IApp } from './AppsTab';
+import { cleanUrl } from './MobileInsightsTab';
 
 const AppToggleCard = (
   props: IApp & {
@@ -34,7 +34,7 @@ const AppToggleCard = (
                 width="20px"
                 height="20px"
                 bgcolor={PALETTE.secondary.green[4]}
-                sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
+                sx={{ svg: { path: { fill: 'rgb(255,255,255)' } } }}
                 borderRadius="100%"
                 overflow="hidden"
                 border="1.5px solid white"
@@ -49,7 +49,7 @@ const AppToggleCard = (
               overflow="hidden"
               boxShadow="0 0 16px rgba(0,0,0,0.08)"
             >
-              <Image
+              <img
                 src={props.imageUrl}
                 height={41}
                 width={41}
@@ -67,10 +67,10 @@ const AppToggleCard = (
               color={PALETTE.secondary.grey[3]}
               maxLines={1}
               sx={{
-                wordBreak: "break-all",
+                wordBreak: 'break-all',
               }}
             >
-              {cleanUrl(props.url).replace(/\/$/, "")}
+              {cleanUrl(props.url).replace(/\/$/, '')}
             </Typography>
           </Stack>
         </Stack>

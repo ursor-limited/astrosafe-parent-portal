@@ -1,13 +1,13 @@
-import PageLayout from "@/app/components/PageLayout";
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import LogOutIcon from "@/images/icons/LogOutIcon.svg";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
+import PageLayout from '@/app/components/PageLayout';
+import { Stack } from '@mui/system';
+
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
+import LogOutIcon from '@/images/icons/LogOutIcon.svg';
+import PhoneIcon from '@/images/icons/PhoneIcon.svg';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import PersonIcon from '@/images/icons/PersonIcon.svg';
 import {
   AstroPlanState,
   IUser,
@@ -15,12 +15,12 @@ import {
   PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
-} from "./common";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import UsersTable from "../components/UsersTable";
-import DevicesTable from "../components/DevicesTable";
-import MobilePageLayout from "@/app/components/MobilePageLayout";
-import MobileAccountPageHeader from "../components/MobileAccountPageHeader";
+} from './common';
+import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
+import UsersTable from '../components/UsersTable';
+import DevicesTable from '../components/DevicesTable';
+import MobilePageLayout from '@/app/components/MobilePageLayout';
+import MobileAccountPageHeader from '../components/MobileAccountPageHeader';
 
 const AccountPageMobileBody = (props: {
   user: IUser;
@@ -72,7 +72,7 @@ const AccountPageMobileBody = (props: {
       >
         <Stack direction="row" spacing="20px" flex={1}>
           <UserInitialsCircle
-            name={props.user.realName ?? ""}
+            name={props.user.realName ?? ''}
             size={50}
             fontSize={18}
           />
@@ -145,7 +145,7 @@ const AccountPageMobileBody = (props: {
             <Typography variant="large" bold color="rgb(255,255,255)">
               {PLAN_DISPLAY_NAMES[props.planState]}
             </Typography>
-            {props.planState !== "troomi" ? (
+            {props.planState !== 'troomi' ? (
               <UrsorButton
                 dark
                 endIcon={VerifiedIcon}
@@ -171,7 +171,7 @@ const AccountPageMobileBody = (props: {
                   sx={{
                     svg: {
                       path: {
-                        fill: "rgb(255,255,255)",
+                        fill: 'rgb(255,255,255)',
                       },
                     },
                   }}
@@ -222,14 +222,14 @@ const AccountPageMobileBody = (props: {
             target="_blank"
             href="https://www.astrosafe.co/terms-and-conditions"
             style={{
-              textDecoration: "none",
+              textDecoration: 'none',
             }}
           >
             <Stack
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.6 },
+                transition: '0.2s',
               }}
             >
               <Typography color={PALETTE.secondary.blue[3]}>
@@ -241,14 +241,14 @@ const AccountPageMobileBody = (props: {
             target="_blank"
             href="https://www.astrosafe.co/app/privacy-policy"
             style={{
-              textDecoration: "none",
+              textDecoration: 'none',
             }}
           >
             <Stack
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.6 },
+                transition: '0.2s',
               }}
             >
               <Typography color={PALETTE.secondary.blue[3]}>
@@ -265,7 +265,7 @@ const AccountPageMobileBody = (props: {
           <UrsorButton
             variant="secondary"
             size="small"
-            onClick={() => window.open("mailto:hello@astrosafe.co")}
+            onClick={() => window.open('mailto:hello@astrosafe.co')}
           >
             Send
           </UrsorButton>

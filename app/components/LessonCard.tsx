@@ -15,7 +15,7 @@
 // import { SECONDARY_COLOR_ORDER } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 // import _ from "lodash";
 // import useOrangeBorder from "./useOrangeBorder";
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 
 // export const spin = keyframes`
 //   from {
@@ -60,7 +60,7 @@
 
 //   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
-//   const router = useRouter();
+//   const navigate = useNavigate()
 
 //   return (
 //     <>
@@ -124,7 +124,7 @@
 //             top="11px"
 //             right="11px"
 //             zIndex={2}
-//             onClick={() => router.push(`/lesson/${props.canonicalUrl}`)}
+//             onClick={() => navigate(`/lesson/${props.canonicalUrl}`)}
 //           >
 //             <UrsorActionButton
 //               size="32px"

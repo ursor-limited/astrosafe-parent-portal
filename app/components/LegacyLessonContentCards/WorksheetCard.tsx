@@ -4,7 +4,7 @@
 // import { PALETTE, Typography } from '@/ui';
 // import { getFormattedDate } from "./VideoCard";
 // import NumberBondWorksheet from "../../worksheet/[id]/NumberBondWorksheet";
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 // import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 // import PencilIcon from "@/images/icons/Pencil.svg";
@@ -24,7 +24,7 @@
 //     deletionCallback: () => void;
 //   }
 // ) => {
-//   const router = useRouter();
+//   const navigate = useNavigate()
 //   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
 //   const notificationCtx = useContext(NotificationContext);
@@ -73,7 +73,7 @@
 //         </Stack>
 //         <Stack
 //           spacing="7px"
-//           onClick={() => router.push(`/worksheet/${props.id}`)}
+//           onClick={() => navigate(`/worksheet/${props.id}`)}
 //           sx={{
 //             "&:hover": { opacity: 0.6 },
 //             transition: "0.2s",

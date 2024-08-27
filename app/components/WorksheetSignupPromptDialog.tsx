@@ -18,8 +18,8 @@ const WorksheetSignupPromptDialog = (props: {
 }) => {
   return (
     <UrsorDialog
-      supertitle='Sign in'
-      title='Your worksheet is ready for download'
+      supertitle="Sign in"
+      title="Your worksheet is ready for download"
       subtitle={[
         'Login or create a free account to get your worksheet',
         'and use all of our teaching resources.',
@@ -41,7 +41,7 @@ const WorksheetSignupPromptDialog = (props: {
       noOverflowHidden
       noCloseButton
     >
-      <Stack flex={1} alignItems='center'>
+      <Stack flex={1} alignItems="center">
         <Stack
           sx={{
             cursor: 'pointer',
@@ -50,7 +50,7 @@ const WorksheetSignupPromptDialog = (props: {
           }}
         >
           <UrsorButton
-            backgroundColor='linear-gradient(150deg, #F279C5, #FD9B41)'
+            backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
             onClick={props.callback}
             endIcon={PersonIcon}
           >
@@ -58,22 +58,22 @@ const WorksheetSignupPromptDialog = (props: {
           </UrsorButton>
         </Stack>
         <Stack
-          width='727px'
-          height='392px'
-          borderRadius='20px'
+          width="727px"
+          height="392px"
+          borderRadius="20px"
           border={`6px solid ${PALETTE.secondary.grey[5]}`}
           sx={{
             transform: 'translateY(30px)',
           }}
-          overflow='hidden'
+          overflow="hidden"
         >
-          <Image
+          <img
             src={SCREENSHOT_URL}
             width={727}
             height={454}
             priority={true}
             //objectFit="contain"
-            alt='worksheet signup dialog screenshot'
+            alt="worksheet signup dialog screenshot"
           />
         </Stack>
       </Stack>

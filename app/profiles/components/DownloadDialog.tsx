@@ -1,29 +1,29 @@
-import UrsorDialog from "@/app/components/UrsorDialog";
-import DownloadIcon from "@/images/icons/DownloadIcon.svg";
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
+import UrsorDialog from '@/app/components/UrsorDialog';
+import DownloadIcon from '@/images/icons/DownloadIcon.svg';
+import { Stack } from '@mui/system';
+
+import { PALETTE, Typography, UrsorButton } from '@/ui';
 
 const PLATFORMS: { name: string; logoUrl: string; url: string }[] = [
   {
-    name: "iOS",
-    logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/appleLogo.png",
-    url: "https://test.com",
+    name: 'iOS',
+    logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/appleLogo.png',
+    url: 'https://test.com',
   },
   {
-    name: "Mac",
-    logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/appleLogo.png",
-    url: "https://test.com",
+    name: 'Mac',
+    logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/appleLogo.png',
+    url: 'https://test.com',
   },
   {
-    name: "Android",
-    logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/androidLogo.png",
-    url: "https://test.com",
+    name: 'Android',
+    logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/androidLogo.png',
+    url: 'https://test.com',
   },
   {
-    name: "Chrome extension",
-    logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/chromeLogo.png",
-    url: "https://test.com",
+    name: 'Chrome extension',
+    logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/chromeLogo.png',
+    url: 'https://test.com',
   },
 ];
 
@@ -44,7 +44,7 @@ const DownloadCard = (props: { imageUrl: string; name: string }) => (
       width="100%"
       alignItems="center"
     >
-      <Image src={props.imageUrl} height={83} width={83} alt="platform logo" />
+      <img src={props.imageUrl} height={83} width={83} alt="platform logo" />
     </Stack>
     <Typography bold variant="medium">
       {props.name}
@@ -72,7 +72,7 @@ const DownloadDialog = (props: {
     onCloseCallback={props.onClose}
     title="Download Browser App"
     subtitle={[
-      "Download the version of AstroSafe that matches",
+      'Download the version of AstroSafe that matches',
       "your kid's Device.",
     ]}
     width="926px"
@@ -81,8 +81,8 @@ const DownloadDialog = (props: {
     scrollable
   >
     <Stack
-      spacing={props.isMobile ? "12px" : "20px"}
-      direction={props.isMobile ? "column" : "row"}
+      spacing={props.isMobile ? '12px' : '20px'}
+      direction={props.isMobile ? 'column' : 'row'}
       alignItems="center"
       flex={1}
     >

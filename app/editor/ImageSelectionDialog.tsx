@@ -50,7 +50,7 @@ const ImageSelectionDialog = (props: {
       maxWidth='880px'
       onCloseCallback={props.closeCallback}
     >
-      <ImageUploader
+      <imgUploader
         previewUrlCallback={setPreviewImageUrl}
         downloadUrlCallback={(url, upload) => {
           setDownloadImageUrl(url);

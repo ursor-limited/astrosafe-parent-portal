@@ -1,39 +1,39 @@
-import { Stack } from "@mui/system";
-import AstroCard from "../../filters/[id]/components/AstroCard";
-import Image from "next/image";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
-import FilterIcon from "@/images/icons/FilterIcon.svg";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import { DeviceType } from "../../filters/[id]/contents/common";
-import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Stack } from '@mui/system';
+import AstroCard from '../../filters/[id]/components/AstroCard';
+
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
+import FilterIcon from '@/images/icons/FilterIcon.svg';
+import GlobeIcon from '@/images/icons/GlobeIcon.svg';
+import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
+import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import { DeviceType } from '../../filters/[id]/contents/common';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   DeviceCardBrowsingStatusSection,
   DeviceCardCurrentUrlSection,
   DeviceCardScreenTimeSection,
   DeviceCardSection,
-} from "./DeviceCard";
-import { IFilter } from "@/app/filters/contents/common";
-import ApiController from "@/app/api";
-import UrsorPopover from "@/app/components/UrsorPopover";
-import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
-import { IEnrichedDevice } from "../contents/common";
-import NotificationContext from "@/app/components/NotificationContext";
-import { getInitials } from "@/app/account/contents/common";
-import useAuth from "@/app/hooks/useAuth";
+} from './DeviceCard';
+import { IFilter } from '@/app/filters/contents/common';
+import ApiController from '@/app/api';
+import UrsorPopover from '@/app/components/UrsorPopover';
+import AstroSettingCard from '@/app/filters/[id]/components/AstroSettingCard';
+import { IEnrichedDevice } from '../contents/common';
+import NotificationContext from '@/app/components/NotificationContext';
+import { getInitials } from '@/app/account/contents/common';
+import useAuth from '@/app/hooks/useAuth';
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
-  android: "Android",
-  chrome: "Chromebook",
-  ios: "iOS",
+  android: 'Android',
+  chrome: 'Chromebook',
+  ios: 'iOS',
 };
 
 export const DeviceCardFilterSection = (props: {
-  filterId: IFilter["id"];
-  changeFilter: (id: IFilter["id"]) => void;
+  filterId: IFilter['id'];
+  changeFilter: (id: IFilter['id']) => void;
 }) => {
   const { user } = useAuth();
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
@@ -52,10 +52,10 @@ export const DeviceCardFilterSection = (props: {
               key={i}
               sx={{
                 opacity: props.filterId != f.id ? 0.6 : 1,
-                pointerEvents: props.filterId == f.id ? "none" : undefined,
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
+                pointerEvents: props.filterId == f.id ? 'none' : undefined,
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.7 },
+                transition: '0.2s',
               }}
               onClick={() => {
                 setOpen(false);
@@ -103,9 +103,9 @@ export const DeviceCardFilterSection = (props: {
             alignItems="center"
             justifyContent="space-between"
             sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
+              cursor: 'pointer',
+              '&:hover': { opacity: 0.7 },
+              transition: '0.2s',
             }}
           >
             <Stack
@@ -145,14 +145,14 @@ const HorizontalDeviceCard = (
     () => setBrowsingEnabled(!!props.config?.browsingAllowed),
     [props.config?.browsingAllowed]
   );
-  const router = useRouter();
-  const onClick = () => router.push(`/profiles/${props.id}`);
+  const navigate = useNavigate();
+  const onClick = () => navigate(`/profiles/${props.id}`);
 
   const notificationCtx = useContext(NotificationContext);
-  const changeFilter = (id: IFilter["id"]) =>
+  const changeFilter = (id: IFilter['id']) =>
     ApiController.addFilterToDevice(id, props.id)
       .then(props.onUpdate)
-      .then(() => notificationCtx.success("Changed Filter"));
+      .then(() => notificationCtx.success('Changed Filter'));
   return (
     <AstroCard>
       <Stack direction="row" alignItems="center" px="16px" spacing="20px">
@@ -175,13 +175,13 @@ const HorizontalDeviceCard = (
               alignItems="center"
               onClick={onClick}
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.6 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.6 },
               }}
             >
               {props.profileAvatarUrl ? (
-                <Image
+                <img
                   src={props.profileAvatarUrl}
                   height={70}
                   width={70}
@@ -211,7 +211,7 @@ const HorizontalDeviceCard = (
               sx={{
                 svg: {
                   path: {
-                    fill: "rgb(255,255,255)",
+                    fill: 'rgb(255,255,255)',
                   },
                 },
               }}
@@ -230,9 +230,9 @@ const HorizontalDeviceCard = (
             title={props.latestBrowsing?.title}
             disabled={
               !browsingEnabled
-                ? "browsingDisabled"
+                ? 'browsingDisabled'
                 : !props.online
-                ? "offline"
+                ? 'offline'
                 : undefined
             }
             faviconUrl={props.latestBrowsing?.faviconUrl}
@@ -253,7 +253,7 @@ const HorizontalDeviceCard = (
               ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
               notificationCtx.success(
                 `Browsing is now ${
-                  !browsingEnabled ? "enabled" : "disabled"
+                  !browsingEnabled ? 'enabled' : 'disabled'
                 } on ${props.name}`
               );
             }}

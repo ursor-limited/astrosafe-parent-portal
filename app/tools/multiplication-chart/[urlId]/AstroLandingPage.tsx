@@ -30,28 +30,27 @@ export default function AstroLandingPage(props: {
 }) {
   return (
     <Stack
-      width='100vw'
-      height='100vh'
-      overflow='scroll'
-      alignItems='center'
+      width="100vw"
+      height="100vh"
+      overflow="scroll"
+      alignItems="center"
       bgcolor={PALETTE.primary.navy}
     >
-      <UserProvider>
-        <Header mobile={props.mobile} />
-      </UserProvider>
+      <Header mobile={props.mobile} />
+
       <Stack
-        spacing='36px'
-        alignItems='center'
-        width='100%'
+        spacing="36px"
+        alignItems="center"
+        width="100%"
         pb={props.mobile ? '20px' : '50px'}
-        pt='10px'
+        pt="10px"
       >
         <Stack
           maxWidth={props.mobile ? undefined : '780px'}
           spacing={props.mobile ? '10px' : '22px'}
-          alignItems='center'
+          alignItems="center"
           pt={props.mobile ? '13px' : undefined}
-          px='20px'
+          px="20px"
         >
           <Stack
             // sx={{
@@ -60,7 +59,7 @@ export default function AstroLandingPage(props: {
             //   backgroundClip: "text",
             //   "-webkit-background-clip": "text",
             // }}
-            alignItems='center'
+            alignItems="center"
             width={props.mobile ? '86%' : '700px'}
           >
             {props.title.map((x, i) => (
@@ -73,7 +72,7 @@ export default function AstroLandingPage(props: {
                   lineHeight: '116%',
                 }}
                 bold
-                htmlTag='h1'
+                htmlTag="h1"
                 color={PALETTE.secondary.purple[2]}
               >
                 {x}
@@ -90,28 +89,28 @@ export default function AstroLandingPage(props: {
               width: props.mobile ? undefined : '660px',
               paddingX: props.mobile ? '16px' : undefined,
             }}
-            htmlTag='h2'
+            htmlTag="h2"
           >
             {props.subtitle}
           </Typography>
         </Stack>
         {props.children}
       </Stack>
-      <Stack width='100%'>
+      <Stack width="100%">
         <Stack
           sx={{
             transform: 'translateY(1px)',
           }}
         >
           {props.fainterSpaceGlow ? (
-            <SpaceGlowFainter width='auto' height='auto' />
+            <SpaceGlowFainter width="auto" height="auto" />
           ) : (
-            <SpaceGlow width='auto' height='auto' />
+            <SpaceGlow width="auto" height="auto" />
           )}
         </Stack>
         <Stack
-          spacing='180px'
-          bgcolor='rgb(255,255,255)'
+          spacing="180px"
+          bgcolor="rgb(255,255,255)"
           pt={props.mobile ? '25px' : 0}
           zIndex={1}
         >

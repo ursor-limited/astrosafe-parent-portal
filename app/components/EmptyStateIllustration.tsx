@@ -8,9 +8,9 @@ const EmptyStateIllustration = (props: {
   children: React.ReactNode;
 }) => (
   <Stack
-    height='100%'
-    justifyContent='center'
-    alignItems='center'
+    height="100%"
+    justifyContent="center"
+    alignItems="center"
     sx={{
       pointerEvents: 'none',
       filter: 'grayscale(1)',
@@ -18,23 +18,23 @@ const EmptyStateIllustration = (props: {
     zIndex={999}
   >
     <UrsorFadeIn delay={500} duration={800}>
-      <Stack position='relative'>
+      <Stack position="relative">
         <Stack sx={{ opacity: 0.3 }}>
-          <Image
+          <img
             height={217}
             width={217}
-            src='https://ursorassets.s3.eu-west-1.amazonaws.com/wondering_.png'
-            alt='Empty state illustration'
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/wondering_.png"
+            alt="Empty state illustration"
           />
         </Stack>
         <Stack
-          width='100%'
-          alignItems='center'
+          width="100%"
+          alignItems="center"
           sx={{ transform: 'translateY(-12px)' }}
         >
           <Typography
             bold
-            variant='medium'
+            variant="medium"
             color={PALETTE.secondary.grey[3]}
             sx={{ textAlign: 'center' }}
           >

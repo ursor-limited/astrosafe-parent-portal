@@ -1,27 +1,27 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { Stack } from "@mui/system";
-import FolderCard from "../../../components/FolderCard";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { useRouter } from "next/navigation";
-import { IEnrichedContentBucket } from "@/app/folders/contents/common";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import ApiController from "@/app/api";
-import { useContext, useState } from "react";
-import NotificationContext from "@/app/components/NotificationContext";
-import FolderDeviceRemovalConfirmationDialog from "@/app/folders/[id]/components/FolderDeviceRemovalConfirmationDialog";
-import Image from "next/image";
-import ProfilePageTabLayout, { INFOS } from "./ProfilePageTabLayout";
+import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import { Stack } from '@mui/system';
+import FolderCard from '../../../components/FolderCard';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import { useRouter } from 'next/navigation';
+import { IEnrichedContentBucket } from '@/app/folders/contents/common';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { IDevice } from '@/app/filters/[id]/contents/common';
+import ApiController from '@/app/api';
+import { useContext, useState } from 'react';
+import NotificationContext from '@/app/components/NotificationContext';
+import FolderDeviceRemovalConfirmationDialog from '@/app/folders/[id]/components/FolderDeviceRemovalConfirmationDialog';
 
-export type AstroContent = "video" | "channel" | "link";
+import ProfilePageTabLayout, { INFOS } from './ProfilePageTabLayout';
+
+export type AstroContent = 'video' | 'channel' | 'link';
 
 export interface IContent {
   id: number;
   title: string;
   url: string;
   createdAt: string;
-  contentBucketId: IContentBucket["id"];
+  contentBucketId: IContentBucket['id'];
 }
 
 export interface IContentBucket {
@@ -43,7 +43,7 @@ export interface IChannel extends IContent {
 }
 export interface IVideo extends IContent {
   thumbnailUrl: string;
-  channelId?: IChannel["id"];
+  channelId?: IChannel['id'];
 }
 export interface ILesson extends IContent {
   imageUrls: string[];
@@ -53,11 +53,11 @@ const DevicePageContentTab = (props: {
   folders: IEnrichedContentBucket[];
   isMobile?: boolean;
   onUpdate: () => void;
-  deviceId: IDevice["id"];
-  deviceName: IDevice["name"];
+  deviceId: IDevice['id'];
+  deviceName: IDevice['name'];
   openAddFolderDialog: () => void;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [
     folderDeviceRemovalConfirmationDialogId,
     setFolderDeviceRemovalConfirmationDialogId,
@@ -66,7 +66,7 @@ const DevicePageContentTab = (props: {
   return (
     <ProfilePageTabLayout
       title={`${props.folders.length} Content Folder${
-        props.folders.length === 1 ? "" : "s"
+        props.folders.length === 1 ? '' : 's'
       }`}
       rightSideElement={
         <UrsorButton
@@ -91,7 +91,7 @@ const DevicePageContentTab = (props: {
                 <FolderCard
                   key={f.id}
                   {...f}
-                  clickCallback={() => router.push(`/folders/${f.id}`)}
+                  clickCallback={() => navigate(`/folders/${f.id}`)}
                   isMobile={props.isMobile}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
@@ -113,24 +113,24 @@ const DevicePageContentTab = (props: {
         <Stack flex={1} justifyContent="center" alignItems="center">
           <UrsorFadeIn delay={600} duration={800}>
             <Stack
-              height={props.isMobile ? "100%" : "457px"}
+              height={props.isMobile ? '100%' : '457px'}
               justifyContent="center"
               alignItems="center"
               spacing="13px"
             >
-              <Image
+              <img
                 src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
                 width={props.isMobile ? 179 : 230}
                 height={props.isMobile ? 152 : 195}
                 alt="empty state illustration"
               />
               <Stack
-                width={props.isMobile ? "100%" : "304px"}
+                width={props.isMobile ? '100%' : '304px'}
                 alignItems="center"
               >
                 <Typography
                   color={PALETTE.secondary.grey[3]}
-                  sx={{ textAlign: "center" }}
+                  sx={{ textAlign: 'center' }}
                   bold
                 >
                   There is no Content currently assigned to this Device. Add a
@@ -152,7 +152,7 @@ const DevicePageContentTab = (props: {
             )
               .then(props.onUpdate)
               .then(() =>
-                notificationCtx.negativeSuccess("Removed Folder from Device.")
+                notificationCtx.negativeSuccess('Removed Folder from Device.')
               )
           }
           deviceName={props.deviceName}

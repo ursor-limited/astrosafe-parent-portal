@@ -52,9 +52,9 @@ const COMPANY_URLS = [
 ];
 
 const ContactSection = (props: { mobile?: boolean }) => (
-  <Stack spacing='15px' alignItems={props.mobile ? 'center' : undefined}>
+  <Stack spacing="15px" alignItems={props.mobile ? 'center' : undefined}>
     <Typography
-      variant='medium'
+      variant="medium"
       sx={{
         fontWeight: 500,
         textAlign: props.mobile ? 'center' : undefined,
@@ -63,14 +63,14 @@ const ContactSection = (props: { mobile?: boolean }) => (
     >
       Contact
     </Typography>
-    <Stack spacing='7px'>
+    <Stack spacing="7px">
       <Stack
         onClick={() => (window.location.href = 'mailto:hello@astrosafe.co')}
-        spacing='7px'
+        spacing="7px"
         alignItems={props.mobile ? 'center' : undefined}
       >
         <Typography
-          variant='small'
+          variant="small"
           color={PALETTE.secondary.grey[4]}
           sx={{
             fontWeight: 390,
@@ -85,7 +85,7 @@ const ContactSection = (props: { mobile?: boolean }) => (
         <Stack alignItems={props.mobile ? 'center' : undefined}>
           {props.mobile ? (
             <Typography
-              variant='small'
+              variant="small"
               color={PALETTE.secondary.grey[4]}
               sx={{
                 fontWeight: 390,
@@ -97,7 +97,7 @@ const ContactSection = (props: { mobile?: boolean }) => (
           ) : (
             <>
               <Typography
-                variant='small'
+                variant="small"
                 color={PALETTE.secondary.grey[4]}
                 sx={{
                   fontWeight: 390,
@@ -106,7 +106,7 @@ const ContactSection = (props: { mobile?: boolean }) => (
                 URSOR LIMITED, Company
               </Typography>
               <Typography
-                variant='small'
+                variant="small"
                 color={PALETTE.secondary.grey[4]}
                 sx={{
                   fontWeight: 390,
@@ -117,7 +117,7 @@ const ContactSection = (props: { mobile?: boolean }) => (
             </>
           )}
           <Typography
-            variant='small'
+            variant="small"
             color={PALETTE.secondary.grey[4]}
             sx={{
               fontWeight: 390,
@@ -127,7 +127,7 @@ const ContactSection = (props: { mobile?: boolean }) => (
             404, 301 Kingsland Road,
           </Typography>
           <Typography
-            variant='small'
+            variant="small"
             color={PALETTE.secondary.grey[4]}
             sx={{
               fontWeight: 390,
@@ -143,29 +143,29 @@ const ContactSection = (props: { mobile?: boolean }) => (
 );
 
 export const LandingPageFooter = (props: { mobile?: boolean }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <Stack
-      width='100%'
-      alignItems='center'
-      justifyContent='center'
-      bgcolor='rgb(255,255,255)'
+      width="100%"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor="rgb(255,255,255)"
     >
       <Stack
         direction={props.mobile ? 'column' : 'row'}
         height={props.mobile ? undefined : '236px'}
-        width='100%'
+        width="100%"
         maxWidth={props.mobile ? undefined : 'calc(1320px + 2 * 24px)'}
-        px='24px'
-        py='35px'
-        justifyContent='space-between'
+        px="24px"
+        py="35px"
+        justifyContent="space-between"
         spacing={props.mobile ? '50px' : undefined}
-        boxSizing='border-box'
+        boxSizing="border-box"
       >
         <Stack
           width={props.mobile ? '100%' : '280px'}
-          height='100%'
-          justifyContent='space-between'
+          height="100%"
+          justifyContent="space-between"
           alignItems={props.mobile ? 'center' : undefined}
           spacing={props.mobile ? '18px' : undefined}
         >
@@ -173,7 +173,7 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
             spacing={props.mobile ? '18px' : '12px'}
             alignItems={props.mobile ? 'center' : undefined}
           >
-            <Logo width='85px' height='30px' />
+            <Logo width="85px" height="30px" />
             <Typography
               sx={{
                 fontWeight: props.mobile ? 350 : 400,
@@ -185,15 +185,30 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
               A safe space for kids to discover, learn, and play online.
             </Typography>
           </Stack>
-          <Stack direction='row' spacing={props.mobile ? '12px' : '9px'}>
+          <Stack direction="row" spacing={props.mobile ? '12px' : '9px'}>
             <Stack
-              onClick={() => router.push('https://www.linkedin.com/astrosafe/')}
+              onClick={() => navigate('https://www.linkedin.com/astrosafe/')}
             >
-              <Image
-                src='https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f34eb206d77199d60e_LinkedIN_white.png'
+              <img
+                src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f34eb206d77199d60e_LinkedIN_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                alt='Linkedin link'
+                alt="Linkedin link"
+                style={{
+                  cursor: 'pointer',
+                  borderRadius: '100%',
+                  background: PALETTE.primary.navy,
+                }}
+              />
+            </Stack>
+            <Stack
+              onClick={() => navigate('https://www.facebook.com/astrosafeco')}
+            >
+              <img
+                src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3e6d738f557cae3b2_Facebook_white.png"
+                width={props.mobile ? 28 : 30}
+                height={props.mobile ? 28 : 30}
+                alt="Facebook link"
                 style={{
                   cursor: 'pointer',
                   borderRadius: '100%',
@@ -203,14 +218,14 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
             </Stack>
             <Stack
               onClick={() =>
-                router.push('https://www.facebook.com/astrosafeco')
+                navigate('https://www.instagram.com/astrosafebrowser/')
               }
             >
-              <Image
-                src='https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3e6d738f557cae3b2_Facebook_white.png'
+              <img
+                src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f26e765647afa2a993_Instagram_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                alt='Facebook link'
+                alt="Instagram link"
                 style={{
                   cursor: 'pointer',
                   borderRadius: '100%',
@@ -219,30 +234,13 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
               />
             </Stack>
             <Stack
-              onClick={() =>
-                router.push('https://www.instagram.com/astrosafebrowser/')
-              }
+              onClick={() => navigate('https://twitter.com/astrosafebrowse')}
             >
-              <Image
-                src='https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f26e765647afa2a993_Instagram_white.png'
+              <img
+                src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3ffe78e45ab0d4527_Twitter_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                alt='Instagram link'
-                style={{
-                  cursor: 'pointer',
-                  borderRadius: '100%',
-                  background: PALETTE.primary.navy,
-                }}
-              />
-            </Stack>
-            <Stack
-              onClick={() => router.push('https://twitter.com/astrosafebrowse')}
-            >
-              <Image
-                src='https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3ffe78e45ab0d4527_Twitter_white.png'
-                width={props.mobile ? 28 : 30}
-                height={props.mobile ? 28 : 30}
-                alt='Instagram link'
+                alt="Instagram link"
                 style={{
                   cursor: 'pointer',
                   borderRadius: '100%',
@@ -255,11 +253,11 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 (window.location.href = 'mailto:hello@astrosafe.co')
               }
             >
-              <Image
-                src='https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3fda9947f5b91d938_Telegram_white.png'
+              <img
+                src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3fda9947f5b91d938_Telegram_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                alt='Instagram link'
+                alt="Instagram link"
                 style={{
                   cursor: 'pointer',
                   borderRadius: '100%',
@@ -268,28 +266,28 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
               />
             </Stack>
           </Stack>
-          <Typography variant='small' color={PALETTE.secondary.grey[4]}>
+          <Typography variant="small" color={PALETTE.secondary.grey[4]}>
             All rights reserved 2024™
           </Typography>
         </Stack>
         {props.mobile ? (
-          <Stack spacing='50px'>
-            <Stack width='100%' direction='row' justifyContent='space-between'>
+          <Stack spacing="50px">
+            <Stack width="100%" direction="row" justifyContent="space-between">
               <Stack flex={1}>
-                <FooterList mobile title='Pages' items={PAGES_URLS} />
+                <FooterList mobile title="Pages" items={PAGES_URLS} />
               </Stack>
               <Stack flex={1}>
-                <FooterList mobile title='Company' items={COMPANY_URLS} />
+                <FooterList mobile title="Company" items={COMPANY_URLS} />
               </Stack>
             </Stack>
-            <Stack width='100%'>
+            <Stack width="100%">
               <ContactSection mobile />
             </Stack>
           </Stack>
         ) : (
-          <Stack width='50%' direction='row' justifyContent='space-between'>
-            <FooterList title='Pages' items={PAGES_URLS} />
-            <FooterList title='Company' items={COMPANY_URLS} />
+          <Stack width="50%" direction="row" justifyContent="space-between">
+            <FooterList title="Pages" items={PAGES_URLS} />
+            <FooterList title="Company" items={COMPANY_URLS} />
             <ContactSection />
           </Stack>
         )}

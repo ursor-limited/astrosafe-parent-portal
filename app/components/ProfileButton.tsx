@@ -17,20 +17,20 @@ const ProfileButtonActualButton = (props: {
   light?: boolean;
 }) => (
   <Stack
-    p='2px'
-    boxSizing='border-box'
+    p="2px"
+    boxSizing="border-box"
     sx={{
       background: ASTRO_MAGICAL_GRADIENT,
     }}
-    borderRadius='100%'
-    height='42px'
-    width='42px'
+    borderRadius="100%"
+    height="42px"
+    width="42px"
   >
     <Stack
       flex={1}
-      borderRadius='100%'
-      justifyContent='center'
-      alignItems='center'
+      borderRadius="100%"
+      justifyContent="center"
+      alignItems="center"
       bgcolor={props.light ? 'rgba(255,255,255,0.97)' : '#253D4D'}
     >
       <Typography
@@ -53,8 +53,8 @@ const ProfilePopupButton = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
-      height='36px'
-      minHeight='36px'
+      height="36px"
+      minHeight="36px"
       sx={{
         cursor: 'pointer',
         '&:hover': { opacity: 0.7 },
@@ -68,10 +68,10 @@ const ProfilePopupButton = (props: {
         },
       }}
       onClick={props.callback}
-      direction='row'
-      spacing='8px'
-      alignItems='center'
-      px='20px'
+      direction="row"
+      spacing="8px"
+      alignItems="center"
+      px="20px"
       bgcolor={hovering ? PALETTE.secondary.grey[1] : undefined}
       onMouseEnter={() => {
         setHovering(true);
@@ -80,9 +80,9 @@ const ProfilePopupButton = (props: {
         setHovering(false);
       }}
     >
-      <props.icon height='16px' width='16px' />
+      <props.icon height="16px" width="16px" />
       <Typography
-        variant='small'
+        variant="small"
         bold
         color={
           hovering ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[5]
@@ -98,7 +98,7 @@ const ProfileButton = (props: { light?: boolean }) => {
   const { user, logout } = useAuth();
   const userCtx = useUserContext();
   const [open, setOpen] = useState<boolean>(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const [
     subscriptionStatusChangePossible,
@@ -119,28 +119,28 @@ const ProfileButton = (props: { light?: boolean }) => {
       <UrsorPopover
         open={open}
         content={
-          <Stack minWidth='250px'>
+          <Stack minWidth="250px">
             <Stack
-              height='40px'
+              height="40px"
               sx={{
                 background: ASTRO_MAGICAL_GRADIENT,
                 '-webkit-text-fill-color': 'transparent',
                 backgroundClip: 'text',
                 '-webkit-background-clip': 'text',
               }}
-              px='20px'
-              justifyContent='center'
+              px="20px"
+              justifyContent="center"
               borderBottom={`1px solid ${PALETTE.secondary.grey[2]}`}
             >
-              <Typography bold variant='small'>
+              <Typography bold variant="small">
                 {user?.email}
               </Typography>
             </Stack>
 
             <ProfilePopupButton
-              callback={() => router.push('/dashboard')}
+              callback={() => navigate('/dashboard')}
               icon={ListUnorderedIcon}
-              text='Dashboard'
+              text="Dashboard"
             />
 
             {/* {userCtx.schoolIsSubscribed ? (
@@ -176,12 +176,12 @@ const ProfileButton = (props: { light?: boolean }) => {
                 //mixpanel.reset();
               }}
               icon={LogOutIcon}
-              text='Log out'
+              text="Log out"
             />
           </Stack>
         }
         closeCallback={() => setOpen(false)}
-        placement='right'
+        placement="right"
         noPadding
       >
         <Stack onClick={() => setOpen(true)}>

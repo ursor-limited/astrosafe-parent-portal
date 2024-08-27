@@ -10,24 +10,24 @@ export const Keywords = (props: {
   links: { title: string; url: string }[];
   mobile: boolean;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
-    <Stack width='100%' position='relative' alignItems='center'>
+    <Stack width="100%" position="relative" alignItems="center">
       <Grid
         container
-        gap='10px'
+        gap="10px"
         width={props.mobile ? '90%' : '60%'}
-        justifyContent='center'
+        justifyContent="center"
       >
         {props.links.map((link, i) => (
           <Grid item key={i}>
             <Link href={link.url} style={{ textDecoration: 'none' }}>
               <Stack
-                borderRadius='16px'
+                borderRadius="16px"
                 bgcolor={PALETTE.secondary.grey[1]}
-                height='32px'
-                px='24px'
-                justifyContent='center'
+                height="32px"
+                px="24px"
+                justifyContent="center"
                 sx={{
                   cursor: 'pointer',
                   '&:hover': { opacity: 0.6 },

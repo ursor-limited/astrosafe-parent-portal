@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import React, { useContext, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
-import ApiController from "../../../api";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import ApiController from '../../../api';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
 import {
   IChannel,
   IContentBucket,
   IVideo,
-} from "../../../profiles/[id]/components/ContentTab";
-import ChannelPageDesktopBody from "./body-desktop";
-import VideoCreationDialog from "../../../folders/[id]/components/VideoCreationDialog";
-import { PALETTE } from "@/ui";
-import DeletionDialog from "@/app/components/DeletionDialog";
-import ChannelRenameDialog from "../components/ChannelRenameDialog";
-import NotificationContext from "@/app/components/NotificationContext";
-import ChannelPageMobileBody from "./body-mobile";
+} from '../../../profiles/[id]/components/ContentTab';
+import ChannelPageDesktopBody from './body-desktop';
+import VideoCreationDialog from '../../../folders/[id]/components/VideoCreationDialog';
+import { PALETTE } from '@/ui';
+import DeletionDialog from '@/app/components/DeletionDialog';
+import ChannelRenameDialog from '../components/ChannelRenameDialog';
+import NotificationContext from '@/app/components/NotificationContext';
+import ChannelPageMobileBody from './body-mobile';
 
-const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
-  const router = useRouter();
-  const [title, setTitle] = useState<IChannel["title"]>("");
-  const [folderId, setFolderId] = useState<IContentBucket["id"] | undefined>();
+const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState<IChannel['title']>('');
+  const [folderId, setFolderId] = useState<IContentBucket['id'] | undefined>();
   const [videos, setVideos] = useState<IVideo[]>([]);
   const load = useCallback(
     () =>
@@ -43,19 +43,19 @@ const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
   }, [folderId]);
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
-    IVideo["id"] | undefined
+    IVideo['id'] | undefined
   >();
 
   const titleRow = [
     ...(folder
       ? [
           {
-            text: "My Folders",
-            callback: () => router.push("/folders"),
+            text: 'My Folders',
+            callback: () => navigate('/folders'),
           },
           {
-            text: folder?.title ?? "",
-            callback: () => router.push(`/folders/${folderId}`),
+            text: folder?.title ?? '',
+            callback: () => navigate(`/folders/${folderId}`),
           },
         ]
       : []),
@@ -69,12 +69,12 @@ const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
 
   const actions = [
     {
-      text: "Edit name",
+      text: 'Edit name',
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
     {
-      text: "Delete",
+      text: 'Delete',
       kallback: () => setDeletionDialogOpen(true),
       icon: TrashcanIcon,
       color: PALETTE.system.red,
@@ -85,7 +85,7 @@ const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
 
   const deleteChannel = () =>
     ApiController.deleteChannel(props.id).then(() =>
-      router.push(folderId ? `/folders/${folderId}` : "/folders")
+      navigate(folderId ? `/folders/${folderId}` : '/folders')
     );
 
   return (
@@ -98,7 +98,7 @@ const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
           setVideoEditingDialogId={setVideoEditingDialogId}
           actions={actions}
           onBack={() =>
-            router.push(folderId ? `/folders/${folderId}` : "/folders")
+            navigate(folderId ? `/folders/${folderId}` : '/folders')
           }
         />
       ) : (
@@ -109,7 +109,7 @@ const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
           setVideoEditingDialogId={setVideoEditingDialogId}
           actions={actions}
           onBack={() =>
-            router.push(folderId ? `/folders/${folderId}` : "/folders")
+            navigate(folderId ? `/folders/${folderId}` : '/folders')
           }
         />
       )}
@@ -143,7 +143,7 @@ const ChannelPage = (props: { id: IChannel["id"]; isMobile: boolean }) => {
         onSubmit={(title) =>
           ApiController.changeChannelName(props.id, title)
             .then(load)
-            .then(() => notificationCtx.success("Renamed Channel"))
+            .then(() => notificationCtx.success('Renamed Channel'))
         }
         isMobile={props.isMobile}
       />

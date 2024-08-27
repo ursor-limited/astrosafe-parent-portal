@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
-import { getNewImageDetails } from "./AstroImage";
-import "react-quill/dist/quill.snow.css";
-import TypographyIcon from "@/images/icons/TypographyIcon.svg";
-import SafeTubePlayIcon from "@/images/play.svg";
-import ImageIcon from "@/images/icons/ImageIcon.svg";
-import TextEditorToolbar from "./TextEditorToolBar";
-import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
-import ImageSelectionDialog from "./ImageSelectionDialog";
-import { getNewTextDetails } from "./AstroText";
-import PaletteButton from "../components/PaletteButton";
-import { getNewVideoPlayerDetails } from "./AstroVideoPlayer";
+import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { getNewImageDetails } from './AstroImage';
+import 'react-quill/dist/quill.snow.css';
+import TypographyIcon from '@/images/icons/TypographyIcon.svg';
+import SafeTubePlayIcon from '@/images/play.svg';
+import ImageIcon from '@/images/icons/ImageIcon.svg';
+import TextEditorToolbar from './TextEditorToolBar';
+import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from './ActualCanvas';
+import ImageSelectionDialog from './ImageSelectionDialog';
+import { getNewTextDetails } from './AstroText';
+import PaletteButton from '../components/PaletteButton';
+import { getNewVideoPlayerDetails } from './AstroVideoPlayer';
 
 export const ElementButton = (props: {
   callback: () => void;
@@ -28,9 +28,9 @@ export const ElementButton = (props: {
     bgcolor="rgb(255,255,255)"
     borderRadius="12px"
     sx={{
-      cursor: "pointer",
-      "&:hover": { opacity: 0.7 },
-      transition: "0.2s",
+      cursor: 'pointer',
+      '&:hover': { opacity: 0.7 },
+      transition: '0.2s',
       svg: {
         path: {
           fill: props.iconColor,
@@ -44,7 +44,7 @@ export const ElementButton = (props: {
   </Stack>
 );
 
-export type AstroCanvasElement = "image" | "text" | "player";
+export type AstroCanvasElement = 'image' | 'text' | 'player';
 
 export interface IAstroCanvasElement {
   id: string;
@@ -121,7 +121,7 @@ const Canvas = (props: {
   };
 
   const [url, setUrl] = useState<string>(
-    "https://www.youtube.com/watch?v=LeW53nKDLw8&t=3188s"
+    'https://www.youtube.com/watch?v=LeW53nKDLw8&t=3188s'
   );
 
   return (
@@ -131,7 +131,7 @@ const Canvas = (props: {
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row" spacing="10px">
               <PaletteButton
-                selected={props.color || "#ffffff"}
+                selected={props.color || '#ffffff'}
                 callback={(color) => props.colorChangeCallback?.(color)}
               />
               <ElementButton icon={TypographyIcon} callback={addText} />
@@ -149,7 +149,7 @@ const Canvas = (props: {
             </Stack>
             <Stack position="relative" flex={1}>
               {elements
-                ?.filter((e) => e.type === "text")
+                ?.filter((e) => e.type === 'text')
                 .map((e) => (
                   <Stack
                     position="absolute"
@@ -159,8 +159,8 @@ const Canvas = (props: {
                     sx={{
                       opacity: e.id === selectedElement ? 1 : 0,
                       pointerEvents:
-                        e.id === selectedElement ? undefined : "none",
-                      transition: "0.6s",
+                        e.id === selectedElement ? undefined : 'none',
+                      transition: '0.6s',
                     }}
                   >
                     <TextEditorToolbar id={e.id} />
@@ -178,7 +178,7 @@ const Canvas = (props: {
           preview={props.noButtons}
         />
       </Stack>
-      <ImageSelectionDialog
+      <imgSelectionDialog
         open={imageSelectionDialogOpen}
         closeCallback={() => setImageSelectionDialogOpen(false)}
         additionCallback={(url) => addImage(url)}

@@ -2,7 +2,7 @@
 // import { Stack, alpha } from "@mui/system";
 // import dayjs from "dayjs";
 // import { PALETTE, Typography } from '@/ui';
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import PencilIcon from "@/images/icons/Pencil.svg";
 // import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 // import UrsorActionButton from "./UrsorActionButton";
@@ -27,7 +27,7 @@
 // ) => {
 //   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
-//   const router = useRouter();
+//   const navigate = useNavigate()
 
 //   const notificationCtx = React.useContext(NotificationContext);
 

@@ -35,23 +35,23 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
     );
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
-    <Stack direction='row' spacing='40px' alignItems='center'>
-      <Stack width='94px'>
+    <Stack direction="row" spacing="40px" alignItems="center">
+      <Stack width="94px">
         <Typography bold color={PALETTE.secondary.grey[4]}>
           {dayjs(props.searchedAt).format('hh:mm:HHa')}
         </Typography>
       </Stack>
-      <Stack direction='row' spacing='8px' alignItems='center'>
+      <Stack direction="row" spacing="8px" alignItems="center">
         <Stack
-          borderRadius='3px'
-          overflow='hidden'
-          boxShadow='0 0 10px rgba(0,0,0,0.1)'
+          borderRadius="3px"
+          overflow="hidden"
+          boxShadow="0 0 10px rgba(0,0,0,0.1)"
         >
-          <Image
+          <img
             height={20}
             width={20}
             src={props.faviconUrl}
-            alt='favicon url'
+            alt="favicon url"
           />
         </Stack>
         <Typography bold>{props.title}</Typography>
@@ -60,7 +60,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
         </Typography>
         <Link
           href={getAbsoluteUrl(cleanUrl(props.url))}
-          target='_blank'
+          target="_blank"
           style={{ textDecoration: 'none' }}
         >
           <Stack
@@ -80,9 +80,9 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
         </Typography>
         {duration ? (
           <Stack
-            direction='row'
-            spacing='8px'
-            alignItems='center'
+            direction="row"
+            spacing="8px"
+            alignItems="center"
             sx={{
               svg: {
                 path: {
@@ -91,7 +91,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
               },
             }}
           >
-            <ClockIcon height='16px' width='16px' />
+            <ClockIcon height="16px" width="16px" />
             <Typography color={PALETTE.secondary.grey[4]} bold>
               {duration < 60
                 ? `${duration}s`
@@ -110,11 +110,11 @@ const HistoryDomainRow = (props: IDomainGroup) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <DynamicContainer duration={650} fullWidth>
-      <Stack spacing='12px'>
+      <Stack spacing="12px">
         <Stack
-          justifyContent='space-between'
-          alignItems='center'
-          direction='row'
+          justifyContent="space-between"
+          alignItems="center"
+          direction="row"
           sx={{
             cursor: 'pointer',
             transition: '0.2s',
@@ -141,16 +141,16 @@ const HistoryDomainRow = (props: IDomainGroup) => {
               },
             }}
           >
-            <ChevronDownIcon width='20px' height='20px' />
+            <ChevronDownIcon width="20px" height="20px" />
           </Stack>
         </Stack>
         {expanded ? (
           <Stack
-            borderRadius='12px'
+            borderRadius="12px"
             bgcolor={PALETTE.secondary.grey[1]}
-            pl='28px'
-            py='12px'
-            spacing='16px'
+            pl="28px"
+            py="12px"
+            spacing="16px"
           >
             {props.rows.map((row, i) => (
               <HistoryRow key={i} {...row} />
@@ -228,7 +228,7 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
 
   return (
     <AstroBentoCard
-      title='Browser history'
+      title="Browser history"
       notCollapsible
       topRightStuff={
         <SearchInput
@@ -239,7 +239,7 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
         />
       }
     >
-      <Stack spacing='16px'>
+      <Stack spacing="16px">
         {domainGroups.map((dg, i) => (
           <UrsorFadeIn
             key={`${i}${pageIndex}${props.date}`}
@@ -251,7 +251,7 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
         ))}
       </Stack>
       {nPages > 1 ? (
-        <Stack pt='24px' pb='9px'>
+        <Stack pt="24px" pb="9px">
           <PageSelector
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import { AstroBentoCard } from "../../../filters/[id]/components/AstroBentoCard";
-import { Stack } from "@mui/system";
-import { IVisitedSite } from "./InsightsTab";
-import Link from "next/link";
-import Image from "next/image";
-import _ from "lodash";
-import AllMostVisitedSitesDialog from "./AllMostVisitedSitesDialog";
-import { cleanUrl } from "./MobileInsightsTab";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import React, { useState } from 'react';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { AstroBentoCard } from '../../../filters/[id]/components/AstroBentoCard';
+import { Stack } from '@mui/system';
+import { IVisitedSite } from './InsightsTab';
+import Link from 'next/link';
+
+import _ from 'lodash';
+import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog';
+import { cleanUrl } from './MobileInsightsTab';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {
-    maxScreenTime: IVisitedSite["screenTime"];
+    maxScreenTime: IVisitedSite['screenTime'];
     borderTop: boolean;
   }
 ) => (
@@ -22,9 +22,9 @@ export const VisitedSiteRow = (
       props.borderTop ? `2px solid ${PALETTE.secondary.grey[2]}` : undefined
     }
     sx={{
-      cursor: "pointer",
-      "&:hover": { opacity: 0.7 },
-      transition: "0.2s",
+      cursor: 'pointer',
+      '&:hover': { opacity: 0.7 },
+      transition: '0.2s',
     }}
     justifyContent="center"
   >
@@ -32,7 +32,7 @@ export const VisitedSiteRow = (
       href={props.url}
       target="_blank"
       style={{
-        textDecoration: "none",
+        textDecoration: 'none',
       }}
     >
       <Stack flex={1} direction="row" spacing="12px" alignItems="center">
@@ -43,7 +43,7 @@ export const VisitedSiteRow = (
           minWidth={42}
           boxShadow="0 0 12px rgba(0,0,0,0.1)"
         >
-          <Image src={props.faviconUrl} height={42} width={42} alt="favicon" />
+          <img src={props.faviconUrl} height={42} width={42} alt="favicon" />
         </Stack>
         <Stack spacing="8px" width="100%">
           <Stack direction="row" spacing="8px" alignItems="center">
@@ -51,7 +51,7 @@ export const VisitedSiteRow = (
               bold
               maxLines={1}
               sx={{
-                wordBreak: "break-all",
+                wordBreak: 'break-all',
               }}
             >
               {props.title}
@@ -62,10 +62,10 @@ export const VisitedSiteRow = (
                 color={PALETTE.secondary.grey[3]}
                 maxLines={1}
                 sx={{
-                  wordBreak: "break-all",
+                  wordBreak: 'break-all',
                 }}
               >
-                {cleanUrl(props.url).replace(/\/$/, "")}
+                {cleanUrl(props.url).replace(/\/$/, '')}
               </Typography>
             </Stack>
           </Stack>

@@ -1,23 +1,23 @@
-import React from "react";
-import { useRouter } from "next/navigation";
-import { IVideo } from "../../../profiles/[id]/components/ContentTab";
-import { Stack } from "@mui/system";
-import UrsorFadeIn from "../../../components/UrsorFadeIn";
-import VideoCard from "../../../folders/[id]/components/VideoCard";
-import EmptyStateIllustration from "../../../components/EmptyStateIllustration";
-import { ITitleRowItem } from "../../../components/TitleRow";
-import { IActionPopupItem } from "../../../components/ActionPopup";
-import MobilePageLayout from "@/app/components/MobilePageLayout";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IVideo } from '../../../profiles/[id]/components/ContentTab';
+import { Stack } from '@mui/system';
+import UrsorFadeIn from '../../../components/UrsorFadeIn';
+import VideoCard from '../../../folders/[id]/components/VideoCard';
+import EmptyStateIllustration from '../../../components/EmptyStateIllustration';
+import { ITitleRowItem } from '../../../components/TitleRow';
+import { IActionPopupItem } from '../../../components/ActionPopup';
+import MobilePageLayout from '@/app/components/MobilePageLayout';
 
 const ChannelPageMobileBody = (props: {
   videos: IVideo[];
   onUpdate: () => void;
-  setVideoEditingDialogId: (id: IVideo["id"]) => void;
+  setVideoEditingDialogId: (id: IVideo['id']) => void;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
   onBack: () => void;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}

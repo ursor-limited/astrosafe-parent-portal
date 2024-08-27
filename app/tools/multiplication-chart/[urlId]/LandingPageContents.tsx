@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import AstroLandingPage from "./AstroLandingPage";
-import WonderingIllustration from "@/images/WonderingIllustration.png";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import _ from "lodash";
-import LandingPageViewport from "./LandingPageViewport";
-import ExplainerCard from "./ExplainerCard";
-import OtherPageCard from "./OtherPageCard";
-import { IntroSteps } from "./IntroSteps";
+import { Stack } from '@mui/system';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import AstroLandingPage from './AstroLandingPage';
+import WonderingIllustration from '@/images/WonderingIllustration.png';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import _ from 'lodash';
+import LandingPageViewport from './LandingPageViewport';
+import ExplainerCard from './ExplainerCard';
+import OtherPageCard from './OtherPageCard';
+import { IntroSteps } from './IntroSteps';
 import {
   WorksheetTopic,
   WorksheetComponent,
   ISpecificWorksheetSettings,
-} from "../../../components/WorksheetGenerator";
-import Image from "next/image";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+} from '../../../components/WorksheetGenerator';
+
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 //import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
-import dynamic from "next/dynamic";
-import CheckIcon from "@/images/icons/CheckIcon.svg";
-import { headers } from "next/headers";
-import { getSelectorsByUserAgent } from "react-device-detect";
-import { useEffect, useState } from "react";
-import { useWindowSize } from "usehooks-ts";
-import { VisualLinkCards } from "./VisualLinkCards";
-import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
-import { Keywords } from "./Keywords";
+import dynamic from 'next/dynamic';
+import CheckIcon from '@/images/icons/CheckIcon.svg';
+import { headers } from 'next/headers';
+import { getSelectorsByUserAgent } from 'react-device-detect';
+import { useEffect, useState } from 'react';
+import { useWindowSize } from 'usehooks-ts';
+import { VisualLinkCards } from './VisualLinkCards';
+import ValueProposition, { IValuePropositionItem } from './ValueProposition';
+import { Keywords } from './Keywords';
 import MultiplicationTableColumns, {
   IMultiplicationTableColumns,
-} from "@/app/components/MultiplicationTableColumns";
-import { useRouter } from "next/navigation";
+} from '@/app/components/MultiplicationTableColumns';
+import { useRouter } from 'next/navigation';
 
 export interface IAstroLandingPage {
   urlId: string;
@@ -43,7 +43,7 @@ export interface IAstroLandingPage {
     worksheetId: WorksheetComponent;
     title: string;
     nProblems: number;
-    specificSettings?: Omit<ISpecificWorksheetSettings, "max" | "random"> & {
+    specificSettings?: Omit<ISpecificWorksheetSettings, 'max' | 'random'> & {
       topic: WorksheetTopic;
     };
   };
@@ -163,12 +163,12 @@ export interface IAstroLandingPage {
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
 const PrintableMultiplicationTable = dynamic(
-  () => import("./PrintableMultiplicationTable"),
+  () => import('./PrintableMultiplicationTable'),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
 const WorksheetGenerator = dynamic(
-  () => import("../../../components/WorksheetGenerator"),
+  () => import('../../../components/WorksheetGenerator'),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -184,15 +184,15 @@ export const EmptyStateIllustration = (props: {
     justifyContent="center"
     alignItems="center"
     sx={{
-      pointerEvents: "none",
-      filter: "grayscale(1)",
+      pointerEvents: 'none',
+      filter: 'grayscale(1)',
     }}
     zIndex={999}
   >
     <UrsorFadeIn delay={500} duration={800}>
       <Stack position="relative" spacing="18px" pt={`${props.paddingTop}px`}>
         <Stack sx={{ opacity: 0.3 }}>
-          <Image
+          <img
             height={207}
             width={217}
             src={WonderingIllustration}
@@ -208,7 +208,7 @@ export const EmptyStateIllustration = (props: {
           <Typography
             bold
             color={PALETTE.secondary.grey[3]}
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: 'center' }}
           >
             {props.children}
           </Typography>
@@ -235,7 +235,7 @@ export const Captioned = (props: {
     spacing="6px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,
-      pointerEvents: props.disabled ? "none" : undefined,
+      pointerEvents: props.disabled ? 'none' : undefined,
     }}
     position="relative"
     height={props.height}
@@ -260,9 +260,9 @@ export const Captioned = (props: {
             alignItems="center"
             onClick={props.checkbox.callback}
             sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
+              cursor: 'pointer',
+              '&:hover': { opacity: 0.6 },
+              transition: '0.2s',
               svg: {
                 path: {
                   fill: PALETTE.secondary.grey[5],
@@ -285,7 +285,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -320,9 +320,9 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 mobile={isMobile}
               >
                 <Stack
-                  direction={isMobile ? "column" : "row"}
-                  spacing={isMobile ? "30px" : "45px"}
-                  alignItems={isMobile ? "center" : undefined}
+                  direction={isMobile ? 'column' : 'row'}
+                  spacing={isMobile ? '30px' : '45px'}
+                  alignItems={isMobile ? 'center' : undefined}
                   overflow="hidden"
                   pt="8px"
                 >
@@ -335,7 +335,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                   ) : null}
                   <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
-                      .split("\n")
+                      .split('\n')
                       .map((paragraph, i) => (
                         <Typography key={i} color={PALETTE.secondary.grey[4]}>
                           {paragraph}
@@ -371,7 +371,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                       {props.linkTable.tableHeading}
                     </Typography>
                   </Stack>
-                  <Stack spacing={isMobile ? "16px" : "22px"}>
+                  <Stack spacing={isMobile ? '16px' : '22px'}>
                     {_.chunk(props.linkTable.links, 2).map((pair, i) => (
                       <Stack
                         key={i}
@@ -390,7 +390,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                             target="_blank"
                             href={pair[0].url}
                             style={{
-                              textDecoration: "none",
+                              textDecoration: 'none',
                               color: PALETTE.secondary.purple[2],
                             }}
                             rel="noreferrer"
@@ -413,7 +413,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                               target="_blank"
                               href={pair[1].url}
                               style={{
-                                textDecoration: "none",
+                                textDecoration: 'none',
                                 color: PALETTE.secondary.purple[2],
                               }}
                               rel="noreferrer"
@@ -477,20 +477,20 @@ export default function LandingPageContents(props: IAstroLandingPage) {
               >
                 <Stack
                   sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.7 },
+                    transition: '0.2s',
                   }}
-                  pt={isMobile ? "12px" : undefined}
+                  pt={isMobile ? '12px' : undefined}
                 >
                   <UrsorButton
-                    size={isMobile ? "small" : "large"}
+                    size={isMobile ? 'small' : 'large'}
                     dark
                     variant="tertiary"
                     endIcon={PencilIcon}
                     iconSize={isMobile ? 16 : 22}
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
-                    onClick={() => router.push("/dashboard")}
+                    onClick={() => navigate('/dashboard')}
                   >
                     Create a printable multiplication chart
                   </UrsorButton>
@@ -510,20 +510,20 @@ export default function LandingPageContents(props: IAstroLandingPage) {
               >
                 <Stack
                   sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.7 },
+                    transition: '0.2s',
                   }}
-                  pt={isMobile ? "12px" : undefined}
+                  pt={isMobile ? '12px' : undefined}
                 >
                   <UrsorButton
-                    size={isMobile ? "small" : "large"}
+                    size={isMobile ? 'small' : 'large'}
                     dark
                     variant="tertiary"
                     endIcon={PencilIcon}
                     iconSize={isMobile ? 16 : 22}
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
-                    onClick={() => router.push("/dashboard")}
+                    onClick={() => navigate('/dashboard')}
                   >
                     Create your own worksheets
                   </UrsorButton>
@@ -553,8 +553,8 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 mobile={isMobile}
               >
                 <Stack
-                  direction={isMobile ? "column" : "row"}
-                  spacing={isMobile ? "16px" : "22px"}
+                  direction={isMobile ? 'column' : 'row'}
+                  spacing={isMobile ? '16px' : '22px'}
                 >
                   <ExplainerCard
                     imageUrl={props.explainerCards?.cards?.[0]?.imageUrl}
@@ -587,12 +587,12 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 title={props.otherPages.title}
                 mobile={isMobile}
               >
-                <Stack spacing={isMobile ? "14px" : "22px"}>
+                <Stack spacing={isMobile ? '14px' : '22px'}>
                   {_.chunk(props.otherPages.links, 2).map((pair, i) => (
                     <Stack
                       key={i}
-                      direction={isMobile ? "column" : "row"}
-                      spacing={isMobile ? "14px" : "22px"}
+                      direction={isMobile ? 'column' : 'row'}
+                      spacing={isMobile ? '14px' : '22px'}
                     >
                       <OtherPageCard
                         title={pair[0].title}

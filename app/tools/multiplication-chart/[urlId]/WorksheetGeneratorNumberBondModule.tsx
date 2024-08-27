@@ -28,14 +28,14 @@ const LinearNumberBondConfigurationIcon = (props: {
   filled: number[];
   selected: boolean;
 }) => (
-  <Stack direction='row' spacing='4.5px'>
+  <Stack direction="row" spacing="4.5px">
     <Stack
       border={`1.6px solid ${
         props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
       }`}
-      height='4px'
-      width='4px'
-      borderRadius='100%'
+      height="4px"
+      width="4px"
+      borderRadius="100%"
       bgcolor={
         props.selected && props.filled.includes(0)
           ? PALETTE.secondary.purple[2]
@@ -48,9 +48,9 @@ const LinearNumberBondConfigurationIcon = (props: {
       border={`1.6px solid ${
         props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
       }`}
-      height='4px'
-      width='4px'
-      borderRadius='100%'
+      height="4px"
+      width="4px"
+      borderRadius="100%"
       bgcolor={
         props.selected && props.filled.includes(1)
           ? PALETTE.secondary.purple[2]
@@ -63,9 +63,9 @@ const LinearNumberBondConfigurationIcon = (props: {
       border={`1.6px solid ${
         props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
       }`}
-      height='4px'
-      width='4px'
-      borderRadius='100%'
+      height="4px"
+      width="4px"
+      borderRadius="100%"
       bgcolor={
         props.selected && props.filled.includes(2)
           ? PALETTE.secondary.purple[2]
@@ -81,14 +81,14 @@ const TriangularNumberBondConfigurationIcon = (props: {
   filled: number[];
   selected: boolean;
 }) => (
-  <Stack spacing='4.5px' alignItems='center'>
+  <Stack spacing="4.5px" alignItems="center">
     <Stack
       border={`1.6px solid ${
         props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
       }`}
-      height='4px'
-      width='4px'
-      borderRadius='100%'
+      height="4px"
+      width="4px"
+      borderRadius="100%"
       bgcolor={
         props.selected && props.filled.includes(2)
           ? PALETTE.secondary.purple[2]
@@ -97,16 +97,16 @@ const TriangularNumberBondConfigurationIcon = (props: {
           : undefined
       }
     />
-    <Stack direction='row' spacing='8px'>
+    <Stack direction="row" spacing="8px">
       <Stack
         border={`1.6px solid ${
           props.selected
             ? PALETTE.secondary.purple[2]
             : PALETTE.secondary.grey[4]
         }`}
-        height='4px'
-        width='4px'
-        borderRadius='100%'
+        height="4px"
+        width="4px"
+        borderRadius="100%"
         bgcolor={
           props.selected && props.filled.includes(0)
             ? PALETTE.secondary.purple[2]
@@ -121,9 +121,9 @@ const TriangularNumberBondConfigurationIcon = (props: {
             ? PALETTE.secondary.purple[2]
             : PALETTE.secondary.grey[4]
         }`}
-        height='4px'
-        width='4px'
-        borderRadius='100%'
+        height="4px"
+        width="4px"
+        borderRadius="100%"
         bgcolor={
           props.selected && props.filled.includes(1)
             ? PALETTE.secondary.purple[2]
@@ -246,7 +246,7 @@ export function WorksheetGeneratorNumberBondModule(
   //       userDetails.user?.id
   //     )
   //       // .then((ws) => {
-  //       //   router.push(`/worksheet/${ws.id}`);
+  //       //   navigate(`/worksheet/${ws.id}`);
   //       //   return ws;
   //       // })
   //       .then((ws) => ws.id)
@@ -278,10 +278,10 @@ export function WorksheetGeneratorNumberBondModule(
   }, [previewWorksheet]);
 
   return (
-    <Stack flex={1} spacing='16px'>
-      <Stack direction='row' spacing='20px'>
-        <Captioned text='Orientation'>
-          <Stack direction='row' spacing='10px'>
+    <Stack flex={1} spacing="16px">
+      <Stack direction="row" spacing="20px">
+        <Captioned text="Orientation">
+          <Stack direction="row" spacing="10px">
             <CategorySelectionButton
               selected={orientation === 'horizontal' && empty === 'sum'}
               onClick={() => {
@@ -363,23 +363,23 @@ export function WorksheetGeneratorNumberBondModule(
           </Stack>
         </Captioned>
       </Stack>
-      <Stack direction='row' spacing='20px'>
-        <Captioned text='Bonded number'>
+      <Stack direction="row" spacing="20px">
+        <Captioned text="Bonded number">
           <UrsorInputField
             value={sum?.toString() ?? ''}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setSum(getZeroHandledNumber(event.target.value));
               setChangedValueAffectingSettings(true);
             }}
-            placeholder='Enter number'
-            width='100%'
+            placeholder="Enter number"
+            width="100%"
             leftAlign
             boldValue
-            height='44px'
+            height="44px"
             backgroundColor={props.whiteFields ? 'rgb(255,255,255)' : undefined}
           />
         </Captioned>
-        <Captioned text='Number of questions'>
+        <Captioned text="Number of questions">
           <UrsorInputField
             value={props.nProblems?.toString() ?? ''}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -387,11 +387,11 @@ export function WorksheetGeneratorNumberBondModule(
               props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
               setChangedValueAffectingSettings(true);
             }}
-            placeholder='Enter number'
-            width='100%'
+            placeholder="Enter number"
+            width="100%"
             leftAlign
             boldValue
-            height='44px'
+            height="44px"
             backgroundColor={props.whiteFields ? 'rgb(255,255,255)' : undefined}
           />
         </Captioned>

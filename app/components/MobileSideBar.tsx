@@ -49,14 +49,14 @@ const MobileSideBar = (props: {
   onClose: () => void;
   selectedPage: AstroPage;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <>
       <Stack
-        position='absolute'
-        bgcolor='rgba(0,0,0,0.2)'
-        width='100%'
-        height='100%'
+        position="absolute"
+        bgcolor="rgba(0,0,0,0.2)"
+        width="100%"
+        height="100%"
         onClick={props.onClose}
         sx={{
           pointerEvents: props.open ? undefined : 'none',
@@ -67,14 +67,14 @@ const MobileSideBar = (props: {
         zIndex={999}
       />
       <Stack
-        position='absolute'
-        spacing='32px'
-        height='100%'
-        width='272px'
-        bgcolor='rgb(255,255,255)'
-        px='28px'
-        py='56px'
-        boxSizing='border-box'
+        position="absolute"
+        spacing="32px"
+        height="100%"
+        width="272px"
+        bgcolor="rgb(255,255,255)"
+        px="28px"
+        py="56px"
+        boxSizing="border-box"
         sx={{
           transform: `translateX(${props.open ? 0 : '-100%'})`,
           transition: '0.5s',
@@ -82,30 +82,30 @@ const MobileSideBar = (props: {
         zIndex={1000}
       >
         <Stack
-          direction='row'
-          alignItems='center'
-          justifyContent='space-between'
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          <Image
-            src='https://ursorassets.s3.eu-west-1.amazonaws.com/astroLogo!.png'
+          <img
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/astroLogo!.png"
             height={20}
             width={59}
-            alt='astro'
+            alt="astro"
           />
           <Stack onClick={props.onClose}>
-            <XIcon height='28px' width='28px' />
+            <XIcon height="28px" width="28px" />
           </Stack>
         </Stack>
-        <Stack justifyContent='space-between' height='100%'>
-          <Stack spacing='24px'>
+        <Stack justifyContent="space-between" height="100%">
+          <Stack spacing="24px">
             {['profiles', 'filters', 'content'].map((page) => {
               const Icon = PAGE_ICONS[page as AstroPage];
               return (
                 <Stack
                   key={page}
-                  direction='row'
-                  spacing='12px'
-                  alignItems='center'
+                  direction="row"
+                  spacing="12px"
+                  alignItems="center"
                   sx={{
                     cursor: 'pointer',
                     '&:hover': { opacity: 0.7 },
@@ -119,11 +119,9 @@ const MobileSideBar = (props: {
                       },
                     },
                   }}
-                  onClick={() =>
-                    router.push(`/${PAGE_ROUTES[page as AstroPage]}`)
-                  }
+                  onClick={() => navigate(`/${PAGE_ROUTES[page as AstroPage]}`)}
                 >
-                  <Icon height='28px' width='28px' />
+                  <Icon height="28px" width="28px" />
                   <Typography
                     bold
                     color={
@@ -139,12 +137,10 @@ const MobileSideBar = (props: {
             })}
           </Stack>
           <Stack
-            direction='row'
-            spacing='12px'
-            alignItems='center'
-            onClick={() =>
-              router.push(`/${PAGE_ROUTES['account' as AstroPage]}`)
-            }
+            direction="row"
+            spacing="12px"
+            alignItems="center"
+            onClick={() => navigate(`/${PAGE_ROUTES['account' as AstroPage]}`)}
             sx={{
               cursor: 'pointer',
               '&:hover': { opacity: 0.7 },

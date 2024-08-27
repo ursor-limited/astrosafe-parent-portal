@@ -87,16 +87,16 @@ const RefreshButton = (props: { onClick: () => void }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
-      height='37.5px'
-      width='37.5px'
-      minHeight='37.5px'
-      minWidth='37.5px'
-      borderRadius='100%'
+      height="37.5px"
+      width="37.5px"
+      minHeight="37.5px"
+      minWidth="37.5px"
+      borderRadius="100%"
       border={`2px solid ${
         hovering ? PALETTE.secondary.purple[3] : PALETTE.secondary.purple[2]
       }`}
-      justifyContent='center'
-      alignItems='center'
+      justifyContent="center"
+      alignItems="center"
       sx={{
         cursor: 'pointer',
         transition: '0.2s',
@@ -116,7 +116,7 @@ const RefreshButton = (props: { onClick: () => void }) => {
       }}
       onClick={props.onClick}
     >
-      <SyncIcon height='20px' width='20px' />
+      <SyncIcon height="20px" width="20px" />
     </Stack>
   );
 };
@@ -130,12 +130,12 @@ export const CategorySelectionButton = (props: {
   return (
     <Stack
       flex={1}
-      height='44px'
-      boxSizing='border-box'
-      borderRadius='8px'
-      justifyContent='center'
-      alignItems='center'
-      bgcolor='rgb(255,255,255)'
+      height="44px"
+      boxSizing="border-box"
+      borderRadius="8px"
+      justifyContent="center"
+      alignItems="center"
+      bgcolor="rgb(255,255,255)"
       border={`2px solid ${
         props.selected
           ? PALETTE.secondary.purple[2]
@@ -159,7 +159,7 @@ export const CategorySelectionButton = (props: {
     >
       <Typography
         bold
-        variant='small'
+        variant="small"
         color={
           props.selected
             ? PALETTE.secondary.purple[2]
@@ -266,7 +266,7 @@ export default function WorksheetGenerator(props: {
 
   const userDetails = useUserContext();
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -279,7 +279,7 @@ export default function WorksheetGenerator(props: {
       }
       props.callback
         ? props.callback(id)
-        : router.push(
+        : navigate(
             !props.landOnWorksheetPage ? '/dashboard' : `/worksheet/${id}`
           );
     });
@@ -297,18 +297,18 @@ export default function WorksheetGenerator(props: {
   };
 
   return (
-    <Stack position='relative'>
+    <Stack position="relative">
       <Stack
-        position='absolute'
+        position="absolute"
         top={0}
         left={0}
-        bgcolor='rgb(255,255,255)'
-        height='100%'
-        width='100%'
-        justifyContent='center'
-        alignItems='center'
+        bgcolor="rgb(255,255,255)"
+        height="100%"
+        width="100%"
+        justifyContent="center"
+        alignItems="center"
         zIndex={3}
-        borderRadius='20px'
+        borderRadius="20px"
         sx={{
           opacity: loading ? 1 : 0,
           pointerEvents: loading ? undefined : 'none',
@@ -320,64 +320,64 @@ export default function WorksheetGenerator(props: {
       </Stack>
       <UrsorFadeIn duration={props.fadeIn ? 1000 : 0}>
         <Stack
-          borderRadius='20px'
-          bgcolor='rgb(255,255,255)'
+          borderRadius="20px"
+          bgcolor="rgb(255,255,255)"
           p={props.noPadding ? undefined : props.mobile ? '26px' : '42px'}
-          direction='row'
-          spacing='40px'
+          direction="row"
+          spacing="40px"
           boxShadow={
             props.glow
               ? `0 70px 86px ${alpha('rgb(186, 91, 222)', 0.3)}`
               : undefined
           }
-          position='relative'
+          position="relative"
         >
-          <Stack width={props.mobile ? undefined : '480px'} spacing='18px'>
-            <Captioned text='Worksheet title'>
+          <Stack width={props.mobile ? undefined : '480px'} spacing="18px">
+            <Captioned text="Worksheet title">
               <UrsorInputField
                 value={title}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setTitle(event.target.value)
                 }
-                placeholder='Type in your worksheet title'
-                width='100%'
+                placeholder="Type in your worksheet title"
+                width="100%"
                 leftAlign
                 boldValue
-                height='44px'
+                height="44px"
                 autoFocus
               />
             </Captioned>
-            <Captioned text='Description'>
+            <Captioned text="Description">
               <UrsorInputField
                 value={description}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setDescription(event.target.value)
                 }
-                placeholder='Type in your worksheet description'
-                width='100%'
+                placeholder="Type in your worksheet description"
+                width="100%"
                 leftAlign
                 boldValue
-                height='44px'
+                height="44px"
               />
             </Captioned>
-            <Stack height='28px' justifyContent='center'>
+            <Stack height="28px" justifyContent="center">
               <Stack
-                height='2px'
-                width='100%'
+                height="2px"
+                width="100%"
                 bgcolor={PALETTE.secondary.grey[2]}
               />
             </Stack>
             {!props.mobile || !props.worksheet ? (
               <Stack
-                direction='row'
-                spacing='20px'
+                direction="row"
+                spacing="20px"
                 sx={{
                   opacity: props.worksheet ? 0.35 : 1,
                   //pointerEvents: props.worksheet ? "none" : undefined,
                   cursor: props.worksheet ? 'not-allowed' : undefined,
                 }}
               >
-                <Captioned text='Worksheet topic'>
+                <Captioned text="Worksheet topic">
                   <UrsorSelect
                     items={[
                       {
@@ -399,13 +399,13 @@ export default function WorksheetGenerator(props: {
                     ]}
                     selected={[topic]}
                     callback={(t: string) => setTopic(t as WorksheetTopic)}
-                    width='100%'
+                    width="100%"
                     zIndex={999999999}
                     leftAlignPopover
                     disabled={!!props.worksheet}
                   />
                 </Captioned>
-                <Captioned text='Question type'>
+                <Captioned text="Question type">
                   <UrsorSelect
                     items={WORKSHEET_TOPIC_WORKSHEET_COMPONENTS[topic].map(
                       (t) => ({
@@ -417,7 +417,7 @@ export default function WorksheetGenerator(props: {
                     callback={(wid: string) => {
                       setWorksheetComponent(wid as WorksheetComponent);
                     }}
-                    width='100%'
+                    width="100%"
                     zIndex={999999999}
                     leftAlignPopover
                     disabled={!!props.worksheet}
@@ -470,9 +470,9 @@ export default function WorksheetGenerator(props: {
                   props.worksheet ? submitUpdate() : submitCreation()
                 }
                 dark
-                variant='tertiary'
+                variant="tertiary"
                 endIcon={PencilIcon}
-                width='100%'
+                width="100%"
               >
                 {props.buttonText || (props.worksheet ? 'Update' : 'Create')}
               </UrsorButton>
@@ -480,22 +480,22 @@ export default function WorksheetGenerator(props: {
           </Stack>
           {!props.mobile ? (
             <Stack
-              minWidth='268px'
-              position='relative'
+              minWidth="268px"
+              position="relative"
               flex={1}
-              justifyContent='space-between'
+              justifyContent="space-between"
             >
               <Stack
                 sx={{ transform: 'scale(0.333)', transformOrigin: 'top left' }}
-                position='absolute'
+                position="absolute"
                 top={0}
                 left={0}
-                boxShadow='0 0 60px rgba(0,0,0,0.07)'
+                boxShadow="0 0 60px rgba(0,0,0,0.07)"
               >
                 {previewWorksheet}
               </Stack>
               <Stack />
-              <Stack spacing='19px'>
+              <Stack spacing="19px">
                 {nPages > 1 ? (
                   <PageSelector
                     pageIndex={selectedPageIndex}
@@ -504,7 +504,7 @@ export default function WorksheetGenerator(props: {
                     nPages={nPages}
                   />
                 ) : null}
-                <Stack direction='row' spacing='12px'>
+                <Stack direction="row" spacing="12px">
                   <RefreshButton
                     onClick={() => setRegenerationCount(regenerationCount + 1)}
                   />
@@ -513,9 +513,9 @@ export default function WorksheetGenerator(props: {
                       props.worksheet ? submitUpdate() : submitCreation()
                     }
                     dark
-                    variant='tertiary'
+                    variant="tertiary"
                     endIcon={PencilIcon}
-                    width='100%'
+                    width="100%"
                   >
                     {props.buttonText ||
                       (props.worksheet ? 'Update' : 'Create')}

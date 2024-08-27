@@ -1,9 +1,8 @@
-import React from "react";
-import { Stack } from "@mui/system";
-import { VIBRANT_GRADIENT } from "../contents/common";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import Image from "next/image";
+import React from 'react';
+import { Stack } from '@mui/system';
+import { VIBRANT_GRADIENT } from '../contents/common';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
 
 const MobileAccountPageHeader = (props: {
   setUpgradeDialogOpen: () => void;
@@ -11,7 +10,7 @@ const MobileAccountPageHeader = (props: {
   smallerFont?: boolean;
 }) => (
   <Stack
-    minHeight={props.isMobile ? "107px" : "71px"}
+    minHeight={props.isMobile ? '107px' : '71px'}
     direction="row"
     alignItems="space-between"
     sx={{
@@ -19,7 +18,7 @@ const MobileAccountPageHeader = (props: {
     }}
     borderRadius="12px"
     overflow="hidden"
-    spacing={props.smallerFont || props.isMobile ? "12px" : undefined}
+    spacing={props.smallerFont || props.isMobile ? '12px' : undefined}
     width="100%"
   >
     <Stack spacing="16px" direction="column" p="12px" boxSizing="border-box">
@@ -40,7 +39,7 @@ const MobileAccountPageHeader = (props: {
       </UrsorButton>
     </Stack>
     <Stack justifyContent="flex-end" alignItems="flex-end">
-      <Image
+      <img
         src="https://ursorassets.s3.eu-west-1.amazonaws.com/ELLIPSE!.png"
         height={95}
         width={84}

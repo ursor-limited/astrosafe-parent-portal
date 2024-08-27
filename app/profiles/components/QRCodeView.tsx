@@ -1,13 +1,13 @@
-import ApiController from "@/app/api";
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import useAuth from "@/app/hooks/useAuth";
+import ApiController from '@/app/api';
+import { Stack } from '@mui/system';
+
+import { useEffect, useState } from 'react';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import useAuth from '@/app/hooks/useAuth';
 
 const QRCodeView = () => {
   const { user } = useAuth();
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<string>('');
   useEffect(() => {
     user?.group_id && ApiController.getQRCode(user.group_id).then(setImage);
   }, [user?.group_id]);
@@ -24,9 +24,9 @@ const QRCodeView = () => {
         <Stack
           sx={{
             background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
-            "-webkit-text-fill-color": "transparent",
-            backgroundClip: "text",
-            "-webkit-background-clip": "text",
+            '-webkit-text-fill-color': 'transparent',
+            backgroundClip: 'text',
+            '-webkit-background-clip': 'text',
           }}
         >
           <Typography variant="h4">Welcome to AstroSafe</Typography>
@@ -35,7 +35,7 @@ const QRCodeView = () => {
           <Typography
             variant="medium"
             bold
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: 'center' }}
             color={PALETTE.secondary.grey[4]}
           >
             {
@@ -58,13 +58,13 @@ const QRCodeView = () => {
           <Typography
             variant="large"
             bold
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: 'center' }}
             color={PALETTE.secondary.grey[5]}
           >
             Scan and download the browser on your kids device
           </Typography>
         </Stack>
-        {image ? <Image src={image} width={237} height={237} alt="qr" /> : null}
+        {image ? <img src={image} width={237} height={237} alt="qr" /> : null}
         <UrsorButton dark variant="tertiary">
           Or follow this link
         </UrsorButton>

@@ -9,19 +9,19 @@ export default function ExplainerCard(props: {
 }) {
   return (
     <Stack
-      width='313px'
-      height='425px'
+      width="313px"
+      height="425px"
       bgcolor={PALETTE.secondary.grey[1]}
-      borderRadius='12px'
-      justifyContent='space-between'
-      overflow='hidden'
+      borderRadius="12px"
+      justifyContent="space-between"
+      overflow="hidden"
     >
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-        <Image
+        <img
           src={props.imageUrl}
           style={{ objectFit: 'cover' }}
           fill
-          alt='explainer card image'
+          alt="explainer card image"
         />
       </div>
       {/* <Stack
@@ -36,13 +36,13 @@ export default function ExplainerCard(props: {
       /> */}
       <Stack
         flex={1}
-        spacing='16px'
-        px='12px'
-        py='12px'
-        boxSizing='border-box'
-        minHeight='182px'
+        spacing="16px"
+        px="12px"
+        py="12px"
+        boxSizing="border-box"
+        minHeight="182px"
       >
-        <Typography htmlTag='h4' bold variant='h5'>
+        <Typography htmlTag="h4" bold variant="h5">
           {props.title}
         </Typography>
         <Typography>{props.text}</Typography>

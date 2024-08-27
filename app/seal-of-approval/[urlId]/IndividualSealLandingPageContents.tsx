@@ -22,14 +22,14 @@ export default function IndividualSealLandingPageContents(
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-  const router = useRouter();
+  const navigate = useNavigate();
   const [explanationDialogOpen, setExplanationDialogOpen] =
     useState<boolean>(false);
   return (
     <>
       <AstroLandingPage
         title={[props.companyName]}
-        subtitle='This page confirms that the website, mobile app, or other technology shown below is a member in the AstroSafe Seal Program.'
+        subtitle="This page confirms that the website, mobile app, or other technology shown below is a member in the AstroSafe Seal Program."
         mobile={isMobile}
         faqs={{
           cards: [
@@ -62,18 +62,18 @@ export default function IndividualSealLandingPageContents(
         }}
         viewports={[
           <Stack
-            key='grid'
+            key="grid"
             spacing={isMobile ? '16px' : '28px'}
-            alignItems='center'
-            pt='100px'
+            alignItems="center"
+            pt="100px"
             px={isMobile ? '24px' : undefined}
           >
-            <Stack position='relative' width='100%' alignItems='center'>
+            <Stack position="relative" width="100%" alignItems="center">
               {props.heroImage?.includes('placeholder') ? (
                 <Stack
-                  position='absolute'
-                  top='50%'
-                  left='50%'
+                  position="absolute"
+                  top="50%"
+                  left="50%"
                   sx={{ transform: 'translate(-50%, -50%)' }}
                   zIndex={2}
                 >
@@ -98,7 +98,7 @@ export default function IndividualSealLandingPageContents(
                       boxShadow: '0 0 30px rgba(0,0,0,0.05)',
                     }}
                   >
-                    <Image
+                    <img
                       src={
                         props.heroImage
                           ? `${S3_BASE_URL}/${props.heroImage}`
@@ -123,7 +123,7 @@ export default function IndividualSealLandingPageContents(
                       bgcolor="rgba(0,0,0,0.5)"
                       borderRadius="12px"
                     /> */}
-                    <Image
+                    <img
                       src={
                         props.heroImage
                           ? `${S3_BASE_URL}/${props.heroImage}`
@@ -147,11 +147,11 @@ export default function IndividualSealLandingPageContents(
               <ApprovedCompanyCard {...props} mobile={isMobile} />
             </Stack>
             <Stack
-              borderRadius='12px'
+              borderRadius="12px"
               bgcolor={PALETTE.secondary.grey[1]}
-              spacing='10px'
-              p='20px'
-              boxSizing='border-box'
+              spacing="10px"
+              p="20px"
+              boxSizing="border-box"
               width={isMobile ? '100%' : '1000px'}
             >
               <Typography bold>Description</Typography>
@@ -161,16 +161,16 @@ export default function IndividualSealLandingPageContents(
             </Stack>
           </Stack>,
           <LandingPageViewport
-            key='explanation'
-            title='About our AstroSafe Seals'
-            supertitle='Certification'
-            subtitle='The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods.'
+            key="explanation"
+            title="About our AstroSafe Seals"
+            supertitle="Certification"
+            subtitle="The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods."
           >
-            <Stack direction='row' spacing={isMobile ? '8px' : '12px'}>
+            <Stack direction="row" spacing={isMobile ? '8px' : '12px'}>
               <UrsorButton
                 width={isMobile ? '160px' : '226px'}
                 dark
-                variant='tertiary'
+                variant="tertiary"
                 onClick={() =>
                   (window.location.href =
                     'https://form.typeform.com/to/mVezziat')
@@ -179,7 +179,7 @@ export default function IndividualSealLandingPageContents(
                 Enrol now
               </UrsorButton>
               <UrsorButton
-                variant='secondary'
+                variant="secondary"
                 width={isMobile ? '160px' : '226px'}
                 onClick={() => setExplanationDialogOpen(true)}
               >
@@ -208,13 +208,13 @@ export default function IndividualSealLandingPageContents(
           </LandingPageViewport>,
         ]}
       >
-        <Stack width='100%' alignItems='center' spacing='32px'>
-          <Stack direction='row' spacing={isMobile ? '8px' : '12px'}>
+        <Stack width="100%" alignItems="center" spacing="32px">
+          <Stack direction="row" spacing={isMobile ? '8px' : '12px'}>
             <UrsorButton
               size={isMobile ? 'medium' : 'large'}
               width={isMobile ? '160px' : '226px'}
               dark
-              variant='tertiary'
+              variant="tertiary"
               onClick={() =>
                 (window.location.href = 'https://form.typeform.com/to/mVezziat')
               }
@@ -225,7 +225,7 @@ export default function IndividualSealLandingPageContents(
               size={isMobile ? 'medium' : 'large'}
               width={isMobile ? '160px' : '226px'}
               dark
-              onClick={() => router.push('/seal-of-approval')}
+              onClick={() => navigate('/seal-of-approval')}
             >
               View list
             </UrsorButton>

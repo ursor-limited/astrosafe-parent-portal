@@ -22,11 +22,11 @@ const SealExplanationDialog = (props: {
       p={props.mobile ? '16px' : undefined}
     >
       <Stack
-        borderRadius='12px'
+        borderRadius="12px"
         bgcolor={props.mobile ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)'}
         direction={props.mobile ? 'column' : 'row'}
-        p='16px'
-        boxSizing='border-box'
+        p="16px"
+        boxSizing="border-box"
         spacing={props.mobile ? '16px' : '24px'}
       >
         {!props.mobile ? (
@@ -34,25 +34,25 @@ const SealExplanationDialog = (props: {
             minWidth={props.mobile ? '100%' : '170px'}
             width={props.mobile ? '100%' : '170px'}
             bgcolor={props.mobile ? undefined : alpha('#DFDAFA', 0.36)}
-            justifyContent='center'
-            alignItems='center'
-            borderRadius='12px'
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="12px"
             //boxShadow={props.mobile ? undefined : `0 0 30px ${"#DFDAFA"}`}
           >
-            <Image
-              src='https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png'
-              alt='Astro seal'
+            <img
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png"
+              alt="Astro seal"
               height={80}
               width={134}
             />
           </Stack>
         ) : null}
-        <Stack spacing='5px'>
-          <Stack direction='row' spacing='8px' alignItems='center'>
+        <Stack spacing="5px">
+          <Stack direction="row" spacing="8px" alignItems="center">
             {props.mobile ? (
-              <Image
-                src='https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png'
-                alt='Astro seal'
+              <img
+                src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png"
+                alt="Astro seal"
                 height={23}
                 width={38}
               />
@@ -87,11 +87,11 @@ const SealExplanationDialog = (props: {
         </Stack>
       </Stack>
       <Stack
-        borderRadius='12px'
+        borderRadius="12px"
         bgcolor={props.mobile ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)'}
         direction={props.mobile ? 'column' : 'row'}
-        p='16px'
-        boxSizing='border-box'
+        p="16px"
+        boxSizing="border-box"
         spacing={props.mobile ? '16px' : '24px'}
       >
         {!props.mobile ? (
@@ -99,25 +99,25 @@ const SealExplanationDialog = (props: {
             minWidth={props.mobile ? '100%' : '170px'}
             width={props.mobile ? '100%' : '170px'}
             bgcolor={props.mobile ? undefined : alpha('#ddd6ff', 0.36)}
-            justifyContent='center'
-            alignItems='center'
-            borderRadius='12px'
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="12px"
             //boxShadow={props.mobile ? undefined : `0 0 30px ${"#ddd6ff"}`}
           >
-            <Image
-              src='https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png'
-              alt='Astro seal'
+            <img
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+              alt="Astro seal"
               height={80}
               width={134}
             />
           </Stack>
         ) : null}
-        <Stack spacing='5px'>
-          <Stack direction='row' spacing='8px' alignItems='center'>
+        <Stack spacing="5px">
+          <Stack direction="row" spacing="8px" alignItems="center">
             {props.mobile ? (
-              <Image
-                src='https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png'
-                alt='Astro seal'
+              <img
+                src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+                alt="Astro seal"
                 height={23}
                 width={38}
               />

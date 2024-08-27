@@ -1,11 +1,10 @@
-"use client";
+'use client';
 
-import { Stack } from "@mui/system";
-import UrsorPopover from "./UrsorPopover";
-import { PALETTE, Typography } from "@/ui";
-import ChevronDown from "@/images/icons/ChevronDown.svg";
-import { useState } from "react";
-import Image from "next/image";
+import { Stack } from '@mui/system';
+import UrsorPopover from './UrsorPopover';
+import { PALETTE, Typography } from '@/ui';
+import ChevronDown from '@/images/icons/ChevronDown.svg';
+import { useState } from 'react';
 
 export interface ITitleRowItem {
   text: string;
@@ -27,7 +26,7 @@ const TitleRowItemCore = (
   const ActualItem = (
     <Stack
       direction="row"
-      spacing={props.isMobile ? "6px" : "12px"}
+      spacing={props.isMobile ? '6px' : '12px'}
       onClick={() => {
         if (props.options?.length === 0) return;
         setOpen(true);
@@ -39,10 +38,10 @@ const TitleRowItemCore = (
       <Stack justifyContent="center">
         <Typography
           bold
-          variant={props.isMobile ? "medium" : "h4"}
+          variant={props.isMobile ? 'medium' : 'h4'}
           color={!props.last ? PALETTE.secondary.grey[3] : undefined}
           maxLines={1}
-          sx={{ wordBreak: "break-all" }}
+          sx={{ wordBreak: 'break-all' }}
         >
           {props.text}
         </Typography>
@@ -51,10 +50,10 @@ const TitleRowItemCore = (
         <Stack
           justifyContent="flex-end"
           height="100%"
-          sx={{ transform: "translateY(-1px)" }}
+          sx={{ transform: 'translateY(-1px)' }}
         >
           <Typography
-            variant={props.isMobile ? "tiny" : "normal"}
+            variant={props.isMobile ? 'tiny' : 'normal'}
             color={PALETTE.secondary.grey[4]}
           >
             {props.label}
@@ -63,8 +62,8 @@ const TitleRowItemCore = (
       ) : null}
       {props.options && props.options.length > 0 ? (
         <ChevronDown
-          height={props.isMobile ? "24px" : "32px"}
-          width={props.isMobile ? "24px" : "32px"}
+          height={props.isMobile ? '24px' : '32px'}
+          width={props.isMobile ? '24px' : '32px'}
         />
       ) : null}
     </Stack>
@@ -81,16 +80,16 @@ const TitleRowItemCore = (
               alignItems="center"
               spacing="8px"
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.6 },
+                transition: '0.2s',
               }}
               onClick={o.callback}
             >
               {o.image || o.imageUrl ? (
                 <Stack borderRadius="100%" overflow="hidden">
-                  <Image
-                    src={o.imageUrl ?? ""}
+                  <img
+                    src={o.imageUrl ?? ''}
                     height={20}
                     width={20}
                     alt="option image"
@@ -116,7 +115,7 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
   return (
     <Stack
       direction="row"
-      spacing={props.isMobile ? "6px" : "12px"}
+      spacing={props.isMobile ? '6px' : '12px'}
       alignItems="center"
     >
       {props.items.map((x, i) => {
@@ -126,13 +125,13 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
             key={i}
             alignItems="center"
             direction="row"
-            spacing={props.isMobile ? "6px" : "12px"}
+            spacing={props.isMobile ? '6px' : '12px'}
             sx={
               !(isLast && x.options?.length === 0)
                 ? {
-                    cursor: "pointer",
-                    transition: "0.2s",
-                    "&:hover": { opacity: 0.7 },
+                    cursor: 'pointer',
+                    transition: '0.2s',
+                    '&:hover': { opacity: 0.7 },
                   }
                 : undefined
             }
@@ -145,7 +144,7 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
             {!isLast ? (
               <Typography
                 bold
-                variant={props.isMobile ? "medium" : "h4"}
+                variant={props.isMobile ? 'medium' : 'h4'}
                 color={PALETTE.secondary.grey[3]}
               >
                 /

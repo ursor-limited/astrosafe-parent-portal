@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import Image from "next/image";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "@/ui";
-import _ from "lodash";
-import { useRouter } from "next/navigation";
-import ApiController from "@/app/api";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import ProfilePageDesktopBody from "./body-desktop";
-import DeviceRenameDialog from "../../components/DeviceRenameDialog";
-import DeviceDisconnectDialog from "../../components/DeviceDisconnectDialog";
-import ProfilePageMobileBody from "./body-mobile";
-import { DEVICE_TYPE_DISPLAY_NAMES } from "../../components/DeviceCard";
-import { IEnrichedContentBucket } from "@/app/folders/contents/common";
-import { IEnrichedDevice } from "../../contents/common";
-import AddFolderDialog from "../components/AddFolderDialog";
-import NotificationContext from "@/app/components/NotificationContext";
-import FolderCreationDialog from "@/app/folders/[id]/components/FolderCreationDialog";
-import { IContentBucket } from "../components/ContentTab";
-import useDeviceOnlineStatus from "../../components/useDeviceOnlineStatus";
-import { getInitials } from "@/app/account/contents/common";
-import useAuth from "@/app/hooks/useAuth";
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import PencilIcon from '@/images/icons/Pencil.svg';
 
-export type DeviceType = "chrome" | "android" | "ios";
+import { Stack } from '@mui/system';
+import { PALETTE, Typography } from '@/ui';
+import _ from 'lodash';
+import { useRouter } from 'next/navigation';
+import ApiController from '@/app/api';
+import { IDevice } from '@/app/filters/[id]/contents/common';
+import ProfilePageDesktopBody from './body-desktop';
+import DeviceRenameDialog from '../../components/DeviceRenameDialog';
+import DeviceDisconnectDialog from '../../components/DeviceDisconnectDialog';
+import ProfilePageMobileBody from './body-mobile';
+import { DEVICE_TYPE_DISPLAY_NAMES } from '../../components/DeviceCard';
+import { IEnrichedContentBucket } from '@/app/folders/contents/common';
+import { IEnrichedDevice } from '../../contents/common';
+import AddFolderDialog from '../components/AddFolderDialog';
+import NotificationContext from '@/app/components/NotificationContext';
+import FolderCreationDialog from '@/app/folders/[id]/components/FolderCreationDialog';
+import { IContentBucket } from '../components/ContentTab';
+import useDeviceOnlineStatus from '../../components/useDeviceOnlineStatus';
+import { getInitials } from '@/app/account/contents/common';
+import useAuth from '@/app/hooks/useAuth';
 
-export type AstroAccountTab = "content" | "insights" | "apps" | "limits";
+export type DeviceType = 'chrome' | 'android' | 'ios';
+
+export type AstroAccountTab = 'content' | 'insights' | 'apps' | 'limits';
 
 export default function ProfilePage(props: {
   deviceId: number;
@@ -48,7 +48,7 @@ export default function ProfilePage(props: {
     loadDevice();
   }, [loadDevice]);
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
   const [disconnectDialogOpen, setDisconnectDialogOpen] =
@@ -82,11 +82,11 @@ export default function ProfilePage(props: {
 
   const titleRow = [
     {
-      text: "All Kids",
-      callback: () => router.push("/profiles"),
+      text: 'All Kids',
+      callback: () => navigate('/profiles'),
     },
     {
-      text: device?.name ?? "",
+      text: device?.name ?? '',
       image: (
         <Stack position="relative" borderRadius="100%">
           <Stack
@@ -99,8 +99,8 @@ export default function ProfilePage(props: {
             width={props.isMobile ? 24 : 36}
           >
             {device?.profileAvatarUrl ? (
-              <Image
-                src={device?.profileAvatarUrl ?? ""}
+              <img
+                src={device?.profileAvatarUrl ?? ''}
                 height={props.isMobile ? 24 : 36}
                 width={props.isMobile ? 24 : 36}
                 alt="device profile"
@@ -110,9 +110,9 @@ export default function ProfilePage(props: {
                 color="rgb(255,255,255)"
                 bold
                 variant="small"
-                sx={{ transform: "translateY(0.5px)" }}
+                sx={{ transform: 'translateY(0.5px)' }}
               >
-                {getInitials(device?.name ?? "")}
+                {getInitials(device?.name ?? '')}
               </Typography>
             )}
           </Stack>
@@ -126,7 +126,7 @@ export default function ProfilePage(props: {
               position="absolute"
               bottom={0}
               right={0}
-              sx={{ transform: "translate(2px, 2px)" }}
+              sx={{ transform: 'translate(2px, 2px)' }}
             />
           ) : null}
         </Stack>
@@ -136,7 +136,7 @@ export default function ProfilePage(props: {
         .map((d) => ({
           text: d.name,
           imageUrl: d.profileAvatarUrl,
-          callback: () => router.push(`/profiles/${d.id}`),
+          callback: () => navigate(`/profiles/${d.id}`),
         })),
       label:
         !props.isMobile && device?.deviceType
@@ -147,7 +147,7 @@ export default function ProfilePage(props: {
 
   const actions = [
     {
-      text: "Edit name",
+      text: 'Edit name',
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
@@ -155,12 +155,12 @@ export default function ProfilePage(props: {
 
   const notificationCtx = useContext(NotificationContext);
 
-  const createAndAddFolder = (title: IContentBucket["title"]) =>
+  const createAndAddFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
     ApiController.createFolder(title, user.group_id).then((response) => {
       ApiController.addFolderToDevice(response.contentBucketId, props.deviceId);
-      router.push(`/folders/${response.contentBucketId}`);
-      notificationCtx.success("Created Folder and added it to the Device.");
+      navigate(`/folders/${response.contentBucketId}`);
+      notificationCtx.success('Created Folder and added it to the Device.');
     });
 
   return device ? (
@@ -194,10 +194,10 @@ export default function ProfilePage(props: {
         onSubmit={(name) => {
           ApiController.renameDevice(props.deviceId, name)
             .then(loadDevice)
-            .then(() => notificationCtx.success("Renamed Device"));
+            .then(() => notificationCtx.success('Renamed Device'));
           setRenameDialogOpen(false);
         }}
-        name={device.name ?? ""}
+        name={device.name ?? ''}
         isMobile={props.isMobile}
       />
       <DeviceDisconnectDialog
@@ -214,7 +214,7 @@ export default function ProfilePage(props: {
           ApiController.addFolderToDevice(id, props.deviceId)
             .then(loadFolders)
             .then(() => setAddFolderDialogOpen(false))
-            .then(() => notificationCtx.success("Added Folder to Device."))
+            .then(() => notificationCtx.success('Added Folder to Device.'))
         }
         openCreateNewDialog={() => {
           setCreateFolderDialogOpen(true);

@@ -11,8 +11,8 @@ const DashboardSignupPromptDialog = (props: {
   const { login } = useAuth();
   return (
     <UrsorDialog
-      supertitle='Sign in'
-      title='SafeTube sign in'
+      supertitle="Sign in"
+      title="SafeTube sign in"
       subtitle={[
         'Log in or create an account to store your videos in a dashboard',
         'and create unlimited videos.',
@@ -26,15 +26,15 @@ const DashboardSignupPromptDialog = (props: {
         },
         icon: ChevronRight,
       }}
-      width='90%'
-      maxWidth='880px'
+      width="90%"
+      maxWidth="880px"
       noCloseButton
     >
-      <Image
-        src='https://ursorassets.s3.eu-west-1.amazonaws.com/GraphIllustration.svg'
+      <img
+        src="https://ursorassets.s3.eu-west-1.amazonaws.com/GraphIllustration.svg"
         width={150}
         height={150}
-        alt='Upgrade dialog illustration'
+        alt="Upgrade dialog illustration"
       />
     </UrsorDialog>
   );

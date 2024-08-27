@@ -1,18 +1,18 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { AstroBentoCard } from "./AstroBentoCard";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import XIcon from "@/images/icons/X.svg";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import _ from "lodash";
-import { IDevice } from "../contents/common";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import AllDevicesDialog from "@/app/components/AllDevicesDialog";
-import DeviceCard from "@/app/profiles/components/DeviceCard";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import { AstroBentoCard } from './AstroBentoCard';
+import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import XIcon from '@/images/icons/X.svg';
+import { Stack } from '@mui/system';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import _ from 'lodash';
+import { IDevice } from '../contents/common';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import AllDevicesDialog from '@/app/components/AllDevicesDialog';
+import DeviceCard from '@/app/profiles/components/DeviceCard';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const FilterPageDevicesSection = (props: {
   devices: IDevice[];
@@ -20,7 +20,7 @@ const FilterPageDevicesSection = (props: {
   onRemove: () => void;
   openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false);
@@ -29,9 +29,9 @@ const FilterPageDevicesSection = (props: {
       <AstroBentoCard
         title={
           props.devices.length === 0
-            ? "No Devices yet have this Filter applied"
+            ? 'No Devices yet have this Filter applied'
             : props.devices.length === 1
-            ? "Filter applied to this Device"
+            ? 'Filter applied to this Device'
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }
         info={INFOS.filterDevice}
@@ -66,9 +66,9 @@ const FilterPageDevicesSection = (props: {
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <Stack
                   sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.7 },
+                    transition: '0.2s',
                   }}
                 >
                   <DeviceCard
@@ -81,7 +81,7 @@ const FilterPageDevicesSection = (props: {
                       </Stack>
                     }
                     noExtras
-                    onClick={() => router.push(`/profiles/${d.id}`)}
+                    onClick={() => navigate(`/profiles/${d.id}`)}
                   />
                 </Stack>
               </UrsorFadeIn>
@@ -96,11 +96,11 @@ const FilterPageDevicesSection = (props: {
             justifyContent="center"
             alignItems="center"
             bgcolor={
-              hoveringOnButton ? PALETTE.secondary.grey[1] : "rgb(255,255,255)"
+              hoveringOnButton ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)'
             }
             sx={{
-              transition: "0.2s",
-              cursor: "pointer",
+              transition: '0.2s',
+              cursor: 'pointer',
               svg: {
                 path: {
                   fill: PALETTE.secondary.grey[4],
@@ -123,7 +123,7 @@ const FilterPageDevicesSection = (props: {
       </AstroBentoCard>
       <AllDevicesDialog
         title={`${props.devices.length} ${
-          props.devices.length === 1 ? "Device has" : "Devices have"
+          props.devices.length === 1 ? 'Device has' : 'Devices have'
         } this Filter applied`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}

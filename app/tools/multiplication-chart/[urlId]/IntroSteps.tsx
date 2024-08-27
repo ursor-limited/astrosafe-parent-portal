@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Stack, keyframes } from "@mui/system";
-import Image from "next/image";
-import { IntroBox } from "./IntroBox";
-import Wave from "@/images/Wave.png";
-import ShootingStarMobile from "@/images/ShootingStarMobile.png";
+import { Stack, keyframes } from '@mui/system';
+
+import { IntroBox } from './IntroBox';
+import Wave from '@/images/Wave.png';
+import ShootingStarMobile from '@/images/ShootingStarMobile.png';
 
 export const getPulse = (
   center: number,
   amplitude: number,
-  dim: "x" | "y"
+  dim: 'x' | 'y'
 ) => keyframes`
   from {
     transform: translate${dim.toUpperCase()}(${center - amplitude}px)
@@ -40,7 +40,7 @@ export const IntroSteps = (props: {
             marginLeft="auto"
             marginRight="auto"
           >
-            <Image src={Wave.src} fill alt="Wave" />
+            <img src={Wave.src} fill alt="Wave" />
           </Stack>
           <Stack
             position="absolute"
@@ -49,7 +49,7 @@ export const IntroSteps = (props: {
             height="100px"
             sx={{
               background:
-                "linear-gradient(90deg, rgb(255,255,255), rgba(255,255,255,0))",
+                'linear-gradient(90deg, rgb(255,255,255), rgba(255,255,255,0))',
             }}
           />
           <Stack
@@ -59,7 +59,7 @@ export const IntroSteps = (props: {
             height="100px"
             sx={{
               background:
-                "linear-gradient(-90deg, rgb(255,255,255), rgba(255,255,255,0))",
+                'linear-gradient(-90deg, rgb(255,255,255), rgba(255,255,255,0))',
             }}
           />
 
@@ -73,9 +73,9 @@ export const IntroSteps = (props: {
           >
             <Stack
               sx={{
-                animation: `${getPulse(0, 10, "y")} 3.2s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
+                animation: `${getPulse(0, 10, 'y')} 3.2s ease-in-out`,
+                animationDirection: 'alternate',
+                animationIterationCount: 'infinite',
               }}
             >
               <IntroBox
@@ -87,10 +87,10 @@ export const IntroSteps = (props: {
             <Stack
               sx={{
                 // transform: "translateY(57px)",
-                animation: `${getPulse(55, 12, "y")} 3s ease-in-out`,
+                animation: `${getPulse(55, 12, 'y')} 3s ease-in-out`,
                 animationDelay: 0.5,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
+                animationDirection: 'alternate',
+                animationIterationCount: 'infinite',
               }}
             >
               <IntroBox
@@ -102,9 +102,9 @@ export const IntroSteps = (props: {
             <Stack
               sx={{
                 // transform: "translateY(57px)",
-                animation: `${getPulse(20, 15, "y")} 4s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
+                animation: `${getPulse(20, 15, 'y')} 4s ease-in-out`,
+                animationDirection: 'alternate',
+                animationIterationCount: 'infinite',
               }}
             >
               <IntroBox
@@ -127,12 +127,12 @@ export const IntroSteps = (props: {
             marginLeft="auto"
             marginRight="auto"
           >
-            <Image
+            <img
               src={ShootingStarMobile.src}
               width={266}
               height={253}
               alt="Intro square"
-              style={{ transform: "scaleY(-1) rotate(-60deg)" }}
+              style={{ transform: 'scaleY(-1) rotate(-60deg)' }}
             />
           </Stack>
           <Stack
@@ -145,9 +145,9 @@ export const IntroSteps = (props: {
           >
             <Stack
               sx={{
-                animation: `${getPulse(0, 10, "y")} 3.2s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
+                animation: `${getPulse(0, 10, 'y')} 3.2s ease-in-out`,
+                animationDirection: 'alternate',
+                animationIterationCount: 'infinite',
               }}
               spacing="60px"
             >
@@ -160,10 +160,10 @@ export const IntroSteps = (props: {
               <Stack
                 sx={{
                   // transform: "translateY(57px)",
-                  animation: `${getPulse(10, 12, "y")} 3s ease-in-out`,
+                  animation: `${getPulse(10, 12, 'y')} 3s ease-in-out`,
                   animationDelay: 0.5,
-                  animationDirection: "alternate",
-                  animationIterationCount: "infinite",
+                  animationDirection: 'alternate',
+                  animationIterationCount: 'infinite',
                 }}
               >
                 <IntroBox
@@ -176,9 +176,9 @@ export const IntroSteps = (props: {
             </Stack>
             <Stack
               sx={{
-                animation: `${getPulse(0, 15, "y")} 4s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
+                animation: `${getPulse(0, 15, 'y')} 4s ease-in-out`,
+                animationDirection: 'alternate',
+                animationIterationCount: 'infinite',
               }}
             >
               <IntroBox

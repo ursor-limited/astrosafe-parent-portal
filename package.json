@@ -1,5 +1,5 @@
 {
-  "name": "video-player",
+  "name": "astro-parent-portal",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -32,7 +32,6 @@
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.0",
     "mixpanel-browser": "^2.48.1",
-    "next": "14.0.4",
     "next-intl": "^3.9.5",
     "next-svgr": "^0.0.2",
     "react": "^18",
@@ -44,6 +43,7 @@
     "react-image-size": "^2.3.2",
     "react-popper": "^2.3.0",
     "react-quill": "^2.0.0",
+    "react-router-dom": "^6.26.1",
     "react-slick": "^0.29.0",
     "react-to-print": "^2.15.1",
     "react-tsparticles": "^2.12.2",

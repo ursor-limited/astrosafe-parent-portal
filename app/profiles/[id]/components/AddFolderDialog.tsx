@@ -1,25 +1,25 @@
-import ApiController from "@/app/api";
-import { SearchInput } from "@/app/components/SearchInput";
-import UrsorDialog from "@/app/components/UrsorDialog";
-import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import { IContentBucket } from "./ContentTab";
-import { IGroup } from "@/app/folders/[id]/contents/common";
-import { IEnrichedContentBucket } from "@/app/folders/contents/common";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
+import ApiController from '@/app/api';
+import { SearchInput } from '@/app/components/SearchInput';
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { IDevice } from '@/app/filters/[id]/contents/common';
+import { IContentBucket } from './ContentTab';
+import { IGroup } from '@/app/folders/[id]/contents/common';
+import { IEnrichedContentBucket } from '@/app/folders/contents/common';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
 
 const AddFolderDialog = (props: {
   open: boolean;
   onClose: () => void;
-  onAdd: (id: IDevice["id"]) => void;
+  onAdd: (id: IDevice['id']) => void;
   openCreateNewDialog: () => void;
   addedFolders: IEnrichedContentBucket[];
   isMobile?: boolean;
-  groupId: IGroup["id"];
+  groupId: IGroup['id'];
 }) => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [allFolders, setAllFolders] = useState<IContentBucket[]>([]);
   useEffect(() => {
     ApiController.getGroupFolders(props.groupId).then((d) => setAllFolders(d));
@@ -54,16 +54,16 @@ const AddFolderDialog = (props: {
       onCloseCallback={props.onClose}
       title="Add a Folder"
       subtitle={[
-        "Add all of the Content from the selected Folder to this Device. Or create a new one.",
+        'Add all of the Content from the selected Folder to this Device. Or create a new one.',
       ]}
       width="434px"
-      height={props.isMobile ? "76%" : undefined}
+      height={props.isMobile ? '76%' : undefined}
       isMobile={props.isMobile}
     >
       <SearchInput
         value={searchValue}
         callback={setSearchValue}
-        clearCallback={() => setSearchValue("")}
+        clearCallback={() => setSearchValue('')}
         fullWidth
         height="41px"
         grey
@@ -73,7 +73,7 @@ const AddFolderDialog = (props: {
           <Typography
             color={PALETTE.secondary.grey[3]}
             bold
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: 'center' }}
           >
             All of your Content Folders are already on this Device.
           </Typography>
@@ -88,9 +88,9 @@ const AddFolderDialog = (props: {
                 spacing="8px"
                 px="8px"
                 sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.7 },
+                  cursor: 'pointer',
+                  transition: '0.2s',
+                  '&:hover': { opacity: 0.7 },
                 }}
                 onClick={() => props.onAdd(d.id)}
               >
@@ -100,7 +100,7 @@ const AddFolderDialog = (props: {
                 minWidth={23}
                 minHeight={23}
               >
-                <Image
+                <img
                   src={d.profileAvatarUrl}
                   height={23}
                   width={23}

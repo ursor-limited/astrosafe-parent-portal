@@ -11,22 +11,22 @@ export default function OtherPageCard(props: {
 }) {
   return (
     <Link
-      target='_blank'
+      target="_blank"
       href={props.urlId}
       style={{
         textDecoration: 'none',
       }}
-      rel='noreferrer'
+      rel="noreferrer"
     >
       <Stack
-        maxWidth='480px'
+        maxWidth="480px"
         height={props.mobile ? '100px' : '163px'}
         maxHeight={props.mobile ? '100px' : '163px'}
-        alignItems='center'
-        direction='row'
+        alignItems="center"
+        direction="row"
         bgcolor={PALETTE.secondary.grey[1]}
-        borderRadius='12px'
-        overflow='hidden'
+        borderRadius="12px"
+        overflow="hidden"
         sx={{
           cursor: 'pointer',
           '&:hover': { opacity: 0.7 },
@@ -34,10 +34,10 @@ export default function OtherPageCard(props: {
         }}
       >
         <Stack
-          height='100%'
-          width='230px'
-          justifyContent='center'
-          alignItems='center'
+          height="100%"
+          width="230px"
+          justifyContent="center"
+          alignItems="center"
           sx={{
             background: 'linear-gradient(12deg, #F279C5, #1D62F6)',
             '-webkit-text-fill-color': 'transparent',
@@ -53,7 +53,7 @@ export default function OtherPageCard(props: {
           </Typography>
         </Stack>
         {/* <div style={{ height: "100%", width: "200px", position: "relative" }}>
-          <Image
+          <img
             src={props.imageUrl}
             fill
             objectFit="scale-down"
@@ -62,9 +62,9 @@ export default function OtherPageCard(props: {
         </div> */}
         <Stack
           spacing={props.mobile ? '3px' : '12px'}
-          py='20px'
-          pr='24px'
-          boxSizing='border-box'
+          py="20px"
+          pr="24px"
+          boxSizing="border-box"
         >
           <Typography
             variant={props.mobile ? 'medium' : 'h5'}

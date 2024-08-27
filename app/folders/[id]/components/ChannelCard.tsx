@@ -1,18 +1,18 @@
-import ContentCard from "./ContentCard";
-import Image from "next/image";
-import { Stack } from "@mui/system";
-import ApiController from "@/app/api";
+import ContentCard from './ContentCard';
+
+import { Stack } from '@mui/system';
+import ApiController from '@/app/api';
 import {
   IChannel,
   IContentBucket,
-} from "@/app/profiles/[id]/components/ContentTab";
-import { PALETTE } from "@/ui";
-import { useRouter } from "next/navigation";
+} from '@/app/profiles/[id]/components/ContentTab';
+import { PALETTE } from '@/ui';
+import { useRouter } from 'next/navigation';
 
 const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
-  props: Partial<Omit<IChannel, "createdAt">> & {
+  props: Partial<Omit<IChannel, 'createdAt'>> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -20,10 +20,10 @@ const ChannelCard = (
     onOpenEditingDialog?: () => void;
     isMobile?: boolean;
     twoLineTitleSectionHeight?: boolean;
-    folderId?: IContentBucket["id"];
+    folderId?: IContentBucket['id'];
   }
 ) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <ContentCard
       type="channel"
@@ -31,7 +31,7 @@ const ChannelCard = (
       onClick={
         props.noPointerEvents
           ? undefined
-          : () => router.push(`/channel/${props.id}`)
+          : () => navigate(`/channel/${props.id}`)
       }
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
@@ -51,12 +51,12 @@ const ChannelCard = (
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
         {props.bannerUrl ? (
-          <Image
+          <img
             src={props.bannerUrl}
             style={{
-              objectFit: "cover",
-              justifyContent: "center",
-              alignItems: "center",
+              objectFit: 'cover',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
             fill
             alt="banner image"
@@ -84,12 +84,12 @@ const ChannelCard = (
               boxShadow="0 0 20px rgba(0,0,0,0.1)"
             >
               {props.profileUrl ? (
-                <Image
+                <img
                   src={props.profileUrl}
                   style={{
-                    objectFit: "cover",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    objectFit: 'cover',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                   fill
                   alt="profile image"

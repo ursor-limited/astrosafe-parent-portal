@@ -1,33 +1,33 @@
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import { Stack } from "@mui/system";
-import dayjs from "dayjs";
-import Image from "next/image";
-import { PALETTE, Typography } from "@/ui";
-import ClockIcon from "@/images/icons/ClockIcon.svg";
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import { useEffect, useState } from "react";
-import DynamicContainer from "@/app/components/DynamicContainer";
-import Link from "next/link";
+import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
+import { Stack } from '@mui/system';
+import dayjs from 'dayjs';
+
+import { PALETTE, Typography } from '@/ui';
+import ClockIcon from '@/images/icons/ClockIcon.svg';
+import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import { useEffect, useState } from 'react';
+import DynamicContainer from '@/app/components/DynamicContainer';
+import Link from 'next/link';
 import {
   IDomainGroup,
   IHistoryItem,
   ISimplisticDomainGroup,
   PAGE_LENGTH,
-} from "./HistorySection";
-import ApiController from "@/app/api";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import _ from "lodash";
-import { cleanUrl } from "./MobileInsightsTab";
-import PageSelector from "@/app/components/PageSelector";
-import { SearchInput } from "@/app/components/SearchInput";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+} from './HistorySection';
+import ApiController from '@/app/api';
+import { IDevice } from '@/app/filters/[id]/contents/common';
+import _ from 'lodash';
+import { cleanUrl } from './MobileInsightsTab';
+import PageSelector from '@/app/components/PageSelector';
+import { SearchInput } from '@/app/components/SearchInput';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds
   useEffect(() => {
     setDuration(
       props.duration ||
-        dayjs(props.finishedAt).diff(props.searchedAt, "seconds")
+        dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
     );
   }, [props.duration, props.searchedAt, props.finishedAt]);
   return (
@@ -66,7 +66,7 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
           minWidth="42px"
           boxShadow="0 0 12px rgba(0,0,0,0.1)"
         >
-          <Image
+          <img
             height={42}
             width={42}
             src={props.faviconUrl}
@@ -79,7 +79,7 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
               bold
               maxLines={1}
               sx={{
-                wordBreak: "break-all",
+                wordBreak: 'break-all',
               }}
             >
               {props.title}
@@ -87,7 +87,7 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
             <Link
               href={props.url}
               target="_blank"
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: 'none' }}
             >
               <Stack minWidth="20%">
                 <Typography
@@ -95,10 +95,10 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
                   color={PALETTE.secondary.grey[3]}
                   maxLines={1}
                   sx={{
-                    wordBreak: "break-all",
+                    wordBreak: 'break-all',
                   }}
                 >
-                  {cleanUrl(props.url).replace(/\/$/, "")}
+                  {cleanUrl(props.url).replace(/\/$/, '')}
                 </Typography>
               </Stack>
             </Link>
@@ -106,11 +106,11 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
 
           <Stack direction="row" spacing="8px" alignItems="center">
             <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-              {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+              {dayjs(props.searchedAt).utc().format('hh:mm:HHa')}
             </Typography>
             <Typography
               bold
-              sx={{ lineHeight: "100%" }}
+              sx={{ lineHeight: '100%' }}
               color={PALETTE.secondary.grey[4]}
             >
               -
@@ -159,9 +159,9 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
           alignItems="center"
           direction="row"
           sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.6 },
+            cursor: 'pointer',
+            transition: '0.2s',
+            '&:hover': { opacity: 0.6 },
           }}
           onClick={() => setExpanded(!expanded)}
         >
@@ -169,7 +169,7 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
             {...props.domain}
             duration={_.sum(
               props.rows.map((r) =>
-                dayjs(r.finishedAt).diff(r.searchedAt, "seconds")
+                dayjs(r.finishedAt).diff(r.searchedAt, 'seconds')
               )
             )}
           />
@@ -177,7 +177,7 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
             sx={{
               svg: {
                 transform: `rotate(${expanded ? 180 : 0}deg)`,
-                transition: "0.2s",
+                transition: '0.2s',
                 path: {
                   fill: PALETTE.secondary.grey[4],
                 },
@@ -208,13 +208,13 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
 };
 
 const MobileHistorySection = (props: {
-  deviceId: IDevice["id"];
+  deviceId: IDevice['id'];
   date: string;
 }) => {
   const [nPages, setNPages] = useState<number>(1);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   useEffect(() => setPageIndex(0), [searchValue]);
   useEffect(() => {
     ApiController.getHistory(
@@ -254,10 +254,10 @@ const MobileHistorySection = (props: {
       simplisticDomainGroups.map((dg) => ({
         domain: {
           url: dg.domain,
-          title: dg.rows[dg.rows.length - 1]?.title ?? "",
-          faviconUrl: dg.rows[0]?.faviconUrl ?? "",
-          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? "",
-          finishedAt: dg.rows[0]?.finishedAt ?? "",
+          title: dg.rows[dg.rows.length - 1]?.title ?? '',
+          faviconUrl: dg.rows[0]?.faviconUrl ?? '',
+          searchedAt: dg.rows[dg.rows.length - 1]?.searchedAt ?? '',
+          finishedAt: dg.rows[0]?.finishedAt ?? '',
         },
         rows: dg.rows,
       }))
@@ -273,7 +273,7 @@ const MobileHistorySection = (props: {
         <SearchInput
           value={searchValue}
           callback={setSearchValue}
-          clearCallback={() => setSearchValue("")}
+          clearCallback={() => setSearchValue('')}
           grey
         />
       }

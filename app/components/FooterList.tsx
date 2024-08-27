@@ -7,11 +7,11 @@ export const FooterList = (props: {
   items: { title: string; url: string }[];
   mobile?: boolean;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
-    <Stack spacing='15px' alignItems={props.mobile ? 'center' : undefined}>
+    <Stack spacing="15px" alignItems={props.mobile ? 'center' : undefined}>
       <Typography
-        variant='medium'
+        variant="medium"
         sx={{
           fontWeight: 500,
         }}
@@ -24,9 +24,9 @@ export const FooterList = (props: {
         alignItems={props.mobile ? 'center' : undefined}
       >
         {props.items.map((p) => (
-          <Stack key={p.url} onClick={() => router.push(p.url)}>
+          <Stack key={p.url} onClick={() => navigate(p.url)}>
             <Typography
-              variant='small'
+              variant="small"
               color={PALETTE.secondary.grey[4]}
               sx={{
                 fontWeight: 390,

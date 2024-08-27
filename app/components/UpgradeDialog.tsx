@@ -103,7 +103,7 @@ export const FrequencySwitch = (props: {
   value: 'monthly' | 'annual';
   callback: () => void;
 }) => (
-  <Stack direction='row' spacing='12px' alignItems='center' height='26px'>
+  <Stack direction="row" spacing="12px" alignItems="center" height="26px">
     <Typography bold color={PALETTE.secondary.grey[4]}>
       Annual discount
     </Typography>
@@ -205,37 +205,37 @@ const PricingCard = (props: {
     bgcolor={
       props.dark ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[1]
     }
-    p='28px'
-    boxSizing='border-box'
-    alignItems='center'
-    borderRadius='20px'
+    p="28px"
+    boxSizing="border-box"
+    alignItems="center"
+    borderRadius="20px"
     border={
       props.border ? `4px solid ${PALETTE.secondary.purple[3]}` : undefined
     }
-    position='relative'
+    position="relative"
   >
     {props.notif ? (
       <Stack
-        borderRadius='10px'
+        borderRadius="10px"
         bgcolor={PALETTE.system.orange}
-        height='24px'
-        position='absolute'
-        top='-16px'
-        right='-26px'
-        justifyContent='center'
-        px='16px'
+        height="24px"
+        position="absolute"
+        top="-16px"
+        right="-26px"
+        justifyContent="center"
+        px="16px"
       >
-        <Typography variant='small' bold color={PALETTE.font.light}>
+        <Typography variant="small" bold color={PALETTE.font.light}>
           {props.notif}
         </Typography>
       </Stack>
     ) : null}
-    <Stack spacing='2px' alignItems='center'>
-      <Stack spacing='20px' justifyContent='center' alignItems='center'>
-        <Stack spacing='4px' alignItems='center'>
-          <Stack spacing='4px' alignItems='center'>
+    <Stack spacing="2px" alignItems="center">
+      <Stack spacing="20px" justifyContent="center" alignItems="center">
+        <Stack spacing="4px" alignItems="center">
+          <Stack spacing="4px" alignItems="center">
             <Typography
-              variant='h4'
+              variant="h4"
               color={
                 props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]
               }
@@ -246,7 +246,7 @@ const PricingCard = (props: {
               color={
                 props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]
               }
-              variant='small'
+              variant="small"
               bold
             >
               {props.subtitle}
@@ -254,28 +254,28 @@ const PricingCard = (props: {
           </Stack>
         </Stack>
 
-        <Stack direction='row' alignItems='center' spacing='3px'>
+        <Stack direction="row" alignItems="center" spacing="3px">
           <Typography
-            variant='small'
+            variant="small"
             bold
             color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
           >
             {props.currency}
           </Typography>
           <Typography
-            variant='h3'
+            variant="h3"
             color={props.dark ? PALETTE.font.light : PALETTE.font.dark}
           >
             {props.price}
           </Typography>
           <Stack
-            height='28px'
+            height="28px"
             bgcolor={PALETTE.secondary.orange[4]}
-            borderRadius='10px'
-            px='8px'
-            justifyContent='center'
+            borderRadius="10px"
+            px="8px"
+            justifyContent="center"
           >
-            <Typography bold variant='small' color='rgb(255,255,255)'>
+            <Typography bold variant="small" color="rgb(255,255,255)">
               Save 30%
             </Typography>
           </Stack>
@@ -283,16 +283,16 @@ const PricingCard = (props: {
       </Stack>
 
       <Typography
-        variant='tiny'
+        variant="tiny"
         bold
         color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
       >
         {`per ${props.unit}`}
       </Typography>
 
-      <Stack alignItems='center' width='100%' pb='20px'>
+      <Stack alignItems="center" width="100%" pb="20px">
         <Typography
-          variant='tiny'
+          variant="tiny"
           bold
           color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
         >
@@ -302,7 +302,7 @@ const PricingCard = (props: {
     </Stack>
 
     <Stack
-      justifyContent='flex-end'
+      justifyContent="flex-end"
       sx={
         props.dark
           ? {
@@ -327,21 +327,21 @@ const PricingCard = (props: {
       </Stack>
     </Stack>
     {props.items ? (
-      <Stack spacing='8px' pt='18px'>
+      <Stack spacing="8px" pt="18px">
         {props.items.map((item, i) => (
-          <Stack key={i} direction='row' spacing='6px'>
+          <Stack key={i} direction="row" spacing="6px">
             <Stack
-              borderRadius='100%'
-              height='18px'
-              width='18px'
-              alignItems='center'
-              justifyContent='center'
-              bgcolor='rgb(255,255,255)'
+              borderRadius="100%"
+              height="18px"
+              width="18px"
+              alignItems="center"
+              justifyContent="center"
+              bgcolor="rgb(255,255,255)"
             >
-              <CheckIcon width='12px' height='12px' />
+              <CheckIcon width="12px" height="12px" />
             </Stack>
             <Typography
-              variant='small'
+              variant="small"
               color={props.dark ? PALETTE.secondary.grey[1] : undefined}
             >
               {item}
@@ -351,9 +351,9 @@ const PricingCard = (props: {
       </Stack>
     ) : null}
     {props.text ? (
-      <Stack pt='22px'>
+      <Stack pt="22px">
         <Typography
-          variant='small'
+          variant="small"
           color={props.dark ? PALETTE.secondary.grey[1] : undefined}
         >
           Contact sales for custom pricing based on the number of teacher
@@ -374,7 +374,7 @@ const UpgradeDialog = (props: {
 
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>('upgradedNotificationPending', false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const [locale, setLocale] = useState<string>('US');
 
@@ -400,18 +400,18 @@ const UpgradeDialog = (props: {
 
   return (
     <UrsorDialog
-      title='Upgrade to a paid plan and enjoy unlimited access.'
+      title="Upgrade to a paid plan and enjoy unlimited access."
       open={props.open}
       titleSize={props.mobile ? 'h5' : 'h3'}
       noOverflowHidden
       onCloseCallback={props.closeCallback}
       dynamicHeight
-      width='1030px'
-      maxWidth='1030px'
-      titleMaxWidth='600px'
+      width="1030px"
+      maxWidth="1030px"
+      titleMaxWidth="600px"
       scrollable
     >
-      <Stack width='100%' alignItems='center'>
+      <Stack width="100%" alignItems="center">
         <FrequencySwitch
           value={frequency}
           callback={() =>
@@ -421,14 +421,14 @@ const UpgradeDialog = (props: {
       </Stack>
       <Stack
         direction={props.mobile ? 'column' : 'row'}
-        spacing='32px'
-        width='100%'
-        pt='20px'
+        spacing="32px"
+        width="100%"
+        pt="20px"
       >
         <PricingCard
-          title='Home'
-          subtitle='Ideal for families'
-          buttonText='Upgrade'
+          title="Home"
+          subtitle="Ideal for families"
+          buttonText="Upgrade"
           price={(
             (frequency === 'annual'
               ? PRODUCT_DETAILS[0]?.annualPrices
@@ -441,7 +441,7 @@ const UpgradeDialog = (props: {
           unit={frequency === 'monthly' ? 'month' : 'year'}
           items={PRODUCT_DETAILS[0].items}
           callback={() => {
-            router.push(
+            navigate(
               user?.email ? getPaymentUrl(user.email, 'home', frequency) : ''
             );
             setUpgradedNotificationPending(true);
@@ -450,9 +450,9 @@ const UpgradeDialog = (props: {
         <PricingCard
           dark
           border
-          title='School'
-          subtitle='Ideal for schools'
-          buttonText='Upgrade'
+          title="School"
+          subtitle="Ideal for schools"
+          buttonText="Upgrade"
           price={(
             (frequency === 'annual'
               ? PRODUCT_DETAILS[1]?.annualPrices
@@ -465,7 +465,7 @@ const UpgradeDialog = (props: {
           unit={frequency === 'monthly' ? 'month' : 'year'}
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
-            router.push(
+            navigate(
               user?.email ? getPaymentUrl(user.email, 'school', frequency) : ''
             );
             setUpgradedNotificationPending(true);
@@ -474,55 +474,55 @@ const UpgradeDialog = (props: {
         <Stack
           flex={1}
           bgcolor={PALETTE.secondary.grey[1]}
-          p='28px'
-          boxSizing='border-box'
-          alignItems='center'
-          borderRadius='20px'
-          position='relative'
-          spacing='20px'
+          p="28px"
+          boxSizing="border-box"
+          alignItems="center"
+          borderRadius="20px"
+          position="relative"
+          spacing="20px"
         >
-          <Stack spacing='4px' alignItems='center'>
-            <Typography color={PALETTE.secondary.grey[4]} variant='h4'>
+          <Stack spacing="4px" alignItems="center">
+            <Typography color={PALETTE.secondary.grey[4]} variant="h4">
               License key
             </Typography>
-            <Typography variant='small' bold color={PALETTE.secondary.grey[4]}>
+            <Typography variant="small" bold color={PALETTE.secondary.grey[4]}>
               Add your AstroSafe license key
             </Typography>
           </Stack>
-          <Stack alignItems='center' spacing='10px'>
+          <Stack alignItems="center" spacing="10px">
             <UrsorInputField
               value={licenseKeyInputValue}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setLicenseKeyInputValue(event.target.value);
               }}
               leftAlign
-              backgroundColor='rgb(255,255,255)'
-              width='100%'
+              backgroundColor="rgb(255,255,255)"
+              width="100%"
             />
-            <Typography color={PALETTE.secondary.grey[4]} bold variant='tiny'>
+            <Typography color={PALETTE.secondary.grey[4]} bold variant="tiny">
               12 digit code sent to you by the Astro team
             </Typography>
           </Stack>
-          <UrsorButton variant='secondary'>Unlock</UrsorButton>
+          <UrsorButton variant="secondary">Unlock</UrsorButton>
         </Stack>
       </Stack>
       <Stack
-        height='52px'
-        width='100%'
-        justifyContent='center'
+        height="52px"
+        width="100%"
+        justifyContent="center"
         bgcolor={PALETTE.secondary.grey[1]}
-        alignItems='center'
-        mt='24px'
-        spacing='20px'
-        direction='row'
-        borderRadius='20px'
+        alignItems="center"
+        mt="24px"
+        spacing="20px"
+        direction="row"
+        borderRadius="20px"
       >
         <Typography bold color={PALETTE.secondary.grey[4]}>
           Need a plan with more devices?
         </Typography>
         <UrsorButton
-          variant='secondary'
-          size='small'
+          variant="secondary"
+          size="small"
           onClick={() => (window.location.href = 'mailto:hello@astrosafe.co')}
         >
           Contact sales

@@ -8,8 +8,7 @@ import { Metadata } from 'next';
 import { useWindowSize } from 'usehooks-ts';
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from '@/app/tools/multiplication-chart/[urlId]/LandingPageContents';
 // import MobileWorksheetPageContents from "./MobileWorksheetPageContents";
-import { getSelectorsByUserAgent } from 'react-device-detect';
-import { headers } from 'next/headers';
+import { isMobile } from 'react-device-detect';
 
 export const dynamicParams = true;
 
@@ -35,13 +34,11 @@ async function WorksheetPage({
   //const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
   //const { width } = useWindowSize();
   // const [isMobile, setIsMobile] = useState<boolean>(false);
-  const isMobile = getSelectorsByUserAgent(
-    headers().get('user-agent') ?? ''
-  )?.isMobile;
+
   //useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
   // return details ? (
   //   <AuthWrapper>
-  //     <UserProvider>
+  //
   //       {isMobile ? (
   //         <MobileWorksheetPageContents
   //           details={details}
@@ -53,7 +50,7 @@ async function WorksheetPage({
   //           lessonId={searchParams.lesson}
   //         />
   //       )}
-  //     </UserProvider>
+  //
   //   </AuthWrapper>
   // ) : (
   //   <></>

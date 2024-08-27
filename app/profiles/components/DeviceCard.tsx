@@ -1,30 +1,30 @@
-import { Stack } from "@mui/system";
-import AstroCard from "../../filters/[id]/components/AstroCard";
-import Image from "next/image";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
-import FilterIcon from "@/images/icons/FilterIcon.svg";
-import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
-import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
-import AstroSwitch from "@/app/components/AstroSwitch";
-import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
-import Link from "next/link";
-import ApiController, { getAbsoluteUrl } from "@/app/api";
-import { IEnrichedDevice } from "../contents/common";
-import { useElementSize } from "usehooks-ts";
-import { cleanUrl } from "../[id]/components/MobileInsightsTab";
-import NotificationContext from "@/app/components/NotificationContext";
-import { getInitials } from "@/app/account/contents/common";
+import { Stack } from '@mui/system';
+import AstroCard from '../../filters/[id]/components/AstroCard';
+
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import PhoneIcon from '@/images/icons/PhoneIcon.svg';
+import GlobeIcon from '@/images/icons/GlobeIcon.svg';
+import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
+import FilterIcon from '@/images/icons/FilterIcon.svg';
+import LinkExternalIcon from '@/images/icons/LinkExternalIcon.svg';
+import { DeviceType, IDevice } from '../../filters/[id]/contents/common';
+import AstroSwitch from '@/app/components/AstroSwitch';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { IFilter, IFilterUrl } from '@/app/filters/contents/common';
+import Link from 'next/link';
+import ApiController, { getAbsoluteUrl } from '@/app/api';
+import { IEnrichedDevice } from '../contents/common';
+import { useElementSize } from 'usehooks-ts';
+import { cleanUrl } from '../[id]/components/MobileInsightsTab';
+import NotificationContext from '@/app/components/NotificationContext';
+import { getInitials } from '@/app/account/contents/common';
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
-  android: "Android",
-  chrome: "Chromebook",
-  ios: "iOS",
+  android: 'Android',
+  chrome: 'Chromebook',
+  ios: 'iOS',
 };
 
 export const DeviceCardSection = (props: {
@@ -82,9 +82,9 @@ export const DeviceCardBrowsingStatusSection = (props: {
               bold
               color={PALETTE.secondary.grey[5]}
               maxLines={1}
-              sx={{ maxWidth: "100%", minWidth: 0 }}
+              sx={{ maxWidth: '100%', minWidth: 0 }}
             >
-              {`Browsing is ${props.browsingEnabled ? "enabled" : "disabled"}`}
+              {`Browsing is ${props.browsingEnabled ? 'enabled' : 'disabled'}`}
             </Typography>
           </Stack>
           <AstroSwitch
@@ -145,12 +145,12 @@ export const DeviceCardScreenTimeSection = (props: {
 );
 
 export const DeviceCardCurrentUrlSection = (props: {
-  url?: IFilterUrl["url"];
-  title?: IFilterUrl["title"];
-  disabled?: "offline" | "browsingDisabled";
-  faviconUrl?: IFilterUrl["imageUrl"];
+  url?: IFilterUrl['url'];
+  title?: IFilterUrl['title'];
+  disabled?: 'offline' | 'browsingDisabled';
+  faviconUrl?: IFilterUrl['imageUrl'];
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <DeviceCardSection title="Currently visiting">
       {/* <Link
@@ -168,9 +168,9 @@ export const DeviceCardCurrentUrlSection = (props: {
         sx={
           !props.disabled
             ? {
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.7 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.7 },
                 svg: {
                   path: {
                     fill: PALETTE.secondary.purple[2],
@@ -181,7 +181,7 @@ export const DeviceCardCurrentUrlSection = (props: {
         }
         onClick={
           !props.disabled
-            ? () => router.push(getAbsoluteUrl(cleanUrl(props.url!)))
+            ? () => navigate(getAbsoluteUrl(cleanUrl(props.url!)))
             : undefined
         }
       >
@@ -193,7 +193,7 @@ export const DeviceCardCurrentUrlSection = (props: {
               borderRadius="5px"
               overflow="hidden"
             >
-              <Image
+              <img
                 src={props.faviconUrl}
                 height={20}
                 width={20}
@@ -210,10 +210,10 @@ export const DeviceCardCurrentUrlSection = (props: {
             }
             maxLines={1}
           >
-            {props.disabled === "browsingDisabled"
-              ? "Currently locked"
-              : props.disabled === "offline"
-              ? "Offline"
+            {props.disabled === 'browsingDisabled'
+              ? 'Currently locked'
+              : props.disabled === 'offline'
+              ? 'Offline'
               : props.title}
           </Typography>
         </Stack>
@@ -228,7 +228,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 
 const DeviceCard = (
   props: IEnrichedDevice & {
-    filterName?: IFilter["title"];
+    filterName?: IFilter['title'];
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -243,8 +243,8 @@ const DeviceCard = (
     () => setBrowsingEnabled(!!props.config?.browsingAllowed),
     [props.config?.browsingAllowed]
   );
-  const router = useRouter();
-  const onClick = () => router.push(`/profiles/${props.id}`);
+  const navigate = useNavigate();
+  const onClick = () => navigate(`/profiles/${props.id}`);
 
   const notificationCtx = useContext(NotificationContext);
   return (
@@ -256,9 +256,9 @@ const DeviceCard = (
             top="28px"
             right="15px"
             sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
+              cursor: 'pointer',
+              '&:hover': { opacity: 0.6 },
+              transition: '0.2s',
             }}
             zIndex={2}
           >
@@ -269,15 +269,15 @@ const DeviceCard = (
           direction="row"
           spacing="18px"
           position="relative"
-          height={props.small ? "58px" : "90px"}
+          height={props.small ? '58px' : '90px'}
           alignItems="center"
           width="94%"
           onClick={props.onClick}
         >
           <Stack position="relative">
             <Stack
-              minHeight={props.small ? "40px" : "84px"}
-              minWidth={props.small ? "40px" : "84px"}
+              minHeight={props.small ? '40px' : '84px'}
+              minWidth={props.small ? '40px' : '84px'}
               borderRadius="100%"
               overflow="hidden"
               bgcolor={PALETTE.secondary.blue[2]}
@@ -285,13 +285,13 @@ const DeviceCard = (
               alignItems="center"
               onClick={onClick}
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.6 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.6 },
               }}
             >
               {props.profileAvatarUrl ? (
-                <Image
+                <img
                   src={props.profileAvatarUrl}
                   height={props.small ? 40 : 84}
                   width={props.small ? 40 : 84}
@@ -321,7 +321,7 @@ const DeviceCard = (
               sx={{
                 svg: {
                   path: {
-                    fill: "rgb(255,255,255)",
+                    fill: 'rgb(255,255,255)',
                   },
                 },
               }}
@@ -337,16 +337,16 @@ const DeviceCard = (
             <Stack
               onClick={onClick}
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.6 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.6 },
               }}
             >
               <Typography
                 bold
                 variant="h5"
                 maxLines={1}
-                sx={{ wordBreak: "break-all" }}
+                sx={{ wordBreak: 'break-all' }}
               >
                 {props.name}
               </Typography>
@@ -363,16 +363,16 @@ const DeviceCard = (
                 spacing="8px"
                 alignItems="center"
                 sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.7 },
+                  cursor: 'pointer',
+                  transition: '0.2s',
+                  '&:hover': { opacity: 0.7 },
                   svg: {
                     path: {
                       fill: PALETTE.system.orange,
                     },
                   },
                 }}
-                onClick={() => router.push(`/filters/${props.filterId}`)}
+                onClick={() => navigate(`/filters/${props.filterId}`)}
               >
                 <FilterIcon height="16px" width="16px" />
                 <Typography maxLines={1}>{props.filterName}</Typography>
@@ -387,9 +387,9 @@ const DeviceCard = (
                 url={props.latestBrowsing?.url}
                 disabled={
                   !browsingEnabled
-                    ? "browsingDisabled"
+                    ? 'browsingDisabled'
                     : !props.online
-                    ? "offline"
+                    ? 'offline'
                     : undefined
                 }
                 title={props.latestBrowsing?.title}
@@ -398,9 +398,7 @@ const DeviceCard = (
               <DeviceCardScreenTimeSection
                 totalTime={props.screenTime?.allowed ?? 0}
                 elapsedTime={props.screenTime?.current ?? 0}
-                onClickView={() =>
-                  router.push(`/profiles/${props.id}?tab=limits`)
-                }
+                onClickView={() => navigate(`/profiles/${props.id}?tab=limits`)}
               />
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
@@ -409,7 +407,7 @@ const DeviceCard = (
                   ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
                   notificationCtx.success(
                     `Browsing is now ${
-                      !browsingEnabled ? "enabled" : "disabled"
+                      !browsingEnabled ? 'enabled' : 'disabled'
                     } on ${props.name}`
                   );
                 }}
@@ -427,7 +425,7 @@ const DeviceCard = (
               justifyContent="center"
               direction="row"
               spacing="8px"
-              onClick={() => router.push(`/profiles/${props.id}`)}
+              onClick={() => navigate(`/profiles/${props.id}`)}
             >
               <Typography bold variant="small" color={PALETTE.primary.indigo}>
                 Go to Device
@@ -438,7 +436,7 @@ const DeviceCard = (
               <UrsorButton
                 variant="secondary"
                 endIcon={ChevronRightIcon}
-                onClick={() => router.push(`/profiles/${props.id}`)}
+                onClick={() => navigate(`/profiles/${props.id}`)}
                 width="100%"
                 backgroundColor="white"
               >

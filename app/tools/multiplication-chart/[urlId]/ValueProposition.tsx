@@ -15,17 +15,17 @@ const ValueProposition = (props: {
   items: IValuePropositionItem[];
   mobile: boolean;
 }) => (
-  <Stack p='3px' mx='20px' borderRadius='43px'>
+  <Stack p="3px" mx="20px" borderRadius="43px">
     <Stack
       width={props.mobile ? undefined : '1000px'}
-      boxSizing='border-box'
+      boxSizing="border-box"
       //bgcolor={PALETTE.secondary.grey[1]}
-      spacing='40px'
+      spacing="40px"
     >
       {props.mobile ? (
-        <Stack spacing='40px'>
+        <Stack spacing="40px">
           {props.items.map((item, i) => (
-            <Stack key={i} spacing='20px'>
+            <Stack key={i} spacing="20px">
               <div
                 style={{
                   position: 'relative',
@@ -35,18 +35,18 @@ const ValueProposition = (props: {
                   overflow: 'hidden',
                 }}
               >
-                <Image
+                <img
                   src={item.imageUrl}
                   style={{ objectFit: 'cover' }}
                   fill
-                  alt='visual link card image'
+                  alt="visual link card image"
                 />
               </div>
               <Stack
                 key={i}
                 height={props.mobile ? undefined : '200px'}
-                spacing='14px'
-                alignItems='center'
+                spacing="14px"
+                alignItems="center"
               >
                 {item.title ? (
                   <Stack
@@ -58,8 +58,8 @@ const ValueProposition = (props: {
                     }}
                   >
                     <Typography
-                      variant='h4'
-                      htmlTag='h4'
+                      variant="h4"
+                      htmlTag="h4"
                       sx={{ textAlign: 'center' }}
                     >
                       {item.title}
@@ -83,7 +83,7 @@ const ValueProposition = (props: {
       ) : (
         props.items
           .map((item, i) => [
-            <Stack key={`content${i}`} spacing='16px' justifyContent='center'>
+            <Stack key={`content${i}`} spacing="16px" justifyContent="center">
               {item.title ? (
                 <Stack
                   sx={{
@@ -93,7 +93,7 @@ const ValueProposition = (props: {
                     '-webkit-background-clip': 'text',
                   }}
                 >
-                  <Typography variant='h4' htmlTag='h4'>
+                  <Typography variant="h4" htmlTag="h4">
                     {item.title}
                   </Typography>
                 </Stack>
@@ -103,7 +103,7 @@ const ValueProposition = (props: {
                 sx={{
                   lineHeight: '28px',
                 }}
-                variant='medium'
+                variant="medium"
               >
                 {item.text}
               </Typography>
@@ -119,19 +119,19 @@ const ValueProposition = (props: {
                 overflow: 'hidden',
               }}
             >
-              <Image src={item.imageUrl} fill alt='visual link card image' />
+              <img src={item.imageUrl} fill alt="visual link card image" />
             </div>,
           ])
           .map((pair, i) => (
             <Stack
               key={i}
-              direction='row'
-              spacing='32px'
-              justifyContent='space-between'
-              height='377px'
-              p='32px'
-              boxSizing='border-box'
-              borderRadius='20px'
+              direction="row"
+              spacing="32px"
+              justifyContent="space-between"
+              height="377px"
+              p="32px"
+              boxSizing="border-box"
+              borderRadius="20px"
               bgcolor={PALETTE.secondary.grey[1]}
             >
               {(i + 1) % 2 ? _.reverse(pair.slice()) : pair}

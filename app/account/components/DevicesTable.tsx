@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from "../../components/UrsorTable";
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import dayjs from "dayjs";
-import _ from "lodash";
-import { DeviceType } from "../../profiles/contents/common";
-import { IDevice } from "../../filters/[id]/contents/common";
-import ApiController from "../../api";
-import { DEVICE_TYPE_DISPLAY_NAMES } from "@/app/profiles/components/DeviceCard";
-import { PALETTE } from "@/ui";
-import useAuth from "@/app/hooks/useAuth";
+} from '../../components/UrsorTable';
+import { Stack } from '@mui/system';
+
+import dayjs from 'dayjs';
+import _ from 'lodash';
+import { DeviceType } from '../../profiles/contents/common';
+import { IDevice } from '../../filters/[id]/contents/common';
+import ApiController from '../../api';
+import { DEVICE_TYPE_DISPLAY_NAMES } from '@/app/profiles/components/DeviceCard';
+import { PALETTE } from '@/ui';
+import useAuth from '@/app/hooks/useAuth';
 
 interface IDevicesTableRowItems {
-  name: IDevice["name"];
-  type: IDevice["deviceType"];
-  lastActive: IDevice["lastOnline"];
-  dateJoined: IDevice["createdAt"];
-  profileAvatarUrl: IDevice["profileAvatarUrl"];
+  name: IDevice['name'];
+  type: IDevice['deviceType'];
+  lastActive: IDevice['lastOnline'];
+  dateJoined: IDevice['createdAt'];
+  profileAvatarUrl: IDevice['profileAvatarUrl'];
 }
 
 const DevicesTable = () => {
@@ -36,8 +36,8 @@ const DevicesTable = () => {
 
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
-      name: "name",
-      displayName: `${devices.length} Device${devices.length === 1 ? "" : "s"}`,
+      name: 'name',
+      displayName: `${devices.length} Device${devices.length === 1 ? '' : 's'}`,
       sortable: true,
       newTag: true,
       getAvatar: (id) => {
@@ -51,10 +51,10 @@ const DevicesTable = () => {
             borderRadius="100%"
           >
             {devices.find((d) => d.id.toString() === id)?.profileAvatarUrl ? (
-              <Image
+              <img
                 src={
                   devices.find((d) => d.id.toString() === id)
-                    ?.profileAvatarUrl ?? ""
+                    ?.profileAvatarUrl ?? ''
                 }
                 height={20}
                 width={20}
@@ -66,25 +66,25 @@ const DevicesTable = () => {
       },
     },
     {
-      name: "type",
-      displayName: "Device type",
+      name: 'type',
+      displayName: 'Device type',
       sortable: true,
       itemDisplay: (type) => DEVICE_TYPE_DISPLAY_NAMES[type as DeviceType],
     },
     {
-      name: "lastActive",
-      displayName: "Last active",
+      name: 'lastActive',
+      displayName: 'Last active',
       sortable: true,
       itemDisplay: (lastActive) => {
-        const hours = dayjs().diff(lastActive, "hours");
-        return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+        const hours = dayjs().diff(lastActive, 'hours');
+        return `${hours} hour${hours === 1 ? '' : 's'} ago`;
       },
     },
     {
-      name: "dateJoined",
-      displayName: "Date joined",
+      name: 'dateJoined',
+      displayName: 'Date joined',
       sortable: true,
-      itemDisplay: (createdAt) => dayjs(createdAt).format("MM/DD/YYYY"),
+      itemDisplay: (createdAt) => dayjs(createdAt).format('MM/DD/YYYY'),
     },
   ];
 
@@ -96,10 +96,10 @@ const DevicesTable = () => {
         devices?.map((d) => ({
           id: d.id.toString(),
           items: {
-            name: d.name ?? "",
+            name: d.name ?? '',
             type: d.deviceType,
             lastActive: d.lastOnline,
-            dateJoined: d.createdAt ?? "",
+            dateJoined: d.createdAt ?? '',
             profileAvatarUrl: d.profileAvatarUrl,
           },
           tags: [],
@@ -112,15 +112,15 @@ const DevicesTable = () => {
   const [sortedRows, setSortedRows] = useState<
     IUrsorTableRow<IDevicesTableRowItems>[]
   >([]);
-  const [sortedColumn, setSortedColumn] = useState<string>("name");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [sortedColumn, setSortedColumn] = useState<string>('name');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   useEffect(() => {
     if (!rows) return;
     const sorted = _.sortBy(rows, (row) =>
       //@ts-ignore
       row.items?.[sortedColumn]?.toLowerCase()
     );
-    setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
+    setSortedRows(sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted);
   }, [rows, sortDirection, sortedColumn]);
 
   return (
@@ -130,13 +130,13 @@ const DevicesTable = () => {
       defaultSortedByColumn="createdAt"
       defaultSortedAscending
       selectedSort={sortedColumn}
-      ascending={sortDirection === "asc"}
+      ascending={sortDirection === 'asc'}
       sortSelectionCallback={(columnId) => {
         if (columnId === sortedColumn) {
-          setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+          setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
         } else {
           setSortedColumn(columnId);
-          setSortDirection("asc");
+          setSortDirection('asc');
         }
       }}
       noHeaderGradient

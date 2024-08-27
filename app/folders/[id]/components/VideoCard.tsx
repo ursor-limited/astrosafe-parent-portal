@@ -1,15 +1,14 @@
-import Image from "next/image";
-import { Stack } from "@mui/system";
-import Play from "@/images/play.svg";
-import ApiController from "@/app/api";
-import ContentCard from "./ContentCard";
-import { IVideo } from "@/app/profiles/[id]/components/ContentTab";
-import { PALETTE } from "@/ui";
+import { Stack } from '@mui/system';
+import Play from '@/images/play.svg';
+import ApiController from '@/app/api';
+import ContentCard from './ContentCard';
+import { IVideo } from '@/app/profiles/[id]/components/ContentTab';
+import { PALETTE } from '@/ui';
 
 const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
-  props: Partial<Omit<IVideo, "createdAt">> & {
+  props: Partial<Omit<IVideo, 'createdAt'>> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -45,12 +44,12 @@ const VideoCard = (
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
         {props.thumbnailUrl ? (
-          <Image
+          <img
             src={props.thumbnailUrl}
             style={{
-              objectFit: "cover",
-              justifyContent: "center",
-              alignItems: "center",
+              objectFit: 'cover',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
             fill
             alt="video card image"
@@ -67,10 +66,10 @@ const VideoCard = (
           justifyContent="center"
           alignItems="center"
           sx={{
-            background: "radial-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0))",
+            background: 'radial-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0))',
             svg: {
               fill: {
-                path: "rgb(255,255,255)",
+                path: 'rgb(255,255,255)',
               },
             },
           }}

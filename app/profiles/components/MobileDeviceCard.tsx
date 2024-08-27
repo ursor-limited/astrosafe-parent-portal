@@ -1,30 +1,30 @@
-import { Stack } from "@mui/system";
-import AstroCard from "../../filters/[id]/components/AstroCard";
-import Image from "next/image";
-import { PALETTE, Typography } from "@/ui";
-import ClockIcon from "@/images/icons/ClockIcon.svg";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
-import FilterIcon from "@/images/icons/FilterIcon.svg";
-import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
-import AstroSwitch from "@/app/components/AstroSwitch";
-import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { IFilter } from "@/app/filters/contents/common";
-import ApiController from "@/app/api";
-import { IEnrichedDevice } from "../contents/common";
-import UrsorPopover from "@/app/components/UrsorPopover";
-import { DEVICE_TYPE_DISPLAY_NAMES } from "./DeviceCard";
-import NotificationContext from "@/app/components/NotificationContext";
-import { getInitials } from "@/app/account/contents/common";
-import useAuth from "@/app/hooks/useAuth";
+import { Stack } from '@mui/system';
+import AstroCard from '../../filters/[id]/components/AstroCard';
+
+import { PALETTE, Typography } from '@/ui';
+import ClockIcon from '@/images/icons/ClockIcon.svg';
+import PhoneIcon from '@/images/icons/PhoneIcon.svg';
+import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import GlobeIcon from '@/images/icons/GlobeIcon.svg';
+import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
+import FilterIcon from '@/images/icons/FilterIcon.svg';
+import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
+import AstroSwitch from '@/app/components/AstroSwitch';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { IFilter } from '@/app/filters/contents/common';
+import ApiController from '@/app/api';
+import { IEnrichedDevice } from '../contents/common';
+import UrsorPopover from '@/app/components/UrsorPopover';
+import { DEVICE_TYPE_DISPLAY_NAMES } from './DeviceCard';
+import NotificationContext from '@/app/components/NotificationContext';
+import { getInitials } from '@/app/account/contents/common';
+import useAuth from '@/app/hooks/useAuth';
 
 export const MobileDeviceCardFilterRow = (props: {
-  filterId: IFilter["id"];
-  changeFilter: (id: IFilter["id"]) => void;
+  filterId: IFilter['id'];
+  changeFilter: (id: IFilter['id']) => void;
 }) => {
   const { user } = useAuth();
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
@@ -43,10 +43,10 @@ export const MobileDeviceCardFilterRow = (props: {
               key={i}
               sx={{
                 opacity: props.filterId != f.id ? 0.55 : 1,
-                pointerEvents: props.filterId == f.id ? "none" : undefined,
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
+                pointerEvents: props.filterId == f.id ? 'none' : undefined,
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.7 },
+                transition: '0.2s',
               }}
               onClick={() => {
                 setOpen(false);
@@ -86,7 +86,7 @@ export const MobileDeviceCardFilterRow = (props: {
     >
       <Stack onClick={() => setOpen(true)} flex={1}>
         <MobileDeviceCardRow
-          text={allFilters?.find((f) => f.id == props.filterId)?.title ?? ""}
+          text={allFilters?.find((f) => f.id == props.filterId)?.title ?? ''}
           rightSideElement={<ChevronDownIcon height="16px" width="16px" />}
           icon={FilterIcon}
           iconColor={PALETTE.secondary.orange[3]}
@@ -206,7 +206,7 @@ export const MobileDeviceCardRow = (props: {
 //             borderRadius="5px"
 //             overflow="hidden"
 //           >
-//             <Image
+//             <img
 //               src={props.faviconUrl}
 //               height={20}
 //               width={20}
@@ -239,13 +239,13 @@ const MobileDeviceCard = (
     () => setBrowsingEnabled(!!props.config?.browsingAllowed),
     [props.config?.browsingAllowed]
   );
-  const router = useRouter();
+  const navigate = useNavigate();
   const notificationCtx = useContext(NotificationContext);
-  const onClick = () => router.push(`/profiles/${props.id}`);
-  const changeFilter = (id: IFilter["id"]) =>
+  const onClick = () => navigate(`/profiles/${props.id}`);
+  const changeFilter = (id: IFilter['id']) =>
     ApiController.addFilterToDevice(id, props.id)
       .then(props.onUpdate)
-      .then(() => notificationCtx.success("Changed Filter"));
+      .then(() => notificationCtx.success('Changed Filter'));
   return (
     <AstroCard>
       <Stack
@@ -260,9 +260,9 @@ const MobileDeviceCard = (
           top="12px"
           right="12px"
           sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
+            cursor: 'pointer',
+            '&:hover': { opacity: 0.6 },
+            transition: '0.2s',
           }}
           zIndex={2}
         >
@@ -279,7 +279,7 @@ const MobileDeviceCard = (
             spacing="8px"
             position="relative"
             alignItems="center"
-            width={props.noExtras ? undefined : "91px"}
+            width={props.noExtras ? undefined : '91px'}
           >
             <Stack position="relative">
               <Stack
@@ -292,13 +292,13 @@ const MobileDeviceCard = (
                 alignItems="center"
                 onClick={onClick}
                 sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.6 },
+                  cursor: 'pointer',
+                  transition: '0.2s',
+                  '&:hover': { opacity: 0.6 },
                 }}
               >
                 {props.profileAvatarUrl ? (
-                  <Image
+                  <img
                     src={props.profileAvatarUrl}
                     height={80}
                     width={80}
@@ -328,7 +328,7 @@ const MobileDeviceCard = (
                 sx={{
                   svg: {
                     path: {
-                      fill: "rgb(255,255,255)",
+                      fill: 'rgb(255,255,255)',
                     },
                   },
                 }}
@@ -345,7 +345,7 @@ const MobileDeviceCard = (
                 variant="small"
                 bold
                 maxLines={1}
-                sx={{ wordBreak: "break-all" }}
+                sx={{ wordBreak: 'break-all' }}
               >
                 {props.name}
               </Typography>
@@ -370,9 +370,9 @@ const MobileDeviceCard = (
               <Stack
                 onClick={props.onClickViewScreenTime}
                 sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.7 },
+                  cursor: 'pointer',
+                  transition: '0.2s',
+                  '&:hover': { opacity: 0.7 },
                 }}
               >
                 <MobileDeviceCardRow
@@ -396,9 +396,9 @@ const MobileDeviceCard = (
               </Stack>
               <Stack
                 sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.7 },
+                  cursor: 'pointer',
+                  transition: '0.2s',
+                  '&:hover': { opacity: 0.7 },
                 }}
               >
                 <MobileDeviceCardFilterRow
@@ -407,7 +407,7 @@ const MobileDeviceCard = (
                 />
               </Stack>
               <MobileDeviceCardRow
-                text={`Browsing is ${browsingEnabled ? "enabled" : "disabled"}`}
+                text={`Browsing is ${browsingEnabled ? 'enabled' : 'disabled'}`}
                 icon={GlobeIcon}
                 iconColor={PALETTE.secondary.grey[3]}
                 rightSideElement={

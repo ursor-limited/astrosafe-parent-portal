@@ -1,5 +1,5 @@
 // import { Stack, alpha } from "@mui/system";
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import React, { useEffect, useState } from "react";
 // import ApiController, { IVideo_DEPRECATED } fro../../apiapi";
 // import { PALETTE, Typography } from '@/ui';
@@ -7,7 +7,7 @@
 // import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 // import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 // import PencilIcon from "@/images/icons/Pencil.svg";
-// import Image from "next/image";
+//
 // import dayjs from "dayjs";
 // import advancedFormat from "dayjs/plugin/advancedFormat.js";
 // import UrsorActionButton fro../UrsorActionButtonton";
@@ -29,7 +29,7 @@
 //     deletionCallback: () => void;
 //   }
 // ) => {
-//   const router = useRouter();
+//   const navigate = useNavigate()
 //   const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(
 //     undefined
 //   );
@@ -91,7 +91,7 @@
 //             transition: "0.2s",
 //             cursor: "pointer",
 //           }}
-//           onClick={() => router.push(`/video/${props.id}`)}
+//           onClick={() => navigate(`/video/${props.id}`)}
 //         >
 //           <Stack
 //             height="163px"
@@ -122,7 +122,7 @@
 //           </Stack> */}
 //             {!props.thumbnailUrl ? (
 //               <Stack flex={1} justifyContent="center" alignItems="center">
-//                 <Image
+//                 <img
 //                   src={PLACEHOLDER_THUMBNAIL}
 //                   width={200}
 //                   height={100}

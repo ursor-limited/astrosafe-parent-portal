@@ -19,9 +19,9 @@ async function CreationPage({ params }: { params: { videoId: string } }) {
   return (
     <></>
     // <AuthWrapper>
-    //   <UserProvider>
+    //
     //     {videoDetails ? <CreationPageContents details={videoDetails} /> : <></>}
-    //   </UserProvider>
+    //
     // </AuthWrapper>
   );
 }

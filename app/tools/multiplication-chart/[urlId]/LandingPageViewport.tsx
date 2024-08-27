@@ -13,23 +13,23 @@ export default function LandingPageViewport(props: {
   return (
     <Stack
       flex={1}
-      alignItems='center'
+      alignItems="center"
       zIndex={1} // covers the SpaceGlow's bottom border
       spacing={props.mobile ? '10px' : '32px'}
-      position='relative'
-      px='20px'
+      position="relative"
+      px="20px"
     >
       <Stack
         spacing={props.mobile ? '3px' : '10px'}
-        maxWidth='816px'
-        alignItems='center'
+        maxWidth="816px"
+        alignItems="center"
       >
-        <Stack spacing='6px' alignItems='center'>
+        <Stack spacing="6px" alignItems="center">
           <Typography
             variant={props.mobile ? 'normal' : 'large'}
             bold
             color={PALETTE.secondary.grey[4]}
-            htmlTag='h3'
+            htmlTag="h3"
           >
             {props.supertitle}
           </Typography>
@@ -41,16 +41,16 @@ export default function LandingPageViewport(props: {
               textAlign: 'center',
               width: props.mobile ? '300px' : undefined,
             }}
-            htmlTag='h2'
+            htmlTag="h2"
           >
             {props.title}
           </Typography>
         </Stack>
         {props.subtitle ? (
           <Stack
-            pt='5px'
+            pt="5px"
             direction={props.mobile ? 'column' : 'row'}
-            spacing='20px'
+            spacing="20px"
           >
             {props.leftImageUrl ? (
               <div
@@ -62,11 +62,11 @@ export default function LandingPageViewport(props: {
                   transform: 'translateY(5px)',
                 }}
               >
-                <Image
+                <img
                   src={props.leftImageUrl}
                   fill
                   style={{ objectFit: 'cover' }}
-                  alt='left image'
+                  alt="left image"
                 />
               </div>
             ) : null}
@@ -78,7 +78,7 @@ export default function LandingPageViewport(props: {
                   props.leftImageUrl && !props.mobile ? 'left' : 'center',
                 width: props.mobile ? '280px' : undefined,
               }}
-              htmlTag='h4'
+              htmlTag="h4"
             >
               {props.subtitle}
             </Typography>

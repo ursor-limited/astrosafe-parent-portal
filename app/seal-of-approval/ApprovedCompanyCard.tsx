@@ -37,13 +37,13 @@ export const ApprovedCompanyCard = (
     []
   );
   return (
-    <Stack position='relative'>
+    <Stack position="relative">
       <Stack
-        borderRadius='12px'
+        borderRadius="12px"
         p={props.mobile ? '14px' : '20px'}
-        boxSizing='border-box'
-        direction='row'
-        spacing='20px'
+        boxSizing="border-box"
+        direction="row"
+        spacing="20px"
         boxShadow={props.shadow ? '0 0 24px rgba(0,0,0,0.08)' : undefined}
         bgcolor={props.white ? 'rgb(255,255,255)' : PALETTE.secondary.grey[1]}
       >
@@ -62,9 +62,9 @@ export const ApprovedCompanyCard = (
           }}
         >
           {props.ogimage && !props.ogimage.includes('placeholder') ? (
-            <Image
+            <img
               src={`${S3_BASE_URL}/thumbnails/${props.ogimage}`}
-              alt='Approved company'
+              alt="Approved company"
               fill
               style={{ objectFit: 'cover' }}
             />
@@ -78,17 +78,17 @@ export const ApprovedCompanyCard = (
             </Typography>
           )}
         </div>
-        <Stack flex={1} justifyContent='space-between'>
+        <Stack flex={1} justifyContent="space-between">
           <Typography
-            htmlTag='h3'
+            htmlTag="h3"
             maxLines={props.mobile ? 2 : 1}
             variant={props.mobile ? 'normal' : 'large'}
             bold
           >
             {props.companyName}
           </Typography>
-          <Stack spacing='4px'>
-            <Stack direction='row' spacing='10px'>
+          <Stack spacing="4px">
+            <Stack direction="row" spacing="10px">
               <Typography
                 sx={{ whiteSpace: 'nowrap' }}
                 variant={props.mobile ? 'tiny' : 'small'}
@@ -103,7 +103,7 @@ export const ApprovedCompanyCard = (
                 {props.publisher}
               </Typography>
             </Stack>
-            <Stack direction='row' spacing='10px'>
+            <Stack direction="row" spacing="10px">
               <Typography
                 sx={{ whiteSpace: 'nowrap' }}
                 variant={props.mobile ? 'tiny' : 'small'}
@@ -118,7 +118,7 @@ export const ApprovedCompanyCard = (
                 {props.productType}
               </Typography>
             </Stack>
-            <Stack direction='row' spacing='10px'>
+            <Stack direction="row" spacing="10px">
               <Typography
                 sx={{ whiteSpace: 'nowrap' }}
                 variant={props.mobile ? 'tiny' : 'small'}
@@ -133,7 +133,7 @@ export const ApprovedCompanyCard = (
                 {props.productCategory}
               </Typography>
             </Stack>
-            <Stack direction='row' spacing='10px'>
+            <Stack direction="row" spacing="10px">
               <Typography
                 sx={{ whiteSpace: 'nowrap' }}
                 variant={props.mobile ? 'tiny' : 'small'}
@@ -149,7 +149,7 @@ export const ApprovedCompanyCard = (
               </Typography>
             </Stack>
             {props.showUrl ? (
-              <Stack direction='row' spacing='10px'>
+              <Stack direction="row" spacing="10px">
                 <Typography
                   sx={{ whiteSpace: 'nowrap' }}
                   variant={props.mobile ? 'tiny' : 'small'}
@@ -171,14 +171,14 @@ export const ApprovedCompanyCard = (
         </Stack>
         {!props.mobile ? (
           <Stack
-            pl='16px'
+            pl="16px"
             sx={{
               transform: 'rotate(10deg)',
             }}
           >
-            <Image
-              src='https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png'
-              alt='Astro background'
+            <img
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+              alt="Astro background"
               height={85}
               width={155}
             />
@@ -187,17 +187,17 @@ export const ApprovedCompanyCard = (
       </Stack>
       {props.mobile ? (
         <Stack
-          pl='16px'
+          pl="16px"
           sx={{
             transform: 'rotate(-4deg)',
           }}
-          position='absolute'
-          bottom='0px'
-          left='-10px'
+          position="absolute"
+          bottom="0px"
+          left="-10px"
         >
-          <Image
-            src='https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png'
-            alt='Astro background'
+          <img
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+            alt="Astro background"
             height={40}
             width={67}
           />

@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/system";
-import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
-import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
-import FilterPageSearchWordsSection from "../components/SearchWordsSection";
-import { IActionPopupItem } from "@/app/components/ActionPopup";
-import { IDevice, IFilterException } from "./common";
+import React, { useEffect, useState } from 'react';
+import { Stack } from '@mui/system';
+import FilterPageAllowedSitesSection from '../components/AllowedSitesSection';
+import FilterPageBlockedSitesSection from '../components/BlockedSitesSection';
+import FilterPageSearchWordsSection from '../components/SearchWordsSection';
+import { IActionPopupItem } from '@/app/components/ActionPopup';
+import { IDevice, IFilterException } from './common';
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from "../../contents/common";
-import MobilePageLayout from "@/app/components/MobilePageLayout";
-import { ITitleRowItem } from "@/app/components/TitleRow";
-import MobileFilterPageDevicesSection from "../components/MobileFilterDevicesSection";
-import MobileFilterPageCategoriesSection from "../components/MobileCategoriesSection";
-import { useRouter } from "next/navigation";
+} from '../../contents/common';
+import MobilePageLayout from '@/app/components/MobilePageLayout';
+import { ITitleRowItem } from '@/app/components/TitleRow';
+import MobileFilterPageDevicesSection from '../components/MobileFilterDevicesSection';
+import MobileFilterPageCategoriesSection from '../components/MobileCategoriesSection';
+import { useNavigate } from 'react-router-dom';
 
 export default function FilterPageMobileBody(props: {
   filterId: number;
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterSubcategory["id"][];
-  flipCategory: (id: IFilterCategory["categoryId"]) => void;
-  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
+  allowedCategories: IFilterSubcategory['id'][];
+  flipCategory: (id: IFilterCategory['categoryId']) => void;
+  flipSubcategory: (id: IFilterSubcategory['id']) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -33,22 +33,22 @@ export default function FilterPageMobileBody(props: {
   removeFromBlockedSearchWords: (word: string) => void;
   devices: IDevice[];
   actions: IActionPopupItem[];
-  setExceptionDialogOpen: (url: IFilterUrl["url"]) => void;
+  setExceptionDialogOpen: (url: IFilterUrl['url']) => void;
   titleRow: ITitleRowItem[];
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
-  addBlockedSite: (url: IFilterUrl["url"]) => void;
-  addAllowedSite: (url: IFilterUrl["url"]) => void;
-  removeBlockedSite: (url: IFilterUrl["url"]) => void;
-  removeAllowedSite: (url: IFilterUrl["url"]) => void;
+  addBlockedSite: (url: IFilterUrl['url']) => void;
+  addAllowedSite: (url: IFilterUrl['url']) => void;
+  removeBlockedSite: (url: IFilterUrl['url']) => void;
+  removeAllowedSite: (url: IFilterUrl['url']) => void;
   openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <MobilePageLayout
       actions={props.actions}
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => router.push("/filters")}
+      titleBackButtonCallback={() => navigate('/filters')}
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">

@@ -1,12 +1,12 @@
 // import { Stack, alpha } from "@mui/system";
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import React, { useEffect, useState } from "react";
 // import ApiController, { IVideo_DEPRECATED } from "../api";
 // import { PALETTE, Typography } from '@/ui';
 // import ImageIcon from "@/images/icons/ImageIcon.svg";
 // import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 // import PencilIcon from "@/images/icons/Pencil.svg";
-// import Image from "next/image";
+//
 // import dayjs from "dayjs";
 // import advancedFormat from "dayjs/plugin/advancedFormat.js";
 // import UrsorActionButton from "./UrsorActionButton";
@@ -27,7 +27,7 @@
 //     noFooter?: boolean;
 //   }
 // ) => {
-//   const router = useRouter();
+//   const navigate = useNavigate()
 //   const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(
 //     undefined
 //   );
@@ -107,7 +107,7 @@
 //             overflow="hidden"
 //             position="relative"
 //           >
-//             <Image
+//             <img
 //               src={props.url}
 //               fill
 //               style={{ objectFit: "cover" }}
@@ -139,7 +139,7 @@
 //                 <Typography variant="small" color={PALETTE.secondary.grey[5]}>
 //                   {getFormattedDate(props.createdAt)}
 //                 </Typography>
-//                 <ImageIcon height="20px" width="20px" />
+//                 <imgIcon height="20px" width="20px" />
 //               </Stack>
 //             ) : null}
 //           </Stack>

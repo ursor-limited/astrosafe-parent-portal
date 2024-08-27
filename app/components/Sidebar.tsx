@@ -121,9 +121,9 @@ const SidebarItem = (props: {
 }) => (
   <Stack
     id={props.tourId}
-    width='100%'
-    alignItems='center'
-    justifyContent='center'
+    width="100%"
+    alignItems="center"
+    justifyContent="center"
     sx={{
       cursor: 'pointer',
       '&:hover': { opacity: 0.6 },
@@ -142,26 +142,26 @@ const SidebarItem = (props: {
       },
     }}
     onClick={props.callback}
-    position='relative'
+    position="relative"
   >
     {props.notificationCount ? (
       <Stack
-        top='-3px'
-        right='26px'
-        position='absolute'
-        height='20px'
-        width='20px'
-        justifyContent='center'
-        alignItems='center'
-        borderRadius='100%'
+        top="-3px"
+        right="26px"
+        position="absolute"
+        height="20px"
+        width="20px"
+        justifyContent="center"
+        alignItems="center"
+        borderRadius="100%"
         bgcolor={PALETTE.system.orange}
       >
-        <Typography variant='tiny' bold color='rgb(255,255,255)'>
+        <Typography variant="tiny" bold color="rgb(255,255,255)">
           {props.notificationCount}
         </Typography>
       </Stack>
     ) : null}
-    <Stack flex={1} spacing='4px' justifyContent='center' alignItems='center'>
+    <Stack flex={1} spacing="4px" justifyContent="center" alignItems="center">
       {props.children}
       {!props.noText ? (
         <Typography
@@ -182,28 +182,28 @@ const SidebarItem = (props: {
 
 export default function Sidebar(props: ISidebarProps) {
   const user = useUserContext().user;
-  const router = useRouter();
+  const navigate = useNavigate();
   const topItems: ISidebarItem[] = [
     {
       id: 'devices',
       //tourId: "devices-button",
       icon: PeopleIcon,
       title: 'Kids',
-      callback: () => router.push('/profiles'),
+      callback: () => navigate('/profiles'),
     },
     {
       id: 'filters',
       //tourId: "devices-button",
       icon: FilterIcon,
       title: 'Filters',
-      callback: () => router.push('/filters'),
+      callback: () => navigate('/filters'),
     },
     {
       id: 'content',
       //tourId: "devices-button",
       icon: BookIcon,
       title: 'Content',
-      callback: () => router.push('/folders'),
+      callback: () => navigate('/folders'),
     },
   ];
 
@@ -212,12 +212,12 @@ export default function Sidebar(props: ISidebarProps) {
       id: 'account',
       icon: GearIcon,
       title: 'Account',
-      callback: () => router.push('/account'),
+      callback: () => navigate('/account'),
     },
   ];
 
   const getList = (items: ISidebarItem[], small: boolean, noText: boolean) => (
-    <Stack spacing={small ? '16px' : '24px'} width='100%'>
+    <Stack spacing={small ? '16px' : '24px'} width="100%">
       {items.map((item, index) => {
         const selected = item.id === props.selectedItemId;
         return (
@@ -246,24 +246,24 @@ export default function Sidebar(props: ISidebarProps) {
     <>
       <Stack
         ref={ref}
-        height='100%'
+        height="100%"
         width={WIDTH}
         sx={{ background: 'white', fontSize: '10px' }}
-        borderRadius='20px'
+        borderRadius="20px"
         py={Y_PADDING}
-        justifyContent='space-between'
-        id='my-first-step'
+        justifyContent="space-between"
+        id="my-first-step"
       >
-        <Stack spacing={small ? '16px' : '24px'} alignItems='center'>
+        <Stack spacing={small ? '16px' : '24px'} alignItems="center">
           {getList(topItems, small, noText)}
         </Stack>
         <SidebarItem
-          title='Account'
-          callback={() => router.push('/account')}
+          title="Account"
+          callback={() => navigate('/account')}
           selected={'account' === props.selectedItemId}
           small={small}
           noText={noText}
-          tourId='account'
+          tourId="account"
         >
           <UserInitialsCircle
             size={32}

@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/system";
-import FilterPageCategoriesSection from "../components/CategoriesSection";
-import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
-import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
-import FilterPageSearchWordsSection from "../components/SearchWordsSection";
-import FilterPageDevicesSection from "../components/FilterDevicesSection";
-import PageLayout from "@/app/components/PageLayout";
-import { IActionPopupItem } from "@/app/components/ActionPopup";
-import { IDevice, IFilterException } from "./common";
+import React, { useEffect, useState } from 'react';
+import { Stack } from '@mui/system';
+import FilterPageCategoriesSection from '../components/CategoriesSection';
+import FilterPageAllowedSitesSection from '../components/AllowedSitesSection';
+import FilterPageBlockedSitesSection from '../components/BlockedSitesSection';
+import FilterPageSearchWordsSection from '../components/SearchWordsSection';
+import FilterPageDevicesSection from '../components/FilterDevicesSection';
+import PageLayout from '@/app/components/PageLayout';
+import { IActionPopupItem } from '@/app/components/ActionPopup';
+import { IDevice, IFilterException } from './common';
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from "../../contents/common";
-import { ITitleRowItem } from "@/app/components/TitleRow";
-import { useRouter } from "next/navigation";
+} from '../../contents/common';
+import { ITitleRowItem } from '@/app/components/TitleRow';
+import { useNavigate } from 'react-router-dom';
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterSubcategory["id"][];
-  flipCategory: (id: IFilterCategory["categoryId"]) => void;
-  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
+  allowedCategories: IFilterSubcategory['id'][];
+  flipCategory: (id: IFilterCategory['categoryId']) => void;
+  flipSubcategory: (id: IFilterSubcategory['id']) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -33,21 +33,21 @@ export default function FilterPageDesktopBody(props: {
   removeFromBlockedSearchWords: (word: string) => void;
   devices: IDevice[];
   actions: IActionPopupItem[];
-  setExceptionDialogOpen: (url: IFilterUrl["url"]) => void;
+  setExceptionDialogOpen: (url: IFilterUrl['url']) => void;
   titleRow: ITitleRowItem[];
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
-  addBlockedSite: (url: IFilterUrl["url"]) => void;
-  addAllowedSite: (url: IFilterUrl["url"]) => void;
-  removeBlockedSite: (url: IFilterUrl["url"]) => void;
-  removeAllowedSite: (url: IFilterUrl["url"]) => void;
+  addBlockedSite: (url: IFilterUrl['url']) => void;
+  addAllowedSite: (url: IFilterUrl['url']) => void;
+  removeBlockedSite: (url: IFilterUrl['url']) => void;
+  removeAllowedSite: (url: IFilterUrl['url']) => void;
   openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButtonCallback={() => router.push("/filters")}
+      titleBackButtonCallback={() => navigate('/filters')}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="filters"

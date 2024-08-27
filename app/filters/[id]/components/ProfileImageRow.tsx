@@ -1,14 +1,14 @@
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import { PALETTE, Typography } from "@/ui";
-import PeopleIcon from "@/images/icons/PeopleIcon.svg";
-import { IDevice } from "../contents/common";
-import { getInitials } from "@/app/account/contents/common";
+import { Stack } from '@mui/system';
+
+import { PALETTE, Typography } from '@/ui';
+import PeopleIcon from '@/images/icons/PeopleIcon.svg';
+import { IDevice } from '../contents/common';
+import { getInitials } from '@/app/account/contents/common';
 
 const ProfileImageRow = (props: {
   devices: {
-    name: IDevice["name"];
-    profileAvatarUrl: IDevice["profileAvatarUrl"];
+    name: IDevice['name'];
+    profileAvatarUrl: IDevice['profileAvatarUrl'];
   }[];
   totalDeviceCount: number;
 }) => (
@@ -30,7 +30,7 @@ const ProfileImageRow = (props: {
                   bgcolor={PALETTE.secondary.blue[2]}
                 >
                   {d.profileAvatarUrl ? (
-                    <Image
+                    <img
                       src={d.profileAvatarUrl}
                       height={42}
                       width={42}
@@ -53,7 +53,7 @@ const ProfileImageRow = (props: {
             spacing="4px"
             alignItems="center"
             sx={{
-              transform: "translate(48px, -10px)",
+              transform: 'translate(48px, -10px)',
               svg: {
                 path: {
                   fill: PALETTE.secondary.grey[4],

@@ -1,12 +1,11 @@
-import ApiController from "@/app/api";
-import { SearchInput } from "@/app/components/SearchInput";
-import UrsorDialog from "@/app/components/UrsorDialog";
-import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
-import { PALETTE, Typography } from "@/ui";
-import { IGroup } from "../contents/common";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import Image from "next/image";
+import ApiController from '@/app/api';
+import { SearchInput } from '@/app/components/SearchInput';
+import UrsorDialog from '@/app/components/UrsorDialog';
+import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { PALETTE, Typography } from '@/ui';
+import { IGroup } from '../contents/common';
+import { IDevice } from '@/app/filters/[id]/contents/common';
 
 const AddDeviceDialog = (props: {
   title: string;
@@ -14,12 +13,12 @@ const AddDeviceDialog = (props: {
   emptyText: string;
   open: boolean;
   onClose: () => void;
-  onAdd: (id: IDevice["id"]) => void;
+  onAdd: (id: IDevice['id']) => void;
   addedDevices: IDevice[];
-  groupId: IGroup["id"];
+  groupId: IGroup['id'];
   isMobile?: boolean;
 }) => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
   useEffect(() => {
     props.groupId &&
@@ -58,13 +57,13 @@ const AddDeviceDialog = (props: {
       title={props.title}
       subtitle={props.subtitle}
       width="434px"
-      height={props.isMobile ? "76%" : undefined}
+      height={props.isMobile ? '76%' : undefined}
       isMobile={props.isMobile}
     >
       <SearchInput
         value={searchValue}
         callback={setSearchValue}
-        clearCallback={() => setSearchValue("")}
+        clearCallback={() => setSearchValue('')}
         fullWidth
         iconSize="18px"
         grey
@@ -74,7 +73,7 @@ const AddDeviceDialog = (props: {
           <Typography
             color={PALETTE.secondary.grey[3]}
             bold
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: 'center' }}
           >
             {props.emptyText}
           </Typography>
@@ -88,9 +87,9 @@ const AddDeviceDialog = (props: {
               spacing="8px"
               px="8px"
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.7 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.7 },
               }}
               onClick={() => props.onAdd(d.id)}
             >
@@ -102,7 +101,7 @@ const AddDeviceDialog = (props: {
                 bgcolor={PALETTE.secondary.blue[2]}
               >
                 {d.profileAvatarUrl ? (
-                  <Image
+                  <img
                     src={d.profileAvatarUrl}
                     height={23}
                     width={23}

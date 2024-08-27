@@ -1,14 +1,14 @@
-import ContentCard from "./ContentCard";
-import Image from "next/image";
-import { Stack } from "@mui/system";
-import ApiController from "@/app/api";
-import { ILink } from "@/app/profiles/[id]/components/ContentTab";
-import { PALETTE } from "@/ui";
+import ContentCard from './ContentCard';
+
+import { Stack } from '@mui/system';
+import ApiController from '@/app/api';
+import { ILink } from '@/app/profiles/[id]/components/ContentTab';
+import { PALETTE } from '@/ui';
 
 const IMAGE_HEIGHT = 227;
 
 const LinkCard = (
-  props: Partial<Omit<ILink, "createdAt">> & {
+  props: Partial<Omit<ILink, 'createdAt'>> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -40,9 +40,9 @@ const LinkCard = (
         boxShadow="0 0 6px rgba(0,0,0,0.08)"
       >
         {props.thumbnailUrl ? (
-          <Image
+          <img
             src={props.thumbnailUrl}
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: 'cover' }}
             fill
             alt="image card image"
           />

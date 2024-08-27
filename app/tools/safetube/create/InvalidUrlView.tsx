@@ -17,15 +17,15 @@ export const urlIsInvalid = async (value: string) =>
 
 export default function InvalidUrlView(props: { mobile: boolean }) {
   const [url, setUrl] = useState<string>('');
-  const router = useRouter();
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState<string>('');
   const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
   return (
     <Stack
-      minHeight='40vh'
-      justifyContent='center'
-      alignItems='center'
-      spacing='36px'
+      minHeight="40vh"
+      justifyContent="center"
+      alignItems="center"
+      spacing="36px"
     >
       <Stack
         sx={{
@@ -35,26 +35,26 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
           '-webkit-background-clip': 'text',
         }}
       >
-        <Typography variant='h1'>Ooooops...</Typography>
+        <Typography variant="h1">Ooooops...</Typography>
       </Stack>
-      <Stack spacing='5px' alignItems='center'>
-        <Typography variant='medium' bold color='rgba(255,255,255,0.65)'>
+      <Stack spacing="5px" alignItems="center">
+        <Typography variant="medium" bold color="rgba(255,255,255,0.65)">
           Unfortunately, we couldn’t create a video from that link!
         </Typography>
-        <Typography variant='medium' bold color='rgba(255,255,255,0.65)'>
+        <Typography variant="medium" bold color="rgba(255,255,255,0.65)">
           Please enter a valid Vimeo or YouTube link to create a safe video
           link.
         </Typography>
-        <Typography variant='medium' bold color='rgba(255,255,255,0.65)'>
+        <Typography variant="medium" bold color="rgba(255,255,255,0.65)">
           (Note that some videos have the permissions to create a safe link
           turned off.)
         </Typography>
       </Stack>
       <Stack
-        width='50%'
-        spacing='16px'
+        width="50%"
+        spacing="16px"
         direction={props.mobile ? 'column' : 'row'}
-        alignItems='center'
+        alignItems="center"
       >
         <UrsorInputField
           value={inputValue}
@@ -62,8 +62,8 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
             setInputValue(event.target.value);
             setInvalidUrl(false);
           }}
-          placeholder='Enter Youtube or Vimeo URL'
-          width='100%'
+          placeholder="Enter Youtube or Vimeo URL"
+          width="100%"
           leftAlign
           boldValue
           color={invalidUrl ? PALETTE.system.red : undefined}
@@ -83,7 +83,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
               if (await urlIsInvalid(inputValue)) {
                 setInvalidUrl(true);
               } else {
-                router.push(
+                navigate(
                   `/tools/safetube/create?url=${encodeURIComponent(inputValue)}`
                 );
               }
@@ -95,8 +95,8 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
       </Stack>
       <UrsorButton
         dark
-        variant='tertiary'
-        onClick={() => router.push('/tools/safetube')}
+        variant="tertiary"
+        onClick={() => navigate('/tools/safetube')}
         startIcon={ChevronLeft}
       >
         Back
@@ -125,7 +125,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
             dark
             variant="tertiary"
             onClick={() =>
-              router.push(`/video/create?url=${encodeURIComponent(url)}`)
+              navigate(`/video/create?url=${encodeURIComponent(url)}`)
             }
             backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
             hoverOpacity={0.7}

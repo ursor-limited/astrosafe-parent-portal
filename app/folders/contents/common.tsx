@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import ApiController from "../../api";
-import { useCallback, useEffect, useState } from "react";
-import { IDevice } from "../../filters/[id]/contents/common";
-import AllFoldersPageDesktopBody from "./body-desktop";
-import AllFoldersPageMobileBody from "./body-mobile";
-import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
-import FolderCreationDialog from "../[id]/components/FolderCreationDialog";
-import useAuth from "@/app/hooks/useAuth";
+import { useNavigate } from 'react-router-dom';
+import ApiController from '../../api';
+import { useCallback, useEffect, useState } from 'react';
+import { IDevice } from '../../filters/[id]/contents/common';
+import AllFoldersPageDesktopBody from './body-desktop';
+import AllFoldersPageMobileBody from './body-mobile';
+import { IContentBucket } from '@/app/profiles/[id]/components/ContentTab';
+import FolderCreationDialog from '../[id]/components/FolderCreationDialog';
+import useAuth from '@/app/hooks/useAuth';
 
 export interface IEnrichedContentBucket {
-  id: IContentBucket["id"];
-  title: IContentBucket["title"];
+  id: IContentBucket['id'];
+  title: IContentBucket['title'];
   preview: {
     thumbnailUrls: string[];
     devices: {
-      profileAvatarUrl: IDevice["profileAvatarUrl"];
-      name: IDevice["name"];
+      profileAvatarUrl: IDevice['profileAvatarUrl'];
+      name: IDevice['name'];
     }[];
     totalDeviceCount: number;
   };
@@ -25,7 +25,7 @@ export interface IEnrichedContentBucket {
 
 const AllFoldersPage = (props: { isMobile: boolean }) => {
   const { user } = useAuth();
-  const router = useRouter();
+  const navigate = useNavigate();
   const [folders, setFolders] = useState<IEnrichedContentBucket[]>([]);
   const loadFolders = useCallback(
     () =>
@@ -38,10 +38,10 @@ const AllFoldersPage = (props: { isMobile: boolean }) => {
   useEffect(() => {
     loadFolders();
   }, [loadFolders]);
-  const createFolder = (title: IContentBucket["title"]) =>
+  const createFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
     ApiController.createFolder(title, user.group_id).then((response) =>
-      router.push(`/folders/${response.contentBucketId}`)
+      navigate(`/folders/${response.contentBucketId}`)
     );
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
 

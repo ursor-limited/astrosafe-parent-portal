@@ -173,7 +173,7 @@ export function WorksheetGeneratorEquationModule(
     React.ReactNode | undefined
   >(undefined);
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const userDetails = useUserContext();
 
@@ -234,8 +234,8 @@ export function WorksheetGeneratorEquationModule(
   }, [previewWorksheet]);
 
   return (
-    <Stack flex={1} spacing='18px'>
-      <Stack direction='row' spacing='20px'>
+    <Stack flex={1} spacing="18px">
+      <Stack direction="row" spacing="20px">
         <Captioned
           //text={props.topic === "division" ? "Divisor" : "Multiplier"}
           checkbox={{
@@ -263,13 +263,13 @@ export function WorksheetGeneratorEquationModule(
                 setFactor(getZeroHandledNumber(event.target.value));
                 setChangedValueAffectingSettings(true);
               }}
-              placeholder='Enter number'
+              placeholder="Enter number"
               leftAlign
               boldValue
               backgroundColor={
                 props.whiteFields ? 'rgb(255,255,255)' : undefined
               }
-              height='44px'
+              height="44px"
             />
           </Stack>
         </Captioned>
@@ -287,18 +287,18 @@ export function WorksheetGeneratorEquationModule(
                 setMax(getZeroHandledNumber(event.target.value));
                 setChangedValueAffectingSettings(true);
               }}
-              placeholder='Enter number'
+              placeholder="Enter number"
               leftAlign
               boldValue
               backgroundColor={
                 props.whiteFields ? 'rgb(255,255,255)' : undefined
               }
-              height='44px'
+              height="44px"
             />
           </Captioned>
         ) : (
-          <Captioned text='Number of digits'>
-            <Stack direction='row' spacing='10px'>
+          <Captioned text="Number of digits">
+            <Stack direction="row" spacing="10px">
               <CategorySelectionButton
                 selected={nDigits === 1}
                 onClick={() => {
@@ -330,8 +330,8 @@ export function WorksheetGeneratorEquationModule(
           </Captioned>
         )}
       </Stack>
-      <Stack direction='row' spacing='20px'>
-        <Captioned text='Number of questions'>
+      <Stack direction="row" spacing="20px">
+        <Captioned text="Number of questions">
           <UrsorInputField
             value={props.nProblems?.toString() ?? ''}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -341,16 +341,16 @@ export function WorksheetGeneratorEquationModule(
               );
               setChangedValueAffectingSettings(true);
             }}
-            placeholder='Enter number'
-            width='100%'
-            height='44px'
+            placeholder="Enter number"
+            width="100%"
+            height="44px"
             leftAlign
             boldValue
             backgroundColor={props.whiteFields ? 'rgb(255,255,255)' : undefined}
           />
         </Captioned>
-        <Captioned text='Question format'>
-          <Stack direction='row' spacing='10px'>
+        <Captioned text="Question format">
+          <Stack direction="row" spacing="10px">
             <CategorySelectionButton
               selected={orientation === 'horizontal'}
               onClick={() => {

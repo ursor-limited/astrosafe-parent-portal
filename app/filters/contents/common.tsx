@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import AllFiltersPageDesktopBody from "./body-desktop";
-import AllFiltersPageMobileBody from "./body-mobile";
-import ApiController from "@/app/api";
-import { useRouter } from "next/navigation";
-import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
-import { IDevice } from "../[id]/contents/common";
-import _ from "lodash";
-import useAuth from "@/app/hooks/useAuth";
+import { useEffect, useState } from 'react';
+import AllFiltersPageDesktopBody from './body-desktop';
+import AllFiltersPageMobileBody from './body-mobile';
+import ApiController from '@/app/api';
+import { useNavigate } from 'react-router-dom';
+import FilterCreationDialog from '../[id]/components/FilterCreationDialog';
+import { IDevice } from '../[id]/contents/common';
+import _ from 'lodash';
+import useAuth from '@/app/hooks/useAuth';
 
 export interface IFilterCategory {
   categoryId: number;
@@ -19,7 +19,7 @@ export interface IFilterCategory {
 
 export interface IFilterSubcategory {
   id: number;
-  categoryId: IFilterCategory["categoryId"];
+  categoryId: IFilterCategory['categoryId'];
   title: string;
 }
 
@@ -57,12 +57,12 @@ export interface IFilter {
 }
 
 export interface IGroupFilter {
-  id: IFilter["id"];
-  title: IFilter["title"];
-  official: IFilter["official"];
+  id: IFilter['id'];
+  title: IFilter['title'];
+  official: IFilter['official'];
   devices: {
-    profileAvatarUrl: IDevice["profileAvatarUrl"];
-    name: IDevice["name"];
+    profileAvatarUrl: IDevice['profileAvatarUrl'];
+    name: IDevice['name'];
   }[];
   totalDeviceCount: number;
   whitelistedCategories: number;
@@ -80,7 +80,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
   }, [user?.group_id]);
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false);
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <>
       {props.isMobile ? (
@@ -97,10 +97,10 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
       <FilterCreationDialog
         open={filterCreationDialogOpen}
         onClose={() => setFilterCreationDialogOpen(false)}
-        onSubmit={(title: IFilter["title"]) =>
+        onSubmit={(title: IFilter['title']) =>
           user?.group_id &&
           ApiController.createFilter(user.group_id, title).then((f) =>
-            router.push(`/filters/${f.filterId}`)
+            navigate(`/filters/${f.filterId}`)
           )
         }
         isMobile={props.isMobile}

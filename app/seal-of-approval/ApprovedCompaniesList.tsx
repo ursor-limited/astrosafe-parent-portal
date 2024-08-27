@@ -76,13 +76,13 @@ const PageChevrons = (props: {
   nextCallback: () => void;
   endCallback: () => void;
 }) => (
-  <Stack direction='row' spacing='8px'>
+  <Stack direction="row" spacing="8px">
     <Stack
-      height='26px'
-      alignItems='center'
-      position='relative'
-      spacing='2px'
-      direction='row'
+      height="26px"
+      alignItems="center"
+      position="relative"
+      spacing="2px"
+      direction="row"
       sx={{
         cursor: 'pointer',
         '&:hover': { opacity: 0.6 },
@@ -96,21 +96,21 @@ const PageChevrons = (props: {
       onClick={props.endCallback}
     >
       <Stack
-        position='absolute'
-        left='3px'
-        top='6.7px'
-        width='2px'
+        position="absolute"
+        left="3px"
+        top="6.7px"
+        width="2px"
         bgcolor={PALETTE.secondary.purple[2]}
-        height='12.3px'
+        height="12.3px"
         // sx={{
         //   transform: props.reversed ? `rotate(180deg)` : undefined,
         // }}
       />
-      <ChevronLeftIcon height='20px' width='20px' />
+      <ChevronLeftIcon height="20px" width="20px" />
     </Stack>
     <Stack
-      height='26px'
-      justifyContent='center'
+      height="26px"
+      justifyContent="center"
       sx={{
         cursor: 'pointer',
         '&:hover': { opacity: 0.6 },
@@ -123,7 +123,7 @@ const PageChevrons = (props: {
       }}
       onClick={props.nextCallback}
     >
-      <ChevronLeftIcon height='26px' width='26px' />
+      <ChevronLeftIcon height="26px" width="26px" />
     </Stack>
   </Stack>
 );
@@ -136,18 +136,18 @@ const PageSelection = (props: {
 }) => {
   return (
     <Stack
-      direction='row'
-      justifyContent='center'
-      alignItems='flex-start'
-      spacing='10px'
-      pt='35px'
-      width='100%'
+      direction="row"
+      justifyContent="center"
+      alignItems="flex-start"
+      spacing="10px"
+      pt="35px"
+      width="100%"
     >
       <Stack
-        height='fit-content'
-        direction='row'
-        alignItems='center'
-        spacing='30px'
+        height="fit-content"
+        direction="row"
+        alignItems="center"
+        spacing="30px"
       >
         <Stack
           sx={{
@@ -160,7 +160,7 @@ const PageSelection = (props: {
             endCallback={() => props.setPageIndex(0)}
           />
         </Stack>
-        <Stack direction='row' justifyContent='center' spacing='5px'>
+        <Stack direction="row" justifyContent="center" spacing="5px">
           <Typography
             variant={props.mobile ? 'small' : 'medium'}
             color={PALETTE.secondary.grey[5]}
@@ -255,14 +255,14 @@ const ApprovedCompaniesList = (props: {
     <Stack
       width={props.mobile ? undefined : '1000px'}
       maxWidth={props.mobile ? undefined : '990px'}
-      spacing='22px'
+      spacing="22px"
     >
       <Stack
         direction={props.mobile ? 'column' : 'row'}
         justifyContent={props.mobile ? undefined : 'space-between'}
       >
-        <Stack direction={props.mobile ? 'column' : 'row'} spacing='12px'>
-          <Captioned text='Product category' noFlex>
+        <Stack direction={props.mobile ? 'column' : 'row'} spacing="12px">
+          <Captioned text="Product category" noFlex>
             <UrsorSelect
               items={PRODUCT_CATEGORIES.map((c) => ({
                 id: c,
@@ -277,7 +277,7 @@ const ApprovedCompaniesList = (props: {
               leftAlignPopover
             />
           </Captioned>
-          <Captioned text='Product type' noFlex>
+          <Captioned text="Product type" noFlex>
             <UrsorSelect
               items={PRODUCT_TYPES.map((t) => ({
                 id: t,
@@ -292,7 +292,7 @@ const ApprovedCompaniesList = (props: {
               leftAlignPopover
             />
           </Captioned>
-          <Captioned text='Target audience' noFlex>
+          <Captioned text="Target audience" noFlex>
             <UrsorSelect
               items={TARGET_AUDIENCES.map((a) => ({
                 id: a,
@@ -308,26 +308,26 @@ const ApprovedCompaniesList = (props: {
             />
           </Captioned>
           <Stack
-            height='100%'
-            width='2px'
+            height="100%"
+            width="2px"
             bgcolor={PALETTE.secondary.grey[2]}
           />
-          <Captioned text='Search' noFlex>
+          <Captioned text="Search" noFlex>
             <SearchInput
               value={searchValue}
               callback={(value: string) => {
                 setSearchValue(value);
               }}
               clearCallback={() => setSearchValue('')}
-              height='40px'
+              height="40px"
               fullWidth
               grey
             />
           </Captioned>
         </Stack>
       </Stack>
-      <Stack spacing='20px'>
-        <Stack alignItems='center' spacing={props.mobile ? '14px' : '24px'}>
+      <Stack spacing="20px">
+        <Stack alignItems="center" spacing={props.mobile ? '14px' : '24px'}>
           {filteredCompanies.length > 0 ? (
             (filteredCompanies as IApprovedCompany[])
               .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
@@ -367,13 +367,13 @@ const ApprovedCompaniesList = (props: {
                   filter: 'grayscale(1)',
                   opacity: 0.4,
                 }}
-                alignItems='center'
+                alignItems="center"
               >
-                <Image
+                <img
                   height={190}
                   width={190}
                   src={WonderingIllustration}
-                  alt='Empty state illustration'
+                  alt="Empty state illustration"
                   style={{
                     transform: 'translateY(20px)',
                   }}

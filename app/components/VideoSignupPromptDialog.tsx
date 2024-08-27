@@ -21,7 +21,7 @@ const VideoSignupPromptDialog = (props: {
     useLocalStorage<number>('freeVideoCreationCount', 0);
   return (
     <UrsorDialog
-      supertitle='Sign in'
+      supertitle="Sign in"
       title={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? 'Create an Account'
@@ -67,14 +67,14 @@ const VideoSignupPromptDialog = (props: {
             }
       }
       onCloseCallback={props.closeCallback}
-      width='90%'
-      maxWidth='630px'
-      titleMaxWidth='400px'
+      width="90%"
+      maxWidth="630px"
+      titleMaxWidth="400px"
       titleSize={props.mobile ? 'h4' : 'h3'}
     >
       {!props.mobile ? (
-        <Stack borderRadius='12px' overflow='hidden'>
-          <Image
+        <Stack borderRadius="12px" overflow="hidden">
+          <img
             src={
               'https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png'
             }
@@ -83,15 +83,15 @@ const VideoSignupPromptDialog = (props: {
             }}
             width={415}
             height={300}
-            alt='Screenshot'
+            alt="Screenshot"
           />
         </Stack>
       ) : (
-        <Image
-          src='https://ursorassets.s3.eu-west-1.amazonaws.com/graphIllustration.png'
+        <img
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/graphIllustration.png"
           width={300}
           height={300}
-          alt='Upgrade dialog illustration'
+          alt="Upgrade dialog illustration"
         />
       )}
     </UrsorDialog>

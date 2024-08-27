@@ -1,27 +1,27 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import PageLayout from "@/app/components/PageLayout";
-import { Stack } from "@mui/system";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import UrsorActionButton from "@/app/components/UrsorActionButton";
-import { useRouter } from "next/navigation";
-import DeviceCard from "../components/DeviceCard";
-import QRCodeView from "../components/QRCodeView";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { IEnrichedDevice } from "./common";
-import { IFilter } from "@/app/filters/contents/common";
+import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import PageLayout from '@/app/components/PageLayout';
+import { Stack } from '@mui/system';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
+import { IDevice } from '@/app/filters/[id]/contents/common';
+import UrsorActionButton from '@/app/components/UrsorActionButton';
+import { useNavigate } from 'react-router-dom';
+import DeviceCard from '../components/DeviceCard';
+import QRCodeView from '../components/QRCodeView';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import { IEnrichedDevice } from './common';
+import { IFilter } from '@/app/filters/contents/common';
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IEnrichedDevice[];
   filters: IFilter[];
   setConnectDialogOpen: () => void;
   // setDownloadDialogOpen: () => void;
-  setRenameDeviceDialogId: (id: IDevice["id"]) => void;
-  setDisconnectDialogOpen: (id: IDevice["id"]) => void;
+  setRenameDeviceDialogId: (id: IDevice['id']) => void;
+  setDisconnectDialogOpen: (id: IDevice['id']) => void;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <PageLayout
       title="My Kids"
@@ -30,7 +30,7 @@ const AllDevicesPageDesktopBody = (props: {
       fullHeight
       selectedSidebarItemId="devices"
       button={{
-        text: "Add a Device",
+        text: 'Add a Device',
         callback: props.setConnectDialogOpen,
         icon: PlusIcon,
       }}
@@ -51,7 +51,7 @@ const AllDevicesPageDesktopBody = (props: {
                   {...d}
                   showBrowsing
                   filterName={
-                    props.filters.find((f) => f.id === d.filterId)?.title ?? ""
+                    props.filters.find((f) => f.id === d.filterId)?.title ?? ''
                   }
                   button={
                     <UrsorActionButton
@@ -59,12 +59,12 @@ const AllDevicesPageDesktopBody = (props: {
                       iconSize="18px"
                       actions={[
                         {
-                          text: "Open",
-                          kallback: () => router.push(`/profiles/${d.id}`),
+                          text: 'Open',
+                          kallback: () => navigate(`/profiles/${d.id}`),
                           icon: ArrowUpRightIcon,
                         },
                         {
-                          text: "Edit name",
+                          text: 'Edit name',
                           kallback: () => props.setRenameDeviceDialogId(d.id),
                           icon: PencilIcon,
                         },

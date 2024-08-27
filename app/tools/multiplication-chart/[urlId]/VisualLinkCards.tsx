@@ -16,18 +16,18 @@ export interface IVisualLinkCard {
 }
 
 const VisualLinkCard = (props: IVisualLinkCard & { mobile: boolean }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <Stack
       height={isMobile ? undefined : '567px'}
-      maxWidth='497px'
-      p='24px'
-      pb='32px'
-      boxSizing='border-box'
-      borderRadius='20px'
-      bgcolor='rgb(255,255,255)'
-      justifyContent='space-between'
-      boxShadow='0 0 40px rgba(0,0,0,0.08)'
+      maxWidth="497px"
+      p="24px"
+      pb="32px"
+      boxSizing="border-box"
+      borderRadius="20px"
+      bgcolor="rgb(255,255,255)"
+      justifyContent="space-between"
+      boxShadow="0 0 40px rgba(0,0,0,0.08)"
     >
       <div
         style={{
@@ -39,39 +39,39 @@ const VisualLinkCard = (props: IVisualLinkCard & { mobile: boolean }) => {
           boxShadow: '0 0 16px rgba(0,0,0,0.03)',
         }}
       >
-        <Image
+        <img
           src={props.imageUrl}
           style={{ objectFit: 'cover' }}
           fill
-          alt='visual link card image'
+          alt="visual link card image"
         />
       </div>
       <Stack
         pt={isMobile ? '28px' : undefined}
-        height='186px'
-        justifyContent='space-between'
-        alignItems='center'
+        height="186px"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        <Typography variant='h3' htmlTag='h4'>
+        <Typography variant="h3" htmlTag="h4">
           {props.title}
         </Typography>
         <Typography
-          variant='large'
+          variant="large"
           color={PALETTE.secondary.grey[4]}
           sx={{ textAlign: 'center' }}
         >
           {props.text}
         </Typography>
-        <Stack direction='row' spacing='12px'>
-          <Link href='/dashboard' style={{ textDecoration: 'none' }}>
-            <UrsorButton variant='tertiary' dark>
+        <Stack direction="row" spacing="12px">
+          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+            <UrsorButton variant="tertiary" dark>
               Try it now
             </UrsorButton>
           </Link>
           {props.url ? (
             <UrsorButton
-              onClick={() => router.push(props.url!)}
-              variant='secondary'
+              onClick={() => navigate(props.url!)}
+              variant="secondary"
             >
               Learn more
             </UrsorButton>
@@ -89,7 +89,7 @@ export const VisualLinkCards = (props: {
   return (
     <Stack spacing={SPACING}>
       {_.chunk(props.cards, props.mobile ? 1 : 2).map((pair, i) => (
-        <Stack spacing={SPACING} key={i} direction='row'>
+        <Stack spacing={SPACING} key={i} direction="row">
           <VisualLinkCard {...pair[0]} mobile={props.mobile} />
           {pair[1] ? (
             <VisualLinkCard {...pair[1]} mobile={props.mobile} />

@@ -6,23 +6,23 @@ import { PALETTE, Typography, UrsorButton } from '@/ui';
 import Star from '@/images/Star.svg';
 
 const ExternalPageFooter = () => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <Stack
-      height='518px'
-      borderRadius='20px'
-      direction='row'
+      height="518px"
+      borderRadius="20px"
+      direction="row"
       bgcolor={PALETTE.primary.navy}
-      position='relative'
-      overflow='hidden'
-      boxShadow='0 0 18px rgba(0,0,0,0.08)'
+      position="relative"
+      overflow="hidden"
+      boxShadow="0 0 18px rgba(0,0,0,0.08)"
     >
       <Stack
-        position='absolute'
+        position="absolute"
         top={0}
         left={0}
-        height='100%'
-        width='100%'
+        height="100%"
+        width="100%"
         sx={{
           '#tsparticles': {
             height: '100%',
@@ -32,11 +32,11 @@ const ExternalPageFooter = () => {
         <UrsorParticles number={22} />
       </Stack>
       <Stack
-        width='50%'
-        px='40px'
-        boxSizing='border-box'
-        spacing='30px'
-        justifyContent='center'
+        width="50%"
+        px="40px"
+        boxSizing="border-box"
+        spacing="30px"
+        justifyContent="center"
         zIndex={2}
         sx={{
           background: `linear-gradient(90deg, ${PALETTE.primary.navy}, ${
@@ -44,23 +44,23 @@ const ExternalPageFooter = () => {
           }, ${alpha(PALETTE.primary.navy, 0)})`,
         }}
       >
-        <Typography variant='h2' color={PALETTE.font.light}>
+        <Typography variant="h2" color={PALETTE.font.light}>
           Anyone can create digital lessons. Get started for free!
         </Typography>
-        <Stack alignItems='center' width='206px' spacing='4px'>
+        <Stack alignItems="center" width="206px" spacing="4px">
           <UrsorButton
             dark
-            variant='tertiary'
-            onClick={() => router.push('/dashboard')}
+            variant="tertiary"
+            onClick={() => navigate('/dashboard')}
             endIcon={Star}
             iconSize={16}
             iconSpin
-            iconColor='rgba(255,255,255,0.7)'
-            size='large'
+            iconColor="rgba(255,255,255,0.7)"
+            size="large"
           >
             Start for free
           </UrsorButton>
-          <Typography variant='small' color='rgba(255,255,255,0.75)'>
+          <Typography variant="small" color="rgba(255,255,255,0.75)">
             No payment required
           </Typography>
         </Stack>
@@ -73,11 +73,11 @@ const ExternalPageFooter = () => {
             position: 'relative',
           }}
         >
-          <Image
-            src='https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp'
+          <img
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp"
             style={{ objectFit: 'cover' }}
             fill
-            alt='Footer image'
+            alt="Footer image"
           />
         </div>
       </Stack>

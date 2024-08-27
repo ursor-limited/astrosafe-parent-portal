@@ -1,20 +1,20 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import PageLayout from "@/app/components/PageLayout";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import { Stack } from "@mui/system";
-import { useRouter } from "next/navigation";
-import { IEnrichedContentBucket } from "./common";
-import FolderCard from "@/app/components/FolderCard";
-import EmptyStateIllustration from "@/app/components/EmptyStateIllustration";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+import DynamicCardGrid from '@/app/components/DynamicCardGrid';
+import PageLayout from '@/app/components/PageLayout';
+import UrsorFadeIn from '@/app/components/UrsorFadeIn';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import { Stack } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
+import { IEnrichedContentBucket } from './common';
+import FolderCard from '@/app/components/FolderCard';
+import EmptyStateIllustration from '@/app/components/EmptyStateIllustration';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[];
   createFolder: () => void;
   onUpdate: () => void;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <PageLayout
       title="My Content"
@@ -23,7 +23,7 @@ const AllFoldersPageDesktopBody = (props: {
       fullHeight
       selectedSidebarItemId="content"
       button={{
-        text: "Create a Folder",
+        text: 'Create a Folder',
         callback: props.createFolder,
         icon: PlusIcon,
       }}
@@ -37,7 +37,7 @@ const AllFoldersPageDesktopBody = (props: {
               <UrsorFadeIn key={f.id} duration={800} delay={i * 90}>
                 <FolderCard
                   {...f}
-                  clickCallback={() => router.push(`/folders/${f.id}`)}
+                  clickCallback={() => navigate(`/folders/${f.id}`)}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
                 />

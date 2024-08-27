@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import { Stack } from "@mui/system";
-import UrsorFadeIn from "../../components/UrsorFadeIn";
-import _ from "lodash";
-import DynamicCardGrid from "../../components/DynamicCardGrid";
-import { useRouter } from "next/navigation";
-import PageLayout from "../../components/PageLayout";
-import FilterCard from "../[id]/components/FilterCard";
-import { IFilter, IGroupFilter } from "./common";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import { Stack } from '@mui/system';
+import UrsorFadeIn from '../../components/UrsorFadeIn';
+import _ from 'lodash';
+import DynamicCardGrid from '../../components/DynamicCardGrid';
+import { useNavigate } from 'react-router-dom';
+import PageLayout from '../../components/PageLayout';
+import FilterCard from '../[id]/components/FilterCard';
+import { IFilter, IGroupFilter } from './common';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
-export const GRID_SPACING = "20px";
+export const GRID_SPACING = '20px';
 
 export default function AllFiltersPageDesktopBody(props: {
   filters: IGroupFilter[];
   setCreateFilterDialogOpen: () => void;
 }) {
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <PageLayout
       title="My Filters"
@@ -28,7 +28,7 @@ export default function AllFiltersPageDesktopBody(props: {
       fullHeight
       selectedSidebarItemId="filters"
       button={{
-        text: "Add a Filter",
+        text: 'Add a Filter',
         callback: props.setCreateFilterDialogOpen,
         icon: PlusIcon,
       }}
@@ -40,11 +40,11 @@ export default function AllFiltersPageDesktopBody(props: {
             <Stack
               key={f.id}
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.6 },
+                cursor: 'pointer',
+                transition: '0.2s',
+                '&:hover': { opacity: 0.6 },
               }}
-              onClick={() => router.push(`/filters/${f.id}`)}
+              onClick={() => navigate(`/filters/${f.id}`)}
             >
               <UrsorFadeIn duration={800} delay={i * 150}>
                 <FilterCard {...f} />

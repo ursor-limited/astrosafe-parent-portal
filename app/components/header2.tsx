@@ -41,20 +41,20 @@ const HeaderButton = (props: {
   children?: React.ReactNode;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <UrsorPopover
       open={open}
       content={props.children}
       closeCallback={() => setOpen(false)}
-      placement='left'
+      placement="left"
       noPadding
-      margin='26px'
+      margin="26px"
     >
       <Stack
-        direction='row'
-        spacing='3px'
-        alignItems='center'
+        direction="row"
+        spacing="3px"
+        alignItems="center"
         sx={{
           cursor: 'pointer',
           '&:hover': { opacity: 0.7 },
@@ -68,7 +68,7 @@ const HeaderButton = (props: {
           },
         }}
         onClick={() => {
-          props.url ? router.push(props.url) : setOpen(true);
+          props.url ? navigate(props.url) : setOpen(true);
         }}
       >
         <Typography
@@ -80,7 +80,7 @@ const HeaderButton = (props: {
         >
           {props.text}
         </Typography>
-        {!props.url ? <ChevronDownIcon width='20px' height='20px' /> : null}
+        {!props.url ? <ChevronDownIcon width="20px" height="20px" /> : null}
       </Stack>
     </UrsorPopover>
   );
@@ -93,15 +93,15 @@ const ProductsPopoverProductButton = (props: {
   color: string;
   url: string;
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
-      direction='row'
-      height='62px'
-      alignItems='center'
-      spacing='10px'
-      onClick={() => router.push(props.url)}
+      direction="row"
+      height="62px"
+      alignItems="center"
+      spacing="10px"
+      onClick={() => navigate(props.url)}
       sx={{
         cursor: 'pointer',
         transition: '0.2s',
@@ -113,14 +113,14 @@ const ProductsPopoverProductButton = (props: {
         setHovering(false);
       }}
       bgcolor={hovering ? 'rgb(255,255,255)' : undefined}
-      borderRadius='10px'
+      borderRadius="10px"
       boxShadow={hovering ? '0 0 18px rgba(0,0,0,0.03)' : undefined}
     >
       <Stack
-        width='46px'
-        height='46px'
+        width="46px"
+        height="46px"
         bgcolor={props.color}
-        borderRadius='8px'
+        borderRadius="8px"
         sx={{
           svg: {
             path: {
@@ -128,20 +128,20 @@ const ProductsPopoverProductButton = (props: {
             },
           },
         }}
-        justifyContent='center'
-        alignItems='center'
+        justifyContent="center"
+        alignItems="center"
       >
-        <props.icon width='24px' height='24px' />
+        <props.icon width="24px" height="24px" />
       </Stack>
-      <Stack flex={1} justifyContent='space-between'>
+      <Stack flex={1} justifyContent="space-between">
         <Typography
-          variant='small'
+          variant="small"
           bold
           color={hovering ? props.color : undefined}
         >
           {props.title}
         </Typography>
-        <Typography variant='tiny' color={hovering ? props.color : undefined}>
+        <Typography variant="tiny" color={hovering ? props.color : undefined}>
           {props.body}
         </Typography>
       </Stack>
@@ -160,12 +160,12 @@ const ProductsPopoverColumn = (props: {
   useEffect(() => setOpen(!!props.alwaysOpen), []);
   return (
     <DynamicContainer duration={800} fullWidth>
-      <Stack spacing='12px'>
+      <Stack spacing="12px">
         <Stack
-          direction='row'
-          alignItems='center'
+          direction="row"
+          alignItems="center"
           justifyContent={props.spaceBetween ? 'space-between' : undefined}
-          spacing='8px'
+          spacing="8px"
           onClick={() => !props.alwaysOpen && setOpen(!open)}
           sx={{
             svg: {
@@ -176,25 +176,25 @@ const ProductsPopoverColumn = (props: {
             },
           }}
         >
-          <Typography variant='small' bold>
+          <Typography variant="small" bold>
             {props.title}
           </Typography>
           {!props.noChevron ? (
-            <ChevronRightIcon width='16px' height='16px' />
+            <ChevronRightIcon width="16px" height="16px" />
           ) : null}
         </Stack>
         {open ? (
-          <Stack spacing='12px'>
+          <Stack spacing="12px">
             {props.links.map((link, i) => (
               <Link
                 key={i}
                 href={link.url}
-                target='_blank'
+                target="_blank"
                 style={{
                   textDecoration: 'none',
                   color: 'unset',
                 }}
-                rel='noreferrer'
+                rel="noreferrer"
               >
                 <Stack
                   sx={{
@@ -203,7 +203,7 @@ const ProductsPopoverColumn = (props: {
                     transition: '0.2s',
                   }}
                 >
-                  <Typography variant='small'>{link.text}</Typography>
+                  <Typography variant="small">{link.text}</Typography>
                 </Stack>
               </Link>
             ))}
@@ -219,62 +219,62 @@ const ProductsPopoverContents = (props: {
   noSignIn?: boolean;
 }) => {
   const { login, user } = useAuth();
-  const router = useRouter();
+  const navigate = useNavigate();
   return (
     <Stack
       height={props.mobile ? undefined : '292px'}
       width={props.mobile ? undefined : '842px'}
-      bgcolor='rgb(255,255,255)'
-      borderRadius='12px'
+      bgcolor="rgb(255,255,255)"
+      borderRadius="12px"
       direction={props.mobile ? 'column' : 'row'}
-      p='12px'
-      spacing='24px'
+      p="12px"
+      spacing="24px"
     >
       <Stack
         bgcolor={PALETTE.secondary.grey[1]}
         width={props.mobile ? undefined : '300px'}
         height={props.mobile ? '268px' : undefined}
-        p='12px'
+        p="12px"
         pb={props.mobile ? '4px' : undefined}
-        borderRadius='10px'
-        boxSizing='border-box'
+        borderRadius="10px"
+        boxSizing="border-box"
         spacing={props.mobile ? '12px' : '20px'}
       >
-        <Typography variant='medium' bold>
+        <Typography variant="medium" bold>
           Products
         </Typography>
-        <Stack flex={1} justifyContent='space-between'>
+        <Stack flex={1} justifyContent="space-between">
           <ProductsPopoverProductButton
-            title='Worksheet generator'
-            body='Personalised and printable worksheets made in seconds.'
+            title="Worksheet generator"
+            body="Personalised and printable worksheets made in seconds."
             icon={ChecklistIcon}
             color={PALETTE.secondary.blue[3]}
-            url='/tools/math-worksheet-generator'
+            url="/tools/math-worksheet-generator"
           />
           <ProductsPopoverProductButton
-            title='SafeTube - Safe Videos'
-            body='Reduce ads, remove distracting content, and increase focus.'
+            title="SafeTube - Safe Videos"
+            body="Reduce ads, remove distracting content, and increase focus."
             icon={CirclePlayIcon}
-            color='#FC5C5C'
-            url='/tools/safetube'
+            color="#FC5C5C"
+            url="/tools/safetube"
           />
           <ProductsPopoverProductButton
-            title='Browser'
-            body='Keep students safe with a browser built for the classroom.'
+            title="Browser"
+            body="Keep students safe with a browser built for the classroom."
             icon={GlobeIcon}
             color={PALETTE.secondary.purple[2]}
-            url='https://app.astrosafe.co'
+            url="https://app.astrosafe.co"
           />
         </Stack>
       </Stack>
-      <Stack flex={1} p='12px' spacing='20px'>
-        <Stack onClick={() => router.push('/seal-of-approval')}>
-          <Typography variant='medium' bold>
+      <Stack flex={1} p="12px" spacing="20px">
+        <Stack onClick={() => navigate('/seal-of-approval')}>
+          <Typography variant="medium" bold>
             Safeseal
           </Typography>
         </Stack>
         {props.mobile ? (
-          <Typography variant='medium' bold>
+          <Typography variant="medium" bold>
             Tools
           </Typography>
         ) : null}
@@ -284,7 +284,7 @@ const ProductsPopoverContents = (props: {
         >
           <ProductsPopoverColumn
             alwaysOpen={!props.mobile}
-            title='Times tables'
+            title="Times tables"
             links={[
               {
                 text: '5 times tables',
@@ -316,7 +316,7 @@ const ProductsPopoverContents = (props: {
           />
           <ProductsPopoverColumn
             alwaysOpen={!props.mobile}
-            title='All tools'
+            title="All tools"
             links={[
               {
                 text: 'Chore charts',
@@ -340,7 +340,7 @@ const ProductsPopoverContents = (props: {
           />
           <ProductsPopoverColumn
             alwaysOpen={!props.mobile}
-            title='More'
+            title="More"
             links={[
               {
                 text: 'About',
@@ -360,19 +360,19 @@ const ProductsPopoverContents = (props: {
           />
         </Stack>
       </Stack>
-      <Stack spacing='8px'>
+      <Stack spacing="8px">
         {props.mobile ? (
           <UrsorButton
-            width='100%'
-            variant='secondary'
+            width="100%"
+            variant="secondary"
             onClick={() => (window.location.href = 'mailto:hello@astrosafe.co')}
-            fontSize='16px'
+            fontSize="16px"
           >
             Contact sales
           </UrsorButton>
         ) : null}
         {!user && props.mobile && !props.noSignIn ? (
-          <UrsorButton width='100%' onClick={login}>
+          <UrsorButton width="100%" onClick={login}>
             Sign in
           </UrsorButton>
         ) : null}
@@ -388,24 +388,24 @@ const MobileMenuButton = (props: { noSignIn?: boolean }) => {
     <UrsorPopover
       open={open}
       closeCallback={() => setOpen(false)}
-      placement='right'
+      placement="right"
       width={`${width - 40}px`}
       content={<ProductsPopoverContents mobile noSignIn={props.noSignIn} />}
       noPadding
     >
       <Stack
-        height='42px'
-        width='42px'
-        borderRadius='100%'
-        bgcolor='rgb(255,255,255)'
+        height="42px"
+        width="42px"
+        borderRadius="100%"
+        bgcolor="rgb(255,255,255)"
         onClick={() => setOpen(true)}
-        alignItems='center'
-        justifyContent='center'
+        alignItems="center"
+        justifyContent="center"
       >
         {open ? (
-          <X width='20px' height='20px' />
+          <X width="20px" height="20px" />
         ) : (
-          <ThreeBarsIcon width='20px' height='20px' />
+          <ThreeBarsIcon width="20px" height="20px" />
         )}
       </Stack>
     </UrsorPopover>
@@ -422,44 +422,44 @@ export const Header = (props: {
   hidePopupDashboardButton?: boolean;
 }) => {
   const { user, login, logout } = useAuth();
-  const router = useRouter();
+  const navigate = useNavigate();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const safeTubeUser = useUserContext();
 
   return (
     <>
-      <Stack alignItems='center' width='100%'>
+      <Stack alignItems="center" width="100%">
         <Stack
-          direction='row'
+          direction="row"
           height={`${60}px`}
           minHeight={`${60}px`}
-          alignItems='center'
-          justifyContent='space-between'
-          px='20px'
-          boxSizing='border-box'
+          alignItems="center"
+          justifyContent="space-between"
+          px="20px"
+          boxSizing="border-box"
           maxWidth={props.mobile ? '100%' : '1300px'}
-          width='100%'
+          width="100%"
         >
-          <Stack direction='row'>
+          <Stack direction="row">
             <Stack
-              width='fit-content'
-              pr='51px'
+              width="fit-content"
+              pr="51px"
               sx={{
                 cursor: 'pointer',
                 '&:hover': { opacity: 0.8 },
                 transition: '0.2s',
               }}
             >
-              <Link href='https://astrosafe.co/'>
+              <Link href="https://astrosafe.co/">
                 <Logo width={65} />
               </Link>
             </Stack>
             {!props.mobile ? (
-              <Stack direction='row' spacing='20px'>
-                <HeaderButton text='Products'>
+              <Stack direction="row" spacing="20px">
+                <HeaderButton text="Products">
                   <ProductsPopoverContents />
                 </HeaderButton>
-                <HeaderButton text='Safeseal' url='/seal-of-approval' />
+                <HeaderButton text="Safeseal" url="/seal-of-approval" />
               </Stack>
             ) : null}
           </Stack>
@@ -478,21 +478,21 @@ export const Header = (props: {
         ) : null} */}
 
           {props.mobile ? (
-            <Stack direction='row' spacing='8px'>
+            <Stack direction="row" spacing="8px">
               {user ? <ProfileButton /> : null}
               <MobileMenuButton noSignIn={props.noSignIn} />
             </Stack>
           ) : (
-            <Stack spacing={'14px'} direction='row'>
+            <Stack spacing={'14px'} direction="row">
               {!user ? (
                 <UrsorButton
-                  backgroundColor='transparent'
+                  backgroundColor="transparent"
                   hoverOpacity={0.7}
                   onClick={() =>
                     (window.location.href = 'mailto:hello@astrosafe.co')
                   }
-                  fontSize='16px'
-                  paddingX='8px'
+                  fontSize="16px"
+                  paddingX="8px"
                 >
                   Contact sales
                 </UrsorButton>
@@ -500,10 +500,10 @@ export const Header = (props: {
                 <UrsorButton
                   dark
                   hoverOpacity={0.7}
-                  backgroundColor='transparent'
-                  borderColor='rgb(255,255,255)'
-                  fontColor='rgb(255,255,255)'
-                  onClick={() => router.push('/dashboard')}
+                  backgroundColor="transparent"
+                  borderColor="rgb(255,255,255)"
+                  fontColor="rgb(255,255,255)"
+                  onClick={() => navigate('/dashboard')}
                   //onClick={() => ApiController.doIt()}
                   endIcon={HomeIcon}
                 >
@@ -511,21 +511,21 @@ export const Header = (props: {
                 </UrsorButton>
               )}
               {user ? (
-                <Stack direction='row' spacing='12px'>
+                <Stack direction="row" spacing="12px">
                   <ProfileButton />
                 </Stack>
               ) : !props.noSignIn ? (
                 <UrsorButton
                   dark
-                  variant='tertiary'
+                  variant="tertiary"
                   onClick={() => {
                     login();
                     //mixpanel.track("clicked header sign up");
                   }}
                   endIcon={PersonIcon}
-                  fontSize='16px'
-                  height='40px'
-                  paddingX='20px'
+                  fontSize="16px"
+                  height="40px"
+                  paddingX="20px"
                 >
                   Log in
                 </UrsorButton>

@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import React from "react";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import { UrsorButton } from "@/ui";
-import { Stack } from "@mui/system";
-import UrsorFadeIn from "../../components/UrsorFadeIn";
-import _ from "lodash";
-import DynamicCardGrid from "../../components/DynamicCardGrid";
-import { useRouter } from "next/navigation";
-import FilterCard from "../[id]/components/FilterCard";
-import { IGroupFilter } from "./common";
-import MobilePageLayout from "@/app/components/MobilePageLayout";
-import { INFOS } from "@/app/profiles/[id]/components/ProfilePageTabLayout";
+import React from 'react';
+import PlusIcon from '@/images/icons/PlusIcon.svg';
+import { UrsorButton } from '@/ui';
+import { Stack } from '@mui/system';
+import UrsorFadeIn from '../../components/UrsorFadeIn';
+import _ from 'lodash';
+import DynamicCardGrid from '../../components/DynamicCardGrid';
+import { useNavigate } from 'react-router-dom';
+import FilterCard from '../[id]/components/FilterCard';
+import { IGroupFilter } from './common';
+import MobilePageLayout from '@/app/components/MobilePageLayout';
+import { INFOS } from '@/app/profiles/[id]/components/ProfilePageTabLayout';
 
-export const GRID_SPACING = "20px";
+export const GRID_SPACING = '20px';
 
 export default function AllFiltersPageMobileBody(props: {
   filters: IGroupFilter[];
   setCreateFilterDialogOpen: () => void;
 }) {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return (
     <MobilePageLayout
@@ -43,11 +43,11 @@ export default function AllFiltersPageMobileBody(props: {
           <Stack
             key={f.id}
             sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
+              cursor: 'pointer',
+              transition: '0.2s',
+              '&:hover': { opacity: 0.6 },
             }}
-            onClick={() => router.push(`/filters/${f.id}`)}
+            onClick={() => navigate(`/filters/${f.id}`)}
           >
             <UrsorFadeIn duration={800} delay={i * 150}>
               <FilterCard {...f} isMobile />

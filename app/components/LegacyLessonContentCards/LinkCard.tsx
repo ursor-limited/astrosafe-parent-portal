@@ -2,7 +2,7 @@
 // import { Stack, alpha } from "@mui/system";
 // import dayjs from "dayjs";
 // import { PALETTE, Typography } from '@/ui';
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import { ILink_DEPRECATED } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 // import { getFormattedDate } from "../VideoCard";
 // import LinkIcon from "@/images/icons/LinkIcon.svg";
@@ -106,7 +106,7 @@
 
 //   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
-//   const router = useRouter();
+//   const navigate = useNavigate()
 
 //   const notificationCtx = React.useContext(NotificationContext);
 

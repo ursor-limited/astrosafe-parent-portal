@@ -21,7 +21,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   // function download(content: any, fileName: string, contentType: string) {
   //   var a = document.createElement("a");
@@ -62,17 +62,17 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           ...(props.visualLinkCardsSubtler
             ? [
                 <LandingPageViewport
-                  key='seals'
+                  key="seals"
                   supertitle={props.visualLinkCardsSubtler.supertitle}
                   subtitle={props.visualLinkCardsSubtler.subtitle}
                   title={props.visualLinkCardsSubtler.title}
                   mobile={isMobile}
                 >
-                  <Stack direction='row' spacing={isMobile ? '8px' : '12px'}>
+                  <Stack direction="row" spacing={isMobile ? '8px' : '12px'}>
                     <UrsorButton
                       width={isMobile ? '160px' : '226px'}
                       dark
-                      variant='tertiary'
+                      variant="tertiary"
                       onClick={() =>
                         (window.location.href =
                           'https://form.typeform.com/to/mVezziat')
@@ -82,7 +82,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                     </UrsorButton>
                     <UrsorButton
                       width={isMobile ? '160px' : '226px'}
-                      variant='secondary'
+                      variant="secondary"
                       onClick={() => setExplanationDialogOpen(true)}
                     >
                       Learn more
@@ -98,7 +98,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           ...(props.valueProposition
             ? [
                 <LandingPageViewport
-                  key='valueProposition'
+                  key="valueProposition"
                   supertitle={props.valueProposition.supertitle}
                   title={props.valueProposition.title}
                   mobile={isMobile}
@@ -110,10 +110,10 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                 </LandingPageViewport>,
               ]
             : []),
-          <Stack key='list' ref={listRef}>
+          <Stack key="list" ref={listRef}>
             <LandingPageViewport
-              supertitle='Seal members'
-              title='AstroSafe Seal recipients'
+              supertitle="Seal members"
+              title="AstroSafe Seal recipients"
               mobile={isMobile}
             >
               <ApprovedCompaniesList
@@ -124,13 +124,13 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           </Stack>,
         ]}
       >
-        <Stack width='100%' alignItems='center' spacing='32px'>
-          <Stack direction='row' spacing={isMobile ? '8px' : '12px'}>
+        <Stack width="100%" alignItems="center" spacing="32px">
+          <Stack direction="row" spacing={isMobile ? '8px' : '12px'}>
             <UrsorButton
               size={isMobile ? 'medium' : 'large'}
               width={isMobile ? '160px' : '226px'}
               dark
-              variant='tertiary'
+              variant="tertiary"
               onClick={() =>
                 (window.location.href = 'https://form.typeform.com/to/mVezziat')
               }
@@ -146,17 +146,17 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
               View list
             </UrsorButton>
           </Stack>
-          <Stack position='relative' height={isMobile ? '80px' : '150px'}>
+          <Stack position="relative" height={isMobile ? '80px' : '150px'}>
             <Stack
-              position='absolute'
+              position="absolute"
               top={0}
               sx={{ transform: 'translateX(-50%)' }}
             >
-              <Image
-                src='https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png'
+              <img
+                src="https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png"
                 width={isMobile ? 380 : 873}
                 height={isMobile ? 138 : 316}
-                alt='Astro Seals illustration'
+                alt="Astro Seals illustration"
                 priority
               />
             </Stack>

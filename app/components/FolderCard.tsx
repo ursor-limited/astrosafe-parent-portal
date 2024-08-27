@@ -1,23 +1,23 @@
-import { useContext, useEffect, useState } from "react";
-import { Stack, keyframes } from "@mui/system";
-import { PALETTE, Typography } from "@/ui";
-import Star from "@/images/Star.svg";
-import { useRouter } from "next/navigation";
-import _ from "lodash";
-import ProfileImageRow from "@/app/filters/[id]/components/ProfileImageRow";
-import UrsorActionButton from "@/app/components/UrsorActionButton";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
-import DeletionDialog from "@/app/components/DeletionDialog";
-import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
-import { IEnrichedContentBucket } from "@/app/folders/contents/common";
-import ApiController from "@/app/api";
-import FolderRenameDialog from "@/app/folders/[id]/components/FolderRenameDialog";
-import { IContentBucket } from "../profiles/[id]/components/ContentTab";
-import NotificationContext from "@/app/components/NotificationContext";
-import { FOLDER_DELETION_DIALOG_SUBTITLE } from "../folders/[id]/contents/common";
-import { IActionPopupItem } from "./ActionPopup";
+import { useContext, useEffect, useState } from 'react';
+import { Stack, keyframes } from '@mui/system';
+import { PALETTE, Typography } from '@/ui';
+import Star from '@/images/Star.svg';
+import { useNavigate } from 'react-router-dom';
+import _ from 'lodash';
+import ProfileImageRow from '@/app/filters/[id]/components/ProfileImageRow';
+import UrsorActionButton from '@/app/components/UrsorActionButton';
+import PencilIcon from '@/images/icons/Pencil.svg';
+import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import ArrowUpRight from '@/images/icons/ArrowUpRight.svg';
+import DeletionDialog from '@/app/components/DeletionDialog';
+import { SECONDARY_COLOR_ORDER } from '@/app/components/PaletteButton';
+import { IEnrichedContentBucket } from '@/app/folders/contents/common';
+import ApiController from '@/app/api';
+import FolderRenameDialog from '@/app/folders/[id]/components/FolderRenameDialog';
+import { IContentBucket } from '../profiles/[id]/components/ContentTab';
+import NotificationContext from '@/app/components/NotificationContext';
+import { FOLDER_DELETION_DIALOG_SUBTITLE } from '../folders/[id]/contents/common';
+import { IActionPopupItem } from './ActionPopup';
 
 export const spin = keyframes`
   from {
@@ -38,8 +38,8 @@ const FolderCard = (
     isMobile?: boolean;
   }
 ) => {
-  const [stackCard1Color, setStackCard1Color] = useState<string>("#ffffff");
-  const [stackCard2Color, setStackCard2Color] = useState<string>("#ffffff");
+  const [stackCard1Color, setStackCard1Color] = useState<string>('#ffffff');
+  const [stackCard2Color, setStackCard2Color] = useState<string>('#ffffff');
   useEffect(() => {
     setStackCard1Color(
       PALETTE.secondary[
@@ -55,7 +55,7 @@ const FolderCard = (
 
   const [hovering, setHovering] = useState<boolean>(false);
 
-  const router = useRouter();
+  const navigate = useNavigate();
   const notificationCtx = useContext(NotificationContext);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
@@ -63,15 +63,15 @@ const FolderCard = (
   const deleteFolder = () =>
     ApiController.removeFolder(props.id).then(() => {
       props.deletionCallback?.();
-      notificationCtx.negativeSuccess("Removed Folder");
+      notificationCtx.negativeSuccess('Removed Folder');
     });
 
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
 
-  const renameFolder = (title: IContentBucket["title"]) =>
+  const renameFolder = (title: IContentBucket['title']) =>
     ApiController.renameFolder(props.id, title).then(() => {
       props.editingCallback?.();
-      notificationCtx.success("Renamed Folder");
+      notificationCtx.success('Renamed Folder');
     });
 
   return (
@@ -99,12 +99,12 @@ const FolderCard = (
           bgcolor={stackCard1Color}
           sx={{
             transform: `rotate(-${hovering ? 6 : 2.6}deg) translateY(-7px)`,
-            transition: "0.4s",
+            transition: '0.4s',
           }}
           boxShadow={
             props.strongShadow
-              ? "0 0 20px rgba(0,0,0,0.08)"
-              : "0 0 12px rgba(0,0,0,0.06)"
+              ? '0 0 20px rgba(0,0,0,0.08)'
+              : '0 0 12px rgba(0,0,0,0.06)'
           }
           zIndex={0}
         />
@@ -121,12 +121,12 @@ const FolderCard = (
           bgcolor={stackCard2Color}
           sx={{
             transform: `rotate(${hovering ? 5 : 1.4}deg) translateY(-7px)`,
-            transition: "0.4s",
+            transition: '0.4s',
           }}
           boxShadow={
             props.strongShadow
-              ? "0 0 20px rgba(0,0,0,0.08)"
-              : "0 0 12px rgba(0,0,0,0.06)"
+              ? '0 0 20px rgba(0,0,0,0.08)'
+              : '0 0 12px rgba(0,0,0,0.06)'
           }
           zIndex={0}
         />
@@ -136,24 +136,24 @@ const FolderCard = (
             top="163px"
             right="3px"
             zIndex={2}
-            // onClick={() => router.push(`/lesson/${props.canonicalUrl}`)}
+            // onClick={() => navigate(`/lesson/${props.canonicalUrl}`)}
           >
             <UrsorActionButton
               size="32px"
               iconSize="16px"
               actions={[
                 {
-                  text: "Open",
-                  kallback: () => router.push(`/folders/${props.id}`),
+                  text: 'Open',
+                  kallback: () => navigate(`/folders/${props.id}`),
                   icon: ArrowUpRight,
                 },
                 {
-                  text: "Edit",
+                  text: 'Edit',
                   kallback: () => setRenameDialogOpen(true),
                   icon: PencilIcon,
                 },
                 {
-                  text: "Delete",
+                  text: 'Delete',
                   kallback: () => setDeletionDialogOpen(true),
                   icon: TrashcanIcon,
                   color: PALETTE.system.red,
@@ -169,7 +169,7 @@ const FolderCard = (
           border={`4px solid rgb(255,255,255)`}
           boxSizing="border-box"
           sx={{
-            transition: "0.2s",
+            transition: '0.2s',
             // outline: orangeBorderOn
             //   ? `3px solid ${PALETTE.system.orange}`
             //   : undefined,
@@ -178,8 +178,8 @@ const FolderCard = (
           width="100%"
           boxShadow={
             props.strongShadow
-              ? "0 0 20px rgba(0,0,0,0.08)"
-              : "0 0 12px rgba(0,0,0,0.06)"
+              ? '0 0 20px rgba(0,0,0,0.08)'
+              : '0 0 12px rgba(0,0,0,0.06)'
           }
           position="relative"
           pb="6px"
@@ -188,9 +188,9 @@ const FolderCard = (
             flex={1}
             onClick={props.clickCallback}
             sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
+              cursor: 'pointer',
+              transition: '0.2s',
+              '&:hover': { opacity: 0.6 },
             }}
             borderRadius="8px 8px 0 0"
             overflow="hidden"
@@ -211,10 +211,10 @@ const FolderCard = (
                 sx={{
                   opacity: 0.74,
                   svg: {
-                    transform: "rotate(26deg)",
+                    transform: 'rotate(26deg)',
                   },
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                   backgroundImage: props.preview?.thumbnailUrls?.[0]
                     ? `url(${props.preview.thumbnailUrls[0]})`
                     : undefined,
@@ -224,7 +224,7 @@ const FolderCard = (
                   <Stack
                     sx={{
                       animation: `${spin} 9s linear`,
-                      animationIterationCount: "infinite",
+                      animationIterationCount: 'infinite',
                     }}
                   >
                     <Star height="52px" width="52px" />
@@ -241,10 +241,10 @@ const FolderCard = (
                   sx={{
                     opacity: 0.74,
                     svg: {
-                      transform: "rotate(39deg)",
+                      transform: 'rotate(39deg)',
                     },
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                     backgroundImage: props.preview?.thumbnailUrls?.[1]
                       ? `url(${props.preview.thumbnailUrls[1]})`
                       : undefined,
@@ -254,8 +254,8 @@ const FolderCard = (
                     <Stack
                       sx={{
                         animation: `${spin} 12s linear`,
-                        animationDirection: "reverse",
-                        animationIterationCount: "infinite",
+                        animationDirection: 'reverse',
+                        animationIterationCount: 'infinite',
                       }}
                     >
                       <Star height="20px" width="20px" />
@@ -271,10 +271,10 @@ const FolderCard = (
                   sx={{
                     opacity: 0.74,
                     svg: {
-                      transform: "rotate(50deg)",
+                      transform: 'rotate(50deg)',
                     },
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                     backgroundImage: props.preview?.thumbnailUrls?.[2]
                       ? `url(${props.preview?.thumbnailUrls[2]})`
                       : undefined,
@@ -284,7 +284,7 @@ const FolderCard = (
                     <Stack
                       sx={{
                         animation: `${spin} 4s linear`,
-                        animationIterationCount: "infinite",
+                        animationIterationCount: 'infinite',
                       }}
                     >
                       <Star height="20px" width="20px" />
@@ -323,7 +323,7 @@ const FolderCard = (
       <FolderRenameDialog
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
-        name={props.title ?? ""}
+        name={props.title ?? ''}
         onSubmit={renameFolder}
         isMobile={false}
       />

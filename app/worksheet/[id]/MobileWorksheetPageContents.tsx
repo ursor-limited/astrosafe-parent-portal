@@ -16,7 +16,7 @@
 // import PageCard from "@/app/components/PageCard";
 // import DeletionDialog from "@/app/components/DeletionDialog";
 // import ApiController from "@/app/api";
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 // import { useLocalStorage, useWindowSize } from "usehooks-ts";
 // import { useUserContext } from "@/app/components/UserContext";
@@ -133,11 +133,11 @@
 //   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 //   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
-//   const router = useRouter();
+//   const navigate = useNavigate()
 
 //   const submitDeletion = () =>
 //     ApiController.deleteWorksheet(props.details.id).then(() =>
-//       router.push(
+//       navigate(
 //         props.lessonId
 //           ? `/lesson/${props.lessonId}`
 //           : userDetails
@@ -158,7 +158,7 @@
 //   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
 //   useEffect(() => {
 //     if (userDetails.user && !signedIn) {
-//       router.push("/dashboard");
+//       navigate("/dashboard");
 //     }
 //   }, [userDetails.user]);
 

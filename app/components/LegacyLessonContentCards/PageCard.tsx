@@ -2,7 +2,7 @@
 // import { PALETTE, Typography } from '@/ui';
 // import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 // import PencilIcon from "@/images/icons/Pencil.svg";
-// import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom"
 // import { getFormattedDate } from "./VideoCard";
 // import { useUserContext } from "../UserContext";
 
@@ -35,7 +35,7 @@
 //   grey?: boolean;
 //   children: React.ReactNode;
 // }) => {
-//   const router = useRouter();
+//   const navigate = useNavigate()
 //   const userDetails = useUserContext().user;
 //   return (
 //     <Stack
@@ -85,7 +85,7 @@
 //                   onClick={
 //                     props.backCallback ||
 //                     (() =>
-//                       router.push(
+//                       navigate(
 //                         props.backRoute || (userDetails ? "/dashboard" : "/")
 //                       ))
 //                   }
@@ -108,7 +108,7 @@
 //                   onClick={
 //                     props.backCallback ||
 //                     (() =>
-//                       router.push(
+//                       navigate(
 //                         props.backRoute || (userDetails ? "/dashboard" : "/")
 //                       ))
 //                   }
@@ -129,7 +129,7 @@
 //                     onClick={
 //                       props.backCallback ||
 //                       (() =>
-//                         router.push(
+//                         navigate(
 //                           props.backRoute || (userDetails ? "/dashboard" : "/")
 //                         ))
 //                     }
