@@ -13,7 +13,7 @@ import LinkCard from '../components/LinkCard';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import useColumnWidth from '@/app/components/useColumnWidth';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 import { ITitleRowItem } from '@/app/components/TitleRow';
 import { IDevice } from '@/app/filters/[id]/contents/common';

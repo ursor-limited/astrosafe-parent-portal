@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import PlayIcon from '@/images/icons/PlayIcon.svg';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
-import Image from 'next/image';
+
 import X from '@/images/icons/X.svg';
 import { useState } from 'react';
 

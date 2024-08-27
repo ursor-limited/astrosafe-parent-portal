@@ -4,7 +4,7 @@ import UrsorPopover from './UrsorPopover';
 import { PALETTE, Typography } from '@/ui';
 import ChevronDown from '@/images/icons/ChevronDown.svg';
 import { useState } from 'react';
-import Image from 'next/image';
+
 import { ITitleRowItem } from './TitleRow';
 
 const MobileTitleRowItemCore = (

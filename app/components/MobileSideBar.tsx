@@ -6,9 +6,9 @@ import BookIcon from '@/images/icons/BookIcon.svg';
 import VersionsIcon from '@/images/icons/VersionsIcon.svg';
 import XIcon from '@/images/icons/X.svg';
 import _ from 'lodash';
-import Image from 'next/image';
+
 import { UserInitialsCircle } from '@/app/account/contents/common';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 
 export const astroPages = [
   'profiles',

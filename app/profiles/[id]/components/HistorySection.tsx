@@ -1,7 +1,7 @@
 import { AstroBentoCard } from '@/app/filters/[id]/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
-import Image from 'next/image';
+
 import { PALETTE, Typography } from '@/ui';
 import ClockIcon from '@/images/icons/ClockIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';

@@ -1,6 +1,6 @@
 import UrsorDialog from './UrsorDialog';
 import PersonIcon from '@/images/icons/PersonIcon.svg';
-import Image from 'next/image';
+
 import { Stack } from '@mui/system';
 import { PALETTE, UrsorButton } from '@/ui';
 

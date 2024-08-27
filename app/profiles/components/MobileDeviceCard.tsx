@@ -12,7 +12,7 @@ import FilterIcon from '@/images/icons/FilterIcon.svg';
 import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
 import AstroSwitch from '@/app/components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { IFilter } from '@/app/filters/contents/common';
 import ApiController from '@/app/api';
 import { IEnrichedDevice } from '../contents/common';

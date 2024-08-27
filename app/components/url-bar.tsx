@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import { Typography, UrsorButton } from '@/ui';
-import Image from 'next/image';
+
 import { useEffect, useState } from 'react';
 import Clipboard from '@/images/icons/Clipboard.svg';
 

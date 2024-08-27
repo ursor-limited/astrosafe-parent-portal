@@ -7,7 +7,7 @@ import { useState } from 'react';
 import ListUnorderedIcon from '@/images/icons/ListUnorderedIcon.svg';
 import CreditCardIcon from '@/images/icons/CreditCard.svg';
 import LogOutIcon from '@/images/icons/LogOutIcon.svg';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import { useUserContext } from './UserContext';
 import { useLocalStorage } from 'usehooks-ts';

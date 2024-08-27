@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import UrsorFadeIn from './UrsorFadeIn';
-import Image from 'next/image';
+
 import { PALETTE, Typography } from '@/ui';
 
 const EmptyStateIllustration = (props: {

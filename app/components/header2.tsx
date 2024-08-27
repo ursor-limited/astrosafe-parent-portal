@@ -13,7 +13,7 @@ import CirclePlayIcon from '@/images/icons/CirclePlay.svg';
 import ThreeBarsIcon from '@/images/icons/ThreeBarsIcon.svg';
 import X from '@/images/icons/X.svg';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import dynamic from 'next/dynamic';
 import mixpanel from 'mixpanel-browser';
 import { useUserContext } from './UserContext';

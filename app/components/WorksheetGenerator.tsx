@@ -11,7 +11,7 @@ import { WorksheetGeneratorEquationModule } from '../tools/multiplication-chart/
 import { WorksheetGeneratorNumberBondModule } from '../tools/multiplication-chart/[urlId]/WorksheetGeneratorNumberBondModule';
 import { useLocalStorage } from 'usehooks-ts';
 import { useUserContext } from '@/app/components/UserContext';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import UrsorFadeIn from '@/app/components/UrsorFadeIn';
 // import UrsorLoading from "./UrsorLoading";
 import dynamic from 'next/dynamic';

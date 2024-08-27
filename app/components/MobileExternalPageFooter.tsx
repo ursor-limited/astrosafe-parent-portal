@@ -1,7 +1,7 @@
 import UrsorParticles from '@/app/components/UrsorParticles';
 import { Stack, alpha } from '@mui/system';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
+import { useNavigate } from 'react-router-dom';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import Star from '@/images/Star.svg';
 

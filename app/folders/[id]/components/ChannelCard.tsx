@@ -7,7 +7,7 @@ import {
   IContentBucket,
 } from '@/app/profiles/[id]/components/ContentTab';
 import { PALETTE } from '@/ui';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 
 const IMAGE_HEIGHT = 160;
 

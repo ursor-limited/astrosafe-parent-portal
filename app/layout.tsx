@@ -1,16 +1,9 @@
-import { Rubik } from 'next/font/google';
 import './globals.css';
 import { Stack } from '@mui/system';
 import Background from '@/images/background.png';
 import { PALETTE } from '@/ui';
 import NotificationProvider from './components/NotificationProvider';
 import UrsorNotificationBar from './components/UrsorNotificationBar';
-import Image from 'next/image';
-
-const rubik = Rubik({
-  subsets: ['latin'],
-  weight: 'variable',
-});
 
 // export const metadata: Metadata = {
 //   title: "SafeTube - A Safe video player for teachers and schools",
@@ -27,7 +20,7 @@ export default function RootLayout({
     <html lang="en" style={{ zIndex: 999999999999 }}>
       <meta name="theme-color" content={PALETTE.secondary.grey[1]} />
       <body
-        className={rubik.className}
+        className="__className_5c20f6"
         style={{
           margin: 0,
           overflow: 'hidden',

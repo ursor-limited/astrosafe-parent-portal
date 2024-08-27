@@ -4,7 +4,7 @@ import PersonIcon from '@/images/icons/PersonIcon.svg';
 import useAuth from '@/app/hooks/useAuth';
 import mixpanel from 'mixpanel-browser';
 import { useLocalStorage } from 'usehooks-ts';
-import Image from 'next/image';
+
 import { Stack } from '@mui/system';
 
 const FREE_VIDEO_LIMIT = 3;

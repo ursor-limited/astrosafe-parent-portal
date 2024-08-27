@@ -2,7 +2,7 @@ import DynamicCardGrid from '@/app/components/DynamicCardGrid';
 import { Stack } from '@mui/system';
 import FolderCard from '../../../components/FolderCard';
 import UrsorFadeIn from '@/app/components/UrsorFadeIn';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { IEnrichedContentBucket } from '@/app/folders/contents/common';
 import PlusIcon from '@/images/icons/PlusIcon.svg';
 import { PALETTE, Typography, UrsorButton } from '@/ui';

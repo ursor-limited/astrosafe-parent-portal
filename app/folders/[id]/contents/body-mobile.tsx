@@ -26,7 +26,7 @@ import {
 import { IActionPopupItem } from '@/app/components/ActionPopup';
 import Link from 'next/link';
 import { cleanUrl } from '@/app/profiles/[id]/components/MobileInsightsTab';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket['id'];

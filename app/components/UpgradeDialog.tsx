@@ -4,7 +4,7 @@ import { Stack, alpha } from '@mui/system';
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from '@/ui';
 import UrsorDialog from './UrsorDialog';
 import { useUserContext } from './UserContext';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import { useEffect, useState } from 'react';
 import AstroSwitch from './AstroSwitch';

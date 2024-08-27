@@ -6,7 +6,7 @@ import BookIcon from '@/images/icons/BookIcon.svg';
 import GearIcon from '@/images/icons/GearIcon.svg';
 import PeopleIcon from '@/images/icons/PeopleIcon.svg';
 import FilterIcon from '@/images/icons/FilterIcon.svg';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useUserContext } from './UserContext';
 import { UserInitialsCircle } from '../account/contents/common';
 

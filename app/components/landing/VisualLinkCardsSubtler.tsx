@@ -1,7 +1,7 @@
 import { Stack, alpha } from '@mui/system';
 import _ from 'lodash';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
+import { useNavigate } from 'react-router-dom';
 import { PALETTE, Typography } from '@/ui';
 
 const SPACING = '24px';

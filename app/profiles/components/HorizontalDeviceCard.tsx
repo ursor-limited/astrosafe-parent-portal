@@ -9,7 +9,7 @@ import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
 import { DeviceType } from '../../filters/[id]/contents/common';
 import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import {
   DeviceCardBrowsingStatusSection,
   DeviceCardCurrentUrlSection,

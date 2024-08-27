@@ -11,7 +11,7 @@ import LinkExternalIcon from '@/images/icons/LinkExternalIcon.svg';
 import { DeviceType, IDevice } from '../../filters/[id]/contents/common';
 import AstroSwitch from '@/app/components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { IFilter, IFilterUrl } from '@/app/filters/contents/common';
 import Link from 'next/link';
 import ApiController, { getAbsoluteUrl } from '@/app/api';

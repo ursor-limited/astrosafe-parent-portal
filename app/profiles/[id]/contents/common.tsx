@@ -4,7 +4,7 @@ import PencilIcon from '@/images/icons/Pencil.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from '@/ui';
 import _ from 'lodash';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import ApiController from '@/app/api';
 import { IDevice } from '@/app/filters/[id]/contents/common';
 import ProfilePageDesktopBody from './body-desktop';

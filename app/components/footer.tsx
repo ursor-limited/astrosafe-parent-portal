@@ -1,11 +1,11 @@
 import { Stack } from '@mui/system';
 import Kitemark from '@/images/kiteMark.svg';
-import Image from 'next/image';
+
 import Link from 'next/link';
 import { PALETTE, Typography, UrsorButton } from '@/ui';
 import FooterBackground from '@/images/footerBackground.png';
 import FooterScreenshot from '@/images/footerScreenshot.png';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 
 export const HEADER_HEIGHT = 86;
 

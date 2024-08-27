@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { PALETTE, Typography } from '@/ui';
 
 export const FooterList = (props: {
