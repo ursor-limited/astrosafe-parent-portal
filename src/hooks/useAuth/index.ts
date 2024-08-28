@@ -24,19 +24,36 @@ const useAuth = () => {
 
     const pathname = window.location.href;
 
-    if (!accessToken) navigate(`${BACKEND_URL}/login?origin_uri=${pathname}`);
+    if (!accessToken) {
+      window.location.href = `${BACKEND_URL}/login?origin_uri=${pathname}`;
+
+      return;
+    }
 
     getUserInfo().then((data) => {
+      if (!data?.sub) {
+        window.location.href = `${BACKEND_URL}/login?origin_uri=${pathname}`;
+
+        return;
+      }
+
       setUser(data);
 
       Cookies.set('user_info', JSON.stringify(data));
     });
   }, []);
 
-  const login = () =>
-    navigate(`${BACKEND_URL}/login?redirect_uri=${window.location.href}`);
+  const login = () => {
+    window.location.href = `${BACKEND_URL}/login?origin_uri=${window.location.href}`;
 
-  const logout = () => navigate(`${BACKEND_URL}/logout`);
+    return;
+  };
+
+  const logout = () => {
+    window.location.href = `${BACKEND_URL}/logout`;
+
+    return;
+  };
 
   return { user, login, logout };
 };

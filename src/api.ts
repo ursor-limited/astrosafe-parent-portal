@@ -36,8 +36,9 @@ const BACKEND_URLS = {
 };
 
 export const BACKEND_URL =
-  BACKEND_URLS[process.env.REACT_ENV as keyof typeof BACKEND_URLS] ||
-  'https://api.astrosafe.co';
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8000'
+    : `https://api.astrosafe.co`;
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
