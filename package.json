@@ -1,13 +1,17 @@
 {
   "name": "test-sfdagag-da-bleh",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
-  "outDir": "./dist",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "include": [
-    "src/index.ts"
+  "files": [
+    "dist"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsc"
   },
