@@ -1,6 +1,6 @@
 {
   "name": "test-sfdagag-da-bleh",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": false,
   "main": "dist/index.js",
   "types": "index.d.ts",
@@ -14,7 +14,7 @@
     }
   },
   "scripts": {
-    "build": "tsc --declaration"
+    "build": "tsc"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
