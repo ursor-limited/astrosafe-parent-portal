@@ -8,7 +8,7 @@ import _ from 'lodash';
 import AstroTimeChart from './AstroTimeChart';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat.js';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import CalendarButton from '@/components/CalendarButton';
 import { IDayScreenTime, IVisitedSite } from './InsightsTab';
 import MobileHistorySection from './MobileHistorySection';

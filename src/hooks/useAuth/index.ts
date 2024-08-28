@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import Cookies from '@/node_modules/@types/js-cookie';
 import { UserInfo } from '@/auth/model';
 import { BACKEND_URL } from '@/api';
 import { useNavigate } from 'react-router-dom';
