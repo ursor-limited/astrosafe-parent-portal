@@ -219,7 +219,7 @@ export const MobileDeviceCardRow = (props: {
 //         </Stack>
 //         <aExternalIcon height="20px" width="20px" />
 //       </Stack>
-//     </Link>
+//     </a>
 //   </DeviceCardSection>
 // );
 

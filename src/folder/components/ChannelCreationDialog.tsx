@@ -1,31 +1,31 @@
-import { Stack } from "@mui/system";
-import ContentCreationDialog from "./ContentCreationDialog";
-import { useContext, useEffect, useState } from "react";
-import ChannelCard from "./ChannelCard";
-import NotificationContext from "@/components/NotificationContext";
-import ApiController, { getAbsoluteUrl } from "@/api";
-import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";
-import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
-import { PALETTE, Typography } from "@/ui";
-import { IEnrichedContentBucket } from "../../folders/contents/common";
-import { IChannel } from "@/profile/components/ContentTab";
-import { INFOS } from "@/profile/components/ProfilePageTabLayout";
-import { cleanUrl } from "@/profile/components/MobileInsightsTab";
+import { Stack } from '@mui/system';
+import ContentCreationDialog from './ContentCreationDialog';
+import { useContext, useEffect, useState } from 'react';
+import ChannelCard from './ChannelCard';
+import NotificationContext from '@/components/NotificationContext';
+import ApiController, { getAbsoluteUrl } from '@/api';
+import CheckboxIcon from '@/images/icons/CheckboxIcon.svg';
+import EmptyCheckboxIcon from '@/images/icons/EmptyCheckboxIcon.svg';
+import { PALETTE, Typography } from '@/ui';
+import { IEnrichedContentBucket } from '../../folders/contents/common';
+import { IChannel } from '@/profile/components/ContentTab';
+import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import { cleanUrl } from '@/profile/components/MobileInsightsTab';
 
 const ChannelCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  folderId: IEnrichedContentBucket["id"];
+  folderId: IEnrichedContentBucket['id'];
   creationCallback: () => void;
   updateDetails?: {
     channel: IChannel;
     callback?: () => void;
   };
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [url, setUrl] = useState<string>("");
-  const [profileUrl, setProfileUrl] = useState<string>("");
-  const [bannerUrl, setBannerUrl] = useState<string>("");
+  const [title, setTitle] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+  const [profileUrl, setProfileUrl] = useState<string>('');
+  const [bannerUrl, setBannerUrl] = useState<string>('');
   useEffect(() => {
     props.updateDetails && setTitle(props.updateDetails?.channel.title);
     props.updateDetails && setUrl(props.updateDetails?.channel.url);
@@ -55,7 +55,7 @@ const ChannelCreationDialog = (props: {
       profileUrl
     )
       .then(props.updateDetails?.callback)
-      .then(() => notificationCtx.success("Updated Channel"));
+      .then(() => notificationCtx.success('Updated Channel'));
 
   const [checked, setChecked] = useState<boolean>(false);
 
@@ -100,9 +100,9 @@ const ChannelCreationDialog = (props: {
             <Stack
               pt="3px"
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.7 },
+                transition: '0.2s',
                 svg: {
                   path: {
                     fill: PALETTE.secondary.purple[2],
@@ -119,7 +119,7 @@ const ChannelCreationDialog = (props: {
             </Stack>
             <Typography variant="small" bold>
               {
-                "I"m aware that I"m adding all Videos from this Channel to the Folder."
+                "I'm aware that I'm adding all Videos from this Channel to the Folder."
               }
             </Typography>
           </Stack>
@@ -128,7 +128,7 @@ const ChannelCreationDialog = (props: {
     >
       <Stack
         sx={{
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       >
         <ChannelCard

@@ -237,7 +237,7 @@ const MobileHistorySection = (props: {
         const latestGroup = acc[acc.length - 1];
 
         const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        if (latestUrl === cur.url) return acc; // don"t show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
         const latestDomain = latestGroup?.domain;
         return currentDomain === latestDomain

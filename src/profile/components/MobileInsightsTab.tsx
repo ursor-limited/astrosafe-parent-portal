@@ -254,7 +254,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
                       </Stack>
                     </Stack>
                   </Stack>
-                </Link>
+                </a>
               </Stack>
             ))}
           </Stack>

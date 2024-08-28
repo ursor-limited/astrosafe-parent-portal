@@ -7,14 +7,9 @@ import { useWindowSize } from 'usehooks-ts';
 import { ButtonVariant, UrsorButton } from '@/ui/ursor-button';
 import { PALETTE, Typography } from '@/ui';
 import { UrsorTypographyVariant } from '@/ui/typography';
-import dynamic from 'next/dynamic';
 import InfoButton, { IInfoButtonProps } from './InfoButton';
 import { INFOS } from '../profile/components/ProfilePageTabLayout';
-
-const ByteStepper = dynamic(
-  () => import('./ByteStepper'),
-  { ssr: false } // not including this component on server-side due to its dependence on "document"
-);
+import ByteStepper from './ByteStepper';
 
 const WIDTH = '926px';
 const HEIGHT = '630px';

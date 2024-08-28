@@ -1,37 +1,37 @@
-import { AstroBentoCard } from "./AstroBentoCard";
-import ThumbsDownIcon from "@/images/icons/ThumbsDownIcon.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorInputField } from "@/ui";
+import { AstroBentoCard } from './AstroBentoCard';
+import ThumbsDownIcon from '@/images/icons/ThumbsDownIcon.svg';
+import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import { Stack } from '@mui/system';
+import { PALETTE, Typography, UrsorInputField } from '@/ui';
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from "@/components/UrsorTable";
+} from '@/components/UrsorTable';
 
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import _ from "lodash";
-import { IAllowedSitesTableRowItems } from "./AllowedSitesSection";
-import FilterBlacklistExceptionDialog from "./FilterBlacklistExceptionDialog";
-import { IFilterException } from "../contents/common";
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { IAllowedSitesTableRowItems } from './AllowedSitesSection';
+import FilterBlacklistExceptionDialog from './FilterBlacklistExceptionDialog';
+import { IFilterException } from '../contents/common';
 
 const FilterPageBlockedSitesSection = (props: {
   blockedSites: IFilterException[];
-  add: (url: IFilterException["domain"]) => void;
-  delete: (url: IFilterException["domain"]) => void;
+  add: (url: IFilterException['domain']) => void;
+  delete: (url: IFilterException['domain']) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
-      name: "title",
-      displayName: "Title",
+      name: 'title',
+      displayName: 'Title',
       sortable: true,
       newTag: true,
       getAvatar: (i) => {
         return (
           <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <img
-              src={props.blockedSites[parseInt(i)]?.favicon ?? ""}
+              src={props.blockedSites[parseInt(i)]?.favicon ?? ''}
               height={20}
               width={20}
               alt="allowed site favicon"
@@ -41,15 +41,15 @@ const FilterPageBlockedSitesSection = (props: {
       },
     },
     {
-      name: "domain",
-      displayName: "Domain",
+      name: 'domain',
+      displayName: 'Domain',
       sortable: true,
     },
     {
-      name: "createdAt",
-      displayName: "Added on",
+      name: 'createdAt',
+      displayName: 'Added on',
       sortable: true,
-      itemDisplay: (createdAt) => dayjs(createdAt).format("MM/DD/YYYY"),
+      itemDisplay: (createdAt) => dayjs(createdAt).format('MM/DD/YYYY'),
     },
   ];
 
@@ -63,7 +63,7 @@ const FilterPageBlockedSitesSection = (props: {
         props.blockedSites?.map((b, i) => ({
           id: i.toString(),
           items: {
-            title: b.title ?? "",
+            title: b.title ?? '',
             domain: b.domain,
             createdAt: b.createdAt,
           },
@@ -81,13 +81,13 @@ const FilterPageBlockedSitesSection = (props: {
   const [filteredRows, setFilteredRows] = useState<
     IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
   useEffect(() => {
     setFilteredRows(
       rows.filter((row) =>
         inputValue
-          ? [row.items.title, row.items.domain.replace("www.", "")]
-              .join("_")
+          ? [row.items.title, row.items.domain.replace('www.', '')]
+              .join('_')
               .toLowerCase()
               .includes(inputValue.toLowerCase())
           : true
@@ -95,15 +95,15 @@ const FilterPageBlockedSitesSection = (props: {
     );
   }, [rows, inputValue]);
 
-  const [sortedColumn, setSortedColumn] = useState<string>("createdAt");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [sortedColumn, setSortedColumn] = useState<string>('createdAt');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   useEffect(() => {
     if (!filteredRows) return;
     const sorted = _.sortBy(rows, (row) =>
       //@ts-ignore
       row.items?.[sortedColumn]?.toLowerCase()
     );
-    setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
+    setSortedRows(sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted);
   }, [rows, sortDirection, sortedColumn]);
 
   const [confirmationDialogOpen, setConfirmationDialogOpen] =
@@ -114,9 +114,9 @@ const FilterPageBlockedSitesSection = (props: {
       <AstroBentoCard
         icon={ThumbsDownIcon}
         title={`${props.blockedSites.length ?? 0} blocked site exception${
-          props.blockedSites.length === 1 ? "" : "s"
+          props.blockedSites.length === 1 ? '' : 's'
         }`}
-        subtitle="Add sites here that you never want to be accessible. This will make sure the site isn"t accessible even if the rest of the corresponding Category is!"
+        subtitle="Add sites here that you never want to be accessible. This will make sure the site isn't accessible even if the rest of the corresponding Category is!"
         isMobile={props.isMobile}
       >
         <Stack spacing="20px">
@@ -138,20 +138,20 @@ const FilterPageBlockedSitesSection = (props: {
               defaultSortedByColumn="createdAt"
               defaultSortedAscending
               selectedSort={sortedColumn}
-              ascending={sortDirection === "asc"}
+              ascending={sortDirection === 'asc'}
               sortSelectionCallback={(columnId) => {
                 if (columnId === sortedColumn) {
-                  setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+                  setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
                 } else {
                   setSortedColumn(columnId);
-                  setSortDirection("asc");
+                  setSortDirection('asc');
                 }
               }}
               noHeaderGradient
               getActionButtonItems={(i) => [
                 {
                   icon: TrashcanIcon,
-                  text: "Delete",
+                  text: 'Delete',
                   kallback: () =>
                     props.delete(props.blockedSites[parseInt(i)].domain),
                   color: PALETTE.system.red,
@@ -167,7 +167,7 @@ const FilterPageBlockedSitesSection = (props: {
         onClose={() => setConfirmationDialogOpen(false)}
         onSubmit={() => {
           props.add(inputValue);
-          setInputValue("");
+          setInputValue('');
         }}
         isMobile={props.isMobile}
       />

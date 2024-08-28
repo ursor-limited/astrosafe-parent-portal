@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useState } from 'react';
-import ApiController from '../../../api';
+import ApiController from '@/api';
 import PencilIcon from '@/images/icons/Pencil.svg';
 import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
 import {
   IChannel,
   IContentBucket,
   IVideo,
-} from '../../../profiles/[id]/components/ContentTab';
+} from '@/profile/components/ContentTab';
 import ChannelPageDesktopBody from './body-desktop';
-import VideoCreationDialog from '../../../folders/[id]/components/VideoCreationDialog';
+import VideoCreationDialog from '@/folder/components/VideoCreationDialog';
 import { PALETTE } from '@/ui';
 import DeletionDialog from '@/components/DeletionDialog';
 import ChannelRenameDialog from '../components/ChannelRenameDialog';

@@ -143,7 +143,7 @@ const Player = (props: {
                 : ''
             }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join('&')}`
           : // `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-            //   // don"t use nocookie, as it forces the youtube logo in there
+            //   // don't use nocookie, as it forces the youtube logo in there
             //   props.startTime ? `start=${props.startTime}&` : ""
             // }${
             //   props.endTime ? `end=${props.endTime}&` : ""
@@ -421,7 +421,7 @@ const Player = (props: {
             pointerEvents: playing && !ended ? 'none' : undefined,
             backdropFilter:
               !props.noBackdrop && hasBegunPlaying ? 'blur(13px)' : undefined,
-            //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don"t use blur when the playing has not yet been started
+            //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don't use blur when the playing has not yet been started
           }}
           justifyContent="center"
           alignItems="center"

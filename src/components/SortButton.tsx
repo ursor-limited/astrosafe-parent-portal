@@ -4,12 +4,7 @@ import { Stack } from '@mui/system';
 import FilterIcon from '@/images/icons/FilterIcon.svg';
 import { PALETTE, UrsorButton } from '@/ui';
 import UrsorSelectList from './UrsorSelectList';
-import dynamic from 'next/dynamic';
-
-const UrsorPopover = dynamic(
-  () => import('@/components/UrsorPopover'),
-  { ssr: false } // not including this component on server-side due to its dependence on "document"
-);
+import UrsorPopover from '@/components/UrsorPopover';
 
 export interface IClassSortButtonProps<T extends string> {
   selected: T;

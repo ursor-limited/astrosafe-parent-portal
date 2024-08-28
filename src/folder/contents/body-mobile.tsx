@@ -177,7 +177,7 @@ const FolderPageMobileBody = (props: {
                         />
                       ) : null}
                     </UrsorFadeIn>
-                    {/* </Link> */}
+                    {/* </a> */}
                   </Stack>
                 ))}
               </Stack>

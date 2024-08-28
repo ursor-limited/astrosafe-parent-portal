@@ -136,7 +136,7 @@ const ContentCard = (props: {
             >
               {props.children}
             </ContentCardCore>
-          </Link>
+          </a>
         ) : (
           <ContentCardCore
             onClick={props.onClick}

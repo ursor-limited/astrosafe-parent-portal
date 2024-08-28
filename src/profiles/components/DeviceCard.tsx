@@ -217,7 +217,7 @@ export const DeviceCardCurrentUrlSection = (props: {
         </Stack>
         {!props.disabled ? <aExternalIcon height="20px" width="20px" /> : null}
       </Stack>
-      {/* </Link> */}
+      {/* </a> */}
     </DeviceCardSection>
   );
 };

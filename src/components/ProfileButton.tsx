@@ -167,7 +167,7 @@ const ProfileButton = (props: { light?: boolean }) => {
                   icon={CreditCardIcon}
                   text="Manage plan"
                 />
-              </Link>
+              </a>
             ) : null} */}
             <ProfilePopupButton
               callback={() => {

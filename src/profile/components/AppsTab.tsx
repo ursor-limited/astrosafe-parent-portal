@@ -1,21 +1,18 @@
-import DynamicCardGrid from "@/components/DynamicCardGrid";
-import AppToggleCard from "./AppToggleCard";
-import { Stack } from "@mui/system";
-import UrsorFadeIn from "@/components/UrsorFadeIn";
-import { PALETTE, Typography, UrsorButton } from "@/ui";
-import {
-  IFilterSubcategory,
-  IFilterUrl,
-} from "../../filters/contents/common";
-import ProfilePageTabLayout from "./ProfilePageTabLayout";
-import { IDevice } from "@/filter/contents/common";
-import { useContext, useEffect, useState } from "react";
-import ApiController from "@/api";
-import AstroCard from "@/filter/components/AstroCard";
-import _ from "lodash";
-import NotificationContext from "@/components/NotificationContext";
-import PageSelector from "../../components/PageSelector";
-import { SearchInput } from "@/components/SearchInput";
+import DynamicCardGrid from '@/components/DynamicCardGrid';
+import AppToggleCard from './AppToggleCard';
+import { Stack } from '@mui/system';
+import UrsorFadeIn from '@/components/UrsorFadeIn';
+import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { IFilterSubcategory, IFilterUrl } from '../../filters/contents/common';
+import ProfilePageTabLayout from './ProfilePageTabLayout';
+import { IDevice } from '@/filter/contents/common';
+import { useContext, useEffect, useState } from 'react';
+import ApiController from '@/api';
+import AstroCard from '@/filter/components/AstroCard';
+import _ from 'lodash';
+import NotificationContext from '@/components/NotificationContext';
+import PageSelector from '../../components/PageSelector';
+import { SearchInput } from '@/components/SearchInput';
 
 const PAGE_SIZE = 20;
 
@@ -29,7 +26,7 @@ export interface IApp {
   title: string;
   url: string;
   imageUrl: string;
-  categoryId: IAppCategory["id"];
+  categoryId: IAppCategory['id'];
   description: string;
   enabled: boolean;
 }
@@ -40,14 +37,14 @@ export const AppsLegend = (props: { small?: boolean }) => (
       <Stack
         direction="row"
         alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
+        spacing={props.small ? '7px' : '10px'}
       >
-        <Typography variant={props.small ? "small" : "normal"} bold>
+        <Typography variant={props.small ? 'small' : 'normal'} bold>
           Enabled
         </Typography>
         <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
+          height={props.small ? '12px' : '16px'}
+          width={props.small ? '12px' : '16px'}
           borderRadius="100%"
           bgcolor={PALETTE.system.green}
         />
@@ -57,14 +54,14 @@ export const AppsLegend = (props: { small?: boolean }) => (
       <Stack
         direction="row"
         alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
+        spacing={props.small ? '7px' : '10px'}
       >
-        <Typography variant={props.small ? "small" : "normal"} bold>
+        <Typography variant={props.small ? 'small' : 'normal'} bold>
           Disabled
         </Typography>
         <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
+          height={props.small ? '12px' : '16px'}
+          width={props.small ? '12px' : '16px'}
           borderRadius="100%"
           bgcolor={PALETTE.secondary.grey[3]}
         />
@@ -74,7 +71,7 @@ export const AppsLegend = (props: { small?: boolean }) => (
 );
 
 const DevicePageAppsTab = (props: {
-  deviceId: IDevice["id"];
+  deviceId: IDevice['id'];
   isMobile?: boolean;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -90,7 +87,7 @@ const DevicePageAppsTab = (props: {
   const [pageIndex, setPageIndex] = useState<number>(0);
   useEffect(() => setPageIndex(0), [selectedCategory]);
 
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>('');
   const [apps, setApps] = useState<IApp[]>([]);
   const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
 
@@ -126,8 +123,8 @@ const DevicePageAppsTab = (props: {
       title="Apps"
       rightSideElement={!props.isMobile ? <AppsLegend /> : undefined}
       info={{
-        title: "How do apps work?",
-        text: "Apps provide quick access on your kid's Browser to hand-picked resources that provide a lot of value. Toggle them on and they"ll be accessible on your kid's Device and we'll make sure the Filter doesn"t interfere with access to them. Please note that we do override the Filter to allow access to the Apps that you select! So if you have social media access turned off but toggle on a social media app we will allow access to it.",
+        title: 'How do apps work?',
+        text: "Apps provide quick access on your kid's Browser to hand-picked resources that provide a lot of value. Toggle them on and they'll be accessible on your kid's Device and we'll make sure the Filter doesn't interfere with access to them. Please note that we do override the Filter to allow access to the Apps that you select! So if you have social media access turned off but toggle on a social media app we will allow access to it.",
       }}
     >
       {props.isMobile ? (
@@ -156,14 +153,14 @@ const DevicePageAppsTab = (props: {
                       px="12px"
                       onClick={() => setSelectedCategory(undefined)}
                       sx={{
-                        cursor: "pointer",
-                        transition: "0.2s",
-                        "&:hover": { opacity: 0.7 },
+                        cursor: 'pointer',
+                        transition: '0.2s',
+                        '&:hover': { opacity: 0.7 },
                       }}
                     >
                       <Typography
                         bold
-                        sx={{ fontSize: 14, whiteSpace: "nowrap" }}
+                        sx={{ fontSize: 14, whiteSpace: 'nowrap' }}
                         color={
                           _.isUndefined(selectedCategory)
                             ? PALETTE.secondary.purple[2]
@@ -184,14 +181,14 @@ const DevicePageAppsTab = (props: {
                         px="12px"
                         onClick={() => setSelectedCategory(c.categoryId)}
                         sx={{
-                          cursor: "pointer",
-                          transition: "0.2s",
-                          "&:hover": { opacity: 0.7 },
+                          cursor: 'pointer',
+                          transition: '0.2s',
+                          '&:hover': { opacity: 0.7 },
                         }}
                       >
                         <Typography
                           bold
-                          sx={{ fontSize: 14, whiteSpace: "nowrap" }}
+                          sx={{ fontSize: 14, whiteSpace: 'nowrap' }}
                           color={
                             selectedCategory === c.categoryId
                               ? PALETTE.secondary.purple[2]
@@ -209,7 +206,7 @@ const DevicePageAppsTab = (props: {
                 <SearchInput
                   value={searchValue}
                   callback={setSearchValue}
-                  clearCallback={() => setSearchValue("")}
+                  clearCallback={() => setSearchValue('')}
                   grey
                 />
               </Stack>
