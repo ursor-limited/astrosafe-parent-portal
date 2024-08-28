@@ -24,10 +24,15 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
     []
   );
 
+  const apiDomain =
+    process.env.NEXT_PUBLIC_VERCEL_ENV === 'local'
+      ? 'localhost:8000'
+      : 'api.astrosafe.co';
+
   useEffect(() => {
     if (!user?.group_id) return;
     const socket = new WebSocket(
-      `wss://api.astrosafe.co/sessions/groups/${user.group_id}`
+      `wss://${apiDomain}/sessions/groups/${user.group_id}`
     );
     const handleMessage = (event: any) => {
       if (!event.data) return;
