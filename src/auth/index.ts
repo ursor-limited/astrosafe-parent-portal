@@ -6,6 +6,8 @@ export const getUserInfo = async (): Promise<UserInfo> => {
     credentials: 'include',
   });
 
+  if (!resp.ok) throw new Error('Failed to fetch user info - invalid session.');
+
   const data = await resp.json();
 
   return data;

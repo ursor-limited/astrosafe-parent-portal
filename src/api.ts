@@ -21,6 +21,7 @@ import {
 } from './profile/components/LimitsTab';
 import { cleanUrl } from './profile/components/MobileInsightsTab';
 import { IApp } from './profile/components/AppsTab';
+import Cookies from 'js-cookie';
 
 export interface IVideoComment {
   id: string;
@@ -38,11 +39,11 @@ const BACKEND_URLS = {
 export const BACKEND_URL =
   window.location.hostname === 'localhost'
     ? 'http://localhost:8000'
-    : `https://api.astrosafe.co`;
+    : process.env.AUTH_URL;
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
-const get = (route: string) =>
+export const get = (route: string) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
@@ -52,7 +53,7 @@ const get = (route: string) =>
     }
   );
 
-const post = (route: string, body?: any) =>
+export const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
@@ -65,9 +66,9 @@ const post = (route: string, body?: any) =>
       body: body ? JSON.stringify(body) : undefined,
       cache: 'no-store',
     }
-  );
+  ).catch(() => Cookies.remove('user_info'));
 
-const put = (route: string, body: any) =>
+export const put = (route: string, body: any) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
@@ -79,9 +80,9 @@ const put = (route: string, body: any) =>
       credentials: 'include',
       body: JSON.stringify(body),
     }
-  );
+  ).catch(() => Cookies.remove('user_info'));
 
-const patch = (route: string, body: any) =>
+export const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
@@ -93,7 +94,7 @@ const patch = (route: string, body: any) =>
       credentials: 'include',
       body: JSON.stringify(body),
     }
-  );
+  ).catch(() => Cookies.remove('user_info'));
 
 const dellete = (route: string) =>
   fetch(
@@ -104,7 +105,7 @@ const dellete = (route: string) =>
       headers: { 'Access-Control-Allow-Origin': '*' },
       credentials: 'include',
     }
-  );
+  ).catch(() => Cookies.remove('user_info'));
 
 class ApiController {
   static async getDevice(id: IDevice['id']) {

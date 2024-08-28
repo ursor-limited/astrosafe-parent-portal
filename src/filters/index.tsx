@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect';
 import AllFiltersPage from './contents/common';
 import RootLayout from '@/layout';
 
-const Filter = () => {
+const Filters = () => {
   return (
     <RootLayout>
       <AllFiltersPage isMobile={isMobile} />
@@ -11,4 +11,4 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default Filters;
