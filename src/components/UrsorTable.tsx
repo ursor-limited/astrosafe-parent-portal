@@ -242,7 +242,7 @@ const UrsorTableBodyCell = (props: {
           svg: { path: { fill: PALETTE.font.dark } },
         }}
         justifyContent="flex-end"
-        overflow={typeof props.item === 's tring' ? 'hidden' : undefined}
+        overflow={typeof props.item === 'string' ? 'hidden' : undefined}
       >
         <Stack
           direction="row"
@@ -290,7 +290,7 @@ const UrsorTableBodyCell = (props: {
               overflow="hidden"
             >
               {props.avatar}
-              {typeof props.item === 's tring' ||
+              {typeof props.item === 'string' ||
               typeof props.item === 'number' ? (
                 <Stack
                   width="100%"

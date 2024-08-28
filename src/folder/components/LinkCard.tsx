@@ -43,7 +43,6 @@ const LinkCard = (
           <img
             src={props.thumbnailUrl}
             style={{ objectFit: 'cover' }}
-            fill
             alt="image card image"
           />
         ) : (

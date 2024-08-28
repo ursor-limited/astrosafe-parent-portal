@@ -1,12 +1,12 @@
 // import { Stack } from "@mui/system";
 // import UrsorDialog from "./UrsorDialog";
 // import { useContext, useEffect, useState } from "react";
-// import { PALETTE, Typography, UrsorButton } from "@/ui";
+// import { PALETTE, Typography, UrsorButton } from "src/ui";
 // import _, { uniqueId } from "lodash";
 // import { isMobile } from "react-device-detect";
 // import NotificationContext from "./NotificationContext";
 // import AstroText from "../dashboard_DESTINED_FOR_THE_FURNACE/AstroText";
-// import PencilIcon from "@/images/icons/Pencil.svg";
+// import PencilIcon from "src/images/icons/Pencil.svg";
 // import TextEditorToolbar from "./TextEditorToolBar";
 // import ApiController from "../api";
 // import { useUserContext } from "./UserContext";

@@ -148,7 +148,7 @@ const FolderPageMobileBody = (props: {
                     > */}
                     <UrsorFadeIn delay={i * 80} duration={800}>
                       {x.type === 'link' ? (
-                        <aCard
+                        <LinkCard
                           {...(x.content as ILink)}
                           onDelete={props.loadFolderAndContents}
                           onOpenEditingDialog={() =>

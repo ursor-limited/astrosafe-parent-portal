@@ -1,6 +1,5 @@
 import { Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
-import { ASTRO_MAGICAL_GRADIENT } from './header2';
 import { PALETTE, Typography } from '@/ui';
 import useAuth from '@/hooks/useAuth';
 import { useState } from 'react';
@@ -8,9 +7,11 @@ import ListUnorderedIcon from '@/images/icons/ListUnorderedIcon.svg';
 import CreditCardIcon from '@/images/icons/CreditCard.svg';
 import LogOutIcon from '@/images/icons/LogOutIcon.svg';
 import { useNavigate } from 'react-router-dom';
-
 import { useUserContext } from './UserContext';
 import { useLocalStorage } from 'usehooks-ts';
+
+export const ASTRO_MAGICAL_GRADIENT =
+  'linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)';
 
 const ProfileButtonActualButton = (props: {
   initials: string;

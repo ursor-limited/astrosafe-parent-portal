@@ -225,13 +225,13 @@ const Player = (props: {
   useEffect(() => {
     if (!url || !document) return;
     removePreviousScript(url);
-    var tag = document.createElement('s cript');
+    var tag = document.createElement('script');
     tag.id = url;
     tag.src = url?.includes('youtube')
       ? 'https://www.youtube.com/iframe_api'
       : 'https://player.vimeo.com/api/player.js';
     //@ts-ignore
-    var firstScriptTag = document.getElementsByTagName('s cript')[0];
+    var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
     tag.onload = loadVideo;
   }, [url, document]);

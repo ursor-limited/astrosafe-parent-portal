@@ -51,7 +51,6 @@ const VideoCard = (
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            fill
             alt="video card image"
           />
         ) : (

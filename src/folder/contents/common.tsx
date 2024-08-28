@@ -4,7 +4,7 @@ import LinkIcon from '@/images/icons/LinkIcon.svg';
 import VideoCameraIcon from '@/images/icons/VideoCameraIcon.svg';
 import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
 import PencilIcon from '@/images/icons/Pencil.svg';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE } from '@/ui';
 import _ from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import AddDeviceDialog from '../components/AddDeviceDialog';
@@ -288,7 +288,7 @@ export default function FolderPage(props: {
             creationCallback={loadFolderAndContents}
           />
         ) : contentCreationDialogOpen === 'link' ? (
-          <aCreationDialog
+          <LinkCreationDialog
             open={true}
             onClose={() => {
               setContentCreationDialogOpen(undefined);
@@ -308,7 +308,7 @@ export default function FolderPage(props: {
         ) : null
       ) : null}
       {linkEditingDialogId && contents ? (
-        <aCreationDialog
+        <LinkCreationDialog
           open={true}
           onClose={() => {
             setLinkEditingDialogId(undefined);

@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import ChevronDown from '@/images/icons/ChevronDown.svg';
 import X from '@/images/icons/X.svg';
-import { PALETTE, UrsorInputField } from '@/ui';
+import { PALETTE } from '@/ui';
 import { Typography } from '@/ui';
-import dynamic from 'next/dynamic';
-
-const UrsorPopover = dynamic(
-  () => import('@/components/UrsorPopover'),
-  { ssr: false } // not including this component on server-side due to its dependence on "document"
-);
+import UrsorPopover from '@/components/UrsorPopover';
 
 export interface IUrsorSelectItem {
   id: string;

@@ -5,7 +5,7 @@ export interface INotificationProviderProps {
   children: React.ReactNode;
 }
 
-export type NotificationType = 's uccess' | 'negativeSuccess' | 'error';
+export type NotificationType = 'success' | 'negativeSuccess' | 'error';
 
 export default function NotificationProvider(
   props: INotificationProviderProps
@@ -15,7 +15,7 @@ export default function NotificationProvider(
   const success = (text: string) => {
     window.scroll(0, 0);
     setMessage(text);
-    setType('s uccess');
+    setType('success');
   };
   const negativeSuccess = (text: string) => {
     window.scroll(0, 0);

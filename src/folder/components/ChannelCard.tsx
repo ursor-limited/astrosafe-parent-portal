@@ -55,7 +55,6 @@ const ChannelCard = (
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            fill
             alt="banner image"
           />
         ) : (
@@ -88,7 +87,6 @@ const ChannelCard = (
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  fill
                   alt="profile image"
                 />
               ) : (

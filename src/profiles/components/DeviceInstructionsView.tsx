@@ -58,7 +58,7 @@ export const FloatingIntroCards = (props: {
         <img
           src="https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png"
           //style={{ objectFit: "cover" }}
-          fill
+
           alt="wave"
         />
       </Stack>
