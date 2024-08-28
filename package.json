@@ -1,9 +1,8 @@
 {
   "name": "test-sfdagag-da-bleh",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": false,
   "main": "dist/index.js",
-  "types": "index.d.ts",
   "files": [
     "dist"
   ],
