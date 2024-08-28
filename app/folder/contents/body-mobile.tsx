@@ -138,7 +138,7 @@ const FolderPageMobileBody = (props: {
               <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
                   <Stack key={`${x.content.id}${x.type}`}>
-                    {/* <Link
+                    {/* <a
                       href={getAbsoluteUrl(cleanUrl(x.content.url))}
                       target="_blank"
                       style={{
@@ -148,7 +148,7 @@ const FolderPageMobileBody = (props: {
                     > */}
                     <UrsorFadeIn delay={i * 80} duration={800}>
                       {x.type === 'link' ? (
-                        <LinkCard
+                        <aCard
                           {...(x.content as ILink)}
                           onDelete={props.loadFolderAndContents}
                           onOpenEditingDialog={() =>

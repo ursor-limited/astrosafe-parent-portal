@@ -121,7 +121,7 @@ const ContentCard = (props: {
           ) : null}
         </Stack>
         {props.url ? (
-          <Link
+          <a
             href={getAbsoluteUrl(cleanUrl(props.url))}
             target="_blank"
             style={{

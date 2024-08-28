@@ -58,7 +58,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
         <Typography bold color={PALETTE.secondary.grey[4]}>
           -
         </Typography>
-        <Link
+        <a
           href={getAbsoluteUrl(cleanUrl(props.url))}
           target="_blank"
           style={{ textDecoration: 'none' }}

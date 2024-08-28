@@ -288,7 +288,7 @@ export default function FolderPage(props: {
             creationCallback={loadFolderAndContents}
           />
         ) : contentCreationDialogOpen === 'link' ? (
-          <LinkCreationDialog
+          <aCreationDialog
             open={true}
             onClose={() => {
               setContentCreationDialogOpen(undefined);
@@ -308,7 +308,7 @@ export default function FolderPage(props: {
         ) : null
       ) : null}
       {linkEditingDialogId && contents ? (
-        <LinkCreationDialog
+        <aCreationDialog
           open={true}
           onClose={() => {
             setLinkEditingDialogId(undefined);

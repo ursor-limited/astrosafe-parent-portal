@@ -151,7 +151,7 @@ export const DeviceCardCurrentUrlSection = (props: {
   const navigate = useNavigate();
   return (
     <DeviceCardSection title="Currently visiting">
-      {/* <Link
+      {/* <a
       href={props.url ? getAbsoluteUrl(props.url) : undefined}
       target="_blank"
       style={{
@@ -215,9 +215,7 @@ export const DeviceCardCurrentUrlSection = (props: {
               : props.title}
           </Typography>
         </Stack>
-        {!props.disabled ? (
-          <LinkExternalIcon height="20px" width="20px" />
-        ) : null}
+        {!props.disabled ? <aExternalIcon height="20px" width="20px" /> : null}
       </Stack>
       {/* </Link> */}
     </DeviceCardSection>

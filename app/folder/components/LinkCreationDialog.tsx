@@ -88,7 +88,7 @@ const LinkCreationDialog = (props: {
           pointerEvents: 'none',
         }}
       >
-        <LinkCard
+        <aCard
           id={0}
           title={title}
           url={url}

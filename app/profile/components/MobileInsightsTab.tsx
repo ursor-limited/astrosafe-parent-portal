@@ -188,7 +188,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
                 }}
                 justifyContent="center"
               >
-                <Link
+                <a
                   key={site.id}
                   href={site.url}
                   target="_blank"

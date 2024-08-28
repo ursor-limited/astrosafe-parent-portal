@@ -144,7 +144,7 @@ const ProfileButton = (props: { light?: boolean }) => {
             />
 
             {/* {userCtx.schoolIsSubscribed ? (
-              <Link
+              <a
                 target="_blank"
                 href={process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""}
                 style={{

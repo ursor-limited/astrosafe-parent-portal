@@ -1,7 +1,6 @@
 import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
-
 import { PALETTE, Typography } from '@/ui';
 import ClockIcon from '@/images/icons/ClockIcon.svg';
 import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
@@ -84,7 +83,7 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
             >
               {props.title}
             </Typography>
-            <Link
+            <a
               href={props.url}
               target="_blank"
               style={{ textDecoration: 'none' }}
@@ -101,12 +100,12 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
                   {cleanUrl(props.url).replace(/\/$/, '')}
                 </Typography>
               </Stack>
-            </Link>
+            </a>
           </Stack>
 
           <Stack direction="row" spacing="8px" alignItems="center">
             <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-              {dayjs(props.searchedAt).utc().format('hh:mm:HHa')}
+              {dayjs(props.searchedAt).utc().format('hh:mm a')}
             </Typography>
             <Typography
               bold

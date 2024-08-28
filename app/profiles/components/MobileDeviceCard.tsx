@@ -176,7 +176,7 @@ export const MobileDeviceCardRow = (props: {
 //   faviconUrl: IFilterUrl["imageUrl"];
 // }) => (
 //   <DeviceCardSection title="Browsing status">
-//     <Link
+//     <a
 //       href={getAbsoluteUrl(props.url)}
 //       target="_blank"
 //       style={{
@@ -217,7 +217,7 @@ export const MobileDeviceCardRow = (props: {
 //             {props.title}
 //           </Typography>
 //         </Stack>
-//         <LinkExternalIcon height="20px" width="20px" />
+//         <aExternalIcon height="20px" width="20px" />
 //       </Stack>
 //     </Link>
 //   </DeviceCardSection>

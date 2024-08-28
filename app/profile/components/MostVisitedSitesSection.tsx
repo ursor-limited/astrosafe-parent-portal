@@ -27,7 +27,7 @@ export const VisitedSiteRow = (
     }}
     justifyContent="center"
   >
-    <Link
+    <a
       href={props.url}
       target="_blank"
       style={{
