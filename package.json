@@ -1,6 +1,6 @@
 {
   "name": "test-sfdagag-da-bleh",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "private": false,
   "main": "dist/index.js",
   "files": [
@@ -15,6 +15,10 @@
   "scripts": {
     "build": "tsc"
   },
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@emotion/react": "^11.11.1",
