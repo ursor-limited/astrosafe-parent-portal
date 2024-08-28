@@ -8,7 +8,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && resolve-tspaths && cp -r src/images dist"
+    "build": "tsc && resolve-tspaths && yarn copy-static-assets",
+    "copy-static-assets": "cp -r src/images dist && cp src/globals.css src/favicon.ico src/README.md dist"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
