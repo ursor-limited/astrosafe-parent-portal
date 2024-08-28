@@ -1,6 +1,6 @@
 {
   "name": "test-sfdagag-da-bleh",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": false,
   "main": "dist/index.js",
   "files": [
@@ -26,8 +26,6 @@
     "@sentry/react": "^7.77.0",
     "@svgr/webpack": "^8.1.0",
     "@turbo/gen": "^2.0.14",
-    "Check": "link:@mui/icons-material/Check",
-    "DoDisturb": "link:@mui/icons-material/DoDisturb",
     "axios": "^1.6.0",
     "axios-retry": "^3.8.1",
     "dayjs": "^1.11.10",
@@ -58,7 +56,6 @@
     "sharp": "^0.32.6",
     "test-sfdagag-da-bleh": "^0.1.0",
     "tsparticles": "^2.0.6",
-    "ui": "workspace:*",
     "usehooks-ts": "^2.16.0",
     "xmldom": "^0.6.0"
   },
