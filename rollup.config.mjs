@@ -29,8 +29,8 @@ export default [
       resolve(),
       commonjs(),
       css(),
-      typescript({ tsconfig: './tsconfig.json' }),
       url(),
+      typescript({ tsconfig: './tsconfig.json' }),
     ],
   },
   {
