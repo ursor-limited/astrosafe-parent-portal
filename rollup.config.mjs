@@ -2,7 +2,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-import-css';
-import url from '@rollup/plugin-url';
+import copy from 'rollup-plugin-copy';
 import dts from 'rollup-plugin-dts';
 import fs from 'fs';
 
@@ -29,7 +29,9 @@ export default [
       resolve(),
       commonjs(),
       css(),
-      url(),
+      copy({
+        targets: [{ src: 'src/images', dest: 'dist/images' }],
+      }),
       typescript({ tsconfig: './tsconfig.json' }),
     ],
   },
