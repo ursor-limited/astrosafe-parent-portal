@@ -1,7 +1,10 @@
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  mode: 'development',
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
@@ -10,21 +13,39 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(png|jpe?g|svg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images',
+            },
           },
         ],
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
   resolve: {
-    alias: { '@': path.resolve('./src') },
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.d.ts'],
+    plugins: [new TsconfigPathsPlugin()],
+    alias: { react: path.resolve(__dirname, 'node_modules/react') },
+    modules: [__dirname, 'node_modules'],
   },
+  plugins: [new CleanWebpackPlugin()],
   output: {
-    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    library: 'test-sfdagag-da-bleh',
+    libraryTarget: 'umd',
+    globalObject: 'this',
+  },
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
   },
 };
