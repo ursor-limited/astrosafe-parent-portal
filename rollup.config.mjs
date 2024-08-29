@@ -1,8 +1,8 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import images from 'rollup-plugin-img';
 import css from 'rollup-plugin-import-css';
+import url from '@rollup/plugin-url';
 import dts from 'rollup-plugin-dts';
 import fs from 'fs';
 
@@ -30,6 +30,7 @@ export default [
       commonjs(),
       css(),
       typescript({ tsconfig: './tsconfig.json' }),
+      url(),
     ],
   },
   {
