@@ -30,7 +30,7 @@ export default [
       commonjs(),
       css(),
       copy({
-        targets: [{ src: 'src/images', dest: 'dist/images' }],
+        targets: [{ src: 'src/images', dest: 'dist' }],
       }),
       typescript({ tsconfig: './tsconfig.json' }),
     ],
