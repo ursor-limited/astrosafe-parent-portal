@@ -1,6 +1,6 @@
 {
   "name": "test-sfdagag-da-bleh",
-  "version": "0.70.0",
+  "version": "0.71.0",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,12 +23,8 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@sentry/react": "^7.77.0",
-    "@svgr/webpack": "^8.1.0",
-    "@turbo/gen": "^2.0.14",
     "axios": "^1.6.0",
     "axios-retry": "^3.8.1",
-    "copyfiles": "^2.4.1",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",
     "get-user-locale": "^2.3.1",
@@ -58,9 +54,7 @@
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "sharp": "^0.32.6",
-    "terser-webpack-plugin": "^5.3.10",
     "test-sfdagag-da-bleh": "^0.1.0",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "tsparticles": "^2.0.6",
     "usehooks-ts": "^2.16.0",
     "xmldom": "^0.6.0"
@@ -87,6 +81,7 @@
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.3.0",
     "ts-loader": "^9.5.1",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.5.4",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
