@@ -59,6 +59,7 @@
     "xmldom": "^0.6.0"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-url": "^8.0.2",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.14.202",
@@ -82,6 +83,7 @@
     "rollup-plugin-image": "^1.0.2",
     "rollup-plugin-img": "^1.1.0",
     "rollup-plugin-import-css": "^3.5.1",
+    "rollup-plugin-includepaths": "^0.2.4",
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.3.0",
     "ts-loader": "^9.5.1",

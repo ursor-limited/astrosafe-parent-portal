@@ -1,9 +1,12 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
+import alias from '@rollup/plugin-alias';
 import css from 'rollup-plugin-import-css';
 import copy from 'rollup-plugin-copy';
 import dts from 'rollup-plugin-dts';
+import { fileURLToPath } from 'url';
+import path from 'path';
 import fs from 'fs';
 
 const loadJSONFile = (file) => {
@@ -11,6 +14,11 @@ const loadJSONFile = (file) => {
 };
 
 const packageJson = loadJSONFile('./package.json');
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
+
+const projectRootDir = path.resolve(__dirname);
 
 export default [
   {
@@ -29,6 +37,9 @@ export default [
       resolve(),
       commonjs(),
       css(),
+      alias({
+        entries: [{ find: /\.(ts|tsx|js|jsx)/, replacement: '/src' }],
+      }),
       copy({
         targets: [{ src: 'src/images', dest: 'dist' }],
       }),
