@@ -1,20 +1,20 @@
 import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import ChevronLeftIcon from '@/images/icons/ChevronLeft.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
+import ChevronLeftIcon from './../../images/icons/ChevronLeft.svg';
 
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import _ from 'lodash';
 import AstroTimeChart from './AstroTimeChart';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import CalendarButton from '@/components/CalendarButton';
+import CalendarButton from './../../components/CalendarButton';
 import { IDayScreenTime, IVisitedSite } from './InsightsTab';
 import MobileHistorySection from './MobileHistorySection';
 import MostVisitedSitesSection from './MostVisitedSitesSection';
-import ApiController from '@/api';
-import { IDevice } from '@/filter/contents/common';
+import ApiController from './../../api';
+import { IDevice } from './../../filter/contents/common';
 dayjs.extend(advancedFormat);
 
 export const cleanUrl = (url: string) =>

@@ -1,9 +1,9 @@
-import NotificationContext from '@/components/NotificationContext';
-import UrsorDialog from '@/components/UrsorDialog';
+import NotificationContext from './NotificationContext';
+import UrsorDialog from './UrsorDialog';
 import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
-import { PALETTE, UrsorButton, UrsorInputField } from '@/ui';
-import { LabeledInputField } from '@/ui/labeled-input-field';
+import { PALETTE, UrsorButton, UrsorInputField } from './../ui';
+import { LabeledInputField } from './../ui/labeled-input-field';
 import _ from 'lodash';
 import { AstroContent } from '../profile/components/ContentTab';
 

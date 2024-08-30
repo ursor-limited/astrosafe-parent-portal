@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Input } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
-import { FONT_SIZES } from '@/ui/typography';
-import { PALETTE } from '@/ui';
+import { FONT_SIZES } from '@/src/ui/typography';
+import { PALETTE } from '@/src/ui';
 
 export const DEFAULT_WIDTH = '536px';
 export const HEIGHT = '40px';

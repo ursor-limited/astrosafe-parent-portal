@@ -2,8 +2,8 @@ import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
-import { UrsorTypographyVariant } from '@/ui/typography';
+import { PALETTE, Typography } from './../../ui';
+import { UrsorTypographyVariant } from './../../ui/typography';
 import { IDayScreenTime } from './InsightsTab';
 
 const yInterval = 1; // hours

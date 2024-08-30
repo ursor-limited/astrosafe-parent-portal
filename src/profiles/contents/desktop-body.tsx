@@ -1,17 +1,17 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
-import PageLayout from '@/components/PageLayout';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
+import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
-import { IDevice } from '@/filter/contents/common';
-import UrsorActionButton from '@/components/UrsorActionButton';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import ArrowUpRightIcon from './../../images/icons/ArrowUpRight.svg';
+import { IDevice } from './../../filter/contents/common';
+import UrsorActionButton from './../../components/UrsorActionButton';
 import { useNavigate } from 'react-router-dom';
 import DeviceCard from '../components/DeviceCard';
 import QRCodeView from '../components/QRCodeView';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 import { IEnrichedDevice } from './common';
-import { IFilter } from '@/filters/contents/common';
+import { IFilter } from './../../filters/contents/common';
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IEnrichedDevice[];

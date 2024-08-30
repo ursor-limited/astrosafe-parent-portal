@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Stack } from '@mui/system';
 import _ from 'lodash';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 
 export interface INewActivityTagProps {
   n?: number;

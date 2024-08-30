@@ -6,15 +6,15 @@ import {
   UrsorButton,
   UrsorInputField,
   UrsorTextField,
-} from '@/ui';
+} from './../../ui';
 import _ from 'lodash';
 import { isMobile } from 'react-device-detect';
-import UrsorDialog from '@/components/UrsorDialog';
+import UrsorDialog from './../../components/UrsorDialog';
 import { CONTENT_DISPLAY_NAMES } from './ContentCard';
-import { LabeledInputField } from '@/ui/labeled-input-field';
-import { AstroContent } from '@/profile/components/ContentTab';
-import { IFilterUrl } from '@/filters/contents/common';
-import { IInfoButtonProps } from '@/components/InfoButton';
+import { LabeledInputField } from './../../ui/labeled-input-field';
+import { AstroContent } from './../../profile/components/ContentTab';
+import { IFilterUrl } from './../../filters/contents/common';
+import { IInfoButtonProps } from './../../components/InfoButton';
 
 export interface IContentCreationDialogProps {
   open: boolean;

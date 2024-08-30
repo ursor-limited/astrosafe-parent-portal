@@ -1,11 +1,11 @@
 import { Stack } from '@mui/system';
 import { useCallback, useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
 import { IAllowedTime, getISODateString } from './LimitsTab';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import useNewSegmentTimes from './useNewSegmentTimes';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
 
 const DISPLAY_INTERVAL = 2; // hours
 // const MIN = 0;

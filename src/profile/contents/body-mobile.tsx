@@ -1,19 +1,19 @@
-import { IDevice } from '@/filter/contents/common';
+import { IDevice } from './../../filter/contents/common';
 import { Stack } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { ITitleRowItem } from '@/components/TitleRow';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import { ITitleRowItem } from './../../components/TitleRow';
 import AstroTabSwitch from '../components/AstroTabSwitch';
-import { IActionPopupItem } from '@/components/ActionPopup';
+import { IActionPopupItem } from './../../components/ActionPopup';
 import DevicePageContentTab from '../components/ContentTab';
 import { useState } from 'react';
 import { AstroAccountTab } from './common';
-import MobilePageLayout from '@/components/MobilePageLayout';
+import MobilePageLayout from './../../components/MobilePageLayout';
 import DevicePageLimitsTab from '../components/LimitsTab';
 import DevicePageMobileInsightsTab from '../components/MobileInsightsTab';
-import { IEnrichedContentBucket } from '@/folders/contents/common';
+import { IEnrichedContentBucket } from './../../folders/contents/common';
 import MobileDeviceCard from '../../profiles/components/MobileDeviceCard';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
 import DevicePageAppsTab from '../components/AppsTab';
 
 const ProfilePageMobileBody = (props: {

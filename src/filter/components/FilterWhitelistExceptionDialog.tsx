@@ -1,8 +1,8 @@
-import NotificationContext from '@/components/NotificationContext';
-import UrsorDialog from '@/components/UrsorDialog';
+import NotificationContext from './../../components/NotificationContext';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
-import { UrsorButton } from '@/ui';
+import { UrsorButton } from './../../ui';
 
 const FilterWhitelistExceptionDialog = (props: {
   open: boolean;

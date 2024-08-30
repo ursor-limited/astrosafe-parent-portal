@@ -2,15 +2,15 @@ import { Stack } from '@mui/system';
 import ContentCreationDialog from './ContentCreationDialog';
 import { useContext, useEffect, useState } from 'react';
 import ChannelCard from './ChannelCard';
-import NotificationContext from '@/components/NotificationContext';
-import ApiController, { getAbsoluteUrl } from '@/api';
-import CheckboxIcon from '@/images/icons/CheckboxIcon.svg';
-import EmptyCheckboxIcon from '@/images/icons/EmptyCheckboxIcon.svg';
-import { PALETTE, Typography } from '@/ui';
+import NotificationContext from './../../components/NotificationContext';
+import ApiController, { getAbsoluteUrl } from './../../api';
+import CheckboxIcon from './../../images/icons/CheckboxIcon.svgimages/icons/CheckboxIcon.svg';
+import EmptyCheckboxIcon from './../../images/icons/EmptyCheckboxIcon.svgimages/icons/EmptyCheckboxIcon.svg';
+import { PALETTE, Typography } from './../../ui';
 import { IEnrichedContentBucket } from '../../folders/contents/common';
-import { IChannel } from '@/profile/components/ContentTab';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
-import { cleanUrl } from '@/profile/components/MobileInsightsTab';
+import { IChannel } from './../../profile/components/ContentTab';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import { cleanUrl } from './../../profile/components/MobileInsightsTab';
 
 const ChannelCreationDialog = (props: {
   open: boolean;

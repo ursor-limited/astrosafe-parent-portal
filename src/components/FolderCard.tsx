@@ -1,23 +1,23 @@
 import { useContext, useEffect, useState } from 'react';
 import { Stack, keyframes } from '@mui/system';
-import { PALETTE, Typography } from '@/ui';
-import Star from '@/images/Star.svg';
+import { PALETTE, Typography } from './../ui';
+import Star from './../images/Star.svg';
 import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
-import ProfileImageRow from '@/filter/components/ProfileImageRow';
-import UrsorActionButton from '@/components/UrsorActionButton';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import ArrowUpRight from '@/images/icons/ArrowUpRight.svg';
-import DeletionDialog from '@/components/DeletionDialog';
-import { IEnrichedContentBucket } from '@/folders/contents/common';
-import ApiController from '@/api';
-import FolderRenameDialog from '@/folder/components/FolderRenameDialog';
+import ProfileImageRow from './../filter/components/ProfileImageRow';
+import UrsorActionButton from './UrsorActionButton';
+import PencilIcon from './../images/icons/Pencil.svg';
+import TrashcanIcon from './../images/icons/TrashcanIcon.svg';
+import ArrowUpRight from './../images/icons/ArrowUpRight.svg';
+import DeletionDialog from './DeletionDialog';
+import { IEnrichedContentBucket } from './../folders/contents/common';
+import ApiController from './../api';
+import FolderRenameDialog from './../folder/components/FolderRenameDialog';
 import { IContentBucket } from '../profile/components/ContentTab';
-import NotificationContext from '@/components/NotificationContext';
+import NotificationContext from './NotificationContext';
 import { FOLDER_DELETION_DIALOG_SUBTITLE } from '../folder/contents/common';
 import { IActionPopupItem } from './ActionPopup';
-import { SecondaryColor } from '@/ui/palette';
+import { SecondaryColor } from './../ui/palette';
 
 export const spin = keyframes`
   from {

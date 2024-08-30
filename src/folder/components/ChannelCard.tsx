@@ -1,9 +1,12 @@
 import ContentCard from './ContentCard';
 
 import { Stack } from '@mui/system';
-import ApiController from '@/api';
-import { IChannel, IContentBucket } from '@/profile/components/ContentTab';
-import { PALETTE } from '@/ui';
+import ApiController from './../../api';
+import {
+  IChannel,
+  IContentBucket,
+} from './../../profile/components/ContentTab';
+import { PALETTE } from './../../ui';
 import { useNavigate } from 'react-router-dom';
 
 const IMAGE_HEIGHT = 160;

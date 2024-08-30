@@ -1,12 +1,12 @@
 import { Stack } from '@mui/system';
 import AstroCard from '../../filter/components/AstroCard';
 
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import GlobeIcon from '@/images/icons/GlobeIcon.svg';
-import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import StrikeThroughGlobeIcon from './../../images/icons/StrikeThroughGlobeIcon.svg';
+import FilterIcon from './../../images/icons/FilterIcon.svg';
+import GlobeIcon from './../../images/icons/GlobeIcon.svg';
+import CheckCircleFillIcon from './../../images/icons/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svg';
 import { DeviceType } from '../../filter/contents/common';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,14 +16,14 @@ import {
   DeviceCardScreenTimeSection,
   DeviceCardSection,
 } from './DeviceCard';
-import { IFilter } from '@/filters/contents/common';
-import ApiController from '@/api';
-import UrsorPopover from '@/components/UrsorPopover';
-import AstroSettingCard from '@/filter/components/AstroSettingCard';
+import { IFilter } from './../../filters/contents/common';
+import ApiController from './../../api';
+import UrsorPopover from './../../components/UrsorPopover';
+import AstroSettingCard from './../../filter/components/AstroSettingCard';
 import { IEnrichedDevice } from '../contents/common';
-import NotificationContext from '@/components/NotificationContext';
-import { getInitials } from '@/account/contents/common';
-import useAuth from '@/hooks/useAuth';
+import NotificationContext from './../../components/NotificationContext';
+import { getInitials } from './../../account/contents/common';
+import useAuth from './../../hooks/useAuth';
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: 'Android',

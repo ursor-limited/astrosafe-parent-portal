@@ -3,11 +3,11 @@ import MobileTitleRow from './MobileTitleRow';
 import UrsorActionButton from './UrsorActionButton';
 import { IActionPopupItem } from './ActionPopup';
 import React, { useState } from 'react';
-import { Typography } from '@/ui';
-import ThreeBarsIcon from '@/images/icons/ThreeBarsIcon.svg';
+import { Typography } from './../ui';
+import ThreeBarsIcon from './../images/icons/ThreeBarsIcon.svg';
 import MobileSideBar, { AstroPage } from './MobileSideBar';
 import { ITitleRowItem } from './TitleRow';
-import ChevronLeftIcon from '@/images/icons/ChevronLeftIcon.svg';
+import ChevronLeftIcon from './../images/icons/ChevronLeftIcon.svg';
 import InfoButton, { IInfoButtonProps } from './InfoButton';
 
 const MobilePageLayout = (props: {

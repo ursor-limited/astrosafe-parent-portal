@@ -1,13 +1,13 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
-import PageLayout from '@/components/PageLayout';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
+import PageLayout from './../../components/PageLayout';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { IEnrichedContentBucket } from './common';
-import FolderCard from '@/components/FolderCard';
-import EmptyStateIllustration from '@/components/EmptyStateIllustration';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import FolderCard from './../../components/FolderCard';
+import EmptyStateIllustration from './../../components/EmptyStateIllustration';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[];

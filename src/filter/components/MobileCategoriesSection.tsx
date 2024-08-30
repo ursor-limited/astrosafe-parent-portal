@@ -1,9 +1,9 @@
 import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsUpIcon from '@/images/icons/ThumbsUpIcon.svg';
+import ThumbsUpIcon from './../../images/icons/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
 import { Stack } from '@mui/system';
-import { PALETTE, Typography } from '@/ui';
-import AstroSwitch from '@/components/AstroSwitch';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import { PALETTE, Typography } from './../../ui';
+import AstroSwitch from './../../components/AstroSwitch';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 import {
   IFilter,
   IFilterSubcategory,

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Dialog, keyframes, Stack } from '@mui/material';
-import X from '@/images/icons/X.svg';
-import ChevronLeft from '@/images/icons/ChevronLeftIcon.svg';
+import X from './../images/icons/X.svg';
+import ChevronLeft from './../images/icons/ChevronLeftIcon.svg';
 import _ from 'lodash';
 import { useWindowSize } from 'usehooks-ts';
-import { ButtonVariant, UrsorButton } from '@/ui/ursor-button';
-import { PALETTE, Typography } from '@/ui';
-import { UrsorTypographyVariant } from '@/ui/typography';
+import { ButtonVariant, UrsorButton } from './../ui/ursor-button';
+import { PALETTE, Typography } from './../ui';
+import { UrsorTypographyVariant } from './../ui/typography';
 import InfoButton, { IInfoButtonProps } from './InfoButton';
 import { INFOS } from '../profile/components/ProfilePageTabLayout';
 import ByteStepper from './ByteStepper';

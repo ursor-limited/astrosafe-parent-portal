@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { PALETTE } from '@/ui';
+import { PALETTE } from './../ui';
 
 const AstroSwitch = (props: {
   on: boolean;

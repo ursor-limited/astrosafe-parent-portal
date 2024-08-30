@@ -4,7 +4,7 @@ import UrsorDialog, {
   IDialogButtonDetails,
 } from './UrsorDialog';
 import _ from 'lodash';
-import { ButtonVariant } from '@/ui/ursor-button';
+import { ButtonVariant } from './../ui/ursor-button';
 
 export interface IStepDialogButtonDetails {
   text?: string;

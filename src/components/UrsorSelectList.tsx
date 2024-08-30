@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Stack } from '@mui/system';
-import { Typography } from '@/ui';
+import { Typography } from './../ui';
 
 export interface IUrsorSelectItem {
   id: string;

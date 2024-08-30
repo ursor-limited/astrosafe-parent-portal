@@ -1,18 +1,18 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
 import AppToggleCard from './AppToggleCard';
 import { Stack } from '@mui/system';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
 import { IFilterSubcategory, IFilterUrl } from '../../filters/contents/common';
 import ProfilePageTabLayout from './ProfilePageTabLayout';
-import { IDevice } from '@/filter/contents/common';
+import { IDevice } from './../../filter/contents/common';
 import { useContext, useEffect, useState } from 'react';
-import ApiController from '@/api';
-import AstroCard from '@/filter/components/AstroCard';
+import ApiController from './../../api';
+import AstroCard from './../../filter/components/AstroCard';
 import _ from 'lodash';
-import NotificationContext from '@/components/NotificationContext';
+import NotificationContext from './../../components/NotificationContext';
 import PageSelector from '../../components/PageSelector';
-import { SearchInput } from '@/components/SearchInput';
+import { SearchInput } from './../../components/SearchInput';
 
 const PAGE_SIZE = 20;
 

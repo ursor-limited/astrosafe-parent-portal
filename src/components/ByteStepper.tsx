@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { alpha, Box, keyframes, Stack } from '@mui/system';
 import StepsByteController, { ByteAnimation } from './Byte';
 import { fadeOut } from './UrsorDialog';
-import { PALETTE } from '@/ui';
+import { PALETTE } from './../ui';
 
 const SPACING = '62px';
 const CIRCLE_SIZE = 24;

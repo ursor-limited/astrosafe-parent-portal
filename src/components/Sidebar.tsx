@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Stack, keyframes } from '@mui/system';
 import { useElementSize } from 'usehooks-ts';
-import { PALETTE, Typography } from '@/ui';
-import BookIcon from '@/images/icons/BookIcon.svg';
-import GearIcon from '@/images/icons/GearIcon.svg';
-import PeopleIcon from '@/images/icons/PeopleIcon.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
+import { PALETTE, Typography } from './../ui';
+import BookIcon from './../images/icons/BookIcon.svg';
+import GearIcon from './../images/icons/GearIcon.svg';
+import PeopleIcon from './../images/icons/PeopleIcon.svg';
+import FilterIcon from './../images/icons/FilterIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from './UserContext';
 import { UserInitialsCircle } from '../account/contents/common';

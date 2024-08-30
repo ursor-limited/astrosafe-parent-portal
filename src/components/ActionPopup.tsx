@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from '@mui/system';
 import UrsorPopover, { IUrsorPopoverProps } from './UrsorPopover';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 
 const SPACING = '8px';
 const ICON_SIZE = '16px';

@@ -1,8 +1,8 @@
-import AstroSwitch from '@/components/AstroSwitch';
+import AstroSwitch from './../../components/AstroSwitch';
 import { Stack } from '@mui/system';
 
 import React from 'react';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 
 const AstroToggleCard = (props: {
   on: boolean;

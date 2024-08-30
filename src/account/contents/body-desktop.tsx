@@ -1,12 +1,12 @@
-import PageLayout from '@/components/PageLayout';
+import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import VerifiedIcon from '@/images/icons/VerifiedIcon.svg';
-import LogOutIcon from '@/images/icons/LogOutIcon.svg';
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import PersonIcon from '@/images/icons/PersonIcon.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import VerifiedIcon from './../../images/icons/VerifiedIcon.svg';
+import LogOutIcon from './../../images/icons/LogOutIcon.svg';
+import PhoneIcon from './../../images/icons/PhoneIcon.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
+import PersonIcon from './../../images/icons/PersonIcon.svg';
 import {
   AstroPlanState,
   IUser,
@@ -15,7 +15,7 @@ import {
   UserInitialsCircle,
   VIBRANT_GRADIENT,
 } from './common';
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import UsersTable from '../components/UsersTable';
 import DevicesTable from '../components/DevicesTable';
 import AccountPageHeader from '../components/AccountPageHeader';

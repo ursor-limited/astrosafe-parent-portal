@@ -1,20 +1,20 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import XIcon from '@/images/icons/X.svg';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
+import XIcon from './../../images/icons/X.svg';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
 import _ from 'lodash';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { useState } from 'react';
-import ApiController from '@/api';
-import { IDevice } from '@/filter/contents/common';
-import { IContentBucket } from '@/profile/components/ContentTab';
-import AllDevicesDialog from '@/components/AllDevicesDialog';
-import DeviceCard from '@/profiles/components/DeviceCard';
+import ApiController from './../../api';
+import { IDevice } from './../../filter/contents/common';
+import { IContentBucket } from './../../profile/components/ContentTab';
+import AllDevicesDialog from './../../components/AllDevicesDialog';
+import DeviceCard from './../../profiles/components/DeviceCard';
 import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
 
 const DevicesSection = (props: {
   title: string;

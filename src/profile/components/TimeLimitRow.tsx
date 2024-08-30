@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
-import TimeMinusIcon from '@/images/icons/TimeMinusIcon.svg';
-import TimePlusIcon from '@/images/icons/TimePlusIcon.svg';
-import { PALETTE, Typography } from '@/ui';
+import TimeMinusIcon from './../../images/icons/TimeMinusIcon.svgimages/icons/TimeMinusIcon.svg';
+import TimePlusIcon from './../../images/icons/TimePlusIcon.svgimages/icons/TimePlusIcon.svg';
+import { PALETTE, Typography } from './../../ui';
 import _ from 'lodash';
 import { DAILY_LIMIT_INCREMENT, ITimeLimit } from './LimitsTab';
 import { useEffect, useState } from 'react';

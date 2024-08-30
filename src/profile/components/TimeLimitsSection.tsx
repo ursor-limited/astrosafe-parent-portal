@@ -1,4 +1,4 @@
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import _ from 'lodash';
 import { ITimeLimit } from './LimitsTab';

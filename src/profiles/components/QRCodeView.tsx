@@ -1,9 +1,9 @@
-import ApiController from '@/api';
+import ApiController from './../../api';
 import { Stack } from '@mui/system';
 
 import { useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import useAuth from '@/hooks/useAuth';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import useAuth from './../../hooks/useAuth';
 
 const QRCodeView = () => {
   const { user } = useAuth();

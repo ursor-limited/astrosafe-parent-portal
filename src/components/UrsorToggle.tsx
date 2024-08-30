@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Switch } from '@mui/material';
-import { PALETTE } from '@/ui';
+import { PALETTE } from './../ui';
 import { boxShadow } from 'html2canvas/dist/types/css/property-descriptors/box-shadow';
 
 export interface IUrsorToggle {

@@ -1,9 +1,9 @@
 import { Stack } from '@mui/system';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svg';
 import { useState } from 'react';
-import DynamicContainer from '@/components/DynamicContainer';
-import InfoButton, { IInfoButtonProps } from '@/components/InfoButton';
-import { PALETTE, Typography } from '@/ui';
+import DynamicContainer from './../../components/DynamicContainer';
+import InfoButton, { IInfoButtonProps } from './../../components/InfoButton';
+import { PALETTE, Typography } from './../../ui';
 
 export const AstroBentoCard = (props: {
   title: string;

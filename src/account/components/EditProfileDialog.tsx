@@ -1,8 +1,8 @@
-import UrsorDialog from '@/components/UrsorDialog';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
-import { UrsorButton, UrsorInputField } from '@/ui';
-import { LabeledInputField } from '@/ui/labeled-input-field';
+import { UrsorButton, UrsorInputField } from './../../ui';
+import { LabeledInputField } from './../../ui/labeled-input-field';
 import { IUser, UserInitialsCircle } from '../contents/common';
 
 const EditProfileDialog = (props: {

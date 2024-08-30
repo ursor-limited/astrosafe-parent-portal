@@ -1,26 +1,26 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import PencilIcon from '@/images/icons/Pencil.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
 
 import { Stack } from '@mui/system';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 import _ from 'lodash';
 import { useNavigate } from 'react-router-dom';
-import ApiController from '@/api';
-import { IDevice } from '@/filter/contents/common';
+import ApiController from './../../api';
+import { IDevice } from './../../filter/contents/common';
 import ProfilePageDesktopBody from './body-desktop';
 import DeviceRenameDialog from '../../profiles/components/DeviceRenameDialog';
 import DeviceDisconnectDialog from '../../profiles/components/DeviceDisconnectDialog';
 import ProfilePageMobileBody from './body-mobile';
 import { DEVICE_TYPE_DISPLAY_NAMES } from '../../profiles/components/DeviceCard';
-import { IEnrichedContentBucket } from '@/folders/contents/common';
+import { IEnrichedContentBucket } from './../../folders/contents/common';
 import { IEnrichedDevice } from '../../profiles/contents/common';
 import AddFolderDialog from '../components/AddFolderDialog';
-import NotificationContext from '@/components/NotificationContext';
-import FolderCreationDialog from '@/folder/components/FolderCreationDialog';
+import NotificationContext from './../../components/NotificationContext';
+import FolderCreationDialog from './../../folder/components/FolderCreationDialog';
 import { IContentBucket } from '../components/ContentTab';
 import useDeviceOnlineStatus from '../../profiles/components/useDeviceOnlineStatus';
-import { getInitials } from '@/account/contents/common';
-import useAuth from '@/hooks/useAuth';
+import { getInitials } from './../../account/contents/common';
+import useAuth from './../../hooks/useAuth';
 
 export type DeviceType = 'chrome' | 'android' | 'ios';
 

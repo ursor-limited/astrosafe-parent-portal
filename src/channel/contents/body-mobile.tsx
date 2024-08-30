@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IVideo } from '@/profile/components/ContentTab';
+import { IVideo } from './../../profile/components/ContentTab';
 import { Stack } from '@mui/system';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
-import VideoCard from '@/folder/components/VideoCard';
-import EmptyStateIllustration from '@/components/EmptyStateIllustration';
-import { ITitleRowItem } from '@/components/TitleRow';
-import { IActionPopupItem } from '@/components/ActionPopup';
-import MobilePageLayout from '@/components/MobilePageLayout';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
+import VideoCard from './../../folder/components/VideoCard';
+import EmptyStateIllustration from './../../components/EmptyStateIllustration';
+import { ITitleRowItem } from './../../components/TitleRow';
+import { IActionPopupItem } from './../../components/ActionPopup';
+import MobilePageLayout from './../../components/MobilePageLayout';
 
 const ChannelPageMobileBody = (props: {
   videos: IVideo[];

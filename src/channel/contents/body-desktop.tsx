@@ -1,13 +1,13 @@
 import React from 'react';
-import { IVideo } from '@/profile/components/ContentTab';
-import PageLayout from '@/components/PageLayout';
+import { IVideo } from './../../profile/components/ContentTab';
+import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
-import DynamicCardGrid from '@/components/DynamicCardGrid';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
-import VideoCard from '@/folder/components/VideoCard';
-import EmptyStateIllustration from '@/components/EmptyStateIllustration';
-import { ITitleRowItem } from '@/components/TitleRow';
-import { IActionPopupItem } from '@/components/ActionPopup';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
+import VideoCard from './../../folder/components/VideoCard';
+import EmptyStateIllustration from './../../components/EmptyStateIllustration';
+import { ITitleRowItem } from './../../components/TitleRow';
+import { IActionPopupItem } from './../../components/ActionPopup';
 
 const ChannelPageDesktopBody = (props: {
   videos: IVideo[];

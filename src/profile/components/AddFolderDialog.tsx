@@ -1,14 +1,14 @@
-import ApiController from '@/api';
-import { SearchInput } from '@/components/SearchInput';
-import UrsorDialog from '@/components/UrsorDialog';
+import ApiController from './../../api';
+import { SearchInput } from './../../components/SearchInput';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { IDevice } from '@/filter/contents/common';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import { IDevice } from './../../filter/contents/common';
 import { IContentBucket } from './ContentTab';
-import { IGroup } from '@/folder/contents/common';
-import { IEnrichedContentBucket } from '@/folders/contents/common';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
+import { IGroup } from './../../folder/contents/common';
+import { IEnrichedContentBucket } from './../../folders/contents/common';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
 
 const AddFolderDialog = (props: {
   open: boolean;

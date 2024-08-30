@@ -1,11 +1,11 @@
-import ApiController from '@/api';
-import { SearchInput } from '@/components/SearchInput';
-import UrsorDialog from '@/components/UrsorDialog';
+import ApiController from './../../api';
+import { SearchInput } from './../../components/SearchInput';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 import { IGroup } from '../contents/common';
-import { IDevice } from '@/filter/contents/common';
+import { IDevice } from './../../filter/contents/common';
 
 const AddDeviceDialog = (props: {
   title: string;

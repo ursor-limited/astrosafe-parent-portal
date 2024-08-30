@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 
 const LabeledInputField = (props: { children: React.ReactNode }) => (
   <Stack spacing="8px">

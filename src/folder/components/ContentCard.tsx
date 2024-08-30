@@ -1,16 +1,16 @@
 import { Stack } from '@mui/system';
 import { CONTENT_BRANDING } from '../contents/common';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 import _ from 'lodash';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
 import { useState } from 'react';
-import UrsorActionButton from '@/components/UrsorActionButton';
-import DeletionDialog from '@/components/DeletionDialog';
-import { AstroContent, IContent } from '@/profile/components/ContentTab';
+import UrsorActionButton from './../../components/UrsorActionButton';
+import DeletionDialog from './../../components/DeletionDialog';
+import { AstroContent, IContent } from './../../profile/components/ContentTab';
 
-import { getAbsoluteUrl } from '@/api';
-import { cleanUrl } from '@/profile/components/MobileInsightsTab';
+import { getAbsoluteUrl } from './../../api';
+import { cleanUrl } from './../../profile/components/MobileInsightsTab';
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: 'Video',

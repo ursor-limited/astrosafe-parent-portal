@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
 import React, { useState } from 'react';
 import ActionPopup, { IActionPopupItem } from './ActionPopup';
-import MoreIcon from '@/images/icons/MoreIcon.svg';
-import { PALETTE } from '@/ui';
+import MoreIcon from './../images/icons/MoreIcon.svg';
+import { PALETTE } from './../ui';
 
 const DEFAULT_SIZE = '12px';
 const LARGE_SIZE = '20px';

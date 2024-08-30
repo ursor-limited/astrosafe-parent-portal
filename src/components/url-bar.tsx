@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
-import { Typography, UrsorButton } from '@/ui';
+import { Typography, UrsorButton } from './../ui';
 
 import { useEffect, useState } from 'react';
-import Clipboard from '@/images/icons/Clipboard.svg';
+import Clipboard from './../images/icons/Clipboard.svgimages/icons/Clipboard.svg';
 
 const UrlBar = (props: { mobile: boolean }) => {
   const [hovering, setHovering] = useState<boolean>(false);
