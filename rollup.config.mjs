@@ -4,7 +4,7 @@ import typescript from '@rollup/plugin-typescript';
 import alias from '@rollup/plugin-alias';
 import css from 'rollup-plugin-import-css';
 import json from '@rollup/plugin-json';
-import copy from 'rollup-plugin-copy';
+import { babel } from '@rollup/plugin-babel';
 import dts from 'rollup-plugin-dts';
 import { fileURLToPath } from 'url';
 import url from '@rollup/plugin-url';
@@ -102,6 +102,12 @@ export default [
         destDir: 'dist/assets',
       }),
       typescript({ tsconfig: './tsconfig.json' }),
+      babel({
+        babelHelpers: 'runtime',
+        presets: ['@babel/preset-react'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        exclude: 'node_modules/**', // Only transpile our source code
+      }),
     ],
   },
   {
