@@ -5,7 +5,7 @@ import useAuth from './../hooks/useAuth';
 import { useState } from 'react';
 import ListUnorderedIcon from './../images/icons/ListUnorderedIcon.svgimages/icons/ListUnorderedIcon.svg';
 import CreditCardIcon from './../images/icons/CreditCard.svgimages/icons/CreditCard.svg';
-import LogOutIcon from './../images/icons/LogOutIcon.svgimages/icons/LogOutIcon.svg';
+import LogOutIcon from './../images/icons/LogOutIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from './UserContext';
 import { useLocalStorage } from 'usehooks-ts';

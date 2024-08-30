@@ -1,5 +1,5 @@
 import UrsorDialog from './../../components/UrsorDialog';
-import DownloadIcon from './../../images/icons/DownloadIcon.svgimages/icons/DownloadIcon.svg';
+import DownloadIcon from './../../images/icons/DownloadIcon.svg';
 import { Stack } from '@mui/system';
 
 import { PALETTE, Typography, UrsorButton } from './../../ui';

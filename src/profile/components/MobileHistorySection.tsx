@@ -2,8 +2,8 @@ import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 import { PALETTE, Typography } from './../../ui';
-import ClockIcon from './../../images/icons/ClockIcon.svgimages/icons/ClockIcon.svg';
-import ChevronDownIcon from './../../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
+import ClockIcon from './../../images/icons/ClockIcon.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svg';
 import { useEffect, useState } from 'react';
 import DynamicContainer from './../../components/DynamicContainer';
 

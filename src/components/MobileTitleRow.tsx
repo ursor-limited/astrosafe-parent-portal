@@ -2,7 +2,7 @@ import React from 'react';
 import { Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
 import { PALETTE, Typography } from './../ui';
-import ChevronDown from './../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
+import ChevronDown from './../images/icons/ChevronDown.svg';
 import { useState } from 'react';
 
 import { ITitleRowItem } from './TitleRow';

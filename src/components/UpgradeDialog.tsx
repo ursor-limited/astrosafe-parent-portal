@@ -1,5 +1,5 @@
-import VerifiedIcon from './../images/icons/VerifiedIcon.svgimages/icons/VerifiedIcon.svg';
-import CheckIcon from './../images/icons/CheckIcon.svgimages/icons/CheckIcon.svg';
+import VerifiedIcon from './../images/icons/VerifiedIcon.svg';
+import CheckIcon from './../images/icons/CheckIcon.svg';
 import { Stack, alpha } from '@mui/system';
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from './../ui';
 import UrsorDialog from './UrsorDialog';

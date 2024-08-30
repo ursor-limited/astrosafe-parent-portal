@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import { VIBRANT_GRADIENT } from '../contents/common';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import VerifiedIcon from './../../images/icons/VerifiedIcon.svgimages/icons/VerifiedIcon.svg';
+import VerifiedIcon from './../../images/icons/VerifiedIcon.svg';
 
 const AccountPageHeader = (props: {
   setUpgradeDialogOpen: () => void;

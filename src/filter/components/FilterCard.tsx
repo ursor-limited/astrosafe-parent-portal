@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../../ui';
 import ListUnorderedIcon from './../../images/icons/ListUnorderedIcon.svgimages/icons/ListUnorderedIcon.svg';
-import VerifiedIcon from './../../images/icons/VerifiedIcon.svgimages/icons/VerifiedIcon.svg';
+import VerifiedIcon from './../../images/icons/VerifiedIcon.svg';
 import StopIcon from './../../images/icons/StopIcon.svgimages/icons/StopIcon.svg';
 import LockIcon from './../../images/icons/LockIcon.svgimages/icons/LockIcon.svg';
 import ProfileImageRow from './ProfileImageRow';

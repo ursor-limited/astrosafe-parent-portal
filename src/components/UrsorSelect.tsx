@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Stack } from '@mui/system';
-import ChevronDown from './../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
+import ChevronDown from './../images/icons/ChevronDown.svg';
 import X from './../images/icons/X.svg';
 import { PALETTE } from './../ui';
 import { Typography } from './../ui';

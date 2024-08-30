@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
 import PencilIcon from './../../images/icons/Pencil.svg';
-import FilterIcon from './../../images/icons/FilterIcon.svgimages/icons/FilterIcon.svg';
+import FilterIcon from './../../images/icons/FilterIcon.svg';
 import { PALETTE } from './../../ui';
 import FilterPageDesktopBody from './body-desktop';
 import {

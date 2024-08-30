@@ -1,7 +1,7 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
 import ThumbsUpIcon from './../../images/icons/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
-import ChevronDownIcon from './../../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svg';
 import LockIcon from './../../images/icons/LockIcon.svgimages/icons/LockIcon.svg';
 import { Stack } from '@mui/system';
 import { DynamicContainer, PALETTE, Typography } from './../../ui';

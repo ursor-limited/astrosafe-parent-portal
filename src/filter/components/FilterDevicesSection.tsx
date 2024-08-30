@@ -1,6 +1,6 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
-import ChevronRightIcon from './../../images/icons/ChevronRight.svgimages/icons/ChevronRight.svg';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
 import PlusIcon from './../../images/icons/PlusIcon.svg';
 import XIcon from './../../images/icons/X.svg';
 import { Stack } from '@mui/system';

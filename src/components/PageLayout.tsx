@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Box, Stack } from '@mui/material';
-import ChevronLeft from './../images/icons/ChevronLeft.svgimages/icons/ChevronLeft.svg';
+import ChevronLeft from './../images/icons/ChevronLeft.svg';
 import { useWindowSize } from 'usehooks-ts';
 import { PALETTE, Typography, UrsorButton } from './../ui';
 import UrsorFadeIn from './UrsorFadeIn';

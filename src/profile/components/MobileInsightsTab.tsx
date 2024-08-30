@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import ChevronRightIcon from './../../images/icons/ChevronRight.svgimages/icons/ChevronRight.svg';
-import ChevronLeftIcon from './../../images/icons/ChevronLeft.svgimages/icons/ChevronLeft.svg';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
+import ChevronLeftIcon from './../../images/icons/ChevronLeft.svg';
 
 import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import _ from 'lodash';

@@ -7,6 +7,7 @@ import json from '@rollup/plugin-json';
 import copy from 'rollup-plugin-copy';
 import dts from 'rollup-plugin-dts';
 import { fileURLToPath } from 'url';
+import url from '@rollup/plugin-url';
 import path from 'path';
 import fs from 'fs';
 
@@ -86,8 +87,19 @@ export default [
       commonjs(),
       json(),
       css(),
-      copy({
-        targets: [{ src: 'src/images', dest: 'dist' }],
+      url({
+        limit: 0, // Disable inlining by setting the limit to 0 (0 bytes means all files will be copied)
+        include: [
+          '**/*.png',
+          '**/*.jpg',
+          '**/*.jpeg',
+          '**/*.gif',
+          '**/*.svg',
+          '**/*.webp',
+        ], // Handle all common image file types
+        emitFiles: true, // Ensure files are emitted to the output directory
+        publicPath: 'assets/', // URL path for assets
+        destDir: 'dist/assets',
       }),
       typescript({ tsconfig: './tsconfig.json' }),
     ],
