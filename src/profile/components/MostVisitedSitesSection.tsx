@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
 import { AstroBentoCard } from '../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import { IVisitedSite } from './InsightsTab';
@@ -7,7 +7,7 @@ import { IVisitedSite } from './InsightsTab';
 import _ from 'lodash';
 import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog';
 import { cleanUrl } from './MobileInsightsTab';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {

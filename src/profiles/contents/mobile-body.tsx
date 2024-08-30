@@ -1,16 +1,16 @@
 import { Stack } from '@mui/system';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import PlugIcon from '@/images/icons/PlugIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import ArrowUpRightIcon from '@/images/icons/ArrowUpRight.svg';
-import { IDevice } from '@/filter/contents/common';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
+import PlugIcon from './../../images/icons/PlugIcon.svgimages/icons/PlugIcon.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import ArrowUpRightIcon from './../../images/icons/ArrowUpRight.svg';
+import { IDevice } from './../../filter/contents/common';
 import DeviceInstructionsView from '../components/DeviceInstructionsView';
-import UrsorActionButton from '@/components/UrsorActionButton';
-import { PALETTE, UrsorButton } from '@/ui';
+import UrsorActionButton from './../../components/UrsorActionButton';
+import { PALETTE, UrsorButton } from './../../ui';
 import { useNavigate } from 'react-router-dom';
-import MobilePageLayout from '@/components/MobilePageLayout';
+import MobilePageLayout from './../../components/MobilePageLayout';
 import DeviceCard from '../components/DeviceCard';
-import { IFilter } from '@/filters/contents/common';
+import { IFilter } from './../../filters/contents/common';
 
 const AllDevicesPageMobileBody = (props: {
   devices: IDevice[];

@@ -1,11 +1,11 @@
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 
-import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
 import { IRequestedSite } from './LimitsTab';
-import ApiController from '@/api';
+import ApiController from './../../api';
 import { useContext } from 'react';
-import NotificationContext from '@/components/NotificationContext';
+import NotificationContext from './../../components/NotificationContext';
 
 const RequestedSiteRow = (
   props: IRequestedSite & {

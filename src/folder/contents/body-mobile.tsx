@@ -1,31 +1,31 @@
 import { Stack } from '@mui/system';
 import { CONTENT_BRANDING, IContentCard } from './common';
-import { PALETTE, Typography } from '@/ui';
-import { SearchInput } from '@/components/SearchInput';
-import SortButton from '@/components/SortButton';
+import { PALETTE, Typography } from './../../ui';
+import { SearchInput } from './../../components/SearchInput';
+import SortButton from './../../components/SortButton';
 import { AddContentButton } from '../components/AddContentButton';
 import LinkCard from '../components/LinkCard';
 import VideoCard from '../components/VideoCard';
 import ChannelCard from '../components/ChannelCard';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 
 import MobileDevicesSection from '../components/MobileDevicesSection';
-import TitleRow, { ITitleRowItem } from '@/components/TitleRow';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import MobilePageLayout from '@/components/MobilePageLayout';
-import { IDevice } from '@/filter/contents/common';
-import ApiController, { getAbsoluteUrl } from '@/api';
+import TitleRow, { ITitleRowItem } from './../../components/TitleRow';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
+import MobilePageLayout from './../../components/MobilePageLayout';
+import { IDevice } from './../../filter/contents/common';
+import ApiController, { getAbsoluteUrl } from './../../api';
 import {
   AstroContent,
   IChannel,
   IContentBucket,
   ILink,
   IVideo,
-} from '@/profile/components/ContentTab';
-import { IActionPopupItem } from '@/components/ActionPopup';
+} from './../../profile/components/ContentTab';
+import { IActionPopupItem } from './../../components/ActionPopup';
 
-import { cleanUrl } from '@/profile/components/MobileInsightsTab';
+import { cleanUrl } from './../../profile/components/MobileInsightsTab';
 import { useNavigate } from 'react-router-dom';
 
 const FolderPageMobileBody = (props: {

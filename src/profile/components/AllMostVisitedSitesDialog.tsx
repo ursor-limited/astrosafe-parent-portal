@@ -4,10 +4,10 @@ import { BACKDROP_STYLE, BORDER_RADIUS } from '../../components/UrsorDialog';
 import { Dialog } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { IVisitedSite } from './InsightsTab';
-import { Typography } from '@/ui';
-import { SearchInput } from '@/components/SearchInput';
+import { Typography } from './../../ui';
+import { SearchInput } from './../../components/SearchInput';
 import { VisitedSiteRow } from './MostVisitedSitesSection';
-import XIcon from '@/images/icons/X.svg';
+import XIcon from './../../images/icons/X.svg';
 import _ from 'lodash';
 
 const AllMostVisitedSitesDialog = (props: {

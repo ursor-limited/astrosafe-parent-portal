@@ -1,23 +1,23 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import CirclePlayIcon from '@/images/icons/CirclePlay.svg';
-import LinkIcon from '@/images/icons/LinkIcon.svg';
-import VideoCameraIcon from '@/images/icons/VideoCameraIcon.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import { PALETTE } from '@/ui';
+import CirclePlayIcon from './../../images/icons/CirclePlay.svgimages/icons/CirclePlay.svg';
+import LinkIcon from './../../images/icons/LinkIcon.svgimages/icons/LinkIcon.svg';
+import VideoCameraIcon from './../../images/icons/VideoCameraIcon.svgimages/icons/VideoCameraIcon.svg';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import { PALETTE } from './../../ui';
 import _ from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import AddDeviceDialog from '../components/AddDeviceDialog';
 import LinkCreationDialog from '../components/LinkCreationDialog';
 import ChannelCreationDialog from '../components/ChannelCreationDialog';
-import ApiController from '@/api';
+import ApiController from './../../api';
 import FolderRenameDialog from '../components/FolderRenameDialog';
-import NotificationContext from '@/components/NotificationContext';
+import NotificationContext from './../../components/NotificationContext';
 import useLoadFolderAndContents from '../components/useLoadFolderAndContents';
 import VideoCreationDialog from '../components/VideoCreationDialog';
 import FolderPageMobileBody from './body-mobile';
 import FolderPageDesktopBody from './body-desktop';
-import { IDevice } from '@/filter/contents/common';
+import { IDevice } from './../../filter/contents/common';
 import {
   AstroContent,
   IChannel,
@@ -25,10 +25,10 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from '@/profile/components/ContentTab';
-import DeletionDialog from '@/components/DeletionDialog';
-import useDeviceOnlineStatus from '@/profiles/components/useDeviceOnlineStatus';
-import useAuth from '@/hooks/useAuth';
+} from './../../profile/components/ContentTab';
+import DeletionDialog from './../../components/DeletionDialog';
+import useDeviceOnlineStatus from './../../profiles/components/useDeviceOnlineStatus';
+import useAuth from './../../hooks/useAuth';
 
 export const FOLDER_DELETION_DIALOG_SUBTITLE =
   'If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.';

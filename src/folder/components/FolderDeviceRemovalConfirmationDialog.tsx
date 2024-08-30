@@ -1,7 +1,7 @@
-import UrsorDialog from '@/components/UrsorDialog';
-import { IDevice } from '@/filter/contents/common';
+import UrsorDialog from './../../components/UrsorDialog';
+import { IDevice } from './../../filter/contents/common';
 import { Stack } from '@mui/system';
-import { Typography, UrsorButton } from '@/ui';
+import { Typography, UrsorButton } from './../../ui';
 
 const FolderDeviceRemovalConfirmationDialog = (props: {
   open: boolean;

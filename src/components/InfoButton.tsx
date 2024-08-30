@@ -1,8 +1,8 @@
 import React from 'react';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
-import InfoIcon from '@/images/icons/InfoIcon.svg';
+import { PALETTE, Typography } from './../ui';
+import InfoIcon from './../images/icons//InfoIcon.svg';
 import UrsorPopover from './UrsorPopover';
 
 export interface IInfoButtonProps {

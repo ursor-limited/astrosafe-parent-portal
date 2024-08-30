@@ -10,9 +10,9 @@ import _ from 'lodash';
 import { DeviceType } from '../../profiles/contents/common';
 import { IDevice } from '../../filter/contents/common';
 import ApiController from '../../api';
-import { DEVICE_TYPE_DISPLAY_NAMES } from '@/profiles/components/DeviceCard';
-import { PALETTE } from '@/ui';
-import useAuth from '@/hooks/useAuth';
+import { DEVICE_TYPE_DISPLAY_NAMES } from './../../profiles/components/DeviceCard';
+import { PALETTE } from './../../ui';
+import useAuth from './../../hooks/useAuth';
 
 interface IDevicesTableRowItems {
   name: IDevice['name'];

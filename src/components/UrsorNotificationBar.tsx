@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Stack } from '@mui/material';
 import { useContext } from 'react';
 import { NotificationType } from './NotificationProvider';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 import NotificationContext from './NotificationContext';
 import { isMobile } from 'react-device-detect';
 

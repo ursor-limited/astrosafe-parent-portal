@@ -1,13 +1,13 @@
 import { Stack } from '@mui/system';
-import { PALETTE, Typography } from '@/ui';
-import PeopleIcon from '@/images/icons/PeopleIcon.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import BookIcon from '@/images/icons/BookIcon.svg';
-import VersionsIcon from '@/images/icons/VersionsIcon.svg';
-import XIcon from '@/images/icons/X.svg';
+import { PALETTE, Typography } from './../ui';
+import PeopleIcon from './../images/icons/PeopleIcon.svgimages/icons/PeopleIcon.svg';
+import FilterIcon from './../images/icons/FilterIcon.svgimages/icons/FilterIcon.svg';
+import BookIcon from './../images/icons/BookIcon.svgimages/icons/BookIcon.svg';
+import VersionsIcon from './../images/icons/VersionsIcon.svgimages/icons/VersionsIcon.svg';
+import XIcon from './../images/icons/X.svg';
 import _ from 'lodash';
 
-import { UserInitialsCircle } from '@/account/contents/common';
+import { UserInitialsCircle } from './../account/contents/common';
 import { useNavigate } from 'react-router-dom';
 
 export const astroPages = [

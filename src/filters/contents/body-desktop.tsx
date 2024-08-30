@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import UrsorFadeIn from '../../components/UrsorFadeIn';
 import _ from 'lodash';
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import PageLayout from '../../components/PageLayout';
 import FilterCard from '../../filter/components/FilterCard';
 import { IFilter, IGroupFilter } from './common';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
 
 export const GRID_SPACING = '20px';
 

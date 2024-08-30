@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { UserInfo } from '@/auth/model';
-import { BACKEND_URL, post } from '@/api';
-import { getUserInfo } from '@/auth';
+import { UserInfo } from './../../auth/model';
+import { BACKEND_URL, post } from './../../api';
+import { getUserInfo } from './../../auth';
 
 const useAuth = () => {
   // If you're able to access this hook the user info should always be set as the middleware handles checking the auth state!!

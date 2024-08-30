@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import { Stack } from '@mui/system';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import { PALETTE, UrsorButton } from '@/ui';
+import FilterIcon from './../images/icons/FilterIcon.svgimages/icons/FilterIcon.svg';
+import { PALETTE, UrsorButton } from './../ui';
 import UrsorSelectList from './UrsorSelectList';
-import UrsorPopover from '@/components/UrsorPopover';
+import UrsorPopover from './UrsorPopover';
 
 export interface IClassSortButtonProps<T extends string> {
   selected: T;

@@ -1,26 +1,26 @@
 import { Stack } from '@mui/system';
 import AstroCard from '../../filter/components/AstroCard';
 
-import { PALETTE, Typography } from '@/ui';
-import ClockIcon from '@/images/icons/ClockIcon.svg';
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import GlobeIcon from '@/images/icons/GlobeIcon.svg';
-import StrikeThroughGlobeIcon from '@/images/icons/StrikeThroughGlobeIcon.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import CheckCircleFillIcon from '@/images/icons/CheckCircleFillIcon.svg';
-import AstroSwitch from '@/components/AstroSwitch';
+import { PALETTE, Typography } from './../../ui';
+import ClockIcon from './../../images/icons/ClockIcon.svgimages/icons/ClockIcon.svg';
+import PhoneIcon from './../../images/icons/PhoneIcon.svgimages/icons/PhoneIcon.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import GlobeIcon from './../../images/icons/GlobeIcon.svgimages/icons/GlobeIcon.svg';
+import StrikeThroughGlobeIcon from './../../images/icons/StrikeThroughGlobeIcon.svgimages/icons/StrikeThroughGlobeIcon.svg';
+import FilterIcon from './../../images/icons/FilterIcon.svgimages/icons/FilterIcon.svg';
+import CheckCircleFillIcon from './../../images/icons/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
+import AstroSwitch from './../../components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IFilter } from '@/filters/contents/common';
-import ApiController from '@/api';
+import { IFilter } from './../../filters/contents/common';
+import ApiController from './../../api';
 import { IEnrichedDevice } from '../contents/common';
-import UrsorPopover from '@/components/UrsorPopover';
+import UrsorPopover from './../../components/UrsorPopover';
 import { DEVICE_TYPE_DISPLAY_NAMES } from './DeviceCard';
-import NotificationContext from '@/components/NotificationContext';
-import { getInitials } from '@/account/contents/common';
-import useAuth from '@/hooks/useAuth';
+import NotificationContext from './../../components/NotificationContext';
+import { getInitials } from './../../account/contents/common';
+import useAuth from './../../hooks/useAuth';
 
 export const MobileDeviceCardFilterRow = (props: {
   filterId: IFilter['id'];

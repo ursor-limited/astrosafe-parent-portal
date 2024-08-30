@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import UrsorFadeIn from './UrsorFadeIn';
 
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 
 const EmptyStateIllustration = (props: {
   paddingTop?: number;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLottie } from 'lottie-react';
-import byteAppear from '@/lotties/byteAppear.json';
-import byteDisappear from '@/lotties/byteDisappear.json';
-import byteCelebration from '@/lotties/byteCelebration.json';
+import byteAppear from './../lotties/byteAppear.json';
+import byteDisappear from './../lotties/byteDisappear.json';
+import byteCelebration from './../lotties/byteCelebration.json';
 import { Box } from '@mui/system';
 
 const HEIGHT = 45;

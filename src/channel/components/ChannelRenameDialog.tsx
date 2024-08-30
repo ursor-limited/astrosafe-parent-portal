@@ -1,10 +1,10 @@
 import React from 'react';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
-import { UrsorButton, UrsorInputField } from '@/ui';
-import { LabeledInputField } from '@/ui/labeled-input-field';
-import { IChannel } from '@/profile/components/ContentTab';
-import UrsorDialog from '@/components/UrsorDialog';
+import { UrsorButton, UrsorInputField } from './../../ui';
+import { LabeledInputField } from './../../ui/labeled-input-field';
+import { IChannel } from './../../profile/components/ContentTab';
+import UrsorDialog from './../../components/UrsorDialog';
 
 const ChannelRenameDialog = (props: {
   open: boolean;

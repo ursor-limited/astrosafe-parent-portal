@@ -1,6 +1,6 @@
 import { Stack, alpha, keyframes } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svgimages/icons/ChevronRight.svg';
 
 import DownloadDialog from './DownloadDialog';
 import { useState } from 'react';

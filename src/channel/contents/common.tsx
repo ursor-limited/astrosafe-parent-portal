@@ -1,20 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useState } from 'react';
-import ApiController from '@/api';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import ApiController from './../../api';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
 import {
   IChannel,
   IContentBucket,
   IVideo,
-} from '@/profile/components/ContentTab';
+} from './../../profile/components/ContentTab';
 import ChannelPageDesktopBody from './body-desktop';
-import VideoCreationDialog from '@/folder/components/VideoCreationDialog';
-import { PALETTE } from '@/ui';
-import DeletionDialog from '@/components/DeletionDialog';
+import VideoCreationDialog from './../../folder/components/VideoCreationDialog';
+import { PALETTE } from './../../ui';
+import DeletionDialog from './../../components/DeletionDialog';
 import ChannelRenameDialog from '../components/ChannelRenameDialog';
-import NotificationContext from '@/components/NotificationContext';
+import NotificationContext from './../../components/NotificationContext';
 import ChannelPageMobileBody from './body-mobile';
 
 const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {

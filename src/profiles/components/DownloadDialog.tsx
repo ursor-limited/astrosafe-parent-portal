@@ -1,8 +1,8 @@
-import UrsorDialog from '@/components/UrsorDialog';
-import DownloadIcon from '@/images/icons/DownloadIcon.svg';
+import UrsorDialog from './../../components/UrsorDialog';
+import DownloadIcon from './../../images/icons/DownloadIcon.svgimages/icons/DownloadIcon.svg';
 import { Stack } from '@mui/system';
 
-import { PALETTE, Typography, UrsorButton } from '@/ui';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
 
 const PLATFORMS: { name: string; logoUrl: string; url: string }[] = [
   {

@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
-import PencilIcon from '@/images/icons/Pencil.svg';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
-import { PALETTE } from '@/ui';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
+import PencilIcon from './../../images/icons/Pencil.svg';
+import FilterIcon from './../../images/icons/FilterIcon.svgimages/icons/FilterIcon.svg';
+import { PALETTE } from './../../ui';
 import FilterPageDesktopBody from './body-desktop';
 import {
   IFilter,
@@ -13,16 +13,16 @@ import {
 } from '../../filters/contents/common';
 import { useNavigate } from 'react-router-dom';
 import FilterPageMobileBody from './body-mobile';
-import ApiController from '@/api';
-import AddDeviceDialog from '@/folder/components/AddDeviceDialog';
-import NotificationContext from '@/components/NotificationContext';
-import DeletionDialog from '@/components/DeletionDialog';
+import ApiController from './../../api';
+import AddDeviceDialog from './../../folder/components/AddDeviceDialog';
+import NotificationContext from './../../components/NotificationContext';
+import DeletionDialog from './../../components/DeletionDialog';
 import FilterRenameDialog from '../components/FilterRenameDialog';
 import ChangeFilterDialog from '../components/ChangeFilterDialog';
 import { Stack } from '@mui/system';
 import _ from 'lodash';
-import useDeviceOnlineStatus from '@/profiles/components/useDeviceOnlineStatus';
-import useAuth from '@/hooks/useAuth';
+import useDeviceOnlineStatus from './../../profiles/components/useDeviceOnlineStatus';
+import useAuth from './../../hooks/useAuth';
 
 export type DeviceType = 'chrome' | 'android' | 'ios';
 

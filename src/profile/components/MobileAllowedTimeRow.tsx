@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import UrsorDialog from '@/components/UrsorDialog';
-import { PALETTE, Typography } from '@/ui';
+import UrsorDialog from './../../components/UrsorDialog';
+import { PALETTE, Typography } from './../../ui';
 import { getISODateString, IAllowedTime } from './LimitsTab';
 import { alpha, Stack } from '@mui/system';
 import dayjs from 'dayjs';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
 import useNewSegmentTimes from './useNewSegmentTimes';
 import _ from 'lodash';
-import XIcon from '@/images/icons/X.svg';
+import XIcon from './../../images/icons/X.svg';
 
 const DAY_FULL_NAMES = {
   1: 'Monday',

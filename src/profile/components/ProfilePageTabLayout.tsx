@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from '@mui/system';
-import { Typography } from '@/ui';
-import InfoButton, { IInfoButtonProps } from '@/components/InfoButton';
+import { Typography } from './../../ui';
+import InfoButton, { IInfoButtonProps } from './../../components/InfoButton';
 
 export const INFOS: Record<string, IInfoButtonProps> = {
   folders: {

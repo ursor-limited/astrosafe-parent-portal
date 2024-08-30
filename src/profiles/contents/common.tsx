@@ -8,9 +8,9 @@ import { IDevice, IDeviceConfig } from '../../filter/contents/common';
 import AllDevicesPageDesktopBody from './desktop-body';
 import AllDevicesPageMobileBody from './mobile-body';
 import { IAllowedTime, ITimeLimit } from '../../profile/components/LimitsTab';
-import { IFilter } from '@/filters/contents/common';
+import { IFilter } from './../../filters/contents/common';
 import useDeviceOnlineStatus from '../components/useDeviceOnlineStatus';
-import useAuth from '@/hooks/useAuth';
+import useAuth from './../../hooks/useAuth';
 
 export type DeviceType = 'chrome' | 'android' | 'ios';
 

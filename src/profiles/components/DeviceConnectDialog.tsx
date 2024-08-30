@@ -1,4 +1,4 @@
-import UrsorDialog from '@/components/UrsorDialog';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { FloatingIntroCards, MobileIntroCards } from './DeviceInstructionsView';
 

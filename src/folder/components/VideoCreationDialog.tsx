@@ -1,12 +1,12 @@
 import { Stack } from '@mui/system';
 import VideoCard from './VideoCard';
 import { useContext, useEffect, useState } from 'react';
-import ApiController, { getAbsoluteUrl } from '@/api';
-import NotificationContext from '@/components/NotificationContext';
+import ApiController, { getAbsoluteUrl } from './../../api';
+import NotificationContext from './../../components/NotificationContext';
 import ContentCreationDialog from './ContentCreationDialog';
-import { IContentBucket, IVideo } from '@/profile/components/ContentTab';
-import { cleanUrl } from '@/profile/components/MobileInsightsTab';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import { IContentBucket, IVideo } from './../../profile/components/ContentTab';
+import { cleanUrl } from './../../profile/components/MobileInsightsTab';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
 
 const VideoCreationDialog = (props: {
   open: boolean;

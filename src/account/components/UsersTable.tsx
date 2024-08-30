@@ -7,7 +7,7 @@ import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 import { IUser } from '../contents/common';
 import _ from 'lodash';
-import { PALETTE } from '@/ui';
+import { PALETTE } from './../../ui';
 
 interface IAdultUsersTableRowItems {
   name: string;

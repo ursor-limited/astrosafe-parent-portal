@@ -1,5 +1,5 @@
 import React from 'react';
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import _ from 'lodash';
 import { IAllowedTime } from './LimitsTab';

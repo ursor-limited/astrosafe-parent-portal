@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLottie } from 'lottie-react';
-import byteLoading from '@/lotties/byteLoading.json';
+import byteLoading from './../lotties/byteLoading.json';
 import { Box } from '@mui/material';
 
 export default function UrsorLoading(props: { size?: string }) {

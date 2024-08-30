@@ -1,12 +1,12 @@
 import { Stack } from '@mui/system';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import SearchIcon from '@/images/icons/SearchIcon.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import SearchIcon from './../../images/icons/SearchIcon.svgimages/icons/SearchIcon.svg';
 import _ from 'lodash';
-import AstroSwitch from '@/components/AstroSwitch';
+import AstroSwitch from './../../components/AstroSwitch';
 import RequestedSitesSection from './RequestedSitesSection';
-import ApiController from '@/api';
-import { IDevice, IDeviceConfig } from '@/filter/contents/common';
+import ApiController from './../../api';
+import { IDevice, IDeviceConfig } from './../../filter/contents/common';
 import { IEnrichedDevice } from '../../profiles/contents/common';
 import TimeLimitsSection from './TimeLimitsSection';
 import AllowedTimesSection from './AllowedTimesSection';
@@ -15,7 +15,7 @@ import utc from 'dayjs/plugin/utc';
 import { useWindowSize } from 'usehooks-ts';
 import MobileAllowedTimesSection from './MobileAllowedTimesSection';
 import ProfilePageTabLayout from './ProfilePageTabLayout';
-import NotificationContext from '@/components/NotificationContext';
+import NotificationContext from './../../components/NotificationContext';
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>

@@ -1,18 +1,18 @@
 import { Stack } from '@mui/system';
-import { Typography } from '@/ui';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import ChevronLeftIcon from '@/images/icons/ChevronLeft.svg';
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { Typography } from './../../ui';
+import ChevronRightIcon from './../../images/icons/ChevronRight.svgimages/icons/ChevronRight.svg';
+import ChevronLeftIcon from './../../images/icons/ChevronLeft.svgimages/icons/ChevronLeft.svg';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import _ from 'lodash';
 import AstroTimeChart from './AstroTimeChart';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import HistorySection from './HistorySection';
-import CalendarButton from '@/components/CalendarButton';
-import ApiController from '@/api';
+import CalendarButton from './../../components/CalendarButton';
+import ApiController from './../../api';
 import MostVisitedSitesSection from './MostVisitedSitesSection';
-import { IDevice } from '@/filter/contents/common';
+import { IDevice } from './../../filter/contents/common';
 import { useWindowSize } from 'usehooks-ts';
 dayjs.extend(advancedFormat);
 

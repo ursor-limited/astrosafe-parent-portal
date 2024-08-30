@@ -1,12 +1,12 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsUpIcon from '@/images/icons/ThumbsUpIcon.svg';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
-import LockIcon from '@/images/icons/LockIcon.svg';
+import ThumbsUpIcon from './../../images/icons/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
+import LockIcon from './../../images/icons/LockIcon.svgimages/icons/LockIcon.svg';
 import { Stack } from '@mui/system';
-import { DynamicContainer, PALETTE, Typography } from '@/ui';
-import AstroSwitch from '@/components/AstroSwitch';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import { DynamicContainer, PALETTE, Typography } from './../../ui';
+import AstroSwitch from './../../components/AstroSwitch';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 import {
   IFilter,
   IFilterSubcategory,

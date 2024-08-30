@@ -1,11 +1,11 @@
 import { Stack, keyframes } from '@mui/system';
-import Play from '@/images/play.svg';
-import Sync from '@/images/icons/Sync.svg';
-import FullScreenIcon from '@/images/icons/FullScreen.svg';
-import NormalScreenIcon from '@/images/icons/NormalScreen.svg';
-import KiteMark from '@/images/kiteMark.svg';
+import Play from './../images/play.svgimages/play.svg';
+import Sync from './../images/icons/Sync.svgimages/icons/Sync.svg';
+import FullScreenIcon from './../images/icons/FullScreen.svgimages/icons/FullScreen.svg';
+import NormalScreenIcon from './../images/icons/NormalScreen.svgimages/icons/NormalScreen.svg';
+import KiteMark from './../images/kiteMark.svgimages/kiteMark.svg';
 import { useCallback, useEffect, useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 import { useWindowSize } from 'usehooks-ts';
 
 const BEZIER = 'cubic-bezier(.18,3.03,.35,-0.38)';

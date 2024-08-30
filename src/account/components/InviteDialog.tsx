@@ -1,8 +1,8 @@
-import UrsorDialog from '@/components/UrsorDialog';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { UrsorButton, UrsorInputField } from '@/ui';
-import { LabeledInputField } from '@/ui/labeled-input-field';
+import { UrsorButton, UrsorInputField } from './../../ui';
+import { LabeledInputField } from './../../ui/labeled-input-field';
 import { IUser } from '../contents/common';
 
 const InviteDialog = (props: {

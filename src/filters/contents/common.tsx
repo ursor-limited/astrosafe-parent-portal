@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import AllFiltersPageDesktopBody from './body-desktop';
 import AllFiltersPageMobileBody from './body-mobile';
-import ApiController from '@/api';
+import ApiController from './../../api';
 import { useNavigate } from 'react-router-dom';
 import FilterCreationDialog from '../../filter/components/FilterCreationDialog';
 import { IDevice } from '../../filter/contents/common';
 import _ from 'lodash';
-import useAuth from '@/hooks/useAuth';
+import useAuth from './../../hooks/useAuth';
 
 export interface IFilterCategory {
   categoryId: number;

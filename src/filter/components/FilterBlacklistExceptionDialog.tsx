@@ -1,6 +1,6 @@
-import UrsorDialog from '@/components/UrsorDialog';
+import UrsorDialog from './../../components/UrsorDialog';
 import { Stack } from '@mui/system';
-import { UrsorButton } from '@/ui';
+import { UrsorButton } from './../../ui';
 
 const FilterBlacklistExceptionDialog = (props: {
   open: boolean;

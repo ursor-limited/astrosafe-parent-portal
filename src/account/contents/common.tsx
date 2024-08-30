@@ -1,9 +1,9 @@
-import PhoneIcon from '@/images/icons/PhoneIcon.svg';
-import PeopleIcon from '@/images/icons/PeopleIcon.svg';
-import ClockIcon from '@/images/icons/ClockIcon.svg';
+import PhoneIcon from './../../images/icons/PhoneIcon.svgimages/icons/PhoneIcon.svg';
+import PeopleIcon from './../../images/icons/PeopleIcon.svgimages/icons/PeopleIcon.svg';
+import ClockIcon from './../../images/icons/ClockIcon.svgimages/icons/ClockIcon.svg';
 import { Stack } from '@mui/system';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 import _ from 'lodash';
 import EditProfileDialog from '../components/EditProfileDialog';
 import InviteDialog from '../components/InviteDialog';
@@ -15,8 +15,8 @@ import ApiController from '../../api';
 import AccountPageDesktopBody from './body-desktop';
 import AccountPageMobileBody from './body-mobile';
 import TroomiManagePlanDialog from '../components/TroomiManagePlanDialog';
-import NotificationContext from '@/components/NotificationContext';
-import useAuth from '@/hooks/useAuth';
+import NotificationContext from './../../components/NotificationContext';
+import useAuth from './../../hooks/useAuth';
 
 export const DUMMY_USER_ID = 1;
 

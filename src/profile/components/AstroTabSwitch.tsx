@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 
 const AstroTabSwitch = (props: {
   items: { id: string; text: string }[];

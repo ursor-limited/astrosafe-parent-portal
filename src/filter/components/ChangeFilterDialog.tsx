@@ -1,13 +1,13 @@
 import React from 'react';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../../ui';
 import { IFilter } from '../../filters/contents/common';
 import { IGroup } from '../../folder/contents/common';
 import ApiController from '../../api';
 import UrsorDialog from '../../components/UrsorDialog';
 import { IDevice } from '../contents/common';
-import FilterIcon from '@/images/icons/FilterIcon.svg';
+import FilterIcon from './../../images/icons/FilterIcon.svgimages/icons/FilterIcon.svg';
 
 const ChangeFilterDialog = (props: {
   open: boolean;

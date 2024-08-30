@@ -1,20 +1,20 @@
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 
-import { PALETTE, Typography } from '@/ui';
-import ClockIcon from '@/images/icons/ClockIcon.svg';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import { PALETTE, Typography } from './../../ui';
+import ClockIcon from './../../images/icons/ClockIcon.svgimages/icons/ClockIcon.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
 import { useEffect, useState } from 'react';
-import DynamicContainer from '@/components/DynamicContainer';
+import DynamicContainer from './../../components/DynamicContainer';
 
 import _ from 'lodash';
-import { IDevice } from '@/filter/contents/common';
-import ApiController, { getAbsoluteUrl } from '@/api';
+import { IDevice } from './../../filter/contents/common';
+import ApiController, { getAbsoluteUrl } from './../../api';
 import { cleanUrl } from './MobileInsightsTab';
-import PageSelector from '@/components/PageSelector';
-import { SearchInput } from '@/components/SearchInput';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import PageSelector from './../../components/PageSelector';
+import { SearchInput } from './../../components/SearchInput';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 
 export const PAGE_LENGTH = 55;
 

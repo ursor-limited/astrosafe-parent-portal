@@ -1,11 +1,11 @@
-import { AstroBentoCard } from '@/filter/components/AstroBentoCard';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
 import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
-import { PALETTE, Typography } from '@/ui';
-import ClockIcon from '@/images/icons/ClockIcon.svg';
-import ChevronDownIcon from '@/images/icons/ChevronDown.svg';
+import { PALETTE, Typography } from './../../ui';
+import ClockIcon from './../../images/icons/ClockIcon.svgimages/icons/ClockIcon.svg';
+import ChevronDownIcon from './../../images/icons/ChevronDown.svgimages/icons/ChevronDown.svg';
 import { useEffect, useState } from 'react';
-import DynamicContainer from '@/components/DynamicContainer';
+import DynamicContainer from './../../components/DynamicContainer';
 
 import {
   IDomainGroup,
@@ -13,13 +13,13 @@ import {
   ISimplisticDomainGroup,
   PAGE_LENGTH,
 } from './HistorySection';
-import ApiController from '@/api';
-import { IDevice } from '@/filter/contents/common';
+import ApiController from './../../api';
+import { IDevice } from './../../filter/contents/common';
 import _ from 'lodash';
 import { cleanUrl } from './MobileInsightsTab';
-import PageSelector from '@/components/PageSelector';
-import { SearchInput } from '@/components/SearchInput';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import PageSelector from './../../components/PageSelector';
+import { SearchInput } from './../../components/SearchInput';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
   const [duration, setDuration] = useState<number>(0); // seconds

@@ -1,9 +1,9 @@
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { PALETTE } from '@/ui';
-import SearchIcon from '@/images/icons/SearchIcon.svg';
-import XIcon from '@/images/icons/X.svg';
-import { FONT_SIZES } from '@/ui/typography';
+import { PALETTE } from './../ui';
+import SearchIcon from './../images/icons/SearchIcon.svgimages/icons/SearchIcon.svg';
+import XIcon from './../images/icons/X.svg';
+import { FONT_SIZES } from './../ui/typography';
 import { Input } from '@mui/material';
 
 export const SearchInput = (props: {

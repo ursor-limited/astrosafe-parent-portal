@@ -5,8 +5,8 @@ import FilterPageAllowedSitesSection from '../components/AllowedSitesSection';
 import FilterPageBlockedSitesSection from '../components/BlockedSitesSection';
 import FilterPageSearchWordsSection from '../components/SearchWordsSection';
 import FilterPageDevicesSection from '../components/FilterDevicesSection';
-import PageLayout from '@/components/PageLayout';
-import { IActionPopupItem } from '@/components/ActionPopup';
+import PageLayout from './../../components/PageLayout';
+import { IActionPopupItem } from './../../components/ActionPopup';
 import { IDevice, IFilterException } from './common';
 import {
   IFilter,
@@ -14,7 +14,7 @@ import {
   IFilterCategory,
   IFilterUrl,
 } from '../../filters/contents/common';
-import { ITitleRowItem } from '@/components/TitleRow';
+import { ITitleRowItem } from './../../components/TitleRow';
 import { useNavigate } from 'react-router-dom';
 
 export default function FilterPageDesktopBody(props: {

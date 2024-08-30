@@ -2,11 +2,11 @@ import { Stack } from '@mui/system';
 import ContentCreationDialog from './ContentCreationDialog';
 import { useContext, useEffect, useState } from 'react';
 import LinkCard from './LinkCard';
-import ApiController, { getAbsoluteUrl } from '@/api';
-import NotificationContext from '@/components/NotificationContext';
-import { IContentBucket, ILink } from '@/profile/components/ContentTab';
-import { cleanUrl } from '@/profile/components/MobileInsightsTab';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import ApiController, { getAbsoluteUrl } from './../../api';
+import NotificationContext from './../../components/NotificationContext';
+import { IContentBucket, ILink } from './../../profile/components/ContentTab';
+import { cleanUrl } from './../../profile/components/MobileInsightsTab';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
 
 const LinkCreationDialog = (props: {
   open: boolean;

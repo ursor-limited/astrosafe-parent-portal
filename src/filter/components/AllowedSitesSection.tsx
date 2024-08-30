@@ -1,20 +1,19 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsUpIcon from '@/images/icons/ThumbsUpIcon.svg';
-import TrashcanIcon from '@/images/icons/TrashcanIcon.svg';
+import ThumbsUpIcon from './../../images/icons/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
+import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
 import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorInputField } from '@/ui';
+import { PALETTE, Typography, UrsorInputField } from './../../ui';
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from '@/components/UrsorTable';
-
+} from './../../components/UrsorTable';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { IFilterUrl } from '../../filters/contents/common';
 import FilterWhitelistExceptionDialog from './FilterWhitelistExceptionDialog';
-import ApiController from '@/api';
+import ApiController from './../../api';
 import { IFilterException } from '../contents/common';
 
 export interface IAllowedSitesTableRowItems {

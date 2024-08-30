@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
-import { PALETTE, Typography } from '@/ui';
+import { PALETTE, Typography } from './../ui';
 
 const ROW_HEIGHT = '45px';
 export const X_PADDING = '20px';

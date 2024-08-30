@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import FilterPageAllowedSitesSection from '../components/AllowedSitesSection';
 import FilterPageBlockedSitesSection from '../components/BlockedSitesSection';
 import FilterPageSearchWordsSection from '../components/SearchWordsSection';
-import { IActionPopupItem } from '@/components/ActionPopup';
+import { IActionPopupItem } from './../../components/ActionPopup';
 import { IDevice, IFilterException } from './common';
 import {
   IFilter,
@@ -11,8 +11,8 @@ import {
   IFilterCategory,
   IFilterUrl,
 } from '../../filters/contents/common';
-import MobilePageLayout from '@/components/MobilePageLayout';
-import { ITitleRowItem } from '@/components/TitleRow';
+import MobilePageLayout from './../../components/MobilePageLayout';
+import { ITitleRowItem } from './../../components/TitleRow';
 import MobileFilterPageDevicesSection from '../components/MobileFilterDevicesSection';
 import MobileFilterPageCategoriesSection from '../components/MobileCategoriesSection';
 import { useNavigate } from 'react-router-dom';

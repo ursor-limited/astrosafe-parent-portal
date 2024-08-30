@@ -1,16 +1,16 @@
-import DynamicCardGrid from '@/components/DynamicCardGrid';
+import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { Stack } from '@mui/system';
 import FolderCard from '../../components/FolderCard';
-import UrsorFadeIn from '@/components/UrsorFadeIn';
+import UrsorFadeIn from './../../components/UrsorFadeIn';
 import { useNavigate } from 'react-router-dom';
-import { IEnrichedContentBucket } from '@/folders/contents/common';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import { PALETTE, Typography, UrsorButton } from '@/ui';
-import { IDevice } from '@/filter/contents/common';
-import ApiController from '@/api';
+import { IEnrichedContentBucket } from './../../folders/contents/common';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui';
+import { IDevice } from './../../filter/contents/common';
+import ApiController from './../../api';
 import { useContext, useState } from 'react';
-import NotificationContext from '@/components/NotificationContext';
-import FolderDeviceRemovalConfirmationDialog from '@/folder/components/FolderDeviceRemovalConfirmationDialog';
+import NotificationContext from './../../components/NotificationContext';
+import FolderDeviceRemovalConfirmationDialog from './../../folder/components/FolderDeviceRemovalConfirmationDialog';
 
 import ProfilePageTabLayout, { INFOS } from './ProfilePageTabLayout';
 

@@ -4,9 +4,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { IDevice } from '../../filter/contents/common';
 import AllFoldersPageDesktopBody from './body-desktop';
 import AllFoldersPageMobileBody from './body-mobile';
-import { IContentBucket } from '@/profile/components/ContentTab';
+import { IContentBucket } from './../../profile/components/ContentTab';
 import FolderCreationDialog from '../../folder/components/FolderCreationDialog';
-import useAuth from '@/hooks/useAuth';
+import useAuth from './../../hooks/useAuth';
 
 export interface IEnrichedContentBucket {
   id: IContentBucket['id'];

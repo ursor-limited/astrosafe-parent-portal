@@ -1,6 +1,6 @@
 import React from 'react';
-import PlusIcon from '@/images/icons/PlusIcon.svg';
-import { UrsorButton } from '@/ui';
+import PlusIcon from './../../images/icons/PlusIcon.svg';
+import { UrsorButton } from './../../ui';
 import { Stack } from '@mui/system';
 import UrsorFadeIn from '../../components/UrsorFadeIn';
 import _ from 'lodash';
@@ -8,8 +8,8 @@ import DynamicCardGrid from '../../components/DynamicCardGrid';
 import { useNavigate } from 'react-router-dom';
 import FilterCard from '../../filter/components/FilterCard';
 import { IGroupFilter } from './common';
-import MobilePageLayout from '@/components/MobilePageLayout';
-import { INFOS } from '@/profile/components/ProfilePageTabLayout';
+import MobilePageLayout from './../../components/MobilePageLayout';
+import { INFOS } from './../../profile/components/ProfilePageTabLayout';
 
 export const GRID_SPACING = '20px';
 

@@ -1,9 +1,9 @@
-import AstroSwitch from '@/components/AstroSwitch';
+import AstroSwitch from './../../components/AstroSwitch';
 import { Stack } from '@mui/system';
 
 import React from 'react';
-import { PALETTE, Typography } from '@/ui';
-import CheckIcon from '@/images/icons/CheckIcon.svg';
+import { PALETTE, Typography } from './../../ui';
+import CheckIcon from './../../images/icons/CheckIcon.svgimages/icons/CheckIcon.svg';
 import { IApp } from './AppsTab';
 import { cleanUrl } from './MobileInsightsTab';
 

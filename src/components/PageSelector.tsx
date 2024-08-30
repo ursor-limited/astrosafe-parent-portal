@@ -1,8 +1,8 @@
 import React from 'react';
 import { Stack } from '@mui/system';
-import ChevronRightIcon from '@/images/icons/ChevronRight.svg';
-import ChevronLeftIcon from '@/images/icons/ChevronLeft.svg';
-import { PALETTE, Typography } from '@/ui';
+import ChevronRightIcon from './../images/icons/ChevronRight.svgimages/icons/ChevronRight.svg';
+import ChevronLeftIcon from './../images/icons/ChevronLeft.svgimages/icons/ChevronLeft.svg';
+import { PALETTE, Typography } from './../ui';
 
 const PageSelector = (props: {
   pageIndex: number;

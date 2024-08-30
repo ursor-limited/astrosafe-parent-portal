@@ -1,6 +1,6 @@
 import './globals.css';
 import { Stack } from '@mui/system';
-import { PALETTE } from '@/ui';
+import { PALETTE } from './ui';
 import NotificationProvider from './components/NotificationProvider';
 import UrsorNotificationBar from './components/UrsorNotificationBar';
 
