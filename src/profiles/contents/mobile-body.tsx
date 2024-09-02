@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { ReactComponent as PlugIcon } from './../../images/PlugIcon.svgimages/icons/PlugIcon.svg';
+import { ReactComponent as PlugIcon } from './../../images/PlugIcon.svg';
 import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
 import { ReactComponent as ArrowUpRightIcon } from './../../images/ArrowUpRight.svg';
 import { IDevice } from './../../filter/contents/common';

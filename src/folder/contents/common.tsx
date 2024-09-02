@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { ReactComponent as CirclePlayIcon } from './../../images/CirclePlay.svgimages/icons/CirclePlay.svg';
-import { ReactComponent as LinkIcon } from './../../images/LinkIcon.svgimages/icons/LinkIcon.svg';
-import { ReactComponent as VideoCameraIcon } from './../../images/VideoCameraIcon.svgimages/icons/VideoCameraIcon.svg';
+import { ReactComponent as CirclePlayIcon } from './../../images/CirclePlay.svg';
+import { ReactComponent as LinkIcon } from './../../images/LinkIcon.svg';
+import { ReactComponent as VideoCameraIcon } from './../../images/VideoCameraIcon.svg';
 import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
 import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
 import { PALETTE } from './../../ui';

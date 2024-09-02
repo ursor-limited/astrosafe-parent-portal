@@ -1,6 +1,6 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
-import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
+import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svg';
 import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorInputField } from './../../ui';

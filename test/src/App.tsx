@@ -1,9 +1,9 @@
-import { AccountPage } from './dist';
+import { FoldersPage } from './dist';
 
 const App: React.FC = () => {
   return (
     <div>
-      <AccountPage />
+      <FoldersPage />
     </div>
   );
 };

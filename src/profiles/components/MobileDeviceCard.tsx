@@ -9,7 +9,7 @@ import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
 import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg';
 import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg';
 import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
-import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
+import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg';
 import AstroSwitch from './../../components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
 import useNavigate from '../../hooks/useNavigate';

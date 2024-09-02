@@ -1,5 +1,5 @@
 import { Stack } from '@mui/system';
-import { ReactComponent as Play } from './../../images/play.svgimages/play.svg';
+import { ReactComponent as Play } from './../../images/play.svg';
 import ApiController from './../../api';
 import ContentCard from './ContentCard';
 import { IVideo } from './../../profile/components/ContentTab';

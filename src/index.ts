@@ -1,1 +1,1 @@
-export { default as AccountPage } from './account';
+export { default as FoldersPage } from './folders';

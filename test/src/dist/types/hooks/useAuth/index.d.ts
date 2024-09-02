@@ -1,7 +1,7 @@
-import { UserInfo } from './../../auth/model';
+import { UserInfo } from '../../auth/model';
 declare const useAuth: () => {
-    user: UserInfo;
-    login: () => Promise<any>;
-    logout: () => void;
+  user: UserInfo;
+  login: () => Promise<any>;
+  logout: () => void;
 };
 export default useAuth;
