@@ -1558,8 +1558,8 @@ function _defineProperty$2(obj, key, value) {
   return obj;
 }
 
-function _extends$2() {
-  _extends$2 = Object.assign || function (target) {
+function _extends$n() {
+  _extends$n = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
 
@@ -1573,7 +1573,7 @@ function _extends$2() {
     return target;
   };
 
-  return _extends$2.apply(this, arguments);
+  return _extends$n.apply(this, arguments);
 }
 
 function _inherits(subClass, superClass) {
@@ -2373,7 +2373,7 @@ function withOrientationChange(WrappedComponent) {
     }, {
       key: "render",
       value: function render() {
-        return React__default.createElement(WrappedComponent, _extends$2({}, this.props, {
+        return React__default.createElement(WrappedComponent, _extends$n({}, this.props, {
           isLandscape: this.state.isLandscape,
           isPortrait: this.state.isPortrait
         }));
@@ -2553,11 +2553,64 @@ function _slicedToArray$1(r, e) {
   return _arrayWithHoles$1(r) || _iterableToArrayLimit$1(r, e) || _unsupportedIterableToArray$1(r, e) || _nonIterableRest$1();
 }
 
-var PhoneIcon = "assets/202ff48a44886967.svg";
+var _g$3, _defs$3;
+function _extends$m() { return _extends$m = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$m.apply(null, arguments); }
+var SvgPhoneIcon = function SvgPhoneIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$m({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 8 8"
+  }, props), _g$3 || (_g$3 = /*#__PURE__*/React$1.createElement("g", {
+    clipPath: "url(#PhoneIcon_svg__a)"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M1.875 0A.875.875 0 0 0 1 .875v6.25c0 .483.392.875.875.875h4.25A.875.875 0 0 0 7 7.125V.875A.875.875 0 0 0 6.125 0zM1.75.875c0-.069.056-.125.125-.125h4.25c.069 0 .125.056.125.125v6.25a.125.125 0 0 1-.125.125h-4.25a.125.125 0 0 1-.125-.125zM4 6.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1",
+    clipRule: "evenodd"
+  }))), _defs$3 || (_defs$3 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+    id: "PhoneIcon_svg__a"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#fff",
+    d: "M0 0h8v8H0z"
+  })))));
+};
 
-var PeopleIcon = "assets/25a25cab90e735db.svg";
+var _path$g;
+function _extends$l() { return _extends$l = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$l.apply(null, arguments); }
+var SvgPeopleIcon = function SvgPeopleIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$l({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$g || (_path$g = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M11 7.001a4 4 0 1 0 0 8 4 4 0 0 0 0-8m-7 4A7 7 0 1 1 15.796 16.1a11.01 11.01 0 0 1 6.068 8.168 1.5 1.5 0 1 1-2.964.47 8.003 8.003 0 0 0-15.8 0 1.502 1.502 0 0 1-2.942.113 1.5 1.5 0 0 1-.022-.585 11.02 11.02 0 0 1 6.068-8.164A6.98 6.98 0 0 1 4 11.001m18-3a1.5 1.5 0 1 0 0 3 3 3 0 0 1 1.332 5.688 1.5 1.5 0 0 0-.832 1.344v.704a1.5 1.5 0 0 0 1.148 1.46c2.4.578 4.324 2.4 5.044 4.744a1.501 1.501 0 0 0 2.762.267 1.5 1.5 0 0 0 .106-1.147 10.02 10.02 0 0 0-5.12-6.024A6 6 0 0 0 22 8.001",
+    clipRule: "evenodd"
+  })));
+};
 
-var ClockIcon = "assets/6349a72725cb24f3.svg";
+var _g$2, _defs$2;
+function _extends$k() { return _extends$k = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$k.apply(null, arguments); }
+var SvgClockIcon = function SvgClockIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$k({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 16 17"
+  }, props), _g$2 || (_g$2 = /*#__PURE__*/React$1.createElement("g", {
+    clipPath: "url(#ClockIcon_svg__a)"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#787878",
+    fillRule: "evenodd",
+    d: "M1.5 8.5a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0M8 .5a8 8 0 1 0 0 16 8 8 0 0 0 0-16m.5 4.75a.75.75 0 0 0-1.5 0v3.5a.75.75 0 0 0 .471.696l2.5 1a.75.75 0 0 0 .557-1.392L8.5 8.242z",
+    clipRule: "evenodd"
+  }))), _defs$2 || (_defs$2 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+    id: "ClockIcon_svg__a"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#fff",
+    d: "M0 .5h16v16H0z"
+  })))));
+};
 
 /**
  * WARNING: Don't import this directly.
@@ -2584,14 +2637,14 @@ var formatMuiErrorMessage = /*#__PURE__*/Object.freeze({
 	default: formatMuiErrorMessage$1
 });
 
-function _extends$1() {
-  return _extends$1 = Object.assign ? Object.assign.bind() : function (n) {
+function _extends$j() {
+  return _extends$j = Object.assign ? Object.assign.bind() : function (n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
     return n;
-  }, _extends$1.apply(null, arguments);
+  }, _extends$j.apply(null, arguments);
 }
 
 function memoize$1(fn) {
@@ -5021,7 +5074,7 @@ var createStyled$3
     , nextOptions
     /* ?: StyledOptions */
     ) {
-      return createStyled(nextTag, _extends$1({}, options, nextOptions, {
+      return createStyled(nextTag, _extends$j({}, options, nextOptions, {
         shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
       })).apply(void 0, styles);
     };
@@ -6113,7 +6166,7 @@ function deepClone(source) {
 function deepmerge$1(target, source, options = {
   clone: true
 }) {
-  const output = options.clone ? _extends$1({}, target) : target;
+  const output = options.clone ? _extends$j({}, target) : target;
   if (isPlainObject(target) && isPlainObject(source)) {
     Object.keys(source).forEach(key => {
       if (isPlainObject(source[key]) &&
@@ -6146,7 +6199,7 @@ const sortBreakpointsValues = values => {
   // Sort in ascending order
   breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
   return breakpointsAsArray.reduce((acc, obj) => {
-    return _extends$1({}, acc, {
+    return _extends$j({}, acc, {
       [obj.key]: obj.val
     });
   }, {});
@@ -6203,7 +6256,7 @@ function createBreakpoints(breakpoints) {
     }
     return between(key, keys[keys.indexOf(key) + 1]).replace('@media', '@media not all and');
   }
-  return _extends$1({
+  return _extends$j({
     keys,
     values: sortedValues,
     up,
@@ -7347,15 +7400,15 @@ function createTheme$2(options = {}, ...args) {
     direction: 'ltr',
     components: {},
     // Inject component definitions.
-    palette: _extends$1({
+    palette: _extends$j({
       mode: 'light'
     }, paletteInput),
     spacing,
-    shape: _extends$1({}, shape, shapeInput)
+    shape: _extends$j({}, shape, shapeInput)
   }, other);
   muiTheme.applyStyles = applyStyles$2;
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
-  muiTheme.unstable_sxConfig = _extends$1({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$j({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -7450,12 +7503,12 @@ function extendSxProp(props) {
       if (!isPlainObject(result)) {
         return systemProps;
       }
-      return _extends$1({}, systemProps, result);
+      return _extends$j({}, systemProps, result);
     };
   } else {
-    finalSx = _extends$1({}, systemProps, inSx);
+    finalSx = _extends$j({}, systemProps, inSx);
   }
-  return _extends$1({}, otherProps, {
+  return _extends$j({}, otherProps, {
     sx: finalSx
   });
 }
@@ -7506,7 +7559,7 @@ function createBox(options = {}) {
         component = 'div'
       } = _extendSxProp,
       other = _objectWithoutPropertiesLoose$1(_extendSxProp, _excluded$p);
-    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$1({
+    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$j({
       as: component,
       ref: ref,
       className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
@@ -7930,11 +7983,11 @@ function processStyleArg$1(callableStyle, _ref) {
       ownerState
     } = _ref,
     props = _objectWithoutPropertiesLoose$1(_ref, _excluded$o);
-  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$1({
+  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$j({
     ownerState
   }, props)) : callableStyle;
   if (Array.isArray(resolvedStylesArg)) {
-    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$1({
+    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$j({
       ownerState
     }, props)));
   }
@@ -7947,7 +8000,7 @@ function processStyleArg$1(callableStyle, _ref) {
     variants.forEach(variant => {
       let isMatch = true;
       if (typeof variant.props === 'function') {
-        isMatch = variant.props(_extends$1({
+        isMatch = variant.props(_extends$j({
           ownerState
         }, props, ownerState));
       } else {
@@ -7961,7 +8014,7 @@ function processStyleArg$1(callableStyle, _ref) {
         if (!Array.isArray(result)) {
           result = [result];
         }
-        result.push(typeof variant.style === 'function' ? variant.style(_extends$1({
+        result.push(typeof variant.style === 'function' ? variant.style(_extends$j({
           ownerState
         }, props, ownerState)) : variant.style);
       }
@@ -7978,8 +8031,8 @@ function createStyled$2(input = {}) {
     slotShouldForwardProp = shouldForwardProp$1
   } = input;
   const systemSx = props => {
-    return styleFunctionSx$1(_extends$1({}, props, {
-      theme: resolveTheme$1(_extends$1({}, props, {
+    return styleFunctionSx$1(_extends$j({}, props, {
+      theme: resolveTheme$1(_extends$j({}, props, {
         defaultTheme,
         themeId
       }))
@@ -8027,7 +8080,7 @@ function createStyled$2(input = {}) {
       // for string (html) tag, preserve the behavior in emotion & styled-components.
       shouldForwardPropOption = undefined;
     }
-    const defaultStyledResolver = styled$2(tag, _extends$1({
+    const defaultStyledResolver = styled$2(tag, _extends$j({
       shouldForwardProp: shouldForwardPropOption,
       label
     }, options));
@@ -8036,7 +8089,7 @@ function createStyled$2(input = {}) {
       // component stays as a function. This condition makes sure that we do not interpolate functions
       // which are basically components used as a selectors.
       if (typeof stylesArg === 'function' && stylesArg.__emotion_real !== stylesArg || isPlainObject(stylesArg)) {
-        return props => processStyleArg$1(stylesArg, _extends$1({}, props, {
+        return props => processStyleArg$1(stylesArg, _extends$j({}, props, {
           theme: resolveTheme$1({
             theme: props.theme,
             defaultTheme,
@@ -8051,7 +8104,7 @@ function createStyled$2(input = {}) {
       const expressionsWithDefaultTheme = expressions ? expressions.map(transformStyleArg) : [];
       if (componentName && overridesResolver) {
         expressionsWithDefaultTheme.push(props => {
-          const theme = resolveTheme$1(_extends$1({}, props, {
+          const theme = resolveTheme$1(_extends$j({}, props, {
             defaultTheme,
             themeId
           }));
@@ -8062,7 +8115,7 @@ function createStyled$2(input = {}) {
           const resolvedStyleOverrides = {};
           // TODO: v7 remove iteration and use `resolveStyleArg(styleOverrides[slot])` directly
           Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
-            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$1({}, props, {
+            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$j({}, props, {
               theme
             }));
           });
@@ -8072,14 +8125,14 @@ function createStyled$2(input = {}) {
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push(props => {
           var _theme$components;
-          const theme = resolveTheme$1(_extends$1({}, props, {
+          const theme = resolveTheme$1(_extends$j({}, props, {
             defaultTheme,
             themeId
           }));
           const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[componentName]) == null ? void 0 : _theme$components.variants;
           return processStyleArg$1({
             variants: themeVariants
-          }, _extends$1({}, props, {
+          }, _extends$j({}, props, {
             theme
           }));
         });
@@ -8126,10 +8179,10 @@ const styled$1 = createStyled$2();
  * @returns {object} resolved props
  */
 function resolveProps(defaultProps, props) {
-  const output = _extends$1({}, props);
+  const output = _extends$j({}, props);
   Object.keys(defaultProps).forEach(propName => {
     if (propName.toString().match(/^(components|slots)$/)) {
-      output[propName] = _extends$1({}, defaultProps[propName], output[propName]);
+      output[propName] = _extends$j({}, defaultProps[propName], output[propName]);
     } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
       const defaultSlotProps = defaultProps[propName] || {};
       const slotProps = props[propName];
@@ -8141,7 +8194,7 @@ function resolveProps(defaultProps, props) {
         // Reduce the iteration if the default slot props is empty
         output[propName] = slotProps;
       } else {
-        output[propName] = _extends$1({}, slotProps);
+        output[propName] = _extends$j({}, slotProps);
         Object.keys(defaultSlotProps).forEach(slotPropName => {
           output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
         });
@@ -8426,7 +8479,7 @@ function exactProp(propTypes) {
   if (process.env.NODE_ENV === 'production') {
     return propTypes;
   }
-  return _extends$1({}, propTypes, {
+  return _extends$j({}, propTypes, {
     [specialProperty]: props => {
       const unsupportedProps = Object.keys(props).filter(prop => !propTypes.hasOwnProperty(prop));
       if (unsupportedProps.length > 0) {
@@ -8694,8 +8747,8 @@ function appendOwnerState(elementType, otherProps, ownerState) {
   if (elementType === undefined || isHostComponent(elementType)) {
     return otherProps;
   }
-  return _extends$1({}, otherProps, {
-    ownerState: _extends$1({}, otherProps.ownerState, ownerState)
+  return _extends$j({}, otherProps, {
+    ownerState: _extends$j({}, otherProps.ownerState, ownerState)
   });
 }
 
@@ -8760,8 +8813,8 @@ function mergeSlotProps(parameters) {
     // The simpler case - getSlotProps is not defined, so no internal event handlers are defined,
     // so we can simply merge all the props without having to worry about extracting event handlers.
     const joinedClasses = clsx(additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
-    const mergedStyle = _extends$1({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
-    const props = _extends$1({}, additionalProps, externalForwardedProps, externalSlotProps);
+    const mergedStyle = _extends$j({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+    const props = _extends$j({}, additionalProps, externalForwardedProps, externalSlotProps);
     if (joinedClasses.length > 0) {
       props.className = joinedClasses;
     }
@@ -8777,7 +8830,7 @@ function mergeSlotProps(parameters) {
   // In this case, getSlotProps is responsible for calling the external event handlers.
   // We don't need to include them in the merged props because of this.
 
-  const eventHandlers = extractEventHandlers(_extends$1({}, externalForwardedProps, externalSlotProps));
+  const eventHandlers = extractEventHandlers(_extends$j({}, externalForwardedProps, externalSlotProps));
   const componentsPropsWithoutEventHandlers = omitEventHandlers(externalSlotProps);
   const otherPropsWithoutEventHandlers = omitEventHandlers(externalForwardedProps);
   const internalSlotProps = getSlotProps(eventHandlers);
@@ -8787,8 +8840,8 @@ function mergeSlotProps(parameters) {
   // to properly override style. It requires the most important classes to be last
   // (see https://github.com/mui/material-ui/pull/33205) for the related discussion.
   const joinedClasses = clsx(internalSlotProps == null ? void 0 : internalSlotProps.className, additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
-  const mergedStyle = _extends$1({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
-  const props = _extends$1({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
+  const mergedStyle = _extends$j({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+  const props = _extends$j({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
   if (joinedClasses.length > 0) {
     props.className = joinedClasses;
   }
@@ -8834,11 +8887,11 @@ function useSlotProps(parameters) {
   const {
     props: mergedProps,
     internalRef
-  } = mergeSlotProps(_extends$1({}, rest, {
+  } = mergeSlotProps(_extends$j({}, rest, {
     externalSlotProps: resolvedComponentsProps
   }));
   const ref = useForkRef(internalRef, resolvedComponentsProps == null ? void 0 : resolvedComponentsProps.ref, (_parameters$additiona = parameters.additionalProps) == null ? void 0 : _parameters$additiona.ref);
-  const props = appendOwnerState(elementType, _extends$1({}, mergedProps, {
+  const props = appendOwnerState(elementType, _extends$j({}, mergedProps, {
     ref
   }), ownerState);
   return props;
@@ -8966,7 +9019,7 @@ const style = ({
   ownerState,
   theme
 }) => {
-  let styles = _extends$1({
+  let styles = _extends$j({
     display: 'flex',
     flexDirection: 'column'
   }, handleBreakpoints({
@@ -9059,7 +9112,7 @@ function createStack(options = {}) {
       useFlexGap
     };
     const classes = useUtilityClasses();
-    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$1({
+    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$j({
       as: component,
       ownerState: ownerState,
       ref: ref,
@@ -9628,7 +9681,7 @@ const grey = {
 var THEME_ID = '$$material';
 
 function createMixins(breakpoints, mixins) {
-  return _extends$1({
+  return _extends$j({
     toolbar: {
       minHeight: 56,
       [breakpoints.up('xs')]: {
@@ -10230,7 +10283,7 @@ function createPalette(palette) {
     lightShade = 300,
     darkShade = 700
   }) => {
-    color = _extends$1({}, color);
+    color = _extends$j({}, color);
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
     }
@@ -10270,9 +10323,9 @@ const theme2 = createTheme({ palette: {
       console.error(`MUI: The palette mode \`${mode}\` is not supported.`);
     }
   }
-  const paletteOutput = deepmerge$1(_extends$1({
+  const paletteOutput = deepmerge$1(_extends$j({
     // A collection of common colors.
-    common: _extends$1({}, common),
+    common: _extends$j({}, common),
     // prevent mutable object.
     // The palette mode, can be light or dark.
     mode,
@@ -10368,7 +10421,7 @@ function createTypography(palette, typography) {
   }
   const coef = fontSize / 14;
   const pxToRem = pxToRem2 || (size => `${size / htmlFontSize * coef}rem`);
-  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$1({
+  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$j({
     fontFamily,
     fontWeight,
     fontSize: pxToRem(size),
@@ -10400,7 +10453,7 @@ function createTypography(palette, typography) {
       letterSpacing: 'inherit'
     }
   };
-  return deepmerge$1(_extends$1({
+  return deepmerge$1(_extends$j({
     htmlFontSize,
     pxToRem,
     fontFamily,
@@ -10467,8 +10520,8 @@ function getAutoHeightDuration(height) {
   return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
 }
 function createTransitions(inputTransitions) {
-  const mergedEasing = _extends$1({}, easing, inputTransitions.easing);
-  const mergedDuration = _extends$1({}, duration, inputTransitions.duration);
+  const mergedEasing = _extends$j({}, easing, inputTransitions.easing);
+  const mergedDuration = _extends$j({}, duration, inputTransitions.duration);
   const create = (props = ['all'], options = {}) => {
     const {
         duration: durationOption = mergedDuration.standard,
@@ -10502,7 +10555,7 @@ function createTransitions(inputTransitions) {
     }
     return (Array.isArray(props) ? props : [props]).map(animatedProp => `${animatedProp} ${typeof durationOption === 'string' ? durationOption : formatMs(durationOption)} ${easingOption} ${typeof delay === 'string' ? delay : formatMs(delay)}`).join(',');
   };
-  return _extends$1({
+  return _extends$j({
     getAutoHeightDuration,
     create
   }, inputTransitions, {
@@ -10546,7 +10599,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     shadows: shadows.slice(),
     typography: createTypography(palette, typographyInput),
     transitions: createTransitions(transitionsInput),
-    zIndex: _extends$1({}, zIndex)
+    zIndex: _extends$j({}, zIndex)
   });
   muiTheme = deepmerge$1(muiTheme, other);
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
@@ -10580,7 +10633,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
       }
     });
   }
-  muiTheme.unstable_sxConfig = _extends$1({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$j({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -10603,12 +10656,12 @@ function useTheme() {
 
 var createStyled$1 = {};
 
-var _extends = {exports: {}};
+var _extends$i = {exports: {}};
 
 var hasRequired_extends;
 
 function require_extends () {
-	if (hasRequired_extends) return _extends.exports;
+	if (hasRequired_extends) return _extends$i.exports;
 	hasRequired_extends = 1;
 	(function (module) {
 		function _extends() {
@@ -10621,8 +10674,8 @@ function require_extends () {
 		  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _extends.apply(null, arguments);
 		}
 		module.exports = _extends, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-	} (_extends));
-	return _extends.exports;
+	} (_extends$i));
+	return _extends$i.exports;
 }
 
 var objectWithoutPropertiesLoose = {exports: {}};
@@ -11652,7 +11705,7 @@ const PaperRoot = styled('div', {
   ownerState
 }) => {
   var _theme$vars$overlays;
-  return _extends$1({
+  return _extends$j({
     backgroundColor: (theme.vars || theme).palette.background.paper,
     color: (theme.vars || theme).palette.text.primary,
     transition: theme.transitions.create('box-shadow')
@@ -11660,7 +11713,7 @@ const PaperRoot = styled('div', {
     borderRadius: theme.shape.borderRadius
   }, ownerState.variant === 'outlined' && {
     border: `1px solid ${(theme.vars || theme).palette.divider}`
-  }, ownerState.variant === 'elevation' && _extends$1({
+  }, ownerState.variant === 'elevation' && _extends$j({
     boxShadow: (theme.vars || theme).shadows[ownerState.elevation]
   }, !theme.vars && theme.palette.mode === 'dark' && {
     backgroundImage: `linear-gradient(${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))}, ${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))})`
@@ -11681,7 +11734,7 @@ const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
       variant = 'elevation'
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$g);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component,
     elevation,
     square,
@@ -11695,7 +11748,7 @@ const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
       console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join('\n'));
     }
   }
-  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$j({
     as: component,
     ownerState: ownerState,
     className: clsx(classes.root, className),
@@ -11787,7 +11840,7 @@ const TypographyRoot = styled('span', {
 })(({
   theme,
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   margin: 0
 }, ownerState.variant === 'inherit' && {
   // Some elements, like <button> on Chrome have default font that doesn't inherit, reset this.
@@ -11834,7 +11887,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
     name: 'MuiTypography'
   });
   const color = transformDeprecatedColors(themeProps.color);
-  const props = extendSxProp(_extends$1({}, themeProps, {
+  const props = extendSxProp(_extends$j({}, themeProps, {
     color
   }));
   const {
@@ -11848,7 +11901,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
       variantMapping = defaultVariantMapping
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$f);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     align,
     color,
     className,
@@ -11861,7 +11914,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
   });
   const Component = component || (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) || 'span';
   const classes = useUtilityClasses$c(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$j({
     as: Component,
     ref: ref,
     ownerState: ownerState,
@@ -13977,7 +14030,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
     }
   };
   return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
-    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$1({
+    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$j({
       value: value,
       onChange: handleChange,
       ref: handleRef
@@ -13991,7 +14044,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
       readOnly: true,
       ref: shadowRef,
       tabIndex: -1,
-      style: _extends$1({}, styles$1.shadow, style, {
+      style: _extends$j({}, styles$1.shadow, style, {
         paddingTop: 0,
         paddingBottom: 0
       })
@@ -14063,7 +14116,7 @@ function useFormControl() {
 }
 
 function GlobalStyles(props) {
-  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$1({}, props, {
+  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$j({}, props, {
     defaultTheme: defaultTheme$1,
     themeId: THEME_ID
   }));
@@ -14148,7 +14201,7 @@ const InputBaseRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$1({}, theme.typography.body1, {
+}) => _extends$j({}, theme.typography.body1, {
   color: (theme.vars || theme).palette.text.primary,
   lineHeight: '1.4375em',
   // 23px
@@ -14162,7 +14215,7 @@ const InputBaseRoot = styled('div', {
     color: (theme.vars || theme).palette.text.disabled,
     cursor: 'default'
   }
-}, ownerState.multiline && _extends$1({
+}, ownerState.multiline && _extends$j({
   padding: '4px 0 5px'
 }, ownerState.size === 'small' && {
   paddingTop: 1
@@ -14178,7 +14231,7 @@ const InputBaseComponent = styled('input', {
   ownerState
 }) => {
   const light = theme.palette.mode === 'light';
-  const placeholder = _extends$1({
+  const placeholder = _extends$j({
     color: 'currentColor'
   }, theme.vars ? {
     opacity: theme.vars.opacity.inputPlaceholder
@@ -14197,7 +14250,7 @@ const InputBaseComponent = styled('input', {
   } : {
     opacity: light ? 0.42 : 0.5
   };
-  return _extends$1({
+  return _extends$j({
     font: 'inherit',
     letterSpacing: 'inherit',
     color: 'currentColor',
@@ -14469,13 +14522,13 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           console.warn('MUI: You can not use the `minRows` or `maxRows` props when the input `rows` prop is set.');
         }
       }
-      inputProps = _extends$1({
+      inputProps = _extends$j({
         type: undefined,
         minRows: rows,
         maxRows: rows
       }, inputProps);
     } else {
-      inputProps = _extends$1({
+      inputProps = _extends$j({
         type: undefined,
         maxRows,
         minRows
@@ -14494,7 +14547,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       muiFormControl.setAdornedStart(Boolean(startAdornment));
     }
   }, [muiFormControl, startAdornment]);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     color: fcs.color || 'primary',
     disabled: fcs.disabled,
     endAdornment,
@@ -14512,10 +14565,10 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
   const Root = slots.root || components.Root || InputBaseRoot;
   const rootProps = slotProps.root || componentsProps.root || {};
   const Input = slots.input || components.Input || InputBaseComponent;
-  inputProps = _extends$1({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
+  inputProps = _extends$j({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
   return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
-    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$1({}, rootProps, !isHostComponent(Root) && {
-      ownerState: _extends$1({}, ownerState, rootProps.ownerState)
+    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$j({}, rootProps, !isHostComponent(Root) && {
+      ownerState: _extends$j({}, ownerState, rootProps.ownerState)
     }, {
       ref: ref,
       onClick: handleClick
@@ -14523,7 +14576,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       className: clsx(classes.root, rootProps.className, className, readOnly && 'MuiInputBase-readOnly'),
       children: [startAdornment, /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
         value: null,
-        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$1({
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$j({
           ownerState: ownerState,
           "aria-invalid": fcs.error,
           "aria-describedby": ariaDescribedby,
@@ -14544,7 +14597,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           type: type
         }, inputProps, !isHostComponent(Input) && {
           as: InputComponent,
-          ownerState: _extends$1({}, ownerState, inputProps.ownerState)
+          ownerState: _extends$j({}, ownerState, inputProps.ownerState)
         }, {
           ref: handleInputRef,
           className: clsx(classes.input, inputProps.className, readOnly && 'MuiInputBase-readOnly'),
@@ -14552,7 +14605,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           onChange: handleChange,
           onFocus: handleFocus
         }))
-      }), endAdornment, renderSuffix ? renderSuffix(_extends$1({}, fcs, {
+      }), endAdornment, renderSuffix ? renderSuffix(_extends$j({}, fcs, {
         startAdornment
       })) : null]
     }))]
@@ -14793,7 +14846,7 @@ var InputBase$1 = InputBase;
 function getInputUtilityClass(slot) {
   return generateUtilityClass('MuiInput', slot);
 }
-const inputClasses = _extends$1({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
+const inputClasses = _extends$j({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
 
 const _excluded$c = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
 const styles = {
@@ -14887,7 +14940,7 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
       addEndListener(nodeRef.current, next);
     }
   };
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$j({
     appear: appear,
     in: inProp,
     nodeRef: nodeRef ,
@@ -14901,8 +14954,8 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
     timeout: timeout
   }, other, {
     children: (state, childProps) => {
-      return /*#__PURE__*/React$1.cloneElement(children, _extends$1({
-        style: _extends$1({
+      return /*#__PURE__*/React$1.cloneElement(children, _extends$j({
+        style: _extends$j({
           opacity: 0,
           visibility: state === 'exited' && !inProp ? 'hidden' : undefined
         }, styles[state], style, children.props.style),
@@ -15014,7 +15067,7 @@ const BackdropRoot = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   position: 'fixed',
   display: 'flex',
   alignItems: 'center',
@@ -15048,22 +15101,22 @@ const Backdrop = /*#__PURE__*/React$1.forwardRef(function Backdrop(inProps, ref)
       transitionDuration
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$b);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component,
     invisible
   });
   const classes = useUtilityClasses$a(ownerState);
   const rootSlotProps = (_slotProps$root = slotProps.root) != null ? _slotProps$root : componentsProps.root;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$j({
     in: open,
     timeout: transitionDuration
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$1({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$j({
       "aria-hidden": true
     }, rootSlotProps, {
       as: (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : component,
       className: clsx(classes.root, className, rootSlotProps == null ? void 0 : rootSlotProps.className),
-      ownerState: _extends$1({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
+      ownerState: _extends$j({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
       classes: classes,
       ref: ref,
       children: children
@@ -15871,8 +15924,8 @@ function useModal(parameters) {
     // The custom event handlers shouldn't be spread on the root element
     delete propsEventHandlers.onTransitionEnter;
     delete propsEventHandlers.onTransitionExited;
-    const externalEventHandlers = _extends$1({}, propsEventHandlers, otherHandlers);
-    return _extends$1({
+    const externalEventHandlers = _extends$j({}, propsEventHandlers, otherHandlers);
+    return _extends$j({
       role: 'presentation'
     }, externalEventHandlers, {
       onKeyDown: createHandleKeyDown(externalEventHandlers),
@@ -15881,7 +15934,7 @@ function useModal(parameters) {
   };
   const getBackdropProps = (otherHandlers = {}) => {
     const externalEventHandlers = otherHandlers;
-    return _extends$1({
+    return _extends$j({
       'aria-hidden': true
     }, externalEventHandlers, {
       onClick: createHandleBackdropClick(externalEventHandlers),
@@ -15951,7 +16004,7 @@ const ModalRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   position: 'fixed',
   zIndex: (theme.vars || theme).zIndex.modal,
   right: 0,
@@ -16015,7 +16068,7 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
       // eslint-disable-next-line react/prop-types
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$a);
-  const propsWithDefaults = _extends$1({}, props, {
+  const propsWithDefaults = _extends$j({}, props, {
     closeAfterTransition,
     disableAutoFocus,
     disableEnforceFocus,
@@ -16034,10 +16087,10 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     isTopModal,
     exited,
     hasTransition
-  } = useModal(_extends$1({}, propsWithDefaults, {
+  } = useModal(_extends$j({}, propsWithDefaults, {
     rootRef: ref
   }));
-  const ownerState = _extends$1({}, propsWithDefaults, {
+  const ownerState = _extends$j({}, propsWithDefaults, {
     exited
   });
   const classes = useUtilityClasses$9(ownerState);
@@ -16076,7 +16129,7 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     externalSlotProps: backdropSlotProps,
     additionalProps: BackdropProps,
     getSlotProps: otherHandlers => {
-      return getBackdropProps(_extends$1({}, otherHandlers, {
+      return getBackdropProps(_extends$j({}, otherHandlers, {
         onClick: e => {
           if (onBackdropClick) {
             onBackdropClick(e);
@@ -16097,8 +16150,8 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     ref: portalRef,
     container: container,
     disablePortal: disablePortal,
-    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$1({}, rootProps, {
-      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$1({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
+    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$j({}, rootProps, {
+      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$j({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
         disableEnforceFocus: disableEnforceFocus,
         disableAutoFocus: disableAutoFocus,
         disableRestoreFocus: disableRestoreFocus,
@@ -16346,7 +16399,7 @@ const DialogContainer = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   height: '100%',
   '@media print': {
     height: 'auto'
@@ -16381,7 +16434,7 @@ const DialogPaper = styled(Paper, {
 })(({
   theme,
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   margin: 32,
   position: 'relative',
   overflowY: 'auto',
@@ -16465,7 +16518,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
       TransitionProps
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$9);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     disableEscapeKeyDown,
     fullScreen,
     fullWidth,
@@ -16502,14 +16555,14 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
       titleId: ariaLabelledby
     };
   }, [ariaLabelledby]);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$j({
     className: clsx(classes.root, className),
     closeAfterTransition: true,
     components: {
       Backdrop: DialogBackdrop
     },
     componentsProps: {
-      backdrop: _extends$1({
+      backdrop: _extends$j({
         transitionDuration,
         as: BackdropComponent
       }, BackdropProps)
@@ -16521,7 +16574,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
     onClick: handleBackdropClick,
     ownerState: ownerState
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$1({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$j({
       appear: true,
       in: open,
       timeout: transitionDuration,
@@ -16531,7 +16584,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
         className: clsx(classes.container),
         onMouseDown: handleMouseDown,
         ownerState: ownerState,
-        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$1({
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$j({
           as: PaperComponent,
           elevation: 24,
           role: "dialog",
@@ -16749,7 +16802,7 @@ const useUtilityClasses$7 = ownerState => {
     input: ['input']
   };
   const composedClasses = composeClasses(slots, getInputUtilityClass, classes);
-  return _extends$1({}, classes, composedClasses);
+  return _extends$j({}, classes, composedClasses);
 };
 const InputRoot = styled(InputBaseRoot, {
   shouldForwardProp: prop => rootShouldForwardProp(prop) || prop === 'classes',
@@ -16770,7 +16823,7 @@ const InputRoot = styled(InputBaseRoot, {
   if (theme.vars) {
     bottomLineColor = `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})`;
   }
-  return _extends$1({
+  return _extends$j({
     position: 'relative'
   }, ownerState.formControl && {
     'label + &': {
@@ -16862,7 +16915,7 @@ const Input = /*#__PURE__*/React$1.forwardRef(function Input(inProps, ref) {
   const componentsProps = (slotProps != null ? slotProps : componentsPropsProp) ? deepmerge$1(slotProps != null ? slotProps : componentsPropsProp, inputComponentsProps) : inputComponentsProps;
   const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : InputRoot;
   const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : InputInput;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$j({
     slots: {
       root: RootSlot,
       input: InputSlot
@@ -17099,7 +17152,7 @@ const InputAdornmentRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   display: 'flex',
   height: '0.01em',
   // Fix IE11 flexbox alignment. To remove at some point.
@@ -17149,7 +17202,7 @@ const InputAdornment = /*#__PURE__*/React$1.forwardRef(function InputAdornment(i
   if (muiFormControl && !variant) {
     variant = muiFormControl.variant;
   }
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     hiddenLabel: muiFormControl.hiddenLabel,
     size: muiFormControl.size,
     disablePointerEvents,
@@ -17159,7 +17212,7 @@ const InputAdornment = /*#__PURE__*/React$1.forwardRef(function InputAdornment(i
   const classes = useUtilityClasses$6(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
     value: null,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$1({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$j({
       as: component,
       ownerState: ownerState,
       className: clsx(classes.root, className),
@@ -17262,12 +17315,12 @@ const TableRoot = styled('table', {
 })(({
   theme,
   ownerState
-}) => _extends$1({
+}) => _extends$j({
   display: 'table',
   width: '100%',
   borderCollapse: 'collapse',
   borderSpacing: 0,
-  '& caption': _extends$1({}, theme.typography.body2, {
+  '& caption': _extends$j({}, theme.typography.body2, {
     padding: theme.spacing(2),
     color: (theme.vars || theme).palette.text.secondary,
     textAlign: 'left',
@@ -17290,7 +17343,7 @@ const Table = /*#__PURE__*/React$1.forwardRef(function Table(inProps, ref) {
       stickyHeader = false
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$6);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component,
     padding,
     size,
@@ -17304,7 +17357,7 @@ const Table = /*#__PURE__*/React$1.forwardRef(function Table(inProps, ref) {
   }), [padding, size, stickyHeader]);
   return /*#__PURE__*/jsxRuntimeExports.jsx(TableContext.Provider, {
     value: table,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableRoot, _extends$1({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableRoot, _extends$j({
       as: component,
       role: component === defaultComponent$3 ? null : 'table',
       ref: ref,
@@ -17402,13 +17455,13 @@ const TableBody = /*#__PURE__*/React$1.forwardRef(function TableBody(inProps, re
       component = defaultComponent$2
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$5);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component
   });
   const classes = useUtilityClasses$4(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
     value: tablelvl2$1,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableBodyRoot, _extends$1({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableBodyRoot, _extends$j({
       className: clsx(classes.root, className),
       as: component,
       ref: ref,
@@ -17477,7 +17530,7 @@ const TableCellRoot = styled('td', {
 })(({
   theme,
   ownerState
-}) => _extends$1({}, theme.typography.body2, {
+}) => _extends$j({}, theme.typography.body2, {
   display: 'table-cell',
   verticalAlign: 'inherit',
   // Workaround for a rendering bug with spanned columns in Chrome 62.0.
@@ -17566,7 +17619,7 @@ const TableCell = /*#__PURE__*/React$1.forwardRef(function TableCell(inProps, re
     scope = 'col';
   }
   const variant = variantProp || tablelvl2 && tablelvl2.variant;
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     align,
     component,
     padding: paddingProp || (table && table.padding ? table.padding : 'normal'),
@@ -17580,7 +17633,7 @@ const TableCell = /*#__PURE__*/React$1.forwardRef(function TableCell(inProps, re
   if (sortDirection) {
     ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
   }
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableCellRoot, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TableCellRoot, _extends$j({
     as: component,
     ref: ref,
     className: clsx(classes.root, className),
@@ -17681,11 +17734,11 @@ const TableContainer = /*#__PURE__*/React$1.forwardRef(function TableContainer(i
       component = 'div'
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$3);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component
   });
   const classes = useUtilityClasses$2(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableContainerRoot, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TableContainerRoot, _extends$j({
     ref: ref,
     as: component,
     className: clsx(classes.root, className),
@@ -17756,13 +17809,13 @@ const TableHead = /*#__PURE__*/React$1.forwardRef(function TableHead(inProps, re
       component = defaultComponent$1
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$2);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component
   });
   const classes = useUtilityClasses$1(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
     value: tablelvl2,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableHeadRoot, _extends$1({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableHeadRoot, _extends$j({
       as: component,
       className: clsx(classes.root, className),
       ref: ref,
@@ -17863,7 +17916,7 @@ const TableRow = /*#__PURE__*/React$1.forwardRef(function TableRow(inProps, ref)
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded);
   const tablelvl2 = React$1.useContext(Tablelvl2Context);
-  const ownerState = _extends$1({}, props, {
+  const ownerState = _extends$j({}, props, {
     component,
     hover,
     selected,
@@ -17871,7 +17924,7 @@ const TableRow = /*#__PURE__*/React$1.forwardRef(function TableRow(inProps, ref)
     footer: tablelvl2 && tablelvl2.variant === 'footer'
   });
   const classes = useUtilityClasses(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableRowRoot, _extends$1({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TableRowRoot, _extends$j({
     as: component,
     ref: ref,
     className: clsx(classes.root, className),
@@ -35212,9 +35265,35 @@ lodash.exports;
 var lodashExports = lodash.exports;
 var _ = /*@__PURE__*/getDefaultExportFromCjs(lodashExports);
 
-var XIcon = "assets/a09e044df49602ba.svg";
+var _path$f;
+function _extends$h() { return _extends$h = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$h.apply(null, arguments); }
+var SvgX = function SvgX(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$h({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$f || (_path$f = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M7.439 7.44a1.5 1.5 0 0 1 2.12 0l6.44 6.44 6.44-6.44a1.5 1.5 0 1 1 2.12 2.12L18.119 16l6.44 6.44a1.501 1.501 0 1 1-2.12 2.12l-6.44-6.44-6.44 6.44a1.5 1.5 0 0 1-2.12-2.12l6.44-6.44-6.44-6.44a1.5 1.5 0 0 1 0-2.12",
+    clipRule: "evenodd"
+  })));
+};
 
-var ChevronLeftIcon = "assets/d46362cc9f92f79c.svg";
+var _path$e;
+function _extends$g() { return _extends$g = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$g.apply(null, arguments); }
+var SvgChevronLeftIcon = function SvgChevronLeftIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$g({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$e || (_path$e = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M19.56 25.56a1.5 1.5 0 0 1-2.12 0l-8.5-8.5a1.5 1.5 0 0 1 0-2.12l8.5-8.5a1.5 1.5 0 0 1 2.12 2.12L12.122 16l7.44 7.44a1.5 1.5 0 0 1 0 2.12",
+    clipRule: "evenodd"
+  })));
+};
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -35814,7 +35893,27 @@ function useWindowSize(options = {}) {
   return windowSize;
 }
 
-var InfoIcon = "assets/2715e70547e65063.svg";
+var _g$1, _defs$1;
+function _extends$f() { return _extends$f = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$f.apply(null, arguments); }
+var SvgInfoIcon = function SvgInfoIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$f({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 16 17"
+  }, props), _g$1 || (_g$1 = /*#__PURE__*/React$1.createElement("g", {
+    clipPath: "url(#InfoIcon_svg__a)"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M8 2a6.5 6.5 0 1 0 0 13A6.5 6.5 0 0 0 8 2M0 8.5a8 8 0 1 1 16 0 8 8 0 0 1-16 0m6.5-.25a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 .75.75V11h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25V9h-.25a.75.75 0 0 1-.75-.75M8 6.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2",
+    clipRule: "evenodd"
+  }))), _defs$1 || (_defs$1 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+    id: "InfoIcon_svg__a"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#fff",
+    d: "M0 .5h16v16H0z"
+  })))));
+};
 
 /**
  * Simple ponyfill for Object.fromEntries
@@ -36273,7 +36372,7 @@ var InfoButton = function InfoButton(props) {
           color: PALETTE.secondary.grey[3],
           maxLines: 1,
           children: props.title
-        }), jsxRuntimeExports.jsx(InfoIcon, {
+        }), jsxRuntimeExports.jsx(SvgInfoIcon, {
           width: "14px",
           height: "14px"
         })]
@@ -101808,7 +101907,7 @@ function UrsorDialog(props) {
           transition: '0.2s',
           zIndex: Z_INDEX
         },
-        children: jsxRuntimeExports.jsx(ChevronLeftIcon, {
+        children: jsxRuntimeExports.jsx(SvgChevronLeftIcon, {
           height: "27px"
         })
       }) : null, _.isNumber(props.step) && props.nSteps ? jsxRuntimeExports.jsx(Stack, {
@@ -101836,7 +101935,7 @@ function UrsorDialog(props) {
           transition: '0.2s',
           zIndex: Z_INDEX
         },
-        children: jsxRuntimeExports.jsx(XIcon, {
+        children: jsxRuntimeExports.jsx(SvgX, {
           height: props.isMobile ? '26px' : '27px'
         })
       }) : null, jsxRuntimeExports.jsxs(Stack, {
@@ -102067,9 +102166,35 @@ var InviteDialog = function InviteDialog(props) {
   });
 };
 
-var ChevronRightIcon = "assets/72032ddc45433fcf.svg";
+var _path$d;
+function _extends$e() { return _extends$e = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$e.apply(null, arguments); }
+var SvgChevronRight = function SvgChevronRight(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$e({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$d || (_path$d = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M12.44 6.44a1.5 1.5 0 0 1 2.12 0l8.5 8.5a1.5 1.5 0 0 1 0 2.12l-8.5 8.5a1.5 1.5 0 0 1-2.12-2.12L19.878 16l-7.44-7.44a1.5 1.5 0 0 1 0-2.12",
+    clipRule: "evenodd"
+  })));
+};
 
-var DownloadIcon = "assets/517ff4881ae227d9.svg";
+var _path$c;
+function _extends$d() { return _extends$d = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$d.apply(null, arguments); }
+var SvgDownloadIcon = function SvgDownloadIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$d({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$c || (_path$c = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M14.94 21.561a1.5 1.5 0 0 0 2.12 0l7.5-7.5a1.5 1.5 0 0 0-2.12-2.121l-4.94 4.94V3.5a1.5 1.5 0 0 0-3 0v13.38l-4.94-4.94a1.5 1.5 0 1 0-2.12 2.121zm-7.44 4.44a1.5 1.5 0 0 0 0 3h17a1.5 1.5 0 0 0 0-3z",
+    clipRule: "evenodd"
+  })));
+};
 
 var PLATFORMS = [{
   name: 'iOS',
@@ -102115,7 +102240,7 @@ var DownloadCard = function DownloadCard(props) {
       children: props.name
     }), jsxRuntimeExports.jsx(UrsorButton, {
       size: "small",
-      endIcon: DownloadIcon,
+      endIcon: SvgDownloadIcon,
       iconSize: 16,
       dark: true,
       variant: "tertiary",
@@ -102212,7 +102337,7 @@ var FloatingIntroCards = function FloatingIntroCards(props) {
             onClick: props.onOpen,
             size: "small",
             variant: "secondary",
-            endIcon: ChevronRightIcon,
+            endIcon: SvgChevronRight,
             iconSize: 16,
             children: "Download options"
           })
@@ -102268,7 +102393,7 @@ var MobileIntroCards = function MobileIntroCards(props) {
         onClick: props.onOpen,
         size: "small",
         variant: "secondary",
-        endIcon: ChevronRightIcon,
+        endIcon: SvgChevronRight,
         iconSize: 16,
         children: "Download options"
       })
@@ -102728,9 +102853,42 @@ try {
 
 var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
-var VerifiedIcon = "assets/c005dcbd3ac8ad54.svg";
+var _g, _defs;
+function _extends$c() { return _extends$c = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$c.apply(null, arguments); }
+var SvgVerifiedIcon = function SvgVerifiedIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$c({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 20 20"
+  }, props), _g || (_g = /*#__PURE__*/React$1.createElement("g", {
+    clipPath: "url(#VerifiedIcon_svg__a)"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#2E2657",
+    fillRule: "evenodd",
+    d: "M11.981.65a3.35 3.35 0 0 0-3.962 0l-1.16.85c-.191.14-.414.233-.648.269l-1.422.218a3.35 3.35 0 0 0-2.802 2.802l-.218 1.422a1.5 1.5 0 0 1-.269.648L.65 8.02a3.35 3.35 0 0 0 0 3.962l.85 1.16c.14.191.233.414.269.648l.218 1.422a3.35 3.35 0 0 0 2.802 2.802l1.422.218c.234.036.457.128.648.269l1.16.85a3.35 3.35 0 0 0 3.962 0l1.16-.85c.191-.14.414-.233.648-.269l1.422-.218a3.35 3.35 0 0 0 2.802-2.802l.218-1.422c.036-.234.128-.457.269-.648l.85-1.16a3.35 3.35 0 0 0 0-3.962l-.85-1.16a1.5 1.5 0 0 1-.269-.648l-.218-1.422a3.35 3.35 0 0 0-2.802-2.802l-1.422-.218a1.5 1.5 0 0 1-.648-.269zM9.128 2.16a1.47 1.47 0 0 1 1.744 0l1.16.852c.434.32.94.529 1.473.61l1.422.218a1.47 1.47 0 0 1 1.233 1.233l.218 1.422c.081.533.29 1.039.61 1.474l.851 1.16c.381.518.381 1.224 0 1.743l-.85 1.16c-.32.434-.53.94-.611 1.473l-.218 1.422a1.47 1.47 0 0 1-1.233 1.233l-1.422.218a3.35 3.35 0 0 0-1.474.61l-1.16.851c-.518.381-1.224.381-1.743 0l-1.16-.85a3.35 3.35 0 0 0-1.473-.611l-1.422-.218a1.47 1.47 0 0 1-1.233-1.233l-.218-1.422a3.35 3.35 0 0 0-.61-1.474l-.851-1.16a1.47 1.47 0 0 1 0-1.743l.85-1.16c.32-.434.53-.94.611-1.473l.218-1.422A1.47 1.47 0 0 1 5.073 3.84l1.422-.218a3.35 3.35 0 0 0 1.474-.61zM14.1 8.476a.938.938 0 0 0-1.325-1.325L8.75 11.174 7.225 9.65A.937.937 0 1 0 5.9 10.975l2.187 2.188a.94.94 0 0 0 1.326 0z",
+    clipRule: "evenodd"
+  }))), _defs || (_defs = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+    id: "VerifiedIcon_svg__a"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#fff",
+    d: "M0 0h20v20H0z"
+  })))));
+};
 
-var CheckIcon = "assets/50315778c2905929.svg";
+var _path$b;
+function _extends$b() { return _extends$b = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$b.apply(null, arguments); }
+var SvgCheckIcon = function SvgCheckIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$b({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$b || (_path$b = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M27.562 8.44a1.5 1.5 0 0 1 0 2.12l-14.5 14.5a1.5 1.5 0 0 1-2.12 0l-6.5-6.5a1.5 1.5 0 0 1 2.12-2.12l5.44 5.44 13.44-13.44a1.5 1.5 0 0 1 2.12 0",
+    clipRule: "evenodd"
+  })));
+};
 
 function _classCallCheck(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
@@ -102748,9 +102906,35 @@ function _createClass(e, r, t) {
   }), e;
 }
 
-var ChevronLeft = "assets/4e9206df13eea178.svg";
+var _path$a;
+function _extends$a() { return _extends$a = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$a.apply(null, arguments); }
+var SvgChevronLeft = function SvgChevronLeft(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$a({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$a || (_path$a = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M19.557 25.56a1.5 1.5 0 0 1-2.122 0l-8.5-8.5a1.5 1.5 0 0 1 0-2.12l8.5-8.5a1.5 1.5 0 1 1 2.122 2.12L12.117 16l7.44 7.44a1.5 1.5 0 0 1 0 2.12",
+    clipRule: "evenodd"
+  })));
+};
 
-var ChevronDown = "assets/1bfb880be3ef8cf3.svg";
+var _path$9;
+function _extends$9() { return _extends$9 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$9.apply(null, arguments); }
+var SvgChevronDown = function SvgChevronDown(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$9({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$9 || (_path$9 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M25.56 12.44a1.5 1.5 0 0 1 0 2.12l-8.5 8.5a1.5 1.5 0 0 1-2.12 0l-8.5-8.5a1.5 1.5 0 0 1 2.12-2.12L16 19.878l7.44-7.44a1.5 1.5 0 0 1 2.12 0",
+    clipRule: "evenodd"
+  })));
+};
 
 /* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
 function useResizeObserver(ref) {
@@ -102894,7 +103078,7 @@ var AstroBentoCard = function AstroBentoCard(props) {
             onClick: function onClick() {
               return setCollapsed(!collapsed);
             },
-            children: jsxRuntimeExports.jsx(ChevronDown, {
+            children: jsxRuntimeExports.jsx(SvgChevronDown, {
               height: "24px",
               width: "24px"
             })
@@ -105049,7 +105233,7 @@ var PricingCard = function PricingCard(props) {
         children: jsxRuntimeExports.jsx(UrsorButton, {
           dark: true,
           variant: props.dark ? 'primary' : 'tertiary',
-          endIcon: props.icon || (props.noButtonIcon ? undefined : VerifiedIcon),
+          endIcon: props.icon || (props.noButtonIcon ? undefined : SvgVerifiedIcon),
           children: props.buttonText
         })
       })
@@ -105067,7 +105251,7 @@ var PricingCard = function PricingCard(props) {
             alignItems: "center",
             justifyContent: "center",
             bgcolor: "rgb(255,255,255)",
-            children: jsxRuntimeExports.jsx(CheckIcon, {
+            children: jsxRuntimeExports.jsx(SvgCheckIcon, {
               width: "12px",
               height: "12px"
             })
@@ -105328,7 +105512,18 @@ function ActionPopup(props) {
   });
 }
 
-var MoreIcon = "assets/6a6db4496d3f186a.svg";
+var _path$8;
+function _extends$8() { return _extends$8 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$8.apply(null, arguments); }
+var SvgMoreIcon = function SvgMoreIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$8({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$8 || (_path$8 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    d: "M3 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6M16 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6M32 15a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+  })));
+};
 
 var DEFAULT_SIZE = '12px';
 var LARGE_SIZE = '20px';
@@ -105375,7 +105570,7 @@ function UrsorActionButton(props) {
         (_props$buttonClickCal = props.buttonClickCallback) === null || _props$buttonClickCal === void 0 || _props$buttonClickCal.call(props);
       },
       boxShadow: props.shadow ? '0 0 16px rgba(0,0,0,0.08)' : undefined,
-      children: jsxRuntimeExports.jsx(MoreIcon, {
+      children: jsxRuntimeExports.jsx(SvgMoreIcon, {
         height: props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE),
         width: props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)
       })
@@ -105424,7 +105619,7 @@ var TitleRowItemCore = function TitleRowItemCore(props) {
         color: PALETTE.secondary.grey[4],
         children: props.label
       })
-    }) : null, props.options && props.options.length > 0 ? jsxRuntimeExports.jsx(ChevronDown, {
+    }) : null, props.options && props.options.length > 0 ? jsxRuntimeExports.jsx(SvgChevronDown, {
       height: props.isMobile ? '24px' : '32px',
       width: props.isMobile ? '24px' : '32px'
     }) : null]
@@ -105503,9 +105698,35 @@ var TitleRow = function TitleRow(props) {
   });
 };
 
-var BookIcon = "assets/5147e8cde6283024.svg";
+var _path$7;
+function _extends$7() { return _extends$7 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$7.apply(null, arguments); }
+var SvgBookIcon = function SvgBookIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$7({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 28 28"
+  }, props), _path$7 || (_path$7 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#7B61FF",
+    fillRule: "evenodd",
+    d: "M0 3.063C0 2.338.588 1.75 1.313 1.75h7.442a6.55 6.55 0 0 1 5.252 2.627 6.55 6.55 0 0 1 5.252-2.627h7.429c.724 0 1.312.588 1.312 1.313v18.375c0 .724-.588 1.312-1.312 1.312H18.8a3.94 3.94 0 0 0-2.785 1.153l-1.087 1.088a1.31 1.31 0 0 1-1.856 0l-1.087-1.088A3.94 3.94 0 0 0 9.2 22.75H1.313A1.313 1.313 0 0 1 0 21.438zm15.321 5.25a3.94 3.94 0 0 1 3.938-3.938h6.116v15.75H18.8a6.56 6.56 0 0 0-3.485 1.002zM12.69 21.13l.006-8.879-.003-3.942a3.937 3.937 0 0 0-3.938-3.934h-6.13v15.75H9.2c1.245 0 2.452.353 3.49 1.005",
+    clipRule: "evenodd"
+  })));
+};
 
-var FilterIcon = "assets/2acd096150529726.svg";
+var _path$6;
+function _extends$6() { return _extends$6 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$6.apply(null, arguments); }
+var SvgFilterIcon = function SvgFilterIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$6({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$6 || (_path$6 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M1.5 6a1.5 1.5 0 0 0 0 3h29a1.5 1.5 0 0 0 0-3zM6 15.5A1.5 1.5 0 0 1 7.5 14h17a1.5 1.5 0 0 1 0 3h-17A1.5 1.5 0 0 1 6 15.5m6 8a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 1 0 3h-5a1.5 1.5 0 0 1-1.5-1.5",
+    clipRule: "evenodd"
+  })));
+};
 
 var _templateObject, _templateObject2;
 var WIDTH = '106px';
@@ -105575,7 +105796,7 @@ function Sidebar(props) {
   var topItems = [{
     id: 'devices',
     //tourId: "devices-button",
-    icon: PeopleIcon,
+    icon: SvgPeopleIcon,
     title: 'Kids',
     callback: function callback() {
       return navigate.push('/profiles');
@@ -105583,7 +105804,7 @@ function Sidebar(props) {
   }, {
     id: 'filters',
     //tourId: "devices-button",
-    icon: FilterIcon,
+    icon: SvgFilterIcon,
     title: 'Filters',
     callback: function callback() {
       return navigate.push('/filters');
@@ -105591,7 +105812,7 @@ function Sidebar(props) {
   }, {
     id: 'content',
     //tourId: "devices-button",
-    icon: BookIcon,
+    icon: SvgBookIcon,
     title: 'Content',
     callback: function callback() {
       return navigate.push('/folders');
@@ -105744,7 +105965,7 @@ var PageLayout = /*#__PURE__*/forwardRef(function (props, ref) {
                       },
                       onClick: props.titleBackButtonCallback,
                       justifyContent: "center",
-                      children: jsxRuntimeExports.jsx(ChevronLeft, {
+                      children: jsxRuntimeExports.jsx(SvgChevronLeft, {
                         height: "32px",
                         width: "32px"
                       })
@@ -105887,13 +106108,65 @@ var PageLayout = /*#__PURE__*/forwardRef(function (props, ref) {
 });
 PageLayout.displayName = 'Page layout';
 
-var LogOutIcon = "assets/6873705642ef7b8e.svg";
+var _path$5;
+function _extends$5() { return _extends$5 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$5.apply(null, arguments); }
+var SvgLogOutIcon = function SvgLogOutIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$5({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 28 28"
+  }, props), _path$5 || (_path$5 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M3.499 4.814A3.06 3.06 0 0 1 6.56 1.75h4.375a1.313 1.313 0 0 1 0 2.625H6.561a.44.44 0 0 0-.437.438v18.375c0 .241.196.437.437.437h4.375a1.313 1.313 0 0 1 0 2.625H6.561A3.06 3.06 0 0 1 3.5 23.19zm18.269 7.875H11.81a1.312 1.312 0 1 0 0 2.625h9.957L18.32 18.76a1.312 1.312 0 1 0 1.856 1.856l5.687-5.688a1.31 1.31 0 0 0 0-1.856l-5.687-5.687a1.312 1.312 0 1 0-1.856 1.856z",
+    clipRule: "evenodd"
+  })));
+};
 
-var PencilIcon = "assets/3cde928ba4472bd8.svg";
+var _path$4;
+function _extends$4() { return _extends$4 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$4.apply(null, arguments); }
+var SvgPencil = function SvgPencil(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$4({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$4 || (_path$4 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M22.025 2.853a3.5 3.5 0 0 1 4.95 0l2.171 2.171a3.5 3.5 0 0 1 0 4.95l-17.219 17.22a3.5 3.5 0 0 1-1.513.89L3.912 29.94a1.5 1.5 0 0 1-1.854-1.854l1.857-6.502a3.5 3.5 0 0 1 .89-1.513zm2.829 2.121a.5.5 0 0 0-.707 0L21.62 7.5l2.88 2.879 2.524-2.525a.5.5 0 0 0 0-.707zM22.379 12.5 19.5 9.621 6.927 22.193a.5.5 0 0 0-.127.217l-1.116 3.905L9.59 25.2a.5.5 0 0 0 .216-.127z",
+    clipRule: "evenodd"
+  })));
+};
 
-var PersonIcon = "assets/1c030ae7b0113797.svg";
+var _path$3;
+function _extends$3() { return _extends$3 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$3.apply(null, arguments); }
+var SvgPersonIcon = function SvgPersonIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$3({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24"
+  }, props), _path$3 || (_path$3 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M15.748 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0m.091 4.61a6.002 6.002 0 0 0-.397-9.52 6 6 0 0 0-7.287 9.52 9 9 0 0 0-5.147 7.713 1.125 1.125 0 0 0 2.247.105 6.75 6.75 0 0 1 13.485 0 1.125 1.125 0 1 0 2.247-.105 9.01 9.01 0 0 0-5.148-7.713",
+    clipRule: "evenodd"
+  })));
+};
 
-var ArrowDownIcon = "assets/f769e466fb30f914.svg";
+var _path$2;
+function _extends$2() { return _extends$2 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$2.apply(null, arguments); }
+var SvgArrowDownIcon = function SvgArrowDownIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$2({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 16 17"
+  }, props), _path$2 || (_path$2 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M13.03 8.72a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L3.47 9.78a.75.75 0 0 1 1.06-1.06l2.97 2.97V4.25a.75.75 0 0 1 1.5 0v7.44l2.97-2.97a.75.75 0 0 1 1.06 0",
+    clipRule: "evenodd"
+  })));
+};
 
 function NewActivityTag(props) {
   return jsxRuntimeExports.jsxs(Stack$1, {
@@ -106356,7 +106629,7 @@ function UrsorTable(props) {
               // opacity: sort ? (sort?.direction || hovering ? 1 : 0.4) : 0,
               opacity: sort ? sort !== null && sort !== void 0 && sort.direction ? 1 : 0.4 : 0
             },
-            children: jsxRuntimeExports.jsx(ArrowDownIcon, {
+            children: jsxRuntimeExports.jsx(SvgArrowDownIcon, {
               width: "16px",
               height: "16px"
             })
@@ -106857,7 +107130,7 @@ var AccountPageHeader = function AccountPageHeader(props) {
         children: "Upgrade to a Family or School account to get unlimited access!"
       }), jsxRuntimeExports.jsx(UrsorButton, {
         dark: true,
-        endIcon: VerifiedIcon,
+        endIcon: SvgVerifiedIcon,
         iconSize: 15,
         size: "small",
         backgroundColor: "rgb(255,255,255)",
@@ -106890,7 +107163,7 @@ var AccountPageDesktopBody = function AccountPageDesktopBody(props) {
       callback: function callback() {
         return null;
       },
-      icon: LogOutIcon
+      icon: SvgLogOutIcon
     },
     maxWidth: 834,
     scrollable: true,
@@ -106913,7 +107186,7 @@ var AccountPageDesktopBody = function AccountPageDesktopBody(props) {
             size: "small",
             variant: "secondary",
             onClick: props.setEditDialogOpen,
-            endIcon: PencilIcon,
+            endIcon: SvgPencil,
             iconSize: 13,
             children: "Edit"
           }),
@@ -106979,7 +107252,7 @@ var AccountPageDesktopBody = function AccountPageDesktopBody(props) {
             size: "small",
             variant: "secondary",
             onClick: props.onManagePlan,
-            endIcon: ChevronRightIcon,
+            endIcon: SvgChevronRight,
             iconSize: 14,
             children: "Manage plan"
           }),
@@ -107027,7 +107300,7 @@ var AccountPageDesktopBody = function AccountPageDesktopBody(props) {
                 justifyContent: "flex-end",
                 children: jsxRuntimeExports.jsx(UrsorButton, {
                   dark: true,
-                  endIcon: VerifiedIcon,
+                  endIcon: SvgVerifiedIcon,
                   backgroundColor: "rgb(255,255,255)",
                   fontColor: PALETTE.primary.navy,
                   hoverOpacity: 0.7,
@@ -107045,14 +107318,14 @@ var AccountPageDesktopBody = function AccountPageDesktopBody(props) {
           direction: "row",
           spacing: "12px",
           children: [jsxRuntimeExports.jsx(UrsorButton, {
-            endIcon: PersonIcon,
+            endIcon: SvgPersonIcon,
             size: "small",
             variant: "secondary",
             iconSize: 16,
             onClick: props.setInviteDialogOpen,
             children: "Add an adult"
           }), jsxRuntimeExports.jsx(UrsorButton, {
-            endIcon: PhoneIcon,
+            endIcon: SvgPhoneIcon,
             size: "small",
             variant: "secondary",
             iconSize: 16,
@@ -107212,7 +107485,7 @@ var MobileTitleRow = function MobileTitleRow(props) {
               },
               children: props.item.text
             })
-          }), props.item.options && props.item.options.length > 0 ? jsxRuntimeExports.jsx(ChevronDown, {
+          }), props.item.options && props.item.options.length > 0 ? jsxRuntimeExports.jsx(SvgChevronDown, {
             height: "20px",
             width: "20px"
           }) : null]
@@ -107222,16 +107495,43 @@ var MobileTitleRow = function MobileTitleRow(props) {
   });
 };
 
-var ThreeBarsIcon = "assets/61ca66c76e3fcea7.svg";
+var _path$1;
+function _extends$1() { return _extends$1 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$1.apply(null, arguments); }
+var SvgThreeBarsIcon = function SvgThreeBarsIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$1({
+    xmlns: "http://www.w3.org/2000/svg",
+    width: 20,
+    height: 20,
+    fill: "none"
+  }, props), _path$1 || (_path$1 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M1.25 3.437a.94.94 0 0 1 .938-.937h15.625a.938.938 0 0 1 0 1.875H2.188a.937.937 0 0 1-.938-.938m0 6.25a.94.94 0 0 1 .938-.937h15.625a.938.938 0 0 1 0 1.874H2.188a.94.94 0 0 1-.938-.937M2.188 15a.938.938 0 0 0 0 1.875h15.625a.937.937 0 1 0 0-1.876z",
+    clipRule: "evenodd"
+  })));
+};
 
-var VersionsIcon = "assets/3c11c688be27a450.svg";
+var _path;
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+var SvgVersionsIcon = function SvgVersionsIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 20 20"
+  }, props), _path || (_path = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M9.688 17.5A2.19 2.19 0 0 1 7.5 15.313V4.688c0-1.209.98-2.188 2.188-2.188h8.124C19.022 2.5 20 3.48 20 4.688v10.625c0 1.208-.98 2.187-2.187 2.187zm-.313-2.187c0 .172.14.312.313.312h8.124c.173 0 .313-.14.313-.312V4.688a.31.31 0 0 0-.312-.313H9.688a.31.31 0 0 0-.313.313zM6.124 4.384a.937.937 0 0 1-.342 1.281.31.31 0 0 0-.157.271v8.125c0 .115.061.216.157.272a.938.938 0 0 1-.939 1.623 2.19 2.19 0 0 1-1.093-1.895V5.937c0-.81.442-1.517 1.093-1.894a.937.937 0 0 1 1.281.342M2.032 6.916a.938.938 0 0 0-.939-1.623A2.19 2.19 0 0 0 0 7.187v5.625c0 .811.442 1.518 1.093 1.895a.937.937 0 1 0 .939-1.623.31.31 0 0 1-.157-.272V7.187c0-.114.061-.215.157-.27",
+    clipRule: "evenodd"
+  })));
+};
 
 var PAGE_ICONS = {
-  profiles: PeopleIcon,
-  filters: FilterIcon,
-  content: BookIcon,
-  lessons: VersionsIcon,
-  account: VersionsIcon
+  profiles: SvgPeopleIcon,
+  filters: SvgFilterIcon,
+  content: SvgBookIcon,
+  lessons: SvgVersionsIcon,
+  account: SvgVersionsIcon
 };
 var PAGE_ROUTES = {
   profiles: 'profiles',
@@ -107288,7 +107588,7 @@ var MobileSideBar = function MobileSideBar(props) {
           alt: "astro"
         }), jsxRuntimeExports.jsx(Stack$1, {
           onClick: props.onClose,
-          children: jsxRuntimeExports.jsx(XIcon, {
+          children: jsxRuntimeExports.jsx(SvgX, {
             height: "28px",
             width: "28px"
           })
@@ -107391,7 +107691,7 @@ var MobilePageLayout = function MobilePageLayout(props) {
               onClick: function onClick() {
                 return setSideBarOpen(true);
               },
-              children: jsxRuntimeExports.jsx(ThreeBarsIcon, {
+              children: jsxRuntimeExports.jsx(SvgThreeBarsIcon, {
                 height: "20px",
                 width: "20px"
               })
@@ -107407,7 +107707,7 @@ var MobilePageLayout = function MobilePageLayout(props) {
                 },
                 onClick: props.titleBackButtonCallback,
                 justifyContent: "center",
-                children: jsxRuntimeExports.jsx(ChevronLeftIcon, {
+                children: jsxRuntimeExports.jsx(SvgChevronLeftIcon, {
                   height: "24px",
                   width: "24px"
                 })
@@ -107461,7 +107761,7 @@ var MobileAccountPageHeader = function MobileAccountPageHeader(props) {
         children: "Upgrade to a Family or School account to get unlimited access!"
       }), jsxRuntimeExports.jsx(UrsorButton, {
         dark: true,
-        endIcon: VerifiedIcon,
+        endIcon: SvgVerifiedIcon,
         iconSize: 15,
         size: "small",
         backgroundColor: "rgb(255,255,255)",
@@ -107495,7 +107795,7 @@ var AccountPageMobileBody = function AccountPageMobileBody(props) {
       onClick: function onClick() {
         return null;
       },
-      endIcon: LogOutIcon,
+      endIcon: SvgLogOutIcon,
       iconSize: 16,
       children: "Log out"
     }),
@@ -107511,7 +107811,7 @@ var AccountPageMobileBody = function AccountPageMobileBody(props) {
           size: "small",
           variant: "secondary",
           onClick: props.setEditDialogOpen,
-          endIcon: PencilIcon,
+          endIcon: SvgPencil,
           iconSize: 13,
           children: "Edit"
         }),
@@ -107579,7 +107879,7 @@ var AccountPageMobileBody = function AccountPageMobileBody(props) {
           size: "small",
           variant: "secondary",
           onClick: props.onManagePlan,
-          endIcon: ChevronRightIcon,
+          endIcon: SvgChevronRight,
           iconSize: 14,
           children: "Manage plan"
         }),
@@ -107603,7 +107903,7 @@ var AccountPageMobileBody = function AccountPageMobileBody(props) {
               children: PLAN_DISPLAY_NAMES[props.planState]
             }), props.planState !== 'troomi' ? jsxRuntimeExports.jsx(UrsorButton, {
               dark: true,
-              endIcon: VerifiedIcon,
+              endIcon: SvgVerifiedIcon,
               size: "small",
               backgroundColor: "rgb(255,255,255)",
               fontColor: PALETTE.primary.navy,
@@ -107654,7 +107954,7 @@ var AccountPageMobileBody = function AccountPageMobileBody(props) {
             direction: "row",
             spacing: "12px",
             children: [jsxRuntimeExports.jsx(UrsorButton, {
-              endIcon: PersonIcon,
+              endIcon: SvgPersonIcon,
               size: "small",
               variant: "secondary",
               iconSize: 16,
@@ -107662,7 +107962,7 @@ var AccountPageMobileBody = function AccountPageMobileBody(props) {
               width: "100%",
               children: "Add an adult"
             }), jsxRuntimeExports.jsx(UrsorButton, {
-              endIcon: PhoneIcon,
+              endIcon: SvgPhoneIcon,
               size: "small",
               variant: "secondary",
               iconSize: 16,
@@ -107765,20 +108065,20 @@ var PLAN_DISPLAY_NAMES = {
 };
 var PLAN_BANNER_ITEMS = {
   freeTrial: [{
-    icon: PhoneIcon,
+    icon: SvgPhoneIcon,
     text: 'Connect unlimited Devices'
   }, {
-    icon: PeopleIcon,
+    icon: SvgPeopleIcon,
     text: 'Add unlimited parents or teachers'
   }, {
-    icon: ClockIcon,
+    icon: SvgClockIcon,
     text: 'X days left'
   }],
   troomi: [{
-    icon: PhoneIcon,
+    icon: SvgPhoneIcon,
     text: 'Connect up to 10 Devices'
   }, {
-    icon: PeopleIcon,
+    icon: SvgPeopleIcon,
     text: 'Add unlimited parents or teachers'
   }]
 };

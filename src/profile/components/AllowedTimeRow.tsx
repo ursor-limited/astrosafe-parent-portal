@@ -5,7 +5,7 @@ import { IAllowedTime, getISODateString } from './LimitsTab';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import useNewSegmentTimes from './useNewSegmentTimes';
-import TrashcanIcon from './../../images/TrashcanIcon.svg';
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
 
 const DISPLAY_INTERVAL = 2; // hours
 // const MIN = 0;

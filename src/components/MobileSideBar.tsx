@@ -1,10 +1,10 @@
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../ui';
-import PeopleIcon from './../images/PeopleIcon.svg';
-import FilterIcon from './../images/FilterIcon.svg';
-import BookIcon from './../images/BookIcon.svg';
-import VersionsIcon from './../images/VersionsIcon.svg';
-import XIcon from './../images/X.svg';
+import { ReactComponent as PeopleIcon } from './../images/PeopleIcon.svg';
+import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg';
+import { ReactComponent as BookIcon } from './../images/BookIcon.svg';
+import { ReactComponent as VersionsIcon } from './../images/VersionsIcon.svg';
+import { ReactComponent as XIcon } from './../images/X.svg';
 import _ from 'lodash';
 
 import { UserInitialsCircle } from './../account/contents/common';

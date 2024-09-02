@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
 import { PALETTE, Typography } from './../ui';
-import ChevronDown from './../images/ChevronDown.svg';
+import { ReactComponent as ChevronDown } from './../images/ChevronDown.svg';
 import { useState } from 'react';
 
 export interface ITitleRowItem {

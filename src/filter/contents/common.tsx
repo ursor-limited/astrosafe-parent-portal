@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import TrashcanIcon from './../../images/TrashcanIcon.svg';
-import PencilIcon from './../../images/Pencil.svg';
-import FilterIcon from './../../images/FilterIcon.svg';
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
 import { PALETTE } from './../../ui';
 import FilterPageDesktopBody from './body-desktop';
 import {

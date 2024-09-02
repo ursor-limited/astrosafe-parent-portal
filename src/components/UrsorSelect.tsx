@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Stack } from '@mui/system';
-import ChevronDown from './../images/ChevronDown.svg';
-import X from './../images/X.svg';
+import { ReactComponent as ChevronDown } from './../images/ChevronDown.svg';
+import { ReactComponent as X } from './../images/X.svg';
 import { PALETTE } from './../ui';
 import { Typography } from './../ui';
 import UrsorPopover from './UrsorPopover';

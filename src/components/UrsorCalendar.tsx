@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { alpha, Box } from '@mui/system';
 import Calendar from 'react-calendar';
-import ChevronIcon from './../images/ChevronLeftIcon.svg';
+import { ReactComponent as ChevronIcon } from './../images/ChevronLeftIcon.svg';
 import { PALETTE } from './../ui';
 import dayjs from 'dayjs';
 import DynamicContainer from './DynamicContainer';

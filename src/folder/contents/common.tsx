@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import CirclePlayIcon from './../../images/CirclePlay.svgimages/icons/CirclePlay.svg';
-import LinkIcon from './../../images/LinkIcon.svgimages/icons/LinkIcon.svg';
-import VideoCameraIcon from './../../images/VideoCameraIcon.svgimages/icons/VideoCameraIcon.svg';
-import TrashcanIcon from './../../images/TrashcanIcon.svg';
-import PencilIcon from './../../images/Pencil.svg';
+import { ReactComponent as CirclePlayIcon } from './../../images/CirclePlay.svgimages/icons/CirclePlay.svg';
+import { ReactComponent as LinkIcon } from './../../images/LinkIcon.svgimages/icons/LinkIcon.svg';
+import { ReactComponent as VideoCameraIcon } from './../../images/VideoCameraIcon.svgimages/icons/VideoCameraIcon.svg';
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
 import { PALETTE } from './../../ui';
 import _ from 'lodash';
 import useNavigate from '../../hooks/useNavigate';

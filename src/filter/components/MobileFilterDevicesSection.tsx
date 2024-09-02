@@ -1,9 +1,9 @@
 import React from 'react';
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
-import ChevronRightIcon from './../../images/ChevronRight.svg';
-import PlusIcon from './../../images/PlusIcon.svg';
-import XIcon from './../../images/X.svg';
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
+import { ReactComponent as XIcon } from './../../images/X.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
 import _ from 'lodash';

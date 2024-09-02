@@ -1,5 +1,5 @@
 import UrsorFadeIn from './../../components/UrsorFadeIn';
-import PlusIcon from './../../images/PlusIcon.svg';
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import useNavigate from '../../hooks/useNavigate';
 import { IEnrichedContentBucket } from './common';

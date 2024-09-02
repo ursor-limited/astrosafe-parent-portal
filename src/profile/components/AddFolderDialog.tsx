@@ -8,7 +8,7 @@ import { IDevice } from './../../filter/contents/common';
 import { IContentBucket } from './ContentTab';
 import { IGroup } from './../../folder/contents/common';
 import { IEnrichedContentBucket } from './../../folders/contents/common';
-import PlusIcon from './../../images/PlusIcon.svg';
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
 
 const AddFolderDialog = (props: {
   open: boolean;

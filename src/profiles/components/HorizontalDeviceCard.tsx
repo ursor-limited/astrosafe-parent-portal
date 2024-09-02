@@ -2,11 +2,11 @@ import { Stack } from '@mui/system';
 import AstroCard from '../../filter/components/AstroCard';
 
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import StrikeThroughGlobeIcon from './../../images/StrikeThroughGlobeIcon.svg';
-import FilterIcon from './../../images/FilterIcon.svg';
-import GlobeIcon from './../../images/GlobeIcon.svg';
-import CheckCircleFillIcon from './../../images/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
-import ChevronDownIcon from './../../images/ChevronDown.svg';
+import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg';
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
+import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg';
+import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
 import { DeviceType } from '../../filter/contents/common';
 import { useContext, useEffect, useState } from 'react';
 import useNavigate from '../../hooks/useNavigate';

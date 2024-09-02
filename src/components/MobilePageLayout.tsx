@@ -4,10 +4,10 @@ import UrsorActionButton from './UrsorActionButton';
 import { IActionPopupItem } from './ActionPopup';
 import React, { useState } from 'react';
 import { Typography } from './../ui';
-import ThreeBarsIcon from './../images/ThreeBarsIcon.svg';
+import { ReactComponent as ThreeBarsIcon } from './../images/ThreeBarsIcon.svg';
 import MobileSideBar, { AstroPage } from './MobileSideBar';
 import { ITitleRowItem } from './TitleRow';
-import ChevronLeftIcon from './../images/ChevronLeftIcon.svg';
+import { ReactComponent as ChevronLeftIcon } from './../images/ChevronLeftIcon.svg';
 import InfoButton, { IInfoButtonProps } from './InfoButton';
 
 const MobilePageLayout = (props: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from '@mui/system';
-import ChevronRightIcon from './../images/ChevronRight.svg';
-import ChevronLeftIcon from './../images/ChevronLeft.svg';
+import { ReactComponent as ChevronRightIcon } from './../images/ChevronRight.svg';
+import { ReactComponent as ChevronLeftIcon } from './../images/ChevronLeft.svg';
 import { PALETTE, Typography } from './../ui';
 
 const PageSelector = (props: {

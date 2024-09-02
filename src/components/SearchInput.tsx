@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
 import { useState } from 'react';
 import { PALETTE } from './../ui';
-import SearchIcon from './../images/SearchIcon.svg';
-import XIcon from './../images/X.svg';
+import { ReactComponent as SearchIcon } from './../images/SearchIcon.svg';
+import { ReactComponent as XIcon } from './../images/X.svg';
 import { FONT_SIZES } from './../ui/typography';
 import { Input } from '@mui/material';
 

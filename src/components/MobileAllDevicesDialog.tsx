@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
 import { IDevice } from '../filter/contents/common';
 import UrsorFadeIn from './UrsorFadeIn';
-import XIcon from './../images/X.svg';
-import PlusIcon from './../images/PlusIcon.svg';
+import { ReactComponent as XIcon } from './../images/X.svg';
+import { ReactComponent as PlusIcon } from './../images/PlusIcon.svg';
 import { BACKDROP_STYLE, BORDER_RADIUS } from './UrsorDialog';
 import { Dialog } from '@mui/material';
 import { Typography, UrsorButton } from './../ui';

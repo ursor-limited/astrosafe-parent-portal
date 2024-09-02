@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import useNavigate from '../../hooks/useNavigate';
 import { useCallback, useState } from 'react';
 import ApiController from './../../api';
-import PencilIcon from './../../images/Pencil.svg';
-import TrashcanIcon from './../../images/TrashcanIcon.svg';
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
 import {
   IChannel,
   IContentBucket,

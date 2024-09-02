@@ -88,7 +88,6 @@ export default [
       json(),
       css(),
       commonjs(),
-      svgr(),
       url({
         limit: 0, // Disable inlining by setting the limit to 0 (0 bytes means all files will be copied)
         include: [
@@ -98,10 +97,16 @@ export default [
         publicPath: 'assets/', // URL path for assets
         destDir: 'dist/assets',
       }),
+      svgr(),
       typescript({ tsconfig: './tsconfig.json' }),
       babel({
         babelHelpers: 'runtime',
-        presets: ['@babel/preset-react'],
+        presets: [
+          '@babel/preset-env',
+          '@babel/preset-react',
+          '@babel/preset-typescript',
+        ],
+        plugins: ['@babel/plugin-transform-runtime'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
         exclude: 'node_modules/**', // Only transpile our source code
       }),

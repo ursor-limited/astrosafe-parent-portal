@@ -1,12 +1,12 @@
 import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import VerifiedIcon from './../../images/VerifiedIcon.svg';
-import LogOutIcon from './../../images/LogOutIcon.svg';
-import PhoneIcon from './../../images/PhoneIcon.svg';
-import PencilIcon from './../../images/Pencil.svg';
-import ChevronRightIcon from './../../images/ChevronRight.svg';
-import PersonIcon from './../../images/PersonIcon.svg';
+import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg';
+import { ReactComponent as LogOutIcon } from './../../images/LogOutIcon.svg';
+import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg';
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
+import { ReactComponent as PersonIcon } from './../../images/PersonIcon.svg';
 import {
   AstroPlanState,
   IUser,

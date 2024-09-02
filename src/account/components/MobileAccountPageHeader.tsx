@@ -2,7 +2,7 @@ import React from 'react';
 import { Stack } from '@mui/system';
 import { VIBRANT_GRADIENT } from '../contents/common';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import VerifiedIcon from './../../images/VerifiedIcon.svg';
+import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg';
 
 const MobileAccountPageHeader = (props: {
   setUpgradeDialogOpen: () => void;

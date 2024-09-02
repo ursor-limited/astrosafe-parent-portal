@@ -3,8 +3,8 @@ import { Stack } from '@mui/system';
 import dayjs from 'dayjs';
 
 import { PALETTE, Typography } from './../../ui';
-import ClockIcon from './../../images/ClockIcon.svg';
-import ChevronDownIcon from './../../images/ChevronDown.svg';
+import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg';
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
 import { useEffect, useState } from 'react';
 import DynamicContainer from './../../components/DynamicContainer';
 

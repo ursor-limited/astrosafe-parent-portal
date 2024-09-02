@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import PencilIcon from './../../images/Pencil.svg';
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
 
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../../ui';

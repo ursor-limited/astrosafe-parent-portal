@@ -1,8 +1,8 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsUpIcon from './../../images/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
-import ChevronDownIcon from './../../images/ChevronDown.svg';
-import LockIcon from './../../images/LockIcon.svgimages/icons/LockIcon.svg';
+import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
+import { ReactComponent as LockIcon } from './../../images/LockIcon.svgimages/icons/LockIcon.svg';
 import { Stack } from '@mui/system';
 import { DynamicContainer, PALETTE, Typography } from './../../ui';
 import AstroSwitch from './../../components/AstroSwitch';

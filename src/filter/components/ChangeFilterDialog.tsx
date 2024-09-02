@@ -7,7 +7,7 @@ import { IGroup } from '../../folder/contents/common';
 import ApiController from '../../api';
 import UrsorDialog from '../../components/UrsorDialog';
 import { IDevice } from '../contents/common';
-import FilterIcon from './../../images/FilterIcon.svg';
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
 
 const ChangeFilterDialog = (props: {
   open: boolean;

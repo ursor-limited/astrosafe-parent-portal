@@ -13,7 +13,7 @@ import DevicePageLimitsTab from '../components/LimitsTab';
 import DevicePageMobileInsightsTab from '../components/MobileInsightsTab';
 import { IEnrichedContentBucket } from './../../folders/contents/common';
 import MobileDeviceCard from '../../profiles/components/MobileDeviceCard';
-import PlusIcon from './../../images/PlusIcon.svg';
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
 import DevicePageAppsTab from '../components/AppsTab';
 
 const ProfilePageMobileBody = (props: {

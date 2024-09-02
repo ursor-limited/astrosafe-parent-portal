@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 
 import React from 'react';
 import { PALETTE, Typography } from './../../ui';
-import CheckIcon from './../../images/CheckIcon.svg';
+import { ReactComponent as CheckIcon } from './../../images/CheckIcon.svg';
 import { IApp } from './AppsTab';
 import { cleanUrl } from './MobileInsightsTab';
 

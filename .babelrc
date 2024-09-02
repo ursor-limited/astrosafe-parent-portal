@@ -6,7 +6,8 @@
         "useBuiltIns": "entry",
         "corejs": 3
       }
-    ]
+    ],
+    "@babel/preset-react" // Ensure you have this preset if you are working with React
   ],
   "plugins": ["@babel/plugin-transform-runtime"]
 }

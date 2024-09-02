@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { Stack, keyframes } from '@mui/system';
 import { PALETTE, Typography } from './../ui';
-import Star from './../images/Star.svg';
+import { ReactComponent as Star } from './../images/Star.svg';
 import useNavigate from '../hooks/useNavigate';
 import _ from 'lodash';
 import ProfileImageRow from './../filter/components/ProfileImageRow';
 import UrsorActionButton from './UrsorActionButton';
-import PencilIcon from './../images/Pencil.svg';
-import TrashcanIcon from './../images/TrashcanIcon.svg';
-import ArrowUpRight from './../images/ArrowUpRight.svg';
+import { ReactComponent as PencilIcon } from './../images/Pencil.svg';
+import { ReactComponent as TrashcanIcon } from './../images/TrashcanIcon.svg';
+import { ReactComponent as ArrowUpRight } from './../images/ArrowUpRight.svg';
 import DeletionDialog from './DeletionDialog';
 import { IEnrichedContentBucket } from './../folders/contents/common';
 import ApiController from './../api';

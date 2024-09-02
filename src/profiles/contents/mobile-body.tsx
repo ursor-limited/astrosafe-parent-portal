@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
-import PlusIcon from './../../images/PlusIcon.svg';
-import PlugIcon from './../../images/PlugIcon.svgimages/icons/PlugIcon.svg';
-import PencilIcon from './../../images/Pencil.svg';
-import ArrowUpRightIcon from './../../images/ArrowUpRight.svg';
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
+import { ReactComponent as PlugIcon } from './../../images/PlugIcon.svgimages/icons/PlugIcon.svg';
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
+import { ReactComponent as ArrowUpRightIcon } from './../../images/ArrowUpRight.svg';
 import { IDevice } from './../../filter/contents/common';
 import DeviceInstructionsView from '../components/DeviceInstructionsView';
 import UrsorActionButton from './../../components/UrsorActionButton';

@@ -1,12 +1,12 @@
 import { Stack } from '@mui/system';
 import AstroCard from '../../filter/components/AstroCard';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import ChevronRightIcon from './../../images/ChevronRight.svg';
-import PhoneIcon from './../../images/PhoneIcon.svg';
-import GlobeIcon from './../../images/GlobeIcon.svg';
-import StrikeThroughGlobeIcon from './../../images/StrikeThroughGlobeIcon.svg';
-import FilterIcon from './../../images/FilterIcon.svg';
-import LinkExternalIcon from './../../images/LinkExternalIcon.svg';
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
+import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg';
+import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg';
+import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg';
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
+import { ReactComponent as LinkExternalIcon } from './../../images/LinkExternalIcon.svg';
 import { DeviceType, IDevice } from '../../filter/contents/common';
 import AstroSwitch from './../../components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';

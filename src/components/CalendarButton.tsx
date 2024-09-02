@@ -1,4 +1,4 @@
-import ChevronDownIcon from './../images/ChevronDown.svg';
+import { ReactComponent as ChevronDownIcon } from './../images/ChevronDown.svg';
 import { Stack } from '@mui/system';
 import UrsorPopover from './UrsorPopover';
 import { useState } from 'react';
