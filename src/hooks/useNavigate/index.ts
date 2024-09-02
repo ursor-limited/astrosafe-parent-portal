@@ -1,6 +1,8 @@
 const useNavigate = () => {
   const push = (path: string) => {
-    window.location.href += path;
+    const newUrl = window.location.href + path;
+
+    window.location.href = newUrl.replace('//', '/');
   };
 
   return { push };
