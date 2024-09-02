@@ -1,9 +1,9 @@
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../../ui';
-import ListUnorderedIcon from './../../images/icons/ListUnorderedIcon.svgimages/icons/ListUnorderedIcon.svg';
-import VerifiedIcon from './../../images/icons/VerifiedIcon.svg';
-import StopIcon from './../../images/icons/StopIcon.svgimages/icons/StopIcon.svg';
-import LockIcon from './../../images/icons/LockIcon.svgimages/icons/LockIcon.svg';
+import ListUnorderedIcon from './../../images/ListUnorderedIcon.svgimages/icons/ListUnorderedIcon.svg';
+import VerifiedIcon from './../../images/VerifiedIcon.svg';
+import StopIcon from './../../images/StopIcon.svgimages/icons/StopIcon.svg';
+import LockIcon from './../../images/LockIcon.svgimages/icons/LockIcon.svg';
 import ProfileImageRow from './ProfileImageRow';
 import { IGroupFilter } from '../../filters/contents/common';
 

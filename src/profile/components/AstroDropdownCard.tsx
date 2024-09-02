@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
 import React, { useState } from 'react';
 import { PALETTE, Typography } from './../../ui';
-import ChevronDown from './../../images/icons/ChevronDown.svg';
-import CheckCircleFillIcon from './../../images/icons/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
+import ChevronDown from './../../images/ChevronDown.svg';
+import CheckCircleFillIcon from './../../images/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
 import UrsorPopover from './../../components/UrsorPopover';
 import AstroSettingCard, {
   IAstroSettingCardProps,

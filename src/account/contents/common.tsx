@@ -1,6 +1,6 @@
-import PhoneIcon from './../../images/icons/PhoneIcon.svg';
-import PeopleIcon from './../../images/icons/PeopleIcon.svg';
-import ClockIcon from './../../images/icons/ClockIcon.svg';
+import PhoneIcon from './../../images/PhoneIcon.svg';
+import PeopleIcon from './../../images/PeopleIcon.svg';
+import ClockIcon from './../../images/ClockIcon.svg';
 import { Stack } from '@mui/system';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { PALETTE, Typography } from './../../ui';

@@ -1,7 +1,7 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
-import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
-import XIcon from './../../images/icons/X.svg';
-import PlusIcon from './../../images/icons/PlusIcon.svg';
+import ChevronRightIcon from './../../images/ChevronRight.svg';
+import XIcon from './../../images/X.svg';
+import PlusIcon from './../../images/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
 import _ from 'lodash';

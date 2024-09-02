@@ -1558,8 +1558,8 @@ function _defineProperty$2(obj, key, value) {
   return obj;
 }
 
-function _extends$4() {
-  _extends$4 = Object.assign || function (target) {
+function _extends$2() {
+  _extends$2 = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
 
@@ -1573,7 +1573,7 @@ function _extends$4() {
     return target;
   };
 
-  return _extends$4.apply(this, arguments);
+  return _extends$2.apply(this, arguments);
 }
 
 function _inherits(subClass, superClass) {
@@ -2373,7 +2373,7 @@ function withOrientationChange(WrappedComponent) {
     }, {
       key: "render",
       value: function render() {
-        return React__default.createElement(WrappedComponent, _extends$4({}, this.props, {
+        return React__default.createElement(WrappedComponent, _extends$2({}, this.props, {
           isLandscape: this.state.isLandscape,
           isPortrait: this.state.isPortrait
         }));
@@ -2584,14 +2584,14 @@ var formatMuiErrorMessage = /*#__PURE__*/Object.freeze({
 	default: formatMuiErrorMessage$1
 });
 
-function _extends$3() {
-  return _extends$3 = Object.assign ? Object.assign.bind() : function (n) {
+function _extends$1() {
+  return _extends$1 = Object.assign ? Object.assign.bind() : function (n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
     return n;
-  }, _extends$3.apply(null, arguments);
+  }, _extends$1.apply(null, arguments);
 }
 
 function memoize$1(fn) {
@@ -5021,7 +5021,7 @@ var createStyled$3
     , nextOptions
     /* ?: StyledOptions */
     ) {
-      return createStyled(nextTag, _extends$3({}, options, nextOptions, {
+      return createStyled(nextTag, _extends$1({}, options, nextOptions, {
         shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
       })).apply(void 0, styles);
     };
@@ -6113,7 +6113,7 @@ function deepClone(source) {
 function deepmerge$1(target, source, options = {
   clone: true
 }) {
-  const output = options.clone ? _extends$3({}, target) : target;
+  const output = options.clone ? _extends$1({}, target) : target;
   if (isPlainObject(target) && isPlainObject(source)) {
     Object.keys(source).forEach(key => {
       if (isPlainObject(source[key]) &&
@@ -6146,7 +6146,7 @@ const sortBreakpointsValues = values => {
   // Sort in ascending order
   breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
   return breakpointsAsArray.reduce((acc, obj) => {
-    return _extends$3({}, acc, {
+    return _extends$1({}, acc, {
       [obj.key]: obj.val
     });
   }, {});
@@ -6203,7 +6203,7 @@ function createBreakpoints(breakpoints) {
     }
     return between(key, keys[keys.indexOf(key) + 1]).replace('@media', '@media not all and');
   }
-  return _extends$3({
+  return _extends$1({
     keys,
     values: sortedValues,
     up,
@@ -7347,15 +7347,15 @@ function createTheme$2(options = {}, ...args) {
     direction: 'ltr',
     components: {},
     // Inject component definitions.
-    palette: _extends$3({
+    palette: _extends$1({
       mode: 'light'
     }, paletteInput),
     spacing,
-    shape: _extends$3({}, shape, shapeInput)
+    shape: _extends$1({}, shape, shapeInput)
   }, other);
   muiTheme.applyStyles = applyStyles$2;
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
-  muiTheme.unstable_sxConfig = _extends$3({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$1({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -7450,12 +7450,12 @@ function extendSxProp(props) {
       if (!isPlainObject(result)) {
         return systemProps;
       }
-      return _extends$3({}, systemProps, result);
+      return _extends$1({}, systemProps, result);
     };
   } else {
-    finalSx = _extends$3({}, systemProps, inSx);
+    finalSx = _extends$1({}, systemProps, inSx);
   }
-  return _extends$3({}, otherProps, {
+  return _extends$1({}, otherProps, {
     sx: finalSx
   });
 }
@@ -7506,7 +7506,7 @@ function createBox(options = {}) {
         component = 'div'
       } = _extendSxProp,
       other = _objectWithoutPropertiesLoose$1(_extendSxProp, _excluded$p);
-    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$3({
+    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$1({
       as: component,
       ref: ref,
       className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
@@ -7930,11 +7930,11 @@ function processStyleArg$1(callableStyle, _ref) {
       ownerState
     } = _ref,
     props = _objectWithoutPropertiesLoose$1(_ref, _excluded$o);
-  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$3({
+  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$1({
     ownerState
   }, props)) : callableStyle;
   if (Array.isArray(resolvedStylesArg)) {
-    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$3({
+    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$1({
       ownerState
     }, props)));
   }
@@ -7947,7 +7947,7 @@ function processStyleArg$1(callableStyle, _ref) {
     variants.forEach(variant => {
       let isMatch = true;
       if (typeof variant.props === 'function') {
-        isMatch = variant.props(_extends$3({
+        isMatch = variant.props(_extends$1({
           ownerState
         }, props, ownerState));
       } else {
@@ -7961,7 +7961,7 @@ function processStyleArg$1(callableStyle, _ref) {
         if (!Array.isArray(result)) {
           result = [result];
         }
-        result.push(typeof variant.style === 'function' ? variant.style(_extends$3({
+        result.push(typeof variant.style === 'function' ? variant.style(_extends$1({
           ownerState
         }, props, ownerState)) : variant.style);
       }
@@ -7978,8 +7978,8 @@ function createStyled$2(input = {}) {
     slotShouldForwardProp = shouldForwardProp$1
   } = input;
   const systemSx = props => {
-    return styleFunctionSx$1(_extends$3({}, props, {
-      theme: resolveTheme$1(_extends$3({}, props, {
+    return styleFunctionSx$1(_extends$1({}, props, {
+      theme: resolveTheme$1(_extends$1({}, props, {
         defaultTheme,
         themeId
       }))
@@ -8027,7 +8027,7 @@ function createStyled$2(input = {}) {
       // for string (html) tag, preserve the behavior in emotion & styled-components.
       shouldForwardPropOption = undefined;
     }
-    const defaultStyledResolver = styled$2(tag, _extends$3({
+    const defaultStyledResolver = styled$2(tag, _extends$1({
       shouldForwardProp: shouldForwardPropOption,
       label
     }, options));
@@ -8036,7 +8036,7 @@ function createStyled$2(input = {}) {
       // component stays as a function. This condition makes sure that we do not interpolate functions
       // which are basically components used as a selectors.
       if (typeof stylesArg === 'function' && stylesArg.__emotion_real !== stylesArg || isPlainObject(stylesArg)) {
-        return props => processStyleArg$1(stylesArg, _extends$3({}, props, {
+        return props => processStyleArg$1(stylesArg, _extends$1({}, props, {
           theme: resolveTheme$1({
             theme: props.theme,
             defaultTheme,
@@ -8051,7 +8051,7 @@ function createStyled$2(input = {}) {
       const expressionsWithDefaultTheme = expressions ? expressions.map(transformStyleArg) : [];
       if (componentName && overridesResolver) {
         expressionsWithDefaultTheme.push(props => {
-          const theme = resolveTheme$1(_extends$3({}, props, {
+          const theme = resolveTheme$1(_extends$1({}, props, {
             defaultTheme,
             themeId
           }));
@@ -8062,7 +8062,7 @@ function createStyled$2(input = {}) {
           const resolvedStyleOverrides = {};
           // TODO: v7 remove iteration and use `resolveStyleArg(styleOverrides[slot])` directly
           Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
-            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$3({}, props, {
+            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$1({}, props, {
               theme
             }));
           });
@@ -8072,14 +8072,14 @@ function createStyled$2(input = {}) {
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push(props => {
           var _theme$components;
-          const theme = resolveTheme$1(_extends$3({}, props, {
+          const theme = resolveTheme$1(_extends$1({}, props, {
             defaultTheme,
             themeId
           }));
           const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[componentName]) == null ? void 0 : _theme$components.variants;
           return processStyleArg$1({
             variants: themeVariants
-          }, _extends$3({}, props, {
+          }, _extends$1({}, props, {
             theme
           }));
         });
@@ -8126,10 +8126,10 @@ const styled$1 = createStyled$2();
  * @returns {object} resolved props
  */
 function resolveProps(defaultProps, props) {
-  const output = _extends$3({}, props);
+  const output = _extends$1({}, props);
   Object.keys(defaultProps).forEach(propName => {
     if (propName.toString().match(/^(components|slots)$/)) {
-      output[propName] = _extends$3({}, defaultProps[propName], output[propName]);
+      output[propName] = _extends$1({}, defaultProps[propName], output[propName]);
     } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
       const defaultSlotProps = defaultProps[propName] || {};
       const slotProps = props[propName];
@@ -8141,7 +8141,7 @@ function resolveProps(defaultProps, props) {
         // Reduce the iteration if the default slot props is empty
         output[propName] = slotProps;
       } else {
-        output[propName] = _extends$3({}, slotProps);
+        output[propName] = _extends$1({}, slotProps);
         Object.keys(defaultSlotProps).forEach(slotPropName => {
           output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
         });
@@ -8426,7 +8426,7 @@ function exactProp(propTypes) {
   if (process.env.NODE_ENV === 'production') {
     return propTypes;
   }
-  return _extends$3({}, propTypes, {
+  return _extends$1({}, propTypes, {
     [specialProperty]: props => {
       const unsupportedProps = Object.keys(props).filter(prop => !propTypes.hasOwnProperty(prop));
       if (unsupportedProps.length > 0) {
@@ -8694,8 +8694,8 @@ function appendOwnerState(elementType, otherProps, ownerState) {
   if (elementType === undefined || isHostComponent(elementType)) {
     return otherProps;
   }
-  return _extends$3({}, otherProps, {
-    ownerState: _extends$3({}, otherProps.ownerState, ownerState)
+  return _extends$1({}, otherProps, {
+    ownerState: _extends$1({}, otherProps.ownerState, ownerState)
   });
 }
 
@@ -8760,8 +8760,8 @@ function mergeSlotProps(parameters) {
     // The simpler case - getSlotProps is not defined, so no internal event handlers are defined,
     // so we can simply merge all the props without having to worry about extracting event handlers.
     const joinedClasses = clsx(additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
-    const mergedStyle = _extends$3({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
-    const props = _extends$3({}, additionalProps, externalForwardedProps, externalSlotProps);
+    const mergedStyle = _extends$1({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+    const props = _extends$1({}, additionalProps, externalForwardedProps, externalSlotProps);
     if (joinedClasses.length > 0) {
       props.className = joinedClasses;
     }
@@ -8777,7 +8777,7 @@ function mergeSlotProps(parameters) {
   // In this case, getSlotProps is responsible for calling the external event handlers.
   // We don't need to include them in the merged props because of this.
 
-  const eventHandlers = extractEventHandlers(_extends$3({}, externalForwardedProps, externalSlotProps));
+  const eventHandlers = extractEventHandlers(_extends$1({}, externalForwardedProps, externalSlotProps));
   const componentsPropsWithoutEventHandlers = omitEventHandlers(externalSlotProps);
   const otherPropsWithoutEventHandlers = omitEventHandlers(externalForwardedProps);
   const internalSlotProps = getSlotProps(eventHandlers);
@@ -8787,8 +8787,8 @@ function mergeSlotProps(parameters) {
   // to properly override style. It requires the most important classes to be last
   // (see https://github.com/mui/material-ui/pull/33205) for the related discussion.
   const joinedClasses = clsx(internalSlotProps == null ? void 0 : internalSlotProps.className, additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
-  const mergedStyle = _extends$3({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
-  const props = _extends$3({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
+  const mergedStyle = _extends$1({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+  const props = _extends$1({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
   if (joinedClasses.length > 0) {
     props.className = joinedClasses;
   }
@@ -8834,11 +8834,11 @@ function useSlotProps(parameters) {
   const {
     props: mergedProps,
     internalRef
-  } = mergeSlotProps(_extends$3({}, rest, {
+  } = mergeSlotProps(_extends$1({}, rest, {
     externalSlotProps: resolvedComponentsProps
   }));
   const ref = useForkRef(internalRef, resolvedComponentsProps == null ? void 0 : resolvedComponentsProps.ref, (_parameters$additiona = parameters.additionalProps) == null ? void 0 : _parameters$additiona.ref);
-  const props = appendOwnerState(elementType, _extends$3({}, mergedProps, {
+  const props = appendOwnerState(elementType, _extends$1({}, mergedProps, {
     ref
   }), ownerState);
   return props;
@@ -8966,7 +8966,7 @@ const style = ({
   ownerState,
   theme
 }) => {
-  let styles = _extends$3({
+  let styles = _extends$1({
     display: 'flex',
     flexDirection: 'column'
   }, handleBreakpoints({
@@ -9059,7 +9059,7 @@ function createStack(options = {}) {
       useFlexGap
     };
     const classes = useUtilityClasses();
-    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$3({
+    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$1({
       as: component,
       ownerState: ownerState,
       ref: ref,
@@ -9628,7 +9628,7 @@ const grey = {
 var THEME_ID = '$$material';
 
 function createMixins(breakpoints, mixins) {
-  return _extends$3({
+  return _extends$1({
     toolbar: {
       minHeight: 56,
       [breakpoints.up('xs')]: {
@@ -10230,7 +10230,7 @@ function createPalette(palette) {
     lightShade = 300,
     darkShade = 700
   }) => {
-    color = _extends$3({}, color);
+    color = _extends$1({}, color);
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
     }
@@ -10270,9 +10270,9 @@ const theme2 = createTheme({ palette: {
       console.error(`MUI: The palette mode \`${mode}\` is not supported.`);
     }
   }
-  const paletteOutput = deepmerge$1(_extends$3({
+  const paletteOutput = deepmerge$1(_extends$1({
     // A collection of common colors.
-    common: _extends$3({}, common),
+    common: _extends$1({}, common),
     // prevent mutable object.
     // The palette mode, can be light or dark.
     mode,
@@ -10368,7 +10368,7 @@ function createTypography(palette, typography) {
   }
   const coef = fontSize / 14;
   const pxToRem = pxToRem2 || (size => `${size / htmlFontSize * coef}rem`);
-  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$3({
+  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$1({
     fontFamily,
     fontWeight,
     fontSize: pxToRem(size),
@@ -10400,7 +10400,7 @@ function createTypography(palette, typography) {
       letterSpacing: 'inherit'
     }
   };
-  return deepmerge$1(_extends$3({
+  return deepmerge$1(_extends$1({
     htmlFontSize,
     pxToRem,
     fontFamily,
@@ -10467,8 +10467,8 @@ function getAutoHeightDuration(height) {
   return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
 }
 function createTransitions(inputTransitions) {
-  const mergedEasing = _extends$3({}, easing, inputTransitions.easing);
-  const mergedDuration = _extends$3({}, duration, inputTransitions.duration);
+  const mergedEasing = _extends$1({}, easing, inputTransitions.easing);
+  const mergedDuration = _extends$1({}, duration, inputTransitions.duration);
   const create = (props = ['all'], options = {}) => {
     const {
         duration: durationOption = mergedDuration.standard,
@@ -10502,7 +10502,7 @@ function createTransitions(inputTransitions) {
     }
     return (Array.isArray(props) ? props : [props]).map(animatedProp => `${animatedProp} ${typeof durationOption === 'string' ? durationOption : formatMs(durationOption)} ${easingOption} ${typeof delay === 'string' ? delay : formatMs(delay)}`).join(',');
   };
-  return _extends$3({
+  return _extends$1({
     getAutoHeightDuration,
     create
   }, inputTransitions, {
@@ -10546,7 +10546,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     shadows: shadows.slice(),
     typography: createTypography(palette, typographyInput),
     transitions: createTransitions(transitionsInput),
-    zIndex: _extends$3({}, zIndex)
+    zIndex: _extends$1({}, zIndex)
   });
   muiTheme = deepmerge$1(muiTheme, other);
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
@@ -10580,7 +10580,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
       }
     });
   }
-  muiTheme.unstable_sxConfig = _extends$3({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$1({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -10603,12 +10603,12 @@ function useTheme() {
 
 var createStyled$1 = {};
 
-var _extends$2 = {exports: {}};
+var _extends = {exports: {}};
 
 var hasRequired_extends;
 
 function require_extends () {
-	if (hasRequired_extends) return _extends$2.exports;
+	if (hasRequired_extends) return _extends.exports;
 	hasRequired_extends = 1;
 	(function (module) {
 		function _extends() {
@@ -10621,8 +10621,8 @@ function require_extends () {
 		  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _extends.apply(null, arguments);
 		}
 		module.exports = _extends, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-	} (_extends$2));
-	return _extends$2.exports;
+	} (_extends));
+	return _extends.exports;
 }
 
 var objectWithoutPropertiesLoose = {exports: {}};
@@ -11652,7 +11652,7 @@ const PaperRoot = styled('div', {
   ownerState
 }) => {
   var _theme$vars$overlays;
-  return _extends$3({
+  return _extends$1({
     backgroundColor: (theme.vars || theme).palette.background.paper,
     color: (theme.vars || theme).palette.text.primary,
     transition: theme.transitions.create('box-shadow')
@@ -11660,7 +11660,7 @@ const PaperRoot = styled('div', {
     borderRadius: theme.shape.borderRadius
   }, ownerState.variant === 'outlined' && {
     border: `1px solid ${(theme.vars || theme).palette.divider}`
-  }, ownerState.variant === 'elevation' && _extends$3({
+  }, ownerState.variant === 'elevation' && _extends$1({
     boxShadow: (theme.vars || theme).shadows[ownerState.elevation]
   }, !theme.vars && theme.palette.mode === 'dark' && {
     backgroundImage: `linear-gradient(${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))}, ${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))})`
@@ -11681,7 +11681,7 @@ const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
       variant = 'elevation'
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$g);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component,
     elevation,
     square,
@@ -11695,7 +11695,7 @@ const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
       console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join('\n'));
     }
   }
-  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$1({
     as: component,
     ownerState: ownerState,
     className: clsx(classes.root, className),
@@ -11787,7 +11787,7 @@ const TypographyRoot = styled('span', {
 })(({
   theme,
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   margin: 0
 }, ownerState.variant === 'inherit' && {
   // Some elements, like <button> on Chrome have default font that doesn't inherit, reset this.
@@ -11834,7 +11834,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
     name: 'MuiTypography'
   });
   const color = transformDeprecatedColors(themeProps.color);
-  const props = extendSxProp(_extends$3({}, themeProps, {
+  const props = extendSxProp(_extends$1({}, themeProps, {
     color
   }));
   const {
@@ -11848,7 +11848,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
       variantMapping = defaultVariantMapping
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$f);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     align,
     color,
     className,
@@ -11861,7 +11861,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
   });
   const Component = component || (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) || 'span';
   const classes = useUtilityClasses$c(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$1({
     as: Component,
     ref: ref,
     ownerState: ownerState,
@@ -13977,7 +13977,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
     }
   };
   return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
-    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$3({
+    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$1({
       value: value,
       onChange: handleChange,
       ref: handleRef
@@ -13991,7 +13991,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
       readOnly: true,
       ref: shadowRef,
       tabIndex: -1,
-      style: _extends$3({}, styles$1.shadow, style, {
+      style: _extends$1({}, styles$1.shadow, style, {
         paddingTop: 0,
         paddingBottom: 0
       })
@@ -14063,7 +14063,7 @@ function useFormControl() {
 }
 
 function GlobalStyles(props) {
-  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$3({}, props, {
+  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$1({}, props, {
     defaultTheme: defaultTheme$1,
     themeId: THEME_ID
   }));
@@ -14148,7 +14148,7 @@ const InputBaseRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$3({}, theme.typography.body1, {
+}) => _extends$1({}, theme.typography.body1, {
   color: (theme.vars || theme).palette.text.primary,
   lineHeight: '1.4375em',
   // 23px
@@ -14162,7 +14162,7 @@ const InputBaseRoot = styled('div', {
     color: (theme.vars || theme).palette.text.disabled,
     cursor: 'default'
   }
-}, ownerState.multiline && _extends$3({
+}, ownerState.multiline && _extends$1({
   padding: '4px 0 5px'
 }, ownerState.size === 'small' && {
   paddingTop: 1
@@ -14178,7 +14178,7 @@ const InputBaseComponent = styled('input', {
   ownerState
 }) => {
   const light = theme.palette.mode === 'light';
-  const placeholder = _extends$3({
+  const placeholder = _extends$1({
     color: 'currentColor'
   }, theme.vars ? {
     opacity: theme.vars.opacity.inputPlaceholder
@@ -14197,7 +14197,7 @@ const InputBaseComponent = styled('input', {
   } : {
     opacity: light ? 0.42 : 0.5
   };
-  return _extends$3({
+  return _extends$1({
     font: 'inherit',
     letterSpacing: 'inherit',
     color: 'currentColor',
@@ -14469,13 +14469,13 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           console.warn('MUI: You can not use the `minRows` or `maxRows` props when the input `rows` prop is set.');
         }
       }
-      inputProps = _extends$3({
+      inputProps = _extends$1({
         type: undefined,
         minRows: rows,
         maxRows: rows
       }, inputProps);
     } else {
-      inputProps = _extends$3({
+      inputProps = _extends$1({
         type: undefined,
         maxRows,
         minRows
@@ -14494,7 +14494,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       muiFormControl.setAdornedStart(Boolean(startAdornment));
     }
   }, [muiFormControl, startAdornment]);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     color: fcs.color || 'primary',
     disabled: fcs.disabled,
     endAdornment,
@@ -14512,10 +14512,10 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
   const Root = slots.root || components.Root || InputBaseRoot;
   const rootProps = slotProps.root || componentsProps.root || {};
   const Input = slots.input || components.Input || InputBaseComponent;
-  inputProps = _extends$3({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
+  inputProps = _extends$1({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
   return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
-    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$3({}, rootProps, !isHostComponent(Root) && {
-      ownerState: _extends$3({}, ownerState, rootProps.ownerState)
+    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$1({}, rootProps, !isHostComponent(Root) && {
+      ownerState: _extends$1({}, ownerState, rootProps.ownerState)
     }, {
       ref: ref,
       onClick: handleClick
@@ -14523,7 +14523,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       className: clsx(classes.root, rootProps.className, className, readOnly && 'MuiInputBase-readOnly'),
       children: [startAdornment, /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
         value: null,
-        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$3({
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$1({
           ownerState: ownerState,
           "aria-invalid": fcs.error,
           "aria-describedby": ariaDescribedby,
@@ -14544,7 +14544,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           type: type
         }, inputProps, !isHostComponent(Input) && {
           as: InputComponent,
-          ownerState: _extends$3({}, ownerState, inputProps.ownerState)
+          ownerState: _extends$1({}, ownerState, inputProps.ownerState)
         }, {
           ref: handleInputRef,
           className: clsx(classes.input, inputProps.className, readOnly && 'MuiInputBase-readOnly'),
@@ -14552,7 +14552,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           onChange: handleChange,
           onFocus: handleFocus
         }))
-      }), endAdornment, renderSuffix ? renderSuffix(_extends$3({}, fcs, {
+      }), endAdornment, renderSuffix ? renderSuffix(_extends$1({}, fcs, {
         startAdornment
       })) : null]
     }))]
@@ -14793,7 +14793,7 @@ var InputBase$1 = InputBase;
 function getInputUtilityClass(slot) {
   return generateUtilityClass('MuiInput', slot);
 }
-const inputClasses = _extends$3({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
+const inputClasses = _extends$1({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
 
 const _excluded$c = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
 const styles = {
@@ -14887,7 +14887,7 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
       addEndListener(nodeRef.current, next);
     }
   };
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$1({
     appear: appear,
     in: inProp,
     nodeRef: nodeRef ,
@@ -14901,8 +14901,8 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
     timeout: timeout
   }, other, {
     children: (state, childProps) => {
-      return /*#__PURE__*/React$1.cloneElement(children, _extends$3({
-        style: _extends$3({
+      return /*#__PURE__*/React$1.cloneElement(children, _extends$1({
+        style: _extends$1({
           opacity: 0,
           visibility: state === 'exited' && !inProp ? 'hidden' : undefined
         }, styles[state], style, children.props.style),
@@ -15014,7 +15014,7 @@ const BackdropRoot = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   position: 'fixed',
   display: 'flex',
   alignItems: 'center',
@@ -15048,22 +15048,22 @@ const Backdrop = /*#__PURE__*/React$1.forwardRef(function Backdrop(inProps, ref)
       transitionDuration
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$b);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component,
     invisible
   });
   const classes = useUtilityClasses$a(ownerState);
   const rootSlotProps = (_slotProps$root = slotProps.root) != null ? _slotProps$root : componentsProps.root;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$1({
     in: open,
     timeout: transitionDuration
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$3({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$1({
       "aria-hidden": true
     }, rootSlotProps, {
       as: (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : component,
       className: clsx(classes.root, className, rootSlotProps == null ? void 0 : rootSlotProps.className),
-      ownerState: _extends$3({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
+      ownerState: _extends$1({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
       classes: classes,
       ref: ref,
       children: children
@@ -15871,8 +15871,8 @@ function useModal(parameters) {
     // The custom event handlers shouldn't be spread on the root element
     delete propsEventHandlers.onTransitionEnter;
     delete propsEventHandlers.onTransitionExited;
-    const externalEventHandlers = _extends$3({}, propsEventHandlers, otherHandlers);
-    return _extends$3({
+    const externalEventHandlers = _extends$1({}, propsEventHandlers, otherHandlers);
+    return _extends$1({
       role: 'presentation'
     }, externalEventHandlers, {
       onKeyDown: createHandleKeyDown(externalEventHandlers),
@@ -15881,7 +15881,7 @@ function useModal(parameters) {
   };
   const getBackdropProps = (otherHandlers = {}) => {
     const externalEventHandlers = otherHandlers;
-    return _extends$3({
+    return _extends$1({
       'aria-hidden': true
     }, externalEventHandlers, {
       onClick: createHandleBackdropClick(externalEventHandlers),
@@ -15951,7 +15951,7 @@ const ModalRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   position: 'fixed',
   zIndex: (theme.vars || theme).zIndex.modal,
   right: 0,
@@ -16015,7 +16015,7 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
       // eslint-disable-next-line react/prop-types
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$a);
-  const propsWithDefaults = _extends$3({}, props, {
+  const propsWithDefaults = _extends$1({}, props, {
     closeAfterTransition,
     disableAutoFocus,
     disableEnforceFocus,
@@ -16034,10 +16034,10 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     isTopModal,
     exited,
     hasTransition
-  } = useModal(_extends$3({}, propsWithDefaults, {
+  } = useModal(_extends$1({}, propsWithDefaults, {
     rootRef: ref
   }));
-  const ownerState = _extends$3({}, propsWithDefaults, {
+  const ownerState = _extends$1({}, propsWithDefaults, {
     exited
   });
   const classes = useUtilityClasses$9(ownerState);
@@ -16076,7 +16076,7 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     externalSlotProps: backdropSlotProps,
     additionalProps: BackdropProps,
     getSlotProps: otherHandlers => {
-      return getBackdropProps(_extends$3({}, otherHandlers, {
+      return getBackdropProps(_extends$1({}, otherHandlers, {
         onClick: e => {
           if (onBackdropClick) {
             onBackdropClick(e);
@@ -16097,8 +16097,8 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     ref: portalRef,
     container: container,
     disablePortal: disablePortal,
-    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$3({}, rootProps, {
-      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$3({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
+    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$1({}, rootProps, {
+      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$1({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
         disableEnforceFocus: disableEnforceFocus,
         disableAutoFocus: disableAutoFocus,
         disableRestoreFocus: disableRestoreFocus,
@@ -16346,7 +16346,7 @@ const DialogContainer = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   height: '100%',
   '@media print': {
     height: 'auto'
@@ -16381,7 +16381,7 @@ const DialogPaper = styled(Paper, {
 })(({
   theme,
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   margin: 32,
   position: 'relative',
   overflowY: 'auto',
@@ -16465,7 +16465,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
       TransitionProps
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$9);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     disableEscapeKeyDown,
     fullScreen,
     fullWidth,
@@ -16502,14 +16502,14 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
       titleId: ariaLabelledby
     };
   }, [ariaLabelledby]);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$1({
     className: clsx(classes.root, className),
     closeAfterTransition: true,
     components: {
       Backdrop: DialogBackdrop
     },
     componentsProps: {
-      backdrop: _extends$3({
+      backdrop: _extends$1({
         transitionDuration,
         as: BackdropComponent
       }, BackdropProps)
@@ -16521,7 +16521,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
     onClick: handleBackdropClick,
     ownerState: ownerState
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$3({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$1({
       appear: true,
       in: open,
       timeout: transitionDuration,
@@ -16531,7 +16531,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
         className: clsx(classes.container),
         onMouseDown: handleMouseDown,
         ownerState: ownerState,
-        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$3({
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$1({
           as: PaperComponent,
           elevation: 24,
           role: "dialog",
@@ -16749,7 +16749,7 @@ const useUtilityClasses$7 = ownerState => {
     input: ['input']
   };
   const composedClasses = composeClasses(slots, getInputUtilityClass, classes);
-  return _extends$3({}, classes, composedClasses);
+  return _extends$1({}, classes, composedClasses);
 };
 const InputRoot = styled(InputBaseRoot, {
   shouldForwardProp: prop => rootShouldForwardProp(prop) || prop === 'classes',
@@ -16770,7 +16770,7 @@ const InputRoot = styled(InputBaseRoot, {
   if (theme.vars) {
     bottomLineColor = `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})`;
   }
-  return _extends$3({
+  return _extends$1({
     position: 'relative'
   }, ownerState.formControl && {
     'label + &': {
@@ -16862,7 +16862,7 @@ const Input = /*#__PURE__*/React$1.forwardRef(function Input(inProps, ref) {
   const componentsProps = (slotProps != null ? slotProps : componentsPropsProp) ? deepmerge$1(slotProps != null ? slotProps : componentsPropsProp, inputComponentsProps) : inputComponentsProps;
   const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : InputRoot;
   const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : InputInput;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$1({
     slots: {
       root: RootSlot,
       input: InputSlot
@@ -17099,7 +17099,7 @@ const InputAdornmentRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   display: 'flex',
   height: '0.01em',
   // Fix IE11 flexbox alignment. To remove at some point.
@@ -17149,7 +17149,7 @@ const InputAdornment = /*#__PURE__*/React$1.forwardRef(function InputAdornment(i
   if (muiFormControl && !variant) {
     variant = muiFormControl.variant;
   }
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     hiddenLabel: muiFormControl.hiddenLabel,
     size: muiFormControl.size,
     disablePointerEvents,
@@ -17159,7 +17159,7 @@ const InputAdornment = /*#__PURE__*/React$1.forwardRef(function InputAdornment(i
   const classes = useUtilityClasses$6(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
     value: null,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$3({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$1({
       as: component,
       ownerState: ownerState,
       className: clsx(classes.root, className),
@@ -17262,12 +17262,12 @@ const TableRoot = styled('table', {
 })(({
   theme,
   ownerState
-}) => _extends$3({
+}) => _extends$1({
   display: 'table',
   width: '100%',
   borderCollapse: 'collapse',
   borderSpacing: 0,
-  '& caption': _extends$3({}, theme.typography.body2, {
+  '& caption': _extends$1({}, theme.typography.body2, {
     padding: theme.spacing(2),
     color: (theme.vars || theme).palette.text.secondary,
     textAlign: 'left',
@@ -17290,7 +17290,7 @@ const Table = /*#__PURE__*/React$1.forwardRef(function Table(inProps, ref) {
       stickyHeader = false
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$6);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component,
     padding,
     size,
@@ -17304,7 +17304,7 @@ const Table = /*#__PURE__*/React$1.forwardRef(function Table(inProps, ref) {
   }), [padding, size, stickyHeader]);
   return /*#__PURE__*/jsxRuntimeExports.jsx(TableContext.Provider, {
     value: table,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableRoot, _extends$3({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableRoot, _extends$1({
       as: component,
       role: component === defaultComponent$3 ? null : 'table',
       ref: ref,
@@ -17402,13 +17402,13 @@ const TableBody = /*#__PURE__*/React$1.forwardRef(function TableBody(inProps, re
       component = defaultComponent$2
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$5);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component
   });
   const classes = useUtilityClasses$4(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
     value: tablelvl2$1,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableBodyRoot, _extends$3({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableBodyRoot, _extends$1({
       className: clsx(classes.root, className),
       as: component,
       ref: ref,
@@ -17477,7 +17477,7 @@ const TableCellRoot = styled('td', {
 })(({
   theme,
   ownerState
-}) => _extends$3({}, theme.typography.body2, {
+}) => _extends$1({}, theme.typography.body2, {
   display: 'table-cell',
   verticalAlign: 'inherit',
   // Workaround for a rendering bug with spanned columns in Chrome 62.0.
@@ -17566,7 +17566,7 @@ const TableCell = /*#__PURE__*/React$1.forwardRef(function TableCell(inProps, re
     scope = 'col';
   }
   const variant = variantProp || tablelvl2 && tablelvl2.variant;
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     align,
     component,
     padding: paddingProp || (table && table.padding ? table.padding : 'normal'),
@@ -17580,7 +17580,7 @@ const TableCell = /*#__PURE__*/React$1.forwardRef(function TableCell(inProps, re
   if (sortDirection) {
     ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
   }
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableCellRoot, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TableCellRoot, _extends$1({
     as: component,
     ref: ref,
     className: clsx(classes.root, className),
@@ -17681,11 +17681,11 @@ const TableContainer = /*#__PURE__*/React$1.forwardRef(function TableContainer(i
       component = 'div'
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$3);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component
   });
   const classes = useUtilityClasses$2(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableContainerRoot, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TableContainerRoot, _extends$1({
     ref: ref,
     as: component,
     className: clsx(classes.root, className),
@@ -17756,13 +17756,13 @@ const TableHead = /*#__PURE__*/React$1.forwardRef(function TableHead(inProps, re
       component = defaultComponent$1
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded$2);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component
   });
   const classes = useUtilityClasses$1(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
     value: tablelvl2,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableHeadRoot, _extends$3({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableHeadRoot, _extends$1({
       as: component,
       className: clsx(classes.root, className),
       ref: ref,
@@ -17863,7 +17863,7 @@ const TableRow = /*#__PURE__*/React$1.forwardRef(function TableRow(inProps, ref)
     } = props,
     other = _objectWithoutPropertiesLoose$1(props, _excluded);
   const tablelvl2 = React$1.useContext(Tablelvl2Context);
-  const ownerState = _extends$3({}, props, {
+  const ownerState = _extends$1({}, props, {
     component,
     hover,
     selected,
@@ -17871,7 +17871,7 @@ const TableRow = /*#__PURE__*/React$1.forwardRef(function TableRow(inProps, ref)
     footer: tablelvl2 && tablelvl2.variant === 'footer'
   });
   const classes = useUtilityClasses(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableRowRoot, _extends$3({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TableRowRoot, _extends$1({
     as: component,
     ref: ref,
     className: clsx(classes.root, className),
@@ -35596,12 +35596,12 @@ var lodash_debounce = debounce;
 
 var debounce$1 = /*@__PURE__*/getDefaultExportFromCjs(lodash_debounce);
 
-var useIsomorphicLayoutEffect$2 = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+var useIsomorphicLayoutEffect$1 = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 // src/useEventListener/useEventListener.ts
 function useEventListener(eventName, handler, element, options) {
   const savedHandler = useRef(handler);
-  useIsomorphicLayoutEffect$2(() => {
+  useIsomorphicLayoutEffect$1(() => {
     savedHandler.current = handler;
   }, [handler]);
   useEffect(() => {
@@ -35621,7 +35621,7 @@ function useEventCallback(fn) {
   const ref = useRef(() => {
     throw new Error("Cannot call an event handler while rendering.");
   });
-  useIsomorphicLayoutEffect$2(() => {
+  useIsomorphicLayoutEffect$1(() => {
     ref.current = fn;
   }, [fn]);
   return useCallback((...args) => ref.current(...args), [ref]);
@@ -35769,7 +35769,7 @@ function useElementSize(options = {}) {
     setSize(readValue());
   }, [ref == null ? void 0 : ref.offsetHeight, ref == null ? void 0 : ref.offsetWidth]);
   useEventListener("resize", handleSize);
-  useIsomorphicLayoutEffect$2(() => {
+  useIsomorphicLayoutEffect$1(() => {
     handleSize();
   }, [ref == null ? void 0 : ref.offsetHeight, ref == null ? void 0 : ref.offsetWidth]);
   const result = [setRef, size];
@@ -35808,7 +35808,7 @@ function useWindowSize(options = {}) {
     });
   }
   useEventListener("resize", handleSize);
-  useIsomorphicLayoutEffect$2(() => {
+  useIsomorphicLayoutEffect$1(() => {
     handleSize();
   }, []);
   return windowSize;
@@ -35832,7 +35832,7 @@ var fromEntries = function fromEntries(entries) {
  * Small wrapper around `useLayoutEffect` to get rid of the warning on SSR envs
  */
 
-var useIsomorphicLayoutEffect$1 = typeof window !== 'undefined' && window.document && window.document.createElement ? React$1.useLayoutEffect : React$1.useEffect;
+var useIsomorphicLayoutEffect = typeof window !== 'undefined' && window.document && window.document.createElement ? React$1.useLayoutEffect : React$1.useEffect;
 
 /* global Map:readonly, Set:readonly, ArrayBuffer:readonly */
 
@@ -36047,12 +36047,12 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
     }
   }, [optionsWithDefaults.onFirstUpdate, optionsWithDefaults.placement, optionsWithDefaults.strategy, optionsWithDefaults.modifiers, updateStateModifier]);
   var popperInstanceRef = React$1.useRef();
-  useIsomorphicLayoutEffect$1(function () {
+  useIsomorphicLayoutEffect(function () {
     if (popperInstanceRef.current) {
       popperInstanceRef.current.setOptions(popperOptions);
     }
   }, [popperOptions]);
-  useIsomorphicLayoutEffect$1(function () {
+  useIsomorphicLayoutEffect(function () {
     if (referenceElement == null || popperElement == null) {
       return;
     }
@@ -104761,511 +104761,14 @@ var useUserContext = function useUserContext() {
   return context;
 };
 
-/**
- * @remix-run/router v1.19.1
- *
- * Copyright (c) Remix Software Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.md file in the root directory of this source tree.
- *
- * @license MIT
- */
-function _extends$1() {
-  _extends$1 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
+var useNavigate = function useNavigate() {
+  var push = function push(path) {
+    window.location.href += path;
   };
-  return _extends$1.apply(this, arguments);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//#region Types and Constants
-////////////////////////////////////////////////////////////////////////////////
-/**
- * Actions represent the type of change to a location value.
- */
-var Action;
-(function (Action) {
-  /**
-   * A POP indicates a change to an arbitrary index in the history stack, such
-   * as a back or forward navigation. It does not describe the direction of the
-   * navigation, only that the current index changed.
-   *
-   * Note: This is the default action for newly created history objects.
-   */
-  Action["Pop"] = "POP";
-  /**
-   * A PUSH indicates a new entry being added to the history stack, such as when
-   * a link is clicked and a new page loads. When this happens, all subsequent
-   * entries in the stack are lost.
-   */
-  Action["Push"] = "PUSH";
-  /**
-   * A REPLACE indicates the entry at the current index in the history stack
-   * being replaced by a new one.
-   */
-  Action["Replace"] = "REPLACE";
-})(Action || (Action = {}));
-function invariant(value, message) {
-  if (value === false || value === null || typeof value === "undefined") {
-    throw new Error(message);
-  }
-}
-function warning(cond, message) {
-  if (!cond) {
-    // eslint-disable-next-line no-console
-    if (typeof console !== "undefined") console.warn(message);
-    try {
-      // Welcome to debugging history!
-      //
-      // This error is thrown as a convenience, so you can more easily
-      // find the source for a warning that appears in the console by
-      // enabling "pause on exceptions" in your JavaScript debugger.
-      throw new Error(message);
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
-  }
-}
-/**
- * Parses a string URL path into its separate pathname, search, and hash components.
- */
-function parsePath(path) {
-  let parsedPath = {};
-  if (path) {
-    let hashIndex = path.indexOf("#");
-    if (hashIndex >= 0) {
-      parsedPath.hash = path.substr(hashIndex);
-      path = path.substr(0, hashIndex);
-    }
-    let searchIndex = path.indexOf("?");
-    if (searchIndex >= 0) {
-      parsedPath.search = path.substr(searchIndex);
-      path = path.substr(0, searchIndex);
-    }
-    if (path) {
-      parsedPath.pathname = path;
-    }
-  }
-  return parsedPath;
-}
-//#endregion
-
-var ResultType;
-(function (ResultType) {
-  ResultType["data"] = "data";
-  ResultType["deferred"] = "deferred";
-  ResultType["redirect"] = "redirect";
-  ResultType["error"] = "error";
-})(ResultType || (ResultType = {}));
-/**
- * Returns a resolved path object relative to the given pathname.
- *
- * @see https://reactrouter.com/utils/resolve-path
- */
-function resolvePath(to, fromPathname) {
-  if (fromPathname === void 0) {
-    fromPathname = "/";
-  }
-  let {
-    pathname: toPathname,
-    search = "",
-    hash = ""
-  } = typeof to === "string" ? parsePath(to) : to;
-  let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
   return {
-    pathname,
-    search: normalizeSearch(search),
-    hash: normalizeHash(hash)
+    push: push
   };
-}
-function resolvePathname(relativePath, fromPathname) {
-  let segments = fromPathname.replace(/\/+$/, "").split("/");
-  let relativeSegments = relativePath.split("/");
-  relativeSegments.forEach(segment => {
-    if (segment === "..") {
-      // Keep the root "" segment so the pathname starts at /
-      if (segments.length > 1) segments.pop();
-    } else if (segment !== ".") {
-      segments.push(segment);
-    }
-  });
-  return segments.length > 1 ? segments.join("/") : "/";
-}
-function getInvalidPathError(char, field, dest, path) {
-  return "Cannot include a '" + char + "' character in a manually specified " + ("`to." + field + "` field [" + JSON.stringify(path) + "].  Please separate it out to the ") + ("`to." + dest + "` field. Alternatively you may provide the full path as ") + "a string in <Link to=\"...\"> and the router will parse it for you.";
-}
-/**
- * @private
- *
- * When processing relative navigation we want to ignore ancestor routes that
- * do not contribute to the path, such that index/pathless layout routes don't
- * interfere.
- *
- * For example, when moving a route element into an index route and/or a
- * pathless layout route, relative link behavior contained within should stay
- * the same.  Both of the following examples should link back to the root:
- *
- *   <Route path="/">
- *     <Route path="accounts" element={<Link to=".."}>
- *   </Route>
- *
- *   <Route path="/">
- *     <Route path="accounts">
- *       <Route element={<AccountsLayout />}>       // <-- Does not contribute
- *         <Route index element={<Link to=".."} />  // <-- Does not contribute
- *       </Route
- *     </Route>
- *   </Route>
- */
-function getPathContributingMatches(matches) {
-  return matches.filter((match, index) => index === 0 || match.route.path && match.route.path.length > 0);
-}
-// Return the array of pathnames for the current route matches - used to
-// generate the routePathnames input for resolveTo()
-function getResolveToMatches(matches, v7_relativeSplatPath) {
-  let pathMatches = getPathContributingMatches(matches);
-  // When v7_relativeSplatPath is enabled, use the full pathname for the leaf
-  // match so we include splat values for "." links.  See:
-  // https://github.com/remix-run/react-router/issues/11052#issuecomment-1836589329
-  if (v7_relativeSplatPath) {
-    return pathMatches.map((match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase);
-  }
-  return pathMatches.map(match => match.pathnameBase);
-}
-/**
- * @private
- */
-function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
-  if (isPathRelative === void 0) {
-    isPathRelative = false;
-  }
-  let to;
-  if (typeof toArg === "string") {
-    to = parsePath(toArg);
-  } else {
-    to = _extends$1({}, toArg);
-    invariant(!to.pathname || !to.pathname.includes("?"), getInvalidPathError("?", "pathname", "search", to));
-    invariant(!to.pathname || !to.pathname.includes("#"), getInvalidPathError("#", "pathname", "hash", to));
-    invariant(!to.search || !to.search.includes("#"), getInvalidPathError("#", "search", "hash", to));
-  }
-  let isEmptyPath = toArg === "" || to.pathname === "";
-  let toPathname = isEmptyPath ? "/" : to.pathname;
-  let from;
-  // Routing is relative to the current pathname if explicitly requested.
-  //
-  // If a pathname is explicitly provided in `to`, it should be relative to the
-  // route context. This is explained in `Note on `<Link to>` values` in our
-  // migration guide from v5 as a means of disambiguation between `to` values
-  // that begin with `/` and those that do not. However, this is problematic for
-  // `to` values that do not provide a pathname. `to` can simply be a search or
-  // hash string, in which case we should assume that the navigation is relative
-  // to the current location's pathname and *not* the route pathname.
-  if (toPathname == null) {
-    from = locationPathname;
-  } else {
-    let routePathnameIndex = routePathnames.length - 1;
-    // With relative="route" (the default), each leading .. segment means
-    // "go up one route" instead of "go up one URL segment".  This is a key
-    // difference from how <a href> works and a major reason we call this a
-    // "to" value instead of a "href".
-    if (!isPathRelative && toPathname.startsWith("..")) {
-      let toSegments = toPathname.split("/");
-      while (toSegments[0] === "..") {
-        toSegments.shift();
-        routePathnameIndex -= 1;
-      }
-      to.pathname = toSegments.join("/");
-    }
-    from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
-  }
-  let path = resolvePath(to, from);
-  // Ensure the pathname has a trailing slash if the original "to" had one
-  let hasExplicitTrailingSlash = toPathname && toPathname !== "/" && toPathname.endsWith("/");
-  // Or if this was a link to the current path which has a trailing slash
-  let hasCurrentTrailingSlash = (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
-  if (!path.pathname.endsWith("/") && (hasExplicitTrailingSlash || hasCurrentTrailingSlash)) {
-    path.pathname += "/";
-  }
-  return path;
-}
-/**
- * @private
- */
-const joinPaths = paths => paths.join("/").replace(/\/\/+/g, "/");
-/**
- * @private
- */
-const normalizeSearch = search => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
-/**
- * @private
- */
-const normalizeHash = hash => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
-
-const validMutationMethodsArr = ["post", "put", "patch", "delete"];
-new Set(validMutationMethodsArr);
-const validRequestMethodsArr = ["get", ...validMutationMethodsArr];
-new Set(validRequestMethodsArr);
-
-/**
- * React Router v6.26.1
- *
- * Copyright (c) Remix Software Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.md file in the root directory of this source tree.
- *
- * @license MIT
- */
-
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends.apply(this, arguments);
-}
-
-// Create react-specific types from the agnostic types in @remix-run/router to
-// export from react-router
-const DataRouterContext = /*#__PURE__*/React$1.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  DataRouterContext.displayName = "DataRouter";
-}
-const DataRouterStateContext = /*#__PURE__*/React$1.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  DataRouterStateContext.displayName = "DataRouterState";
-}
-const AwaitContext = /*#__PURE__*/React$1.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  AwaitContext.displayName = "Await";
-}
-
-/**
- * A Navigator is a "location changer"; it's how you get to different locations.
- *
- * Every history instance conforms to the Navigator interface, but the
- * distinction is useful primarily when it comes to the low-level `<Router>` API
- * where both the location and a navigator must be provided separately in order
- * to avoid "tearing" that may occur in a suspense-enabled app if the action
- * and/or location were to be read directly from the history instance.
- */
-
-const NavigationContext = /*#__PURE__*/React$1.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  NavigationContext.displayName = "Navigation";
-}
-const LocationContext = /*#__PURE__*/React$1.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  LocationContext.displayName = "Location";
-}
-const RouteContext = /*#__PURE__*/React$1.createContext({
-  outlet: null,
-  matches: [],
-  isDataRoute: false
-});
-if (process.env.NODE_ENV !== "production") {
-  RouteContext.displayName = "Route";
-}
-const RouteErrorContext = /*#__PURE__*/React$1.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  RouteErrorContext.displayName = "RouteError";
-}
-
-/**
- * Returns true if this component is a descendant of a `<Router>`.
- *
- * @see https://reactrouter.com/hooks/use-in-router-context
- */
-function useInRouterContext() {
-  return React$1.useContext(LocationContext) != null;
-}
-
-/**
- * Returns the current location object, which represents the current URL in web
- * browsers.
- *
- * Note: If you're using this it may mean you're doing some of your own
- * "routing" in your app, and we'd like to know what your use case is. We may
- * be able to provide something higher-level to better suit your needs.
- *
- * @see https://reactrouter.com/hooks/use-location
- */
-function useLocation() {
-  !useInRouterContext() ? process.env.NODE_ENV !== "production" ? invariant(false, // TODO: This error is probably because they somehow have 2 versions of the
-  // router loaded. We can help them understand how to avoid that.
-  "useLocation() may be used only in the context of a <Router> component.") : invariant(false) : void 0;
-  return React$1.useContext(LocationContext).location;
-}
-
-/**
- * The interface for the navigate.push() function returned from usenavigate.push().
- */
-
-const navigateEffectWarning = "You should call navigate.push() in a React.useEffect(), not when " + "your component is first rendered.";
-
-// Mute warnings for calls to useNavigate in SSR environments
-function useIsomorphicLayoutEffect(cb) {
-  let isStatic = React$1.useContext(NavigationContext).static;
-  if (!isStatic) {
-    // We should be able to get rid of this once react 18.3 is released
-    // See: https://github.com/facebook/react/pull/26395
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React$1.useLayoutEffect(cb);
-  }
-}
-
-/**
- * Returns an imperative method for changing the location. Used by `<Link>`s, but
- * may also be used by other elements to change the location.
- *
- * @see https://reactrouter.com/hooks/use-navigate
- */
-function usenavigate.push() {
-  let {
-    isDataRoute
-  } = React$1.useContext(RouteContext);
-  // Conditional usage is OK here because the usage of a data router is static
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  return isDataRoute ? useNavigateStable() : useNavigateUnstable();
-}
-function useNavigateUnstable() {
-  !useInRouterContext() ? process.env.NODE_ENV !== "production" ? invariant(false, // TODO: This error is probably because they somehow have 2 versions of the
-  // router loaded. We can help them understand how to avoid that.
-  "usenavigate.push() may be used only in the context of a <Router> component.") : invariant(false) : void 0;
-  let dataRouterContext = React$1.useContext(DataRouterContext);
-  let {
-    basename,
-    future,
-    navigator
-  } = React$1.useContext(NavigationContext);
-  let {
-    matches
-  } = React$1.useContext(RouteContext);
-  let {
-    pathname: locationPathname
-  } = useLocation();
-  let routePathnamesJson = JSON.stringify(getResolveToMatches(matches, future.v7_relativeSplatPath));
-  let activeRef = React$1.useRef(false);
-  useIsomorphicLayoutEffect(() => {
-    activeRef.current = true;
-  });
-  let navigate = React$1.useCallback(function (to, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    process.env.NODE_ENV !== "production" ? warning(activeRef.current, navigateEffectWarning) : void 0;
-
-    // Short circuit here since if this happens on first render the navigate
-    // is useless because we haven't wired up our history listener yet
-    if (!activeRef.current) return;
-    if (typeof to === "number") {
-      navigator.go(to);
-      return;
-    }
-    let path = resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, options.relative === "path");
-
-    // If we're operating within a basename, prepend it to the pathname prior
-    // to handing off to history (but only if we're not in a data router,
-    // otherwise it'll prepend the basename inside of the router).
-    // If this is a root navigation, then we navigate to the raw basename
-    // which allows the basename to have full control over the presence of a
-    // trailing slash on root links
-    if (dataRouterContext == null && basename !== "/") {
-      path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
-    }
-    (!!options.replace ? navigator.replace : navigator.push)(path, options.state, options);
-  }, [basename, navigator, routePathnamesJson, locationPathname, dataRouterContext]);
-  return navigate;
-}
-var DataRouterHook = /*#__PURE__*/function (DataRouterHook) {
-  DataRouterHook["UseBlocker"] = "useBlocker";
-  DataRouterHook["UseRevalidator"] = "useRevalidator";
-  DataRouterHook["UseNavigateStable"] = "useNavigate";
-  return DataRouterHook;
-}(DataRouterHook || {});
-var DataRouterStateHook = /*#__PURE__*/function (DataRouterStateHook) {
-  DataRouterStateHook["UseBlocker"] = "useBlocker";
-  DataRouterStateHook["UseLoaderData"] = "useLoaderData";
-  DataRouterStateHook["UseActionData"] = "useActionData";
-  DataRouterStateHook["UseRouteError"] = "useRouteError";
-  DataRouterStateHook["UseNavigation"] = "useNavigation";
-  DataRouterStateHook["UseRouteLoaderData"] = "useRouteLoaderData";
-  DataRouterStateHook["UseMatches"] = "useMatches";
-  DataRouterStateHook["UseRevalidator"] = "useRevalidator";
-  DataRouterStateHook["UseNavigateStable"] = "useNavigate";
-  DataRouterStateHook["UseRouteId"] = "useRouteId";
-  return DataRouterStateHook;
-}(DataRouterStateHook || {});
-function getDataRouterConsoleError(hookName) {
-  return hookName + " must be used within a data router.  See https://reactrouter.com/routers/picking-a-router.";
-}
-function useDataRouterContext(hookName) {
-  let ctx = React$1.useContext(DataRouterContext);
-  !ctx ? process.env.NODE_ENV !== "production" ? invariant(false, getDataRouterConsoleError(hookName)) : invariant(false) : void 0;
-  return ctx;
-}
-function useRouteContext(hookName) {
-  let route = React$1.useContext(RouteContext);
-  !route ? process.env.NODE_ENV !== "production" ? invariant(false, getDataRouterConsoleError(hookName)) : invariant(false) : void 0;
-  return route;
-}
-
-// Internal version with hookName-aware debugging
-function useCurrentRouteId(hookName) {
-  let route = useRouteContext(hookName);
-  let thisRoute = route.matches[route.matches.length - 1];
-  !thisRoute.route.id ? process.env.NODE_ENV !== "production" ? invariant(false, hookName + " can only be used on routes that contain a unique \"id\"") : invariant(false) : void 0;
-  return thisRoute.route.id;
-}
-
-/**
- * Stable version of useNavigate that is used when we are in the context of
- * a RouterProvider.
- */
-function useNavigateStable() {
-  let {
-    router
-  } = useDataRouterContext(DataRouterHook.UseNavigateStable);
-  let id = useCurrentRouteId(DataRouterStateHook.UseNavigateStable);
-  let activeRef = React$1.useRef(false);
-  useIsomorphicLayoutEffect(() => {
-    activeRef.current = true;
-  });
-  let navigate = React$1.useCallback(function (to, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    process.env.NODE_ENV !== "production" ? warning(activeRef.current, navigateEffectWarning) : void 0;
-
-    // Short circuit here since if this happens on first render the navigate
-    // is useless because we haven't wired up our router subscriber yet
-    if (!activeRef.current) return;
-    if (typeof to === "number") {
-      router.navigate.push(to);
-    } else {
-      router.navigate.push(to, _extends({
-        fromRouteId: id
-      }, options));
-    }
-  }, [router, id]);
-  return navigate;
-}
-new Promise(() => {});
+};
 
 var AstroSwitch = function AstroSwitch(props) {
   var _useState = useState(false),
@@ -105592,7 +105095,7 @@ var UpgradeDialog = function UpgradeDialog(props) {
     _useLocalStorage2 = _slicedToArray$1(_useLocalStorage, 2);
     _useLocalStorage2[0];
     var setUpgradedNotificationPending = _useLocalStorage2[1];
-  var navigate = usenavigate.push();
+  var navigate = useNavigate();
   var _useState = useState('US'),
     _useState2 = _slicedToArray$1(_useState, 2),
     locale = _useState2[0],
@@ -106068,7 +105571,7 @@ var SidebarItem = function SidebarItem(props) {
 };
 function Sidebar(props) {
   var user = useUserContext().user;
-  var navigate = usenavigate.push();
+  var navigate = useNavigate();
   var topItems = [{
     id: 'devices',
     //tourId: "devices-button",
@@ -107745,7 +107248,7 @@ var PAGE_DISPLAY_NAMES = {
   account: 'Account'
 };
 var MobileSideBar = function MobileSideBar(props) {
-  var navigate = usenavigate.push();
+  var navigate = useNavigate();
   return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
     children: [jsxRuntimeExports.jsx(Stack$1, {
       position: "absolute",

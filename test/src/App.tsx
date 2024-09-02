@@ -1,4 +1,3 @@
-import { BrowserRouter } from 'react-router-dom';
 import { AccountPage } from './dist';
 
 const App: React.FC = () => {

@@ -1,7 +1,7 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import PageLayout from './../../components/PageLayout';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
-import PlusIcon from './../../images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/PlusIcon.svg';
 import { Stack } from '@mui/system';
 import useNavigate from '../../hooks/useNavigate';
 import { IEnrichedContentBucket } from './common';

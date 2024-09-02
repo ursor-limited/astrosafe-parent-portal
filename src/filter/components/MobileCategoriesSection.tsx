@@ -1,5 +1,5 @@
 import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsUpIcon from './../../images/icons/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
+import ThumbsUpIcon from './../../images/ThumbsUpIcon.svgimages/icons/ThumbsUpIcon.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../../ui';
 import AstroSwitch from './../../components/AstroSwitch';

@@ -1,9 +1,9 @@
 import DynamicCardGrid from './../../components/DynamicCardGrid';
 import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
-import PlusIcon from './../../images/icons/PlusIcon.svg';
-import PencilIcon from './../../images/icons/Pencil.svg';
-import ArrowUpRightIcon from './../../images/icons/ArrowUpRight.svg';
+import PlusIcon from './../../images/PlusIcon.svg';
+import PencilIcon from './../../images/Pencil.svg';
+import ArrowUpRightIcon from './../../images/ArrowUpRight.svg';
 import { IDevice } from './../../filter/contents/common';
 import UrsorActionButton from './../../components/UrsorActionButton';
 import useNavigate from '../../hooks/useNavigate';

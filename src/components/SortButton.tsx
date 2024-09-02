@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import { Stack } from '@mui/system';
-import FilterIcon from './../images/icons/FilterIcon.svg';
+import FilterIcon from './../images/FilterIcon.svg';
 import { PALETTE, UrsorButton } from './../ui';
 import UrsorSelectList from './UrsorSelectList';
 import UrsorPopover from './UrsorPopover';

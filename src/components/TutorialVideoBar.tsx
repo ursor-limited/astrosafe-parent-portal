@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
-import PlayIcon from './../images/icons/PlayIcon.svgimages/icons/PlayIcon.svg';
+import PlayIcon from './../images/PlayIcon.svgimages/icons/PlayIcon.svg';
 import { PALETTE, Typography, UrsorButton } from './../ui';
 
-import X from './../images/icons/X.svg';
+import X from './../images/X.svg';
 import { useState } from 'react';
 
 const TutorialVideoBar = (props: {

@@ -4,7 +4,7 @@ import FolderCard from '../../components/FolderCard';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
 import useNavigate from '../../hooks/useNavigate';
 import { IEnrichedContentBucket } from './../../folders/contents/common';
-import PlusIcon from './../../images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/PlusIcon.svg';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
 import { IDevice } from './../../filter/contents/common';
 import ApiController from './../../api';

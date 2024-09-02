@@ -84,19 +84,14 @@ export default [
       resolve({
         extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
       }),
-      commonjs(),
       json(),
       css(),
+      commonjs(),
       url({
         limit: 0, // Disable inlining by setting the limit to 0 (0 bytes means all files will be copied)
         include: [
-          '**/*.png',
-          '**/*.jpg',
-          '**/*.jpeg',
-          '**/*.gif',
-          '**/*.svg',
-          '**/*.webp',
-        ], // Handle all common image file types
+          'src/images/**/*.{png,jpg,jpeg,gif,svg,webp}', // Adjust this path to be more specific if needed
+        ],
         emitFiles: true, // Ensure files are emitted to the output directory
         publicPath: 'assets/', // URL path for assets
         destDir: 'dist/assets',

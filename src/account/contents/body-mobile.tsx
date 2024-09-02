@@ -2,12 +2,12 @@ import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
 
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import VerifiedIcon from './../../images/icons/VerifiedIcon.svg';
-import LogOutIcon from './../../images/icons/LogOutIcon.svg';
-import PhoneIcon from './../../images/icons/PhoneIcon.svg';
-import PencilIcon from './../../images/icons/Pencil.svg';
-import ChevronRightIcon from './../../images/icons/ChevronRight.svg';
-import PersonIcon from './../../images/icons/PersonIcon.svg';
+import VerifiedIcon from './../../images/VerifiedIcon.svg';
+import LogOutIcon from './../../images/LogOutIcon.svg';
+import PhoneIcon from './../../images/PhoneIcon.svg';
+import PencilIcon from './../../images/Pencil.svg';
+import ChevronRightIcon from './../../images/ChevronRight.svg';
+import PersonIcon from './../../images/PersonIcon.svg';
 import {
   AstroPlanState,
   IUser,

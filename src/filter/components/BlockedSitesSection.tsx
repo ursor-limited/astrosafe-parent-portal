@@ -1,6 +1,6 @@
 import { AstroBentoCard } from './AstroBentoCard';
-import ThumbsDownIcon from './../../images/icons/ThumbsDownIcon.svgimages/icons/ThumbsDownIcon.svg';
-import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
+import ThumbsDownIcon from './../../images/ThumbsDownIcon.svgimages/icons/ThumbsDownIcon.svg';
+import TrashcanIcon from './../../images/TrashcanIcon.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorInputField } from './../../ui';
 import UrsorTable, {

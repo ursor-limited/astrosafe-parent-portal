@@ -11,8 +11,8 @@ import UrsorFadeIn from './../../components/UrsorFadeIn';
 
 import MobileDevicesSection from '../components/MobileDevicesSection';
 import TitleRow, { ITitleRowItem } from './../../components/TitleRow';
-import PencilIcon from './../../images/icons/Pencil.svg';
-import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
+import PencilIcon from './../../images/Pencil.svg';
+import TrashcanIcon from './../../images/TrashcanIcon.svg';
 import MobilePageLayout from './../../components/MobilePageLayout';
 import { IDevice } from './../../filter/contents/common';
 import ApiController, { getAbsoluteUrl } from './../../api';

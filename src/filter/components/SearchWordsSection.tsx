@@ -1,6 +1,6 @@
 import { AstroBentoCard } from './AstroBentoCard';
-import StopIcon from './../../images/icons/StopIcon.svgimages/icons/StopIcon.svg';
-import XIcon from './../../images/icons/X.svg';
+import StopIcon from './../../images/StopIcon.svgimages/icons/StopIcon.svg';
+import XIcon from './../../images/X.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography, UrsorInputField } from './../../ui';
 import { useState } from 'react';

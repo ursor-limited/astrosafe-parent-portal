@@ -6,7 +6,7 @@
 // import { isMobile } from "react-device-detect";
 // import NotificationContext from "./NotificationContext";
 // import AstroText from "../dashboard_DESTINED_FOR_THE_FURNACE/AstroText";
-// import PencilIcon from "src/images/icons/Pencil.svg";
+// import PencilIcon from "src/images/Pencil.svg";
 // import TextEditorToolbar from "./TextEditorToolBar";
 // import ApiController from "../api";
 // import { useUserContext } from "./UserContext";

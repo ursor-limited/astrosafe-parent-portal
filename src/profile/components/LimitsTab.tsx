@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
-import SearchIcon from './../../images/icons/SearchIcon.svg';
+import SearchIcon from './../../images/SearchIcon.svg';
 import _ from 'lodash';
 import AstroSwitch from './../../components/AstroSwitch';
 import RequestedSitesSection from './RequestedSitesSection';

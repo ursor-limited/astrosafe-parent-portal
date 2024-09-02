@@ -1,7 +1,7 @@
 import { Stack } from '@mui/system';
 
 import { PALETTE, Typography } from './../../ui';
-import PeopleIcon from './../../images/icons/PeopleIcon.svg';
+import PeopleIcon from './../../images/PeopleIcon.svg';
 import { IDevice } from '../contents/common';
 import { getInitials } from './../../account/contents/common';
 

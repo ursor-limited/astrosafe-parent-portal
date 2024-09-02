@@ -1,10 +1,10 @@
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../ui';
-import PeopleIcon from './../images/icons/PeopleIcon.svg';
-import FilterIcon from './../images/icons/FilterIcon.svg';
-import BookIcon from './../images/icons/BookIcon.svg';
-import VersionsIcon from './../images/icons/VersionsIcon.svg';
-import XIcon from './../images/icons/X.svg';
+import PeopleIcon from './../images/PeopleIcon.svg';
+import FilterIcon from './../images/FilterIcon.svg';
+import BookIcon from './../images/BookIcon.svg';
+import VersionsIcon from './../images/VersionsIcon.svg';
+import XIcon from './../images/X.svg';
 import _ from 'lodash';
 
 import { UserInitialsCircle } from './../account/contents/common';

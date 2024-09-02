@@ -1,8 +1,8 @@
 import { Stack, keyframes } from '@mui/system';
 import Play from './../images/play.svgimages/play.svg';
-import Sync from './../images/icons/Sync.svgimages/icons/Sync.svg';
-import FullScreenIcon from './../images/icons/FullScreen.svgimages/icons/FullScreen.svg';
-import NormalScreenIcon from './../images/icons/NormalScreen.svgimages/icons/NormalScreen.svg';
+import Sync from './../images/Sync.svgimages/icons/Sync.svg';
+import FullScreenIcon from './../images/FullScreen.svgimages/icons/FullScreen.svg';
+import NormalScreenIcon from './../images/NormalScreen.svgimages/icons/NormalScreen.svg';
 import KiteMark from './../images/kiteMark.svgimages/kiteMark.svg';
 import { useCallback, useEffect, useState } from 'react';
 import { PALETTE, Typography } from './../ui';

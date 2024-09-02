@@ -1,5 +1,5 @@
 import React from 'react';
-import PlusIcon from './../../images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/PlusIcon.svg';
 import { UrsorButton } from './../../ui';
 import { Stack } from '@mui/system';
 import UrsorFadeIn from '../../components/UrsorFadeIn';

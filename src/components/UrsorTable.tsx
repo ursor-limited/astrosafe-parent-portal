@@ -9,7 +9,7 @@ import { Box, Stack } from '@mui/material';
 import { IActionPopupItem } from './ActionPopup';
 import { alpha } from '@mui/system';
 import UrsorActionButton from './UrsorActionButton';
-import ArrowDownIcon from './../images/icons/ArrowDownIcon.svg';
+import ArrowDownIcon from './../images/ArrowDownIcon.svg';
 import _ from 'lodash';
 import { PALETTE, Typography } from './../ui';
 import dayjs from 'dayjs';

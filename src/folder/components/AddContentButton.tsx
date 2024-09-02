@@ -1,6 +1,6 @@
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../../ui';
-import PlusIcon from './../../images/icons/PlusIcon.svg';
+import PlusIcon from './../../images/PlusIcon.svg';
 
 export const AddContentButton = (props: {
   color: string;

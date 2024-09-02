@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Dialog, keyframes, Stack } from '@mui/material';
-import X from './../images/icons/X.svg';
-import ChevronLeft from './../images/icons/ChevronLeftIcon.svg';
+import X from './../images/X.svg';
+import ChevronLeft from './../images/ChevronLeftIcon.svg';
 import _ from 'lodash';
 import { useWindowSize } from 'usehooks-ts';
 import { ButtonVariant, UrsorButton } from './../ui/ursor-button';
