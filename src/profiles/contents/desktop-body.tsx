@@ -6,7 +6,7 @@ import PencilIcon from './../../images/icons/Pencil.svg';
 import ArrowUpRightIcon from './../../images/icons/ArrowUpRight.svg';
 import { IDevice } from './../../filter/contents/common';
 import UrsorActionButton from './../../components/UrsorActionButton';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import DeviceCard from '../components/DeviceCard';
 import QRCodeView from '../components/QRCodeView';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
@@ -60,7 +60,7 @@ const AllDevicesPageDesktopBody = (props: {
                       actions={[
                         {
                           text: 'Open',
-                          kallback: () => navigate(`/profiles/${d.id}`),
+                          kallback: () => navigate.push(`/profiles/${d.id}`),
                           icon: ArrowUpRightIcon,
                         },
                         {

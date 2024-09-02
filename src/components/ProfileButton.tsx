@@ -6,7 +6,7 @@ import { useState } from 'react';
 import ListUnorderedIcon from './../images/icons/ListUnorderedIcon.svgimages/icons/ListUnorderedIcon.svg';
 import CreditCardIcon from './../images/icons/CreditCard.svgimages/icons/CreditCard.svg';
 import LogOutIcon from './../images/icons/LogOutIcon.svg';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../hooks/useNavigate';
 import { useUserContext } from './UserContext';
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -139,7 +139,7 @@ const ProfileButton = (props: { light?: boolean }) => {
             </Stack>
 
             <ProfilePopupButton
-              callback={() => navigate('/dashboard')}
+              callback={() => navigate.push('/dashboard')}
               icon={ListUnorderedIcon}
               text="Dashboard"
             />

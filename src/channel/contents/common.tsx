@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { useCallback, useState } from 'react';
 import ApiController from './../../api';
 import PencilIcon from './../../images/icons/Pencil.svg';
@@ -49,11 +49,11 @@ const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {
       ? [
           {
             text: 'My Folders',
-            callback: () => navigate('/folders'),
+            callback: () => navigate.push('/folders'),
           },
           {
             text: folder?.title ?? '',
-            callback: () => navigate(`/folders/${folderId}`),
+            callback: () => navigate.push(`/folders/${folderId}`),
           },
         ]
       : []),
@@ -83,7 +83,7 @@ const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {
 
   const deleteChannel = () =>
     ApiController.deleteChannel(props.id).then(() =>
-      navigate(folderId ? `/folders/${folderId}` : '/folders')
+      navigate.push(folderId ? `/folders/${folderId}` : '/folders')
     );
 
   return (
@@ -96,7 +96,7 @@ const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {
           setVideoEditingDialogId={setVideoEditingDialogId}
           actions={actions}
           onBack={() =>
-            navigate(folderId ? `/folders/${folderId}` : '/folders')
+            navigate.push(folderId ? `/folders/${folderId}` : '/folders')
           }
         />
       ) : (
@@ -107,7 +107,7 @@ const ChannelPage = (props: { id: IChannel['id']; isMobile: boolean }) => {
           setVideoEditingDialogId={setVideoEditingDialogId}
           actions={actions}
           onBack={() =>
-            navigate(folderId ? `/folders/${folderId}` : '/folders')
+            navigate.push(folderId ? `/folders/${folderId}` : '/folders')
           }
         />
       )}

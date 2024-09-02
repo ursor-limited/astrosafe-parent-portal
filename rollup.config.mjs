@@ -109,6 +109,7 @@ export default [
         exclude: 'node_modules/**', // Only transpile our source code
       }),
     ],
+    external: ['react', 'react-dom'],
   },
   {
     input: 'src/index.ts',

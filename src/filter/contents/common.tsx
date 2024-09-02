@@ -11,7 +11,7 @@ import {
   IFilterCategory,
   IFilterUrl,
 } from '../../filters/contents/common';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import FilterPageMobileBody from './body-mobile';
 import ApiController from './../../api';
 import AddDeviceDialog from './../../folder/components/AddDeviceDialog';
@@ -161,7 +161,7 @@ export default function FilterPage(props: {
   const titleRow = [
     {
       text: 'My Filters',
-      callback: () => navigate('/filters'),
+      callback: () => navigate.push('/filters'),
     },
     {
       text: filter?.title ?? '',
@@ -184,7 +184,7 @@ export default function FilterPage(props: {
               <FilterIcon height="16px" width="16px" />
             </Stack>
           ),
-          callback: () => navigate(`/filters/${f.id}`),
+          callback: () => navigate.push(`/filters/${f.id}`),
         })),
     },
   ];
@@ -199,7 +199,9 @@ export default function FilterPage(props: {
     useState<IDevice | undefined>();
 
   const deleteFilter = () =>
-    ApiController.removeFilter(props.filterId).then(() => navigate('/filters'));
+    ApiController.removeFilter(props.filterId).then(() =>
+      navigate.push('/filters')
+    );
 
   const flipSubcategory = (id: IFilterSubcategory['id']) => {
     if (allowedSubcategories.includes(id)) {

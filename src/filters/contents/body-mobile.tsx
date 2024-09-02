@@ -5,7 +5,7 @@ import { Stack } from '@mui/system';
 import UrsorFadeIn from '../../components/UrsorFadeIn';
 import _ from 'lodash';
 import DynamicCardGrid from '../../components/DynamicCardGrid';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import FilterCard from '../../filter/components/FilterCard';
 import { IGroupFilter } from './common';
 import MobilePageLayout from './../../components/MobilePageLayout';
@@ -45,7 +45,7 @@ export default function AllFiltersPageMobileBody(props: {
               transition: '0.2s',
               '&:hover': { opacity: 0.6 },
             }}
-            onClick={() => navigate(`/filters/${f.id}`)}
+            onClick={() => navigate.push(`/filters/${f.id}`)}
           >
             <UrsorFadeIn duration={800} delay={i * 150}>
               <FilterCard {...f} isMobile />

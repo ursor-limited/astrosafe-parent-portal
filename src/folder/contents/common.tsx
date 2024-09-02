@@ -6,7 +6,7 @@ import TrashcanIcon from './../../images/icons/TrashcanIcon.svg';
 import PencilIcon from './../../images/icons/Pencil.svg';
 import { PALETTE } from './../../ui';
 import _ from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import AddDeviceDialog from '../components/AddDeviceDialog';
 import LinkCreationDialog from '../components/LinkCreationDialog';
 import ChannelCreationDialog from '../components/ChannelCreationDialog';
@@ -154,7 +154,7 @@ export default function FolderPage(props: {
   const titleRow = [
     {
       text: 'My Folders',
-      callback: () => navigate('/folders'),
+      callback: () => navigate.push('/folders'),
     },
     {
       text: folder?.title ?? '',
@@ -162,7 +162,7 @@ export default function FolderPage(props: {
         .filter((f) => f.id !== props.folderId)
         .map((f) => ({
           text: f.title,
-          callback: () => navigate(`/folders/${f.id}`),
+          callback: () => navigate.push(`/folders/${f.id}`),
         })),
     },
   ];
@@ -170,7 +170,9 @@ export default function FolderPage(props: {
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
   const deleteFolder = () =>
-    ApiController.removeFolder(props.folderId).then(() => navigate('/folders'));
+    ApiController.removeFolder(props.folderId).then(() =>
+      navigate.push('/folders')
+    );
 
   const actions = [
     {

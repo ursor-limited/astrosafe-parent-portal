@@ -6,7 +6,7 @@ import BookIcon from './../images/icons/BookIcon.svg';
 import GearIcon from './../images/icons/GearIcon.svg';
 import PeopleIcon from './../images/icons/PeopleIcon.svg';
 import FilterIcon from './../images/icons/FilterIcon.svg';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../hooks/useNavigate';
 import { useUserContext } from './UserContext';
 import { UserInitialsCircle } from '../account/contents/common';
 
@@ -187,21 +187,21 @@ export default function Sidebar(props: ISidebarProps) {
       //tourId: "devices-button",
       icon: PeopleIcon,
       title: 'Kids',
-      callback: () => navigate('/profiles'),
+      callback: () => navigate.push('/profiles'),
     },
     {
       id: 'filters',
       //tourId: "devices-button",
       icon: FilterIcon,
       title: 'Filters',
-      callback: () => navigate('/filters'),
+      callback: () => navigate.push('/filters'),
     },
     {
       id: 'content',
       //tourId: "devices-button",
       icon: BookIcon,
       title: 'Content',
-      callback: () => navigate('/folders'),
+      callback: () => navigate.push('/folders'),
     },
   ];
 
@@ -210,7 +210,7 @@ export default function Sidebar(props: ISidebarProps) {
       id: 'account',
       icon: GearIcon,
       title: 'Account',
-      callback: () => navigate('/account'),
+      callback: () => navigate.push('/account'),
     },
   ];
 
@@ -257,7 +257,7 @@ export default function Sidebar(props: ISidebarProps) {
         </Stack>
         <SidebarItem
           title="Account"
-          callback={() => navigate('/account')}
+          callback={() => navigate.push('/account')}
           selected={'account' === props.selectedItemId}
           small={small}
           noText={noText}

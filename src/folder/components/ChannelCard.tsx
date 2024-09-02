@@ -7,7 +7,7 @@ import {
   IContentBucket,
 } from './../../profile/components/ContentTab';
 import { PALETTE } from './../../ui';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 
 const IMAGE_HEIGHT = 160;
 
@@ -31,7 +31,7 @@ const ChannelCard = (
       onClick={
         props.noPointerEvents
           ? undefined
-          : () => navigate(`/channel/${props.id}`)
+          : () => navigate.push(`/channel/${props.id}`)
       }
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}

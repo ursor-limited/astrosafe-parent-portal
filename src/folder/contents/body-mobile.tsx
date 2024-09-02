@@ -26,7 +26,7 @@ import {
 import { IActionPopupItem } from './../../components/ActionPopup';
 
 import { cleanUrl } from './../../profile/components/MobileInsightsTab';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket['id'];
@@ -52,7 +52,7 @@ const FolderPageMobileBody = (props: {
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => navigate('/folders')}
+      titleBackButtonCallback={() => navigate.push('/folders')}
       selectedPage="content"
       actions={props.actions}
     >

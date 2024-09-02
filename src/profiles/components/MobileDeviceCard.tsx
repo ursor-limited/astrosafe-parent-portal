@@ -12,7 +12,7 @@ import FilterIcon from './../../images/icons/FilterIcon.svg';
 import CheckCircleFillIcon from './../../images/icons/CheckCircleFillIcon.svgimages/icons/CheckCircleFillIcon.svg';
 import AstroSwitch from './../../components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { IFilter } from './../../filters/contents/common';
 import ApiController from './../../api';
 import { IEnrichedDevice } from '../contents/common';
@@ -241,7 +241,7 @@ const MobileDeviceCard = (
   );
   const navigate = useNavigate();
   const notificationCtx = useContext(NotificationContext);
-  const onClick = () => navigate(`/profiles/${props.id}`);
+  const onClick = () => navigate.push(`/profiles/${props.id}`);
   const changeFilter = (id: IFilter['id']) =>
     ApiController.addFilterToDevice(id, props.id)
       .then(props.onUpdate)

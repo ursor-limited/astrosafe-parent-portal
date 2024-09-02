@@ -3,7 +3,7 @@ import PageLayout from './../../components/PageLayout';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
 import PlusIcon from './../../images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { IEnrichedContentBucket } from './common';
 import FolderCard from './../../components/FolderCard';
 import EmptyStateIllustration from './../../components/EmptyStateIllustration';
@@ -37,7 +37,7 @@ const AllFoldersPageDesktopBody = (props: {
               <UrsorFadeIn key={f.id} duration={800} delay={i * 90}>
                 <FolderCard
                   {...f}
-                  clickCallback={() => navigate(`/folders/${f.id}`)}
+                  clickCallback={() => navigate.push(`/folders/${f.id}`)}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
                 />

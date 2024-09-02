@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { IVideo } from './../../profile/components/ContentTab';
 import { Stack } from '@mui/system';
 import UrsorFadeIn from './../../components/UrsorFadeIn';

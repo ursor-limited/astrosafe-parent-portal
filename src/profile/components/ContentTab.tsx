@@ -2,7 +2,7 @@ import DynamicCardGrid from './../../components/DynamicCardGrid';
 import { Stack } from '@mui/system';
 import FolderCard from '../../components/FolderCard';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { IEnrichedContentBucket } from './../../folders/contents/common';
 import PlusIcon from './../../images/icons/PlusIcon.svg';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
@@ -91,7 +91,7 @@ const DevicePageContentTab = (props: {
                 <FolderCard
                   key={f.id}
                   {...f}
-                  clickCallback={() => navigate(`/folders/${f.id}`)}
+                  clickCallback={() => navigate.push(`/folders/${f.id}`)}
                   isMobile={props.isMobile}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}

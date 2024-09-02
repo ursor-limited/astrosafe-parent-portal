@@ -1,6 +1,6 @@
 import PageLayout from './../../components/PageLayout';
 import { Stack } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { PALETTE } from './../../ui';
 import { ITitleRowItem } from './../../components/TitleRow';
 import AstroTabSwitch from '../components/AstroTabSwitch';
@@ -44,7 +44,7 @@ const ProfilePageDesktopBody = (props: {
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButtonCallback={() => navigate('/profiles')}
+      titleBackButtonCallback={() => navigate.push('/profiles')}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="devices"

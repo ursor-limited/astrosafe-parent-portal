@@ -7,7 +7,7 @@ import { IDevice } from './../../filter/contents/common';
 import DeviceInstructionsView from '../components/DeviceInstructionsView';
 import UrsorActionButton from './../../components/UrsorActionButton';
 import { PALETTE, UrsorButton } from './../../ui';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import MobilePageLayout from './../../components/MobilePageLayout';
 import DeviceCard from '../components/DeviceCard';
 import { IFilter } from './../../filters/contents/common';
@@ -84,7 +84,7 @@ const AllDevicesPageMobileBody = (props: {
                     actions={[
                       {
                         text: 'Open',
-                        kallback: () => navigate(`/profiles/${d.id}`),
+                        kallback: () => navigate.push(`/profiles/${d.id}`),
                         icon: ArrowUpRightIcon,
                       },
                       {

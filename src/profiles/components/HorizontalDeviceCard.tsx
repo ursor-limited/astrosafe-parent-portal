@@ -9,7 +9,7 @@ import CheckCircleFillIcon from './../../images/icons/CheckCircleFillIcon.svgima
 import ChevronDownIcon from './../../images/icons/ChevronDown.svg';
 import { DeviceType } from '../../filter/contents/common';
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import {
   DeviceCardBrowsingStatusSection,
   DeviceCardCurrentUrlSection,
@@ -146,7 +146,7 @@ const HorizontalDeviceCard = (
     [props.config?.browsingAllowed]
   );
   const navigate = useNavigate();
-  const onClick = () => navigate(`/profiles/${props.id}`);
+  const onClick = () => navigate.push(`/profiles/${props.id}`);
 
   const notificationCtx = useContext(NotificationContext);
   const changeFilter = (id: IFilter['id']) =>

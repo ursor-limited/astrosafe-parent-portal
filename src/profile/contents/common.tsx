@@ -4,7 +4,7 @@ import PencilIcon from './../../images/icons/Pencil.svg';
 import { Stack } from '@mui/system';
 import { PALETTE, Typography } from './../../ui';
 import _ from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import ApiController from './../../api';
 import { IDevice } from './../../filter/contents/common';
 import ProfilePageDesktopBody from './body-desktop';
@@ -81,7 +81,7 @@ export default function ProfilePage(props: {
   const titleRow = [
     {
       text: 'All Kids',
-      callback: () => navigate('/profiles'),
+      callback: () => navigate.push('/profiles'),
     },
     {
       text: device?.name ?? '',
@@ -134,7 +134,7 @@ export default function ProfilePage(props: {
         .map((d) => ({
           text: d.name,
           imageUrl: d.profileAvatarUrl,
-          callback: () => navigate(`/profiles/${d.id}`),
+          callback: () => navigate.push(`/profiles/${d.id}`),
         })),
       label:
         !props.isMobile && device?.deviceType
@@ -157,7 +157,7 @@ export default function ProfilePage(props: {
     user?.group_id &&
     ApiController.createFolder(title, user.group_id).then((response) => {
       ApiController.addFolderToDevice(response.contentBucketId, props.deviceId);
-      navigate(`/folders/${response.contentBucketId}`);
+      navigate.push(`/folders/${response.contentBucketId}`);
       notificationCtx.success('Created Folder and added it to the Device.');
     });
 

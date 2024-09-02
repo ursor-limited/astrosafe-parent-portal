@@ -8,7 +8,7 @@ import { PALETTE, Typography, UrsorButton } from './../../ui';
 import _ from 'lodash';
 import { IDevice } from '../contents/common';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { useState } from 'react';
 import AllDevicesDialog from './../../components/AllDevicesDialog';
 import DeviceCard from './../../profiles/components/DeviceCard';
@@ -81,7 +81,7 @@ const FilterPageDevicesSection = (props: {
                       </Stack>
                     }
                     noExtras
-                    onClick={() => navigate(`/profiles/${d.id}`)}
+                    onClick={() => navigate.push(`/profiles/${d.id}`)}
                   />
                 </Stack>
               </UrsorFadeIn>

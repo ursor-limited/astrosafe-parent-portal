@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import ApiController from '../../api';
 import { useCallback, useEffect, useState } from 'react';
 import { IDevice } from '../../filter/contents/common';
@@ -39,7 +39,7 @@ const AllFoldersPage = (props: { isMobile: boolean }) => {
   const createFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
     ApiController.createFolder(title, user.group_id).then((response) =>
-      navigate(`/folders/${response.contentBucketId}`)
+      navigate.push(`/folders/${response.contentBucketId}`)
     );
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
 

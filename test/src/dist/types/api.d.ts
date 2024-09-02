@@ -10,7 +10,8 @@ export interface IVideoComment {
     value: string;
     time: number;
 }
-export declare const BACKEND_URL: string | undefined;
+export declare const BACKEND_URL: string;
+export declare const AUTH_URL: string | undefined;
 export declare const getAbsoluteUrl: (url: string) => string;
 export declare const get: (route: string) => Promise<Response>;
 export declare const post: (route: string, body?: any) => Promise<void | Response>;

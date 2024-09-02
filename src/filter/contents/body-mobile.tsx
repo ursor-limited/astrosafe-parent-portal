@@ -15,7 +15,7 @@ import MobilePageLayout from './../../components/MobilePageLayout';
 import { ITitleRowItem } from './../../components/TitleRow';
 import MobileFilterPageDevicesSection from '../components/MobileFilterDevicesSection';
 import MobileFilterPageCategoriesSection from '../components/MobileCategoriesSection';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 
 export default function FilterPageMobileBody(props: {
   filterId: number;
@@ -46,7 +46,7 @@ export default function FilterPageMobileBody(props: {
     <MobilePageLayout
       actions={props.actions}
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => navigate('/filters')}
+      titleBackButtonCallback={() => navigate.push('/filters')}
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">

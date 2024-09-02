@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Stack, keyframes } from '@mui/system';
 import { PALETTE, Typography } from './../ui';
 import Star from './../images/Star.svg';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../hooks/useNavigate';
 import _ from 'lodash';
 import ProfileImageRow from './../filter/components/ProfileImageRow';
 import UrsorActionButton from './UrsorActionButton';
@@ -147,7 +147,7 @@ const FolderCard = (
             top="163px"
             right="3px"
             zIndex={2}
-            // onClick={() => navigate(`/lesson/${props.canonicalUrl}`)}
+            // onClick={() => navigate.push(`/lesson/${props.canonicalUrl}`)}
           >
             <UrsorActionButton
               size="32px"
@@ -155,7 +155,7 @@ const FolderCard = (
               actions={[
                 {
                   text: 'Open',
-                  kallback: () => navigate(`/folders/${props.id}`),
+                  kallback: () => navigate.push(`/folders/${props.id}`),
                   icon: ArrowUpRight,
                 },
                 {

@@ -118,11 +118,13 @@ const AccountPage = (props: { isMobile: boolean }) => {
     user?.group_id &&
       ApiController.getGroupUsers(user.group_id).then(setAllUsers);
   }, [user?.group_id]);
+
   useEffect(() => {
     loadUsers();
   }, [loadUsers]);
 
   const [currentUser, setCurrentUser] = useState<IUser | undefined>();
+
   useEffect(() => {
     user?.user_id &&
       setCurrentUser(allUsers.find((u) => u.id === user.user_id));

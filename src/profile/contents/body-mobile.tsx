@@ -1,6 +1,6 @@
 import { IDevice } from './../../filter/contents/common';
 import { Stack } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { PALETTE, Typography, UrsorButton } from './../../ui';
 import { ITitleRowItem } from './../../components/TitleRow';
 import AstroTabSwitch from '../components/AstroTabSwitch';
@@ -33,7 +33,7 @@ const ProfilePageMobileBody = (props: {
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => navigate('/profiles')}
+      titleBackButtonCallback={() => navigate.push('/profiles')}
       selectedPage="profiles"
       actions={props.actions}
     >

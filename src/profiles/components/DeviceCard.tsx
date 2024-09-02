@@ -10,7 +10,7 @@ import LinkExternalIcon from './../../images/icons/LinkExternalIcon.svg';
 import { DeviceType, IDevice } from '../../filter/contents/common';
 import AstroSwitch from './../../components/AstroSwitch';
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { IFilter, IFilterUrl } from './../../filters/contents/common';
 import ApiController, { getAbsoluteUrl } from './../../api';
 import { IEnrichedDevice } from '../contents/common';
@@ -179,7 +179,7 @@ export const DeviceCardCurrentUrlSection = (props: {
         }
         onClick={
           !props.disabled
-            ? () => navigate(getAbsoluteUrl(cleanUrl(props.url!)))
+            ? () => navigate.push(getAbsoluteUrl(cleanUrl(props.url!)))
             : undefined
         }
       >
@@ -242,7 +242,7 @@ const DeviceCard = (
     [props.config?.browsingAllowed]
   );
   const navigate = useNavigate();
-  const onClick = () => navigate(`/profiles/${props.id}`);
+  const onClick = () => navigate.push(`/profiles/${props.id}`);
 
   const notificationCtx = useContext(NotificationContext);
   return (
@@ -370,7 +370,7 @@ const DeviceCard = (
                     },
                   },
                 }}
-                onClick={() => navigate(`/filters/${props.filterId}`)}
+                onClick={() => navigate.push(`/filters/${props.filterId}`)}
               >
                 <FilterIcon height="16px" width="16px" />
                 <Typography maxLines={1}>{props.filterName}</Typography>
@@ -396,7 +396,9 @@ const DeviceCard = (
               <DeviceCardScreenTimeSection
                 totalTime={props.screenTime?.allowed ?? 0}
                 elapsedTime={props.screenTime?.current ?? 0}
-                onClickView={() => navigate(`/profiles/${props.id}?tab=limits`)}
+                onClickView={() =>
+                  navigate.push(`/profiles/${props.id}?tab=limits`)
+                }
               />
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
@@ -423,7 +425,7 @@ const DeviceCard = (
               justifyContent="center"
               direction="row"
               spacing="8px"
-              onClick={() => navigate(`/profiles/${props.id}`)}
+              onClick={() => navigate.push(`/profiles/${props.id}`)}
             >
               <Typography bold variant="small" color={PALETTE.primary.indigo}>
                 Go to Device
@@ -434,7 +436,7 @@ const DeviceCard = (
               <UrsorButton
                 variant="secondary"
                 endIcon={ChevronRightIcon}
-                onClick={() => navigate(`/profiles/${props.id}`)}
+                onClick={() => navigate.push(`/profiles/${props.id}`)}
                 width="100%"
                 backgroundColor="white"
               >

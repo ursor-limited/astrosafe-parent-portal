@@ -1,7 +1,7 @@
 import UrsorFadeIn from './../../components/UrsorFadeIn';
 import PlusIcon from './../../images/icons/PlusIcon.svg';
 import { Stack } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import { IEnrichedContentBucket } from './common';
 import MobilePageLayout from './../../components/MobilePageLayout';
 import { UrsorButton } from './../../ui';
@@ -39,7 +39,7 @@ const AllFoldersPageMobileBody = (props: {
               <UrsorFadeIn key={f.id} duration={800} delay={i * 90} fullWidth>
                 <FolderCard
                   {...f}
-                  clickCallback={() => navigate(`/folders/${f.id}`)}
+                  clickCallback={() => navigate.push(`/folders/${f.id}`)}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
                   isMobile

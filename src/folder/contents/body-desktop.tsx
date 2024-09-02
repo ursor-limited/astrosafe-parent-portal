@@ -13,7 +13,7 @@ import LinkCard from '../components/LinkCard';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import useColumnWidth from './../../components/useColumnWidth';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import UrsorFadeIn from './../../components/UrsorFadeIn';
 import { ITitleRowItem } from './../../components/TitleRow';
 import { IDevice } from './../../filter/contents/common';
@@ -67,7 +67,7 @@ const FolderPageDesktopBody = (props: {
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButtonCallback={() => navigate('/folders')}
+      titleBackButtonCallback={() => navigate.push('/folders')}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="content"

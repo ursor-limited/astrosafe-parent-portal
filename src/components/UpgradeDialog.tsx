@@ -4,7 +4,7 @@ import { Stack, alpha } from '@mui/system';
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from './../ui';
 import UrsorDialog from './UrsorDialog';
 import { useUserContext } from './UserContext';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../hooks/useNavigate';
 import { useLocalStorage } from 'usehooks-ts';
 import { useEffect, useState } from 'react';
 import AstroSwitch from './AstroSwitch';
@@ -439,7 +439,7 @@ const UpgradeDialog = (props: {
           unit={frequency === 'monthly' ? 'month' : 'year'}
           items={PRODUCT_DETAILS[0].items}
           callback={() => {
-            navigate(
+            navigate.push(
               user?.email ? getPaymentUrl(user.email, 'home', frequency) : ''
             );
             setUpgradedNotificationPending(true);
@@ -463,7 +463,7 @@ const UpgradeDialog = (props: {
           unit={frequency === 'monthly' ? 'month' : 'year'}
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
-            navigate(
+            navigate.push(
               user?.email ? getPaymentUrl(user.email, 's chool', frequency) : ''
             );
             setUpgradedNotificationPending(true);

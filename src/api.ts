@@ -29,14 +29,17 @@ export interface IVideoComment {
   time: number;
 }
 
-const BACKEND_URLS = {
-  local: 'http://localhost:8000',
-  development: 'https://api.astrosafe.co',
-  preview: 'https://api.astrosafe.co',
-  production: 'https://api.astrosafe.co',
-};
+if (window.location.hostname !== 'localhost' && !process.env.AUTH_URL)
+  throw new Error(
+    'You must set AUTH_URL (Endpoint to call to login your users) in your .env'
+  );
 
 export const BACKEND_URL =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:8000'
+    : 'https://api.astrosafe.co';
+
+export const AUTH_URL =
   window.location.hostname === 'localhost'
     ? 'http://localhost:8000'
     : process.env.AUTH_URL;
@@ -46,7 +49,7 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 export const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
+    `${BACKEND_URL}/${route}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -56,7 +59,7 @@ export const get = (route: string) =>
 export const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
+    `${BACKEND_URL}/${route}`,
     {
       method: 'POST',
       headers: {
@@ -71,7 +74,7 @@ export const post = (route: string, body?: any) =>
 export const put = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
+    `${BACKEND_URL}/${route}`,
     {
       method: 'PUT',
       headers: {
@@ -85,7 +88,7 @@ export const put = (route: string, body: any) =>
 export const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
+    `${BACKEND_URL}/${route}`,
     {
       method: 'PATCH',
       headers: {
@@ -99,7 +102,7 @@ export const patch = (route: string, body: any) =>
 const dellete = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.REACT_ENV]}/${route}`,
+    `${BACKEND_URL}/${route}`,
     {
       method: 'DELETE',
       headers: { 'Access-Control-Allow-Origin': '*' },

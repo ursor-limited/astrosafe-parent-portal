@@ -8,7 +8,7 @@ import XIcon from './../images/icons/X.svg';
 import _ from 'lodash';
 
 import { UserInitialsCircle } from './../account/contents/common';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../hooks/useNavigate';
 
 export const astroPages = [
   'profiles',
@@ -117,7 +117,9 @@ const MobileSideBar = (props: {
                       },
                     },
                   }}
-                  onClick={() => navigate(`/${PAGE_ROUTES[page as AstroPage]}`)}
+                  onClick={() =>
+                    navigate.push(`/${PAGE_ROUTES[page as AstroPage]}`)
+                  }
                 >
                   <Icon height="28px" width="28px" />
                   <Typography
@@ -138,7 +140,9 @@ const MobileSideBar = (props: {
             direction="row"
             spacing="12px"
             alignItems="center"
-            onClick={() => navigate(`/${PAGE_ROUTES['account' as AstroPage]}`)}
+            onClick={() =>
+              navigate.push(`/${PAGE_ROUTES['account' as AstroPage]}`)
+            }
             sx={{
               cursor: 'pointer',
               '&:hover': { opacity: 0.7 },

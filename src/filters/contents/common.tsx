@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import AllFiltersPageDesktopBody from './body-desktop';
 import AllFiltersPageMobileBody from './body-mobile';
 import ApiController from './../../api';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 import FilterCreationDialog from '../../filter/components/FilterCreationDialog';
 import { IDevice } from '../../filter/contents/common';
 import _ from 'lodash';
@@ -98,7 +98,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
         onSubmit={(title: IFilter['title']) =>
           user?.group_id &&
           ApiController.createFilter(user.group_id, title).then((f) =>
-            navigate(`/filters/${f.filterId}`)
+            navigate.push(`/filters/${f.filterId}`)
           )
         }
         isMobile={props.isMobile}

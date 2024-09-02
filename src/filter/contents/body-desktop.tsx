@@ -15,7 +15,7 @@ import {
   IFilterUrl,
 } from '../../filters/contents/common';
 import { ITitleRowItem } from './../../components/TitleRow';
-import { useNavigate } from 'react-router-dom';
+import useNavigate from '../../hooks/useNavigate';
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;
@@ -45,7 +45,7 @@ export default function FilterPageDesktopBody(props: {
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButtonCallback={() => navigate('/filters')}
+      titleBackButtonCallback={() => navigate.push('/filters')}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="filters"
