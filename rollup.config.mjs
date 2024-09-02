@@ -8,6 +8,7 @@ import { babel } from '@rollup/plugin-babel';
 import dts from 'rollup-plugin-dts';
 import { fileURLToPath } from 'url';
 import url from '@rollup/plugin-url';
+import svgr from '@svgr/rollup';
 import path from 'path';
 import fs from 'fs';
 
@@ -87,6 +88,7 @@ export default [
       json(),
       css(),
       commonjs(),
+      svgr(),
       url({
         limit: 0, // Disable inlining by setting the limit to 0 (0 bytes means all files will be copied)
         include: [
