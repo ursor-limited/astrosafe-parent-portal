@@ -1,4 +1,4 @@
-import { FoldersPage } from './dist';
+import { FoldersPage, ProfilesPage } from './dist';
 
 const App: React.FC = () => {
   return (

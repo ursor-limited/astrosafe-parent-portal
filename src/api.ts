@@ -54,7 +54,13 @@ export const get = (route: string) =>
       method: 'GET',
       credentials: 'include',
     }
-  );
+  ).catch((err) => {
+    if (err.statusCode === 401) {
+      Cookies.remove('access_token');
+
+      Cookies.remove('user_info');
+    }
+  });
 
 export const post = (route: string, body?: any) =>
   fetch(
@@ -69,7 +75,13 @@ export const post = (route: string, body?: any) =>
       body: body ? JSON.stringify(body) : undefined,
       cache: 'no-store',
     }
-  ).catch(() => Cookies.remove('user_info'));
+  ).catch((err) => {
+    if (err.statusCode === 401) {
+      Cookies.remove('access_token');
+
+      Cookies.remove('user_info');
+    }
+  });
 
 export const put = (route: string, body: any) =>
   fetch(
@@ -83,7 +95,13 @@ export const put = (route: string, body: any) =>
       credentials: 'include',
       body: JSON.stringify(body),
     }
-  ).catch(() => Cookies.remove('user_info'));
+  ).catch((err) => {
+    if (err.statusCode === 401) {
+      Cookies.remove('access_token');
+
+      Cookies.remove('user_info');
+    }
+  });
 
 export const patch = (route: string, body: any) =>
   fetch(
@@ -97,7 +115,13 @@ export const patch = (route: string, body: any) =>
       credentials: 'include',
       body: JSON.stringify(body),
     }
-  ).catch(() => Cookies.remove('user_info'));
+  ).catch((err) => {
+    if (err.statusCode === 401) {
+      Cookies.remove('access_token');
+
+      Cookies.remove('user_info');
+    }
+  });
 
 const dellete = (route: string) =>
   fetch(
@@ -108,7 +132,13 @@ const dellete = (route: string) =>
       headers: { 'Access-Control-Allow-Origin': '*' },
       credentials: 'include',
     }
-  ).catch(() => Cookies.remove('user_info'));
+  ).catch((err) => {
+    if (err.statusCode === 401) {
+      Cookies.remove('access_token');
+
+      Cookies.remove('user_info');
+    }
+  });
 
 class ApiController {
   static async getDevice(id: IDevice['id']) {

@@ -1,6 +1,5 @@
-import { IVideo } from '../../profile/components/ContentTab';
-declare const VideoCard: (
-  props: Partial<Omit<IVideo, 'createdAt'>> & {
+import { IVideo } from './../../profile/components/ContentTab';
+declare const VideoCard: (props: Partial<Omit<IVideo, "createdAt">> & {
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -8,6 +7,5 @@ declare const VideoCard: (
     onOpenEditingDialog?: () => void;
     isMobile?: boolean;
     twoLineTitleSectionHeight?: boolean;
-  }
-) => import('react/jsx-runtime').JSX.Element;
+}) => import("react/jsx-runtime").JSX.Element;
 export default VideoCard;

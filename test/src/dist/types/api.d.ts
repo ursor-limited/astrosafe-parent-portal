@@ -13,7 +13,7 @@ export interface IVideoComment {
 export declare const BACKEND_URL: string;
 export declare const AUTH_URL: string | undefined;
 export declare const getAbsoluteUrl: (url: string) => string;
-export declare const get: (route: string) => Promise<Response>;
+export declare const get: (route: string) => Promise<void | Response>;
 export declare const post: (route: string, body?: any) => Promise<void | Response>;
 export declare const put: (route: string, body: any) => Promise<void | Response>;
 export declare const patch: (route: string, body: any) => Promise<void | Response>;

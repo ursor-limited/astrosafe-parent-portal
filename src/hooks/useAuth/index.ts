@@ -8,9 +8,19 @@ const useAuth = () => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
 
   useEffect(() => {
+    const storedUserInfo = Cookies.get('user_info');
+
+    if (storedUserInfo) {
+      setUser(JSON.parse(atob(storedUserInfo)));
+
+      return;
+    }
+
     getUserInfo()
       .then((data) => {
         setUser(data);
+
+        Cookies.set('user_info', btoa(JSON.stringify(data)));
 
         return;
       })
@@ -20,6 +30,8 @@ const useAuth = () => {
             .then(() => {
               getUserInfo().then((data) => {
                 setUser(data);
+
+                Cookies.set('user_info', btoa(JSON.stringify(data)));
 
                 return;
               });
