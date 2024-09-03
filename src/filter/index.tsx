@@ -1,6 +1,7 @@
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import FilterPage from './contents/common'
+import RootLayout from '../layout'
 
 const Filter = ({
   props,
@@ -8,12 +9,14 @@ const Filter = ({
   props: { id: string; deviceId: string; authUrl: string }
 }) => {
   return (
-    <FilterPage
-      filterId={parseInt(props.id)}
-      isMobile={isMobile}
-      deviceId={props.deviceId}
-      authUrl={props.authUrl}
-    />
+    <RootLayout>
+      <FilterPage
+        filterId={parseInt(props.id)}
+        isMobile={isMobile}
+        deviceId={props.deviceId}
+        authUrl={props.authUrl}
+      />
+    </RootLayout>
   )
 }
 

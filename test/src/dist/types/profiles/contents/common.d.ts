@@ -17,4 +17,6 @@ export type IEnrichedDevice = IDevice & {
 };
 export default function AllDevicesPage(props: {
     isMobile: boolean;
+    deviceId: string;
+    authUrl: string;
 }): import("react/jsx-runtime").JSX.Element;

@@ -1,2 +1,5 @@
-declare const Profile: () => import("react/jsx-runtime").JSX.Element;
+declare const Profile: (props: {
+    deviceId: string;
+    authUrl: string;
+}) => import("react/jsx-runtime").JSX.Element;
 export default Profile;

@@ -1,17 +1,12 @@
-import {
-  FoldersPage,
-  FolderPage,
-  ProfilesPage,
-  ProfilePage,
-  FiltersPage,
-  FilterPage,
-  ChannelPage,
-} from './dist'
+import { FoldersPage, FolderPage } from './dist'
 
 const App: React.FC = () => {
   return (
     <div>
-      <FoldersPage />
+      <FoldersPage
+        deviceId="a5dbd744c347cfd9"
+        authUrl="https://localhost:8000/auth/login/troomi"
+      />
     </div>
   )
 }

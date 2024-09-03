@@ -1,6 +1,7 @@
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import ProfilePage, { AstroAccountTab } from './contents/common'
+import RootLayout from '../layout'
 
 const Profile = ({
   props,
@@ -10,13 +11,15 @@ const Profile = ({
   searchParams: { tab: AstroAccountTab }
 }) => {
   return (
-    <ProfilePage
-      astroDeviceId={parseInt(props.astroDeviceId)}
-      isMobile={isMobile}
-      tab={searchParams.tab}
-      deviceId={props.deviceId}
-      authUrl={props.authUrl}
-    />
+    <RootLayout>
+      <ProfilePage
+        astroDeviceId={parseInt(props.astroDeviceId)}
+        isMobile={isMobile}
+        tab={searchParams.tab}
+        deviceId={props.deviceId}
+        authUrl={props.authUrl}
+      />
+    </RootLayout>
   )
 }
 

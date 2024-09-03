@@ -1,6 +1,7 @@
 import React from 'react'
 import FolderPage from './contents/common'
 import { isMobile } from 'react-device-detect'
+import RootLayout from '../layout'
 
 const Folder = ({
   props,
@@ -8,12 +9,14 @@ const Folder = ({
   props: { folderId: string; deviceId: string; authUrl: string }
 }) => {
   return (
-    <FolderPage
-      folderId={parseInt(props.folderId)}
-      isMobile={isMobile}
-      deviceId={props.deviceId}
-      authUrl={props.authUrl}
-    />
+    <RootLayout>
+      <FolderPage
+        folderId={parseInt(props.folderId)}
+        isMobile={isMobile}
+        deviceId={props.deviceId}
+        authUrl={props.authUrl}
+      />
+    </RootLayout>
   )
 }
 

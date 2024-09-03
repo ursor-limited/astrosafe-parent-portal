@@ -14,5 +14,7 @@ export interface IEnrichedContentBucket {
 }
 declare const AllFoldersPage: (props: {
     isMobile: boolean;
+    deviceId: string;
+    authUrl: string;
 }) => import("react/jsx-runtime").JSX.Element;
 export default AllFoldersPage;

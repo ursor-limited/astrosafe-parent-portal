@@ -1,2 +1,5 @@
-declare const Folders: () => import("react/jsx-runtime").JSX.Element;
+declare const Folders: (props: {
+    deviceId: string;
+    authUrl: string;
+}) => import("react/jsx-runtime").JSX.Element;
 export default Folders;

@@ -1,5 +1,5 @@
 import * as React$1 from 'react';
-import React__default$1, { forwardRef, useContext, useState, useEffect, useRef, useCallback, useLayoutEffect, useMemo, Children, cloneElement, useImperativeHandle, createContext } from 'react';
+import React__default$1, { forwardRef, useContext, useState, useEffect, useRef, useCallback, useLayoutEffect, useMemo, createContext } from 'react';
 import * as ReactDOM from 'react-dom';
 import ReactDOM__default, { createPortal } from 'react-dom';
 
@@ -1904,14 +1904,14 @@ var formatMuiErrorMessage = /*#__PURE__*/Object.freeze({
 	default: formatMuiErrorMessage$1
 });
 
-function _extends$H() {
-  return _extends$H = Object.assign ? Object.assign.bind() : function (n) {
+function _extends$w() {
+  return _extends$w = Object.assign ? Object.assign.bind() : function (n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
     return n;
-  }, _extends$H.apply(null, arguments);
+  }, _extends$w.apply(null, arguments);
 }
 
 function memoize$1(fn) {
@@ -4341,7 +4341,7 @@ var createStyled$3
     , nextOptions
     /* ?: StyledOptions */
     ) {
-      return createStyled(nextTag, _extends$H({}, options, nextOptions, {
+      return createStyled(nextTag, _extends$w({}, options, nextOptions, {
         shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
       })).apply(void 0, styles);
     };
@@ -5433,7 +5433,7 @@ function deepClone(source) {
 function deepmerge$1(target, source, options = {
   clone: true
 }) {
-  const output = options.clone ? _extends$H({}, target) : target;
+  const output = options.clone ? _extends$w({}, target) : target;
   if (isPlainObject(target) && isPlainObject(source)) {
     Object.keys(source).forEach(key => {
       if (isPlainObject(source[key]) &&
@@ -5457,7 +5457,7 @@ var deepmerge = /*#__PURE__*/Object.freeze({
 	isPlainObject: isPlainObject
 });
 
-const _excluded$t = ["values", "unit", "step"];
+const _excluded$m = ["values", "unit", "step"];
 const sortBreakpointsValues = values => {
   const breakpointsAsArray = Object.keys(values).map(key => ({
     key,
@@ -5466,7 +5466,7 @@ const sortBreakpointsValues = values => {
   // Sort in ascending order
   breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
   return breakpointsAsArray.reduce((acc, obj) => {
-    return _extends$H({}, acc, {
+    return _extends$w({}, acc, {
       [obj.key]: obj.val
     });
   }, {});
@@ -5491,7 +5491,7 @@ function createBreakpoints(breakpoints) {
       unit = 'px',
       step = 5
     } = breakpoints,
-    other = _objectWithoutPropertiesLoose$2(breakpoints, _excluded$t);
+    other = _objectWithoutPropertiesLoose$2(breakpoints, _excluded$m);
   const sortedValues = sortBreakpointsValues(values);
   const keys = Object.keys(sortedValues);
   function up(key) {
@@ -5523,7 +5523,7 @@ function createBreakpoints(breakpoints) {
     }
     return between(key, keys[keys.indexOf(key) + 1]).replace('@media', '@media not all and');
   }
-  return _extends$H({
+  return _extends$w({
     keys,
     values: sortedValues,
     up,
@@ -5849,7 +5849,7 @@ function createUnaryUnit(theme, themeKey, defaultValue, propName) {
 function createUnarySpacing(theme) {
   return createUnaryUnit(theme, 'spacing', 8, 'spacing');
 }
-function getValue$1(transformer, propValue) {
+function getValue(transformer, propValue) {
   if (typeof propValue === 'string' || propValue == null) {
     return propValue;
   }
@@ -5865,7 +5865,7 @@ function getValue$1(transformer, propValue) {
 }
 function getStyleFromPropValue(cssProperties, transformer) {
   return propValue => cssProperties.reduce((acc, cssProperty) => {
-    acc[cssProperty] = getValue$1(transformer, propValue);
+    acc[cssProperty] = getValue(transformer, propValue);
     return acc;
   }, {});
 }
@@ -5991,7 +5991,7 @@ const borderRadius = props => {
   if (props.borderRadius !== undefined && props.borderRadius !== null) {
     const transformer = createUnaryUnit(props.theme, 'shape.borderRadius', 4, 'borderRadius');
     const styleFromPropValue = propValue => ({
-      borderRadius: getValue$1(transformer, propValue)
+      borderRadius: getValue(transformer, propValue)
     });
     return handleBreakpoints(props, props.borderRadius, styleFromPropValue);
   }
@@ -6009,7 +6009,7 @@ const gap = props => {
   if (props.gap !== undefined && props.gap !== null) {
     const transformer = createUnaryUnit(props.theme, 'spacing', 8, 'gap');
     const styleFromPropValue = propValue => ({
-      gap: getValue$1(transformer, propValue)
+      gap: getValue(transformer, propValue)
     });
     return handleBreakpoints(props, props.gap, styleFromPropValue);
   }
@@ -6026,7 +6026,7 @@ const columnGap = props => {
   if (props.columnGap !== undefined && props.columnGap !== null) {
     const transformer = createUnaryUnit(props.theme, 'spacing', 8, 'columnGap');
     const styleFromPropValue = propValue => ({
-      columnGap: getValue$1(transformer, propValue)
+      columnGap: getValue(transformer, propValue)
     });
     return handleBreakpoints(props, props.columnGap, styleFromPropValue);
   }
@@ -6043,7 +6043,7 @@ const rowGap = props => {
   if (props.rowGap !== undefined && props.rowGap !== null) {
     const transformer = createUnaryUnit(props.theme, 'spacing', 8, 'rowGap');
     const styleFromPropValue = propValue => ({
-      rowGap: getValue$1(transformer, propValue)
+      rowGap: getValue(transformer, propValue)
     });
     return handleBreakpoints(props, props.rowGap, styleFromPropValue);
   }
@@ -6651,7 +6651,7 @@ function applyStyles$2(key, styles) {
   return {};
 }
 
-const _excluded$s = ["breakpoints", "palette", "spacing", "shape"];
+const _excluded$l = ["breakpoints", "palette", "spacing", "shape"];
 function createTheme$2(options = {}, ...args) {
   const {
       breakpoints: breakpointsInput = {},
@@ -6659,7 +6659,7 @@ function createTheme$2(options = {}, ...args) {
       spacing: spacingInput,
       shape: shapeInput = {}
     } = options,
-    other = _objectWithoutPropertiesLoose$2(options, _excluded$s);
+    other = _objectWithoutPropertiesLoose$2(options, _excluded$l);
   const breakpoints = createBreakpoints(breakpointsInput);
   const spacing = createSpacing(spacingInput);
   let muiTheme = deepmerge$1({
@@ -6667,15 +6667,15 @@ function createTheme$2(options = {}, ...args) {
     direction: 'ltr',
     components: {},
     // Inject component definitions.
-    palette: _extends$H({
+    palette: _extends$w({
       mode: 'light'
     }, paletteInput),
     spacing,
-    shape: _extends$H({}, shape, shapeInput)
+    shape: _extends$w({}, shape, shapeInput)
   }, other);
   muiTheme.applyStyles = applyStyles$2;
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
-  muiTheme.unstable_sxConfig = _extends$H({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$w({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -6735,7 +6735,7 @@ process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes /* remove-propt
   themeId: PropTypes.string
 } : void 0;
 
-const _excluded$r = ["sx"];
+const _excluded$k = ["sx"];
 const splitProps = props => {
   var _props$theme$unstable, _props$theme;
   const result = {
@@ -6756,7 +6756,7 @@ function extendSxProp(props) {
   const {
       sx: inSx
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$r);
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$k);
   const {
     systemProps,
     otherProps
@@ -6770,12 +6770,12 @@ function extendSxProp(props) {
       if (!isPlainObject(result)) {
         return systemProps;
       }
-      return _extends$H({}, systemProps, result);
+      return _extends$w({}, systemProps, result);
     };
   } else {
-    finalSx = _extends$H({}, systemProps, inSx);
+    finalSx = _extends$w({}, systemProps, inSx);
   }
-  return _extends$H({}, otherProps, {
+  return _extends$w({}, otherProps, {
     sx: finalSx
   });
 }
@@ -6807,7 +6807,7 @@ const ClassNameGenerator = createClassNameGenerator();
 
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f);}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}
 
-const _excluded$q = ["className", "component"];
+const _excluded$j = ["className", "component"];
 function createBox(options = {}) {
   const {
     themeId,
@@ -6825,8 +6825,8 @@ function createBox(options = {}) {
         className,
         component = 'div'
       } = _extendSxProp,
-      other = _objectWithoutPropertiesLoose$2(_extendSxProp, _excluded$q);
-    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$H({
+      other = _objectWithoutPropertiesLoose$2(_extendSxProp, _excluded$j);
+    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$w({
       as: component,
       ref: ref,
       className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
@@ -7205,7 +7205,7 @@ var getDisplayName = /*#__PURE__*/Object.freeze({
 	getFunctionName: getFunctionName
 });
 
-const _excluded$p = ["ownerState"],
+const _excluded$i = ["ownerState"],
   _excluded2$1 = ["variants"],
   _excluded3$1 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 function isEmpty$2(obj) {
@@ -7249,12 +7249,12 @@ function processStyleArg$1(callableStyle, _ref) {
   let {
       ownerState
     } = _ref,
-    props = _objectWithoutPropertiesLoose$2(_ref, _excluded$p);
-  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$H({
+    props = _objectWithoutPropertiesLoose$2(_ref, _excluded$i);
+  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$w({
     ownerState
   }, props)) : callableStyle;
   if (Array.isArray(resolvedStylesArg)) {
-    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$H({
+    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$w({
       ownerState
     }, props)));
   }
@@ -7267,7 +7267,7 @@ function processStyleArg$1(callableStyle, _ref) {
     variants.forEach(variant => {
       let isMatch = true;
       if (typeof variant.props === 'function') {
-        isMatch = variant.props(_extends$H({
+        isMatch = variant.props(_extends$w({
           ownerState
         }, props, ownerState));
       } else {
@@ -7281,7 +7281,7 @@ function processStyleArg$1(callableStyle, _ref) {
         if (!Array.isArray(result)) {
           result = [result];
         }
-        result.push(typeof variant.style === 'function' ? variant.style(_extends$H({
+        result.push(typeof variant.style === 'function' ? variant.style(_extends$w({
           ownerState
         }, props, ownerState)) : variant.style);
       }
@@ -7298,8 +7298,8 @@ function createStyled$2(input = {}) {
     slotShouldForwardProp = shouldForwardProp$1
   } = input;
   const systemSx = props => {
-    return styleFunctionSx$1(_extends$H({}, props, {
-      theme: resolveTheme$1(_extends$H({}, props, {
+    return styleFunctionSx$1(_extends$w({}, props, {
+      theme: resolveTheme$1(_extends$w({}, props, {
         defaultTheme,
         themeId
       }))
@@ -7347,7 +7347,7 @@ function createStyled$2(input = {}) {
       // for string (html) tag, preserve the behavior in emotion & styled-components.
       shouldForwardPropOption = undefined;
     }
-    const defaultStyledResolver = styled$2(tag, _extends$H({
+    const defaultStyledResolver = styled$2(tag, _extends$w({
       shouldForwardProp: shouldForwardPropOption,
       label
     }, options));
@@ -7356,7 +7356,7 @@ function createStyled$2(input = {}) {
       // component stays as a function. This condition makes sure that we do not interpolate functions
       // which are basically components used as a selectors.
       if (typeof stylesArg === 'function' && stylesArg.__emotion_real !== stylesArg || isPlainObject(stylesArg)) {
-        return props => processStyleArg$1(stylesArg, _extends$H({}, props, {
+        return props => processStyleArg$1(stylesArg, _extends$w({}, props, {
           theme: resolveTheme$1({
             theme: props.theme,
             defaultTheme,
@@ -7371,7 +7371,7 @@ function createStyled$2(input = {}) {
       const expressionsWithDefaultTheme = expressions ? expressions.map(transformStyleArg) : [];
       if (componentName && overridesResolver) {
         expressionsWithDefaultTheme.push(props => {
-          const theme = resolveTheme$1(_extends$H({}, props, {
+          const theme = resolveTheme$1(_extends$w({}, props, {
             defaultTheme,
             themeId
           }));
@@ -7382,7 +7382,7 @@ function createStyled$2(input = {}) {
           const resolvedStyleOverrides = {};
           // TODO: v7 remove iteration and use `resolveStyleArg(styleOverrides[slot])` directly
           Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
-            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$H({}, props, {
+            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$w({}, props, {
               theme
             }));
           });
@@ -7392,14 +7392,14 @@ function createStyled$2(input = {}) {
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push(props => {
           var _theme$components;
-          const theme = resolveTheme$1(_extends$H({}, props, {
+          const theme = resolveTheme$1(_extends$w({}, props, {
             defaultTheme,
             themeId
           }));
           const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[componentName]) == null ? void 0 : _theme$components.variants;
           return processStyleArg$1({
             variants: themeVariants
-          }, _extends$H({}, props, {
+          }, _extends$w({}, props, {
             theme
           }));
         });
@@ -7446,10 +7446,10 @@ const styled$1 = createStyled$2();
  * @returns {object} resolved props
  */
 function resolveProps(defaultProps, props) {
-  const output = _extends$H({}, props);
+  const output = _extends$w({}, props);
   Object.keys(defaultProps).forEach(propName => {
     if (propName.toString().match(/^(components|slots)$/)) {
-      output[propName] = _extends$H({}, defaultProps[propName], output[propName]);
+      output[propName] = _extends$w({}, defaultProps[propName], output[propName]);
     } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
       const defaultSlotProps = defaultProps[propName] || {};
       const slotProps = props[propName];
@@ -7461,7 +7461,7 @@ function resolveProps(defaultProps, props) {
         // Reduce the iteration if the default slot props is empty
         output[propName] = slotProps;
       } else {
-        output[propName] = _extends$H({}, slotProps);
+        output[propName] = _extends$w({}, slotProps);
         Object.keys(defaultSlotProps).forEach(slotPropName => {
           output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
         });
@@ -7746,7 +7746,7 @@ function exactProp(propTypes) {
   if (process.env.NODE_ENV === 'production') {
     return propTypes;
   }
-  return _extends$H({}, propTypes, {
+  return _extends$w({}, propTypes, {
     [specialProperty]: props => {
       const unsupportedProps = Object.keys(props).filter(prop => !propTypes.hasOwnProperty(prop));
       if (unsupportedProps.length > 0) {
@@ -7817,30 +7817,6 @@ function ownerDocument(node) {
 function ownerWindow(node) {
   const doc = ownerDocument(node);
   return doc.defaultView || window;
-}
-
-function requirePropFactory(componentNameInError, Component) {
-  if (process.env.NODE_ENV === 'production') {
-    return () => null;
-  }
-
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  const prevPropTypes = Component ? _extends$H({}, Component.propTypes) : null;
-  const requireProp = requiredProp => (props, propName, componentName, location, propFullName, ...args) => {
-    const propFullNameSafe = propFullName || propName;
-    const defaultTypeChecker = prevPropTypes == null ? void 0 : prevPropTypes[propFullNameSafe];
-    if (defaultTypeChecker) {
-      const typeCheckerResult = defaultTypeChecker(props, propName, componentName, location, propFullName, ...args);
-      if (typeCheckerResult) {
-        return typeCheckerResult;
-      }
-    }
-    if (typeof props[propName] !== 'undefined' && !props[requiredProp]) {
-      return new Error(`The prop \`${propFullNameSafe}\` of ` + `\`${componentNameInError}\` can only be used together with the \`${requiredProp}\` prop.`);
-    }
-    return null;
-  };
-  return requireProp;
 }
 
 /**
@@ -8038,8 +8014,8 @@ function appendOwnerState(elementType, otherProps, ownerState) {
   if (elementType === undefined || isHostComponent(elementType)) {
     return otherProps;
   }
-  return _extends$H({}, otherProps, {
-    ownerState: _extends$H({}, otherProps.ownerState, ownerState)
+  return _extends$w({}, otherProps, {
+    ownerState: _extends$w({}, otherProps.ownerState, ownerState)
   });
 }
 
@@ -8104,8 +8080,8 @@ function mergeSlotProps(parameters) {
     // The simpler case - getSlotProps is not defined, so no internal event handlers are defined,
     // so we can simply merge all the props without having to worry about extracting event handlers.
     const joinedClasses = clsx(additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
-    const mergedStyle = _extends$H({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
-    const props = _extends$H({}, additionalProps, externalForwardedProps, externalSlotProps);
+    const mergedStyle = _extends$w({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+    const props = _extends$w({}, additionalProps, externalForwardedProps, externalSlotProps);
     if (joinedClasses.length > 0) {
       props.className = joinedClasses;
     }
@@ -8121,7 +8097,7 @@ function mergeSlotProps(parameters) {
   // In this case, getSlotProps is responsible for calling the external event handlers.
   // We don't need to include them in the merged props because of this.
 
-  const eventHandlers = extractEventHandlers(_extends$H({}, externalForwardedProps, externalSlotProps));
+  const eventHandlers = extractEventHandlers(_extends$w({}, externalForwardedProps, externalSlotProps));
   const componentsPropsWithoutEventHandlers = omitEventHandlers(externalSlotProps);
   const otherPropsWithoutEventHandlers = omitEventHandlers(externalForwardedProps);
   const internalSlotProps = getSlotProps(eventHandlers);
@@ -8131,8 +8107,8 @@ function mergeSlotProps(parameters) {
   // to properly override style. It requires the most important classes to be last
   // (see https://github.com/mui/material-ui/pull/33205) for the related discussion.
   const joinedClasses = clsx(internalSlotProps == null ? void 0 : internalSlotProps.className, additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
-  const mergedStyle = _extends$H({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
-  const props = _extends$H({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
+  const mergedStyle = _extends$w({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+  const props = _extends$w({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
   if (joinedClasses.length > 0) {
     props.className = joinedClasses;
   }
@@ -8156,7 +8132,7 @@ function resolveComponentProps(componentProps, ownerState, slotState) {
   return componentProps;
 }
 
-const _excluded$o = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
+const _excluded$h = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
 /**
  * @ignore - do not document.
  * Builds the props to be passed into the slot of an unstyled component.
@@ -8173,16 +8149,16 @@ function useSlotProps(parameters) {
       ownerState,
       skipResolvingSlotProps = false
     } = parameters,
-    rest = _objectWithoutPropertiesLoose$2(parameters, _excluded$o);
+    rest = _objectWithoutPropertiesLoose$2(parameters, _excluded$h);
   const resolvedComponentsProps = skipResolvingSlotProps ? {} : resolveComponentProps(externalSlotProps, ownerState);
   const {
     props: mergedProps,
     internalRef
-  } = mergeSlotProps(_extends$H({}, rest, {
+  } = mergeSlotProps(_extends$w({}, rest, {
     externalSlotProps: resolvedComponentsProps
   }));
   const ref = useForkRef(internalRef, resolvedComponentsProps == null ? void 0 : resolvedComponentsProps.ref, (_parameters$additiona = parameters.additionalProps) == null ? void 0 : _parameters$additiona.ref);
-  const props = appendOwnerState(elementType, _extends$H({}, mergedProps, {
+  const props = appendOwnerState(elementType, _extends$w({}, mergedProps, {
     ref
   }), ownerState);
   return props;
@@ -8237,7 +8213,7 @@ function useDefaultProps$1({
   });
 }
 
-const _excluded$n = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
+const _excluded$g = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
 const defaultTheme$2 = createTheme$2();
 // widening Theme to any so that the consumer can own the theme structure.
 const defaultCreateStyledComponent = styled$1('div', {
@@ -8284,7 +8260,7 @@ const style = ({
   ownerState,
   theme
 }) => {
-  let styles = _extends$H({
+  let styles = _extends$w({
     display: 'flex',
     flexDirection: 'column'
   }, handleBreakpoints({
@@ -8323,7 +8299,7 @@ const style = ({
     const styleFromPropValue = (propValue, breakpoint) => {
       if (ownerState.useFlexGap) {
         return {
-          gap: getValue$1(transformer, propValue)
+          gap: getValue(transformer, propValue)
         };
       }
       return {
@@ -8333,7 +8309,7 @@ const style = ({
           margin: 0
         },
         '& > :not(style) ~ :not(style)': {
-          [`margin${getSideFromDirection(breakpoint ? directionValues[breakpoint] : ownerState.direction)}`]: getValue$1(transformer, propValue)
+          [`margin${getSideFromDirection(breakpoint ? directionValues[breakpoint] : ownerState.direction)}`]: getValue(transformer, propValue)
         }
       };
     };
@@ -8370,14 +8346,14 @@ function createStack(options = {}) {
         className,
         useFlexGap = false
       } = props,
-      other = _objectWithoutPropertiesLoose$2(props, _excluded$n);
+      other = _objectWithoutPropertiesLoose$2(props, _excluded$g);
     const ownerState = {
       direction,
       spacing,
       useFlexGap
     };
     const classes = useUtilityClasses();
-    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$H({
+    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$w({
       as: component,
       ownerState: ownerState,
       ref: ref,
@@ -8546,8 +8522,8 @@ var PALETTE = {
   }
 };
 
-function ownKeys$E(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$C(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$E(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$E(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$i(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$g(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$i(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$i(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var DEFAULT_FONT_WEIGHT = 360;
 var BOLD_FONT_WEIGHT$1 = 500;
 var getMaxLinesStyle = function getMaxLinesStyle(n) {
@@ -8596,7 +8572,7 @@ function Typography$1(props) {
     maxWidth: "fit-content",
     onClick: props.onClick,
     //@ts-expect-error
-    sx: _objectSpread$C(_objectSpread$C(_objectSpread$C(_objectSpread$C(_objectSpread$C({}, props.sx), props.faded ? {
+    sx: _objectSpread$g(_objectSpread$g(_objectSpread$g(_objectSpread$g(_objectSpread$g({}, props.sx), props.faded ? {
       opacity: 0.6
     } : null), props.noWrap ? {
       whiteSpace: 'nowrap',
@@ -8619,8 +8595,8 @@ function Typography$1(props) {
 }
 
 var _templateObject$6;
-function ownKeys$D(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$B(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$D(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$D(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$h(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$f(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$h(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var spin$1 = keyframes(_templateObject$6 || (_templateObject$6 = _taggedTemplateLiteral(["\nfrom {\n  transform: rotate(0deg);\n}\nto {\n  transform: rotate(180deg);\n}\n"])));
 var HEIGHTS = {
   large: 52,
@@ -8804,7 +8780,7 @@ function UrsorButton(props) {
       bold: true,
       color: (_ref = (_props$fontColor = props.fontColor) !== null && _props$fontColor !== void 0 ? _props$fontColor : (_FONT_COLORS$mode$var2 = FONT_COLORS[mode][variant]) === null || _FONT_COLORS$mode$var2 === void 0 ? void 0 : _FONT_COLORS$mode$var2[state]) !== null && _ref !== void 0 ? _ref : PALETTE.font.dark,
       noWrap: true,
-      sx: _objectSpread$B({
+      sx: _objectSpread$f({
         transition: '0.2s',
         paddingY: props.paddingY
       }, props.fontSize ? {
@@ -8946,7 +8922,7 @@ const grey = {
 var THEME_ID = '$$material';
 
 function createMixins(breakpoints, mixins) {
-  return _extends$H({
+  return _extends$w({
     toolbar: {
       minHeight: 56,
       [breakpoints.up('xs')]: {
@@ -9351,7 +9327,7 @@ function blend(background, overlay, opacity, gamma = 1.0) {
   });
 }
 
-const _excluded$m = ["mode", "contrastThreshold", "tonalOffset"];
+const _excluded$f = ["mode", "contrastThreshold", "tonalOffset"];
 const light = {
   // The colors used to style the text.
   text: {
@@ -9520,7 +9496,7 @@ function createPalette(palette) {
       contrastThreshold = 3,
       tonalOffset = 0.2
     } = palette,
-    other = _objectWithoutPropertiesLoose$2(palette, _excluded$m);
+    other = _objectWithoutPropertiesLoose$2(palette, _excluded$f);
   const primary = palette.primary || getDefaultPrimary(mode);
   const secondary = palette.secondary || getDefaultSecondary(mode);
   const error = palette.error || getDefaultError(mode);
@@ -9548,7 +9524,7 @@ function createPalette(palette) {
     lightShade = 300,
     darkShade = 700
   }) => {
-    color = _extends$H({}, color);
+    color = _extends$w({}, color);
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
     }
@@ -9588,9 +9564,9 @@ const theme2 = createTheme({ palette: {
       console.error(`MUI: The palette mode \`${mode}\` is not supported.`);
     }
   }
-  const paletteOutput = deepmerge$1(_extends$H({
+  const paletteOutput = deepmerge$1(_extends$w({
     // A collection of common colors.
-    common: _extends$H({}, common),
+    common: _extends$w({}, common),
     // prevent mutable object.
     // The palette mode, can be light or dark.
     mode,
@@ -9644,7 +9620,7 @@ const theme2 = createTheme({ palette: {
   return paletteOutput;
 }
 
-const _excluded$l = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+const _excluded$e = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
 function round$1(value) {
   return Math.round(value * 1e5) / 1e5;
 }
@@ -9675,7 +9651,7 @@ function createTypography(palette, typography) {
       allVariants,
       pxToRem: pxToRem2
     } = _ref,
-    other = _objectWithoutPropertiesLoose$2(_ref, _excluded$l);
+    other = _objectWithoutPropertiesLoose$2(_ref, _excluded$e);
   if (process.env.NODE_ENV !== 'production') {
     if (typeof fontSize !== 'number') {
       console.error('MUI: `fontSize` is required to be a number.');
@@ -9686,7 +9662,7 @@ function createTypography(palette, typography) {
   }
   const coef = fontSize / 14;
   const pxToRem = pxToRem2 || (size => `${size / htmlFontSize * coef}rem`);
-  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$H({
+  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$w({
     fontFamily,
     fontWeight,
     fontSize: pxToRem(size),
@@ -9718,7 +9694,7 @@ function createTypography(palette, typography) {
       letterSpacing: 'inherit'
     }
   };
-  return deepmerge$1(_extends$H({
+  return deepmerge$1(_extends$w({
     htmlFontSize,
     pxToRem,
     fontFamily,
@@ -9742,7 +9718,7 @@ function createShadow(...px) {
 // Values from https://github.com/material-components/material-components-web/blob/be8747f94574669cb5e7add1a7c54fa41a89cec7/packages/mdc-elevation/_variables.scss
 const shadows = ['none', createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
 
-const _excluded$k = ["duration", "easing", "delay"];
+const _excluded$d = ["duration", "easing", "delay"];
 // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.
 const easing = {
@@ -9785,15 +9761,15 @@ function getAutoHeightDuration(height) {
   return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
 }
 function createTransitions(inputTransitions) {
-  const mergedEasing = _extends$H({}, easing, inputTransitions.easing);
-  const mergedDuration = _extends$H({}, duration, inputTransitions.duration);
+  const mergedEasing = _extends$w({}, easing, inputTransitions.easing);
+  const mergedDuration = _extends$w({}, duration, inputTransitions.duration);
   const create = (props = ['all'], options = {}) => {
     const {
         duration: durationOption = mergedDuration.standard,
         easing: easingOption = mergedEasing.easeInOut,
         delay = 0
       } = options,
-      other = _objectWithoutPropertiesLoose$2(options, _excluded$k);
+      other = _objectWithoutPropertiesLoose$2(options, _excluded$d);
     if (process.env.NODE_ENV !== 'production') {
       const isString = value => typeof value === 'string';
       // IE11 support, replace with Number.isNaN
@@ -9820,7 +9796,7 @@ function createTransitions(inputTransitions) {
     }
     return (Array.isArray(props) ? props : [props]).map(animatedProp => `${animatedProp} ${typeof durationOption === 'string' ? durationOption : formatMs(durationOption)} ${easingOption} ${typeof delay === 'string' ? delay : formatMs(delay)}`).join(',');
   };
-  return _extends$H({
+  return _extends$w({
     getAutoHeightDuration,
     create
   }, inputTransitions, {
@@ -9842,7 +9818,7 @@ const zIndex = {
   tooltip: 1500
 };
 
-const _excluded$j = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+const _excluded$c = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
 function createTheme(options = {}, ...args) {
   const {
       mixins: mixinsInput = {},
@@ -9850,7 +9826,7 @@ function createTheme(options = {}, ...args) {
       transitions: transitionsInput = {},
       typography: typographyInput = {}
     } = options,
-    other = _objectWithoutPropertiesLoose$2(options, _excluded$j);
+    other = _objectWithoutPropertiesLoose$2(options, _excluded$c);
   if (options.vars) {
     throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`vars\` is a private field used for CSS variables support.
 Please use another name.` : formatMuiErrorMessage$1(18));
@@ -9864,7 +9840,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     shadows: shadows.slice(),
     typography: createTypography(palette, typographyInput),
     transitions: createTransitions(transitionsInput),
-    zIndex: _extends$H({}, zIndex)
+    zIndex: _extends$w({}, zIndex)
   });
   muiTheme = deepmerge$1(muiTheme, other);
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
@@ -9898,7 +9874,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
       }
     });
   }
-  muiTheme.unstable_sxConfig = _extends$H({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$w({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -9921,12 +9897,12 @@ function useTheme() {
 
 var createStyled$1 = {};
 
-var _extends$G = {exports: {}};
+var _extends$v = {exports: {}};
 
 var hasRequired_extends;
 
 function require_extends () {
-	if (hasRequired_extends) return _extends$G.exports;
+	if (hasRequired_extends) return _extends$v.exports;
 	hasRequired_extends = 1;
 	(function (module) {
 		function _extends() {
@@ -9939,8 +9915,8 @@ function require_extends () {
 		  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _extends.apply(null, arguments);
 		}
 		module.exports = _extends, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-	} (_extends$G));
-	return _extends$G.exports;
+	} (_extends$v));
+	return _extends$v.exports;
 }
 
 var objectWithoutPropertiesLoose = {exports: {}};
@@ -9992,7 +9968,7 @@ var _capitalize = _interopRequireDefault(require$$5);
 var _getDisplayName = _interopRequireDefault(require$$6);
 var _createTheme = _interopRequireDefault(require$$7);
 var _styleFunctionSx = _interopRequireDefault(require$$8);
-const _excluded$i = ["ownerState"],
+const _excluded$b = ["ownerState"],
   _excluded2 = ["variants"],
   _excluded3 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 /* eslint-disable no-underscore-dangle */
@@ -10039,7 +10015,7 @@ function processStyleArg(callableStyle, _ref) {
   let {
       ownerState
     } = _ref,
-    props = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded$i);
+    props = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded$b);
   const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle((0, _extends2.default)({
     ownerState
   }, props)) : callableStyle;
@@ -10943,8 +10919,8 @@ function getPaperUtilityClass(slot) {
 }
 generateUtilityClasses('MuiPaper', ['root', 'rounded', 'outlined', 'elevation', 'elevation0', 'elevation1', 'elevation2', 'elevation3', 'elevation4', 'elevation5', 'elevation6', 'elevation7', 'elevation8', 'elevation9', 'elevation10', 'elevation11', 'elevation12', 'elevation13', 'elevation14', 'elevation15', 'elevation16', 'elevation17', 'elevation18', 'elevation19', 'elevation20', 'elevation21', 'elevation22', 'elevation23', 'elevation24']);
 
-const _excluded$h = ["className", "component", "elevation", "square", "variant"];
-const useUtilityClasses$e = ownerState => {
+const _excluded$a = ["className", "component", "elevation", "square", "variant"];
+const useUtilityClasses$7 = ownerState => {
   const {
     square,
     elevation,
@@ -10970,7 +10946,7 @@ const PaperRoot = styled('div', {
   ownerState
 }) => {
   var _theme$vars$overlays;
-  return _extends$H({
+  return _extends$w({
     backgroundColor: (theme.vars || theme).palette.background.paper,
     color: (theme.vars || theme).palette.text.primary,
     transition: theme.transitions.create('box-shadow')
@@ -10978,7 +10954,7 @@ const PaperRoot = styled('div', {
     borderRadius: theme.shape.borderRadius
   }, ownerState.variant === 'outlined' && {
     border: `1px solid ${(theme.vars || theme).palette.divider}`
-  }, ownerState.variant === 'elevation' && _extends$H({
+  }, ownerState.variant === 'elevation' && _extends$w({
     boxShadow: (theme.vars || theme).shadows[ownerState.elevation]
   }, !theme.vars && theme.palette.mode === 'dark' && {
     backgroundImage: `linear-gradient(${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))}, ${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))})`
@@ -10998,14 +10974,14 @@ const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
       square = false,
       variant = 'elevation'
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$h);
-  const ownerState = _extends$H({}, props, {
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$a);
+  const ownerState = _extends$w({}, props, {
     component,
     elevation,
     square,
     variant
   });
-  const classes = useUtilityClasses$e(ownerState);
+  const classes = useUtilityClasses$7(ownerState);
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const theme = useTheme();
@@ -11013,7 +10989,7 @@ const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
       console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join('\n'));
     }
   }
-  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$H({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$w({
     as: component,
     ownerState: ownerState,
     className: clsx(classes.root, className),
@@ -11078,8 +11054,8 @@ function getTypographyUtilityClass(slot) {
 }
 generateUtilityClasses('MuiTypography', ['root', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'inherit', 'button', 'caption', 'overline', 'alignLeft', 'alignRight', 'alignCenter', 'alignJustify', 'noWrap', 'gutterBottom', 'paragraph']);
 
-const _excluded$g = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
-const useUtilityClasses$d = ownerState => {
+const _excluded$9 = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
+const useUtilityClasses$6 = ownerState => {
   const {
     align,
     gutterBottom,
@@ -11105,7 +11081,7 @@ const TypographyRoot = styled('span', {
 })(({
   theme,
   ownerState
-}) => _extends$H({
+}) => _extends$w({
   margin: 0
 }, ownerState.variant === 'inherit' && {
   // Some elements, like <button> on Chrome have default font that doesn't inherit, reset this.
@@ -11152,7 +11128,7 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
     name: 'MuiTypography'
   });
   const color = transformDeprecatedColors(themeProps.color);
-  const props = extendSxProp(_extends$H({}, themeProps, {
+  const props = extendSxProp(_extends$w({}, themeProps, {
     color
   }));
   const {
@@ -11165,8 +11141,8 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
       variant = 'body1',
       variantMapping = defaultVariantMapping
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$g);
-  const ownerState = _extends$H({}, props, {
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$9);
+  const ownerState = _extends$w({}, props, {
     align,
     color,
     className,
@@ -11178,8 +11154,8 @@ const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, 
     variantMapping
   });
   const Component = component || (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) || 'span';
-  const classes = useUtilityClasses$d(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$H({
+  const classes = useUtilityClasses$6(ownerState);
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$w({
     as: Component,
     ref: ref,
     ownerState: ownerState,
@@ -13138,7 +13114,7 @@ if (process.env.NODE_ENV !== 'production') {
   Portal['propTypes' + ''] = exactProp(Portal.propTypes);
 }
 
-const _excluded$f = ["onChange", "maxRows", "minRows", "style", "value"];
+const _excluded$8 = ["onChange", "maxRows", "minRows", "style", "value"];
 function getStyleValue(value) {
   return parseInt(value, 10) || 0;
 }
@@ -13179,7 +13155,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
       style,
       value
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$f);
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$8);
   const {
     current: isControlled
   } = React$1.useRef(value != null);
@@ -13295,7 +13271,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
     }
   };
   return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
-    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$H({
+    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$w({
       value: value,
       onChange: handleChange,
       ref: handleRef
@@ -13309,7 +13285,7 @@ const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosi
       readOnly: true,
       ref: shadowRef,
       tabIndex: -1,
-      style: _extends$H({}, styles$1.shadow, style, {
+      style: _extends$w({}, styles$1.shadow, style, {
         paddingTop: 0,
         paddingBottom: 0
       })
@@ -13381,7 +13357,7 @@ function useFormControl() {
 }
 
 function GlobalStyles(props) {
-  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$H({}, props, {
+  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$w({}, props, {
     defaultTheme: defaultTheme$1,
     themeId: THEME_ID
   }));
@@ -13423,7 +13399,7 @@ function getInputBaseUtilityClass(slot) {
 }
 const inputBaseClasses = generateUtilityClasses('MuiInputBase', ['root', 'formControl', 'focused', 'disabled', 'adornedStart', 'adornedEnd', 'error', 'sizeSmall', 'multiline', 'colorSecondary', 'fullWidth', 'hiddenLabel', 'readOnly', 'input', 'inputSizeSmall', 'inputMultiline', 'inputTypeSearch', 'inputAdornedStart', 'inputAdornedEnd', 'inputHiddenLabel']);
 
-const _excluded$e = ["aria-describedby", "autoComplete", "autoFocus", "className", "color", "components", "componentsProps", "defaultValue", "disabled", "disableInjectingGlobalStyles", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "size", "slotProps", "slots", "startAdornment", "type", "value"];
+const _excluded$7 = ["aria-describedby", "autoComplete", "autoFocus", "className", "color", "components", "componentsProps", "defaultValue", "disabled", "disableInjectingGlobalStyles", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "size", "slotProps", "slots", "startAdornment", "type", "value"];
 const rootOverridesResolver = (props, styles) => {
   const {
     ownerState
@@ -13436,7 +13412,7 @@ const inputOverridesResolver = (props, styles) => {
   } = props;
   return [styles.input, ownerState.size === 'small' && styles.inputSizeSmall, ownerState.multiline && styles.inputMultiline, ownerState.type === 'search' && styles.inputTypeSearch, ownerState.startAdornment && styles.inputAdornedStart, ownerState.endAdornment && styles.inputAdornedEnd, ownerState.hiddenLabel && styles.inputHiddenLabel];
 };
-const useUtilityClasses$c = ownerState => {
+const useUtilityClasses$5 = ownerState => {
   const {
     classes,
     color,
@@ -13466,7 +13442,7 @@ const InputBaseRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$H({}, theme.typography.body1, {
+}) => _extends$w({}, theme.typography.body1, {
   color: (theme.vars || theme).palette.text.primary,
   lineHeight: '1.4375em',
   // 23px
@@ -13480,7 +13456,7 @@ const InputBaseRoot = styled('div', {
     color: (theme.vars || theme).palette.text.disabled,
     cursor: 'default'
   }
-}, ownerState.multiline && _extends$H({
+}, ownerState.multiline && _extends$w({
   padding: '4px 0 5px'
 }, ownerState.size === 'small' && {
   paddingTop: 1
@@ -13496,7 +13472,7 @@ const InputBaseComponent = styled('input', {
   ownerState
 }) => {
   const light = theme.palette.mode === 'light';
-  const placeholder = _extends$H({
+  const placeholder = _extends$w({
     color: 'currentColor'
   }, theme.vars ? {
     opacity: theme.vars.opacity.inputPlaceholder
@@ -13515,7 +13491,7 @@ const InputBaseComponent = styled('input', {
   } : {
     opacity: light ? 0.42 : 0.5
   };
-  return _extends$H({
+  return _extends$w({
     font: 'inherit',
     letterSpacing: 'inherit',
     color: 'currentColor',
@@ -13652,7 +13628,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       type = 'text',
       value: valueProp
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$e);
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$7);
   const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
   const {
     current: isControlled
@@ -13787,13 +13763,13 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           console.warn('MUI: You can not use the `minRows` or `maxRows` props when the input `rows` prop is set.');
         }
       }
-      inputProps = _extends$H({
+      inputProps = _extends$w({
         type: undefined,
         minRows: rows,
         maxRows: rows
       }, inputProps);
     } else {
-      inputProps = _extends$H({
+      inputProps = _extends$w({
         type: undefined,
         maxRows,
         minRows
@@ -13812,7 +13788,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       muiFormControl.setAdornedStart(Boolean(startAdornment));
     }
   }, [muiFormControl, startAdornment]);
-  const ownerState = _extends$H({}, props, {
+  const ownerState = _extends$w({}, props, {
     color: fcs.color || 'primary',
     disabled: fcs.disabled,
     endAdornment,
@@ -13826,14 +13802,14 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
     startAdornment,
     type
   });
-  const classes = useUtilityClasses$c(ownerState);
+  const classes = useUtilityClasses$5(ownerState);
   const Root = slots.root || components.Root || InputBaseRoot;
   const rootProps = slotProps.root || componentsProps.root || {};
   const Input = slots.input || components.Input || InputBaseComponent;
-  inputProps = _extends$H({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
+  inputProps = _extends$w({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
   return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
-    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$H({}, rootProps, !isHostComponent(Root) && {
-      ownerState: _extends$H({}, ownerState, rootProps.ownerState)
+    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$w({}, rootProps, !isHostComponent(Root) && {
+      ownerState: _extends$w({}, ownerState, rootProps.ownerState)
     }, {
       ref: ref,
       onClick: handleClick
@@ -13841,7 +13817,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
       className: clsx(classes.root, rootProps.className, className, readOnly && 'MuiInputBase-readOnly'),
       children: [startAdornment, /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
         value: null,
-        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$H({
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$w({
           ownerState: ownerState,
           "aria-invalid": fcs.error,
           "aria-describedby": ariaDescribedby,
@@ -13862,7 +13838,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           type: type
         }, inputProps, !isHostComponent(Input) && {
           as: InputComponent,
-          ownerState: _extends$H({}, ownerState, inputProps.ownerState)
+          ownerState: _extends$w({}, ownerState, inputProps.ownerState)
         }, {
           ref: handleInputRef,
           className: clsx(classes.input, inputProps.className, readOnly && 'MuiInputBase-readOnly'),
@@ -13870,7 +13846,7 @@ const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, re
           onChange: handleChange,
           onFocus: handleFocus
         }))
-      }), endAdornment, renderSuffix ? renderSuffix(_extends$H({}, fcs, {
+      }), endAdornment, renderSuffix ? renderSuffix(_extends$w({}, fcs, {
         startAdornment
       })) : null]
     }))]
@@ -14111,9 +14087,9 @@ var InputBase$1 = InputBase;
 function getInputUtilityClass(slot) {
   return generateUtilityClass('MuiInput', slot);
 }
-const inputClasses = _extends$H({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
+const inputClasses = _extends$w({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
 
-const _excluded$d = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+const _excluded$6 = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
 const styles = {
   entering: {
     opacity: 1
@@ -14150,7 +14126,7 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$d);
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$6);
   const nodeRef = React$1.useRef(null);
   const handleRef = useForkRef(nodeRef, children.ref, ref);
   const normalizedTransitionCallback = callback => maybeIsAppearing => {
@@ -14205,7 +14181,7 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
       addEndListener(nodeRef.current, next);
     }
   };
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$H({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$w({
     appear: appear,
     in: inProp,
     nodeRef: nodeRef ,
@@ -14219,8 +14195,8 @@ const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
     timeout: timeout
   }, other, {
     children: (state, childProps) => {
-      return /*#__PURE__*/React$1.cloneElement(children, _extends$H({
-        style: _extends$H({
+      return /*#__PURE__*/React$1.cloneElement(children, _extends$w({
+        style: _extends$w({
           opacity: 0,
           visibility: state === 'exited' && !inProp ? 'hidden' : undefined
         }, styles[state], style, children.props.style),
@@ -14310,8 +14286,8 @@ function getBackdropUtilityClass(slot) {
 }
 generateUtilityClasses('MuiBackdrop', ['root', 'invisible']);
 
-const _excluded$c = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
-const useUtilityClasses$b = ownerState => {
+const _excluded$5 = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
+const useUtilityClasses$4 = ownerState => {
   const {
     classes,
     invisible
@@ -14332,7 +14308,7 @@ const BackdropRoot = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$H({
+}) => _extends$w({
   position: 'fixed',
   display: 'flex',
   alignItems: 'center',
@@ -14365,23 +14341,23 @@ const Backdrop = /*#__PURE__*/React$1.forwardRef(function Backdrop(inProps, ref)
       TransitionComponent = Fade,
       transitionDuration
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$c);
-  const ownerState = _extends$H({}, props, {
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$5);
+  const ownerState = _extends$w({}, props, {
     component,
     invisible
   });
-  const classes = useUtilityClasses$b(ownerState);
+  const classes = useUtilityClasses$4(ownerState);
   const rootSlotProps = (_slotProps$root = slotProps.root) != null ? _slotProps$root : componentsProps.root;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$H({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$w({
     in: open,
     timeout: transitionDuration
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$H({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$w({
       "aria-hidden": true
     }, rootSlotProps, {
       as: (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : component,
       className: clsx(classes.root, className, rootSlotProps == null ? void 0 : rootSlotProps.className),
-      ownerState: _extends$H({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
+      ownerState: _extends$w({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
       classes: classes,
       ref: ref,
       children: children
@@ -15189,8 +15165,8 @@ function useModal(parameters) {
     // The custom event handlers shouldn't be spread on the root element
     delete propsEventHandlers.onTransitionEnter;
     delete propsEventHandlers.onTransitionExited;
-    const externalEventHandlers = _extends$H({}, propsEventHandlers, otherHandlers);
-    return _extends$H({
+    const externalEventHandlers = _extends$w({}, propsEventHandlers, otherHandlers);
+    return _extends$w({
       role: 'presentation'
     }, externalEventHandlers, {
       onKeyDown: createHandleKeyDown(externalEventHandlers),
@@ -15199,7 +15175,7 @@ function useModal(parameters) {
   };
   const getBackdropProps = (otherHandlers = {}) => {
     const externalEventHandlers = otherHandlers;
-    return _extends$H({
+    return _extends$w({
       'aria-hidden': true
     }, externalEventHandlers, {
       onClick: createHandleBackdropClick(externalEventHandlers),
@@ -15244,8 +15220,8 @@ function getModalUtilityClass(slot) {
 }
 generateUtilityClasses('MuiModal', ['root', 'hidden', 'backdrop']);
 
-const _excluded$b = ["BackdropComponent", "BackdropProps", "classes", "className", "closeAfterTransition", "children", "container", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onTransitionEnter", "onTransitionExited", "open", "slotProps", "slots", "theme"];
-const useUtilityClasses$a = ownerState => {
+const _excluded$4 = ["BackdropComponent", "BackdropProps", "classes", "className", "closeAfterTransition", "children", "container", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onTransitionEnter", "onTransitionExited", "open", "slotProps", "slots", "theme"];
+const useUtilityClasses$3 = ownerState => {
   const {
     open,
     exited,
@@ -15269,7 +15245,7 @@ const ModalRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$H({
+}) => _extends$w({
   position: 'fixed',
   zIndex: (theme.vars || theme).zIndex.modal,
   right: 0,
@@ -15332,8 +15308,8 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
       slots
       // eslint-disable-next-line react/prop-types
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$b);
-  const propsWithDefaults = _extends$H({}, props, {
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$4);
+  const propsWithDefaults = _extends$w({}, props, {
     closeAfterTransition,
     disableAutoFocus,
     disableEnforceFocus,
@@ -15352,13 +15328,13 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     isTopModal,
     exited,
     hasTransition
-  } = useModal(_extends$H({}, propsWithDefaults, {
+  } = useModal(_extends$w({}, propsWithDefaults, {
     rootRef: ref
   }));
-  const ownerState = _extends$H({}, propsWithDefaults, {
+  const ownerState = _extends$w({}, propsWithDefaults, {
     exited
   });
-  const classes = useUtilityClasses$a(ownerState);
+  const classes = useUtilityClasses$3(ownerState);
   const childProps = {};
   if (children.props.tabIndex === undefined) {
     childProps.tabIndex = '-1';
@@ -15394,7 +15370,7 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     externalSlotProps: backdropSlotProps,
     additionalProps: BackdropProps,
     getSlotProps: otherHandlers => {
-      return getBackdropProps(_extends$H({}, otherHandlers, {
+      return getBackdropProps(_extends$w({}, otherHandlers, {
         onClick: e => {
           if (onBackdropClick) {
             onBackdropClick(e);
@@ -15415,8 +15391,8 @@ const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
     ref: portalRef,
     container: container,
     disablePortal: disablePortal,
-    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$H({}, rootProps, {
-      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$H({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
+    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$w({}, rootProps, {
+      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$w({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
         disableEnforceFocus: disableEnforceFocus,
         disableAutoFocus: disableAutoFocus,
         disableRestoreFocus: disableRestoreFocus,
@@ -15619,7 +15595,7 @@ if (process.env.NODE_ENV !== 'production') {
   DialogContext.displayName = 'DialogContext';
 }
 
-const _excluded$a = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
+const _excluded$3 = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
 const DialogBackdrop = styled(Backdrop, {
   name: 'MuiDialog',
   slot: 'Backdrop',
@@ -15628,7 +15604,7 @@ const DialogBackdrop = styled(Backdrop, {
   // Improve scrollable dialog support.
   zIndex: -1
 });
-const useUtilityClasses$9 = ownerState => {
+const useUtilityClasses$2 = ownerState => {
   const {
     classes,
     scroll,
@@ -15664,7 +15640,7 @@ const DialogContainer = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$H({
+}) => _extends$w({
   height: '100%',
   '@media print': {
     height: 'auto'
@@ -15699,7 +15675,7 @@ const DialogPaper = styled(Paper, {
 })(({
   theme,
   ownerState
-}) => _extends$H({
+}) => _extends$w({
   margin: 32,
   position: 'relative',
   overflowY: 'auto',
@@ -15782,15 +15758,15 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
       transitionDuration = defaultTransitionDuration,
       TransitionProps
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$a);
-  const ownerState = _extends$H({}, props, {
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$3);
+  const ownerState = _extends$w({}, props, {
     disableEscapeKeyDown,
     fullScreen,
     fullWidth,
     maxWidth,
     scroll
   });
-  const classes = useUtilityClasses$9(ownerState);
+  const classes = useUtilityClasses$2(ownerState);
   const backdropClick = React$1.useRef();
   const handleMouseDown = event => {
     // We don't want to close the dialog when clicking the dialog content.
@@ -15820,14 +15796,14 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
       titleId: ariaLabelledby
     };
   }, [ariaLabelledby]);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$H({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$w({
     className: clsx(classes.root, className),
     closeAfterTransition: true,
     components: {
       Backdrop: DialogBackdrop
     },
     componentsProps: {
-      backdrop: _extends$H({
+      backdrop: _extends$w({
         transitionDuration,
         as: BackdropComponent
       }, BackdropProps)
@@ -15839,7 +15815,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
     onClick: handleBackdropClick,
     ownerState: ownerState
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$H({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$w({
       appear: true,
       in: open,
       timeout: transitionDuration,
@@ -15849,7 +15825,7 @@ const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
         className: clsx(classes.container),
         onMouseDown: handleMouseDown,
         ownerState: ownerState,
-        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$H({
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$w({
           as: PaperComponent,
           elevation: 24,
           role: "dialog",
@@ -16056,575 +16032,8 @@ process.env.NODE_ENV !== "production" ? Stack.propTypes /* remove-proptypes */ =
   useFlexGap: PropTypes.bool
 } : void 0;
 
-/**
- * @ignore - internal component.
- */
-const GridContext = /*#__PURE__*/React$1.createContext();
-if (process.env.NODE_ENV !== 'production') {
-  GridContext.displayName = 'GridContext';
-}
-
-function getGridUtilityClass(slot) {
-  return generateUtilityClass('MuiGrid', slot);
-}
-const SPACINGS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const DIRECTIONS = ['column-reverse', 'column', 'row-reverse', 'row'];
-const WRAPS = ['nowrap', 'wrap-reverse', 'wrap'];
-const GRID_SIZES = ['auto', true, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const gridClasses = generateUtilityClasses('MuiGrid', ['root', 'container', 'item', 'zeroMinWidth',
-// spacings
-...SPACINGS.map(spacing => `spacing-xs-${spacing}`),
-// direction values
-...DIRECTIONS.map(direction => `direction-xs-${direction}`),
-// wrap values
-...WRAPS.map(wrap => `wrap-xs-${wrap}`),
-// grid sizes for all breakpoints
-...GRID_SIZES.map(size => `grid-xs-${size}`), ...GRID_SIZES.map(size => `grid-sm-${size}`), ...GRID_SIZES.map(size => `grid-md-${size}`), ...GRID_SIZES.map(size => `grid-lg-${size}`), ...GRID_SIZES.map(size => `grid-xl-${size}`)]);
-
-const _excluded$9 = ["className", "columns", "columnSpacing", "component", "container", "direction", "item", "rowSpacing", "spacing", "wrap", "zeroMinWidth"];
-function getOffset(val) {
-  const parse = parseFloat(val);
-  return `${parse}${String(val).replace(String(parse), '') || 'px'}`;
-}
-function generateGrid({
-  theme,
-  ownerState
-}) {
-  let size;
-  return theme.breakpoints.keys.reduce((globalStyles, breakpoint) => {
-    // Use side effect over immutability for better performance.
-    let styles = {};
-    if (ownerState[breakpoint]) {
-      size = ownerState[breakpoint];
-    }
-    if (!size) {
-      return globalStyles;
-    }
-    if (size === true) {
-      // For the auto layouting
-      styles = {
-        flexBasis: 0,
-        flexGrow: 1,
-        maxWidth: '100%'
-      };
-    } else if (size === 'auto') {
-      styles = {
-        flexBasis: 'auto',
-        flexGrow: 0,
-        flexShrink: 0,
-        maxWidth: 'none',
-        width: 'auto'
-      };
-    } else {
-      const columnsBreakpointValues = resolveBreakpointValues({
-        values: ownerState.columns,
-        breakpoints: theme.breakpoints.values
-      });
-      const columnValue = typeof columnsBreakpointValues === 'object' ? columnsBreakpointValues[breakpoint] : columnsBreakpointValues;
-      if (columnValue === undefined || columnValue === null) {
-        return globalStyles;
-      }
-      // Keep 7 significant numbers.
-      const width = `${Math.round(size / columnValue * 10e7) / 10e5}%`;
-      let more = {};
-      if (ownerState.container && ownerState.item && ownerState.columnSpacing !== 0) {
-        const themeSpacing = theme.spacing(ownerState.columnSpacing);
-        if (themeSpacing !== '0px') {
-          const fullWidth = `calc(${width} + ${getOffset(themeSpacing)})`;
-          more = {
-            flexBasis: fullWidth,
-            maxWidth: fullWidth
-          };
-        }
-      }
-
-      // Close to the bootstrap implementation:
-      // https://github.com/twbs/bootstrap/blob/8fccaa2439e97ec72a4b7dc42ccc1f649790adb0/scss/mixins/_grid.scss#L41
-      styles = _extends$H({
-        flexBasis: width,
-        flexGrow: 0,
-        maxWidth: width
-      }, more);
-    }
-
-    // No need for a media query for the first size.
-    if (theme.breakpoints.values[breakpoint] === 0) {
-      Object.assign(globalStyles, styles);
-    } else {
-      globalStyles[theme.breakpoints.up(breakpoint)] = styles;
-    }
-    return globalStyles;
-  }, {});
-}
-function generateDirection({
-  theme,
-  ownerState
-}) {
-  const directionValues = resolveBreakpointValues({
-    values: ownerState.direction,
-    breakpoints: theme.breakpoints.values
-  });
-  return handleBreakpoints({
-    theme
-  }, directionValues, propValue => {
-    const output = {
-      flexDirection: propValue
-    };
-    if (propValue.indexOf('column') === 0) {
-      output[`& > .${gridClasses.item}`] = {
-        maxWidth: 'none'
-      };
-    }
-    return output;
-  });
-}
-
-/**
- * Extracts zero value breakpoint keys before a non-zero value breakpoint key.
- * @example { xs: 0, sm: 0, md: 2, lg: 0, xl: 0 } or [0, 0, 2, 0, 0]
- * @returns [xs, sm]
- */
-function extractZeroValueBreakpointKeys({
-  breakpoints,
-  values
-}) {
-  let nonZeroKey = '';
-  Object.keys(values).forEach(key => {
-    if (nonZeroKey !== '') {
-      return;
-    }
-    if (values[key] !== 0) {
-      nonZeroKey = key;
-    }
-  });
-  const sortedBreakpointKeysByValue = Object.keys(breakpoints).sort((a, b) => {
-    return breakpoints[a] - breakpoints[b];
-  });
-  return sortedBreakpointKeysByValue.slice(0, sortedBreakpointKeysByValue.indexOf(nonZeroKey));
-}
-function generateRowGap({
-  theme,
-  ownerState
-}) {
-  const {
-    container,
-    rowSpacing
-  } = ownerState;
-  let styles = {};
-  if (container && rowSpacing !== 0) {
-    const rowSpacingValues = resolveBreakpointValues({
-      values: rowSpacing,
-      breakpoints: theme.breakpoints.values
-    });
-    let zeroValueBreakpointKeys;
-    if (typeof rowSpacingValues === 'object') {
-      zeroValueBreakpointKeys = extractZeroValueBreakpointKeys({
-        breakpoints: theme.breakpoints.values,
-        values: rowSpacingValues
-      });
-    }
-    styles = handleBreakpoints({
-      theme
-    }, rowSpacingValues, (propValue, breakpoint) => {
-      var _zeroValueBreakpointK;
-      const themeSpacing = theme.spacing(propValue);
-      if (themeSpacing !== '0px') {
-        return {
-          marginTop: `-${getOffset(themeSpacing)}`,
-          [`& > .${gridClasses.item}`]: {
-            paddingTop: getOffset(themeSpacing)
-          }
-        };
-      }
-      if ((_zeroValueBreakpointK = zeroValueBreakpointKeys) != null && _zeroValueBreakpointK.includes(breakpoint)) {
-        return {};
-      }
-      return {
-        marginTop: 0,
-        [`& > .${gridClasses.item}`]: {
-          paddingTop: 0
-        }
-      };
-    });
-  }
-  return styles;
-}
-function generateColumnGap({
-  theme,
-  ownerState
-}) {
-  const {
-    container,
-    columnSpacing
-  } = ownerState;
-  let styles = {};
-  if (container && columnSpacing !== 0) {
-    const columnSpacingValues = resolveBreakpointValues({
-      values: columnSpacing,
-      breakpoints: theme.breakpoints.values
-    });
-    let zeroValueBreakpointKeys;
-    if (typeof columnSpacingValues === 'object') {
-      zeroValueBreakpointKeys = extractZeroValueBreakpointKeys({
-        breakpoints: theme.breakpoints.values,
-        values: columnSpacingValues
-      });
-    }
-    styles = handleBreakpoints({
-      theme
-    }, columnSpacingValues, (propValue, breakpoint) => {
-      var _zeroValueBreakpointK2;
-      const themeSpacing = theme.spacing(propValue);
-      if (themeSpacing !== '0px') {
-        return {
-          width: `calc(100% + ${getOffset(themeSpacing)})`,
-          marginLeft: `-${getOffset(themeSpacing)}`,
-          [`& > .${gridClasses.item}`]: {
-            paddingLeft: getOffset(themeSpacing)
-          }
-        };
-      }
-      if ((_zeroValueBreakpointK2 = zeroValueBreakpointKeys) != null && _zeroValueBreakpointK2.includes(breakpoint)) {
-        return {};
-      }
-      return {
-        width: '100%',
-        marginLeft: 0,
-        [`& > .${gridClasses.item}`]: {
-          paddingLeft: 0
-        }
-      };
-    });
-  }
-  return styles;
-}
-function resolveSpacingStyles(spacing, breakpoints, styles = {}) {
-  // undefined/null or `spacing` <= 0
-  if (!spacing || spacing <= 0) {
-    return [];
-  }
-  // in case of string/number `spacing`
-  if (typeof spacing === 'string' && !Number.isNaN(Number(spacing)) || typeof spacing === 'number') {
-    return [styles[`spacing-xs-${String(spacing)}`]];
-  }
-  // in case of object `spacing`
-  const spacingStyles = [];
-  breakpoints.forEach(breakpoint => {
-    const value = spacing[breakpoint];
-    if (Number(value) > 0) {
-      spacingStyles.push(styles[`spacing-${breakpoint}-${String(value)}`]);
-    }
-  });
-  return spacingStyles;
-}
-
-// Default CSS values
-// flex: '0 1 auto',
-// flexDirection: 'row',
-// alignItems: 'flex-start',
-// flexWrap: 'nowrap',
-// justifyContent: 'flex-start',
-const GridRoot = styled('div', {
-  name: 'MuiGrid',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    const {
-      container,
-      direction,
-      item,
-      spacing,
-      wrap,
-      zeroMinWidth,
-      breakpoints
-    } = ownerState;
-    let spacingStyles = [];
-
-    // in case of grid item
-    if (container) {
-      spacingStyles = resolveSpacingStyles(spacing, breakpoints, styles);
-    }
-    const breakpointsStyles = [];
-    breakpoints.forEach(breakpoint => {
-      const value = ownerState[breakpoint];
-      if (value) {
-        breakpointsStyles.push(styles[`grid-${breakpoint}-${String(value)}`]);
-      }
-    });
-    return [styles.root, container && styles.container, item && styles.item, zeroMinWidth && styles.zeroMinWidth, ...spacingStyles, direction !== 'row' && styles[`direction-xs-${String(direction)}`], wrap !== 'wrap' && styles[`wrap-xs-${String(wrap)}`], ...breakpointsStyles];
-  }
-})(({
-  ownerState
-}) => _extends$H({
-  boxSizing: 'border-box'
-}, ownerState.container && {
-  display: 'flex',
-  flexWrap: 'wrap',
-  width: '100%'
-}, ownerState.item && {
-  margin: 0 // For instance, it's useful when used with a `figure` element.
-}, ownerState.zeroMinWidth && {
-  minWidth: 0
-}, ownerState.wrap !== 'wrap' && {
-  flexWrap: ownerState.wrap
-}), generateDirection, generateRowGap, generateColumnGap, generateGrid);
-function resolveSpacingClasses(spacing, breakpoints) {
-  // undefined/null or `spacing` <= 0
-  if (!spacing || spacing <= 0) {
-    return [];
-  }
-  // in case of string/number `spacing`
-  if (typeof spacing === 'string' && !Number.isNaN(Number(spacing)) || typeof spacing === 'number') {
-    return [`spacing-xs-${String(spacing)}`];
-  }
-  // in case of object `spacing`
-  const classes = [];
-  breakpoints.forEach(breakpoint => {
-    const value = spacing[breakpoint];
-    if (Number(value) > 0) {
-      const className = `spacing-${breakpoint}-${String(value)}`;
-      classes.push(className);
-    }
-  });
-  return classes;
-}
-const useUtilityClasses$8 = ownerState => {
-  const {
-    classes,
-    container,
-    direction,
-    item,
-    spacing,
-    wrap,
-    zeroMinWidth,
-    breakpoints
-  } = ownerState;
-  let spacingClasses = [];
-
-  // in case of grid item
-  if (container) {
-    spacingClasses = resolveSpacingClasses(spacing, breakpoints);
-  }
-  const breakpointsClasses = [];
-  breakpoints.forEach(breakpoint => {
-    const value = ownerState[breakpoint];
-    if (value) {
-      breakpointsClasses.push(`grid-${breakpoint}-${String(value)}`);
-    }
-  });
-  const slots = {
-    root: ['root', container && 'container', item && 'item', zeroMinWidth && 'zeroMinWidth', ...spacingClasses, direction !== 'row' && `direction-xs-${String(direction)}`, wrap !== 'wrap' && `wrap-xs-${String(wrap)}`, ...breakpointsClasses]
-  };
-  return composeClasses(slots, getGridUtilityClass, classes);
-};
-const Grid = /*#__PURE__*/React$1.forwardRef(function Grid(inProps, ref) {
-  const themeProps = useDefaultProps({
-    props: inProps,
-    name: 'MuiGrid'
-  });
-  const {
-    breakpoints
-  } = useTheme();
-  const props = extendSxProp(themeProps);
-  const {
-      className,
-      columns: columnsProp,
-      columnSpacing: columnSpacingProp,
-      component = 'div',
-      container = false,
-      direction = 'row',
-      item = false,
-      rowSpacing: rowSpacingProp,
-      spacing = 0,
-      wrap = 'wrap',
-      zeroMinWidth = false
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$9);
-  const rowSpacing = rowSpacingProp || spacing;
-  const columnSpacing = columnSpacingProp || spacing;
-  const columnsContext = React$1.useContext(GridContext);
-
-  // columns set with default breakpoint unit of 12
-  const columns = container ? columnsProp || 12 : columnsContext;
-  const breakpointsValues = {};
-  const otherFiltered = _extends$H({}, other);
-  breakpoints.keys.forEach(breakpoint => {
-    if (other[breakpoint] != null) {
-      breakpointsValues[breakpoint] = other[breakpoint];
-      delete otherFiltered[breakpoint];
-    }
-  });
-  const ownerState = _extends$H({}, props, {
-    columns,
-    container,
-    direction,
-    item,
-    rowSpacing,
-    columnSpacing,
-    wrap,
-    zeroMinWidth,
-    spacing
-  }, breakpointsValues, {
-    breakpoints: breakpoints.keys
-  });
-  const classes = useUtilityClasses$8(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(GridContext.Provider, {
-    value: columns,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(GridRoot, _extends$H({
-      ownerState: ownerState,
-      className: clsx(classes.root, className),
-      as: component,
-      ref: ref
-    }, otherFiltered))
-  });
-});
-process.env.NODE_ENV !== "production" ? Grid.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * The content of the component.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The number of columns.
-   * @default 12
-   */
-  columns: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number, PropTypes.object]),
-  /**
-   * Defines the horizontal space between the type `item` components.
-   * It overrides the value of the `spacing` prop.
-   */
-  columnSpacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * If `true`, the component will have the flex *container* behavior.
-   * You should be wrapping *items* with a *container*.
-   * @default false
-   */
-  container: PropTypes.bool,
-  /**
-   * Defines the `flex-direction` style property.
-   * It is applied for all screen sizes.
-   * @default 'row'
-   */
-  direction: PropTypes.oneOfType([PropTypes.oneOf(['column-reverse', 'column', 'row-reverse', 'row']), PropTypes.arrayOf(PropTypes.oneOf(['column-reverse', 'column', 'row-reverse', 'row'])), PropTypes.object]),
-  /**
-   * If `true`, the component will have the flex *item* behavior.
-   * You should be wrapping *items* with a *container*.
-   * @default false
-   */
-  item: PropTypes.bool,
-  /**
-   * If a number, it sets the number of columns the grid item uses.
-   * It can't be greater than the total number of columns of the container (12 by default).
-   * If 'auto', the grid item's width matches its content.
-   * If false, the prop is ignored.
-   * If true, the grid item's width grows to use the space available in the grid container.
-   * The value is applied for the `lg` breakpoint and wider screens if not overridden.
-   * @default false
-   */
-  lg: PropTypes.oneOfType([PropTypes.oneOf(['auto']), PropTypes.number, PropTypes.bool]),
-  /**
-   * If a number, it sets the number of columns the grid item uses.
-   * It can't be greater than the total number of columns of the container (12 by default).
-   * If 'auto', the grid item's width matches its content.
-   * If false, the prop is ignored.
-   * If true, the grid item's width grows to use the space available in the grid container.
-   * The value is applied for the `md` breakpoint and wider screens if not overridden.
-   * @default false
-   */
-  md: PropTypes.oneOfType([PropTypes.oneOf(['auto']), PropTypes.number, PropTypes.bool]),
-  /**
-   * Defines the vertical space between the type `item` components.
-   * It overrides the value of the `spacing` prop.
-   */
-  rowSpacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
-  /**
-   * If a number, it sets the number of columns the grid item uses.
-   * It can't be greater than the total number of columns of the container (12 by default).
-   * If 'auto', the grid item's width matches its content.
-   * If false, the prop is ignored.
-   * If true, the grid item's width grows to use the space available in the grid container.
-   * The value is applied for the `sm` breakpoint and wider screens if not overridden.
-   * @default false
-   */
-  sm: PropTypes.oneOfType([PropTypes.oneOf(['auto']), PropTypes.number, PropTypes.bool]),
-  /**
-   * Defines the space between the type `item` components.
-   * It can only be used on a type `container` component.
-   * @default 0
-   */
-  spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-  /**
-   * Defines the `flex-wrap` style property.
-   * It's applied for all screen sizes.
-   * @default 'wrap'
-   */
-  wrap: PropTypes.oneOf(['nowrap', 'wrap-reverse', 'wrap']),
-  /**
-   * If a number, it sets the number of columns the grid item uses.
-   * It can't be greater than the total number of columns of the container (12 by default).
-   * If 'auto', the grid item's width matches its content.
-   * If false, the prop is ignored.
-   * If true, the grid item's width grows to use the space available in the grid container.
-   * The value is applied for the `xl` breakpoint and wider screens if not overridden.
-   * @default false
-   */
-  xl: PropTypes.oneOfType([PropTypes.oneOf(['auto']), PropTypes.number, PropTypes.bool]),
-  /**
-   * If a number, it sets the number of columns the grid item uses.
-   * It can't be greater than the total number of columns of the container (12 by default).
-   * If 'auto', the grid item's width matches its content.
-   * If false, the prop is ignored.
-   * If true, the grid item's width grows to use the space available in the grid container.
-   * The value is applied for all the screen sizes with the lowest priority.
-   * @default false
-   */
-  xs: PropTypes.oneOfType([PropTypes.oneOf(['auto']), PropTypes.number, PropTypes.bool]),
-  /**
-   * If `true`, it sets `min-width: 0` on the item.
-   * Refer to the limitations section of the documentation to better understand the use case.
-   * @default false
-   */
-  zeroMinWidth: PropTypes.bool
-} : void 0;
-if (process.env.NODE_ENV !== 'production') {
-  const requireProp = requirePropFactory('Grid', Grid);
-  // eslint-disable-next-line no-useless-concat
-  Grid['propTypes' + ''] = _extends$H({}, Grid.propTypes, {
-    direction: requireProp('container'),
-    lg: requireProp('item'),
-    md: requireProp('item'),
-    sm: requireProp('item'),
-    spacing: requireProp('container'),
-    wrap: requireProp('container'),
-    xs: requireProp('item'),
-    zeroMinWidth: requireProp('item')
-  });
-}
-
-const _excluded$8 = ["disableUnderline", "components", "componentsProps", "fullWidth", "inputComponent", "multiline", "slotProps", "slots", "type"];
-const useUtilityClasses$7 = ownerState => {
+const _excluded$2 = ["disableUnderline", "components", "componentsProps", "fullWidth", "inputComponent", "multiline", "slotProps", "slots", "type"];
+const useUtilityClasses$1 = ownerState => {
   const {
     classes,
     disableUnderline
@@ -16634,7 +16043,7 @@ const useUtilityClasses$7 = ownerState => {
     input: ['input']
   };
   const composedClasses = composeClasses(slots, getInputUtilityClass, classes);
-  return _extends$H({}, classes, composedClasses);
+  return _extends$w({}, classes, composedClasses);
 };
 const InputRoot = styled(InputBaseRoot, {
   shouldForwardProp: prop => rootShouldForwardProp(prop) || prop === 'classes',
@@ -16655,7 +16064,7 @@ const InputRoot = styled(InputBaseRoot, {
   if (theme.vars) {
     bottomLineColor = `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})`;
   }
-  return _extends$H({
+  return _extends$w({
     position: 'relative'
   }, ownerState.formControl && {
     'label + &': {
@@ -16734,8 +16143,8 @@ const Input = /*#__PURE__*/React$1.forwardRef(function Input(inProps, ref) {
       slots = {},
       type = 'text'
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$8);
-  const classes = useUtilityClasses$7(props);
+    other = _objectWithoutPropertiesLoose$2(props, _excluded$2);
+  const classes = useUtilityClasses$1(props);
   const ownerState = {
     disableUnderline
   };
@@ -16747,7 +16156,7 @@ const Input = /*#__PURE__*/React$1.forwardRef(function Input(inProps, ref) {
   const componentsProps = (slotProps != null ? slotProps : componentsPropsProp) ? deepmerge$1(slotProps != null ? slotProps : componentsPropsProp, inputComponentsProps) : inputComponentsProps;
   const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : InputRoot;
   const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : InputInput;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$H({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$w({
     slots: {
       root: RootSlot,
       input: InputSlot
@@ -16956,14 +16365,14 @@ function getInputAdornmentUtilityClass(slot) {
 const inputAdornmentClasses = generateUtilityClasses('MuiInputAdornment', ['root', 'filled', 'standard', 'outlined', 'positionStart', 'positionEnd', 'disablePointerEvents', 'hiddenLabel', 'sizeSmall']);
 
 var _span;
-const _excluded$7 = ["children", "className", "component", "disablePointerEvents", "disableTypography", "position", "variant"];
+const _excluded = ["children", "className", "component", "disablePointerEvents", "disableTypography", "position", "variant"];
 const overridesResolver = (props, styles) => {
   const {
     ownerState
   } = props;
   return [styles.root, styles[`position${capitalize$1(ownerState.position)}`], ownerState.disablePointerEvents === true && styles.disablePointerEvents, styles[ownerState.variant]];
 };
-const useUtilityClasses$6 = ownerState => {
+const useUtilityClasses = ownerState => {
   const {
     classes,
     disablePointerEvents,
@@ -16984,7 +16393,7 @@ const InputAdornmentRoot = styled('div', {
 })(({
   theme,
   ownerState
-}) => _extends$H({
+}) => _extends$w({
   display: 'flex',
   height: '0.01em',
   // Fix IE11 flexbox alignment. To remove at some point.
@@ -17021,7 +16430,7 @@ const InputAdornment = /*#__PURE__*/React$1.forwardRef(function InputAdornment(i
       position,
       variant: variantProp
     } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$7);
+    other = _objectWithoutPropertiesLoose$2(props, _excluded);
   const muiFormControl = useFormControl() || {};
   let variant = variantProp;
   if (variantProp && muiFormControl.variant) {
@@ -17034,17 +16443,17 @@ const InputAdornment = /*#__PURE__*/React$1.forwardRef(function InputAdornment(i
   if (muiFormControl && !variant) {
     variant = muiFormControl.variant;
   }
-  const ownerState = _extends$H({}, props, {
+  const ownerState = _extends$w({}, props, {
     hiddenLabel: muiFormControl.hiddenLabel,
     size: muiFormControl.size,
     disablePointerEvents,
     position,
     variant
   });
-  const classes = useUtilityClasses$6(ownerState);
+  const classes = useUtilityClasses(ownerState);
   return /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
     value: null,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$H({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$w({
       as: component,
       ownerState: ownerState,
       className: clsx(classes.root, className),
@@ -17109,697 +16518,6 @@ process.env.NODE_ENV !== "production" ? InputAdornment.propTypes /* remove-propt
    * you do not have to set this manually.
    */
   variant: PropTypes.oneOf(['filled', 'outlined', 'standard'])
-} : void 0;
-
-/**
- * @ignore - internal component.
- */
-const TableContext = /*#__PURE__*/React$1.createContext();
-if (process.env.NODE_ENV !== 'production') {
-  TableContext.displayName = 'TableContext';
-}
-
-function getTableUtilityClass(slot) {
-  return generateUtilityClass('MuiTable', slot);
-}
-generateUtilityClasses('MuiTable', ['root', 'stickyHeader']);
-
-const _excluded$6 = ["className", "component", "padding", "size", "stickyHeader"];
-const useUtilityClasses$5 = ownerState => {
-  const {
-    classes,
-    stickyHeader
-  } = ownerState;
-  const slots = {
-    root: ['root', stickyHeader && 'stickyHeader']
-  };
-  return composeClasses(slots, getTableUtilityClass, classes);
-};
-const TableRoot = styled('table', {
-  name: 'MuiTable',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.root, ownerState.stickyHeader && styles.stickyHeader];
-  }
-})(({
-  theme,
-  ownerState
-}) => _extends$H({
-  display: 'table',
-  width: '100%',
-  borderCollapse: 'collapse',
-  borderSpacing: 0,
-  '& caption': _extends$H({}, theme.typography.body2, {
-    padding: theme.spacing(2),
-    color: (theme.vars || theme).palette.text.secondary,
-    textAlign: 'left',
-    captionSide: 'bottom'
-  })
-}, ownerState.stickyHeader && {
-  borderCollapse: 'separate'
-}));
-const defaultComponent$3 = 'table';
-const Table = /*#__PURE__*/React$1.forwardRef(function Table(inProps, ref) {
-  const props = useDefaultProps({
-    props: inProps,
-    name: 'MuiTable'
-  });
-  const {
-      className,
-      component = defaultComponent$3,
-      padding = 'normal',
-      size = 'medium',
-      stickyHeader = false
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$6);
-  const ownerState = _extends$H({}, props, {
-    component,
-    padding,
-    size,
-    stickyHeader
-  });
-  const classes = useUtilityClasses$5(ownerState);
-  const table = React$1.useMemo(() => ({
-    padding,
-    size,
-    stickyHeader
-  }), [padding, size, stickyHeader]);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableContext.Provider, {
-    value: table,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableRoot, _extends$H({
-      as: component,
-      role: component === defaultComponent$3 ? null : 'table',
-      ref: ref,
-      className: clsx(classes.root, className),
-      ownerState: ownerState
-    }, other))
-  });
-});
-process.env.NODE_ENV !== "production" ? Table.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * The content of the table, normally `TableHead` and `TableBody`.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * Allows TableCells to inherit padding of the Table.
-   * @default 'normal'
-   */
-  padding: PropTypes.oneOf(['checkbox', 'none', 'normal']),
-  /**
-   * Allows TableCells to inherit size of the Table.
-   * @default 'medium'
-   */
-  size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['medium', 'small']), PropTypes.string]),
-  /**
-   * Set the header sticky.
-   *
-   * ⚠️ It doesn't work with IE11.
-   * @default false
-   */
-  stickyHeader: PropTypes.bool,
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
-} : void 0;
-
-/**
- * @ignore - internal component.
- */
-const Tablelvl2Context = /*#__PURE__*/React$1.createContext();
-if (process.env.NODE_ENV !== 'production') {
-  Tablelvl2Context.displayName = 'Tablelvl2Context';
-}
-
-function getTableBodyUtilityClass(slot) {
-  return generateUtilityClass('MuiTableBody', slot);
-}
-generateUtilityClasses('MuiTableBody', ['root']);
-
-const _excluded$5 = ["className", "component"];
-const useUtilityClasses$4 = ownerState => {
-  const {
-    classes
-  } = ownerState;
-  const slots = {
-    root: ['root']
-  };
-  return composeClasses(slots, getTableBodyUtilityClass, classes);
-};
-const TableBodyRoot = styled('tbody', {
-  name: 'MuiTableBody',
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})({
-  display: 'table-row-group'
-});
-const tablelvl2$1 = {
-  variant: 'body'
-};
-const defaultComponent$2 = 'tbody';
-const TableBody = /*#__PURE__*/React$1.forwardRef(function TableBody(inProps, ref) {
-  const props = useDefaultProps({
-    props: inProps,
-    name: 'MuiTableBody'
-  });
-  const {
-      className,
-      component = defaultComponent$2
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$5);
-  const ownerState = _extends$H({}, props, {
-    component
-  });
-  const classes = useUtilityClasses$4(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
-    value: tablelvl2$1,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableBodyRoot, _extends$H({
-      className: clsx(classes.root, className),
-      as: component,
-      ref: ref,
-      role: component === defaultComponent$2 ? null : 'rowgroup',
-      ownerState: ownerState
-    }, other))
-  });
-});
-process.env.NODE_ENV !== "production" ? TableBody.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * The content of the component, normally `TableRow`.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
-} : void 0;
-
-function getTableCellUtilityClass(slot) {
-  return generateUtilityClass('MuiTableCell', slot);
-}
-const tableCellClasses = generateUtilityClasses('MuiTableCell', ['root', 'head', 'body', 'footer', 'sizeSmall', 'sizeMedium', 'paddingCheckbox', 'paddingNone', 'alignLeft', 'alignCenter', 'alignRight', 'alignJustify', 'stickyHeader']);
-
-const _excluded$4 = ["align", "className", "component", "padding", "scope", "size", "sortDirection", "variant"];
-const useUtilityClasses$3 = ownerState => {
-  const {
-    classes,
-    variant,
-    align,
-    padding,
-    size,
-    stickyHeader
-  } = ownerState;
-  const slots = {
-    root: ['root', variant, stickyHeader && 'stickyHeader', align !== 'inherit' && `align${capitalize$1(align)}`, padding !== 'normal' && `padding${capitalize$1(padding)}`, `size${capitalize$1(size)}`]
-  };
-  return composeClasses(slots, getTableCellUtilityClass, classes);
-};
-const TableCellRoot = styled('td', {
-  name: 'MuiTableCell',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.root, styles[ownerState.variant], styles[`size${capitalize$1(ownerState.size)}`], ownerState.padding !== 'normal' && styles[`padding${capitalize$1(ownerState.padding)}`], ownerState.align !== 'inherit' && styles[`align${capitalize$1(ownerState.align)}`], ownerState.stickyHeader && styles.stickyHeader];
-  }
-})(({
-  theme,
-  ownerState
-}) => _extends$H({}, theme.typography.body2, {
-  display: 'table-cell',
-  verticalAlign: 'inherit',
-  // Workaround for a rendering bug with spanned columns in Chrome 62.0.
-  // Removes the alpha (sets it to 1), and lightens or darkens the theme color.
-  borderBottom: theme.vars ? `1px solid ${theme.vars.palette.TableCell.border}` : `1px solid
-    ${theme.palette.mode === 'light' ? lighten_1(alpha_1(theme.palette.divider, 1), 0.88) : darken_1(alpha_1(theme.palette.divider, 1), 0.68)}`,
-  textAlign: 'left',
-  padding: 16
-}, ownerState.variant === 'head' && {
-  color: (theme.vars || theme).palette.text.primary,
-  lineHeight: theme.typography.pxToRem(24),
-  fontWeight: theme.typography.fontWeightMedium
-}, ownerState.variant === 'body' && {
-  color: (theme.vars || theme).palette.text.primary
-}, ownerState.variant === 'footer' && {
-  color: (theme.vars || theme).palette.text.secondary,
-  lineHeight: theme.typography.pxToRem(21),
-  fontSize: theme.typography.pxToRem(12)
-}, ownerState.size === 'small' && {
-  padding: '6px 16px',
-  [`&.${tableCellClasses.paddingCheckbox}`]: {
-    width: 24,
-    // prevent the checkbox column from growing
-    padding: '0 12px 0 16px',
-    '& > *': {
-      padding: 0
-    }
-  }
-}, ownerState.padding === 'checkbox' && {
-  width: 48,
-  // prevent the checkbox column from growing
-  padding: '0 0 0 4px'
-}, ownerState.padding === 'none' && {
-  padding: 0
-}, ownerState.align === 'left' && {
-  textAlign: 'left'
-}, ownerState.align === 'center' && {
-  textAlign: 'center'
-}, ownerState.align === 'right' && {
-  textAlign: 'right',
-  flexDirection: 'row-reverse'
-}, ownerState.align === 'justify' && {
-  textAlign: 'justify'
-}, ownerState.stickyHeader && {
-  position: 'sticky',
-  top: 0,
-  zIndex: 2,
-  backgroundColor: (theme.vars || theme).palette.background.default
-}));
-
-/**
- * The component renders a `<th>` element when the parent context is a header
- * or otherwise a `<td>` element.
- */
-const TableCell = /*#__PURE__*/React$1.forwardRef(function TableCell(inProps, ref) {
-  const props = useDefaultProps({
-    props: inProps,
-    name: 'MuiTableCell'
-  });
-  const {
-      align = 'inherit',
-      className,
-      component: componentProp,
-      padding: paddingProp,
-      scope: scopeProp,
-      size: sizeProp,
-      sortDirection,
-      variant: variantProp
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$4);
-  const table = React$1.useContext(TableContext);
-  const tablelvl2 = React$1.useContext(Tablelvl2Context);
-  const isHeadCell = tablelvl2 && tablelvl2.variant === 'head';
-  let component;
-  if (componentProp) {
-    component = componentProp;
-  } else {
-    component = isHeadCell ? 'th' : 'td';
-  }
-  let scope = scopeProp;
-  // scope is not a valid attribute for <td/> elements.
-  // source: https://html.spec.whatwg.org/multipage/tables.html#the-td-element
-  if (component === 'td') {
-    scope = undefined;
-  } else if (!scope && isHeadCell) {
-    scope = 'col';
-  }
-  const variant = variantProp || tablelvl2 && tablelvl2.variant;
-  const ownerState = _extends$H({}, props, {
-    align,
-    component,
-    padding: paddingProp || (table && table.padding ? table.padding : 'normal'),
-    size: sizeProp || (table && table.size ? table.size : 'medium'),
-    sortDirection,
-    stickyHeader: variant === 'head' && table && table.stickyHeader,
-    variant
-  });
-  const classes = useUtilityClasses$3(ownerState);
-  let ariaSort = null;
-  if (sortDirection) {
-    ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
-  }
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableCellRoot, _extends$H({
-    as: component,
-    ref: ref,
-    className: clsx(classes.root, className),
-    "aria-sort": ariaSort,
-    scope: scope,
-    ownerState: ownerState
-  }, other));
-});
-process.env.NODE_ENV !== "production" ? TableCell.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * Set the text-align on the table cell content.
-   *
-   * Monetary or generally number fields **should be right aligned** as that allows
-   * you to add them up quickly in your head without having to worry about decimals.
-   * @default 'inherit'
-   */
-  align: PropTypes.oneOf(['center', 'inherit', 'justify', 'left', 'right']),
-  /**
-   * The content of the component.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * Sets the padding applied to the cell.
-   * The prop defaults to the value (`'default'`) inherited from the parent Table component.
-   */
-  padding: PropTypes.oneOf(['checkbox', 'none', 'normal']),
-  /**
-   * Set scope attribute.
-   */
-  scope: PropTypes.string,
-  /**
-   * Specify the size of the cell.
-   * The prop defaults to the value (`'medium'`) inherited from the parent Table component.
-   */
-  size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['medium', 'small']), PropTypes.string]),
-  /**
-   * Set aria-sort direction.
-   */
-  sortDirection: PropTypes.oneOf(['asc', 'desc', false]),
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-  /**
-   * Specify the cell type.
-   * The prop defaults to the value inherited from the parent TableHead, TableBody, or TableFooter components.
-   */
-  variant: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['body', 'footer', 'head']), PropTypes.string])
-} : void 0;
-
-function getTableContainerUtilityClass(slot) {
-  return generateUtilityClass('MuiTableContainer', slot);
-}
-generateUtilityClasses('MuiTableContainer', ['root']);
-
-const _excluded$3 = ["className", "component"];
-const useUtilityClasses$2 = ownerState => {
-  const {
-    classes
-  } = ownerState;
-  const slots = {
-    root: ['root']
-  };
-  return composeClasses(slots, getTableContainerUtilityClass, classes);
-};
-const TableContainerRoot = styled('div', {
-  name: 'MuiTableContainer',
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})({
-  width: '100%',
-  overflowX: 'auto'
-});
-const TableContainer = /*#__PURE__*/React$1.forwardRef(function TableContainer(inProps, ref) {
-  const props = useDefaultProps({
-    props: inProps,
-    name: 'MuiTableContainer'
-  });
-  const {
-      className,
-      component = 'div'
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$3);
-  const ownerState = _extends$H({}, props, {
-    component
-  });
-  const classes = useUtilityClasses$2(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableContainerRoot, _extends$H({
-    ref: ref,
-    as: component,
-    className: clsx(classes.root, className),
-    ownerState: ownerState
-  }, other));
-});
-process.env.NODE_ENV !== "production" ? TableContainer.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * The content of the component, normally `Table`.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
-} : void 0;
-
-function getTableHeadUtilityClass(slot) {
-  return generateUtilityClass('MuiTableHead', slot);
-}
-generateUtilityClasses('MuiTableHead', ['root']);
-
-const _excluded$2 = ["className", "component"];
-const useUtilityClasses$1 = ownerState => {
-  const {
-    classes
-  } = ownerState;
-  const slots = {
-    root: ['root']
-  };
-  return composeClasses(slots, getTableHeadUtilityClass, classes);
-};
-const TableHeadRoot = styled('thead', {
-  name: 'MuiTableHead',
-  slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})({
-  display: 'table-header-group'
-});
-const tablelvl2 = {
-  variant: 'head'
-};
-const defaultComponent$1 = 'thead';
-const TableHead = /*#__PURE__*/React$1.forwardRef(function TableHead(inProps, ref) {
-  const props = useDefaultProps({
-    props: inProps,
-    name: 'MuiTableHead'
-  });
-  const {
-      className,
-      component = defaultComponent$1
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded$2);
-  const ownerState = _extends$H({}, props, {
-    component
-  });
-  const classes = useUtilityClasses$1(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
-    value: tablelvl2,
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(TableHeadRoot, _extends$H({
-      as: component,
-      className: clsx(classes.root, className),
-      ref: ref,
-      role: component === defaultComponent$1 ? null : 'rowgroup',
-      ownerState: ownerState
-    }, other))
-  });
-});
-process.env.NODE_ENV !== "production" ? TableHead.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * The content of the component, normally `TableRow`.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
-} : void 0;
-
-function getTableRowUtilityClass(slot) {
-  return generateUtilityClass('MuiTableRow', slot);
-}
-const tableRowClasses = generateUtilityClasses('MuiTableRow', ['root', 'selected', 'hover', 'head', 'footer']);
-
-const _excluded = ["className", "component", "hover", "selected"];
-const useUtilityClasses = ownerState => {
-  const {
-    classes,
-    selected,
-    hover,
-    head,
-    footer
-  } = ownerState;
-  const slots = {
-    root: ['root', selected && 'selected', hover && 'hover', head && 'head', footer && 'footer']
-  };
-  return composeClasses(slots, getTableRowUtilityClass, classes);
-};
-const TableRowRoot = styled('tr', {
-  name: 'MuiTableRow',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.root, ownerState.head && styles.head, ownerState.footer && styles.footer];
-  }
-})(({
-  theme
-}) => ({
-  color: 'inherit',
-  display: 'table-row',
-  verticalAlign: 'middle',
-  // We disable the focus ring for mouse, touch and keyboard users.
-  outline: 0,
-  [`&.${tableRowClasses.hover}:hover`]: {
-    backgroundColor: (theme.vars || theme).palette.action.hover
-  },
-  [`&.${tableRowClasses.selected}`]: {
-    backgroundColor: theme.vars ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.selectedOpacity})` : alpha_1(theme.palette.primary.main, theme.palette.action.selectedOpacity),
-    '&:hover': {
-      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.primary.mainChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : alpha_1(theme.palette.primary.main, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity)
-    }
-  }
-}));
-const defaultComponent = 'tr';
-/**
- * Will automatically set dynamic row height
- * based on the material table element parent (head, body, etc).
- */
-const TableRow = /*#__PURE__*/React$1.forwardRef(function TableRow(inProps, ref) {
-  const props = useDefaultProps({
-    props: inProps,
-    name: 'MuiTableRow'
-  });
-  const {
-      className,
-      component = defaultComponent,
-      hover = false,
-      selected = false
-    } = props,
-    other = _objectWithoutPropertiesLoose$2(props, _excluded);
-  const tablelvl2 = React$1.useContext(Tablelvl2Context);
-  const ownerState = _extends$H({}, props, {
-    component,
-    hover,
-    selected,
-    head: tablelvl2 && tablelvl2.variant === 'head',
-    footer: tablelvl2 && tablelvl2.variant === 'footer'
-  });
-  const classes = useUtilityClasses(ownerState);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TableRowRoot, _extends$H({
-    as: component,
-    ref: ref,
-    className: clsx(classes.root, className),
-    role: component === defaultComponent ? null : 'row',
-    ownerState: ownerState
-  }, other));
-});
-process.env.NODE_ENV !== "production" ? TableRow.propTypes /* remove-proptypes */ = {
-  // ┌────────────────────────────── Warning ──────────────────────────────┐
-  // │ These PropTypes are generated from the TypeScript type definitions. │
-  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
-  // └─────────────────────────────────────────────────────────────────────┘
-  /**
-   * Should be valid `<tr>` children such as `TableCell`.
-   */
-  children: PropTypes.node,
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: PropTypes.elementType,
-  /**
-   * If `true`, the table row will shade on hover.
-   * @default false
-   */
-  hover: PropTypes.bool,
-  /**
-   * If `true`, the table row will have the selected shading.
-   * @default false
-   */
-  selected: PropTypes.bool,
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
 } : void 0;
 
 var HEIGHT$3 = '40px';
@@ -17892,82 +16610,14 @@ function UrsorInputField(props) {
   });
 }
 
-/* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
-function useResizeObserver$1(ref) {
-  var _useState = useState(null),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    element = _useState2[0],
-    setElement = _useState2[1];
-  var _useState3 = useState(undefined),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    rect = _useState4[0],
-    setRect = _useState4[1];
-  var observer = useRef(undefined);
-  //Clean up observer
-  var cleanOb = function cleanOb() {
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-  };
-  useEffect(function () {
-    setElement(ref.current);
-  }, [ref]);
-  useEffect(function () {
-    if (!element) return;
-    // Element has changed, disconnect old observer
-    cleanOb();
-    var ob = observer.current = new ResizeObserver(function (_ref) {
-      var _ref2 = _slicedToArray$2(_ref, 1),
-        entry = _ref2[0];
-      // inlineSize and blockSize in entry.borderBoxSize and contentBoxSize
-      // inlineSize means height when write-mode is horizontal, and width when write-mode is vertical.
-      // blockSize means width when write-mode is horizontal, and height when write-mode is vertical.
-      // So, for the sake of simplicity, I will use getBoundingClientRect
-      setRect(entry.target.getBoundingClientRect());
-    });
-    ob.observe(element);
-    // disconnect when component is unmounted
-    return function () {
-      cleanOb();
-    };
-  }, [element]);
-  //@ts-expect-error
-  return rect;
-}
-
-/* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
-function DynamicContainer$1(props) {
-  var _props$width, _props$width2;
-  var content = useRef(null);
-  var rect = useResizeObserver$1(content);
-  return jsxRuntimeExports.jsx(Box$1, {
-    style: {
-      transition: "".concat(props.duration || 600, "ms"),
-      //@ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      height: "".concat(rect === null || rect === void 0 ? void 0 : rect.height, "px"),
-      width: (_props$width = props.width) !== null && _props$width !== void 0 ? _props$width : '100%',
-      overflow: 'hidden'
-    },
-    children: jsxRuntimeExports.jsx(Box$1, {
-      ref: content,
-      style: {
-        width: (_props$width2 = props.width) !== null && _props$width2 !== void 0 ? _props$width2 : '100%',
-        height: 'fit-content'
-      },
-      children: props.children
-    })
-  });
-}
-
-var _path$q;
-function _extends$F() { return _extends$F = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$F.apply(null, arguments); }
+var _path$k;
+function _extends$u() { return _extends$u = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$u.apply(null, arguments); }
 var SvgChevronRight = function SvgChevronRight(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$F({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$u({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$q || (_path$q = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$k || (_path$k = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M12.44 6.44a1.5 1.5 0 0 1 2.12 0l8.5 8.5a1.5 1.5 0 0 1 0 2.12l-8.5 8.5a1.5 1.5 0 0 1-2.12-2.12L19.878 16l-7.44-7.44a1.5 1.5 0 0 1 0-2.12",
@@ -17975,14 +16625,14 @@ var SvgChevronRight = function SvgChevronRight(props) {
   })));
 };
 
-var _path$p;
-function _extends$E() { return _extends$E = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$E.apply(null, arguments); }
+var _path$j;
+function _extends$t() { return _extends$t = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$t.apply(null, arguments); }
 var SvgChevronLeft = function SvgChevronLeft(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$E({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$t({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$p || (_path$p = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$j || (_path$j = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M19.557 25.56a1.5 1.5 0 0 1-2.122 0l-8.5-8.5a1.5 1.5 0 0 1 0-2.12l8.5-8.5a1.5 1.5 0 1 1 2.122 2.12L12.117 16l7.44 7.44a1.5 1.5 0 0 1 0 2.12",
@@ -17990,14 +16640,14 @@ var SvgChevronLeft = function SvgChevronLeft(props) {
   })));
 };
 
-var _path$o;
-function _extends$D() { return _extends$D = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$D.apply(null, arguments); }
+var _path$i;
+function _extends$s() { return _extends$s = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$s.apply(null, arguments); }
 var SvgChevronDown = function SvgChevronDown(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$D({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$s({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$o || (_path$o = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$i || (_path$i = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M25.56 12.44a1.5 1.5 0 0 1 0 2.12l-8.5 8.5a1.5 1.5 0 0 1-2.12 0l-8.5-8.5a1.5 1.5 0 0 1 2.12-2.12L16 19.878l7.44-7.44a1.5 1.5 0 0 1 2.12 0",
@@ -18072,21 +16722,21 @@ function DynamicContainer(props) {
   });
 }
 
-var _g$e, _defs$e;
-function _extends$C() { return _extends$C = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$C.apply(null, arguments); }
+var _g$9, _defs$9;
+function _extends$r() { return _extends$r = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$r.apply(null, arguments); }
 var SvgInfoIcon = function SvgInfoIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$C({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$r({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 16 17"
-  }, props), _g$e || (_g$e = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$9 || (_g$9 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#InfoIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M8 2a6.5 6.5 0 1 0 0 13A6.5 6.5 0 0 0 8 2M0 8.5a8 8 0 1 1 16 0 8 8 0 0 1-16 0m6.5-.25a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 .75.75V11h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25V9h-.25a.75.75 0 0 1-.75-.75M8 6.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2",
     clipRule: "evenodd"
-  }))), _defs$e || (_defs$e = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$9 || (_defs$9 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "InfoIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -18858,8 +17508,8 @@ function useWindowSize(options = {}) {
 }
 
 var _templateObject$5, _templateObject2$2;
-function ownKeys$C(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$A(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$C(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$C(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$g(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$e(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$g(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var fadeIn$1 = keyframes(_templateObject$5 || (_templateObject$5 = _taggedTemplateLiteral(["\nfrom {\n  opacity: 0;\n}\nto {\n  opacity: 1;\n}\n"])));
 keyframes(_templateObject2$2 || (_templateObject2$2 = _taggedTemplateLiteral(["\nfrom {\n  opacity: 1;\n}\nto {\n  opacity: 0;\n}\n"])));
 var DEFAULT_CORNER_RADIUS = '12px';
@@ -18950,7 +17600,7 @@ function UrsorPopover(props) {
         },
         open: props.open,
         onClick: props.closeCallback
-      }) : null, jsxRuntimeExports.jsx(Box$1, _objectSpread$A(_objectSpread$A({
+      }) : null, jsxRuntimeExports.jsx(Box$1, _objectSpread$e(_objectSpread$e({
         ref: setPopperElement,
         style: styles.popper
       }, attributes.popper), {}, {
@@ -19065,8 +17715,8 @@ var InfoButton = function InfoButton(props) {
   });
 };
 
-function ownKeys$B(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$z(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$B(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$B(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$f(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$d(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$f(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$f(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var AstroBentoCard = function AstroBentoCard(props) {
   var _useState = useState(false),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -19112,11 +17762,11 @@ var AstroBentoCard = function AstroBentoCard(props) {
                 sx: {
                   transform: 'translateY(-2px)'
                 },
-                children: jsxRuntimeExports.jsx(InfoButton, _objectSpread$z({
+                children: jsxRuntimeExports.jsx(InfoButton, _objectSpread$d({
                   small: true
                 }, props.info))
               }) : null]
-            }), props.info && (props.isMobile || props.infoButtonBelowTitle) ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$z({
+            }), props.info && (props.isMobile || props.infoButtonBelowTitle) ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$d({
               small: true
             }, props.info)) : null]
           }), props.subtitle ? jsxRuntimeExports.jsx(Typography$1, {
@@ -36388,147 +35038,6 @@ var dayjs_min = {exports: {}};
 var dayjs_minExports = dayjs_min.exports;
 var dayjs = /*@__PURE__*/getDefaultExportFromCjs(dayjs_minExports);
 
-var yInterval = 1; // hours
-var AstroTimeChart = function AstroTimeChart(props) {
-  var _useState = useState(0),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    maxTime = _useState2[0],
-    setMaxTime = _useState2[1]; // minutes
-  useEffect(function () {
-    var _$max, _props$times$;
-    return setMaxTime((_$max = _.max(props.times.map(function (t) {
-      return t.screenTime;
-    }))) !== null && _$max !== void 0 ? _$max : (_props$times$ = props.times[0]) === null || _props$times$ === void 0 ? void 0 : _props$times$.screenTime);
-  }, [props.times]);
-  var _useState3 = useState(1),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    nHorizontalLines = _useState4[0],
-    setNHorizontalLines = _useState4[1];
-  useEffect(function () {
-    var nIntervals = Math.ceil(maxTime / (60 * yInterval));
-    setNHorizontalLines(nIntervals === 1 ? 1 : nIntervals + 1); // if the total time is less than 1 hour, the y range should be only 1 hour for ease of viewing
-  }, [maxTime]);
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    flex: 1,
-    px: props.barsXPadding ? "".concat(props.barsXPadding, "px") : '24px',
-    position: "relative",
-    mr: "56px !important",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      position: "absolute",
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        justifyContent: "space-between",
-        pb: "28px",
-        children: _.reverse(_toConsumableArray(Array(nHorizontalLines + 1).keys())).map(function (i) {
-          return jsxRuntimeExports.jsx(Stack$1, {
-            height: "2px",
-            width: "100%",
-            bgcolor: PALETTE.secondary.grey[2],
-            position: "relative",
-            sx: {
-              opacity: nHorizontalLines > 9 && i % 2 ? 0 : 1
-            },
-            children: jsxRuntimeExports.jsx(Stack$1, {
-              width: "30px",
-              right: "-42px",
-              position: "absolute",
-              sx: {
-                transform: 'translateY(-50%)'
-              },
-              children: jsxRuntimeExports.jsx(Typography$1, {
-                bold: true,
-                color: PALETTE.secondary.grey[3],
-                children: "".concat(i * yInterval, "h")
-              })
-            })
-          }, i);
-        })
-      })
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      direction: "row",
-      flex: 1,
-      justifyContent: "space-between",
-      zIndex: 2,
-      children: props.times.map(function (dayTime, i) {
-        var _props$barWidth, _props$labelFontSize;
-        return jsxRuntimeExports.jsxs(Stack$1, {
-          alignItems: "center",
-          width: "60px",
-          justifyContent: "flex-end",
-          spacing: "6px",
-          sx: props.selected !== dayTime.date ? {
-            cursor: 'pointer',
-            '&:hover': {
-              opacity: 0.7
-            },
-            transition: '0.2s'
-          } : null,
-          onClick: function onClick() {
-            return props.setSelectedDatetime(dayTime.date);
-          },
-          children: [jsxRuntimeExports.jsx(Stack$1, {
-            height: "".concat(100 * dayTime.screenTime / 60 / (yInterval * nHorizontalLines), "%"),
-            width: (_props$barWidth = props.barWidth) !== null && _props$barWidth !== void 0 ? _props$barWidth : '32px',
-            borderRadius: "4px 4px 0 0",
-            bgcolor: props.selected === dayTime.date ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[2],
-            sx: {
-              transition: '0.2s'
-            },
-            position: "relative",
-            children: dayTime.timeLimitReached ? jsxRuntimeExports.jsx(Stack$1, {
-              position: "absolute",
-              left: 0,
-              right: 0,
-              margin: "0 auto",
-              width: 0,
-              overflow: "visible",
-              alignItems: "center",
-              children: jsxRuntimeExports.jsx(Stack$1, {
-                width: "50px",
-                justifyContent: "center",
-                position: "absolute",
-                top: "-25px",
-                sx: {
-                  // transform: `translateX(-${
-                  //   props.limitReachedXTranslation ?? "8.5"
-                  // }px)`,
-                },
-                children: jsxRuntimeExports.jsx(Typography$1, {
-                  variant: "tiny",
-                  bold: true,
-                  color: PALETTE.secondary.grey[3],
-                  sx: {
-                    textAlign: 'center'
-                  },
-                  children: "Limit reached"
-                })
-              })
-            }) : null
-          }), jsxRuntimeExports.jsxs(Stack$1, {
-            children: [jsxRuntimeExports.jsx(Typography$1, {
-              bold: true,
-              color: props.selected === dayTime.date ? undefined : PALETTE.secondary.grey[3],
-              variant: (_props$labelFontSize = props.labelFontSize) !== null && _props$labelFontSize !== void 0 ? _props$labelFontSize : 'normal',
-              children: dayjs(dayTime.date).format(dayjs().utc().diff(dayTime.date, 'days') < 7 ? 'ddd' : 'MM/DD')
-            }), jsxRuntimeExports.jsx(Stack$1, {
-              width: "100%",
-              height: "2px",
-              bgcolor: props.selected === dayTime.date ? PALETTE.secondary.purple[2] : undefined,
-              sx: {
-                transition: '0.2s'
-              }
-            })]
-          })]
-        }, dayTime.date);
-      })
-    })]
-  });
-};
-
 var advancedFormat$1 = {exports: {}};
 
 (function (module, exports) {
@@ -36538,2403 +35047,14 @@ var advancedFormat$1 = {exports: {}};
 var advancedFormatExports = advancedFormat$1.exports;
 var advancedFormat = /*@__PURE__*/getDefaultExportFromCjs(advancedFormatExports);
 
-const copyProperty = (to, from, property, ignoreNonConfigurable) => {
-	// `Function#length` should reflect the parameters of `to` not `from` since we keep its body.
-	// `Function#prototype` is non-writable and non-configurable so can never be modified.
-	if (property === 'length' || property === 'prototype') {
-		return;
-	}
-
-	// `Function#arguments` and `Function#caller` should not be copied. They were reported to be present in `Reflect.ownKeys` for some devices in React Native (#41), so we explicitly ignore them here.
-	if (property === 'arguments' || property === 'caller') {
-		return;
-	}
-
-	const toDescriptor = Object.getOwnPropertyDescriptor(to, property);
-	const fromDescriptor = Object.getOwnPropertyDescriptor(from, property);
-
-	if (!canCopyProperty(toDescriptor, fromDescriptor) && ignoreNonConfigurable) {
-		return;
-	}
-
-	Object.defineProperty(to, property, fromDescriptor);
-};
-
-// `Object.defineProperty()` throws if the property exists, is not configurable and either:
-//  - one its descriptors is changed
-//  - it is non-writable and its value is changed
-const canCopyProperty = function (toDescriptor, fromDescriptor) {
-	return toDescriptor === undefined || toDescriptor.configurable || (
-		toDescriptor.writable === fromDescriptor.writable &&
-		toDescriptor.enumerable === fromDescriptor.enumerable &&
-		toDescriptor.configurable === fromDescriptor.configurable &&
-		(toDescriptor.writable || toDescriptor.value === fromDescriptor.value)
-	);
-};
-
-const changePrototype = (to, from) => {
-	const fromPrototype = Object.getPrototypeOf(from);
-	if (fromPrototype === Object.getPrototypeOf(to)) {
-		return;
-	}
-
-	Object.setPrototypeOf(to, fromPrototype);
-};
-
-const wrappedToString = (withName, fromBody) => `/* Wrapped ${withName}*/\n${fromBody}`;
-
-const toStringDescriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'toString');
-const toStringName = Object.getOwnPropertyDescriptor(Function.prototype.toString, 'name');
-
-// We call `from.toString()` early (not lazily) to ensure `from` can be garbage collected.
-// We use `bind()` instead of a closure for the same reason.
-// Calling `from.toString()` early also allows caching it in case `to.toString()` is called several times.
-const changeToString = (to, from, name) => {
-	const withName = name === '' ? '' : `with ${name.trim()}() `;
-	const newToString = wrappedToString.bind(null, withName, from.toString());
-	// Ensure `to.toString.toString` is non-enumerable and has the same `same`
-	Object.defineProperty(newToString, 'name', toStringName);
-	Object.defineProperty(to, 'toString', {...toStringDescriptor, value: newToString});
-};
-
-const mimicFn$1 = (to, from, {ignoreNonConfigurable = false} = {}) => {
-	const {name} = to;
-
-	for (const property of Reflect.ownKeys(from)) {
-		copyProperty(to, from, property, ignoreNonConfigurable);
-	}
-
-	changePrototype(to, from);
-	changeToString(to, from, name);
-
-	return to;
-};
-
-var mimicFn_1 = mimicFn$1;
-
-var dist$1 = {exports: {}};
-
-var pDefer = () => {
-	const ret = {};
-
-	ret.promise = new Promise((resolve, reject) => {
-		ret.resolve = resolve;
-		ret.reject = reject;
-	});
-
-	return ret;
-};
-
-(function (module, exports) {
-	var __awaiter = (commonjsGlobal && commonjsGlobal.__awaiter) || function (thisArg, _arguments, P, generator) {
-	    return new (P || (P = Promise))(function (resolve, reject) {
-	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-	        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-	        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-	        step((generator = generator.apply(thisArg, _arguments || [])).next());
-	    });
-	};
-	var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
-	    return (mod && mod.__esModule) ? mod : { "default": mod };
-	};
-	Object.defineProperty(exports, "__esModule", { value: true });
-	const p_defer_1 = __importDefault(pDefer);
-	function mapAgeCleaner(map, property = 'maxAge') {
-	    let processingKey;
-	    let processingTimer;
-	    let processingDeferred;
-	    const cleanup = () => __awaiter(this, void 0, void 0, function* () {
-	        if (processingKey !== undefined) {
-	            // If we are already processing an item, we can safely exit
-	            return;
-	        }
-	        const setupTimer = (item) => __awaiter(this, void 0, void 0, function* () {
-	            processingDeferred = p_defer_1.default();
-	            const delay = item[1][property] - Date.now();
-	            if (delay <= 0) {
-	                // Remove the item immediately if the delay is equal to or below 0
-	                map.delete(item[0]);
-	                processingDeferred.resolve();
-	                return;
-	            }
-	            // Keep track of the current processed key
-	            processingKey = item[0];
-	            processingTimer = setTimeout(() => {
-	                // Remove the item when the timeout fires
-	                map.delete(item[0]);
-	                if (processingDeferred) {
-	                    processingDeferred.resolve();
-	                }
-	            }, delay);
-	            // tslint:disable-next-line:strict-type-predicates
-	            if (typeof processingTimer.unref === 'function') {
-	                // Don't hold up the process from exiting
-	                processingTimer.unref();
-	            }
-	            return processingDeferred.promise;
-	        });
-	        try {
-	            for (const entry of map) {
-	                yield setupTimer(entry);
-	            }
-	        }
-	        catch (_a) {
-	            // Do nothing if an error occurs, this means the timer was cleaned up and we should stop processing
-	        }
-	        processingKey = undefined;
-	    });
-	    const reset = () => {
-	        processingKey = undefined;
-	        if (processingTimer !== undefined) {
-	            clearTimeout(processingTimer);
-	            processingTimer = undefined;
-	        }
-	        if (processingDeferred !== undefined) { // tslint:disable-line:early-exit
-	            processingDeferred.reject(undefined);
-	            processingDeferred = undefined;
-	        }
-	    };
-	    const originalSet = map.set.bind(map);
-	    map.set = (key, value) => {
-	        if (map.has(key)) {
-	            // If the key already exist, remove it so we can add it back at the end of the map.
-	            map.delete(key);
-	        }
-	        // Call the original `map.set`
-	        const result = originalSet(key, value);
-	        // If we are already processing a key and the key added is the current processed key, stop processing it
-	        if (processingKey && processingKey === key) {
-	            reset();
-	        }
-	        // Always run the cleanup method in case it wasn't started yet
-	        cleanup(); // tslint:disable-line:no-floating-promises
-	        return result;
-	    };
-	    cleanup(); // tslint:disable-line:no-floating-promises
-	    return map;
-	}
-	exports.default = mapAgeCleaner;
-	// Add support for CJS
-	module.exports = mapAgeCleaner;
-	module.exports.default = mapAgeCleaner; 
-} (dist$1, dist$1.exports));
-
-var distExports = dist$1.exports;
-
-const mimicFn = mimicFn_1;
-const mapAgeCleaner = distExports;
-const decoratorInstanceMap = new WeakMap();
-const cacheStore = new WeakMap();
-/**
-[Memoize](https://en.wikipedia.org/wiki/Memoization) functions - An optimization used to speed up consecutive function calls by caching the result of calls with identical input.
-
-@param fn - Function to be memoized.
-
-@example
-```
-import mem = require('mem');
-
-let i = 0;
-const counter = () => ++i;
-const memoized = mem(counter);
-
-memoized('foo');
-//=> 1
-
-// Cached as it's the same arguments
-memoized('foo');
-//=> 1
-
-// Not cached anymore as the arguments changed
-memoized('bar');
-//=> 2
-
-memoized('bar');
-//=> 2
-```
-*/
-const mem = (fn, { cacheKey, cache = new Map(), maxAge } = {}) => {
-    if (typeof maxAge === 'number') {
-        // TODO: Drop after https://github.com/SamVerschueren/map-age-cleaner/issues/5
-        // @ts-expect-error
-        mapAgeCleaner(cache);
-    }
-    const memoized = function (...arguments_) {
-        const key = cacheKey ? cacheKey(arguments_) : arguments_[0];
-        const cacheItem = cache.get(key);
-        if (cacheItem) {
-            return cacheItem.data;
-        }
-        const result = fn.apply(this, arguments_);
-        cache.set(key, {
-            data: result,
-            maxAge: maxAge ? Date.now() + maxAge : Number.POSITIVE_INFINITY
-        });
-        return result;
-    };
-    mimicFn(memoized, fn, {
-        ignoreNonConfigurable: true
-    });
-    cacheStore.set(memoized, cache);
-    return memoized;
-};
-/**
-@returns A [decorator](https://github.com/tc39/proposal-decorators) to memoize class methods or static class methods.
-
-@example
-```
-import mem = require('mem');
-
-class Example {
-    index = 0
-
-    @mem.decorator()
-    counter() {
-        return ++this.index;
-    }
-}
-
-class ExampleWithOptions {
-    index = 0
-
-    @mem.decorator({maxAge: 1000})
-    counter() {
-        return ++this.index;
-    }
-}
-```
-*/
-mem.decorator = (options = {}) => (target, propertyKey, descriptor) => {
-    const input = target[propertyKey];
-    if (typeof input !== 'function') {
-        throw new TypeError('The decorated value must be a function');
-    }
-    delete descriptor.value;
-    delete descriptor.writable;
-    descriptor.get = function () {
-        if (!decoratorInstanceMap.has(this)) {
-            const value = mem(input, options);
-            decoratorInstanceMap.set(this, value);
-            return value;
-        }
-        return decoratorInstanceMap.get(this);
-    };
-};
-/**
-Clear all cached data of a memoized function.
-
-@param fn - Memoized function.
-*/
-mem.clear = (fn) => {
-    const cache = cacheStore.get(fn);
-    if (!cache) {
-        throw new TypeError('Can\'t clear a function that was not memoized!');
-    }
-    if (typeof cache.clear !== 'function') {
-        throw new TypeError('The cache Map can\'t be cleared!');
-    }
-    cache.clear();
-};
-var dist = mem;
-
-var mem$1 = /*@__PURE__*/getDefaultExportFromCjs(dist);
-
-function isString(el) {
-    return typeof el === 'string';
-}
-function isUnique(el, index, arr) {
-    return arr.indexOf(el) === index;
-}
-function isAllLowerCase(el) {
-    return el.toLowerCase() === el;
-}
-function fixCommas(el) {
-    return el.indexOf(',') === -1 ? el : el.split(',');
-}
-function normalizeLocale(locale) {
-    if (!locale) {
-        return locale;
-    }
-    if (locale === 'C' || locale === 'posix' || locale === 'POSIX') {
-        return 'en-US';
-    }
-    // If there's a dot (.) in the locale, it's likely in the format of "en-US.UTF-8", so we only take the first part
-    if (locale.indexOf('.') !== -1) {
-        var _a = locale.split('.')[0], actualLocale = _a === void 0 ? '' : _a;
-        return normalizeLocale(actualLocale);
-    }
-    // If there's an at sign (@) in the locale, it's likely in the format of "en-US@posix", so we only take the first part
-    if (locale.indexOf('@') !== -1) {
-        var _b = locale.split('@')[0], actualLocale = _b === void 0 ? '' : _b;
-        return normalizeLocale(actualLocale);
-    }
-    // If there's a dash (-) in the locale and it's not all lower case, it's already in the format of "en-US", so we return it
-    if (locale.indexOf('-') === -1 || !isAllLowerCase(locale)) {
-        return locale;
-    }
-    var _c = locale.split('-'), splitEl1 = _c[0], _d = _c[1], splitEl2 = _d === void 0 ? '' : _d;
-    return "".concat(splitEl1, "-").concat(splitEl2.toUpperCase());
-}
-function getUserLocalesInternal(_a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.useFallbackLocale, useFallbackLocale = _c === void 0 ? true : _c, _d = _b.fallbackLocale, fallbackLocale = _d === void 0 ? 'en-US' : _d;
-    var languageList = [];
-    if (typeof navigator !== 'undefined') {
-        var rawLanguages = navigator.languages || [];
-        var languages = [];
-        for (var _i = 0, rawLanguages_1 = rawLanguages; _i < rawLanguages_1.length; _i++) {
-            var rawLanguagesItem = rawLanguages_1[_i];
-            languages = languages.concat(fixCommas(rawLanguagesItem));
-        }
-        var rawLanguage = navigator.language;
-        var language = rawLanguage ? fixCommas(rawLanguage) : rawLanguage;
-        languageList = languageList.concat(languages, language);
-    }
-    if (useFallbackLocale) {
-        languageList.push(fallbackLocale);
-    }
-    return languageList.filter(isString).map(normalizeLocale).filter(isUnique);
-}
-var getUserLocales = mem$1(getUserLocalesInternal, { cacheKey: JSON.stringify });
-function getUserLocaleInternal(options) {
-    return getUserLocales(options)[0] || null;
-}
-var getUserLocale = mem$1(getUserLocaleInternal, { cacheKey: JSON.stringify });
-
-/**
- * Utils
- */
-function makeGetEdgeOfNeighbor(getPeriod, getEdgeOfPeriod, defaultOffset) {
-    return function makeGetEdgeOfNeighborInternal(date, offset) {
-        if (offset === void 0) { offset = defaultOffset; }
-        var previousPeriod = getPeriod(date) + offset;
-        return getEdgeOfPeriod(previousPeriod);
-    };
-}
-function makeGetEnd(getBeginOfNextPeriod) {
-    return function makeGetEndInternal(date) {
-        return new Date(getBeginOfNextPeriod(date).getTime() - 1);
-    };
-}
-function makeGetRange(getStart, getEnd) {
-    return function makeGetRangeInternal(date) {
-        return [getStart(date), getEnd(date)];
-    };
-}
-/**
- * Simple getters - getting a property of a given point in time
- */
-/**
- * Gets year from a given date.
- *
- * @param {DateLike} date Date to get year from
- * @returns {number} Year
- */
-function getYear(date) {
-    if (date instanceof Date) {
-        return date.getFullYear();
-    }
-    if (typeof date === 'number') {
-        return date;
-    }
-    var year = parseInt(date, 10);
-    if (typeof date === 'string' && !isNaN(year)) {
-        return year;
-    }
-    throw new Error("Failed to get year from date: ".concat(date, "."));
-}
-/**
- * Gets month from a given date.
- *
- * @param {Date} date Date to get month from
- * @returns {number} Month
- */
-function getMonth(date) {
-    if (date instanceof Date) {
-        return date.getMonth();
-    }
-    throw new Error("Failed to get month from date: ".concat(date, "."));
-}
-/**
- * Gets day of the month from a given date.
- *
- * @param {Date} date Date to get day of the month from
- * @returns {number} Day of the month
- */
-function getDate(date) {
-    if (date instanceof Date) {
-        return date.getDate();
-    }
-    throw new Error("Failed to get year from date: ".concat(date, "."));
-}
-/**
- * Century
- */
-/**
- * Gets century start date from a given date.
- *
- * @param {DateLike} date Date to get century start from
- * @returns {Date} Century start date
- */
-function getCenturyStart(date) {
-    var year = getYear(date);
-    var centuryStartYear = year + ((-year + 1) % 100);
-    var centuryStartDate = new Date();
-    centuryStartDate.setFullYear(centuryStartYear, 0, 1);
-    centuryStartDate.setHours(0, 0, 0, 0);
-    return centuryStartDate;
-}
-/**
- * Gets previous century start date from a given date.
- *
- * @param {DateLike} date Date to get previous century start from
- * @returns {Date} Previous century start date
- */
-var getPreviousCenturyStart = makeGetEdgeOfNeighbor(getYear, getCenturyStart, -100);
-/**
- * Gets next century start date from a given date.
- *
- * @param {DateLike} date Date to get next century start from
- * @returns {Date} Next century start date
- */
-var getNextCenturyStart = makeGetEdgeOfNeighbor(getYear, getCenturyStart, 100);
-/**
- * Gets century end date from a given date.
- *
- * @param {DateLike} date Date to get century end from
- * @returns {Date} Century end date
- */
-var getCenturyEnd = makeGetEnd(getNextCenturyStart);
-/**
- * Gets previous century end date from a given date.
- *
- * @param {DateLike} date Date to get previous century end from
- * @returns {Date} Previous century end date
- */
-var getPreviousCenturyEnd = makeGetEdgeOfNeighbor(getYear, getCenturyEnd, -100);
-/**
- * Gets century start and end dates from a given date.
- *
- * @param {DateLike} date Date to get century start and end from
- * @returns {[Date, Date]} Century start and end dates
- */
-var getCenturyRange = makeGetRange(getCenturyStart, getCenturyEnd);
-/**
- * Decade
- */
-/**
- * Gets decade start date from a given date.
- *
- * @param {DateLike} date Date to get decade start from
- * @returns {Date} Decade start date
- */
-function getDecadeStart(date) {
-    var year = getYear(date);
-    var decadeStartYear = year + ((-year + 1) % 10);
-    var decadeStartDate = new Date();
-    decadeStartDate.setFullYear(decadeStartYear, 0, 1);
-    decadeStartDate.setHours(0, 0, 0, 0);
-    return decadeStartDate;
-}
-/**
- * Gets previous decade start date from a given date.
- *
- * @param {DateLike} date Date to get previous decade start from
- * @returns {Date} Previous decade start date
- */
-var getPreviousDecadeStart = makeGetEdgeOfNeighbor(getYear, getDecadeStart, -10);
-/**
- * Gets next decade start date from a given date.
- *
- * @param {DateLike} date Date to get next decade start from
- * @returns {Date} Next decade start date
- */
-var getNextDecadeStart = makeGetEdgeOfNeighbor(getYear, getDecadeStart, 10);
-/**
- * Gets decade end date from a given date.
- *
- * @param {DateLike} date Date to get decade end from
- * @returns {Date} Decade end date
- */
-var getDecadeEnd = makeGetEnd(getNextDecadeStart);
-/**
- * Gets previous decade end date from a given date.
- *
- * @param {DateLike} date Date to get previous decade end from
- * @returns {Date} Previous decade end date
- */
-var getPreviousDecadeEnd = makeGetEdgeOfNeighbor(getYear, getDecadeEnd, -10);
-/**
- * Gets decade start and end dates from a given date.
- *
- * @param {DateLike} date Date to get decade start and end from
- * @returns {[Date, Date]} Decade start and end dates
- */
-var getDecadeRange = makeGetRange(getDecadeStart, getDecadeEnd);
-/**
- * Year
- */
-/**
- * Gets year start date from a given date.
- *
- * @param {DateLike} date Date to get year start from
- * @returns {Date} Year start date
- */
-function getYearStart(date) {
-    var year = getYear(date);
-    var yearStartDate = new Date();
-    yearStartDate.setFullYear(year, 0, 1);
-    yearStartDate.setHours(0, 0, 0, 0);
-    return yearStartDate;
-}
-/**
- * Gets previous year start date from a given date.
- *
- * @param {DateLike} date Date to get previous year start from
- * @returns {Date} Previous year start date
- */
-var getPreviousYearStart = makeGetEdgeOfNeighbor(getYear, getYearStart, -1);
-/**
- * Gets next year start date from a given date.
- *
- * @param {DateLike} date Date to get next year start from
- * @returns {Date} Next year start date
- */
-var getNextYearStart = makeGetEdgeOfNeighbor(getYear, getYearStart, 1);
-/**
- * Gets year end date from a given date.
- *
- * @param {DateLike} date Date to get year end from
- * @returns {Date} Year end date
- */
-var getYearEnd = makeGetEnd(getNextYearStart);
-/**
- * Gets previous year end date from a given date.
- *
- * @param {DateLike} date Date to get previous year end from
- * @returns {Date} Previous year end date
- */
-var getPreviousYearEnd = makeGetEdgeOfNeighbor(getYear, getYearEnd, -1);
-/**
- * Gets year start and end dates from a given date.
- *
- * @param {DateLike} date Date to get year start and end from
- * @returns {[Date, Date]} Year start and end dates
- */
-var getYearRange = makeGetRange(getYearStart, getYearEnd);
-/**
- * Month
- */
-function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
-    return function makeGetEdgeOfNeighborMonthInternal(date, offset) {
-        if (offset === void 0) { offset = defaultOffset; }
-        var year = getYear(date);
-        var month = getMonth(date) + offset;
-        var previousPeriod = new Date();
-        previousPeriod.setFullYear(year, month, 1);
-        previousPeriod.setHours(0, 0, 0, 0);
-        return getEdgeOfPeriod(previousPeriod);
-    };
-}
-/**
- * Gets month start date from a given date.
- *
- * @param {DateLike} date Date to get month start from
- * @returns {Date} Month start date
- */
-function getMonthStart(date) {
-    var year = getYear(date);
-    var month = getMonth(date);
-    var monthStartDate = new Date();
-    monthStartDate.setFullYear(year, month, 1);
-    monthStartDate.setHours(0, 0, 0, 0);
-    return monthStartDate;
-}
-/**
- * Gets previous month start date from a given date.
- *
- * @param {DateLike} date Date to get previous month start from
- * @returns {Date} Previous month start date
- */
-var getPreviousMonthStart = makeGetEdgeOfNeighborMonth(getMonthStart, -1);
-/**
- * Gets next month start date from a given date.
- *
- * @param {DateLike} date Date to get next month start from
- * @returns {Date} Next month start date
- */
-var getNextMonthStart = makeGetEdgeOfNeighborMonth(getMonthStart, 1);
-/**
- * Gets month end date from a given date.
- *
- * @param {DateLike} date Date to get month end from
- * @returns {Date} Month end date
- */
-var getMonthEnd = makeGetEnd(getNextMonthStart);
-/**
- * Gets previous month end date from a given date.
- *
- * @param {DateLike} date Date to get previous month end from
- * @returns {Date} Previous month end date
- */
-var getPreviousMonthEnd = makeGetEdgeOfNeighborMonth(getMonthEnd, -1);
-/**
- * Gets month start and end dates from a given date.
- *
- * @param {DateLike} date Date to get month start and end from
- * @returns {[Date, Date]} Month start and end dates
- */
-var getMonthRange = makeGetRange(getMonthStart, getMonthEnd);
-/**
- * Day
- */
-function makeGetEdgeOfNeighborDay(getEdgeOfPeriod, defaultOffset) {
-    return function makeGetEdgeOfNeighborDayInternal(date, offset) {
-        if (offset === void 0) { offset = defaultOffset; }
-        var year = getYear(date);
-        var month = getMonth(date);
-        var day = getDate(date) + offset;
-        var previousPeriod = new Date();
-        previousPeriod.setFullYear(year, month, day);
-        previousPeriod.setHours(0, 0, 0, 0);
-        return getEdgeOfPeriod(previousPeriod);
-    };
-}
-/**
- * Gets day start date from a given date.
- *
- * @param {DateLike} date Date to get day start from
- * @returns {Date} Day start date
- */
-function getDayStart(date) {
-    var year = getYear(date);
-    var month = getMonth(date);
-    var day = getDate(date);
-    var dayStartDate = new Date();
-    dayStartDate.setFullYear(year, month, day);
-    dayStartDate.setHours(0, 0, 0, 0);
-    return dayStartDate;
-}
-/**
- * Gets next day start date from a given date.
- *
- * @param {DateLike} date Date to get next day start from
- * @returns {Date} Next day start date
- */
-var getNextDayStart = makeGetEdgeOfNeighborDay(getDayStart, 1);
-/**
- * Gets day end date from a given date.
- *
- * @param {DateLike} date Date to get day end from
- * @returns {Date} Day end date
- */
-var getDayEnd = makeGetEnd(getNextDayStart);
-/**
- * Gets day start and end dates from a given date.
- *
- * @param {DateLike} date Date to get day start and end from
- * @returns {[Date, Date]} Day start and end dates
- */
-var getDayRange = makeGetRange(getDayStart, getDayEnd);
-/**
- * Other
- */
-/**
- * Returns a number of days in a month of a given date.
- *
- * @param {Date} date Date
- * @returns {number} Number of days in a month
- */
-function getDaysInMonth(date) {
-    return getDate(getMonthEnd(date));
-}
-
-var _a;
-var CALENDAR_TYPES = {
-    GREGORY: 'gregory',
-    HEBREW: 'hebrew',
-    ISLAMIC: 'islamic',
-    ISO_8601: 'iso8601',
-};
-var CALENDAR_TYPE_LOCALES = (_a = {},
-    _a[CALENDAR_TYPES.GREGORY] = [
-        'en-CA',
-        'en-US',
-        'es-AR',
-        'es-BO',
-        'es-CL',
-        'es-CO',
-        'es-CR',
-        'es-DO',
-        'es-EC',
-        'es-GT',
-        'es-HN',
-        'es-MX',
-        'es-NI',
-        'es-PA',
-        'es-PE',
-        'es-PR',
-        'es-SV',
-        'es-VE',
-        'pt-BR',
-    ],
-    _a[CALENDAR_TYPES.HEBREW] = ['he', 'he-IL'],
-    _a[CALENDAR_TYPES.ISLAMIC] = [
-        // ar-LB, ar-MA intentionally missing
-        'ar',
-        'ar-AE',
-        'ar-BH',
-        'ar-DZ',
-        'ar-EG',
-        'ar-IQ',
-        'ar-JO',
-        'ar-KW',
-        'ar-LY',
-        'ar-OM',
-        'ar-QA',
-        'ar-SA',
-        'ar-SD',
-        'ar-SY',
-        'ar-YE',
-        'dv',
-        'dv-MV',
-        'ps',
-        'ps-AR',
-    ],
-    _a);
-var WEEKDAYS = [0, 1, 2, 3, 4, 5, 6];
-
-var formatterCache = new Map();
-function getFormatter(options) {
-    return function formatter(locale, date) {
-        var localeWithDefault = locale || getUserLocale();
-        if (!formatterCache.has(localeWithDefault)) {
-            formatterCache.set(localeWithDefault, new Map());
-        }
-        var formatterCacheLocale = formatterCache.get(localeWithDefault);
-        if (!formatterCacheLocale.has(options)) {
-            formatterCacheLocale.set(options, new Intl.DateTimeFormat(localeWithDefault || undefined, options).format);
-        }
-        return formatterCacheLocale.get(options)(date);
-    };
-}
-/**
- * Changes the hour in a Date to ensure right date formatting even if DST is messed up.
- * Workaround for bug in WebKit and Firefox with historical dates.
- * For more details, see:
- * https://bugs.chromium.org/p/chromium/issues/detail?id=750465
- * https://bugzilla.mozilla.org/show_bug.cgi?id=1385643
- *
- * @param {Date} date Date.
- * @returns {Date} Date with hour set to 12.
- */
-function toSafeHour(date) {
-    var safeDate = new Date(date);
-    return new Date(safeDate.setHours(12));
-}
-function getSafeFormatter(options) {
-    return function (locale, date) { return getFormatter(options)(locale, toSafeHour(date)); };
-}
-var formatDayOptions = { day: 'numeric' };
-var formatLongDateOptions = {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-};
-var formatMonthOptions = { month: 'long' };
-var formatMonthYearOptions = {
-    month: 'long',
-    year: 'numeric',
-};
-var formatShortWeekdayOptions = { weekday: 'short' };
-var formatWeekdayOptions = { weekday: 'long' };
-var formatYearOptions = { year: 'numeric' };
-var formatDay = getSafeFormatter(formatDayOptions);
-var formatLongDate = getSafeFormatter(formatLongDateOptions);
-var formatMonth = getSafeFormatter(formatMonthOptions);
-var formatMonthYear = getSafeFormatter(formatMonthYearOptions);
-var formatShortWeekday = getSafeFormatter(formatShortWeekdayOptions);
-var formatWeekday = getSafeFormatter(formatWeekdayOptions);
-var formatYear = getSafeFormatter(formatYearOptions);
-
-var SUNDAY = WEEKDAYS[0];
-var FRIDAY = WEEKDAYS[5];
-var SATURDAY = WEEKDAYS[6];
-/* Simple getters - getting a property of a given point in time */
-/**
- * Gets day of the week of a given date.
- * @param {Date} date Date.
- * @param {CalendarType} [calendarType="iso8601"] Calendar type.
- * @returns {number} Day of the week.
- */
-function getDayOfWeek(date, calendarType) {
-    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
-    var weekday = date.getDay();
-    switch (calendarType) {
-        case CALENDAR_TYPES.ISO_8601:
-            // Shifts days of the week so that Monday is 0, Sunday is 6
-            return (weekday + 6) % 7;
-        case CALENDAR_TYPES.ISLAMIC:
-            return (weekday + 1) % 7;
-        case CALENDAR_TYPES.HEBREW:
-        case CALENDAR_TYPES.GREGORY:
-            return weekday;
-        default:
-            throw new Error('Unsupported calendar type.');
-    }
-}
-/**
- * Century
- */
-/**
- * Gets the year of the beginning of a century of a given date.
- * @param {Date} date Date.
- * @returns {number} Year of the beginning of a century.
- */
-function getBeginOfCenturyYear(date) {
-    var beginOfCentury = getCenturyStart(date);
-    return getYear(beginOfCentury);
-}
-/**
- * Decade
- */
-/**
- * Gets the year of the beginning of a decade of a given date.
- * @param {Date} date Date.
- * @returns {number} Year of the beginning of a decade.
- */
-function getBeginOfDecadeYear(date) {
-    var beginOfDecade = getDecadeStart(date);
-    return getYear(beginOfDecade);
-}
-/**
- * Week
- */
-/**
- * Returns the beginning of a given week.
- *
- * @param {Date} date Date.
- * @param {CalendarType} [calendarType="iso8601"] Calendar type.
- * @returns {Date} Beginning of a given week.
- */
-function getBeginOfWeek(date, calendarType) {
-    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
-    var year = getYear(date);
-    var monthIndex = getMonth(date);
-    var day = date.getDate() - getDayOfWeek(date, calendarType);
-    return new Date(year, monthIndex, day);
-}
-/**
- * Gets week number according to ISO 8601 or US standard.
- * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
- * In US calendar week 1 is the one with January 1.
- *
- * @param {Date} date Date.
- * @param {CalendarType} [calendarType="iso8601"] Calendar type.
- * @returns {number} Week number.
- */
-function getWeekNumber(date, calendarType) {
-    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
-    var calendarTypeForWeekNumber = calendarType === CALENDAR_TYPES.GREGORY ? CALENDAR_TYPES.GREGORY : CALENDAR_TYPES.ISO_8601;
-    var beginOfWeek = getBeginOfWeek(date, calendarType);
-    var year = getYear(date) + 1;
-    var dayInWeekOne;
-    var beginOfFirstWeek;
-    // Look for the first week one that does not come after a given date
-    do {
-        dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
-        beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
-        year -= 1;
-    } while (date < beginOfFirstWeek);
-    return Math.round((beginOfWeek.getTime() - beginOfFirstWeek.getTime()) / (8.64e7 * 7)) + 1;
-}
-/**
- * Others
- */
-/**
- * Returns the beginning of a given range.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- * @returns {Date} Beginning of a given range.
- */
-function getBegin(rangeType, date) {
-    switch (rangeType) {
-        case 'century':
-            return getCenturyStart(date);
-        case 'decade':
-            return getDecadeStart(date);
-        case 'year':
-            return getYearStart(date);
-        case 'month':
-            return getMonthStart(date);
-        case 'day':
-            return getDayStart(date);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-/**
- * Returns the beginning of a previous given range.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- * @returns {Date} Beginning of a previous given range.
- */
-function getBeginPrevious(rangeType, date) {
-    switch (rangeType) {
-        case 'century':
-            return getPreviousCenturyStart(date);
-        case 'decade':
-            return getPreviousDecadeStart(date);
-        case 'year':
-            return getPreviousYearStart(date);
-        case 'month':
-            return getPreviousMonthStart(date);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-/**
- * Returns the beginning of a next given range.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- * @returns {Date} Beginning of a next given range.
- */
-function getBeginNext(rangeType, date) {
-    switch (rangeType) {
-        case 'century':
-            return getNextCenturyStart(date);
-        case 'decade':
-            return getNextDecadeStart(date);
-        case 'year':
-            return getNextYearStart(date);
-        case 'month':
-            return getNextMonthStart(date);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-function getBeginPrevious2(rangeType, date) {
-    switch (rangeType) {
-        case 'decade':
-            return getPreviousDecadeStart(date, -100);
-        case 'year':
-            return getPreviousYearStart(date, -10);
-        case 'month':
-            return getPreviousMonthStart(date, -12);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-function getBeginNext2(rangeType, date) {
-    switch (rangeType) {
-        case 'decade':
-            return getNextDecadeStart(date, 100);
-        case 'year':
-            return getNextYearStart(date, 10);
-        case 'month':
-            return getNextMonthStart(date, 12);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-/**
- * Returns the end of a given range.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- * @returns {Date} End of a given range.
- */
-function getEnd(rangeType, date) {
-    switch (rangeType) {
-        case 'century':
-            return getCenturyEnd(date);
-        case 'decade':
-            return getDecadeEnd(date);
-        case 'year':
-            return getYearEnd(date);
-        case 'month':
-            return getMonthEnd(date);
-        case 'day':
-            return getDayEnd(date);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-/**
- * Returns the end of a previous given range.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- * @returns {Date} End of a previous given range.
- */
-function getEndPrevious(rangeType, date) {
-    switch (rangeType) {
-        case 'century':
-            return getPreviousCenturyEnd(date);
-        case 'decade':
-            return getPreviousDecadeEnd(date);
-        case 'year':
-            return getPreviousYearEnd(date);
-        case 'month':
-            return getPreviousMonthEnd(date);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-function getEndPrevious2(rangeType, date) {
-    switch (rangeType) {
-        case 'decade':
-            return getPreviousDecadeEnd(date, -100);
-        case 'year':
-            return getPreviousYearEnd(date, -10);
-        case 'month':
-            return getPreviousMonthEnd(date, -12);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-/**
- * Returns an array with the beginning and the end of a given range.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date Date.
- * @returns {Date[]} Beginning and end of a given range.
- */
-function getRange(rangeType, date) {
-    switch (rangeType) {
-        case 'century':
-            return getCenturyRange(date);
-        case 'decade':
-            return getDecadeRange(date);
-        case 'year':
-            return getYearRange(date);
-        case 'month':
-            return getMonthRange(date);
-        case 'day':
-            return getDayRange(date);
-        default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-    }
-}
-/**
- * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
- *
- * @param {RangeType} rangeType Range type (e.g. 'day')
- * @param {Date} date1 First date.
- * @param {Date} date2 Second date.
- * @returns {Date[]} Beginning and end of a given range.
- */
-function getValueRange(rangeType, date1, date2) {
-    var rawNextValue = [date1, date2].sort(function (a, b) { return a.getTime() - b.getTime(); });
-    return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
-}
-function toYearLabel(locale, formatYear$1, dates) {
-    if (formatYear$1 === void 0) { formatYear$1 = formatYear; }
-    return dates.map(function (date) { return formatYear$1(locale, date); }).join(' – ');
-}
-/**
- * @callback FormatYear
- * @param {string} locale Locale.
- * @param {Date} date Date.
- * @returns {string} Formatted year.
- */
-/**
- * Returns a string labelling a century of a given date.
- * For example, for 2017 it will return 2001-2100.
- *
- * @param {string} locale Locale.
- * @param {FormatYear} formatYear Function to format a year.
- * @param {Date|string|number} date Date or a year as a string or as a number.
- * @returns {string} String labelling a century of a given date.
- */
-function getCenturyLabel(locale, formatYear, date) {
-    return toYearLabel(locale, formatYear, getCenturyRange(date));
-}
-/**
- * Returns a string labelling a decade of a given date.
- * For example, for 2017 it will return 2011-2020.
- *
- * @param {string} locale Locale.
- * @param {FormatYear} formatYear Function to format a year.
- * @param {Date|string|number} date Date or a year as a string or as a number.
- * @returns {string} String labelling a decade of a given date.
- */
-function getDecadeLabel(locale, formatYear, date) {
-    return toYearLabel(locale, formatYear, getDecadeRange(date));
-}
-/**
- * Returns a boolean determining whether a given date is the current day of the week.
- *
- * @param {Date} date Date.
- * @returns {boolean} Whether a given date is the current day of the week.
- */
-function isCurrentDayOfWeek(date) {
-    return date.getDay() === new Date().getDay();
-}
-/**
- * Returns a boolean determining whether a given date is a weekend day.
- *
- * @param {Date} date Date.
- * @param {CalendarType} [calendarType="iso8601"] Calendar type.
- * @returns {boolean} Whether a given date is a weekend day.
- */
-function isWeekend(date, calendarType) {
-    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
-    var weekday = date.getDay();
-    switch (calendarType) {
-        case CALENDAR_TYPES.ISLAMIC:
-        case CALENDAR_TYPES.HEBREW:
-            return weekday === FRIDAY || weekday === SATURDAY;
-        case CALENDAR_TYPES.ISO_8601:
-        case CALENDAR_TYPES.GREGORY:
-            return weekday === SATURDAY || weekday === SUNDAY;
-        default:
-            throw new Error('Unsupported calendar type.');
-    }
-}
-
-var className$6 = 'react-calendar__navigation';
-function Navigation(_a) {
-    var activeStartDate = _a.activeStartDate, drillUp = _a.drillUp, _b = _a.formatMonthYear, formatMonthYear$1 = _b === void 0 ? formatMonthYear : _b, _c = _a.formatYear, formatYear$1 = _c === void 0 ? formatYear : _c, locale = _a.locale, maxDate = _a.maxDate, minDate = _a.minDate, _d = _a.navigationAriaLabel, navigationAriaLabel = _d === void 0 ? '' : _d, navigationAriaLive = _a.navigationAriaLive, navigationLabel = _a.navigationLabel, _e = _a.next2AriaLabel, next2AriaLabel = _e === void 0 ? '' : _e, _f = _a.next2Label, next2Label = _f === void 0 ? '»' : _f, _g = _a.nextAriaLabel, nextAriaLabel = _g === void 0 ? '' : _g, _h = _a.nextLabel, nextLabel = _h === void 0 ? '›' : _h, _j = _a.prev2AriaLabel, prev2AriaLabel = _j === void 0 ? '' : _j, _k = _a.prev2Label, prev2Label = _k === void 0 ? '«' : _k, _l = _a.prevAriaLabel, prevAriaLabel = _l === void 0 ? '' : _l, _m = _a.prevLabel, prevLabel = _m === void 0 ? '‹' : _m, setActiveStartDate = _a.setActiveStartDate, showDoubleView = _a.showDoubleView, view = _a.view, views = _a.views;
-    var drillUpAvailable = views.indexOf(view) > 0;
-    var shouldShowPrevNext2Buttons = view !== 'century';
-    var previousActiveStartDate = getBeginPrevious(view, activeStartDate);
-    var previousActiveStartDate2 = shouldShowPrevNext2Buttons
-        ? getBeginPrevious2(view, activeStartDate)
-        : undefined;
-    var nextActiveStartDate = getBeginNext(view, activeStartDate);
-    var nextActiveStartDate2 = shouldShowPrevNext2Buttons
-        ? getBeginNext2(view, activeStartDate)
-        : undefined;
-    var prevButtonDisabled = (function () {
-        if (previousActiveStartDate.getFullYear() < 0) {
-            return true;
-        }
-        var previousActiveEndDate = getEndPrevious(view, activeStartDate);
-        return minDate && minDate >= previousActiveEndDate;
-    })();
-    var prev2ButtonDisabled = shouldShowPrevNext2Buttons &&
-        (function () {
-            if (previousActiveStartDate2.getFullYear() < 0) {
-                return true;
-            }
-            var previousActiveEndDate = getEndPrevious2(view, activeStartDate);
-            return minDate && minDate >= previousActiveEndDate;
-        })();
-    var nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
-    var next2ButtonDisabled = shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
-    function onClickPrevious() {
-        setActiveStartDate(previousActiveStartDate, 'prev');
-    }
-    function onClickPrevious2() {
-        setActiveStartDate(previousActiveStartDate2, 'prev2');
-    }
-    function onClickNext() {
-        setActiveStartDate(nextActiveStartDate, 'next');
-    }
-    function onClickNext2() {
-        setActiveStartDate(nextActiveStartDate2, 'next2');
-    }
-    function renderLabel(date) {
-        var label = (function () {
-            switch (view) {
-                case 'century':
-                    return getCenturyLabel(locale, formatYear$1, date);
-                case 'decade':
-                    return getDecadeLabel(locale, formatYear$1, date);
-                case 'year':
-                    return formatYear$1(locale, date);
-                case 'month':
-                    return formatMonthYear$1(locale, date);
-                default:
-                    throw new Error("Invalid view: ".concat(view, "."));
-            }
-        })();
-        return navigationLabel
-            ? navigationLabel({
-                date: date,
-                label: label,
-                locale: locale || getUserLocale() || undefined,
-                view: view,
-            })
-            : label;
-    }
-    function renderButton() {
-        var labelClassName = "".concat(className$6, "__label");
-        return (jsxRuntimeExports.jsxs("button", { "aria-label": navigationAriaLabel, "aria-live": navigationAriaLive, className: labelClassName, disabled: !drillUpAvailable, onClick: drillUp, style: { flexGrow: 1 }, type: "button", children: [jsxRuntimeExports.jsx("span", { className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--from"), children: renderLabel(activeStartDate) }), showDoubleView ? (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("span", { className: "".concat(labelClassName, "__divider"), children: " \u2013 " }), jsxRuntimeExports.jsx("span", { className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--to"), children: renderLabel(nextActiveStartDate) })] })) : null] }));
-    }
-    return (jsxRuntimeExports.jsxs("div", { className: className$6, children: [prev2Label !== null && shouldShowPrevNext2Buttons ? (jsxRuntimeExports.jsx("button", { "aria-label": prev2AriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__prev2-button"), disabled: prev2ButtonDisabled, onClick: onClickPrevious2, type: "button", children: prev2Label })) : null, prevLabel !== null && (jsxRuntimeExports.jsx("button", { "aria-label": prevAriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__prev-button"), disabled: prevButtonDisabled, onClick: onClickPrevious, type: "button", children: prevLabel })), renderButton(), nextLabel !== null && (jsxRuntimeExports.jsx("button", { "aria-label": nextAriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__next-button"), disabled: nextButtonDisabled, onClick: onClickNext, type: "button", children: nextLabel })), next2Label !== null && shouldShowPrevNext2Buttons ? (jsxRuntimeExports.jsx("button", { "aria-label": next2AriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__next2-button"), disabled: next2ButtonDisabled, onClick: onClickNext2, type: "button", children: next2Label })) : null] }));
-}
-
-var __assign$e = (undefined && undefined.__assign) || function () {
-    __assign$e = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$e.apply(this, arguments);
-};
-var __rest$a = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-function toPercent(num) {
-    return "".concat(num, "%");
-}
-function Flex(_a) {
-    var children = _a.children, className = _a.className, count = _a.count, direction = _a.direction, offset = _a.offset, style = _a.style, wrap = _a.wrap, otherProps = __rest$a(_a, ["children", "className", "count", "direction", "offset", "style", "wrap"]);
-    return (jsxRuntimeExports.jsx("div", __assign$e({ className: className, style: __assign$e({ display: 'flex', flexDirection: direction, flexWrap: wrap ? 'wrap' : 'nowrap' }, style) }, otherProps, { children: Children.map(children, function (child, index) {
-            var marginInlineStart = offset && index === 0 ? toPercent((100 * offset) / count) : null;
-            return cloneElement(child, __assign$e(__assign$e({}, child.props), { style: {
-                    flexBasis: toPercent(100 / count),
-                    flexShrink: 0,
-                    flexGrow: 0,
-                    overflow: 'hidden',
-                    marginLeft: marginInlineStart,
-                    marginInlineStart: marginInlineStart,
-                    marginInlineEnd: 0,
-                } }));
-        }) })));
-}
-
-/**
- * Returns a value no smaller than min and no larger than max.
- *
- * @param {Date} value Value to return.
- * @param {Date} min Minimum return value.
- * @param {Date} max Maximum return value.
- * @returns {Date} Value between min and max.
- */
-function between(value, min, max) {
-    if (min && min > value) {
-        return min;
-    }
-    if (max && max < value) {
-        return max;
-    }
-    return value;
-}
-function isValueWithinRange(value, range) {
-    return range[0] <= value && range[1] >= value;
-}
-function isRangeWithinRange(greaterRange, smallerRange) {
-    return greaterRange[0] <= smallerRange[0] && greaterRange[1] >= smallerRange[1];
-}
-function doRangesOverlap(range1, range2) {
-    return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
-}
-function getRangeClassNames(valueRange, dateRange, baseClassName) {
-    var isRange = doRangesOverlap(dateRange, valueRange);
-    var classes = [];
-    if (isRange) {
-        classes.push(baseClassName);
-        var isRangeStart = isValueWithinRange(valueRange[0], dateRange);
-        var isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
-        if (isRangeStart) {
-            classes.push("".concat(baseClassName, "Start"));
-        }
-        if (isRangeEnd) {
-            classes.push("".concat(baseClassName, "End"));
-        }
-        if (isRangeStart && isRangeEnd) {
-            classes.push("".concat(baseClassName, "BothEnds"));
-        }
-    }
-    return classes;
-}
-function isCompleteValue(value) {
-    if (Array.isArray(value)) {
-        return value[0] !== null && value[1] !== null;
-    }
-    return value !== null;
-}
-function getTileClasses(args) {
-    if (!args) {
-        throw new Error('args is required');
-    }
-    var value = args.value, date = args.date, hover = args.hover;
-    var className = 'react-calendar__tile';
-    var classes = [className];
-    if (!date) {
-        return classes;
-    }
-    var now = new Date();
-    var dateRange = (function () {
-        if (Array.isArray(date)) {
-            return date;
-        }
-        var dateType = args.dateType;
-        if (!dateType) {
-            throw new Error('dateType is required when date is not an array of two dates');
-        }
-        return getRange(dateType, date);
-    })();
-    if (isValueWithinRange(now, dateRange)) {
-        classes.push("".concat(className, "--now"));
-    }
-    if (!value || !isCompleteValue(value)) {
-        return classes;
-    }
-    var valueRange = (function () {
-        if (Array.isArray(value)) {
-            return value;
-        }
-        var valueType = args.valueType;
-        if (!valueType) {
-            throw new Error('valueType is required when value is not an array of two dates');
-        }
-        return getRange(valueType, value);
-    })();
-    if (isRangeWithinRange(valueRange, dateRange)) {
-        classes.push("".concat(className, "--active"));
-    }
-    else if (doRangesOverlap(valueRange, dateRange)) {
-        classes.push("".concat(className, "--hasActive"));
-    }
-    var valueRangeClassNames = getRangeClassNames(valueRange, dateRange, "".concat(className, "--range"));
-    classes.push.apply(classes, valueRangeClassNames);
-    var valueArray = Array.isArray(value) ? value : [value];
-    if (hover && valueArray.length === 1) {
-        var hoverRange = hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
-        var hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, "".concat(className, "--hover"));
-        classes.push.apply(classes, hoverRangeClassNames);
-    }
-    return classes;
-}
-
-function TileGroup(_a) {
-    var className = _a.className, _b = _a.count, count = _b === void 0 ? 3 : _b, dateTransform = _a.dateTransform, dateType = _a.dateType, end = _a.end, hover = _a.hover, offset = _a.offset, renderTile = _a.renderTile, start = _a.start, _c = _a.step, step = _c === void 0 ? 1 : _c, value = _a.value, valueType = _a.valueType;
-    var tiles = [];
-    for (var point = start; point <= end; point += step) {
-        var date = dateTransform(point);
-        tiles.push(renderTile({
-            classes: getTileClasses({
-                date: date,
-                dateType: dateType,
-                hover: hover,
-                value: value,
-                valueType: valueType,
-            }),
-            date: date,
-        }));
-    }
-    return (jsxRuntimeExports.jsx(Flex, { className: className, count: count, offset: offset, wrap: true, children: tiles }));
-}
-
-function Tile(props) {
-    var activeStartDate = props.activeStartDate, children = props.children, classes = props.classes, date = props.date, formatAbbr = props.formatAbbr, locale = props.locale, maxDate = props.maxDate, maxDateTransform = props.maxDateTransform, minDate = props.minDate, minDateTransform = props.minDateTransform, onClick = props.onClick, onMouseOver = props.onMouseOver, style = props.style, tileClassNameProps = props.tileClassName, tileContentProps = props.tileContent, tileDisabled = props.tileDisabled, view = props.view;
-    var tileClassName = useMemo(function () {
-        var args = { activeStartDate: activeStartDate, date: date, view: view };
-        return typeof tileClassNameProps === 'function' ? tileClassNameProps(args) : tileClassNameProps;
-    }, [activeStartDate, date, tileClassNameProps, view]);
-    var tileContent = useMemo(function () {
-        var args = { activeStartDate: activeStartDate, date: date, view: view };
-        return typeof tileContentProps === 'function' ? tileContentProps(args) : tileContentProps;
-    }, [activeStartDate, date, tileContentProps, view]);
-    return (jsxRuntimeExports.jsxs("button", { className: clsx(classes, tileClassName), disabled: (minDate && minDateTransform(minDate) > date) ||
-            (maxDate && maxDateTransform(maxDate) < date) ||
-            (tileDisabled && tileDisabled({ activeStartDate: activeStartDate, date: date, view: view })), onClick: onClick ? function (event) { return onClick(date, event); } : undefined, onFocus: onMouseOver ? function () { return onMouseOver(date); } : undefined, onMouseOver: onMouseOver ? function () { return onMouseOver(date); } : undefined, style: style, type: "button", children: [formatAbbr ? jsxRuntimeExports.jsx("abbr", { "aria-label": formatAbbr(locale, date), children: children }) : children, tileContent] }));
-}
-
-var __assign$d = (undefined && undefined.__assign) || function () {
-    __assign$d = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$d.apply(this, arguments);
-};
-var __rest$9 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-var className$5 = 'react-calendar__century-view__decades__decade';
-function Decade(_a) {
-    var _b = _a.classes, classes = _b === void 0 ? [] : _b, currentCentury = _a.currentCentury, _c = _a.formatYear, formatYear$1 = _c === void 0 ? formatYear : _c, otherProps = __rest$9(_a, ["classes", "currentCentury", "formatYear"]);
-    var date = otherProps.date, locale = otherProps.locale;
-    var classesProps = [];
-    if (classes) {
-        classesProps.push.apply(classesProps, classes);
-    }
-    if (className$5) {
-        classesProps.push(className$5);
-    }
-    if (getCenturyStart(date).getFullYear() !== currentCentury) {
-        classesProps.push("".concat(className$5, "--neighboringCentury"));
-    }
-    return (jsxRuntimeExports.jsx(Tile, __assign$d({}, otherProps, { classes: classesProps, maxDateTransform: getDecadeEnd, minDateTransform: getDecadeStart, view: "century", children: getDecadeLabel(locale, formatYear$1, date) })));
-}
-
-var __assign$c = (undefined && undefined.__assign) || function () {
-    __assign$c = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$c.apply(this, arguments);
-};
-var __rest$8 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-function Decades(props) {
-    var activeStartDate = props.activeStartDate, hover = props.hover, showNeighboringCentury = props.showNeighboringCentury, value = props.value, valueType = props.valueType, otherProps = __rest$8(props, ["activeStartDate", "hover", "showNeighboringCentury", "value", "valueType"]);
-    var start = getBeginOfCenturyYear(activeStartDate);
-    var end = start + (showNeighboringCentury ? 119 : 99);
-    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__century-view__decades", dateTransform: getDecadeStart, dateType: "decade", end: end, hover: hover, renderTile: function (_a) {
-            var date = _a.date, otherTileProps = __rest$8(_a, ["date"]);
-            return (jsxRuntimeExports.jsx(Decade, __assign$c({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, currentCentury: start, date: date }), date.getTime()));
-        }, start: start, step: 10, value: value, valueType: valueType }));
-}
-
-var __assign$b = (undefined && undefined.__assign) || function () {
-    __assign$b = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$b.apply(this, arguments);
-};
-/**
- * Displays a given century.
- */
-function CenturyView(props) {
-    function renderDecades() {
-        return jsxRuntimeExports.jsx(Decades, __assign$b({}, props));
-    }
-    return jsxRuntimeExports.jsx("div", { className: "react-calendar__century-view", children: renderDecades() });
-}
-
-var __assign$a = (undefined && undefined.__assign) || function () {
-    __assign$a = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$a.apply(this, arguments);
-};
-var __rest$7 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-var className$4 = 'react-calendar__decade-view__years__year';
-function Year(_a) {
-    var _b = _a.classes, classes = _b === void 0 ? [] : _b, currentDecade = _a.currentDecade, _c = _a.formatYear, formatYear$1 = _c === void 0 ? formatYear : _c, otherProps = __rest$7(_a, ["classes", "currentDecade", "formatYear"]);
-    var date = otherProps.date, locale = otherProps.locale;
-    var classesProps = [];
-    if (classes) {
-        classesProps.push.apply(classesProps, classes);
-    }
-    if (className$4) {
-        classesProps.push(className$4);
-    }
-    if (getDecadeStart(date).getFullYear() !== currentDecade) {
-        classesProps.push("".concat(className$4, "--neighboringDecade"));
-    }
-    return (jsxRuntimeExports.jsx(Tile, __assign$a({}, otherProps, { classes: classesProps, maxDateTransform: getYearEnd, minDateTransform: getYearStart, view: "decade", children: formatYear$1(locale, date) })));
-}
-
-var __assign$9 = (undefined && undefined.__assign) || function () {
-    __assign$9 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$9.apply(this, arguments);
-};
-var __rest$6 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-function Years(props) {
-    var activeStartDate = props.activeStartDate, hover = props.hover, showNeighboringDecade = props.showNeighboringDecade, value = props.value, valueType = props.valueType, otherProps = __rest$6(props, ["activeStartDate", "hover", "showNeighboringDecade", "value", "valueType"]);
-    var start = getBeginOfDecadeYear(activeStartDate);
-    var end = start + (showNeighboringDecade ? 11 : 9);
-    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__decade-view__years", dateTransform: getYearStart, dateType: "year", end: end, hover: hover, renderTile: function (_a) {
-            var date = _a.date, otherTileProps = __rest$6(_a, ["date"]);
-            return (jsxRuntimeExports.jsx(Year, __assign$9({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, currentDecade: start, date: date }), date.getTime()));
-        }, start: start, value: value, valueType: valueType }));
-}
-
-var __assign$8 = (undefined && undefined.__assign) || function () {
-    __assign$8 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$8.apply(this, arguments);
-};
-/**
- * Displays a given decade.
- */
-function DecadeView(props) {
-    function renderYears() {
-        return jsxRuntimeExports.jsx(Years, __assign$8({}, props));
-    }
-    return jsxRuntimeExports.jsx("div", { className: "react-calendar__decade-view", children: renderYears() });
-}
-
-var __assign$7 = (undefined && undefined.__assign) || function () {
-    __assign$7 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$7.apply(this, arguments);
-};
-var __rest$5 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var className$3 = 'react-calendar__year-view__months__month';
-function Month(_a) {
-    var _b = _a.classes, classes = _b === void 0 ? [] : _b, _c = _a.formatMonth, formatMonth$1 = _c === void 0 ? formatMonth : _c, _d = _a.formatMonthYear, formatMonthYear$1 = _d === void 0 ? formatMonthYear : _d, otherProps = __rest$5(_a, ["classes", "formatMonth", "formatMonthYear"]);
-    var date = otherProps.date, locale = otherProps.locale;
-    return (jsxRuntimeExports.jsx(Tile, __assign$7({}, otherProps, { classes: __spreadArray(__spreadArray([], classes, true), [className$3], false), formatAbbr: formatMonthYear$1, maxDateTransform: getMonthEnd, minDateTransform: getMonthStart, view: "year", children: formatMonth$1(locale, date) })));
-}
-
-var __assign$6 = (undefined && undefined.__assign) || function () {
-    __assign$6 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$6.apply(this, arguments);
-};
-var __rest$4 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-function Months(props) {
-    var activeStartDate = props.activeStartDate, hover = props.hover, value = props.value, valueType = props.valueType, otherProps = __rest$4(props, ["activeStartDate", "hover", "value", "valueType"]);
-    var start = 0;
-    var end = 11;
-    var year = getYear(activeStartDate);
-    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__year-view__months", dateTransform: function (monthIndex) {
-            var date = new Date();
-            date.setFullYear(year, monthIndex, 1);
-            return getMonthStart(date);
-        }, dateType: "month", end: end, hover: hover, renderTile: function (_a) {
-            var date = _a.date, otherTileProps = __rest$4(_a, ["date"]);
-            return (jsxRuntimeExports.jsx(Month, __assign$6({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, date: date }), date.getTime()));
-        }, start: start, value: value, valueType: valueType }));
-}
-
-var __assign$5 = (undefined && undefined.__assign) || function () {
-    __assign$5 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$5.apply(this, arguments);
-};
-/**
- * Displays a given year.
- */
-function YearView(props) {
-    function renderMonths() {
-        return jsxRuntimeExports.jsx(Months, __assign$5({}, props));
-    }
-    return jsxRuntimeExports.jsx("div", { className: "react-calendar__year-view", children: renderMonths() });
-}
-
-var __assign$4 = (undefined && undefined.__assign) || function () {
-    __assign$4 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$4.apply(this, arguments);
-};
-var __rest$3 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-var className$2 = 'react-calendar__month-view__days__day';
-function Day(_a) {
-    var calendarType = _a.calendarType, _b = _a.classes, classes = _b === void 0 ? [] : _b, currentMonthIndex = _a.currentMonthIndex, _c = _a.formatDay, formatDay$1 = _c === void 0 ? formatDay : _c, _d = _a.formatLongDate, formatLongDate$1 = _d === void 0 ? formatLongDate : _d, otherProps = __rest$3(_a, ["calendarType", "classes", "currentMonthIndex", "formatDay", "formatLongDate"]);
-    var date = otherProps.date, locale = otherProps.locale;
-    var classesProps = [];
-    if (classes) {
-        classesProps.push.apply(classesProps, classes);
-    }
-    if (className$2) {
-        classesProps.push(className$2);
-    }
-    if (isWeekend(date, calendarType)) {
-        classesProps.push("".concat(className$2, "--weekend"));
-    }
-    if (date.getMonth() !== currentMonthIndex) {
-        classesProps.push("".concat(className$2, "--neighboringMonth"));
-    }
-    return (jsxRuntimeExports.jsx(Tile, __assign$4({}, otherProps, { classes: classesProps, formatAbbr: formatLongDate$1, maxDateTransform: getDayEnd, minDateTransform: getDayStart, view: "month", children: formatDay$1(locale, date) })));
-}
-
-var __assign$3 = (undefined && undefined.__assign) || function () {
-    __assign$3 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$3.apply(this, arguments);
-};
-var __rest$2 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-function Days(props) {
-    var activeStartDate = props.activeStartDate, calendarType = props.calendarType, hover = props.hover, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks, showNeighboringMonth = props.showNeighboringMonth, value = props.value, valueType = props.valueType, otherProps = __rest$2(props, ["activeStartDate", "calendarType", "hover", "showFixedNumberOfWeeks", "showNeighboringMonth", "value", "valueType"]);
-    var year = getYear(activeStartDate);
-    var monthIndex = getMonth(activeStartDate);
-    var hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
-    var dayOfWeek = getDayOfWeek(activeStartDate, calendarType);
-    var offset = hasFixedNumberOfWeeks ? 0 : dayOfWeek;
-    /**
-     * Defines on which day of the month the grid shall start. If we simply show current
-     * month, we obviously start on day one, but if showNeighboringMonth is set to
-     * true, we need to find the beginning of the week the first day of the month is in.
-     */
-    var start = (hasFixedNumberOfWeeks ? -dayOfWeek : 0) + 1;
-    /**
-     * Defines on which day of the month the grid shall end. If we simply show current
-     * month, we need to stop on the last day of the month, but if showNeighboringMonth
-     * is set to true, we need to find the end of the week the last day of the month is in.
-     */
-    var end = (function () {
-        if (showFixedNumberOfWeeks) {
-            // Always show 6 weeks
-            return start + 6 * 7 - 1;
-        }
-        var daysInMonth = getDaysInMonth(activeStartDate);
-        if (showNeighboringMonth) {
-            var activeEndDate = new Date();
-            activeEndDate.setFullYear(year, monthIndex, daysInMonth);
-            activeEndDate.setHours(0, 0, 0, 0);
-            var daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
-            return daysInMonth + daysUntilEndOfTheWeek;
-        }
-        return daysInMonth;
-    })();
-    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__month-view__days", count: 7, dateTransform: function (day) {
-            var date = new Date();
-            date.setFullYear(year, monthIndex, day);
-            return getDayStart(date);
-        }, dateType: "day", hover: hover, end: end, renderTile: function (_a) {
-            var date = _a.date, otherTileProps = __rest$2(_a, ["date"]);
-            return (jsxRuntimeExports.jsx(Day, __assign$3({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, calendarType: calendarType, currentMonthIndex: monthIndex, date: date }), date.getTime()));
-        }, offset: offset, start: start, value: value, valueType: valueType }));
-}
-
-var className$1 = 'react-calendar__month-view__weekdays';
-var weekdayClassName = "".concat(className$1, "__weekday");
-function Weekdays(props) {
-    var calendarType = props.calendarType, _a = props.formatShortWeekday, formatShortWeekday$1 = _a === void 0 ? formatShortWeekday : _a, _b = props.formatWeekday, formatWeekday$1 = _b === void 0 ? formatWeekday : _b, locale = props.locale, onMouseLeave = props.onMouseLeave;
-    var anyDate = new Date();
-    var beginOfMonth = getMonthStart(anyDate);
-    var year = getYear(beginOfMonth);
-    var monthIndex = getMonth(beginOfMonth);
-    var weekdays = [];
-    for (var weekday = 1; weekday <= 7; weekday += 1) {
-        var weekdayDate = new Date(year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType));
-        var abbr = formatWeekday$1(locale, weekdayDate);
-        weekdays.push(jsxRuntimeExports.jsx("div", { className: clsx(weekdayClassName, isCurrentDayOfWeek(weekdayDate) && "".concat(weekdayClassName, "--current"), isWeekend(weekdayDate, calendarType) && "".concat(weekdayClassName, "--weekend")), children: jsxRuntimeExports.jsx("abbr", { "aria-label": abbr, title: abbr, children: formatShortWeekday$1(locale, weekdayDate).replace('.', '') }) }, weekday));
-    }
-    return (jsxRuntimeExports.jsx(Flex, { className: className$1, count: 7, onFocus: onMouseLeave, onMouseOver: onMouseLeave, children: weekdays }));
-}
-
-var __assign$2 = (undefined && undefined.__assign) || function () {
-    __assign$2 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$2.apply(this, arguments);
-};
-var __rest$1 = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-var className = 'react-calendar__tile';
-function WeekNumber(props) {
-    var onClickWeekNumber = props.onClickWeekNumber, weekNumber = props.weekNumber;
-    var children = jsxRuntimeExports.jsx("span", { children: weekNumber });
-    if (onClickWeekNumber) {
-        var date_1 = props.date, onClickWeekNumber_1 = props.onClickWeekNumber, weekNumber_1 = props.weekNumber, otherProps = __rest$1(props, ["date", "onClickWeekNumber", "weekNumber"]);
-        return (jsxRuntimeExports.jsx("button", __assign$2({}, otherProps, { className: className, onClick: function (event) { return onClickWeekNumber_1(weekNumber_1, date_1, event); }, type: "button", children: children })));
-    }
-    else {
-        props.date; props.onClickWeekNumber; props.weekNumber; var otherProps = __rest$1(props, ["date", "onClickWeekNumber", "weekNumber"]);
-        return (jsxRuntimeExports.jsx("div", __assign$2({}, otherProps, { className: className, children: children })));
-    }
-}
-
-function WeekNumbers(props) {
-    var activeStartDate = props.activeStartDate, calendarType = props.calendarType, onClickWeekNumber = props.onClickWeekNumber, onMouseLeave = props.onMouseLeave, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
-    var numberOfWeeks = (function () {
-        if (showFixedNumberOfWeeks) {
-            return 6;
-        }
-        var numberOfDays = getDaysInMonth(activeStartDate);
-        var startWeekday = getDayOfWeek(activeStartDate, calendarType);
-        var days = numberOfDays - (7 - startWeekday);
-        return 1 + Math.ceil(days / 7);
-    })();
-    var dates = (function () {
-        var year = getYear(activeStartDate);
-        var monthIndex = getMonth(activeStartDate);
-        var day = getDate(activeStartDate);
-        var result = [];
-        for (var index = 0; index < numberOfWeeks; index += 1) {
-            result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType));
-        }
-        return result;
-    })();
-    var weekNumbers = dates.map(function (date) { return getWeekNumber(date, calendarType); });
-    return (jsxRuntimeExports.jsx(Flex, { className: "react-calendar__month-view__weekNumbers", count: numberOfWeeks, direction: "column", onFocus: onMouseLeave, onMouseOver: onMouseLeave, style: { flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }, children: weekNumbers.map(function (weekNumber, weekIndex) {
-            var date = dates[weekIndex];
-            if (!date) {
-                throw new Error('date is not defined');
-            }
-            return (jsxRuntimeExports.jsx(WeekNumber, { date: date, onClickWeekNumber: onClickWeekNumber, weekNumber: weekNumber }, weekNumber));
-        }) }));
-}
-
-var __assign$1 = (undefined && undefined.__assign) || function () {
-    __assign$1 = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign$1.apply(this, arguments);
-};
-var __rest = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-function getCalendarTypeFromLocale(locale) {
-    if (locale) {
-        for (var _i = 0, _a = Object.entries(CALENDAR_TYPE_LOCALES); _i < _a.length; _i++) {
-            var _b = _a[_i], calendarType = _b[0], locales = _b[1];
-            if (locales.includes(locale)) {
-                return calendarType;
-            }
-        }
-    }
-    return CALENDAR_TYPES.ISO_8601;
-}
-/**
- * Displays a given month.
- */
-function MonthView(props) {
-    var activeStartDate = props.activeStartDate, locale = props.locale, onMouseLeave = props.onMouseLeave, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
-    var _a = props.calendarType, calendarType = _a === void 0 ? getCalendarTypeFromLocale(locale) : _a, formatShortWeekday = props.formatShortWeekday, formatWeekday = props.formatWeekday, onClickWeekNumber = props.onClickWeekNumber, showWeekNumbers = props.showWeekNumbers, childProps = __rest(props, ["calendarType", "formatShortWeekday", "formatWeekday", "onClickWeekNumber", "showWeekNumbers"]);
-    function renderWeekdays() {
-        return (jsxRuntimeExports.jsx(Weekdays, { calendarType: calendarType, formatShortWeekday: formatShortWeekday, formatWeekday: formatWeekday, locale: locale, onMouseLeave: onMouseLeave }));
-    }
-    function renderWeekNumbers() {
-        if (!showWeekNumbers) {
-            return null;
-        }
-        return (jsxRuntimeExports.jsx(WeekNumbers, { activeStartDate: activeStartDate, calendarType: calendarType, onClickWeekNumber: onClickWeekNumber, onMouseLeave: onMouseLeave, showFixedNumberOfWeeks: showFixedNumberOfWeeks }));
-    }
-    function renderDays() {
-        return jsxRuntimeExports.jsx(Days, __assign$1({ calendarType: calendarType }, childProps));
-    }
-    var className = 'react-calendar__month-view';
-    return (jsxRuntimeExports.jsx("div", { className: clsx(className, showWeekNumbers ? "".concat(className, "--weekNumbers") : ''), children: jsxRuntimeExports.jsxs("div", { style: {
-                display: 'flex',
-                alignItems: 'flex-end',
-            }, children: [renderWeekNumbers(), jsxRuntimeExports.jsxs("div", { style: {
-                        flexGrow: 1,
-                        width: '100%',
-                    }, children: [renderWeekdays(), renderDays()] })] }) }));
-}
-
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var baseClassName = 'react-calendar';
-var allViews = ['century', 'decade', 'year', 'month'];
-var allValueTypes = ['decade', 'year', 'month', 'day'];
-var defaultMinDate = new Date();
-defaultMinDate.setFullYear(1, 0, 1);
-defaultMinDate.setHours(0, 0, 0, 0);
-var defaultMaxDate = new Date(8.64e15);
-function toDate(value) {
-    if (value instanceof Date) {
-        return value;
-    }
-    return new Date(value);
-}
-/**
- * Returns views array with disallowed values cut off.
- */
-function getLimitedViews(minDetail, maxDetail) {
-    return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
-}
-/**
- * Determines whether a given view is allowed with currently applied settings.
- */
-function isViewAllowed(view, minDetail, maxDetail) {
-    var views = getLimitedViews(minDetail, maxDetail);
-    return views.indexOf(view) !== -1;
-}
-/**
- * Gets either provided view if allowed by minDetail and maxDetail, or gets
- * the default view if not allowed.
- */
-function getView(view, minDetail, maxDetail) {
-    if (!view) {
-        return maxDetail;
-    }
-    if (isViewAllowed(view, minDetail, maxDetail)) {
-        return view;
-    }
-    return maxDetail;
-}
-/**
- * Returns value type that can be returned with currently applied settings.
- */
-function getValueType(view) {
-    var index = allViews.indexOf(view);
-    return allValueTypes[index];
-}
-function getValue(value, index) {
-    var rawValue = Array.isArray(value) ? value[index] : value;
-    if (!rawValue) {
-        return null;
-    }
-    var valueDate = toDate(rawValue);
-    if (isNaN(valueDate.getTime())) {
-        throw new Error("Invalid date: ".concat(value));
-    }
-    return valueDate;
-}
-function getDetailValue(_a, index) {
-    var value = _a.value, minDate = _a.minDate, maxDate = _a.maxDate, maxDetail = _a.maxDetail;
-    var valuePiece = getValue(value, index);
-    if (!valuePiece) {
-        return null;
-    }
-    var valueType = getValueType(maxDetail);
-    var detailValueFrom = (function () {
-        switch (index) {
-            case 0:
-                return getBegin(valueType, valuePiece);
-            case 1:
-                return getEnd(valueType, valuePiece);
-            default:
-                throw new Error("Invalid index value: ".concat(index));
-        }
-    })();
-    return between(detailValueFrom, minDate, maxDate);
-}
-var getDetailValueFrom = function (args) { return getDetailValue(args, 0); };
-var getDetailValueTo = function (args) { return getDetailValue(args, 1); };
-var getDetailValueArray = function (args) {
-    return [getDetailValueFrom, getDetailValueTo].map(function (fn) { return fn(args); });
-};
-function getActiveStartDate(_a) {
-    var maxDate = _a.maxDate, maxDetail = _a.maxDetail, minDate = _a.minDate, minDetail = _a.minDetail, value = _a.value, view = _a.view;
-    var rangeType = getView(view, minDetail, maxDetail);
-    var valueFrom = getDetailValueFrom({
-        value: value,
-        minDate: minDate,
-        maxDate: maxDate,
-        maxDetail: maxDetail,
-    }) || new Date();
-    return getBegin(rangeType, valueFrom);
-}
-function getInitialActiveStartDate(_a) {
-    var activeStartDate = _a.activeStartDate, defaultActiveStartDate = _a.defaultActiveStartDate, defaultValue = _a.defaultValue, defaultView = _a.defaultView, maxDate = _a.maxDate, maxDetail = _a.maxDetail, minDate = _a.minDate, minDetail = _a.minDetail, value = _a.value, view = _a.view;
-    var rangeType = getView(view, minDetail, maxDetail);
-    var valueFrom = activeStartDate || defaultActiveStartDate;
-    if (valueFrom) {
-        return getBegin(rangeType, valueFrom);
-    }
-    return getActiveStartDate({
-        maxDate: maxDate,
-        maxDetail: maxDetail,
-        minDate: minDate,
-        minDetail: minDetail,
-        value: value || defaultValue,
-        view: view || defaultView,
-    });
-}
-function getIsSingleValue(value) {
-    return value && (!Array.isArray(value) || value.length === 1);
-}
-function areDatesEqual(date1, date2) {
-    return date1 instanceof Date && date2 instanceof Date && date1.getTime() === date2.getTime();
-}
-var Calendar = forwardRef(function Calendar(props, ref) {
-    var activeStartDateProps = props.activeStartDate, allowPartialRange = props.allowPartialRange, calendarType = props.calendarType, className = props.className, defaultActiveStartDate = props.defaultActiveStartDate, defaultValue = props.defaultValue, defaultView = props.defaultView, formatDay = props.formatDay, formatLongDate = props.formatLongDate, formatMonth = props.formatMonth, formatMonthYear = props.formatMonthYear, formatShortWeekday = props.formatShortWeekday, formatWeekday = props.formatWeekday, formatYear = props.formatYear, _a = props.goToRangeStartOnSelect, goToRangeStartOnSelect = _a === void 0 ? true : _a, inputRef = props.inputRef, locale = props.locale, _b = props.maxDate, maxDate = _b === void 0 ? defaultMaxDate : _b, _c = props.maxDetail, maxDetail = _c === void 0 ? 'month' : _c, _d = props.minDate, minDate = _d === void 0 ? defaultMinDate : _d, _e = props.minDetail, minDetail = _e === void 0 ? 'century' : _e, navigationAriaLabel = props.navigationAriaLabel, navigationAriaLive = props.navigationAriaLive, navigationLabel = props.navigationLabel, next2AriaLabel = props.next2AriaLabel, next2Label = props.next2Label, nextAriaLabel = props.nextAriaLabel, nextLabel = props.nextLabel, onActiveStartDateChange = props.onActiveStartDateChange, onChangeProps = props.onChange, onClickDay = props.onClickDay, onClickDecade = props.onClickDecade, onClickMonth = props.onClickMonth, onClickWeekNumber = props.onClickWeekNumber, onClickYear = props.onClickYear, onDrillDown = props.onDrillDown, onDrillUp = props.onDrillUp, onViewChange = props.onViewChange, prev2AriaLabel = props.prev2AriaLabel, prev2Label = props.prev2Label, prevAriaLabel = props.prevAriaLabel, prevLabel = props.prevLabel, _f = props.returnValue, returnValue = _f === void 0 ? 'start' : _f, selectRange = props.selectRange, showDoubleView = props.showDoubleView, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks, _g = props.showNavigation, showNavigation = _g === void 0 ? true : _g, showNeighboringCentury = props.showNeighboringCentury, showNeighboringDecade = props.showNeighboringDecade, _h = props.showNeighboringMonth, showNeighboringMonth = _h === void 0 ? true : _h, showWeekNumbers = props.showWeekNumbers, tileClassName = props.tileClassName, tileContent = props.tileContent, tileDisabled = props.tileDisabled, valueProps = props.value, viewProps = props.view;
-    var _j = useState(defaultActiveStartDate), activeStartDateState = _j[0], setActiveStartDateState = _j[1];
-    var _k = useState(null), hoverState = _k[0], setHoverState = _k[1];
-    var _l = useState(Array.isArray(defaultValue)
-        ? defaultValue.map(function (el) { return (el !== null ? toDate(el) : null); })
-        : defaultValue !== null && defaultValue !== undefined
-            ? toDate(defaultValue)
-            : null), valueState = _l[0], setValueState = _l[1];
-    var _m = useState(defaultView), viewState = _m[0], setViewState = _m[1];
-    var activeStartDate = activeStartDateProps ||
-        activeStartDateState ||
-        getInitialActiveStartDate({
-            activeStartDate: activeStartDateProps,
-            defaultActiveStartDate: defaultActiveStartDate,
-            defaultValue: defaultValue,
-            defaultView: defaultView,
-            maxDate: maxDate,
-            maxDetail: maxDetail,
-            minDate: minDate,
-            minDetail: minDetail,
-            value: valueProps,
-            view: viewProps,
-        });
-    var value = (function () {
-        var rawValue = (function () {
-            // In the middle of range selection, use value from state
-            if (selectRange && getIsSingleValue(valueState)) {
-                return valueState;
-            }
-            return valueProps !== undefined ? valueProps : valueState;
-        })();
-        if (!rawValue) {
-            return null;
-        }
-        return Array.isArray(rawValue)
-            ? rawValue.map(function (el) { return (el !== null ? toDate(el) : null); })
-            : rawValue !== null
-                ? toDate(rawValue)
-                : null;
-    })();
-    var valueType = getValueType(maxDetail);
-    var view = getView(viewProps || viewState, minDetail, maxDetail);
-    var views = getLimitedViews(minDetail, maxDetail);
-    var hover = selectRange ? hoverState : null;
-    var drillDownAvailable = views.indexOf(view) < views.length - 1;
-    var drillUpAvailable = views.indexOf(view) > 0;
-    var getProcessedValue = useCallback(function (value) {
-        var processFunction = (function () {
-            switch (returnValue) {
-                case 'start':
-                    return getDetailValueFrom;
-                case 'end':
-                    return getDetailValueTo;
-                case 'range':
-                    return getDetailValueArray;
-                default:
-                    throw new Error('Invalid returnValue.');
-            }
-        })();
-        return processFunction({
-            maxDate: maxDate,
-            maxDetail: maxDetail,
-            minDate: minDate,
-            value: value,
-        });
-    }, [maxDate, maxDetail, minDate, returnValue]);
-    var setActiveStartDate = useCallback(function (nextActiveStartDate, action) {
-        setActiveStartDateState(nextActiveStartDate);
-        var args = {
-            action: action,
-            activeStartDate: nextActiveStartDate,
-            value: value,
-            view: view,
-        };
-        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-            onActiveStartDateChange(args);
-        }
-    }, [activeStartDate, onActiveStartDateChange, value, view]);
-    var onClickTile = useCallback(function (value, event) {
-        var callback = (function () {
-            switch (view) {
-                case 'century':
-                    return onClickDecade;
-                case 'decade':
-                    return onClickYear;
-                case 'year':
-                    return onClickMonth;
-                case 'month':
-                    return onClickDay;
-                default:
-                    throw new Error("Invalid view: ".concat(view, "."));
-            }
-        })();
-        if (callback)
-            callback(value, event);
-    }, [onClickDay, onClickDecade, onClickMonth, onClickYear, view]);
-    var drillDown = useCallback(function (nextActiveStartDate, event) {
-        if (!drillDownAvailable) {
-            return;
-        }
-        onClickTile(nextActiveStartDate, event);
-        var nextView = views[views.indexOf(view) + 1];
-        if (!nextView) {
-            throw new Error('Attempted to drill down from the lowest view.');
-        }
-        setActiveStartDateState(nextActiveStartDate);
-        setViewState(nextView);
-        var args = {
-            action: 'drillDown',
-            activeStartDate: nextActiveStartDate,
-            value: value,
-            view: nextView,
-        };
-        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-            onActiveStartDateChange(args);
-        }
-        if (onViewChange && view !== nextView) {
-            onViewChange(args);
-        }
-        if (onDrillDown) {
-            onDrillDown(args);
-        }
-    }, [
-        activeStartDate,
-        drillDownAvailable,
-        onActiveStartDateChange,
-        onClickTile,
-        onDrillDown,
-        onViewChange,
-        value,
-        view,
-        views,
-    ]);
-    var drillUp = useCallback(function () {
-        if (!drillUpAvailable) {
-            return;
-        }
-        var nextView = views[views.indexOf(view) - 1];
-        if (!nextView) {
-            throw new Error('Attempted to drill up from the highest view.');
-        }
-        var nextActiveStartDate = getBegin(nextView, activeStartDate);
-        setActiveStartDateState(nextActiveStartDate);
-        setViewState(nextView);
-        var args = {
-            action: 'drillUp',
-            activeStartDate: nextActiveStartDate,
-            value: value,
-            view: nextView,
-        };
-        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-            onActiveStartDateChange(args);
-        }
-        if (onViewChange && view !== nextView) {
-            onViewChange(args);
-        }
-        if (onDrillUp) {
-            onDrillUp(args);
-        }
-    }, [
-        activeStartDate,
-        drillUpAvailable,
-        onActiveStartDateChange,
-        onDrillUp,
-        onViewChange,
-        value,
-        view,
-        views,
-    ]);
-    var onChange = useCallback(function (rawNextValue, event) {
-        var previousValue = value;
-        onClickTile(rawNextValue, event);
-        var isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
-        var nextValue;
-        if (selectRange) {
-            // Range selection turned on
-            if (isFirstValueInRange) {
-                // Value has 0 or 2 elements - either way we're starting a new array
-                // First value
-                nextValue = getBegin(valueType, rawNextValue);
-            }
-            else {
-                if (!previousValue) {
-                    throw new Error('previousValue is required');
-                }
-                if (Array.isArray(previousValue)) {
-                    throw new Error('previousValue must not be an array');
-                }
-                // Second value
-                nextValue = getValueRange(valueType, previousValue, rawNextValue);
-            }
-        }
-        else {
-            // Range selection turned off
-            nextValue = getProcessedValue(rawNextValue);
-        }
-        var nextActiveStartDate = 
-        // Range selection turned off
-        !selectRange ||
-            // Range selection turned on, first value
-            isFirstValueInRange ||
-            // Range selection turned on, second value, goToRangeStartOnSelect toggled on
-            goToRangeStartOnSelect
-            ? getActiveStartDate({
-                maxDate: maxDate,
-                maxDetail: maxDetail,
-                minDate: minDate,
-                minDetail: minDetail,
-                value: nextValue,
-                view: view,
-            })
-            : null;
-        event.persist();
-        setActiveStartDateState(nextActiveStartDate);
-        setValueState(nextValue);
-        var args = {
-            action: 'onChange',
-            activeStartDate: nextActiveStartDate,
-            value: nextValue,
-            view: view,
-        };
-        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
-            onActiveStartDateChange(args);
-        }
-        if (onChangeProps) {
-            if (selectRange) {
-                var isSingleValue = getIsSingleValue(nextValue);
-                if (!isSingleValue) {
-                    onChangeProps(nextValue || null, event);
-                }
-                else if (allowPartialRange) {
-                    if (Array.isArray(nextValue)) {
-                        throw new Error('value must not be an array');
-                    }
-                    onChangeProps([nextValue || null, null], event);
-                }
-            }
-            else {
-                onChangeProps(nextValue || null, event);
-            }
-        }
-    }, [
-        activeStartDate,
-        allowPartialRange,
-        getProcessedValue,
-        goToRangeStartOnSelect,
-        maxDate,
-        maxDetail,
-        minDate,
-        minDetail,
-        onActiveStartDateChange,
-        onChangeProps,
-        onClickTile,
-        selectRange,
-        value,
-        valueType,
-        view,
-    ]);
-    function onMouseOver(nextHover) {
-        setHoverState(nextHover);
-    }
-    function onMouseLeave() {
-        setHoverState(null);
-    }
-    useImperativeHandle(ref, function () { return ({
-        activeStartDate: activeStartDate,
-        drillDown: drillDown,
-        drillUp: drillUp,
-        onChange: onChange,
-        setActiveStartDate: setActiveStartDate,
-        value: value,
-        view: view,
-    }); }, [activeStartDate, drillDown, drillUp, onChange, setActiveStartDate, value, view]);
-    function renderContent(next) {
-        var currentActiveStartDate = next
-            ? getBeginNext(view, activeStartDate)
-            : getBegin(view, activeStartDate);
-        var onClick = drillDownAvailable ? drillDown : onChange;
-        var commonProps = {
-            activeStartDate: currentActiveStartDate,
-            hover: hover,
-            locale: locale,
-            maxDate: maxDate,
-            minDate: minDate,
-            onClick: onClick,
-            onMouseOver: selectRange ? onMouseOver : undefined,
-            tileClassName: tileClassName,
-            tileContent: tileContent,
-            tileDisabled: tileDisabled,
-            value: value,
-            valueType: valueType,
-        };
-        switch (view) {
-            case 'century': {
-                return (jsxRuntimeExports.jsx(CenturyView, __assign({ formatYear: formatYear, showNeighboringCentury: showNeighboringCentury }, commonProps)));
-            }
-            case 'decade': {
-                return (jsxRuntimeExports.jsx(DecadeView, __assign({ formatYear: formatYear, showNeighboringDecade: showNeighboringDecade }, commonProps)));
-            }
-            case 'year': {
-                return (jsxRuntimeExports.jsx(YearView, __assign({ formatMonth: formatMonth, formatMonthYear: formatMonthYear }, commonProps)));
-            }
-            case 'month': {
-                return (jsxRuntimeExports.jsx(MonthView, __assign({ calendarType: calendarType, formatDay: formatDay, formatLongDate: formatLongDate, formatShortWeekday: formatShortWeekday, formatWeekday: formatWeekday, onClickWeekNumber: onClickWeekNumber, onMouseLeave: selectRange ? onMouseLeave : undefined, showFixedNumberOfWeeks: typeof showFixedNumberOfWeeks !== 'undefined'
-                        ? showFixedNumberOfWeeks
-                        : showDoubleView, showNeighboringMonth: showNeighboringMonth, showWeekNumbers: showWeekNumbers }, commonProps)));
-            }
-            default:
-                throw new Error("Invalid view: ".concat(view, "."));
-        }
-    }
-    function renderNavigation() {
-        if (!showNavigation) {
-            return null;
-        }
-        return (jsxRuntimeExports.jsx(Navigation, { activeStartDate: activeStartDate, drillUp: drillUp, formatMonthYear: formatMonthYear, formatYear: formatYear, locale: locale, maxDate: maxDate, minDate: minDate, navigationAriaLabel: navigationAriaLabel, navigationAriaLive: navigationAriaLive, navigationLabel: navigationLabel, next2AriaLabel: next2AriaLabel, next2Label: next2Label, nextAriaLabel: nextAriaLabel, nextLabel: nextLabel, prev2AriaLabel: prev2AriaLabel, prev2Label: prev2Label, prevAriaLabel: prevAriaLabel, prevLabel: prevLabel, setActiveStartDate: setActiveStartDate, showDoubleView: showDoubleView, view: view, views: views }));
-    }
-    var valueArray = Array.isArray(value) ? value : [value];
-    return (jsxRuntimeExports.jsxs("div", { className: clsx(baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "".concat(baseClassName, "--doubleView"), className), ref: inputRef, children: [renderNavigation(), jsxRuntimeExports.jsxs("div", { className: "".concat(baseClassName, "__viewContainer"), onBlur: selectRange ? onMouseLeave : undefined, onMouseLeave: selectRange ? onMouseLeave : undefined, children: [renderContent(), showDoubleView ? renderContent(true) : null] })] }));
-});
-
-var _path$n;
-function _extends$B() { return _extends$B = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$B.apply(null, arguments); }
+var _path$h;
+function _extends$q() { return _extends$q = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$q.apply(null, arguments); }
 var SvgChevronLeftIcon = function SvgChevronLeftIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$B({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$q({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$n || (_path$n = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$h || (_path$h = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M19.56 25.56a1.5 1.5 0 0 1-2.12 0l-8.5-8.5a1.5 1.5 0 0 1 0-2.12l8.5-8.5a1.5 1.5 0 0 1 2.12 2.12L12.122 16l7.44 7.44a1.5 1.5 0 0 1 0 2.12",
@@ -38942,197 +35062,21 @@ var SvgChevronLeftIcon = function SvgChevronLeftIcon(props) {
   })));
 };
 
-function UrsorCalendar(props) {
-  var _useState = useState(dayjs().isAfter(props.value) ? new Date() : new Date(props.value.getFullYear(), props.value.getMonth(), 1)),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    viewMonthStartDate = _useState2[0],
-    setViewMonthStartDate = _useState2[1];
-  var showingCurrentMonth = (viewMonthStartDate === null || viewMonthStartDate === void 0 ? void 0 : viewMonthStartDate.getMonth()) === new Date().getMonth() && (viewMonthStartDate === null || viewMonthStartDate === void 0 ? void 0 : viewMonthStartDate.getFullYear()) === new Date().getFullYear();
-  return jsxRuntimeExports.jsx(Box$1, {
-    p: "10px",
-    pb: "5px",
-    width: "320px",
-    sx: {
-      '.react-calendar__tile': {
-        color: PALETTE.font.dark,
-        transition: '0.2s',
-        borderRadius: '100%',
-        height: '42px',
-        border: 'none',
-        fontSize: 15,
-        background: 'transparent',
-        fontFamily: 'inherit',
-        '&:hover': {
-          opacity: 0.7
-        },
-        cursor: 'pointer'
-      },
-      '.react-calendar__tile--active': {
-        '> abbr': {
-          color: 'white !important',
-          background: PALETTE.secondary.purple[2],
-          width: '36px',
-          height: '34px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '100%'
-        },
-        '&:hover': {
-          '> abbr': {
-            background: PALETTE.secondary.purple[2]
-          },
-          opacity: 1
-        },
-        cursor: 'default'
-      },
-      '.react-calendar__month-view__weekdays__weekday': {
-        color: PALETTE.font.dark,
-        fontSize: 13,
-        fontWeight: 500,
-        //opacity: 0.8,
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        '> abbr': {
-          textDecoration: 'none !important',
-          border: 'none !important'
-        },
-        pointerEvents: 'none'
-      },
-      '.react-calendar__navigation': {
-        display: 'flex',
-        marginBottom: '17px'
-      },
-      '.react-calendar__navigation__label': {
-        color: PALETTE.font.dark,
-        background: 'none',
-        border: 'none',
-        fontSize: 15,
-        fontFamily: 'inherit'
-      },
-      '.react-calendar__navigation__arrow': {
-        display: 'flex',
-        alignItems: 'center',
-        background: 'none',
-        border: 'none',
-        '&:hover': {
-          opacity: 0.6
-        },
-        cursor: 'pointer',
-        transition: '0.2s'
-      },
-      '.react-calendar__navigation__prev-button': {
-        opacity: props.hidePast && showingCurrentMonth ? 0 : 1,
-        pointerEvents: props.hidePast && showingCurrentMonth ? 'none' : 'auto'
-      },
-      '.hidePast': {
-        opacity: 0.16,
-        pointerEvents: 'none'
-      },
-      '.disableFuture': {
-        opacity: 0.16,
-        pointerEvents: 'none'
-      }
-    },
-    children: jsxRuntimeExports.jsx(DynamicContainer, {
-      duration: 800,
-      children: jsxRuntimeExports.jsx(Calendar //@ts-ignore
-      , {
-        onChange: props.onChange,
-        onActiveStartDateChange: function onActiveStartDateChange(x) {
-          return setViewMonthStartDate(x.activeStartDate);
-        },
-        value: props.value,
-        prevLabel: jsxRuntimeExports.jsx(SvgChevronLeftIcon, {
-          height: "20px",
-          width: "20px"
-        }),
-        nextLabel: jsxRuntimeExports.jsx(SvgChevronLeftIcon, {
-          height: "20px",
-          width: "20px",
-          style: {
-            transform: 'rotate(180deg)'
-          }
-        }),
-        prev2Label: null,
-        next2Label: null,
-        tileClassName: function tileClassName(tileProps) {
-          return props.hidePast && dayjs().diff(tileProps.date, 'days') >= 1 ? 'hidePast' : props.disableFuture && dayjs(tileProps.date).isAfter(dayjs(), 'days') ? 'hidePast' : '';
-        },
-        maxDate: new Date(),
-        minDetail: "month"
-      })
-    })
-  });
-}
-
-var CalendarButton = function CalendarButton(props) {
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    open = _useState2[0],
-    setOpen = _useState2[1];
-  return jsxRuntimeExports.jsx(UrsorPopover, {
-    open: open,
-    content: jsxRuntimeExports.jsx(UrsorCalendar, {
-      value: props.value,
-      onChange: function onChange(value) {
-        setOpen(false);
-        props.setValue(value);
-      },
-      disableFuture: true
-    }),
-    closeCallback: function closeCallback() {
-      return setOpen(false);
-    },
-    placement: "right",
-    noPadding: true,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      bgcolor: "rgb(255,255,255)",
-      height: "32px",
-      alignItems: "center",
-      borderRadius: "8px",
-      pl: "12px",
-      pr: "8px",
-      boxSizing: "border-box",
-      spacing: "8px",
-      direction: "row",
-      sx: {
-        cursor: 'pointer',
-        transition: '0.2s',
-        '&:hover': {
-          opacity: 0.6
-        }
-      },
-      onClick: function onClick() {
-        return setOpen(true);
-      },
-      children: [jsxRuntimeExports.jsx(Typography$1, {
-        variant: "small",
-        bold: true,
-        children: "Select date"
-      }), jsxRuntimeExports.jsx(SvgChevronDown, {
-        height: "20px",
-        width: "20px"
-      })]
-    })
-  });
-};
-
-var _g$d, _defs$d;
-function _extends$A() { return _extends$A = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$A.apply(null, arguments); }
+var _g$8, _defs$8;
+function _extends$p() { return _extends$p = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$p.apply(null, arguments); }
 var SvgClockIcon = function SvgClockIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$A({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$p({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 16 17"
-  }, props), _g$d || (_g$d = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$8 || (_g$8 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#ClockIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#787878",
     fillRule: "evenodd",
     d: "M1.5 8.5a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0M8 .5a8 8 0 1 0 0 16 8 8 0 0 0 0-16m.5 4.75a.75.75 0 0 0-1.5 0v3.5a.75.75 0 0 0 .471.696l2.5 1a.75.75 0 0 0 .557-1.392L8.5 8.242z",
     clipRule: "evenodd"
-  }))), _defs$d || (_defs$d = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$8 || (_defs$8 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "ClockIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -39140,92 +35084,14 @@ var SvgClockIcon = function SvgClockIcon(props) {
   })))));
 };
 
-var PageSelector = function PageSelector(props) {
-  return jsxRuntimeExports.jsx(Stack$1, {
-    direction: "row",
-    spacing: "4px",
-    alignItems: "center",
-    justifyContent: "center",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      sx: {
-        cursor: 'pointer',
-        transition: '0.2s',
-        '&:hover': {
-          opacity: 0.7
-        },
-        pointerEvents: props.pageIndex === 0 ? 'none' : undefined,
-        opacity: props.pageIndex === 0 ? 0.3 : 1
-      },
-      onClick: function onClick() {
-        return props.setPageIndex(props.pageIndex - 1);
-      },
-      width: "30px",
-      height: "30px",
-      justifyContent: "center",
-      alignItems: "center",
-      children: jsxRuntimeExports.jsx(SvgChevronLeft, {
-        height: "15px",
-        width: "15px"
-      })
-    }, "left")].concat(_toConsumableArray(_toConsumableArray(Array(props.nPages).keys()).map(function (i) {
-      return jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          cursor: 'pointer',
-          transition: '0.2s',
-          '&:hover': {
-            opacity: 0.7
-          },
-          pointerEvents: props.pageIndex === i ? 'none' : undefined
-        },
-        onClick: function onClick() {
-          return props.setPageIndex(i);
-        },
-        width: "30px",
-        height: "30px",
-        justifyContent: "center",
-        alignItems: "center",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          sx: {
-            fontSize: 14
-          },
-          color: i === props.pageIndex ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[3],
-          children: i + 1
-        })
-      }, i);
-    })), [jsxRuntimeExports.jsx(Stack$1, {
-      sx: {
-        cursor: 'pointer',
-        transition: '0.2s',
-        '&:hover': {
-          opacity: 0.7
-        },
-        pointerEvents: props.pageIndex === props.nPages - 1 ? 'none' : undefined,
-        opacity: props.pageIndex === props.nPages - 1 ? 0.3 : 1
-      },
-      onClick: function onClick() {
-        return props.setPageIndex(props.pageIndex + 1);
-      },
-      width: "30px",
-      height: "30px",
-      justifyContent: "center",
-      alignItems: "center",
-      children: jsxRuntimeExports.jsx(SvgChevronRight, {
-        height: "15px",
-        width: "15px"
-      })
-    }, "right")])
-  });
-};
-
-var _path$m;
-function _extends$z() { return _extends$z = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$z.apply(null, arguments); }
+var _path$g;
+function _extends$o() { return _extends$o = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$o.apply(null, arguments); }
 var SvgSearchIcon = function SvgSearchIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$z({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$o({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$m || (_path$m = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$g || (_path$g = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M22.999 14a9 9 0 0 1-9 9A9.001 9.001 0 0 1 7.635 7.638 9 9 0 0 1 22.999 14m-1.64 9.48a12 12 0 1 1 2.12-2.12l6.08 6.08a1.501 1.501 0 1 1-2.12 2.12z",
@@ -39233,14 +35099,14 @@ var SvgSearchIcon = function SvgSearchIcon(props) {
   })));
 };
 
-var _path$l;
-function _extends$y() { return _extends$y = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$y.apply(null, arguments); }
+var _path$f;
+function _extends$n() { return _extends$n = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$n.apply(null, arguments); }
 var SvgX = function SvgX(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$y({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$n({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$l || (_path$l = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$f || (_path$f = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M7.439 7.44a1.5 1.5 0 0 1 2.12 0l6.44 6.44 6.44-6.44a1.5 1.5 0 1 1 2.12 2.12L18.119 16l6.44 6.44a1.501 1.501 0 1 1-2.12 2.12l-6.44-6.44-6.44 6.44a1.5 1.5 0 0 1-2.12-2.12l6.44-6.44-6.44-6.44a1.5 1.5 0 0 1 0-2.12",
@@ -39437,498 +35303,6 @@ function UrsorFadeIn(props) {
     })
   });
 }
-
-function ownKeys$A(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$y(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$A(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$A(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var PAGE_LENGTH = 55;
-var HistoryRow = function HistoryRow(props) {
-  var _useState = useState(0),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    duration = _useState2[0],
-    setDuration = _useState2[1]; // seconds
-  useEffect(function () {
-    setDuration(props.duration || dayjs(props.finishedAt).diff(props.searchedAt, 'seconds'));
-  }, [props.duration, props.searchedAt, props.finishedAt]);
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    direction: "row",
-    spacing: "40px",
-    alignItems: "center",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      width: "94px",
-      children: jsxRuntimeExports.jsx(Typography$1, {
-        bold: true,
-        color: PALETTE.secondary.grey[4],
-        children: dayjs(props.searchedAt).format('hh:mm:HHa')
-      })
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      spacing: "8px",
-      alignItems: "center",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        borderRadius: "3px",
-        overflow: "hidden",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        children: jsxRuntimeExports.jsx("img", {
-          height: 20,
-          width: 20,
-          src: props.faviconUrl,
-          alt: "favicon url"
-        })
-      }), jsxRuntimeExports.jsx(Typography$1, {
-        bold: true,
-        children: props.title
-      }), jsxRuntimeExports.jsx(Typography$1, {
-        bold: true,
-        color: PALETTE.secondary.grey[4],
-        children: "-"
-      }), jsxRuntimeExports.jsx("a", {
-        href: getAbsoluteUrl(cleanUrl(props.url)),
-        target: "_blank",
-        style: {
-          textDecoration: 'none'
-        },
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            cursor: 'pointer',
-            transition: '0.2s',
-            '&:hover': {
-              opacity: 0.7
-            }
-          },
-          children: jsxRuntimeExports.jsx(Typography$1, {
-            bold: true,
-            color: PALETTE.secondary.grey[4],
-            children: cleanUrl(props.url).replace(/\/$/, '')
-          })
-        })
-      }), jsxRuntimeExports.jsx(Typography$1, {
-        bold: true,
-        color: PALETTE.secondary.grey[4],
-        children: "-"
-      }), duration ? jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        spacing: "8px",
-        alignItems: "center",
-        sx: {
-          svg: {
-            path: {
-              fill: PALETTE.secondary.grey[4]
-            }
-          }
-        },
-        children: [jsxRuntimeExports.jsx(SvgClockIcon, {
-          height: "16px",
-          width: "16px"
-        }), jsxRuntimeExports.jsx(Typography$1, {
-          color: PALETTE.secondary.grey[4],
-          bold: true,
-          children: duration < 60 ? "".concat(duration, "s") : "".concat(Math.floor(duration / (60 * 60)), "h ").concat(Math.floor(duration % (60 * 60) / 60), "m")
-        })]
-      }) : null]
-    })]
-  });
-};
-var HistoryDomainRow = function HistoryDomainRow(props) {
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    expanded = _useState4[0],
-    setExpanded = _useState4[1];
-  return jsxRuntimeExports.jsx(DynamicContainer, {
-    duration: 650,
-    fullWidth: true,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "12px",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        justifyContent: "space-between",
-        alignItems: "center",
-        direction: "row",
-        sx: {
-          cursor: 'pointer',
-          transition: '0.2s',
-          '&:hover': {
-            opacity: 0.6
-          }
-        },
-        onClick: function onClick() {
-          return setExpanded(!expanded);
-        },
-        children: [jsxRuntimeExports.jsx(HistoryRow, _objectSpread$y(_objectSpread$y({}, props.domain), {}, {
-          duration: _.sum(props.rows.map(function (r) {
-            return dayjs(r.finishedAt).diff(r.searchedAt, 'seconds');
-          }))
-        })), jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            transform: "rotate(".concat(expanded ? 180 : 0, "deg)"),
-            transition: '0.2s',
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[4]
-              }
-            }
-          },
-          children: jsxRuntimeExports.jsx(SvgChevronDown, {
-            width: "20px",
-            height: "20px"
-          })
-        })]
-      }), expanded ? jsxRuntimeExports.jsx(Stack$1, {
-        borderRadius: "12px",
-        bgcolor: PALETTE.secondary.grey[1],
-        pl: "28px",
-        py: "12px",
-        spacing: "16px",
-        children: props.rows.map(function (row, i) {
-          return jsxRuntimeExports.jsx(HistoryRow, _objectSpread$y({}, row), i);
-        })
-      }) : null]
-    })
-  });
-};
-var HistorySection = function HistorySection(props) {
-  var _useState5 = useState(1),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    nPages = _useState6[0],
-    setNPages = _useState6[1];
-  var _useState7 = useState(0),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    pageIndex = _useState8[0],
-    setPageIndex = _useState8[1];
-  var _useState9 = useState([]),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    history = _useState10[0],
-    setHistory = _useState10[1];
-  var _useState11 = useState(''),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    searchValue = _useState12[0],
-    setSearchValue = _useState12[1];
-  useEffect(function () {
-    return setPageIndex(0);
-  }, [searchValue]);
-  useEffect(function () {
-    ApiController.getHistory(props.deviceId, props.date, pageIndex + 1, PAGE_LENGTH, searchValue).then(function (response) {
-      setHistory(response.history);
-      setNPages(response.pages);
-    });
-  }, [props.deviceId, props.date, pageIndex, searchValue]);
-  var _useState13 = useState([]),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    domainGroups = _useState14[0],
-    setDomainGroups = _useState14[1];
-  useEffect(function () {
-    var simplisticDomainGroups = _.reduce(history, function (acc, cur) {
-      var currentDomain = new URL(cur.url).hostname;
-      var latestGroup = acc[acc.length - 1];
-      var latestUrl = latestGroup === null || latestGroup === void 0 ? void 0 : latestGroup.rows[latestGroup.rows.length - 1].url;
-      if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
-      var latestDomain = latestGroup === null || latestGroup === void 0 ? void 0 : latestGroup.domain;
-      return currentDomain === latestDomain ? [].concat(_toConsumableArray(acc.slice(0, -1)), [{
-        domain: latestDomain,
-        rows: [].concat(_toConsumableArray(latestGroup.rows), [cur])
-      }]) : [].concat(_toConsumableArray(acc), [{
-        domain: currentDomain,
-        rows: [cur]
-      }]);
-    }, []);
-    setDomainGroups(simplisticDomainGroups.map(function (dg) {
-      var _dg$rows$title, _dg$rows, _dg$rows$0$faviconUrl, _dg$rows$, _dg$rows$searchedAt, _dg$rows2, _dg$rows$0$finishedAt, _dg$rows$2;
-      return {
-        domain: {
-          url: dg.domain,
-          title: (_dg$rows$title = (_dg$rows = dg.rows[dg.rows.length - 1]) === null || _dg$rows === void 0 ? void 0 : _dg$rows.title) !== null && _dg$rows$title !== void 0 ? _dg$rows$title : '',
-          faviconUrl: (_dg$rows$0$faviconUrl = (_dg$rows$ = dg.rows[0]) === null || _dg$rows$ === void 0 ? void 0 : _dg$rows$.faviconUrl) !== null && _dg$rows$0$faviconUrl !== void 0 ? _dg$rows$0$faviconUrl : '',
-          searchedAt: (_dg$rows$searchedAt = (_dg$rows2 = dg.rows[dg.rows.length - 1]) === null || _dg$rows2 === void 0 ? void 0 : _dg$rows2.searchedAt) !== null && _dg$rows$searchedAt !== void 0 ? _dg$rows$searchedAt : '',
-          finishedAt: (_dg$rows$0$finishedAt = (_dg$rows$2 = dg.rows[0]) === null || _dg$rows$2 === void 0 ? void 0 : _dg$rows$2.finishedAt) !== null && _dg$rows$0$finishedAt !== void 0 ? _dg$rows$0$finishedAt : ''
-        },
-        rows: dg.rows
-      };
-    }));
-  }, [history]);
-  return jsxRuntimeExports.jsxs(AstroBentoCard, {
-    title: "Browser history",
-    notCollapsible: true,
-    topRightStuff: jsxRuntimeExports.jsx(SearchInput, {
-      value: searchValue,
-      callback: setSearchValue,
-      clearCallback: function clearCallback() {
-        return setSearchValue('');
-      },
-      grey: true
-    }),
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "16px",
-      children: domainGroups.map(function (dg, i) {
-        return jsxRuntimeExports.jsx(UrsorFadeIn, {
-          delay: i * 70,
-          duration: 600,
-          children: jsxRuntimeExports.jsx(HistoryDomainRow, _objectSpread$y({}, dg))
-        }, "".concat(i).concat(pageIndex).concat(props.date));
-      })
-    }), nPages > 1 ? jsxRuntimeExports.jsx(Stack$1, {
-      pt: "24px",
-      pb: "9px",
-      children: jsxRuntimeExports.jsx(PageSelector, {
-        pageIndex: pageIndex,
-        setPageIndex: setPageIndex,
-        nPages: nPages
-      })
-    }) : null]
-  });
-};
-
-function ownKeys$z(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$x(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$z(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$z(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var MobileHistoryRow = function MobileHistoryRow(props) {
-  var _useState = useState(0),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    duration = _useState2[0],
-    setDuration = _useState2[1]; // seconds
-  useEffect(function () {
-    setDuration(props.duration || dayjs(props.finishedAt).diff(props.searchedAt, 'seconds'));
-  }, [props.duration, props.searchedAt, props.finishedAt]);
-  return jsxRuntimeExports.jsx(Stack$1, {
-    direction: "row",
-    spacing: "12px",
-    alignItems: "center",
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      spacing: "12px",
-      alignItems: "center",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        borderRadius: "8px",
-        overflow: "hidden",
-        minHeight: "42px",
-        minWidth: "42px",
-        boxShadow: "0 0 12px rgba(0,0,0,0.1)",
-        children: jsxRuntimeExports.jsx("img", {
-          height: 42,
-          width: 42,
-          src: props.faviconUrl,
-          alt: "favicon url"
-        })
-      }), jsxRuntimeExports.jsxs(Stack$1, {
-        justifyContent: "space-between",
-        children: [jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          spacing: "8px",
-          alignItems: "center",
-          children: [jsxRuntimeExports.jsx(Typography$1, {
-            bold: true,
-            maxLines: 1,
-            sx: {
-              wordBreak: 'break-all'
-            },
-            children: props.title
-          }), jsxRuntimeExports.jsx("a", {
-            href: props.url,
-            target: "_blank",
-            style: {
-              textDecoration: 'none'
-            },
-            children: jsxRuntimeExports.jsx(Stack$1, {
-              minWidth: "20%",
-              children: jsxRuntimeExports.jsx(Typography$1, {
-                bold: true,
-                color: PALETTE.secondary.grey[3],
-                maxLines: 1,
-                sx: {
-                  wordBreak: 'break-all'
-                },
-                children: cleanUrl(props.url).replace(/\/$/, '')
-              })
-            })
-          })]
-        }), jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          spacing: "8px",
-          alignItems: "center",
-          children: [jsxRuntimeExports.jsx(Typography$1, {
-            variant: "tiny",
-            bold: true,
-            color: PALETTE.secondary.grey[4],
-            children: dayjs(props.searchedAt).utc().format('hh:mm a')
-          }), jsxRuntimeExports.jsx(Typography$1, {
-            bold: true,
-            sx: {
-              lineHeight: '100%'
-            },
-            color: PALETTE.secondary.grey[4],
-            children: "-"
-          }), duration ? jsxRuntimeExports.jsxs(Stack$1, {
-            direction: "row",
-            spacing: "4px",
-            alignItems: "center",
-            sx: {
-              svg: {
-                path: {
-                  fill: PALETTE.secondary.grey[4]
-                }
-              }
-            },
-            children: [jsxRuntimeExports.jsx(SvgClockIcon, {
-              height: "12px",
-              width: "12px"
-            }), jsxRuntimeExports.jsx(Typography$1, {
-              variant: "tiny",
-              color: PALETTE.secondary.grey[4],
-              bold: true,
-              children: duration < 60 ? "".concat(duration, "s") : "".concat(Math.floor(duration / (60 * 60)), "h ").concat(Math.floor(duration % (60 * 60) / 60), "m")
-            })]
-          }) : null]
-        })]
-      })]
-    })
-  });
-};
-var MobileHistoryDomainRow = function MobileHistoryDomainRow(props) {
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    expanded = _useState4[0],
-    setExpanded = _useState4[1];
-  return jsxRuntimeExports.jsx(DynamicContainer, {
-    duration: 650,
-    fullWidth: true,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "5px",
-      py: "8px",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        justifyContent: "space-between",
-        alignItems: "center",
-        direction: "row",
-        sx: {
-          cursor: 'pointer',
-          transition: '0.2s',
-          '&:hover': {
-            opacity: 0.6
-          }
-        },
-        onClick: function onClick() {
-          return setExpanded(!expanded);
-        },
-        children: [jsxRuntimeExports.jsx(MobileHistoryRow, _objectSpread$x(_objectSpread$x({}, props.domain), {}, {
-          duration: _.sum(props.rows.map(function (r) {
-            return dayjs(r.finishedAt).diff(r.searchedAt, 'seconds');
-          }))
-        })), jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            svg: {
-              transform: "rotate(".concat(expanded ? 180 : 0, "deg)"),
-              transition: '0.2s',
-              path: {
-                fill: PALETTE.secondary.grey[4]
-              }
-            }
-          },
-          minWidth: "30px",
-          alignItems: "flex-end",
-          children: jsxRuntimeExports.jsx(SvgChevronDown, {
-            width: "20px",
-            height: "20px"
-          })
-        })]
-      }), expanded ? jsxRuntimeExports.jsx(Stack$1, {
-        borderRadius: "12px",
-        bgcolor: PALETTE.secondary.grey[1],
-        pl: "12px",
-        py: "12px",
-        spacing: "16px",
-        children: props.rows.map(function (row, i) {
-          return jsxRuntimeExports.jsx(MobileHistoryRow, _objectSpread$x({}, row), i);
-        })
-      }) : null]
-    })
-  });
-};
-var MobileHistorySection = function MobileHistorySection(props) {
-  var _useState5 = useState(1),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    nPages = _useState6[0],
-    setNPages = _useState6[1];
-  var _useState7 = useState(0),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    pageIndex = _useState8[0],
-    setPageIndex = _useState8[1];
-  var _useState9 = useState([]),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    history = _useState10[0],
-    setHistory = _useState10[1];
-  var _useState11 = useState(''),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    searchValue = _useState12[0],
-    setSearchValue = _useState12[1];
-  useEffect(function () {
-    return setPageIndex(0);
-  }, [searchValue]);
-  useEffect(function () {
-    ApiController.getHistory(props.deviceId, props.date, pageIndex + 1, PAGE_LENGTH, searchValue).then(function (response) {
-      setHistory(response.history);
-      setNPages(response.pages);
-    });
-  }, [props.deviceId, props.date, pageIndex, searchValue]);
-  var _useState13 = useState([]),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    domainGroups = _useState14[0],
-    setDomainGroups = _useState14[1];
-  useEffect(function () {
-    var simplisticDomainGroups = _.reduce(history, function (acc, cur) {
-      var currentDomain = new URL(cur.url).hostname;
-      var latestGroup = acc[acc.length - 1];
-      var latestUrl = latestGroup === null || latestGroup === void 0 ? void 0 : latestGroup.rows[latestGroup.rows.length - 1].url;
-      if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
-      var latestDomain = latestGroup === null || latestGroup === void 0 ? void 0 : latestGroup.domain;
-      return currentDomain === latestDomain ? [].concat(_toConsumableArray(acc.slice(0, -1)), [{
-        domain: latestDomain,
-        rows: [].concat(_toConsumableArray(latestGroup.rows), [cur])
-      }]) : [].concat(_toConsumableArray(acc), [{
-        domain: currentDomain,
-        rows: [cur]
-      }]);
-    }, []);
-    setDomainGroups(simplisticDomainGroups.map(function (dg) {
-      var _dg$rows$title, _dg$rows, _dg$rows$0$faviconUrl, _dg$rows$, _dg$rows$searchedAt, _dg$rows2, _dg$rows$0$finishedAt, _dg$rows$2;
-      return {
-        domain: {
-          url: dg.domain,
-          title: (_dg$rows$title = (_dg$rows = dg.rows[dg.rows.length - 1]) === null || _dg$rows === void 0 ? void 0 : _dg$rows.title) !== null && _dg$rows$title !== void 0 ? _dg$rows$title : '',
-          faviconUrl: (_dg$rows$0$faviconUrl = (_dg$rows$ = dg.rows[0]) === null || _dg$rows$ === void 0 ? void 0 : _dg$rows$.faviconUrl) !== null && _dg$rows$0$faviconUrl !== void 0 ? _dg$rows$0$faviconUrl : '',
-          searchedAt: (_dg$rows$searchedAt = (_dg$rows2 = dg.rows[dg.rows.length - 1]) === null || _dg$rows2 === void 0 ? void 0 : _dg$rows2.searchedAt) !== null && _dg$rows$searchedAt !== void 0 ? _dg$rows$searchedAt : '',
-          finishedAt: (_dg$rows$0$finishedAt = (_dg$rows$2 = dg.rows[0]) === null || _dg$rows$2 === void 0 ? void 0 : _dg$rows$2.finishedAt) !== null && _dg$rows$0$finishedAt !== void 0 ? _dg$rows$0$finishedAt : ''
-        },
-        rows: dg.rows
-      };
-    }));
-  }, [history]);
-  return jsxRuntimeExports.jsxs(AstroBentoCard, {
-    title: "Browser history",
-    notCollapsible: true,
-    isMobile: true,
-    topRightStuff: jsxRuntimeExports.jsx(SearchInput, {
-      value: searchValue,
-      callback: setSearchValue,
-      clearCallback: function clearCallback() {
-        return setSearchValue('');
-      },
-      grey: true
-    }),
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "16px",
-      children: domainGroups.map(function (dg, i) {
-        return jsxRuntimeExports.jsx(UrsorFadeIn, {
-          delay: i * 70,
-          duration: 600,
-          children: jsxRuntimeExports.jsx(MobileHistoryDomainRow, _objectSpread$x({}, dg))
-        }, "".concat(i).concat(pageIndex));
-      })
-    }), nPages > 1 ? jsxRuntimeExports.jsx(Stack$1, {
-      pt: "24px",
-      pb: "9px",
-      children: jsxRuntimeExports.jsx(PageSelector, {
-        pageIndex: pageIndex,
-        setPageIndex: setPageIndex,
-        nPages: nPages
-      })
-    }) : null]
-  });
-};
 
 var lottie$1 = {exports: {}};
 
@@ -60041,7 +55415,7 @@ function _iterableToArrayLimit$1(arr, i) {
     return _arr;
   }
 }
-function ownKeys$y(object, enumerableOnly) {
+function ownKeys$e(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
@@ -60054,9 +55428,9 @@ function ownKeys$y(object, enumerableOnly) {
 function _objectSpread2$1(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
-    i % 2 ? ownKeys$y(Object(source), !0).forEach(function (key) {
+    i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) {
       _defineProperty$1(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$y(Object(source)).forEach(function (key) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) {
       Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
     });
   }
@@ -105252,7 +100626,7 @@ var _templateObject$4;
 var SPACING$1 = '62px';
 var CIRCLE_SIZE = 24;
 var CIRCLE_BORDER_THICKNESS = 2;
-var ROUNDING$1 = '20px';
+var ROUNDING = '20px';
 var APPEAR_DELAY = 800;
 var BAR_DELAY = '0.6s';
 var BAR_LENGTH_CHANGE_DURATION = '0.7s';
@@ -105260,7 +100634,7 @@ var BAR_BEZIER = 'cubic-bezier(0.64, 0.27, 0.47, 1.53)';
 var BAR_Z_INDEX = 2;
 var PULSE_AMPLITUDE$1 = '1.5px';
 var PULSE_PERIOD = '1.4s';
-var pulse$1 = keyframes(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  from {\n    transform: translateY(-", ")\n  }\n  to {\n    transform: translateY(", ")\n  }\n"])), PULSE_AMPLITUDE$1, PULSE_AMPLITUDE$1);
+var pulse = keyframes(_templateObject$4 || (_templateObject$4 = _taggedTemplateLiteral(["\n  from {\n    transform: translateY(-", ")\n  }\n  to {\n    transform: translateY(", ")\n  }\n"])), PULSE_AMPLITUDE$1, PULSE_AMPLITUDE$1);
 function ByteStepper(props) {
   var getCircle = function getCircle(disappear) {
     return jsxRuntimeExports.jsx(Box$1, {
@@ -105292,7 +100666,7 @@ function ByteStepper(props) {
       zIndex: BAR_Z_INDEX + 1,
       children: jsxRuntimeExports.jsx(Box$1, {
         sx: {
-          animation: "".concat(pulse$1, " ").concat(PULSE_PERIOD, " ease-in-out"),
+          animation: "".concat(pulse, " ").concat(PULSE_PERIOD, " ease-in-out"),
           animationDirection: 'alternate',
           animationIterationCount: 'infinite'
         },
@@ -105311,7 +100685,7 @@ function ByteStepper(props) {
     sx: {
       background: PALETTE.secondary.grey[1]
     },
-    borderRadius: ROUNDING$1,
+    borderRadius: ROUNDING,
     children: [jsxRuntimeExports.jsx(Box$1, {
       width: "100%",
       height: "100%",
@@ -105325,7 +100699,7 @@ function ByteStepper(props) {
           transitionDelay: BAR_DELAY,
           transitionTimingFunction: BAR_BEZIER
         },
-        borderRadius: ROUNDING$1,
+        borderRadius: ROUNDING,
         position: "relative",
         zIndex: BAR_Z_INDEX
       })
@@ -105351,8 +100725,8 @@ function ByteStepper(props) {
 }
 
 var _templateObject$3, _templateObject2$1;
-function ownKeys$x(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$w(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$x(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$x(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$d(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$c(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$d(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$d(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var WIDTH$2 = '926px';
 var HEIGHT$1 = '630px';
 var BORDER_RADIUS = '24px';
@@ -105414,7 +100788,7 @@ function UrsorDialog(props) {
     },
     sx: {
       py: '10px',
-      '.MuiBackdrop-root': _objectSpread$w({
+      '.MuiBackdrop-root': _objectSpread$c({
         display: props.noBackdrop ? 'none' : 'visible'
       }, BACKDROP_STYLE)
     },
@@ -105508,7 +100882,7 @@ function UrsorDialog(props) {
                 maxWidth: props.titleMaxWidth
               },
               children: props.title
-            }), props.info ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$w({}, props.info)) : null]
+            }), props.info ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$c({}, props.info)) : null]
           }) : null, props.subtitle ? jsxRuntimeExports.jsx(Stack, {
             alignItems: "center",
             pt: "6px",
@@ -105573,380 +100947,9 @@ function UrsorDialog(props) {
   });
 }
 
-function ownKeys$w(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$v(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$w(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$w(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var AllMostVisitedSitesDialog = function AllMostVisitedSitesDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    searchValue = _useState2[0],
-    setSearchValue = _useState2[1];
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    filteredSites = _useState4[0],
-    setFilteredSites = _useState4[1];
-  useEffect(function () {
-    return setFilteredSites(props.sites.filter(function (d) {
-      return !searchValue || d.title.toLowerCase().includes(searchValue.toLowerCase());
-    }));
-  }, [props.sites, searchValue]);
-  return jsxRuntimeExports.jsx(Dialog, {
-    transitionDuration: 800,
-    open: props.open,
-    onClose: props.onClose,
-    PaperProps: {
-      style: {
-        maxWidth: 1308,
-        width: props.isMobile ? '100%' : '70%',
-        maxHeight: 726,
-        height: '70%',
-        borderRadius: BORDER_RADIUS,
-        margin: '20px',
-        padding: props.isMobile ? '20px' : '32px'
-      }
-    },
-    sx: {
-      py: '10px',
-      '.MuiBackdrop-root': BACKDROP_STYLE
-    },
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "32px",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        direction: props.isMobile ? 'column' : 'row',
-        justifyContent: "space-between",
-        spacing: props.isMobile ? '6px' : undefined,
-        children: [jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          justifyContent: "space-between",
-          children: [jsxRuntimeExports.jsx(Typography$1, {
-            bold: true,
-            variant: props.isMobile ? 'large' : 'h5',
-            children: "Most visited sites today"
-          }), jsxRuntimeExports.jsx(Stack$1, {
-            width: "40px",
-            alignItems: "flex-end",
-            pt: "3px",
-            onClick: props.onClose,
-            children: jsxRuntimeExports.jsx(SvgX, {
-              height: "22px",
-              width: "22px"
-            })
-          })]
-        }), jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          spacing: "0px",
-          alignItems: "center",
-          children: [jsxRuntimeExports.jsx(SearchInput, {
-            value: searchValue,
-            callback: setSearchValue,
-            clearCallback: function clearCallback() {
-              return setSearchValue('');
-            },
-            fullWidth: props.isMobile,
-            iconSize: props.isMobile ? '16px' : undefined,
-            grey: true
-          }), !props.isMobile ? jsxRuntimeExports.jsx(Stack$1, {
-            width: "40px",
-            alignItems: "flex-end",
-            pt: "3px",
-            onClick: props.onClose,
-            children: jsxRuntimeExports.jsx(SvgX, {
-              height: "22px",
-              width: "22px"
-            })
-          }) : null]
-        })]
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        children: _.reverse(filteredSites.slice()).map(function (site, i) {
-          var _$max;
-          return jsxRuntimeExports.jsx(VisitedSiteRow, _objectSpread$v(_objectSpread$v({}, site), {}, {
-            maxScreenTime: (_$max = _.max(props.sites.map(function (s) {
-              return s.screenTime;
-            }))) !== null && _$max !== void 0 ? _$max : 1,
-            borderTop: i > 0
-          }), i);
-        })
-      })]
-    })
-  });
-};
-
-function ownKeys$v(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$u(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$v(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$v(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var VisitedSiteRow = function VisitedSiteRow(props) {
-  return jsxRuntimeExports.jsx(Stack$1, {
-    height: "73px",
-    borderTop: props.borderTop ? "2px solid ".concat(PALETTE.secondary.grey[2]) : undefined,
-    sx: {
-      cursor: 'pointer',
-      '&:hover': {
-        opacity: 0.7
-      },
-      transition: '0.2s'
-    },
-    justifyContent: "center",
-    children: jsxRuntimeExports.jsx("a", {
-      href: props.url,
-      target: "_blank",
-      style: {
-        textDecoration: 'none'
-      },
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        flex: 1,
-        direction: "row",
-        spacing: "12px",
-        alignItems: "center",
-        children: [jsxRuntimeExports.jsx(Stack$1, {
-          borderRadius: "8px",
-          overflow: "hidden",
-          minHeight: 42,
-          minWidth: 42,
-          boxShadow: "0 0 12px rgba(0,0,0,0.1)",
-          children: jsxRuntimeExports.jsx("img", {
-            src: props.faviconUrl,
-            height: 42,
-            width: 42,
-            alt: "favicon"
-          })
-        }), jsxRuntimeExports.jsxs(Stack$1, {
-          spacing: "8px",
-          width: "100%",
-          children: [jsxRuntimeExports.jsxs(Stack$1, {
-            direction: "row",
-            spacing: "8px",
-            alignItems: "center",
-            children: [jsxRuntimeExports.jsx(Typography$1, {
-              bold: true,
-              maxLines: 1,
-              sx: {
-                wordBreak: 'break-all'
-              },
-              children: props.title
-            }), jsxRuntimeExports.jsx(Stack$1, {
-              minWidth: "20%",
-              children: jsxRuntimeExports.jsx(Typography$1, {
-                bold: true,
-                color: PALETTE.secondary.grey[3],
-                maxLines: 1,
-                sx: {
-                  wordBreak: 'break-all'
-                },
-                children: cleanUrl(props.url).replace(/\/$/, '')
-              })
-            })]
-          }), jsxRuntimeExports.jsxs(Stack$1, {
-            direction: "row",
-            alignItems: "center",
-            spacing: "12px",
-            children: [jsxRuntimeExports.jsx(Stack$1, {
-              width: "".concat(100 * props.screenTime / props.maxScreenTime, "%"),
-              height: "8px",
-              bgcolor: PALETTE.secondary.purple[1],
-              borderRadius: "4px"
-            }), jsxRuntimeExports.jsx(Stack$1, {
-              width: "60px",
-              children: jsxRuntimeExports.jsx(Typography$1, {
-                bold: true,
-                variant: "tiny",
-                children: "".concat(Math.floor(props.screenTime / 60), "h ").concat(Math.floor(props.screenTime % 60), "m")
-              })
-            })]
-          })]
-        })]
-      })
-    })
-  });
-};
-var MostVisitedSitesSection = function MostVisitedSitesSection(props) {
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    allMostVisitedSitesDialogOpen = _useState2[0],
-    setAllMostVisitedSitesDialogOpen = _useState2[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsx(AstroBentoCard, {
-      title: "Most visited sites today",
-      notCollapsible: true,
-      paddingBottom: "0",
-      isMobile: props.isMobile,
-      topRightStuff: jsxRuntimeExports.jsx(UrsorButton, {
-        size: "small",
-        variant: "secondary",
-        onClick: function onClick() {
-          return setAllMostVisitedSitesDialogOpen(true);
-        },
-        children: "View all"
-      }),
-      children: _.reverse(props.sites.slice(-3)).map(function (site, i) {
-        var _$max;
-        return jsxRuntimeExports.jsx(UrsorFadeIn, {
-          delay: i * 90,
-          duration: 800,
-          children: jsxRuntimeExports.jsx(VisitedSiteRow, _objectSpread$u(_objectSpread$u({}, site), {}, {
-            maxScreenTime: (_$max = _.max(props.sites.map(function (s) {
-              return s.screenTime;
-            }))) !== null && _$max !== void 0 ? _$max : 1,
-            borderTop: i > 0
-          }))
-        }, site.url);
-      })
-    }), jsxRuntimeExports.jsx(AllMostVisitedSitesDialog, {
-      sites: props.sites,
-      open: allMostVisitedSitesDialogOpen,
-      onClose: function onClose() {
-        return setAllMostVisitedSitesDialogOpen(false);
-      },
-      isMobile: props.isMobile
-    })]
-  });
-};
-
 dayjs.extend(advancedFormat);
 var cleanUrl = function cleanUrl(url) {
   return url.replace('http://', '').replace('https://', '').replace('www.', '');
-};
-var DevicePageMobileInsightsTab = function DevicePageMobileInsightsTab(props) {
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    times = _useState2[0],
-    setTimes = _useState2[1];
-  var _useState3 = useState(0),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    selectedDayIndex = _useState4[0],
-    setSelectedDayIndex = _useState4[1]; // days from today
-  var _useState5 = useState(0),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    rangeEndDayIndex = _useState6[0],
-    setRangeEndDayIndex = _useState6[1];
-  var _useState7 = useState(6),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    rangeStartDayIndex = _useState8[0],
-    setRangeStartDayIndex = _useState8[1];
-  var _useState9 = useState([]),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    visitedSites = _useState10[0],
-    setVisitedSites = _useState10[1];
-  useEffect(function () {
-    ApiController.getStats(props.deviceId, dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'), dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')).then(function (stats) {
-      var _stats$visitedWebsite;
-      setTimes(stats.screenTime);
-      setVisitedSites(_.sortBy(((_stats$visitedWebsite = stats.visitedWebsites) === null || _stats$visitedWebsite === void 0 || (_stats$visitedWebsite = _stats$visitedWebsite.find(function (w) {
-        return w.date === dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD');
-      })) === null || _stats$visitedWebsite === void 0 ? void 0 : _stats$visitedWebsite.websites) || [], function (t) {
-        return t.screenTime;
-      }));
-    });
-  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
-  var _useState11 = useState(0),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    timeSpent = _useState12[0],
-    setTimeSpent = _useState12[1];
-  useEffect(function () {
-    var _times$find$screenTim, _times$find;
-    return setTimeSpent((_times$find$screenTim = (_times$find = times.find(function (t) {
-      return t.date === dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD');
-    })) === null || _times$find === void 0 ? void 0 : _times$find.screenTime) !== null && _times$find$screenTim !== void 0 ? _times$find$screenTim : 0);
-  }, [times, selectedDayIndex]);
-  useEffect(function () {
-    if (selectedDayIndex < 4) {
-      var shiftNDays = selectedDayIndex - 3;
-      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays);
-      setRangeEndDayIndex(Math.max(0, shiftNDays));
-      // }
-      // else if (times.length - selectedDayIndex < 4) {
-      //   const shiftNDays = times.length - 1 - selectedDayIndex;
-      //   setRangeStartDayIndex(Math.min(times.length - 1, selectedDayIndex + 3));
-      //   setRangeEndDayIndex(selectedDayIndex - 6 + shiftNDays);
-    } else {
-      setRangeStartDayIndex(selectedDayIndex + 3);
-      setRangeEndDayIndex(selectedDayIndex - 3);
-    }
-  }, [selectedDayIndex, times]);
-  return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "12px",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        justifyContent: "space-between",
-        children: [jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          spacing: "8px",
-          alignItems: "center",
-          children: [jsxRuntimeExports.jsx(Stack$1, {
-            sx: {
-              cursor: 'pointer',
-              transition: '0.2s',
-              '&:hover': {
-                opacity: 0.6
-              }
-            },
-            onClick: function onClick() {
-              return setSelectedDayIndex(selectedDayIndex + 1);
-            },
-            children: jsxRuntimeExports.jsx(SvgChevronLeft, {
-              height: "18px",
-              width: "18px"
-            })
-          }), jsxRuntimeExports.jsx(Typography$1, {
-            variant: "medium",
-            bold: true,
-            children: "".concat(selectedDayIndex === 0 ? 'Today' : selectedDayIndex === 1 ? 'Yesterday' : "".concat(dayjs().subtract(selectedDayIndex, 'days').format('dddd')), ", ").concat(dayjs().subtract(selectedDayIndex, 'days').format('Do MMMM'))
-          }), jsxRuntimeExports.jsx(Stack$1, {
-            sx: {
-              opacity: selectedDayIndex === 0 ? 0.3 : 1,
-              pointerEvents: selectedDayIndex === 0 ? 'none' : undefined,
-              cursor: 'pointer',
-              transition: '0.2s',
-              '&:hover': {
-                opacity: 0.6
-              }
-            },
-            onClick: function onClick() {
-              return setSelectedDayIndex(selectedDayIndex - 1);
-            },
-            children: jsxRuntimeExports.jsx(SvgChevronRight, {
-              height: "18px",
-              width: "18px"
-            })
-          })]
-        }), jsxRuntimeExports.jsx(CalendarButton, {
-          value: dayjs().subtract(selectedDayIndex, 'days').toDate(),
-          setValue: function setValue(date) {
-            return setSelectedDayIndex(dayjs().diff(date, 'days'));
-          }
-        })]
-      }), jsxRuntimeExports.jsx(AstroBentoCard, {
-        title: "".concat(Math.floor(timeSpent / 60), "h ").concat(Math.floor(timeSpent % 60), "m spent on screen"),
-        notCollapsible: true,
-        isMobile: true,
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          height: "200px",
-          mt: "10px",
-          borderRadius: "12px",
-          bgcolor: "rgb(255,255,255)",
-          py: "8px",
-          boxSizing: "border-box",
-          children: times.length > 0 ? jsxRuntimeExports.jsx(AstroTimeChart, {
-            times: times,
-            selected: dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD'),
-            setSelectedDatetime: function setSelectedDatetime(datetime) {
-              return setSelectedDayIndex(dayjs().utc().diff(datetime, 'days'));
-            },
-            labelFontSize: "small",
-            barsXPadding: 12,
-            barWidth: 22
-          }) : null
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        children: jsxRuntimeExports.jsx(MostVisitedSitesSection, {
-          sites: visitedSites,
-          isMobile: true
-        })
-      }), jsxRuntimeExports.jsx(MobileHistorySection, {
-        deviceId: props.deviceId,
-        date: dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD')
-      })]
-    })
-  });
 };
 
 /*! js-cookie v3.0.5 | MIT */
@@ -106082,8 +101085,8 @@ function init (converter, defaultAttributes) {
 var api = init(defaultConverter, { path: '/' });
 
 if (window.location.hostname !== 'localhost' && !process.env.AUTH_URL) throw new Error('You must set AUTH_URL (Endpoint to call to login your users) in your .env');
-var BACKEND_URL = window.location.hostname === 'localhost' ? 'http://localhost:8000' : 'https://api.astrosafe.co';
-var AUTH_URL = window.location.hostname === 'localhost' ? 'http://localhost:8000' : process.env.AUTH_URL;
+var BACKEND_URL = window.location.hostname === 'localhost' ? 'https://localhost:8000' : 'https://api.astrosafe.co';
+var AUTH_URL = window.location.hostname === 'localhost' ? 'https://localhost:8000' : 'https://auth.astrosafe.co';
 var getAbsoluteUrl = function getAbsoluteUrl(url) {
   return "https://".concat(url);
 };
@@ -107746,14 +102749,14 @@ function ActionPopup(props) {
   });
 }
 
-var _path$k;
-function _extends$x() { return _extends$x = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$x.apply(null, arguments); }
+var _path$e;
+function _extends$m() { return _extends$m = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$m.apply(null, arguments); }
 var SvgMoreIcon = function SvgMoreIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$x({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$m({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$k || (_path$k = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$e || (_path$e = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     d: "M3 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6M16 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6M32 15a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
   })));
@@ -107812,8 +102815,8 @@ function UrsorActionButton(props) {
   });
 }
 
-function ownKeys$u(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$t(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$u(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$u(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$c(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$b(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$c(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$c(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var TitleRowItemCore = function TitleRowItemCore(props) {
   var _props$options2;
   var _useState = useState(false),
@@ -107918,7 +102921,7 @@ var TitleRow = function TitleRow(props) {
             opacity: 0.7
           }
         } : undefined,
-        children: [jsxRuntimeExports.jsx(TitleRowItemCore, _objectSpread$t(_objectSpread$t({}, x), {}, {
+        children: [jsxRuntimeExports.jsx(TitleRowItemCore, _objectSpread$b(_objectSpread$b({}, x), {}, {
           last: i === ((_props$items$length2 = (_props$items2 = props.items) === null || _props$items2 === void 0 ? void 0 : _props$items2.length) !== null && _props$items$length2 !== void 0 ? _props$items$length2 : 0) - 1,
           isMobile: props.isMobile
         })), !isLast ? jsxRuntimeExports.jsx(Typography$1, {
@@ -107932,14 +102935,14 @@ var TitleRow = function TitleRow(props) {
   });
 };
 
-var _path$j;
-function _extends$w() { return _extends$w = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$w.apply(null, arguments); }
+var _path$d;
+function _extends$l() { return _extends$l = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$l.apply(null, arguments); }
 var SvgBookIcon = function SvgBookIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$w({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$l({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 28 28"
-  }, props), _path$j || (_path$j = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$d || (_path$d = /*#__PURE__*/React$1.createElement("path", {
     fill: "#7B61FF",
     fillRule: "evenodd",
     d: "M0 3.063C0 2.338.588 1.75 1.313 1.75h7.442a6.55 6.55 0 0 1 5.252 2.627 6.55 6.55 0 0 1 5.252-2.627h7.429c.724 0 1.312.588 1.312 1.313v18.375c0 .724-.588 1.312-1.312 1.312H18.8a3.94 3.94 0 0 0-2.785 1.153l-1.087 1.088a1.31 1.31 0 0 1-1.856 0l-1.087-1.088A3.94 3.94 0 0 0 9.2 22.75H1.313A1.313 1.313 0 0 1 0 21.438zm15.321 5.25a3.94 3.94 0 0 1 3.938-3.938h6.116v15.75H18.8a6.56 6.56 0 0 0-3.485 1.002zM12.69 21.13l.006-8.879-.003-3.942a3.937 3.937 0 0 0-3.938-3.934h-6.13v15.75H9.2c1.245 0 2.452.353 3.49 1.005",
@@ -107947,14 +102950,14 @@ var SvgBookIcon = function SvgBookIcon(props) {
   })));
 };
 
-var _path$i;
-function _extends$v() { return _extends$v = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$v.apply(null, arguments); }
+var _path$c;
+function _extends$k() { return _extends$k = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$k.apply(null, arguments); }
 var SvgPeopleIcon = function SvgPeopleIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$v({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$k({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$i || (_path$i = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$c || (_path$c = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M11 7.001a4 4 0 1 0 0 8 4 4 0 0 0 0-8m-7 4A7 7 0 1 1 15.796 16.1a11.01 11.01 0 0 1 6.068 8.168 1.5 1.5 0 1 1-2.964.47 8.003 8.003 0 0 0-15.8 0 1.502 1.502 0 0 1-2.942.113 1.5 1.5 0 0 1-.022-.585 11.02 11.02 0 0 1 6.068-8.164A6.98 6.98 0 0 1 4 11.001m18-3a1.5 1.5 0 1 0 0 3 3 3 0 0 1 1.332 5.688 1.5 1.5 0 0 0-.832 1.344v.704a1.5 1.5 0 0 0 1.148 1.46c2.4.578 4.324 2.4 5.044 4.744a1.501 1.501 0 0 0 2.762.267 1.5 1.5 0 0 0 .106-1.147 10.02 10.02 0 0 0-5.12-6.024A6 6 0 0 0 22 8.001",
@@ -107962,14 +102965,14 @@ var SvgPeopleIcon = function SvgPeopleIcon(props) {
   })));
 };
 
-var _path$h;
-function _extends$u() { return _extends$u = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$u.apply(null, arguments); }
+var _path$b;
+function _extends$j() { return _extends$j = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$j.apply(null, arguments); }
 var SvgFilterIcon = function SvgFilterIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$u({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$j({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$h || (_path$h = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$b || (_path$b = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M1.5 6a1.5 1.5 0 0 0 0 3h29a1.5 1.5 0 0 0 0-3zM6 15.5A1.5 1.5 0 0 1 7.5 14h17a1.5 1.5 0 0 1 0 3h-17A1.5 1.5 0 0 1 6 15.5m6 8a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 1 0 3h-5a1.5 1.5 0 0 1-1.5-1.5",
@@ -107977,21 +102980,21 @@ var SvgFilterIcon = function SvgFilterIcon(props) {
   })));
 };
 
-var _g$c, _defs$c;
-function _extends$t() { return _extends$t = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$t.apply(null, arguments); }
+var _g$7, _defs$7;
+function _extends$i() { return _extends$i = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$i.apply(null, arguments); }
 var SvgPhoneIcon = function SvgPhoneIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$t({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$i({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 8 8"
-  }, props), _g$c || (_g$c = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$7 || (_g$7 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#PhoneIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M1.875 0A.875.875 0 0 0 1 .875v6.25c0 .483.392.875.875.875h4.25A.875.875 0 0 0 7 7.125V.875A.875.875 0 0 0 6.125 0zM1.75.875c0-.069.056-.125.125-.125h4.25c.069 0 .125.056.125.125v6.25a.125.125 0 0 1-.125.125h-4.25a.125.125 0 0 1-.125-.125zM4 6.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1",
     clipRule: "evenodd"
-  }))), _defs$c || (_defs$c = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$7 || (_defs$7 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "PhoneIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -108010,399 +103013,9 @@ function LabeledInputField(props) {
   });
 }
 
-var _path$g;
-function _extends$s() { return _extends$s = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$s.apply(null, arguments); }
-var SvgDownloadIcon = function SvgDownloadIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$s({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 32 32"
-  }, props), _path$g || (_path$g = /*#__PURE__*/React$1.createElement("path", {
-    fill: "#0D2839",
-    fillRule: "evenodd",
-    d: "M14.94 21.561a1.5 1.5 0 0 0 2.12 0l7.5-7.5a1.5 1.5 0 0 0-2.12-2.121l-4.94 4.94V3.5a1.5 1.5 0 0 0-3 0v13.38l-4.94-4.94a1.5 1.5 0 1 0-2.12 2.121zm-7.44 4.44a1.5 1.5 0 0 0 0 3h17a1.5 1.5 0 0 0 0-3z",
-    clipRule: "evenodd"
-  })));
-};
-
-var PLATFORMS = [{
-  name: 'iOS',
-  logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/appleLogo.png',
-  url: 'https://test.com'
-}, {
-  name: 'Mac',
-  logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/appleLogo.png',
-  url: 'https://test.com'
-}, {
-  name: 'Android',
-  logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/androidLogo.png',
-  url: 'https://test.com'
-}, {
-  name: 'Chrome extension',
-  logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/chromeLogo.png',
-  url: 'https://test.com'
-}];
-var DownloadCard = function DownloadCard(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    width: "200px",
-    height: "207px",
-    bgcolor: PALETTE.secondary.grey[1],
-    borderRadius: "12px",
-    p: "12px",
-    boxSizing: "border-box",
-    justifyContent: "space-between",
-    alignItems: "center",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      borderRadius: "8px",
-      bgcolor: "rgb(255,255,255)",
-      width: "100%",
-      alignItems: "center",
-      children: jsxRuntimeExports.jsx("img", {
-        src: props.imageUrl,
-        height: 83,
-        width: 83,
-        alt: "platform logo"
-      })
-    }), jsxRuntimeExports.jsx(Typography$1, {
-      bold: true,
-      variant: "medium",
-      children: props.name
-    }), jsxRuntimeExports.jsx(UrsorButton, {
-      size: "small",
-      endIcon: SvgDownloadIcon,
-      iconSize: 16,
-      dark: true,
-      variant: "tertiary",
-      width: "123px",
-      children: "Download"
-    })]
-  });
-};
-var DownloadDialog = function DownloadDialog(props) {
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Download Browser App",
-    subtitle: ['Download the version of AstroSafe that matches', "your kid's Device."],
-    width: "926px",
-    height: "510px",
-    isMobile: props.isMobile,
-    scrollable: true,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      spacing: props.isMobile ? '12px' : '20px',
-      direction: props.isMobile ? 'column' : 'row',
-      alignItems: "center",
-      flex: 1,
-      children: PLATFORMS.map(function (p) {
-        return jsxRuntimeExports.jsx(DownloadCard, {
-          imageUrl: p.logoUrl,
-          name: p.name
-        }, p.name);
-      })
-    })
-  });
-};
-
 var _templateObject$2;
 var PULSE_AMPLITUDE = '12px';
-var pulse = keyframes(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\n  from {\n    transform: translateY(-", ")\n  }\n  to {\n    transform: translateY(", ")\n  }\n"])), PULSE_AMPLITUDE, PULSE_AMPLITUDE);
-var FloatingIntroCards = function FloatingIntroCards(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    position: "relative",
-    width: "100%",
-    children: [props.fadedEdges ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        position: "absolute",
-        right: 0,
-        top: 0,
-        width: "230px",
-        height: "100%",
-        sx: {
-          background: "linear-gradient(-90deg, ".concat(PALETTE.secondary.grey[1], ", ").concat(alpha$1(PALETTE.secondary.grey[1], 0), ")")
-        },
-        zIndex: 2
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        position: "absolute",
-        left: 0,
-        top: 0,
-        width: "230px",
-        height: "100%",
-        sx: {
-          background: "linear-gradient(90deg, ".concat(PALETTE.secondary.grey[1], ", ").concat(alpha$1(PALETTE.secondary.grey[1], 0), ")")
-        },
-        zIndex: 2
-      })]
-    }) : null, jsxRuntimeExports.jsx(Stack$1, {
-      left: 0,
-      position: "absolute",
-      width: "100%",
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        position: "relative",
-        width: "100%",
-        height: "100px",
-        children: jsxRuntimeExports.jsx("img", {
-          src: "https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png",
-          //style={{ objectFit: "cover" }}
-          alt: "wave"
-        })
-      })
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      width: "100%",
-      spacing: props.spacing,
-      justifyContent: "center",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          transform: "translateY(-".concat(PULSE_AMPLITUDE + 51, ")"),
-          animation: "".concat(pulse, " 5s ease-in-out"),
-          animationDirection: 'alternate',
-          animationIterationCount: 'infinite'
-        },
-        children: jsxRuntimeExports.jsx(InstructionCard, {
-          stepIndex: 1,
-          text: "Download the AstroSafe App on child's Device",
-          grey: props.greyCards,
-          children: jsxRuntimeExports.jsx(UrsorButton, {
-            onClick: props.onOpen,
-            size: "small",
-            variant: "secondary",
-            endIcon: SvgChevronRight,
-            iconSize: 16,
-            children: "Download options"
-          })
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          transform: "translateY(-".concat(PULSE_AMPLITUDE, ")"),
-          animation: "".concat(pulse, " 5s ease-in-out"),
-          animationDirection: 'alternate',
-          animationDelay: '1.5s',
-          animationIterationCount: 'infinite'
-        },
-        children: jsxRuntimeExports.jsx(InstructionCard, {
-          stepIndex: 2,
-          text: 'Enter join code to connect.',
-          grey: props.greyCards,
-          children: jsxRuntimeExports.jsx(Typography$1, {
-            variant: "h3",
-            color: PALETTE.secondary.purple[2],
-            sx: {
-              transform: 'translateY(-3px)'
-            },
-            children: "700-008"
-          })
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          transform: "translateY(-".concat(PULSE_AMPLITUDE + 40, ")"),
-          animation: "".concat(pulse, " 5s ease-in-out"),
-          animationDirection: 'alternate',
-          animationDelay: '3s',
-          animationIterationCount: 'infinite'
-        },
-        children: jsxRuntimeExports.jsx(InstructionCard, {
-          stepIndex: 3,
-          text: "Delete all other Browsers on Device",
-          grey: props.greyCards
-        })
-      })]
-    })]
-  });
-};
-var MobileIntroCards = function MobileIntroCards(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    position: "relative",
-    spacing: "16px",
-    alignItems: "center",
-    children: [jsxRuntimeExports.jsx(InstructionCard, {
-      stepIndex: 1,
-      text: "Download the AstroSafe App on child's Device",
-      grey: props.greyCards,
-      children: jsxRuntimeExports.jsx(UrsorButton, {
-        onClick: props.onOpen,
-        size: "small",
-        variant: "secondary",
-        endIcon: SvgChevronRight,
-        iconSize: 16,
-        children: "Download options"
-      })
-    }), jsxRuntimeExports.jsx(InstructionCard, {
-      stepIndex: 2,
-      text: 'Enter join code to connect.',
-      grey: props.greyCards,
-      children: jsxRuntimeExports.jsx(Typography$1, {
-        variant: "h3",
-        color: PALETTE.secondary.purple[2],
-        sx: {
-          transform: 'translateY(-3px)'
-        },
-        children: "700-008"
-      })
-    }), jsxRuntimeExports.jsx(InstructionCard, {
-      stepIndex: 3,
-      text: "Delete all other Browsers on Device",
-      grey: props.greyCards
-    })]
-  });
-};
-var InstructionCard = function InstructionCard(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    width: "260px",
-    borderRadius: "12px",
-    bgcolor: props.grey ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)',
-    alignItems: "center",
-    p: "12px",
-    boxSizing: "border-box",
-    justifyContent: "space-between",
-    // sx={{
-    //   cursor: "pointer",
-    //   "&:hover": { background: PALETTE.secondary.grey[2] },
-    //   transition: "0.2s",
-    // }}
-    spacing: "5px",
-    children: [jsxRuntimeExports.jsx(Typography$1, {
-      variant: "small",
-      bold: true,
-      color: PALETTE.secondary.grey[3],
-      children: "Step ".concat(props.stepIndex)
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      width: "90%",
-      children: jsxRuntimeExports.jsx(Typography$1, {
-        variant: "medium",
-        bold: true,
-        sx: {
-          textAlign: 'center',
-          lineHeight: '25px'
-        },
-        children: props.text
-      })
-    }), props.children ? jsxRuntimeExports.jsx(Stack$1, {
-      pt: "6px",
-      children: props.children
-    }) : null]
-  });
-};
-var DeviceInstructionsView = function DeviceInstructionsView() {
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    downloadDialogOpen = _useState2[0],
-    setDownloadDialogOpen = _useState2[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      height: "100%",
-      position: "relative",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "8px",
-        alignItems: "center",
-        sx: {
-          transform: 'translateY(-160px)'
-        },
-        children: [jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            background: "linear-gradient(".concat(PALETTE.secondary.purple[2], ", ").concat(PALETTE.secondary.blue[2], ")"),
-            '-webkit-text-fill-color': 'transparent',
-            backgroundClip: 'text',
-            '-webkit-background-clip': 'text'
-          },
-          children: jsxRuntimeExports.jsx(Typography$1, {
-            variant: "h4",
-            children: "Welcome to AstroSafe"
-          })
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          width: "444px",
-          children: jsxRuntimeExports.jsx(Typography$1, {
-            variant: "medium",
-            bold: true,
-            sx: {
-              textAlign: 'center'
-            },
-            color: PALETTE.secondary.grey[4],
-            children: "Connect your child or student's device to start exploring the internet with them safely!"
-          })
-        })]
-      }), jsxRuntimeExports.jsx(FloatingIntroCards, {
-        onOpen: function onOpen() {
-          return setDownloadDialogOpen(true);
-        },
-        spacing: "120px",
-        fadedEdges: true
-      })]
-    }), jsxRuntimeExports.jsx(DownloadDialog, {
-      open: downloadDialogOpen,
-      onClose: function onClose() {
-        return setDownloadDialogOpen(false);
-      }
-    })]
-  });
-};
-
-var DeviceConnectDialog = function DeviceConnectDialog(props) {
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Connect a Device",
-    subtitle: ["Connect your child's or student's Device to start", 'exploring the internet with them safely!'],
-    width: "926px",
-    height: "510px",
-    paddingX: props.isMobile ? undefined : '0px',
-    xButtonRight: props.isMobile ? undefined : '34px',
-    isMobile: props.isMobile,
-    scrollable: true,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      justifyContent: "center",
-      width: "100%",
-      height: "100%",
-      children: props.isMobile ? jsxRuntimeExports.jsx(MobileIntroCards, {
-        onOpen: props.onOpen,
-        greyCards: true
-      }) : jsxRuntimeExports.jsx(FloatingIntroCards, {
-        onOpen: props.onOpen,
-        spacing: "36px",
-        greyCards: true
-      })
-    })
-  });
-};
-
-var _g$b, _defs$b;
-function _extends$r() { return _extends$r = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$r.apply(null, arguments); }
-var SvgVerifiedIcon = function SvgVerifiedIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$r({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 20 20"
-  }, props), _g$b || (_g$b = /*#__PURE__*/React$1.createElement("g", {
-    clipPath: "url(#VerifiedIcon_svg__a)"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#2E2657",
-    fillRule: "evenodd",
-    d: "M11.981.65a3.35 3.35 0 0 0-3.962 0l-1.16.85c-.191.14-.414.233-.648.269l-1.422.218a3.35 3.35 0 0 0-2.802 2.802l-.218 1.422a1.5 1.5 0 0 1-.269.648L.65 8.02a3.35 3.35 0 0 0 0 3.962l.85 1.16c.14.191.233.414.269.648l.218 1.422a3.35 3.35 0 0 0 2.802 2.802l1.422.218c.234.036.457.128.648.269l1.16.85a3.35 3.35 0 0 0 3.962 0l1.16-.85c.191-.14.414-.233.648-.269l1.422-.218a3.35 3.35 0 0 0 2.802-2.802l.218-1.422c.036-.234.128-.457.269-.648l.85-1.16a3.35 3.35 0 0 0 0-3.962l-.85-1.16a1.5 1.5 0 0 1-.269-.648l-.218-1.422a3.35 3.35 0 0 0-2.802-2.802l-1.422-.218a1.5 1.5 0 0 1-.648-.269zM9.128 2.16a1.47 1.47 0 0 1 1.744 0l1.16.852c.434.32.94.529 1.473.61l1.422.218a1.47 1.47 0 0 1 1.233 1.233l.218 1.422c.081.533.29 1.039.61 1.474l.851 1.16c.381.518.381 1.224 0 1.743l-.85 1.16c-.32.434-.53.94-.611 1.473l-.218 1.422a1.47 1.47 0 0 1-1.233 1.233l-1.422.218a3.35 3.35 0 0 0-1.474.61l-1.16.851c-.518.381-1.224.381-1.743 0l-1.16-.85a3.35 3.35 0 0 0-1.473-.611l-1.422-.218a1.47 1.47 0 0 1-1.233-1.233l-.218-1.422a3.35 3.35 0 0 0-.61-1.474l-.851-1.16a1.47 1.47 0 0 1 0-1.743l.85-1.16c.32-.434.53-.94.611-1.473l.218-1.422A1.47 1.47 0 0 1 5.073 3.84l1.422-.218a3.35 3.35 0 0 0 1.474-.61zM14.1 8.476a.938.938 0 0 0-1.325-1.325L8.75 11.174 7.225 9.65A.937.937 0 1 0 5.9 10.975l2.187 2.188a.94.94 0 0 0 1.326 0z",
-    clipRule: "evenodd"
-  }))), _defs$b || (_defs$b = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
-    id: "VerifiedIcon_svg__a"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#fff",
-    d: "M0 0h20v20H0z"
-  })))));
-};
-
-var _path$f;
-function _extends$q() { return _extends$q = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$q.apply(null, arguments); }
-var SvgCheckIcon = function SvgCheckIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$q({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 32 32"
-  }, props), _path$f || (_path$f = /*#__PURE__*/React$1.createElement("path", {
-    fill: "#0D2839",
-    fillRule: "evenodd",
-    d: "M27.562 8.44a1.5 1.5 0 0 1 0 2.12l-14.5 14.5a1.5 1.5 0 0 1-2.12 0l-6.5-6.5a1.5 1.5 0 0 1 2.12-2.12l5.44 5.44 13.44-13.44a1.5 1.5 0 0 1 2.12 0",
-    clipRule: "evenodd"
-  })));
-};
+keyframes(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\n  from {\n    transform: translateY(-", ")\n  }\n  to {\n    transform: translateY(", ")\n  }\n"])), PULSE_AMPLITUDE, PULSE_AMPLITUDE);
 
 var AstroSwitch = function AstroSwitch(props) {
   var _useState = useState(false),
@@ -108494,14 +103107,14 @@ var AstroSwitch = function AstroSwitch(props) {
   }
 }];
 
-var _path$e;
-function _extends$p() { return _extends$p = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$p.apply(null, arguments); }
+var _path$a;
+function _extends$h() { return _extends$h = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$h.apply(null, arguments); }
 var SvgPencil = function SvgPencil(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$p({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$h({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$e || (_path$e = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$a || (_path$a = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M22.025 2.853a3.5 3.5 0 0 1 4.95 0l2.171 2.171a3.5 3.5 0 0 1 0 4.95l-17.219 17.22a3.5 3.5 0 0 1-1.513.89L3.912 29.94a1.5 1.5 0 0 1-1.854-1.854l1.857-6.502a3.5 3.5 0 0 1 .89-1.513zm2.829 2.121a.5.5 0 0 0-.707 0L21.62 7.5l2.88 2.879 2.524-2.525a.5.5 0 0 0 0-.707zM22.379 12.5 19.5 9.621 6.927 22.193a.5.5 0 0 0-.127.217l-1.116 3.905L9.59 25.2a.5.5 0 0 0 .216-.127z",
@@ -108509,182 +103122,10 @@ var SvgPencil = function SvgPencil(props) {
   })));
 };
 
-var _path$d;
-function _extends$o() { return _extends$o = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$o.apply(null, arguments); }
-var SvgArrowDownIcon = function SvgArrowDownIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$o({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 16 17"
-  }, props), _path$d || (_path$d = /*#__PURE__*/React$1.createElement("path", {
-    fill: "#0D2839",
-    fillRule: "evenodd",
-    d: "M13.03 8.72a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L3.47 9.78a.75.75 0 0 1 1.06-1.06l2.97 2.97V4.25a.75.75 0 0 1 1.5 0v7.44l2.97-2.97a.75.75 0 0 1 1.06 0",
-    clipRule: "evenodd"
-  })));
-};
-
-function NewActivityTag(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    height: '20px',
-    width: "100%",
-    maxWidth: "fit-content",
-    direction: "row",
-    spacing: '5px',
-    borderRadius: '10px',
-    alignItems: "center",
-    bgcolor: PALETTE.system.orange,
-    py: "7px",
-    px: "11px",
-    boxSizing: "border-box",
-    children: [jsxRuntimeExports.jsx(Box$1, {
-      borderRadius: "100%",
-      bgcolor: "rgb(255,255,255)",
-      height: "7.5px",
-      width: "7.5px"
-    }), jsxRuntimeExports.jsx(Typography$1, {
-      variant: 'tiny',
-      bold: true,
-      sx: {
-        lineHeight: '100%'
-      },
-      color: "rgb(255,255,255)",
-      noWrap: true,
-      children: _.isNumber(props.n) ? "".concat(props.n, " New") : 'New'
-    })]
-  });
-}
-
-function ownKeys$t(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$s(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$t(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$t(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var ROW_HEIGHT$1 = '45px';
-var X_PADDING = '20px';
-var LIST_MAX_HEIGHT = '400px';
-function UrsorDropdownListRow(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    width: "100%",
-    direction: "row",
-    spacing: "7px",
-    height: ROW_HEIGHT$1,
-    px: X_PADDING,
-    // onClick={() => props.callback?.()}
-    alignItems: "center",
-    sx: {
-      cursor: 'pointer'
-    },
-    bgcolor: props.hovering ? PALETTE.secondary.grey[1] : 'rgba(255,255,255)',
-    children: [props.icon ? props.icon : null, jsxRuntimeExports.jsxs(Stack$1, {
-      width: "100%",
-      minWidth: 0,
-      children: [jsxRuntimeExports.jsx(Typography$1, {
-        noWrap: true,
-        variant: "small",
-        sx: {
-          lineHeight: '100%'
-        },
-        color: props.hovering ? PALETTE.secondary.purple[2] : PALETTE.font.dark,
-        children: props.value
-      }), props.secondaryValue ? jsxRuntimeExports.jsx(Typography$1, {
-        noWrap: true,
-        variant: "tiny",
-        color: PALETTE.secondary.grey[3],
-        children: props.secondaryValue
-      }) : null]
-    })]
-  });
-}
-function UrsorDropdownList(props) {
-  var _useState = useState(undefined),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    hoverRowId = _useState2[0],
-    setHoverRowId = _useState2[1];
-  return jsxRuntimeExports.jsx(Stack$1, {
-    width: "100%",
-    maxHeight: LIST_MAX_HEIGHT,
-    children: props.rows.map(function (row) {
-      return jsxRuntimeExports.jsx(Box$1, {
-        onClick: row.callback,
-        onMouseEnter: function onMouseEnter() {
-          return setHoverRowId(row.id);
-        },
-        onMouseLeave: function onMouseLeave() {
-          return setHoverRowId(function (prev) {
-            return prev === row.id ? undefined : prev;
-          });
-        },
-        children: jsxRuntimeExports.jsx(UrsorDropdownListRow, _objectSpread$s(_objectSpread$s({}, row), {}, {
-          hovering: row.id === hoverRowId
-        }))
-      }, row.id);
-    })
-  });
-}
-function UrsorDropdownButton(props) {
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    popupOpen = _useState4[0],
-    setPopupOpen = _useState4[1];
-  return jsxRuntimeExports.jsx(UrsorPopover, {
-    open: popupOpen,
-    content: jsxRuntimeExports.jsx(UrsorDropdownList, {
-      rows: props.rows
-    }),
-    closeCallback: function closeCallback() {
-      return setPopupOpen(false);
-    },
-    floatButton: "duplicate",
-    // animation={`${fadingOut ? fadeOut : fadeIn} ${
-    //   FADE_DURATION / 1000
-    // }s ease-out forwards`}
-    noPadding: true,
-    children: jsxRuntimeExports.jsx(Box$1, {
-      sx: {
-        '&:hover': {
-          opacity: 0.5
-        },
-        transition: '0.2s'
-      },
-      onClick: function onClick() {
-        return setPopupOpen(true);
-      },
-      children: props.children
-    })
-  });
-}
-
-function ownKeys$s(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$r(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$s(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$s(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var GLASS_WHITE_STROKE = 'rgba(251, 251, 251, 0.35)';
-var ROW_HEIGHT = '55px';
 var BORDER_THICKNESS = '1.5px';
 var BORDER = "".concat(BORDER_THICKNESS, " solid ").concat(PALETTE.secondary.grey[2]);
-var ROUNDING = '12px';
 var BODY_CELL_Y_PADDING = '13px';
-var CELL_BUTTON_SIZE = '16px';
-var NEW_TAG_DURATION = 8;
-var fadedRowStyle = {
-  opacity: 0.7,
-  transition: '0.5s'
-};
-var disabledRowItemStyle = {
-  opacity: 0.3
-};
-var headerRowStyle = {
-  // "& th": {
-  //   //paddingTop: "0px",
-  //   //paddingBottom: "15px",
-  //   border: BORDER,
-  // },
-  // "& th:first-of-type": {
-  //   borderTopLeftRadius: ROUNDING,
-  // },
-  // "& th:last-of-type": {
-  //   borderTopRightRadius: ROUNDING,
-  // },
-  position: 'relative',
-  zIndex: 0
-};
-var bodyCellStyle = {
+({
   //overflow: "visible",
   '& td': {
     maxWidth: '450px',
@@ -108728,378 +103169,7 @@ var bodyCellStyle = {
   //     borderBottom: 0,
   //   },
   // },
-};
-var Checkbox = function Checkbox(props) {
-  return jsxRuntimeExports.jsx(Stack, {
-    border: "2px solid ".concat(PALETTE.font.dark),
-    borderRadius: "3px",
-    height: "18px",
-    width: "18px",
-    sx: {
-      svg: {
-        path: {
-          fill: 'rgb(0,0,0)'
-        }
-      }
-    },
-    justifyContent: "center",
-    alignItems: "center",
-    children: props.checked ? jsxRuntimeExports.jsx(Box, {
-      bgcolor: "rgb(0,0,0)",
-      height: "7px",
-      width: "7px",
-      borderRadius: "100%"
-    }) : null
-  });
-};
-var UrsorTableBodyCell = function UrsorTableBodyCell(props) {
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    newTagOn = _useState2[0],
-    setNewTagOn = _useState2[1];
-  React__default$1.useEffect(function () {
-    if (props.newTagDatetime && -dayjs(props.newTagDatetime).diff(dayjs(), 'seconds') < NEW_TAG_DURATION) {
-      setNewTagOn(true);
-      setTimeout(function () {
-        return setNewTagOn(false);
-      }, NEW_TAG_DURATION * 1000);
-    }
-  }, [props.newTagDatetime]);
-  return jsxRuntimeExports.jsx(TableCell, {
-    width: props.columnName === 'title' ? props.titleColumnWidth || '37%' : props.columnName === 'domain' || props.columnName === 'url' ? '23%' : props.columnName === 'accessLevel' ? '40px' : undefined,
-    sx: {
-      fontFamily: 'unset'
-    },
-    children: jsxRuntimeExports.jsx(Stack, {
-      flex: 1,
-      sx: {
-        display: 'flex',
-        position: 'relative',
-        svg: {
-          path: {
-            fill: PALETTE.font.dark
-          }
-        }
-      },
-      justifyContent: "flex-end",
-      overflow: typeof props.item === 'string' ? 'hidden' : undefined,
-      children: jsxRuntimeExports.jsxs(Stack, {
-        direction: "row",
-        spacing: "16px",
-        position: "relative",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-        minWidth: props.columnName === 'title' ? '200px' : undefined,
-        children: [jsxRuntimeExports.jsxs(Stack, {
-          width: "100%",
-          direction: "row",
-          spacing: "10px",
-          alignItems: "center",
-          // sx={{
-          //   ...(props.columnName === "name"
-          //     ? { maxWidth: 0, minWidth: "100%" }
-          //     : {}),
-          // }}
-          onClick: props.onClick,
-          children: [props.checkbox ? jsxRuntimeExports.jsx(Box, {
-            onClick: props.checkbox.callback,
-            sx: {
-              //width: props.checkbox.checked || props.rowHovering ? "20px" : 0,
-              opacity: props.checkbox.checked || props.rowHovering ? 1 : 0,
-              '&:hover': {
-                opacity: 0.5
-              },
-              transition: '0.2s'
-            },
-            children: jsxRuntimeExports.jsx(Checkbox, {
-              checked: props.checkbox.checked
-            })
-          }) : null, jsxRuntimeExports.jsxs(Stack, {
-            minWidth: "100%",
-            maxWidth: 0,
-            direction: "row",
-            spacing: "10px",
-            alignItems: "center",
-            overflow: "hidden",
-            children: [props.avatar, typeof props.item === 'string' || typeof props.item === 'number' ? jsxRuntimeExports.jsx(Stack, {
-              width: "100%",
-              sx: _objectSpread$r({}, props.disabled ? disabledRowItemStyle : {}),
-              children: jsxRuntimeExports.jsx("a", {
-                target: "_blank",
-                href: props.url ? props.url : undefined,
-                style: {
-                  textDecoration: 'none',
-                  width: '100%'
-                },
-                children: jsxRuntimeExports.jsx(Typography$1, {
-                  sx: {
-                    opacity: props.faded ? 0.4 : 1,
-                    maxWidth: props.columnName === 'title' ? 0 //</a>"90%"
-                    : props.columnName === 'domain' || props.columnName === 'url' ? '200px' : 0,
-                    minWidth: '100%'
-                  },
-                  noWrap: true,
-                  children: props.item
-                })
-              })
-            }) : props.item, newTagOn ? jsxRuntimeExports.jsx(NewActivityTag, {}) : null]
-          })]
-        }), props.button || props.listButton || props.actionButtonItems ? jsxRuntimeExports.jsxs(Box, {
-          width: "fit-content",
-          children: [props.button ? jsxRuntimeExports.jsx(Stack, {
-            onClick: props.button.callback,
-            sx: {
-              opacity: props.rowHovering ? 1 : 0,
-              '&:hover': {
-                opacity: 0.5
-              },
-              transition: '0.2s'
-            },
-            children: jsxRuntimeExports.jsx(props.button.icon, {
-              height: "20px",
-              width: "20px"
-            })
-          }) : null, props.listButton && props.listButton.rows.length > 1 ? jsxRuntimeExports.jsxs(Stack, {
-            direction: "row",
-            spacing: "4px",
-            sx: {
-              opacity: props.rowHovering ? 1 : 0
-            },
-            children: [props.listButton.showCount && props.listButton.rows.length > 1 ? jsxRuntimeExports.jsx(Typography$1, {
-              variant: "medium",
-              faded: true,
-              children: "+".concat(props.listButton.rows.length - 1)
-            }) : null, jsxRuntimeExports.jsx(UrsorDropdownButton, {
-              rows: props.listButton.rows,
-              children: jsxRuntimeExports.jsx(props.listButton.icon, {
-                height: CELL_BUTTON_SIZE,
-                width: CELL_BUTTON_SIZE
-              })
-            })]
-          }) : null, props.actionButtonItems ? jsxRuntimeExports.jsx(Stack, {
-            width: "16px",
-            sx: {
-              opacity: props.rowHovering ? 1 : 0
-            },
-            children: jsxRuntimeExports.jsx(UrsorActionButton, {
-              actions: props.actionButtonItems
-            })
-          }) : null]
-        }) : null, props.extraElement]
-      })
-    })
-  }, props.columnName);
-};
-function UrsorTable(props) {
-  var _useState3 = useState(null),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    hoveredRow = _useState4[0],
-    setHoveredRow = _useState4[1];
-  // const [sortedColumn, setSortedColumn] = useState<string | undefined>(
-  //   props.defaultSortedByColumn ||
-  //     props.columns.find((col) => col.sortable)?.name
-  // );
-  // const [sortDirection, setSortDirection] = useState<"asc" | "desc">(
-  //   props.defaultSortedAscending ? "asc" : "desc"
-  // );
-  // const [sortedRows, setSortedRows] = useState<IUrsorTableRow<T>[]>([]);
-  // useEffect(() => {
-  //   if (sortedColumn) {
-  //     const sorted = _.sortBy(props.rows, (row) =>
-  //       row.items[sortedColumn].toLowerCase()
-  //     );
-  //     setSortedRows(
-  //       sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted
-  //     );
-  //   } else {
-  //     setSortedRows(props.rows);
-  //   }
-  // }, [props.rows, sortDirection, sortedColumn]);
-  var getRowStyle = function getRowStyle(index, clickable) {
-    var highlightStyle = hoveredRow === null || index === hoveredRow ? null : fadedRowStyle;
-    return _objectSpread$r(_objectSpread$r({
-      height: ROW_HEIGHT,
-      //background: "#1A415A",
-      transition: '0.2s'
-    }, highlightStyle), {}, {
-      position: 'relative',
-      cursor: 'pointer',
-      overflow: 'visible'
-    });
-  };
-  var getHeaderCell = function getHeaderCell(displayName, fitBodyContent, sort, selectAll, button
-  // sorted?: "asc" | "desc",
-  // sortCallback?: () => void
-  ) {
-    //@ts-ignore
-    // const [hovering, setHovering] = useState<boolean>(false);
-    return jsxRuntimeExports.jsx(TableCell, {
-      sx: {
-        background: props.noHeaderGradient ? undefined : "linear-gradient(".concat(PALETTE.secondary.grey[1], ", ").concat(alpha$1(PALETTE.secondary.grey[1], 0.5), ", ").concat(alpha$1(PALETTE.secondary.grey[1], 0), ")"),
-        width: 'auto',
-        fontFamily: 'unset'
-      },
-      children: jsxRuntimeExports.jsxs(Stack, {
-        direction: "row",
-        spacing: "10px",
-        alignItems: "center",
-        children: [selectAll ? jsxRuntimeExports.jsx(Box, {
-          sx: {
-            '&:hover': {
-              opacity: 0.75
-            },
-            transition: '0.2s',
-            cursor: 'pointer'
-          },
-          onClick: selectAll.callback,
-          children: jsxRuntimeExports.jsx(Checkbox, {
-            checked: selectAll.ticked
-          })
-        }) : null, jsxRuntimeExports.jsxs(Stack, {
-          direction: "row",
-          spacing: "8px",
-          onClick: sort === null || sort === void 0 ? void 0 : sort.callback,
-          sx: sort ? {
-            '&:hover': {
-              opacity: 0.75
-            },
-            transition: '0.2s',
-            cursor: 'pointer'
-          } : undefined,
-          width: "100%",
-          children: [jsxRuntimeExports.jsx(Typography$1, {
-            variant: "small",
-            bold: true,
-            children: displayName.toUpperCase()
-          }), jsxRuntimeExports.jsx(Stack, {
-            justifyContent: "center",
-            sx: {
-              transform: "rotate(".concat((sort === null || sort === void 0 ? void 0 : sort.direction) === 'asc' ? 180 : 0, "deg)"),
-              transition: '0.2s',
-              svg: {
-                path: {
-                  fill: PALETTE.font.dark
-                }
-              },
-              // opacity: sort ? (sort?.direction || hovering ? 1 : 0.4) : 0,
-              opacity: sort ? sort !== null && sort !== void 0 && sort.direction ? 1 : 0.4 : 0
-            },
-            children: jsxRuntimeExports.jsx(SvgArrowDownIcon, {
-              width: "16px",
-              height: "16px"
-            })
-          })]
-        }), button]
-      })
-    }, displayName);
-  };
-  return jsxRuntimeExports.jsx(TableContainer, {
-    sx: {
-      width: 'unset',
-      zIndex: 0,
-      // needed to prevent the sticky header from being on top of dialogs
-      border: BORDER,
-      borderRadius: '12px'
-    },
-    children: jsxRuntimeExports.jsxs(Table, {
-      sx: {
-        overflow: 'visible'
-      },
-      children: [jsxRuntimeExports.jsx(TableHead, {
-        children: jsxRuntimeExports.jsx(TableRow, {
-          sx: headerRowStyle,
-          children: _toConsumableArray(props.columns.map(function (column) {
-            var _props$checkboxes;
-            return getHeaderCell(column.displayName, false, column.sortable ? {
-              direction: props.selectedSort === column.name ? props.ascending ? 'asc' : 'desc' : undefined,
-              // sortedColumn === column.name
-              //   ? sortDirection
-              //   : undefined,
-              callback: function callback() {
-                props.sortSelectionCallback(column.name);
-                // setSortDirection(
-                //   column.name !== sortedColumn ||
-                //     sortDirection === "asc"
-                //     ? "desc"
-                //     : "asc"
-                // );
-                // setSortedColumn(column.name);
-              }
-            } : undefined, column.selectAll && props.checkboxes ? {
-              ticked: ((_props$checkboxes = props.checkboxes) === null || _props$checkboxes === void 0 ? void 0 : _props$checkboxes.checked.length) === props.rows.length,
-              callback: props.checkboxes.selectAllCallback
-            } : undefined, column.headerButton);
-          }))
-        })
-      }), jsxRuntimeExports.jsx(TableBody, {
-        sx: _objectSpread$r(_objectSpread$r({}, bodyCellStyle), {}, {
-          border: "".concat(BORDER_THICKNESS, " solid ").concat(GLASS_WHITE_STROKE),
-          borderRadius: ROUNDING
-        }),
-        onMouseLeave: function onMouseLeave() {
-          return setHoveredRow(null);
-        },
-        children: props.rows.map(function (row, rowIndex) {
-          return jsxRuntimeExports.jsx(TableRow, {
-            sx: getRowStyle(rowIndex, !!props.rowClickCallback),
-            onMouseOver: function onMouseOver() {
-              return setHoveredRow(rowIndex);
-            },
-            children: [].concat(_toConsumableArray(props.columns.map(function (column) {
-              var _column$itemDisplay, _column$itemDisplay2, _column$getAvatar, _column$faded, _column$getButton, _column$getListButton, _column$getActionButt, _column$getExtraEleme;
-              return jsxRuntimeExports.jsx(UrsorTableBodyCell, {
-                columnName: column.name,
-                item: (_column$itemDisplay = (_column$itemDisplay2 = column.itemDisplay) === null || _column$itemDisplay2 === void 0 ? void 0 : _column$itemDisplay2.call(column, row.items[column.name])) !== null && _column$itemDisplay !== void 0 ? _column$itemDisplay : row.items[column.name],
-                avatar: (_column$getAvatar = column.getAvatar) === null || _column$getAvatar === void 0 ? void 0 : _column$getAvatar.call(column, row.id),
-                disabled: row.disabled,
-                tags: row.tags,
-                rowHovering: hoveredRow === rowIndex,
-                faded: (_column$faded = column.faded) === null || _column$faded === void 0 ? void 0 : _column$faded.call(column, row),
-                url: column.link ? row.url : undefined,
-                button: (_column$getButton = column.getButton) === null || _column$getButton === void 0 ? void 0 : _column$getButton.call(column, row.id),
-                listButton: (_column$getListButton = column.getListButton) === null || _column$getListButton === void 0 ? void 0 : _column$getListButton.call(column, row.items[column.name]),
-                titleColumnWidth: props.titleColumnWidth,
-                actionButtonItems: (_column$getActionButt = column.getActionButtonItems) === null || _column$getActionButt === void 0 ? void 0 : _column$getActionButt.call(column, row.id),
-                checkbox: column.checkbox && props.checkboxes ? {
-                  checked: props.checkboxes.checked.includes(row.id),
-                  callback: function callback() {
-                    return props.checkboxes.callback(row.id);
-                  }
-                } : undefined,
-                extraElement: (_column$getExtraEleme = column.getExtraElement) === null || _column$getExtraEleme === void 0 ? void 0 : _column$getExtraEleme.call(column, row.id, hoveredRow === rowIndex),
-                newTagDatetime: column.newTag ? row.newTagDatetime : undefined,
-                onClick: !column.noRowClick ? function () {
-                  var _props$rowClickCallba;
-                  return (_props$rowClickCallba = props.rowClickCallback) === null || _props$rowClickCallba === void 0 ? void 0 : _props$rowClickCallba.call(props, row.id);
-                } : undefined
-              }, column.name);
-            })), _toConsumableArray(props.getActionButtonItems ? [jsxRuntimeExports.jsx(TableCell, {
-              sx: {
-                width: 0
-              },
-              children: jsxRuntimeExports.jsx(Stack, {
-                alignItems: "flex-end",
-                children: jsxRuntimeExports.jsx(UrsorActionButton, {
-                  background: "transparent",
-                  iconSize: "16px",
-                  size: "16px",
-                  actions: props.getActionButtonItems(row.id)
-                })
-              })
-            }, "actionButton")] : []), _toConsumableArray(props.getEndButton ? [jsxRuntimeExports.jsx(TableCell, {
-              sx: {
-                width: 0,
-                fontFamily: 'unset'
-              },
-              children: props.getEndButton(row.id)
-            }, "endButton")] : []))
-          }, rowIndex);
-        })
-      })]
-    })
-  });
-}
+});
 
 var AstroCard = function AstroCard(props) {
   return jsxRuntimeExports.jsx(Stack$1, {
@@ -109113,21 +103183,21 @@ var AstroCard = function AstroCard(props) {
   });
 };
 
-var _g$a, _defs$a;
-function _extends$n() { return _extends$n = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$n.apply(null, arguments); }
+var _g$6, _defs$6;
+function _extends$g() { return _extends$g = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$g.apply(null, arguments); }
 var SvgGlobeIcon = function SvgGlobeIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$n({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$g({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 28 28"
-  }, props), _g$a || (_g$a = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$6 || (_g$6 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#GlobeIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M2.7 12.688h4.783c.252-3.63 1.515-6.574 2.766-8.66q.312-.518.617-.966C6.514 4.307 3.23 8.078 2.7 12.687m4.783 2.624H2.7c.53 4.61 3.815 8.381 8.166 9.626a21 21 0 0 1-.617-.966c-1.251-2.086-2.514-5.03-2.766-8.66m2.633 0h7.768c-.245 3.038-1.31 5.518-2.385 7.31A17.5 17.5 0 0 1 14 24.749a17.5 17.5 0 0 1-1.5-2.127c-1.074-1.792-2.139-4.272-2.384-7.31m7.769-2.624h-7.77c.246-3.038 1.31-5.519 2.386-7.31A17.5 17.5 0 0 1 14 3.251c.429.519.964 1.234 1.5 2.127 1.074 1.791 2.139 4.272 2.385 7.31m2.632 2.624c-.252 3.63-1.515 6.574-2.767 8.66a20 20 0 0 1-.616.966c4.351-1.245 7.636-5.016 8.166-9.625zm4.783-2.624h-4.783c-.252-3.63-1.515-6.574-2.767-8.66a21 21 0 0 0-.616-.966c4.352 1.245 7.636 5.016 8.166 9.626M14 0C6.268 0 0 6.268 0 14s6.268 14 14 14 14-6.268 14-14S21.732 0 14 0",
     clipRule: "evenodd"
-  }))), _defs$a || (_defs$a = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$6 || (_defs$6 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "GlobeIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -109135,26 +103205,26 @@ var SvgGlobeIcon = function SvgGlobeIcon(props) {
   })))));
 };
 
-var _g$9, _path$c, _defs$9;
-function _extends$m() { return _extends$m = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$m.apply(null, arguments); }
+var _g$5, _path$9, _defs$5;
+function _extends$f() { return _extends$f = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$f.apply(null, arguments); }
 var SvgStrikeThroughGlobeIcon = function SvgStrikeThroughGlobeIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$m({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$f({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 16 16"
-  }, props), _g$9 || (_g$9 = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$5 || (_g$5 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#StrikeThroughGlobeIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     fillRule: "evenodd",
     d: "M4.276 7.25H1.543a6.51 6.51 0 0 1 4.666-5.5q-.174.256-.352.552C5.142 3.494 4.42 5.176 4.276 7.25m-2.733 1.5h2.733q.017.242.044.476L6.296 7.25H5.78a9.64 9.64 0 0 1 1.363-4.177c.306-.51.612-.919.857-1.215a10.154 10.154 0 0 1 1.412 2.277l1.124-1.125a12 12 0 0 0-.745-1.26q.748.215 1.412.593l1.093-1.093A8 8 0 0 0 1.25 12.296l1.093-1.093a6.5 6.5 0 0 1-.8-2.453M14.615 3.5l-1.084 1.084a6.5 6.5 0 0 1 .926 2.666h-2.733a11 11 0 0 0-.083-.782v.006L9.366 8.75h.855a9.64 9.64 0 0 1-1.363 4.177c-.306.51-.612.919-.857 1.215a10.114 10.114 0 0 1-1.514-2.513l-1.134 1.134a12 12 0 0 0 .857 1.487 6.5 6.5 0 0 1-1.625-.719L3.5 14.615A8 8 0 0 0 14.615 3.5m-4.472 10.198c.715-1.192 1.437-2.874 1.581-4.948h2.733a6.51 6.51 0 0 1-4.666 5.5q.175-.256.352-.552",
     clipRule: "evenodd"
-  }))), _path$c || (_path$c = /*#__PURE__*/React$1.createElement("path", {
+  }))), _path$9 || (_path$9 = /*#__PURE__*/React$1.createElement("path", {
     stroke: "#fff",
     strokeLinecap: "round",
     strokeWidth: 1.4,
     d: "M1 15 15 1"
-  })), _defs$9 || (_defs$9 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  })), _defs$5 || (_defs$5 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "StrikeThroughGlobeIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -109162,14 +103232,14 @@ var SvgStrikeThroughGlobeIcon = function SvgStrikeThroughGlobeIcon(props) {
   })))));
 };
 
-var _path$b;
-function _extends$l() { return _extends$l = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$l.apply(null, arguments); }
+var _path$8;
+function _extends$e() { return _extends$e = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$e.apply(null, arguments); }
 var SvgLinkExternalIcon = function SvgLinkExternalIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$l({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$e({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$b || (_path$b = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$8 || (_path$8 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M21.207 2H29.5a.5.5 0 0 1 .5.5v8.293a.5.5 0 0 1-.854.353l-3.085-3.085-7.5 7.5a1.5 1.5 0 0 1-2.122-2.122l7.5-7.5-3.085-3.085A.5.5 0 0 1 21.207 2M7.5 4A3.5 3.5 0 0 0 4 7.5v17A3.5 3.5 0 0 0 7.5 28h17a3.5 3.5 0 0 0 3.5-3.5v-7a1.5 1.5 0 0 0-3 0v7a.5.5 0 0 1-.5.5h-17a.5.5 0 0 1-.5-.5v-17a.5.5 0 0 1 .5-.5h7a1.5 1.5 0 0 0 0-3z",
@@ -109585,7 +103655,7 @@ var getUserInfo = /*#__PURE__*/function () {
   };
 }();
 
-var useAuth = function useAuth() {
+var useAuth = function useAuth(deviceId, authUrl) {
   var _useState = useState({}),
     _useState2 = _slicedToArray$2(_useState, 2),
     user = _useState2[0],
@@ -109595,7 +103665,7 @@ var useAuth = function useAuth() {
       setUser(data);
       return;
     })["catch"](function () {
-      return login().then(function () {
+      login().then(function () {
         getUserInfo().then(function (data) {
           setUser(data);
           location.reload();
@@ -109612,17 +103682,23 @@ var useAuth = function useAuth() {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return post(process.env.AUTH_URL, {
-              client_id: 'troomi',
-              client_secret: 'ay8efW7PT2zhmP6VvhnWdML07pY3Lj0l'
+            return fetch(authUrl, {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                deviceId: deviceId
+              })
             });
           case 2:
             resp = _context.sent;
-            if (resp) {
+            if (resp.ok) {
               _context.next = 5;
               break;
             }
-            return _context.abrupt("return");
+            throw new Error('Login failed.');
           case 5:
             _context.next = 7;
             return resp.json();
@@ -109737,15 +103813,15 @@ var MobileTitleRow = function MobileTitleRow(props) {
   });
 };
 
-var _path$a;
-function _extends$k() { return _extends$k = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$k.apply(null, arguments); }
+var _path$7;
+function _extends$d() { return _extends$d = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$d.apply(null, arguments); }
 var SvgThreeBarsIcon = function SvgThreeBarsIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$k({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$d({
     xmlns: "http://www.w3.org/2000/svg",
     width: 20,
     height: 20,
     fill: "none"
-  }, props), _path$a || (_path$a = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$7 || (_path$7 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M1.25 3.437a.94.94 0 0 1 .938-.937h15.625a.938.938 0 0 1 0 1.875H2.188a.937.937 0 0 1-.938-.938m0 6.25a.94.94 0 0 1 .938-.937h15.625a.938.938 0 0 1 0 1.874H2.188a.94.94 0 0 1-.938-.937M2.188 15a.938.938 0 0 0 0 1.875h15.625a.937.937 0 1 0 0-1.876z",
@@ -109753,14 +103829,14 @@ var SvgThreeBarsIcon = function SvgThreeBarsIcon(props) {
   })));
 };
 
-var _path$9;
-function _extends$j() { return _extends$j = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$j.apply(null, arguments); }
+var _path$6;
+function _extends$c() { return _extends$c = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$c.apply(null, arguments); }
 var SvgVersionsIcon = function SvgVersionsIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$j({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$c({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 20 20"
-  }, props), _path$9 || (_path$9 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$6 || (_path$6 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M9.688 17.5A2.19 2.19 0 0 1 7.5 15.313V4.688c0-1.209.98-2.188 2.188-2.188h8.124C19.022 2.5 20 3.48 20 4.688v10.625c0 1.208-.98 2.187-2.187 2.187zm-.313-2.187c0 .172.14.312.313.312h8.124c.173 0 .313-.14.313-.312V4.688a.31.31 0 0 0-.312-.313H9.688a.31.31 0 0 0-.313.313zM6.124 4.384a.937.937 0 0 1-.342 1.281.31.31 0 0 0-.157.271v8.125c0 .115.061.216.157.272a.938.938 0 0 1-.939 1.623 2.19 2.19 0 0 1-1.093-1.895V5.937c0-.81.442-1.517 1.093-1.894a.937.937 0 0 1 1.281.342M2.032 6.916a.938.938 0 0 0-.939-1.623A2.19 2.19 0 0 0 0 7.187v5.625c0 .811.442 1.518 1.093 1.895a.937.937 0 1 0 .939-1.623.31.31 0 0 1-.157-.272V7.187c0-.114.061-.215.157-.27",
@@ -109900,8 +103976,8 @@ var MobileSideBar = function MobileSideBar(props) {
   });
 };
 
-function ownKeys$r(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$q(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$r(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$r(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$b(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$a(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$b(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$b(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var MobilePageLayout = function MobilePageLayout(props) {
   var _useState = useState(false),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -109968,7 +104044,7 @@ var MobilePageLayout = function MobilePageLayout(props) {
             background: "transparent",
             border: true
           }) : null]
-        }), props.info ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$q({}, props.info)) : null]
+        }), props.info ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$a({}, props.info)) : null]
       }), props.children]
     }), jsxRuntimeExports.jsx(MobileSideBar, {
       selectedPage: props.selectedPage,
@@ -110178,8 +104254,8 @@ var DynamicallyLoadedPortal = function DynamicallyLoadedPortal(props) {
   return /*#__PURE__*/createPortal(props.children, document.body);
 };
 
-function ownKeys$q(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$p(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$q(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$q(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$a(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$9(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$a(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$a(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var PADDING_TOP = '51px';
 var SIDEBAR_X_MARGIN = 48;
 var SIDEBAR_Y_MARGIN = '31px';
@@ -110309,7 +104385,7 @@ var PageLayout = /*#__PURE__*/forwardRef(function (props, ref) {
                           sx: {
                             transform: 'translateY(-3px)'
                           },
-                          children: jsxRuntimeExports.jsx(InfoButton, _objectSpread$p({}, props.info))
+                          children: jsxRuntimeExports.jsx(InfoButton, _objectSpread$9({}, props.info))
                         }) : null]
                       })
                     })]
@@ -110399,14 +104475,14 @@ var PageLayout = /*#__PURE__*/forwardRef(function (props, ref) {
 });
 PageLayout.displayName = 'Page layout';
 
-var _path$8;
-function _extends$i() { return _extends$i = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$i.apply(null, arguments); }
+var _path$5;
+function _extends$b() { return _extends$b = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$b.apply(null, arguments); }
 var SvgPlusIcon = function SvgPlusIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$i({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$b({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$8 || (_path$8 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$5 || (_path$5 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M16.117 4.798a1.5 1.5 0 0 1 1.5 1.5v8.5h8.5a1.5 1.5 0 1 1 0 3h-8.5v8.5a1.5 1.5 0 0 1-3 0v-8.5h-8.5a1.5 1.5 0 0 1 0-3h8.5v-8.5a1.5 1.5 0 0 1 1.5-1.5",
@@ -110414,14 +104490,14 @@ var SvgPlusIcon = function SvgPlusIcon(props) {
   })));
 };
 
-var _path$7;
-function _extends$h() { return _extends$h = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$h.apply(null, arguments); }
+var _path$4;
+function _extends$a() { return _extends$a = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$a.apply(null, arguments); }
 var SvgStar = function SvgStar(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$h({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$a({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 18 19"
-  }, props), _path$7 || (_path$7 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$4 || (_path$4 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     d: "m9.822 18.012 2.224-4.066a3.5 3.5 0 0 1 1.401-1.401l4.066-2.224a.936.936 0 0 0 0-1.645l-4.066-2.224a3.53 3.53 0 0 1-1.4-1.4L9.821.988a.937.937 0 0 0-1.644 0L5.954 5.053a3.53 3.53 0 0 1-1.4 1.4L.488 8.679a.937.937 0 0 0 0 1.645l4.066 2.223c.59.324 1.077.81 1.4 1.402l2.224 4.066a.938.938 0 0 0 1.644-.002"
   })));
@@ -110512,14 +104588,14 @@ var ProfileImageRow = function ProfileImageRow(props) {
   });
 };
 
-var _path$6;
-function _extends$g() { return _extends$g = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$g.apply(null, arguments); }
+var _path$3;
+function _extends$9() { return _extends$9 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$9.apply(null, arguments); }
 var SvgTrashcanIcon = function SvgTrashcanIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$g({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$9({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$6 || (_path$6 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$3 || (_path$3 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M13 3.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V6h-6zm9 0V6h4.5a1.5 1.5 0 0 1 0 3h-21a1.5 1.5 0 0 1 0-3H10V3.5A3.5 3.5 0 0 1 13.5 0h5A3.5 3.5 0 0 1 22 3.5M8.993 13.35a1.5 1.5 0 0 0-2.986.3l1.32 13.198A3.5 3.5 0 0 0 10.81 30h10.38a3.5 3.5 0 0 0 3.483-3.152l1.32-13.199a1.5 1.5 0 0 0-2.986-.298l-1.32 13.199a.5.5 0 0 1-.497.45H10.81a.5.5 0 0 1-.498-.45z",
@@ -110527,14 +104603,14 @@ var SvgTrashcanIcon = function SvgTrashcanIcon(props) {
   })));
 };
 
-var _path$5;
-function _extends$f() { return _extends$f = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$f.apply(null, arguments); }
+var _path$2;
+function _extends$8() { return _extends$8 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$8.apply(null, arguments); }
 var SvgArrowUpRight = function SvgArrowUpRight(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$f({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$8({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$5 || (_path$5 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$2 || (_path$2 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M9.06 9.501a1.5 1.5 0 0 1 1.5-1.5h12.021a1.5 1.5 0 0 1 1.5 1.5v12.02a1.5 1.5 0 0 1-3 0v-8.399l-10.52 10.521a1.5 1.5 0 0 1-2.122-2.121L18.96 11h-8.4a1.5 1.5 0 0 1-1.5-1.5",
@@ -110542,7 +104618,7 @@ var SvgArrowUpRight = function SvgArrowUpRight(props) {
   })));
 };
 
-var INPUT_PHRASE$1 = 'delete';
+var INPUT_PHRASE = 'delete';
 var DeletionDialog = function DeletionDialog(props) {
   var _useState = useState(''),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -110564,13 +104640,13 @@ var DeletionDialog = function DeletionDialog(props) {
       justifyContent: "space-between",
       spacing: "32px",
       children: [!props.noConfirmation ? jsxRuntimeExports.jsx(LabeledInputField, {
-        label: "Type \"".concat(INPUT_PHRASE$1, "\" to delete this ").concat(_.capitalize(props.type)),
+        label: "Type \"".concat(INPUT_PHRASE, "\" to delete this ").concat(_.capitalize(props.type)),
         children: jsxRuntimeExports.jsx(UrsorInputField, {
           value: inputValue,
           onChange: function onChange(event) {
             return setInputValue(event.target.value);
           },
-          placeholder: INPUT_PHRASE$1,
+          placeholder: INPUT_PHRASE,
           width: "100%",
           leftAlign: true
         })
@@ -110581,7 +104657,7 @@ var DeletionDialog = function DeletionDialog(props) {
           dark: true,
           variant: "tertiary",
           width: "100%",
-          disabled: !props.noConfirmation && inputValue !== INPUT_PHRASE$1,
+          disabled: !props.noConfirmation && inputValue !== INPUT_PHRASE,
           onClick: function onClick() {
             props.onSubmit();
             notificationCtx.negativeSuccess("Deleted ".concat(_.capitalize(props.type)));
@@ -110645,21 +104721,21 @@ var FolderRenameDialog = function FolderRenameDialog(props) {
   });
 };
 
-var _g$8, _defs$8;
-function _extends$e() { return _extends$e = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$e.apply(null, arguments); }
+var _g$4, _defs$4;
+function _extends$7() { return _extends$7 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$7.apply(null, arguments); }
 var SvgCirclePlay = function SvgCirclePlay(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$e({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$7({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 35 35"
-  }, props), _g$8 || (_g$8 = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$4 || (_g$4 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#CirclePlay_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     fillRule: "evenodd",
     d: "M3.281 17.5c0-7.853 6.366-14.219 14.219-14.219S31.719 9.647 31.719 17.5 25.353 31.719 17.5 31.719 3.281 25.353 3.281 17.5M17.5 0C7.835 0 0 7.835 0 17.5S7.835 35 17.5 35 35 27.165 35 17.5 27.165 0 17.5 0m-3.547 11.434a.547.547 0 0 0-.828.47v11.193c0 .425.464.687.828.468l9.328-5.596a.547.547 0 0 0 0-.938z",
     clipRule: "evenodd"
-  }))), _defs$8 || (_defs$8 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$4 || (_defs$4 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "CirclePlay_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -110667,14 +104743,14 @@ var SvgCirclePlay = function SvgCirclePlay(props) {
   })))));
 };
 
-var _path$4;
-function _extends$d() { return _extends$d = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$d.apply(null, arguments); }
+var _path$1;
+function _extends$6() { return _extends$6 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$6.apply(null, arguments); }
 var SvgLinkIcon = function SvgLinkIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$d({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$6({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$4 || (_path$4 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path$1 || (_path$1 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M15.55 6.551a1.5 1.5 0 0 0 2.12 2.12l2.5-2.5a4.001 4.001 0 1 1 5.66 5.66l-5 5a4 4 0 0 1-5.66 0 1.5 1.5 0 0 0-2.12 2.12 7 7 0 0 0 9.9 0l5-5a7 7 0 1 0-9.9-9.9zm-9.38 19.28a4 4 0 0 1 0-5.66l5-5a4 4 0 0 1 5.66 0 1.5 1.5 0 0 0 2.12-2.12 7 7 0 0 0-9.9 0l-5 5a7 7 0 0 0 9.9 9.9l2.5-2.5a1.5 1.5 0 0 0-2.12-2.12l-2.5 2.5a4 4 0 0 1-5.66 0",
@@ -110682,21 +104758,21 @@ var SvgLinkIcon = function SvgLinkIcon(props) {
   })));
 };
 
-var _g$7, _defs$7;
-function _extends$c() { return _extends$c = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$c.apply(null, arguments); }
+var _g$3, _defs$3;
+function _extends$5() { return _extends$5 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$5.apply(null, arguments); }
 var SvgVideoCameraIcon = function SvgVideoCameraIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$c({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$5({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 21 20"
-  }, props), _g$7 || (_g$7 = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$3 || (_g$3 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#VideoCameraIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     fillRule: "evenodd",
     d: "M20.5 4.688a.937.937 0 0 0-1.42-.804l-4.83 2.898v-.844c0-1.209-.98-2.188-2.187-2.188H2.688C1.479 3.75.5 4.73.5 5.938v8.125c0 1.208.98 2.187 2.188 2.187h9.375c1.208 0 2.187-.98 2.187-2.187v-.845l4.83 2.898a.938.938 0 0 0 1.42-.803zm-6.25 6.344 4.375 2.625V6.343L14.25 8.968zm-1.875-2.594v-2.5a.31.31 0 0 0-.312-.313H2.688a.31.31 0 0 0-.313.313v8.125c0 .172.14.312.313.312h9.375c.172 0 .312-.14.312-.312V8.437",
     clipRule: "evenodd"
-  }))), _defs$7 || (_defs$7 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$3 || (_defs$3 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "VideoCameraIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -110875,7 +104951,7 @@ var UAHelper = /*#__PURE__*/Object.freeze({
   parseUserAgent: parseUserAgent
 });
 
-function ownKeys$p(object, enumerableOnly) {
+function ownKeys$9(object, enumerableOnly) {
   var keys = Object.keys(object);
 
   if (Object.getOwnPropertySymbols) {
@@ -110898,13 +104974,13 @@ function _objectSpread2(target) {
     var source = arguments[i] != null ? arguments[i] : {};
 
     if (i % 2) {
-      ownKeys$p(Object(source), true).forEach(function (key) {
+      ownKeys$9(Object(source), true).forEach(function (key) {
         _defineProperty(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      ownKeys$p(Object(source)).forEach(function (key) {
+      ownKeys$9(Object(source)).forEach(function (key) {
         Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
     }
@@ -110965,8 +105041,8 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function _extends$b() {
-  _extends$b = Object.assign || function (target) {
+function _extends$4() {
+  _extends$4 = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
 
@@ -110980,7 +105056,7 @@ function _extends$b() {
     return target;
   };
 
-  return _extends$b.apply(this, arguments);
+  return _extends$4.apply(this, arguments);
 }
 
 function _inherits(subClass, superClass) {
@@ -111780,7 +105856,7 @@ function withOrientationChange(WrappedComponent) {
     }, {
       key: "render",
       value: function render() {
-        return React__default.createElement(WrappedComponent, _extends$b({}, this.props, {
+        return React__default.createElement(WrappedComponent, _extends$4({}, this.props, {
           isLandscape: this.state.isLandscape,
           isPortrait: this.state.isPortrait
         }));
@@ -112147,8 +106223,6 @@ var LinkCard = function LinkCard(props) {
   });
 };
 
-function ownKeys$o(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$o(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$o(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$o(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var INFOS = {
   folders: {
     title: 'What are Content Folders?',
@@ -112178,34 +106252,6 @@ var INFOS = {
     title: 'How do I add a Safe Video Channel?',
     text: 'Copy and paste the URL of the YouTube channel you want to add into the URL field. We will automatically get the channel name and thumbnail image. Once a Channel is added all of the live videos on the Youtube channel will appear in the Channel folder on the Device. All of the new videos posted to the channel will appear too!'
   }
-};
-var ProfilePageTabLayout = function ProfilePageTabLayout(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    flex: 1,
-    spacing: "24px",
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "6px",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        children: [jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          alignItems: "flex-end",
-          spacing: "16px",
-          children: [jsxRuntimeExports.jsx(Typography$1, {
-            variant: "h5",
-            children: props.title
-          }), !props.mobile ? jsxRuntimeExports.jsx(Stack$1, {
-            sx: {
-              transform: 'translateY(1px)'
-            },
-            children: jsxRuntimeExports.jsx(InfoButton, _objectSpread$o({}, props.info))
-          }) : null]
-        }), props.rightSideElement]
-      }), props.mobile ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$o({}, props.info)) : null]
-    }), props.children]
-  });
 };
 
 var LinkCreationDialog = function LinkCreationDialog(props) {
@@ -112357,21 +106403,21 @@ var ChannelCard = function ChannelCard(props) {
   });
 };
 
-var _g$6, _defs$6;
-function _extends$a() { return _extends$a = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$a.apply(null, arguments); }
+var _g$2, _defs$2;
+function _extends$3() { return _extends$3 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$3.apply(null, arguments); }
 var SvgCheckboxIcon = function SvgCheckboxIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$a({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$3({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 20 20"
-  }, props), _g$6 || (_g$6 = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$2 || (_g$2 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#CheckboxIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#7B61FF",
     fillRule: "evenodd",
     d: "M2 4.667A2.667 2.667 0 0 1 4.667 2h10.666A2.667 2.667 0 0 1 18 4.667v10.666A2.667 2.667 0 0 1 15.333 18H4.667A2.667 2.667 0 0 1 2 15.333zM4.667 0A4.667 4.667 0 0 0 0 4.667v10.666A4.667 4.667 0 0 0 4.667 20h10.666A4.667 4.667 0 0 0 20 15.333V4.667A4.667 4.667 0 0 0 15.333 0zm10.04 8.04a1 1 0 0 0-1.414-1.414l-4.96 4.96L6.707 9.96a1 1 0 0 0-1.414 1.414l2.333 2.333a1 1 0 0 0 1.414 0z",
     clipRule: "evenodd"
-  }))), _defs$6 || (_defs$6 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$2 || (_defs$2 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "CheckboxIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -112379,21 +106425,21 @@ var SvgCheckboxIcon = function SvgCheckboxIcon(props) {
   })))));
 };
 
-var _g$5, _defs$5;
-function _extends$9() { return _extends$9 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$9.apply(null, arguments); }
+var _g$1, _defs$1;
+function _extends$2() { return _extends$2 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$2.apply(null, arguments); }
 var SvgEmptyCheckboxIcon = function SvgEmptyCheckboxIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$9({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$2({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 27 26"
-  }, props), _g$5 || (_g$5 = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g$1 || (_g$1 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#EmptyCheckboxIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M6.877 2.662a3.446 3.446 0 0 0-3.446 3.446v13.784a3.446 3.446 0 0 0 3.446 3.447h13.785a3.446 3.446 0 0 0 3.446-3.447V6.108a3.446 3.446 0 0 0-3.446-3.446zM.847 6.108c0-3.331 2.7-6.031 6.03-6.031h13.785c3.33 0 6.03 2.7 6.03 6.03v13.785c0 3.331-2.7 6.031-6.03 6.031H6.877a6.03 6.03 0 0 1-6.03-6.03z",
     clipRule: "evenodd"
-  }))), _defs$5 || (_defs$5 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs$1 || (_defs$1 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "EmptyCheckboxIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -112565,14 +106611,14 @@ var useLoadFolderAndContents = function useLoadFolderAndContents(folderId) {
   };
 };
 
-var _path$3;
-function _extends$8() { return _extends$8 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$8.apply(null, arguments); }
+var _path;
+function _extends$1() { return _extends$1 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$1.apply(null, arguments); }
 var SvgPlay = function SvgPlay(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$8({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$1({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 39 43"
-  }, props), _path$3 || (_path$3 = /*#__PURE__*/React$1.createElement("path", {
+  }, props), _path || (_path = /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     d: "M7.5 1.074A4.5 4.5 0 0 0 5.25.536c-.792.02-1.568.245-2.253.652a4.64 4.64 0 0 0-1.65 1.666A4.5 4.5 0 0 0 .743 5.09L.735 21.736.728 38.384c.001.778.21 1.536.605 2.2a4.3 4.3 0 0 0 1.647 1.578 4.5 4.5 0 0 0 2.248.536 4.64 4.64 0 0 0 2.25-.65L36.74 24.662a4.64 4.64 0 0 0 1.645-1.665 4.5 4.5 0 0 0 .604-2.231c.001-.778-.205-1.537-.599-2.201a4.3 4.3 0 0 0-1.642-1.584L22.122 9.027z"
   })));
@@ -112891,21 +106937,21 @@ var AddContentButton = function AddContentButton(props) {
   });
 };
 
-var _g$4, _defs$4;
-function _extends$7() { return _extends$7 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$7.apply(null, arguments); }
+var _g, _defs;
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 var SvgCheckCircleFillIcon = function SvgCheckCircleFillIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$7({
+  return /*#__PURE__*/React$1.createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 24 25"
-  }, props), _g$4 || (_g$4 = /*#__PURE__*/React$1.createElement("g", {
+  }, props), _g || (_g = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#CheckCircleFillIcon_svg__a)"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#09D08A",
     fillRule: "evenodd",
     d: "M12 24.5c6.628 0 12-5.372 12-12 0-6.627-5.372-12-12-12-6.627 0-12 5.373-12 12 0 6.628 5.373 12 12 12m5.67-14.58a1.125 1.125 0 0 0-1.59-1.59l-5.955 5.954-2.205-2.205a1.125 1.125 0 0 0-1.59 1.592l3 3c.439.439 1.151.439 1.59 0z",
     clipRule: "evenodd"
-  }))), _defs$4 || (_defs$4 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+  }))), _defs || (_defs = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "CheckCircleFillIcon_svg__a"
   }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
@@ -113310,8 +107356,8 @@ var MobileDeviceCard = function MobileDeviceCard(props) {
   });
 };
 
-function ownKeys$n(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$n(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$n(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$n(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$8(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$8(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$8(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$8(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var MobileAllDevicesDialog = function MobileAllDevicesDialog(props) {
   var _useState = useState(''),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -113385,7 +107431,7 @@ var MobileAllDevicesDialog = function MobileAllDevicesDialog(props) {
           return jsxRuntimeExports.jsx(UrsorFadeIn, {
             duration: 800,
             delay: i * 150,
-            children: jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$n(_objectSpread$n({}, d), {}, {
+            children: jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$8(_objectSpread$8({}, d), {}, {
               button: jsxRuntimeExports.jsx(Stack$1, {
                 onClick: function onClick() {
                   return props.onRemove(d.id);
@@ -113466,8 +107512,8 @@ var FolderDeviceRemovalConfirmationDialog = function FolderDeviceRemovalConfirma
   });
 };
 
-function ownKeys$m(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$m(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$m(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$m(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$7(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$7(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$7(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$7(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var MobileDevicesSection = function MobileDevicesSection(props) {
   var _props$devices$find$n, _props$devices$find;
   var _useState = useState(false),
@@ -113501,7 +107547,7 @@ var MobileDevicesSection = function MobileDevicesSection(props) {
           return jsxRuntimeExports.jsx(UrsorFadeIn, {
             duration: 800,
             delay: i * 150,
-            children: jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$m(_objectSpread$m({}, d), {}, {
+            children: jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$7(_objectSpread$7({}, d), {}, {
               button: jsxRuntimeExports.jsx(Stack$1, {
                 onClick: function onClick() {
                   return setRemovalConfirmationDialogId(d.id);
@@ -113597,8 +107643,8 @@ var MobileDevicesSection = function MobileDevicesSection(props) {
   });
 };
 
-function ownKeys$l(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$l(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$l(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$l(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$6(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$6(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var FolderPageMobileBody = function FolderPageMobileBody(props) {
   var _props$searchValue;
   var navigate = useNavigate();
@@ -113673,7 +107719,7 @@ var FolderPageMobileBody = function FolderPageMobileBody(props) {
               return props.setCreationDialogOpen(c);
             },
             flex: 1,
-            children: jsxRuntimeExports.jsx(AddContentButton, _objectSpread$l(_objectSpread$l({
+            children: jsxRuntimeExports.jsx(AddContentButton, _objectSpread$6(_objectSpread$6({
               onClick: function onClick() {
                 return null;
               }
@@ -113699,19 +107745,19 @@ var FolderPageMobileBody = function FolderPageMobileBody(props) {
                 children: jsxRuntimeExports.jsx(UrsorFadeIn, {
                   delay: i * 80,
                   duration: 800,
-                  children: x.type === 'link' ? jsxRuntimeExports.jsx(LinkCard, _objectSpread$l(_objectSpread$l({}, x.content), {}, {
+                  children: x.type === 'link' ? jsxRuntimeExports.jsx(LinkCard, _objectSpread$6(_objectSpread$6({}, x.content), {}, {
                     onDelete: props.loadFolderAndContents,
                     onOpenEditingDialog: function onOpenEditingDialog() {
                       return props.setLinkEditingDialogId(x.content.id);
                     },
                     isMobile: true
-                  })) : x.type === 'video' ? jsxRuntimeExports.jsx(VideoCard, _objectSpread$l(_objectSpread$l({}, x.content), {}, {
+                  })) : x.type === 'video' ? jsxRuntimeExports.jsx(VideoCard, _objectSpread$6(_objectSpread$6({}, x.content), {}, {
                     onDelete: props.loadFolderAndContents,
                     onOpenEditingDialog: function onOpenEditingDialog() {
                       return props.setVideoEditingDialogId(x.content.id);
                     },
                     isMobile: true
-                  })) : x.type === 'channel' ? jsxRuntimeExports.jsx(ChannelCard, _objectSpread$l(_objectSpread$l({}, x.content), {}, {
+                  })) : x.type === 'channel' ? jsxRuntimeExports.jsx(ChannelCard, _objectSpread$6(_objectSpread$6({}, x.content), {}, {
                     onDelete: props.loadFolderAndContents,
                     onOpenEditingDialog: function onOpenEditingDialog() {
                       return props.setChannelEditingDialogId(x.content.id);
@@ -113750,8 +107796,8 @@ var FolderPageMobileBody = function FolderPageMobileBody(props) {
   });
 };
 
-function ownKeys$k(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$k(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$k(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$k(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$5(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$5(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$5(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var AllDevicesDialog = function AllDevicesDialog(props) {
   var _useState = useState(''),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -113797,7 +107843,7 @@ var AllDevicesDialog = function AllDevicesDialog(props) {
           children: [jsxRuntimeExports.jsx(Typography$1, {
             variant: "h5",
             children: props.title
-          }), jsxRuntimeExports.jsx(InfoButton, _objectSpread$k({}, INFOS.folderDevice))]
+          }), jsxRuntimeExports.jsx(InfoButton, _objectSpread$5({}, INFOS.folderDevice))]
         }), jsxRuntimeExports.jsxs(Stack$1, {
           direction: "row",
           spacing: "12px",
@@ -113826,7 +107872,7 @@ var AllDevicesDialog = function AllDevicesDialog(props) {
           return jsxRuntimeExports.jsx(UrsorFadeIn, {
             duration: 800,
             delay: i * 150,
-            children: jsxRuntimeExports.jsx(DeviceCard, _objectSpread$k(_objectSpread$k({}, d), {}, {
+            children: jsxRuntimeExports.jsx(DeviceCard, _objectSpread$5(_objectSpread$5({}, d), {}, {
               button: props.onRemove ? jsxRuntimeExports.jsx(Stack$1, {
                 onClick: function onClick() {
                   return props.onRemove(d.id);
@@ -113846,8 +107892,8 @@ var AllDevicesDialog = function AllDevicesDialog(props) {
   });
 };
 
-function ownKeys$j(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$j(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$j(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$j(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$4(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var DevicesSection = function DevicesSection(props) {
   var _props$devices, _props$devices$find$n, _props$devices$find;
   var _useState = useState(false),
@@ -113900,7 +107946,7 @@ var DevicesSection = function DevicesSection(props) {
           return jsxRuntimeExports.jsx(UrsorFadeIn, {
             duration: 800,
             delay: i * 150,
-            children: jsxRuntimeExports.jsx(DeviceCard, _objectSpread$j(_objectSpread$j({}, d), {}, {
+            children: jsxRuntimeExports.jsx(DeviceCard, _objectSpread$4(_objectSpread$4({}, d), {}, {
               button: jsxRuntimeExports.jsx(Stack$1, {
                 onClick: function onClick() {
                   return setRemovalConfirmationDialogId(d.id);
@@ -114005,8 +108051,8 @@ var useColumnWidth = function useColumnWidth(idealWidth, minWidth, maxWidth) {
   };
 };
 
-function ownKeys$i(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$i(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$i(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$i(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$3(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 var FolderPageDesktopBody = function FolderPageDesktopBody(props) {
   var _props$searchValue;
@@ -114106,7 +108152,7 @@ var FolderPageDesktopBody = function FolderPageDesktopBody(props) {
                 return props.setContentCreationDialogOpen(c);
               },
               flex: 1,
-              children: jsxRuntimeExports.jsx(AddContentButton, _objectSpread$i(_objectSpread$i({
+              children: jsxRuntimeExports.jsx(AddContentButton, _objectSpread$3(_objectSpread$3({
                 onClick: function onClick() {
                   return null;
                 }
@@ -114140,17 +108186,17 @@ var FolderPageDesktopBody = function FolderPageDesktopBody(props) {
                     children: jsxRuntimeExports.jsx(UrsorFadeIn, {
                       delay: j * 150 + i * 80,
                       duration: 800,
-                      children: x.type === 'link' ? jsxRuntimeExports.jsx(LinkCard, _objectSpread$i(_objectSpread$i({}, x.content), {}, {
+                      children: x.type === 'link' ? jsxRuntimeExports.jsx(LinkCard, _objectSpread$3(_objectSpread$3({}, x.content), {}, {
                         onDelete: props.loadFolderAndContents,
                         onOpenEditingDialog: function onOpenEditingDialog() {
                           return props.setLinkEditingDialogId(x.content.id);
                         }
-                      })) : x.type === 'video' ? jsxRuntimeExports.jsx(VideoCard, _objectSpread$i(_objectSpread$i({}, x.content), {}, {
+                      })) : x.type === 'video' ? jsxRuntimeExports.jsx(VideoCard, _objectSpread$3(_objectSpread$3({}, x.content), {}, {
                         onDelete: props.loadFolderAndContents,
                         onOpenEditingDialog: function onOpenEditingDialog() {
                           return props.setVideoEditingDialogId(x.content.id);
                         }
-                      })) : x.type === 'channel' ? jsxRuntimeExports.jsx(ChannelCard, _objectSpread$i(_objectSpread$i({}, x.content), {}, {
+                      })) : x.type === 'channel' ? jsxRuntimeExports.jsx(ChannelCard, _objectSpread$3(_objectSpread$3({}, x.content), {}, {
                         onDelete: props.loadFolderAndContents,
                         onOpenEditingDialog: function onOpenEditingDialog() {
                           return props.setChannelEditingDialogId(x.content.id);
@@ -114189,8 +108235,8 @@ var FolderPageDesktopBody = function FolderPageDesktopBody(props) {
   });
 };
 
-function ownKeys$h(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$h(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$h(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var useDeviceOnlineStatus = function useDeviceOnlineStatus(devices) {
   var _useAuth = useAuth(),
     user = _useAuth.user;
@@ -114204,7 +108250,7 @@ var useDeviceOnlineStatus = function useDeviceOnlineStatus(devices) {
   var setDeviceOnlineStatus = useCallback(function (deviceId, online) {
     deviceId && setCuttingEdgeOnlineStatusDevices(function (prev) {
       return prev.map(function (device) {
-        return device.id === deviceId ? _objectSpread$h(_objectSpread$h({}, device), {}, {
+        return device.id === deviceId ? _objectSpread$2(_objectSpread$2({}, device), {}, {
           online: online
         }) : device;
       });
@@ -114253,7 +108299,7 @@ var CONTENT_BRANDING = {
 function FolderPage(props) {
   var _folder$title, _folder$title2, _contents$find, _contents$find2, _contents$find3;
   var navigate = useNavigate();
-  var _useAuth = useAuth(),
+  var _useAuth = useAuth(props.deviceId, props.authUrl),
     user = _useAuth.user;
   var _useState = useState([]),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -114847,8 +108893,8 @@ var EmptyStateIllustration = function EmptyStateIllustration(props) {
   });
 };
 
-function ownKeys$g(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$g(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$g(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$1(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var AllFoldersPageDesktopBody = function AllFoldersPageDesktopBody(props) {
   var navigate = useNavigate();
   return jsxRuntimeExports.jsx(PageLayout, {
@@ -114876,7 +108922,7 @@ var AllFoldersPageDesktopBody = function AllFoldersPageDesktopBody(props) {
           return jsxRuntimeExports.jsx(UrsorFadeIn, {
             duration: 800,
             delay: i * 90,
-            children: jsxRuntimeExports.jsx(FolderCard, _objectSpread$g(_objectSpread$g({}, f), {}, {
+            children: jsxRuntimeExports.jsx(FolderCard, _objectSpread$1(_objectSpread$1({}, f), {}, {
               clickCallback: function clickCallback() {
                 return navigate.push("/folders/".concat(f.id));
               },
@@ -114893,8 +108939,8 @@ var AllFoldersPageDesktopBody = function AllFoldersPageDesktopBody(props) {
   });
 };
 
-function ownKeys$f(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$f(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$f(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$f(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var AllFoldersPageMobileBody = function AllFoldersPageMobileBody(props) {
   var navigate = useNavigate();
   return jsxRuntimeExports.jsx(MobilePageLayout, {
@@ -114918,7 +108964,7 @@ var AllFoldersPageMobileBody = function AllFoldersPageMobileBody(props) {
             duration: 800,
             delay: i * 90,
             fullWidth: true,
-            children: jsxRuntimeExports.jsx(FolderCard, _objectSpread$f(_objectSpread$f({}, f), {}, {
+            children: jsxRuntimeExports.jsx(FolderCard, _objectSpread(_objectSpread({}, f), {}, {
               clickCallback: function clickCallback() {
                 return navigate.push("/folders/".concat(f.id));
               },
@@ -114981,7 +109027,7 @@ var FolderCreationDialog = function FolderCreationDialog(props) {
 };
 
 var AllFoldersPage = function AllFoldersPage(props) {
-  var _useAuth = useAuth(),
+  var _useAuth = useAuth(props.deviceId, props.authUrl),
     user = _useAuth.user;
   var navigate = useNavigate();
   var _useState = useState([]),
@@ -115168,5211 +109214,26 @@ function RootLayout(_ref) {
   });
 }
 
-var Folders = function Folders() {
+var Folders = function Folders(props) {
   return jsxRuntimeExports.jsx(RootLayout, {
     children: jsxRuntimeExports.jsx(AllFoldersPage, {
-      isMobile: isMobile_1
+      isMobile: isMobile_1,
+      deviceId: props.deviceId,
+      authUrl: props.authUrl
     })
   });
 };
 
 var Folder = function Folder(_ref) {
-  var params = _ref.params;
-  return jsxRuntimeExports.jsx(FolderPage, {
-    folderId: parseInt(params.id),
-    isMobile: isMobile_1
-  });
-};
-
-var _g$3, _defs$3;
-function _extends$6() { return _extends$6 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$6.apply(null, arguments); }
-var SvgThumbsUpIcon = function SvgThumbsUpIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$6({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 20 20"
-  }, props), _g$3 || (_g$3 = /*#__PURE__*/React$1.createElement("g", {
-    clipPath: "url(#ThumbsUpIcon_svg__a)"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#09D08A",
-    fillRule: "evenodd",
-    d: "M11.042.08C9.368-.111 8.125 1.307 8.125 2.809v.625c0 1.66-.808 2.654-1.647 3.267-.41.3-.825.504-1.148.635a2.19 2.19 0 0 0-1.892-1.09h-1.25C.978 6.247 0 7.227 0 8.435v9.375c0 1.209.98 2.188 2.188 2.188h1.25c.968 0 1.79-.63 2.077-1.501.656.093 1.334.286 2.157.518q.284.081.593.167c1.442.4 3.176.816 5.485.816 2.132 0 3.712-.19 4.652-1.424.441-.58.671-1.303.836-2.09.146-.702.26-1.555.39-2.542l.051-.383c.312-2.335.332-4.147-.235-5.395-.305-.67-.778-1.178-1.421-1.5-.618-.309-1.332-.416-2.085-.416H14.16l.018-.14c.087-.648.197-1.462.197-2.048 0-1.152-.19-2.148-.82-2.874C12.917.449 11.997.189 11.043.08M5.625 16.62c.882.11 1.738.355 2.59.599l.552.156c1.37.38 2.917.747 4.983.747 2.243 0 2.85-.279 3.16-.686.184-.24.345-.63.493-1.337.131-.628.234-1.405.368-2.413l.05-.376c.313-2.352.236-3.665-.084-4.37-.14-.306-.318-.482-.553-.6-.26-.13-.651-.218-1.247-.218H13.75c-.857 0-1.619-.721-1.507-1.67q.043-.362.094-.732c.082-.61.163-1.212.163-1.66 0-1.011-.18-1.439-.36-1.646-.171-.197-.502-.38-1.31-.471-.383-.044-.83.296-.83.866v.625c0 2.402-1.223 3.909-2.416 4.78a7.3 7.3 0 0 1-1.959 1.012zM3.438 8.122c.172 0 .312.14.312.312v9.375c0 .173-.14.313-.312.313h-1.25a.313.313 0 0 1-.313-.313V8.434c0-.172.14-.312.313-.312z",
-    clipRule: "evenodd"
-  }))), _defs$3 || (_defs$3 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
-    id: "ThumbsUpIcon_svg__a"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#fff",
-    d: "M0 0h20v20H0z"
-  })))));
-};
-
-var _g$2, _defs$2;
-function _extends$5() { return _extends$5 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$5.apply(null, arguments); }
-var SvgLockIcon = function SvgLockIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$5({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 32 32"
-  }, props), _g$2 || (_g$2 = /*#__PURE__*/React$1.createElement("g", {
-    clipPath: "url(#LockIcon_svg__a)"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#0D2839",
-    fillRule: "evenodd",
-    d: "M8 8v4h-.5A3.5 3.5 0 0 0 4 15.5v11C4 28.43 5.568 30 7.5 30h17a3.5 3.5 0 0 0 3.5-3.5v-11a3.5 3.5 0 0 0-3.5-3.5H24V8A8 8 0 1 0 8 8m13 4V8a5 5 0 0 0-10 0v4zm3 3h.5a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-17a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5z",
-    clipRule: "evenodd"
-  }))), _defs$2 || (_defs$2 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
-    id: "LockIcon_svg__a"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#fff",
-    d: "M0 0h32v32H0z"
-  })))));
-};
-
-function ownKeys$e(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$e(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$e(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$e(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var FilterLegend = function FilterLegend(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    direction: "row",
-    spacing: "20px",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        alignItems: "center",
-        spacing: props.small ? '7px' : '10px',
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          variant: props.small ? 'small' : 'normal',
-          bold: true,
-          children: "Allowed"
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          height: props.small ? '12px' : '16px',
-          width: props.small ? '12px' : '16px',
-          borderRadius: "100%",
-          bgcolor: PALETTE.system.green
-        })]
-      })
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        alignItems: "center",
-        spacing: props.small ? '7px' : '10px',
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          variant: props.small ? 'small' : 'normal',
-          bold: true,
-          children: "Blocked"
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          height: props.small ? '12px' : '16px',
-          width: props.small ? '12px' : '16px',
-          borderRadius: "100%",
-          bgcolor: PALETTE.secondary.grey[3]
-        })]
-      })
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        alignItems: "center",
-        spacing: props.small ? '7px' : '10px',
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          variant: props.small ? 'small' : 'normal',
-          bold: true,
-          children: "Custom"
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          height: props.small ? '12px' : '16px',
-          width: props.small ? '12px' : '16px',
-          borderRadius: "100%",
-          bgcolor: PALETTE.system.orange
-        })]
-      })
-    })]
-  });
-};
-var CategoryCard = function CategoryCard(props) {
-  var _useState = useState(true),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    collapsed = _useState2[0],
-    setCollapsed = _useState2[1];
-  var _useState3 = useState('off'),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    status = _useState4[0],
-    setStatus = _useState4[1];
-  useEffect(function () {
-    return setStatus(props.subCategories.every(function (c) {
-      return props.allowedCategories.includes(c.id);
-    }) ? 'on' : props.subCategories.some(function (c) {
-      return props.allowedCategories.includes(c.id);
-    }) ? 'custom' : 'off');
-  }, [props.subCategories, props.allowedCategories]);
-  var _useState5 = useState(0),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    nAllowedCategories = _useState6[0],
-    setNAllowedCategories = _useState6[1];
-  useEffect(function () {
-    var _props$subCategories$;
-    setNAllowedCategories((_props$subCategories$ = props.subCategories.filter(function (sc) {
-      return props.allowedCategories.includes(sc.id);
-    }).length) !== null && _props$subCategories$ !== void 0 ? _props$subCategories$ : 0);
-  }, [props.allowedCategories]);
-  return jsxRuntimeExports.jsx(AstroCard, {
-    children: jsxRuntimeExports.jsx(DynamicContainer$1, {
-      duration: 600,
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        p: "16px",
-        spacing: "16px",
-        children: [jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          children: [jsxRuntimeExports.jsxs(Stack$1, {
-            children: [jsxRuntimeExports.jsx(Typography$1, {
-              bold: true,
-              children: props.title
-            }), jsxRuntimeExports.jsx(Typography$1, {
-              bold: true,
-              variant: "small",
-              color: PALETTE.secondary.grey[3],
-              children: "".concat(nAllowedCategories, " ").concat(nAllowedCategories === 1 ? 'Category' : 'Categories', " allowed")
-            })]
-          }), jsxRuntimeExports.jsxs(Stack$1, {
-            direction: "row",
-            spacing: "20px",
-            children: [jsxRuntimeExports.jsx(Stack$1, {
-              sx: {
-                pointerEvents: props.permanentlyBlocked ? 'none' : undefined
-              },
-              children: jsxRuntimeExports.jsx(AstroSwitch, {
-                on: status === 'on',
-                compromise: status === 'custom',
-                callback: function callback() {
-                  return props.flipCategory(props.categoryId);
-                },
-                icon: props.permanentlyBlocked ? SvgLockIcon : undefined
-              })
-            }), jsxRuntimeExports.jsx(Stack$1, {
-              sx: {
-                transform: "rotate(".concat(collapsed ? 0 : 180, "deg)"),
-                transition: '0.2s',
-                cursor: 'pointer',
-                '&:hover': {
-                  opacity: 0.6
-                }
-              },
-              onClick: function onClick() {
-                return setCollapsed(!collapsed);
-              },
-              children: jsxRuntimeExports.jsx(SvgChevronDown, {
-                height: "24px",
-                width: "24px"
-              })
-            })]
-          })]
-        }), !collapsed ? jsxRuntimeExports.jsx(DynamicCardGrid, {
-          cardWidth: "292px",
-          rowGap: "8px",
-          columnGap: "20px",
-          children: props.subCategories.map(function (sc, i) {
-            return jsxRuntimeExports.jsx(UrsorFadeIn, {
-              duration: 800,
-              delay: i * 40,
-              children: jsxRuntimeExports.jsxs(Stack$1, {
-                height: "72px",
-                bgcolor: "rgb(255,255,255)",
-                borderRadius: "12px",
-                border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-                px: "16px",
-                boxSizing: "border-box",
-                justifyContent: "space-between",
-                alignItems: "center",
-                direction: "row",
-                onClick: function onClick() {
-                  return props.flipSubcategory(sc.id);
-                },
-                sx: {
-                  cursor: 'pointer',
-                  transition: '0.2s',
-                  '&:hover': {
-                    opacity: 0.7
-                  },
-                  pointerEvents: props.permanentlyBlocked ? 'none' : undefined
-                },
-                children: [jsxRuntimeExports.jsx(Stack$1, {
-                  justifyContent: "space-between",
-                  children: jsxRuntimeExports.jsx(Stack$1, {
-                    spacing: "16px",
-                    alignItems: "center",
-                    direction: "row",
-                    children: jsxRuntimeExports.jsx(Typography$1, {
-                      maxLines: 1,
-                      bold: true,
-                      children: sc.title
-                    })
-                  })
-                }), jsxRuntimeExports.jsx(AstroSwitch, {
-                  on: props.allowedCategories.includes(sc.id),
-                  callback: function callback() {
-                    return null;
-                  },
-                  icon: props.permanentlyBlocked ? SvgLockIcon : undefined
-                })]
-              })
-            }, sc.id);
-          })
-        }) : null]
-      })
-    })
-  }, props.categoryId);
-};
-var FilterPageCategoriesSection = function FilterPageCategoriesSection(props) {
-  return jsxRuntimeExports.jsx(AstroBentoCard, {
-    icon: SvgThumbsUpIcon,
-    title: "".concat(props.allowedCategories.length, " allowed ").concat(props.allowedCategories.length === 1 ? 'Category' : 'Categories'),
-    subtitle: "Turn the switch on to allow the Category to be browsed on the assigned Devices.",
-    topRightStuff: jsxRuntimeExports.jsx(FilterLegend, {}),
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "20px",
-      children: props.categories.map(function (cg) {
-        return jsxRuntimeExports.jsx(CategoryCard, _objectSpread$e(_objectSpread$e({}, cg), {}, {
-          flipCategory: props.flipCategory,
-          flipSubcategory: props.flipSubcategory,
-          allowedCategories: props.allowedCategories
-        }), cg.categoryId);
-      })
-    })
-  });
-};
-
-var FilterWhitelistExceptionDialog = function FilterWhitelistExceptionDialog(props) {
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Are you sure?",
-    subtitle: ['This will override our Filters and give all of the assigned Devices access to this site. They will be able to access this site until it is removed or they change Filter.'],
-    width: "422px",
-    dynamicHeight: true,
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "8px",
-        width: "100%",
-        height: "100%",
-        justifyContent: "flex-end",
-        children: [jsxRuntimeExports.jsx(UrsorButton, {
-          dark: true,
-          variant: "tertiary",
-          width: "100%",
-          onClick: function onClick() {
-            props.onSubmit();
-            props.onClose();
-          },
-          children: "Yes"
-        }), jsxRuntimeExports.jsx(UrsorButton, {
-          variant: "secondary",
-          width: "100%",
-          onClick: props.onClose,
-          children: "No"
-        })]
-      })
-    })
-  });
-};
-
-var FilterPageAllowedSitesSection = function FilterPageAllowedSitesSection(props) {
-  var _props$allowedSites$l;
-  var TABLE_COLUMNS = [{
-    name: 'title',
-    displayName: 'Title',
-    sortable: true,
-    newTag: true,
-    getAvatar: function getAvatar(i) {
-      var _props$allowedSites$p, _props$allowedSites$p2;
-      return jsxRuntimeExports.jsx(Stack$1, {
-        minWidth: "20px",
-        borderRadius: "100%",
-        overflow: "hidden",
-        children: jsxRuntimeExports.jsx("img", {
-          src: (_props$allowedSites$p = (_props$allowedSites$p2 = props.allowedSites[parseInt(i)]) === null || _props$allowedSites$p2 === void 0 ? void 0 : _props$allowedSites$p2.favicon) !== null && _props$allowedSites$p !== void 0 ? _props$allowedSites$p : '',
-          height: 20,
-          width: 20,
-          alt: "allowed site favicon"
-        })
-      });
-    }
-  }, {
-    name: 'domain',
-    displayName: 'Domain',
-    sortable: true
-  }].concat(_toConsumableArray(props.isMobile ? [] : [{
-    name: 'createdAt',
-    displayName: 'Added on',
-    sortable: true,
-    itemDisplay: function itemDisplay(createdAt) {
-      return dayjs(createdAt).format('MM/DD/YYYY');
-    }
-  }]));
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    rows = _useState2[0],
-    setRows = _useState2[1];
-  useEffect(function () {
-    _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-      var _props$allowedSites;
-      var linkRows;
-      return _regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            linkRows = ((_props$allowedSites = props.allowedSites) === null || _props$allowedSites === void 0 ? void 0 : _props$allowedSites.map(function (a, i) {
-              var _a$title;
-              return {
-                id: i.toString(),
-                items: {
-                  title: (_a$title = a.title) !== null && _a$title !== void 0 ? _a$title : '',
-                  domain: a.domain,
-                  createdAt: a.createdAt
-                },
-                tags: [],
-                disabled: false,
-                url: a.domain
-              };
-            })) || [];
-            setRows(linkRows);
-          case 2:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }))();
-  }, [props.allowedSites]);
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    sortedRows = _useState4[0],
-    setSortedRows = _useState4[1];
-  var _useState5 = useState([]),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    filteredRows = _useState6[0],
-    setFilteredRows = _useState6[1];
-  var _useState7 = useState(''),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    inputValue = _useState8[0],
-    setInputValue = _useState8[1];
-  useEffect(function () {
-    setFilteredRows(rows.filter(function (row) {
-      return inputValue ? [row.items.title, row.items.domain.replace('www.', '')].join('_').toLowerCase().includes(inputValue.toLowerCase()) : true;
-    }));
-  }, [rows, inputValue]);
-  var _useState9 = useState('createdAt'),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    sortedColumn = _useState10[0],
-    setSortedColumn = _useState10[1];
-  var _useState11 = useState('desc'),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    sortDirection = _useState12[0],
-    setSortDirection = _useState12[1];
-  useEffect(function () {
-    if (!filteredRows) return;
-    var sorted = _.sortBy(rows, function (row) {
-      var _row$items;
-      return (//@ts-ignore
-        (_row$items = row.items) === null || _row$items === void 0 || (_row$items = _row$items[sortedColumn]) === null || _row$items === void 0 ? void 0 : _row$items.toLowerCase()
-      );
-    });
-    setSortedRows(sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted);
-  }, [rows, sortDirection, sortedColumn]);
-  var _useState13 = useState(false),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    confirmationDialogOpen = _useState14[0],
-    setConfirmationDialogOpen = _useState14[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsx(AstroBentoCard, {
-      icon: SvgThumbsUpIcon,
-      title: "".concat((_props$allowedSites$l = props.allowedSites.length) !== null && _props$allowedSites$l !== void 0 ? _props$allowedSites$l : 0, " allowed site exception").concat(props.allowedSites.length === 1 ? '' : 's '),
-      subtitle: "Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!",
-      isMobile: props.isMobile,
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "20px",
-        children: [jsxRuntimeExports.jsx(UrsorInputField, {
-          value: inputValue,
-          onChange: function onChange(event) {
-            return setInputValue(event.target.value);
-          },
-          onEnterKey: function onEnterKey() {
-            return setConfirmationDialogOpen(true);
-          },
-          placeholder: "Add a URL",
-          width: "100%",
-          leftAlign: true,
-          boldValue: true
-        }), sortedRows.length > 0 ? jsxRuntimeExports.jsx(UrsorTable, {
-          columns: TABLE_COLUMNS,
-          rows: sortedRows,
-          defaultSortedByColumn: "createdAt",
-          defaultSortedAscending: true,
-          selectedSort: sortedColumn,
-          ascending: sortDirection === 'asc',
-          sortSelectionCallback: function sortSelectionCallback(columnId) {
-            if (columnId === sortedColumn) {
-              setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-            } else {
-              setSortedColumn(columnId);
-              setSortDirection('asc');
-            }
-          },
-          noHeaderGradient: true,
-          getActionButtonItems: function getActionButtonItems(i) {
-            return [{
-              icon: SvgTrashcanIcon,
-              text: 'Delete',
-              kallback: function kallback() {
-                return props["delete"](props.allowedSites[parseInt(i)].domain);
-              },
-              color: PALETTE.system.red
-            }];
-          },
-          rowClickCallback: function rowClickCallback(id) {
-            return null;
-          },
-          titleColumnWidth: "20%"
-        }) : null]
-      })
-    }), jsxRuntimeExports.jsx(FilterWhitelistExceptionDialog, {
-      open: confirmationDialogOpen,
-      onClose: function onClose() {
-        return setConfirmationDialogOpen(false);
-      },
-      onSubmit: function onSubmit() {
-        props.add(inputValue);
-        setInputValue('');
-      },
-      isMobile: props.isMobile
-    })]
-  });
-};
-
-var _g$1, _defs$1;
-function _extends$4() { return _extends$4 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$4.apply(null, arguments); }
-var SvgThumbsDownIcon = function SvgThumbsDownIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$4({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 20 20"
-  }, props), _g$1 || (_g$1 = /*#__PURE__*/React$1.createElement("g", {
-    clipPath: "url(#ThumbsDownIcon_svg__a)"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#FC5C5C",
-    fillRule: "evenodd",
-    d: "M8.854 19.98c1.674.19 2.917-1.228 2.917-2.73v-.625c0-1.66.808-2.654 1.647-3.266.41-.3.825-.505 1.148-.636a2.19 2.19 0 0 0 1.892 1.09h1.25c1.208 0 2.188-.98 2.188-2.188V2.25c0-1.208-.98-2.187-2.188-2.187h-1.25c-.968 0-1.79.629-2.077 1.5-.656-.093-1.335-.285-2.157-.518L11.63.878C10.19.478 8.455.063 6.146.063c-2.132 0-3.712.19-4.652 1.424-.441.579-.671 1.302-.836 2.09-.147.701-.26 1.554-.39 2.542L.216 6.5c-.312 2.336-.332 4.148.235 5.395.305.67.778 1.178 1.421 1.5.618.31 1.331.417 2.085.417h1.778l-.019.14c-.087.648-.196 1.462-.196 2.047 0 1.152.189 2.148.82 2.874.638.737 1.558.997 2.513 1.106M14.27 3.44c-.882-.112-1.738-.356-2.59-.6l-.552-.155c-1.37-.38-2.917-.747-4.983-.747-2.243 0-2.85.278-3.16.685-.184.241-.345.631-.493 1.338-.131.628-.234 1.405-.368 2.412l-.05.376c-.314 2.352-.237 3.665.084 4.371.14.306.318.482.553.6.26.13.651.218 1.246.218h2.188c.857 0 1.619.72 1.507 1.67-.028.239-.062.486-.094.731-.082.61-.163 1.212-.163 1.661 0 1.01.18 1.438.36 1.645.171.197.502.38 1.31.472.383.043.83-.297.83-.866v-.626c0-2.402 1.223-3.909 2.415-4.78a7.3 7.3 0 0 1 1.96-1.012zm2.187 8.498a.313.313 0 0 1-.312-.313V2.25c0-.173.14-.312.312-.312h1.25c.173 0 .313.14.313.312v9.375c0 .173-.14.313-.313.313z",
-    clipRule: "evenodd"
-  }))), _defs$1 || (_defs$1 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
-    id: "ThumbsDownIcon_svg__a"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#fff",
-    d: "M0 0h20v20H0z"
-  })))));
-};
-
-var FilterBlacklistExceptionDialog = function FilterBlacklistExceptionDialog(props) {
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Are you sure?",
-    subtitle: ['This will override our Filters and remove access to this site from all of the assigned Devices. They will not be able to access this site until it is removed or they change Filter.'],
-    width: "422px",
-    dynamicHeight: true,
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "8px",
-        width: "100%",
-        height: "100%",
-        justifyContent: "flex-end",
-        children: [jsxRuntimeExports.jsx(UrsorButton, {
-          dark: true,
-          variant: "tertiary",
-          width: "100%",
-          onClick: function onClick() {
-            props.onSubmit();
-            props.onClose();
-          },
-          children: "Yes"
-        }), jsxRuntimeExports.jsx(UrsorButton, {
-          variant: "secondary",
-          width: "100%",
-          onClick: props.onClose,
-          children: "No"
-        })]
-      })
-    })
-  });
-};
-
-var FilterPageBlockedSitesSection = function FilterPageBlockedSitesSection(props) {
-  var _props$blockedSites$l;
-  var TABLE_COLUMNS = [{
-    name: 'title',
-    displayName: 'Title',
-    sortable: true,
-    newTag: true,
-    getAvatar: function getAvatar(i) {
-      var _props$blockedSites$p, _props$blockedSites$p2;
-      return jsxRuntimeExports.jsx(Stack$1, {
-        minWidth: "20px",
-        borderRadius: "100%",
-        overflow: "hidden",
-        children: jsxRuntimeExports.jsx("img", {
-          src: (_props$blockedSites$p = (_props$blockedSites$p2 = props.blockedSites[parseInt(i)]) === null || _props$blockedSites$p2 === void 0 ? void 0 : _props$blockedSites$p2.favicon) !== null && _props$blockedSites$p !== void 0 ? _props$blockedSites$p : '',
-          height: 20,
-          width: 20,
-          alt: "allowed site favicon"
-        })
-      });
-    }
-  }, {
-    name: 'domain',
-    displayName: 'Domain',
-    sortable: true
-  }, {
-    name: 'createdAt',
-    displayName: 'Added on',
-    sortable: true,
-    itemDisplay: function itemDisplay(createdAt) {
-      return dayjs(createdAt).format('MM/DD/YYYY');
-    }
-  }];
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    rows = _useState2[0],
-    setRows = _useState2[1];
-  useEffect(function () {
-    _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
-      var _props$blockedSites;
-      var linkRows;
-      return _regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            linkRows = ((_props$blockedSites = props.blockedSites) === null || _props$blockedSites === void 0 ? void 0 : _props$blockedSites.map(function (b, i) {
-              var _b$title;
-              return {
-                id: i.toString(),
-                items: {
-                  title: (_b$title = b.title) !== null && _b$title !== void 0 ? _b$title : '',
-                  domain: b.domain,
-                  createdAt: b.createdAt
-                },
-                tags: [],
-                disabled: false,
-                url: b.domain
-              };
-            })) || [];
-            setRows(linkRows);
-          case 2:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }))();
-  }, [props.blockedSites]);
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    sortedRows = _useState4[0],
-    setSortedRows = _useState4[1];
-  var _useState5 = useState([]),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    filteredRows = _useState6[0],
-    setFilteredRows = _useState6[1];
-  var _useState7 = useState(''),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    inputValue = _useState8[0],
-    setInputValue = _useState8[1];
-  useEffect(function () {
-    setFilteredRows(rows.filter(function (row) {
-      return inputValue ? [row.items.title, row.items.domain.replace('www.', '')].join('_').toLowerCase().includes(inputValue.toLowerCase()) : true;
-    }));
-  }, [rows, inputValue]);
-  var _useState9 = useState('createdAt'),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    sortedColumn = _useState10[0],
-    setSortedColumn = _useState10[1];
-  var _useState11 = useState('desc'),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    sortDirection = _useState12[0],
-    setSortDirection = _useState12[1];
-  useEffect(function () {
-    if (!filteredRows) return;
-    var sorted = _.sortBy(rows, function (row) {
-      var _row$items;
-      return (//@ts-ignore
-        (_row$items = row.items) === null || _row$items === void 0 || (_row$items = _row$items[sortedColumn]) === null || _row$items === void 0 ? void 0 : _row$items.toLowerCase()
-      );
-    });
-    setSortedRows(sortDirection === 'asc' ? _.reverse(sorted.slice()) : sorted);
-  }, [rows, sortDirection, sortedColumn]);
-  var _useState13 = useState(false),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    confirmationDialogOpen = _useState14[0],
-    setConfirmationDialogOpen = _useState14[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsx(AstroBentoCard, {
-      icon: SvgThumbsDownIcon,
-      title: "".concat((_props$blockedSites$l = props.blockedSites.length) !== null && _props$blockedSites$l !== void 0 ? _props$blockedSites$l : 0, " blocked site exception").concat(props.blockedSites.length === 1 ? '' : 's'),
-      subtitle: "Add sites here that you never want to be accessible. This will make sure the site isn't accessible even if the rest of the corresponding Category is!",
-      isMobile: props.isMobile,
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "20px",
-        children: [jsxRuntimeExports.jsx(UrsorInputField, {
-          value: inputValue,
-          onChange: function onChange(event) {
-            return setInputValue(event.target.value);
-          },
-          onEnterKey: function onEnterKey() {
-            return setConfirmationDialogOpen(true);
-          },
-          placeholder: "Add a URL",
-          width: "100%",
-          leftAlign: true,
-          boldValue: true
-        }), sortedRows.length > 0 ? jsxRuntimeExports.jsx(UrsorTable, {
-          columns: TABLE_COLUMNS,
-          rows: sortedRows,
-          defaultSortedByColumn: "createdAt",
-          defaultSortedAscending: true,
-          selectedSort: sortedColumn,
-          ascending: sortDirection === 'asc',
-          sortSelectionCallback: function sortSelectionCallback(columnId) {
-            if (columnId === sortedColumn) {
-              setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-            } else {
-              setSortedColumn(columnId);
-              setSortDirection('asc');
-            }
-          },
-          noHeaderGradient: true,
-          getActionButtonItems: function getActionButtonItems(i) {
-            return [{
-              icon: SvgTrashcanIcon,
-              text: 'Delete',
-              kallback: function kallback() {
-                return props["delete"](props.blockedSites[parseInt(i)].domain);
-              },
-              color: PALETTE.system.red
-            }];
-          },
-          rowClickCallback: function rowClickCallback(id) {
-            return null;
-          }
-        }) : null]
-      })
-    }), jsxRuntimeExports.jsx(FilterBlacklistExceptionDialog, {
-      open: confirmationDialogOpen,
-      onClose: function onClose() {
-        return setConfirmationDialogOpen(false);
-      },
-      onSubmit: function onSubmit() {
-        props.add(inputValue);
-        setInputValue('');
-      },
-      isMobile: props.isMobile
-    })]
-  });
-};
-
-var _g, _defs;
-function _extends$3() { return _extends$3 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$3.apply(null, arguments); }
-var SvgStopIcon = function SvgStopIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$3({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 12 12"
-  }, props), _g || (_g = /*#__PURE__*/React$1.createElement("g", {
-    clipPath: "url(#StopIcon_svg__a)"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#787878",
-    fillRule: "evenodd",
-    d: "M3.352.165A.56.56 0 0 1 3.75 0h4.5c.15 0 .292.06.398.165l3.187 3.187A.56.56 0 0 1 12 3.75v4.5c0 .15-.06.292-.165.398l-3.187 3.187A.56.56 0 0 1 8.25 12h-4.5a.56.56 0 0 1-.398-.165L.165 8.648A.56.56 0 0 1 0 8.25v-4.5c0-.15.06-.292.165-.398zm.631.96L1.125 3.983v4.034l2.858 2.858h4.034l2.858-2.858V3.983L8.017 1.125zM6 3c.31 0 .563.252.563.563v2.625a.563.563 0 0 1-1.125 0V3.563C5.438 3.252 5.689 3 6 3m0 6a.75.75 0 1 0 0-1.5A.75.75 0 0 0 6 9",
-    clipRule: "evenodd"
-  }))), _defs || (_defs = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
-    id: "StopIcon_svg__a"
-  }, /*#__PURE__*/React$1.createElement("path", {
-    fill: "#fff",
-    d: "M0 0h12v12H0z"
-  })))));
-};
-
-var BlockedWordTag = function BlockedWordTag(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    height: "36px",
-    minWidth: "98px",
-    direction: "row",
-    bgcolor: PALETTE.secondary.grey[1],
-    borderRadius: "8px",
-    px: "12px",
-    alignItems: "center",
-    justifyContent: "space-between",
-    spacing: "9px",
-    children: [jsxRuntimeExports.jsx(Typography$1, {
-      variant: "small",
-      bold: true,
-      children: props.word
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      sx: {
-        cursor: 'pointer',
-        '&:hover': {
-          opacity: 0.6
-        },
-        transition: '0.2s'
-      },
-      onClick: props.onClick,
-      children: jsxRuntimeExports.jsx(SvgX, {
-        width: "16px",
-        height: "16px"
-      })
-    })]
-  });
-};
-var SearchWordsSection = function SearchWordsSection(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    inputValue = _useState2[0],
-    setInputValue = _useState2[1];
-  return jsxRuntimeExports.jsx(AstroBentoCard, {
-    icon: SvgStopIcon,
-    iconColor: PALETTE.system.red,
-    title: "".concat(props.blockedSearchWords.length, " blocked search word").concat(props.blockedSearchWords.length === 1 ? '' : 's '),
-    subtitle: "Enter words that you want to be blocked or flagged if they are entered in the search engine on the Device.",
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "6px",
-      children: [jsxRuntimeExports.jsx(UrsorInputField, {
-        value: inputValue,
-        onChange: function onChange(event) {
-          return setInputValue(event.target.value);
-        },
-        onEnterKey: function onEnterKey() {
-          props.addWord(inputValue);
-          setInputValue('');
-        },
-        placeholder: "Add a word to block",
-        width: "100%",
-        leftAlign: true,
-        boldValue: true
-      }), props.isMobile ? jsxRuntimeExports.jsx(Grid, {
-        container: true,
-        gap: "6px",
-        children: props.blockedSearchWords.map(function (bs, i) {
-          return jsxRuntimeExports.jsx(Grid, {
-            item: true,
-            children: jsxRuntimeExports.jsx(BlockedWordTag, {
-              word: bs,
-              onClick: function onClick() {
-                return props.removeWord(bs);
-              }
-            })
-          }, i);
-        })
-      }) : jsxRuntimeExports.jsx(Stack$1, {
-        direction: "row",
-        spacing: "12px",
-        children: props.blockedSearchWords.map(function (bs, i) {
-          return jsxRuntimeExports.jsx(BlockedWordTag, {
-            word: bs,
-            onClick: function onClick() {
-              return props.removeWord(bs);
-            }
-          }, i);
-        })
-      })]
-    })
-  });
-};
-
-function ownKeys$d(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$d(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$d(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$d(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var FilterPageDevicesSection = function FilterPageDevicesSection(props) {
-  var _props$devices$length;
-  var navigate = useNavigate();
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    hoveringOnButton = _useState2[0],
-    setHoveringOnButton = _useState2[1];
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    devicesGridDialogOpen = _useState4[0],
-    setDevicesGridDialogOpen = _useState4[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsx(AstroBentoCard, {
-      title: props.devices.length === 0 ? 'No Devices yet have this Filter applied' : props.devices.length === 1 ? 'Filter applied to this Device' : "Filter applied to these ".concat((_props$devices$length = props.devices.length) !== null && _props$devices$length !== void 0 ? _props$devices$length : 0, " Devices"),
-      info: INFOS.filterDevice,
-      notCollapsible: true,
-      topRightStuff: jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        spacing: "12px",
-        children: [jsxRuntimeExports.jsx(UrsorButton, {
-          size: "small",
-          variant: "secondary",
-          endIcon: SvgChevronRight,
-          iconSize: 16,
-          onClick: function onClick() {
-            return setDevicesGridDialogOpen(true);
-          },
-          children: "View all"
-        }), jsxRuntimeExports.jsx(UrsorButton, {
-          dark: true,
-          variant: "tertiary",
-          size: "small",
-          endIcon: SvgPlusIcon,
-          iconSize: 16,
-          onClick: props.onAdd,
-          children: "Add Device"
-        })]
-      }),
-      children: props.devices.length > 0 ? jsxRuntimeExports.jsx(DynamicCardGrid, {
-        cardWidth: "292px",
-        rowGap: "8px",
-        columnGap: "20px",
-        children: props.devices.map(function (d, i) {
-          return jsxRuntimeExports.jsx(UrsorFadeIn, {
-            duration: 800,
-            delay: i * 150,
-            children: jsxRuntimeExports.jsx(Stack$1, {
-              sx: {
-                cursor: 'pointer',
-                '&:hover': {
-                  opacity: 0.7
-                },
-                transition: '0.2s'
-              },
-              children: jsxRuntimeExports.jsx(DeviceCard, _objectSpread$d(_objectSpread$d({}, d), {}, {
-                button: jsxRuntimeExports.jsx(Stack$1, {
-                  onClick: function onClick() {
-                    return props.openChangeFilterDialogForDevice(d);
-                  },
-                  children: jsxRuntimeExports.jsx(SvgX, {
-                    height: 16,
-                    width: 16
-                  })
-                }),
-                noExtras: true,
-                onClick: function onClick() {
-                  return navigate.push("/profiles/".concat(d.id));
-                }
-              }))
-            })
-          }, i);
-        })
-      }) : jsxRuntimeExports.jsxs(Stack$1, {
-        height: "90px",
-        spacing: "1px",
-        borderRadius: "8px",
-        border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: hoveringOnButton ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)',
-        sx: {
-          transition: '0.2s',
-          cursor: 'pointer',
-          svg: {
-            path: {
-              fill: PALETTE.secondary.grey[4]
-            }
-          }
-        },
-        onMouseEnter: function onMouseEnter() {
-          return setHoveringOnButton(true);
-        },
-        onMouseLeave: function onMouseLeave() {
-          return setHoveringOnButton(false);
-        },
-        onClick: props.onAdd,
-        children: [jsxRuntimeExports.jsx(SvgPlusIcon, {
-          height: "32px",
-          width: "32px"
-        }), jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          color: PALETTE.secondary.grey[hoveringOnButton ? 4 : 3],
-          children: "Add a Device"
-        })]
-      })
-    }), jsxRuntimeExports.jsx(AllDevicesDialog, {
-      title: "".concat(props.devices.length, " ").concat(props.devices.length === 1 ? 'Device has' : 'Devices have', " this Filter applied"),
-      devices: props.devices.slice(0, 4),
-      open: devicesGridDialogOpen,
-      onClose: function onClose() {
-        return setDevicesGridDialogOpen(false);
-      },
-      onAdd: props.onAdd,
-      onRemove: function onRemove(id) {
-        var device = props.devices.find(function (d) {
-          return d.id === id;
-        });
-        device && props.openChangeFilterDialogForDevice(device);
-      }
-    })]
-  });
-};
-
-function FilterPageDesktopBody(props) {
-  var navigate = useNavigate();
-  return jsxRuntimeExports.jsx(PageLayout, {
-    titleRow: props.titleRow,
-    titleBackButtonCallback: function titleBackButtonCallback() {
-      return navigate.push('/filters');
-    },
-    bodyWidth: "100%",
-    fullHeight: true,
-    selectedSidebarItemId: "filters",
-    maxWidth: 834,
-    scrollable: true,
-    actions: props.actions,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      pl: "49px",
-      pr: "2px",
-      spacing: "20px",
-      pb: "33px",
-      children: [jsxRuntimeExports.jsx(FilterPageDevicesSection, {
-        devices: props.devices,
-        onAdd: props.setAddDeviceDialogOpen,
-        onRemove: props.onRemoveDevice,
-        openChangeFilterDialogForDevice: props.openChangeFilterDialogForDevice
-      }), jsxRuntimeExports.jsx(FilterPageCategoriesSection, {
-        filter: props.filter,
-        categories: props.categories,
-        allowedCategories: props.allowedCategories,
-        flipCategory: props.flipCategory,
-        flipSubcategory: props.flipSubcategory
-      }), jsxRuntimeExports.jsx(FilterPageAllowedSitesSection, {
-        allowedSites: props.allowedSites,
-        add: props.addAllowedSite,
-        "delete": props.removeAllowedSite
-      }), jsxRuntimeExports.jsx(FilterPageBlockedSitesSection, {
-        blockedSites: props.blockedSites,
-        add: props.addBlockedSite,
-        "delete": props.removeBlockedSite
-      }), jsxRuntimeExports.jsx(SearchWordsSection, {
-        blockedSearchWords: props.blockedSearchWords,
-        addWord: props.addToBlockedSearchWords,
-        removeWord: props.removeFromBlockedSearchWords
-      })]
-    })
-  });
-}
-
-function ownKeys$c(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$c(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$c(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$c(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var MobileFilterPageDevicesSection = function MobileFilterPageDevicesSection(props) {
-  var _props$devices$length;
-  var navigate = useNavigate();
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    hoveringOnButton = _useState2[0],
-    setHoveringOnButton = _useState2[1];
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    devicesGridDialogOpen = _useState4[0],
-    setDevicesGridDialogOpen = _useState4[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsxs(AstroBentoCard, {
-      title: props.devices.length === 0 ? 'No Devices yet have this Filter applied' : props.devices.length === 1 ? 'Filter applied to this Device' : "Filter applied to these ".concat((_props$devices$length = props.devices.length) !== null && _props$devices$length !== void 0 ? _props$devices$length : 0, " Devices"),
-      info: INFOS.filterDevice,
-      isMobile: true,
-      notCollapsible: true,
-      children: [props.devices.length > 0 ? jsxRuntimeExports.jsx(DynamicCardGrid, {
-        cardWidth: "150px",
-        rowGap: "12px",
-        columnGap: "12px",
-        children: props.devices.map(function (d, i) {
-          return jsxRuntimeExports.jsx(UrsorFadeIn, {
-            duration: 800,
-            delay: i * 150,
-            children: jsxRuntimeExports.jsx(Stack$1, {
-              sx: {
-                cursor: 'pointer',
-                '&:hover': {
-                  opacity: 0.7
-                },
-                transition: '0.2s'
-              },
-              children: jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$c(_objectSpread$c({}, d), {}, {
-                button: jsxRuntimeExports.jsx(Stack$1, {
-                  onClick: function onClick() {
-                    return props.openChangeFilterDialogForDevice(d);
-                  },
-                  children: jsxRuntimeExports.jsx(SvgX, {
-                    height: 16,
-                    width: 16
-                  })
-                }),
-                noExtras: true,
-                onClick: function onClick() {
-                  return navigate.push("/profiles/".concat(d.id));
-                }
-              }))
-            })
-          }, i);
-        })
-      }) : jsxRuntimeExports.jsxs(Stack$1, {
-        height: "90px",
-        spacing: "1px",
-        borderRadius: "8px",
-        border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: hoveringOnButton ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)',
-        sx: {
-          transition: '0.2s',
-          cursor: 'pointer',
-          svg: {
-            path: {
-              fill: PALETTE.secondary.grey[4]
-            }
-          }
-        },
-        onMouseEnter: function onMouseEnter() {
-          return setHoveringOnButton(true);
-        },
-        onMouseLeave: function onMouseLeave() {
-          return setHoveringOnButton(false);
-        },
-        onClick: props.onAdd,
-        children: [jsxRuntimeExports.jsx(SvgPlusIcon, {
-          height: "32px",
-          width: "32px"
-        }), jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          color: PALETTE.secondary.grey[hoveringOnButton ? 4 : 3],
-          children: "Add a Device"
-        })]
-      }), jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        spacing: "12px",
-        pt: "14px",
-        children: [jsxRuntimeExports.jsx(UrsorButton, {
-          size: "small",
-          variant: "secondary",
-          endIcon: SvgChevronRight,
-          iconSize: 16,
-          onClick: function onClick() {
-            return setDevicesGridDialogOpen(true);
-          },
-          width: "100%",
-          children: "View all"
-        }), jsxRuntimeExports.jsx(UrsorButton, {
-          dark: true,
-          variant: "tertiary",
-          size: "small",
-          endIcon: SvgPlusIcon,
-          iconSize: 16,
-          onClick: props.onAdd,
-          width: "100%",
-          children: "Add Device"
-        })]
-      })]
-    }), jsxRuntimeExports.jsx(MobileAllDevicesDialog, {
-      title: "".concat(props.devices.length, " ").concat(props.devices.length === 1 ? 'Device has' : 'Devices have', " this Filter applied"),
-      devices: props.devices.slice(0, 4),
-      open: devicesGridDialogOpen,
-      onClose: function onClose() {
-        return setDevicesGridDialogOpen(false);
-      },
-      onAdd: props.onAdd,
-      onRemove: function onRemove(id) {
-        var device = props.devices.find(function (d) {
-          return d.id === id;
-        });
-        device && props.openChangeFilterDialogForDevice(device);
-      }
-    })]
-  });
-};
-
-var MobileFilterPageCategoriesSection = function MobileFilterPageCategoriesSection(props) {
-  return jsxRuntimeExports.jsx(AstroBentoCard, {
-    icon: SvgThumbsUpIcon,
-    title: "".concat(props.allowedCategories.length, " allowed ").concat(props.allowedCategories.length === 1 ? 'Category' : 'Categories'),
-    subtitle: "Turn the switch on to allow the Category to be browsed on the assigned Devices.",
-    isMobile: true,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "10px",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        alignItems: "flex-end",
-        children: jsxRuntimeExports.jsx(FilterLegend, {
-          small: true
-        })
-      }), props.categories.map(function (c, i) {
-        return jsxRuntimeExports.jsx(UrsorFadeIn, {
-          duration: 800,
-          delay: i * 80,
-          children: jsxRuntimeExports.jsxs(Stack$1, {
-            height: "50px",
-            bgcolor: "rgb(255,255,255)",
-            borderRadius: "12px",
-            border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-            px: "16px",
-            boxSizing: "border-box",
-            justifyContent: "space-between",
-            alignItems: "center",
-            direction: "row",
-            children: [jsxRuntimeExports.jsx(Stack$1, {
-              justifyContent: "space-between",
-              children: jsxRuntimeExports.jsx(Stack$1, {
-                spacing: "16px",
-                alignItems: "center",
-                direction: "row",
-                children: jsxRuntimeExports.jsx(Typography$1, {
-                  maxLines: 1,
-                  bold: true,
-                  children: c.title
-                })
-              })
-            }), jsxRuntimeExports.jsx(AstroSwitch, {
-              on: props.allowedCategories.includes(c.categoryId),
-              callback: function callback() {
-                return props.flipCategory(c.categoryId);
-              }
-            })]
-          })
-        }, c.categoryId);
-      })]
-    })
-  });
-};
-
-function FilterPageMobileBody(props) {
-  var navigate = useNavigate();
-  return jsxRuntimeExports.jsx(MobilePageLayout, {
-    actions: props.actions,
-    titleRow: props.titleRow.slice(-1)[0],
-    titleBackButtonCallback: function titleBackButtonCallback() {
-      return navigate.push('/filters');
-    },
-    selectedPage: "filters",
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "20px",
-      pb: "33px",
-      children: [jsxRuntimeExports.jsx(MobileFilterPageDevicesSection, {
-        devices: props.devices,
-        onAdd: props.setAddDeviceDialogOpen,
-        openChangeFilterDialogForDevice: props.openChangeFilterDialogForDevice
-      }), jsxRuntimeExports.jsx(MobileFilterPageCategoriesSection, {
-        filter: props.filter,
-        categories: props.categories,
-        allowedCategories: props.allowedCategories,
-        flipCategory: props.flipCategory,
-        flipSubcategory: props.flipSubcategory
-      }), jsxRuntimeExports.jsx(FilterPageAllowedSitesSection, {
-        allowedSites: props.allowedSites,
-        add: props.addAllowedSite,
-        "delete": props.removeAllowedSite,
-        isMobile: true
-      }), jsxRuntimeExports.jsx(FilterPageBlockedSitesSection, {
-        blockedSites: props.blockedSites,
-        add: props.addBlockedSite,
-        "delete": props.removeBlockedSite,
-        isMobile: true
-      }), jsxRuntimeExports.jsx(SearchWordsSection, {
-        blockedSearchWords: props.blockedSearchWords,
-        addWord: props.addToBlockedSearchWords,
-        removeWord: props.removeFromBlockedSearchWords,
-        isMobile: true
-      })]
-    })
-  });
-}
-
-var FilterRenameDialog = function FilterRenameDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    name = _useState2[0],
-    setName = _useState2[1];
-  useEffect(function () {
-    return setName(props.name);
-  }, [props.name]);
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Rename Filter",
-    width: "422px",
-    height: "226px",
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      children: [jsxRuntimeExports.jsx(LabeledInputField, {
-        label: "Name",
-        children: jsxRuntimeExports.jsx(UrsorInputField, {
-          value: name,
-          onChange: function onChange(event) {
-            return setName(event.target.value);
-          },
-          placeholder: "Choose a new name",
-          width: "100%",
-          leftAlign: true
-        })
-      }), jsxRuntimeExports.jsx(UrsorButton, {
-        dark: true,
-        variant: "tertiary",
-        width: "100%",
-        onClick: function onClick() {
-          props.onSubmit(name);
-          props.onClose();
-        },
-        children: "Save"
-      })]
-    })
-  });
-};
-
-var ChangeFilterDialog = function ChangeFilterDialog(props) {
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    allFilters = _useState2[0],
-    setAllFilters = _useState2[1];
-  useEffect(function () {
-    ApiController.getGroupFilters(props.groupId).then(function (d) {
-      return setAllFilters(d);
-    });
-  }, [props.groupId]);
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Change Filter",
-    subtitle: ['Change the Filter of', props.deviceName],
-    width: "434px",
-    dynamicHeight: true,
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      pt: "16px",
-      spacing: "16px",
-      width: "100%",
-      children: allFilters.filter(function (f) {
-        return f.id !== props.currentFilterId;
-      }).map(function (f) {
-        return jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          spacing: "8px",
-          px: "8px",
-          sx: {
-            cursor: 'pointer',
-            transition: '0.2s',
-            '&:hover': {
-              opacity: 0.7
-            },
-            svg: {
-              path: {
-                fill: PALETTE.secondary.orange[3]
-              }
-            }
-          },
-          onClick: function onClick() {
-            props.submitChange(f.id);
-            props.onClose();
-          },
-          alignItems: "center",
-          children: [jsxRuntimeExports.jsx(SvgFilterIcon, {
-            height: "16px",
-            width: "16px"
-          }), jsxRuntimeExports.jsx(Typography$1, {
-            maxLines: 1,
-            bold: true,
-            children: f.title
-          })]
-        }, f.id);
-      })
-    })
-  });
-};
-
-function FilterPage(props) {
-  var _filter$title;
-  var _useAuth = useAuth(),
-    user = _useAuth.user;
-  var _useState = useState(),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    filter = _useState2[0],
-    setFilter = _useState2[1];
-  var loadFilter = useCallback(function () {
-    return ApiController.getFilter(props.filterId).then(setFilter);
-  }, [props.filterId]);
-  useEffect(function () {
-    loadFilter();
-  }, [loadFilter]);
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    blockedSites = _useState4[0],
-    setBlockedSites = _useState4[1];
-  var loadBlockedSites = useCallback(function () {
-    return ApiController.getBlockedSites(props.filterId).then(setBlockedSites);
-  }, [props.filterId]);
-  useEffect(function () {
-    loadBlockedSites();
-  }, [loadBlockedSites]);
-  var _useState5 = useState([]),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    allowedSites = _useState6[0],
-    setAllowedSites = _useState6[1];
-  var loadAllowedSites = useCallback(function () {
-    return ApiController.getAllowedSites(props.filterId).then(setAllowedSites);
-  }, [props.filterId]);
-  useEffect(function () {
-    loadAllowedSites();
-  }, [loadAllowedSites]);
-  var _useState7 = useState([]),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    categories = _useState8[0],
-    setCategories = _useState8[1];
-  useEffect(function () {
-    ApiController.getAllFilterCategories().then(setCategories);
-  }, []);
-  var _useState9 = useState([]),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    allowedSubcategories = _useState10[0],
-    setAllowedSubcategories = _useState10[1];
-  useEffect(function () {
-    ApiController.getFilterCategories(props.filterId).then(function (response) {
-      return setAllowedSubcategories(response.map(function (x) {
-        return x.categoryId;
-      }));
-    });
-  }, [props.filterId]);
-  var _useState11 = useState([]),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    blockedSearchWords = _useState12[0],
-    setBlockedSearchWords = _useState12[1];
-  useEffect(function () {
-    ApiController.getBlockedSearchWords(props.filterId).then(setBlockedSearchWords);
-  }, [props.filterId]);
-  var _useState13 = useState(false),
-    _useState14 = _slicedToArray$2(_useState13, 2);
-    _useState14[0];
-    var _setExceptionDialogOpen = _useState14[1];
-  var _useState15 = useState(false),
-    _useState16 = _slicedToArray$2(_useState15, 2),
-    renameDialogOpen = _useState16[0],
-    setRenameDialogOpen = _useState16[1];
-  var _useState17 = useState([]),
-    _useState18 = _slicedToArray$2(_useState17, 2),
-    devices = _useState18[0],
-    setDevices = _useState18[1];
-  var loadDevices = useCallback(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getFilterDevices(props.filterId, user.group_id).then(setDevices);
-  }, [props.filterId, user === null || user === void 0 ? void 0 : user.group_id]);
-  useEffect(function () {
-    loadDevices();
-  }, [loadDevices]);
-  var cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
-  var _useState19 = useState([]),
-    _useState20 = _slicedToArray$2(_useState19, 2),
-    allFilters = _useState20[0],
-    setAllFilters = _useState20[1];
-  useEffect(function () {
-    user.group_id && ApiController.getGroupFilters(user.group_id).then(setAllFilters);
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  var actions = [{
-    text: 'Edit name',
-    kallback: function kallback() {
-      return setRenameDialogOpen(true);
-    },
-    icon: SvgPencil
-  },
-  // {
-  //   text: "Duplicate",
-  //   kallback: () => null,
-  //   icon: DuplicateIcon,
-  // },
-  {
-    text: 'Delete',
-    kallback: function kallback() {
-      devices.length > 0 ? notificationCtx.negativeSuccess('Cannot delete a Filter that is applied to Devices.') : setDeletionDialogOpen(true);
-    },
-    icon: SvgTrashcanIcon,
-    color: PALETTE.system.red
-  }];
-  var navigate = useNavigate();
-  var titleRow = [{
-    text: 'My Filters',
-    callback: function callback() {
-      return navigate.push('/filters');
-    }
-  }, {
-    text: (_filter$title = filter === null || filter === void 0 ? void 0 : filter.title) !== null && _filter$title !== void 0 ? _filter$title : '',
-    options: allFilters.filter(function (f) {
-      return f.id !== props.filterId;
-    }).map(function (f) {
-      return {
-        text: f.title,
-        image: jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            svg: {
-              path: {
-                fill: PALETTE.secondary.orange[3]
-              }
-            }
-          },
-          height: "16px",
-          width: "16px",
-          children: jsxRuntimeExports.jsx(SvgFilterIcon, {
-            height: "16px",
-            width: "16px"
-          })
-        }),
-        callback: function callback() {
-          return navigate.push("/filters/".concat(f.id));
-        }
-      };
-    })
-  }];
-  var _useState21 = useState(false),
-    _useState22 = _slicedToArray$2(_useState21, 2),
-    addDeviceDialogOpen = _useState22[0],
-    _setAddDeviceDialogOpen = _useState22[1];
-  var notificationCtx = useContext(NotificationContext);
-  var _useState23 = useState(false),
-    _useState24 = _slicedToArray$2(_useState23, 2),
-    deletionDialogOpen = _useState24[0],
-    setDeletionDialogOpen = _useState24[1];
-  var _useState25 = useState(),
-    _useState26 = _slicedToArray$2(_useState25, 2),
-    changeFilterDialogOpenForDevice = _useState26[0],
-    setChangeFilterDialogOpenForDevice = _useState26[1];
-  var deleteFilter = function deleteFilter() {
-    return ApiController.removeFilter(props.filterId).then(function () {
-      return navigate.push('/filters');
-    });
-  };
-  var flipSubcategory = function flipSubcategory(id) {
-    if (allowedSubcategories.includes(id)) {
-      setAllowedSubcategories(allowedSubcategories.filter(function (sid) {
-        return sid !== id;
-      }));
-      ApiController.removeWhitelistSubcategory(props.filterId, id);
-    } else {
-      setAllowedSubcategories([].concat(_toConsumableArray(allowedSubcategories), [id]));
-      ApiController.addWhitelistSubcategory(props.filterId, id);
-    }
-  };
-  var flipCategory = function flipCategory(id) {
-    var _categories$find;
-    var subcategoryIds = (_categories$find = categories.find(function (cg) {
-      return cg.categoryId === id;
-    })) === null || _categories$find === void 0 ? void 0 : _categories$find.subCategories.map(function (c) {
-      return c.id;
-    });
-    if (!subcategoryIds) return;
-    if (subcategoryIds !== null && subcategoryIds !== void 0 && subcategoryIds.every(function (cid) {
-      return allowedSubcategories.includes(cid);
-    })) {
-      setAllowedSubcategories(allowedSubcategories.filter(function (acid) {
-        return !subcategoryIds.includes(acid);
-      }));
-      ApiController.removeWhitelistCategory(props.filterId, id);
-    } else {
-      setAllowedSubcategories(_.uniq([].concat(_toConsumableArray(allowedSubcategories), _toConsumableArray(subcategoryIds))));
-      ApiController.addWhitelistCategory(props.filterId, id);
-    }
-  };
-  var addToBlockedSearchWords = function addToBlockedSearchWords(word) {
-    setBlockedSearchWords([].concat(_toConsumableArray(blockedSearchWords), [word]));
-    ApiController.addBlockedSearchWord(props.filterId, word);
-  };
-  var removeFromBlockedSearchWords = function removeFromBlockedSearchWords(word) {
-    setBlockedSearchWords(blockedSearchWords.filter(function (w) {
-      return w !== word;
-    }));
-    ApiController.removeBlockedSearchWord(props.filterId, word);
-  };
-  var addBlockedSite = function addBlockedSite(url) {
-    return ApiController.addBlockedSite(props.filterId, url).then(loadBlockedSites).then(function () {
-      return notificationCtx.success('Added blocked site.');
-    });
-  };
-  var addAllowedSite = function addAllowedSite(url) {
-    return ApiController.addAllowedSite(props.filterId, url).then(loadAllowedSites).then(function () {
-      return notificationCtx.success('Added allowed site.');
-    });
-  };
-  var removeBlockedSite = function removeBlockedSite(url) {
-    return ApiController.removeBlockedSite(props.filterId, url).then(loadBlockedSites).then(function () {
-      return notificationCtx.negativeSuccess('Removed blocked site.');
-    });
-  };
-  var removeAllowedSite = function removeAllowedSite(url) {
-    return ApiController.removeAllowedSite(props.filterId, url).then(loadAllowedSites).then(function () {
-      return notificationCtx.negativeSuccess('Removed allowed site.');
-    });
-  };
-  var applyFilterToDevice = function applyFilterToDevice(id) {
-    return ApiController.addFilterToDevice(props.filterId, id).then(function () {
-      _setAddDeviceDialogOpen(false);
-      loadDevices();
-      notificationCtx.success('Applied this Filter to Device.');
-    });
-  };
-  return filter ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [props.isMobile ? jsxRuntimeExports.jsx(FilterPageMobileBody, {
-      filterId: props.filterId,
-      filter: filter,
-      flipCategory: flipCategory,
-      flipSubcategory: flipSubcategory,
-      devices: cuttingEdgeOnlineStatusDevices,
-      actions: actions,
-      categories: categories,
-      allowedCategories: allowedSubcategories,
-      allowedSites: allowedSites,
-      blockedSites: blockedSites,
-      blockedSearchWords: blockedSearchWords,
-      addToBlockedSearchWords: addToBlockedSearchWords,
-      removeFromBlockedSearchWords: removeFromBlockedSearchWords,
-      setExceptionDialogOpen: function setExceptionDialogOpen() {
-        return _setExceptionDialogOpen(true);
-      },
-      titleRow: titleRow,
-      onRemoveDevice: loadDevices,
-      setAddDeviceDialogOpen: function setAddDeviceDialogOpen() {
-        return _setAddDeviceDialogOpen(true);
-      },
-      addBlockedSite: addBlockedSite,
-      addAllowedSite: addAllowedSite,
-      removeBlockedSite: removeBlockedSite,
-      removeAllowedSite: removeAllowedSite,
-      openChangeFilterDialogForDevice: setChangeFilterDialogOpenForDevice
-    }) : jsxRuntimeExports.jsx(FilterPageDesktopBody, {
-      filterId: props.filterId,
-      filter: filter,
-      flipCategory: flipCategory,
-      flipSubcategory: flipSubcategory,
-      devices: cuttingEdgeOnlineStatusDevices,
-      actions: actions,
-      categories: categories,
-      allowedCategories: allowedSubcategories,
-      allowedSites: allowedSites,
-      blockedSites: blockedSites,
-      blockedSearchWords: blockedSearchWords,
-      addToBlockedSearchWords: addToBlockedSearchWords,
-      removeFromBlockedSearchWords: removeFromBlockedSearchWords,
-      setExceptionDialogOpen: function setExceptionDialogOpen() {
-        return _setExceptionDialogOpen(true);
-      },
-      titleRow: titleRow,
-      onRemoveDevice: loadDevices,
-      setAddDeviceDialogOpen: function setAddDeviceDialogOpen() {
-        return _setAddDeviceDialogOpen(true);
-      },
-      addBlockedSite: addBlockedSite,
-      addAllowedSite: addAllowedSite,
-      removeBlockedSite: removeBlockedSite,
-      removeAllowedSite: removeAllowedSite,
-      openChangeFilterDialogForDevice: setChangeFilterDialogOpenForDevice
-    }), devices ? jsxRuntimeExports.jsx(AddDeviceDialog, {
-      open: addDeviceDialogOpen,
-      groupId: user.group_id,
-      onClose: function onClose() {
-        return _setAddDeviceDialogOpen(false);
-      },
-      title: "Apply to a Device",
-      subtitle: ["Replace a Device's current Filter", 'with this one.'],
-      emptyText: "This Filter is applied to all of your Devices",
-      addedDevices: cuttingEdgeOnlineStatusDevices,
-      onAdd: applyFilterToDevice,
-      isMobile: props.isMobile
-    }) : null, jsxRuntimeExports.jsx(DeletionDialog, {
-      open: deletionDialogOpen,
-      type: "Filter",
-      onClose: function onClose() {
-        return setDeletionDialogOpen(false);
-      },
-      subtitle: "If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default.",
-      onSubmit: deleteFilter,
-      isMobile: props.isMobile
-    }), jsxRuntimeExports.jsx(FilterRenameDialog, {
-      open: renameDialogOpen,
-      onClose: function onClose() {
-        return setRenameDialogOpen(false);
-      },
-      name: filter.title,
-      onSubmit: function onSubmit(name) {
-        return ApiController.changeFilterName(props.filterId, name).then(loadFilter).then(function () {
-          return notificationCtx.success('Renamed Filter');
-        });
-      },
-      isMobile: props.isMobile
-    }), changeFilterDialogOpenForDevice ? jsxRuntimeExports.jsx(ChangeFilterDialog, {
-      open: true,
-      onClose: function onClose() {
-        return setChangeFilterDialogOpenForDevice(undefined);
-      },
-      submitChange: function submitChange(id) {
-        return ApiController.addFilterToDevice(id, changeFilterDialogOpenForDevice.id).then(loadDevices).then(function () {
-          return notificationCtx.success("".concat(changeFilterDialogOpenForDevice.name, " changed to new Filter"));
-        });
-      },
-      currentFilterId: props.filterId,
-      groupId: user.group_id,
-      deviceName: changeFilterDialogOpenForDevice.name,
-      isMobile: props.isMobile
-    }) : null]
-  }) : null;
-}
-
-var Filter = function Filter(_ref) {
-  var params = _ref.params;
-  return jsxRuntimeExports.jsx(FilterPage, {
-    filterId: parseInt(params.id),
-    isMobile: isMobile_1
-  });
-};
-
-var _path$2;
-function _extends$2() { return _extends$2 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$2.apply(null, arguments); }
-var SvgListUnorderedIcon = function SvgListUnorderedIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$2({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 32 32"
-  }, props), _path$2 || (_path$2 = /*#__PURE__*/React$1.createElement("path", {
-    fill: "#0D2839",
-    fillRule: "evenodd",
-    d: "M4 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m7.5-3a1.5 1.5 0 0 0 0 3h17a1.5 1.5 0 0 0 0-3zm0 10a1.5 1.5 0 0 0 0 3h17a1.5 1.5 0 0 0 0-3zm0 10a1.5 1.5 0 0 0 0 3h17a1.5 1.5 0 0 0 0-3zM6 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0M4 28a2 2 0 1 0 0-4 2 2 0 0 0 0 4",
-    clipRule: "evenodd"
-  })));
-};
-
-var FilterCard = function FilterCard(props) {
-  var _props$whitelistedCat, _props$blacklistedWor;
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    height: props.isMobile ? '172px' : '213px',
-    borderRadius: "12px",
-    bgcolor: props.official ? '#EDEAFF' : 'rgb(255,255,255)',
-    p: "16px",
-    boxSizing: "border-box",
-    justifyContent: "space-between",
-    position: "relative",
-    overflow: "hidden",
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "12px",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        spacing: "4px",
-        alignItems: "center",
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          variant: props.isMobile ? 'medium' : 'h5',
-          children: props.title
-        }), jsxRuntimeExports.jsx(SvgVerifiedIcon, {
-          height: "20px",
-          width: "20px"
-        })]
-      }), jsxRuntimeExports.jsx(Typography$1, {
-        variant: "small",
-        bold: true,
-        color: PALETTE.secondary.grey[4],
-        children: jsxRuntimeExports.jsxs(Stack$1, {
-          spacing: "4px",
-          sx: {
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[4]
-              }
-            }
-          },
-          children: [jsxRuntimeExports.jsxs(Stack$1, {
-            spacing: "4px",
-            direction: "row",
-            alignItems: "center",
-            children: [jsxRuntimeExports.jsx(SvgListUnorderedIcon, {
-              width: "12px",
-              height: "12px"
-            }), jsxRuntimeExports.jsx("div", {
-              children: "".concat((_props$whitelistedCat = props.whitelistedCategories) !== null && _props$whitelistedCat !== void 0 ? _props$whitelistedCat : 0, " ").concat(props.whitelistedCategories === 1 ? 'Category' : 'Categories', " allowed")
-            })]
-          }), jsxRuntimeExports.jsxs(Stack$1, {
-            spacing: "4px",
-            direction: "row",
-            alignItems: "center",
-            children: [jsxRuntimeExports.jsx(SvgStopIcon, {
-              width: "12px",
-              height: "12px"
-            }), jsxRuntimeExports.jsx("div", {
-              children: "".concat((_props$blacklistedWor = props.blacklistedWords) !== null && _props$blacklistedWor !== void 0 ? _props$blacklistedWor : 0, " blocked ").concat(props.blacklistedWords === 1 ? 'word' : 'words')
-            })]
-          })]
-        })
-      })]
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      position: "absolute",
-      right: props.isMobile ? 13 : 0,
-      top: props.isMobile ? '56px' : '75px',
-      sx: {
-        svg: {
-          path: {
-            fill: 'rgba(0,0,0,0.06)'
-          }
-        }
-      },
-      children: jsxRuntimeExports.jsx(SvgLockIcon, {
-        height: props.isMobile ? '146px' : '171px',
-        width: props.isMobile ? '146px' : '171px'
-      })
-    }), jsxRuntimeExports.jsx(ProfileImageRow, {
-      devices: props.devices,
-      totalDeviceCount: props.totalDeviceCount
-    })]
-  });
-};
-
-function ownKeys$b(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$b(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$b(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$b(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function AllFiltersPageDesktopBody(props) {
-  var navigate = useNavigate();
-  return jsxRuntimeExports.jsx(PageLayout, {
-    title: "My Filters",
-    titleBackButton: true,
-    info: INFOS.filters,
-    bodyWidth: "100%",
-    fullHeight: true,
-    selectedSidebarItemId: "filters",
-    button: {
-      text: 'Add a Filter',
-      callback: props.setCreateFilterDialogOpen,
-      icon: SvgPlusIcon
-    },
-    maxWidth: 834,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      pl: "50px",
-      children: jsxRuntimeExports.jsx(DynamicCardGrid, {
-        cardWidth: "350px",
-        rowGap: "20px",
-        columnGap: "20px",
-        children: props.filters.map(function (f, i) {
-          return jsxRuntimeExports.jsx(Stack$1, {
-            sx: {
-              cursor: 'pointer',
-              transition: '0.2s',
-              '&:hover': {
-                opacity: 0.6
-              }
-            },
-            onClick: function onClick() {
-              return navigate.push("/filters/".concat(f.id));
-            },
-            children: jsxRuntimeExports.jsx(UrsorFadeIn, {
-              duration: 800,
-              delay: i * 150,
-              children: jsxRuntimeExports.jsx(FilterCard, _objectSpread$b({}, f))
-            })
-          }, f.id);
-        })
-      })
-    })
-  });
-}
-
-function ownKeys$a(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$a(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$a(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$a(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function AllFiltersPageMobileBody(props) {
-  var navigate = useNavigate();
-  return jsxRuntimeExports.jsx(MobilePageLayout, {
-    title: "My Filters",
-    info: INFOS.filters,
-    selectedPage: "filters",
-    topRightElement: jsxRuntimeExports.jsx(UrsorButton, {
-      dark: true,
-      variant: "tertiary",
-      size: "small",
-      endIcon: SvgPlusIcon,
-      onClick: props.setCreateFilterDialogOpen,
-      children: "Add a Filter"
-    }),
-    children: jsxRuntimeExports.jsx(DynamicCardGrid, {
-      cardWidth: "350px",
-      rowGap: "20px",
-      columnGap: "20px",
-      children: props.filters.map(function (f, i) {
-        return jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            cursor: 'pointer',
-            transition: '0.2s',
-            '&:hover': {
-              opacity: 0.6
-            }
-          },
-          onClick: function onClick() {
-            return navigate.push("/filters/".concat(f.id));
-          },
-          children: jsxRuntimeExports.jsx(UrsorFadeIn, {
-            duration: 800,
-            delay: i * 150,
-            children: jsxRuntimeExports.jsx(FilterCard, _objectSpread$a(_objectSpread$a({}, f), {}, {
-              isMobile: true
-            }))
-          })
-        }, f.id);
-      })
-    })
-  });
-}
-
-var FilterCreationDialog = function FilterCreationDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    name = _useState2[0],
-    setName = _useState2[1];
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Create Filter",
-    subtitle: ['Choose a name for', 'your Filter.'],
-    width: "422px",
-    dynamicHeight: true,
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      spacing: "12px",
-      children: [jsxRuntimeExports.jsx(LabeledInputField, {
-        label: "Name",
-        children: jsxRuntimeExports.jsx(UrsorInputField, {
-          value: name,
-          onChange: function onChange(event) {
-            return setName(event.target.value);
-          },
-          placeholder: "Choose a name",
-          width: "100%",
-          leftAlign: true
-        })
-      }), jsxRuntimeExports.jsx(UrsorButton, {
-        dark: true,
-        variant: "tertiary",
-        width: "100%",
-        onClick: function onClick() {
-          props.onSubmit(name);
-          props.onClose();
-        },
-        children: "Create"
-      })]
-    })
-  });
-};
-
-var AllFiltersPage = function AllFiltersPage(props) {
-  var _useAuth = useAuth(),
-    user = _useAuth.user;
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    filters = _useState2[0],
-    setFilters = _useState2[1];
-  useEffect(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getGroupFilters(user.group_id).then(function (filtahs) {
-      return setFilters(_.sortBy(filtahs, function (f) {
-        return f.id;
-      }));
-    });
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    filterCreationDialogOpen = _useState4[0],
-    setFilterCreationDialogOpen = _useState4[1];
-  var navigate = useNavigate();
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [props.isMobile ? jsxRuntimeExports.jsx(AllFiltersPageMobileBody, {
-      filters: filters,
-      setCreateFilterDialogOpen: function setCreateFilterDialogOpen() {
-        return setFilterCreationDialogOpen(true);
-      }
-    }) : jsxRuntimeExports.jsx(AllFiltersPageDesktopBody, {
-      filters: filters,
-      setCreateFilterDialogOpen: function setCreateFilterDialogOpen() {
-        return setFilterCreationDialogOpen(true);
-      }
-    }), jsxRuntimeExports.jsx(FilterCreationDialog, {
-      open: filterCreationDialogOpen,
-      onClose: function onClose() {
-        return setFilterCreationDialogOpen(false);
-      },
-      onSubmit: function onSubmit(title) {
-        return (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.createFilter(user.group_id, title).then(function (f) {
-          return navigate.push("/filters/".concat(f.filterId));
-        });
-      },
-      isMobile: props.isMobile
-    })]
-  });
-};
-
-var Filters = function Filters() {
+  var props = _ref.props;
   return jsxRuntimeExports.jsx(RootLayout, {
-    children: jsxRuntimeExports.jsx(AllFiltersPage, {
-      isMobile: isMobile_1
-    })
-  });
-};
-
-var AstroTabSwitch = function AstroTabSwitch(props) {
-  return jsxRuntimeExports.jsx(Stack$1, {
-    direction: "row",
-    spacing: "12px",
-    children: props.items.map(function (item) {
-      return jsxRuntimeExports.jsx(Stack$1, {
-        height: "32px",
-        px: "12px",
-        boxSizing: "border-box",
-        onClick: function onClick() {
-          return props.select(item.id);
-        },
-        borderRadius: "8px",
-        justifyContent: "center",
-        bgcolor: "rgb(255,255,255)",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          variant: "small",
-          bold: true,
-          color: props.selected === item.id ? PALETTE.secondary.purple[2] : undefined,
-          sx: {
-            cursor: 'pointer',
-            '&:hover': {
-              opacity: 0.6
-            },
-            transition: '0.2s'
-          },
-          children: item.text
-        })
-      }, item.id);
-    })
-  });
-};
-
-dayjs.extend(advancedFormat);
-var SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD$1 = 1260;
-var DevicePageInsightsTab = function DevicePageInsightsTab(props) {
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    times = _useState2[0],
-    setTimes = _useState2[1];
-  var _useState3 = useState(0),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    selectedDayIndex = _useState4[0],
-    setSelectedDayIndex = _useState4[1]; // days from today
-  var _useState5 = useState(0),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    rangeEndDayIndex = _useState6[0],
-    setRangeEndDayIndex = _useState6[1];
-  var _useState7 = useState(6),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    rangeStartDayIndex = _useState8[0],
-    setRangeStartDayIndex = _useState8[1];
-  var _useState9 = useState([]),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    visitedSites = _useState10[0],
-    setVisitedSites = _useState10[1];
-  useEffect(function () {
-    ApiController.getStats(props.deviceId, dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'), dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')).then(function (stats) {
-      var _stats$visitedWebsite;
-      setTimes(stats.screenTime);
-      setVisitedSites(_.sortBy(((_stats$visitedWebsite = stats.visitedWebsites) === null || _stats$visitedWebsite === void 0 || (_stats$visitedWebsite = _stats$visitedWebsite.find(function (w) {
-        return w.date === dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD');
-      })) === null || _stats$visitedWebsite === void 0 ? void 0 : _stats$visitedWebsite.websites) || [], function (t) {
-        return t.screenTime;
-      }));
-    });
-  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
-  var _useState11 = useState(0),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    timeSpent = _useState12[0],
-    setTimeSpent = _useState12[1];
-  useEffect(function () {
-    var _times$find$screenTim, _times$find;
-    return setTimeSpent((_times$find$screenTim = (_times$find = times.find(function (t) {
-      return t.date === dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD');
-    })) === null || _times$find === void 0 ? void 0 : _times$find.screenTime) !== null && _times$find$screenTim !== void 0 ? _times$find$screenTim : 0);
-  }, [times, selectedDayIndex]);
-  useEffect(function () {
-    if (selectedDayIndex < 4) {
-      var shiftNDays = selectedDayIndex - 3;
-      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays);
-      setRangeEndDayIndex(Math.max(0, shiftNDays));
-      // }
-      // else if (times.length - selectedDayIndex < 4) {
-      //   const shiftNDays = times.length - 1 - selectedDayIndex;
-      //   setRangeStartDayIndex(Math.min(times.length - 1, selectedDayIndex + 3));
-      //   setRangeEndDayIndex(selectedDayIndex - 6 + shiftNDays);
-    } else {
-      setRangeStartDayIndex(selectedDayIndex + 3);
-      setRangeEndDayIndex(selectedDayIndex - 3);
-    }
-  }, [selectedDayIndex, times]);
-  var _useWindowSize = useWindowSize(),
-    width = _useWindowSize.width;
-  var _useState13 = useState(false),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    switchToColumn = _useState14[0],
-    setSwitchToColumn = _useState14[1];
-  useEffect(function () {
-    setSwitchToColumn(width < SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD$1);
-  }, [width]);
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    spacing: "24px",
-    pb: "32px",
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      justifyContent: "space-between",
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        spacing: "10px",
-        alignItems: "center",
-        children: [jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            cursor: 'pointer',
-            transition: '0.2s',
-            '&:hover': {
-              opacity: 0.6
-            }
-          },
-          onClick: function onClick() {
-            return setSelectedDayIndex(selectedDayIndex + 1);
-          },
-          children: jsxRuntimeExports.jsx(SvgChevronLeft, {
-            height: "24px",
-            width: "24px"
-          })
-        }), jsxRuntimeExports.jsx(Typography$1, {
-          variant: "h5",
-          children: "".concat(selectedDayIndex === 0 ? 'Today' : selectedDayIndex === 1 ? 'Yesterday' : "".concat(dayjs().utc().subtract(selectedDayIndex, 'days').format('dddd')), ", ").concat(dayjs().utc().subtract(selectedDayIndex, 'days').format('Do MMMM'))
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            opacity: selectedDayIndex === 0 ? 0.3 : 1,
-            pointerEvents: selectedDayIndex === 0 ? 'none' : undefined,
-            cursor: 'pointer',
-            transition: '0.2s',
-            '&:hover': {
-              opacity: 0.6
-            }
-          },
-          onClick: function onClick() {
-            return setSelectedDayIndex(selectedDayIndex - 1);
-          },
-          children: jsxRuntimeExports.jsx(SvgChevronRight, {
-            height: "24px",
-            width: "24px"
-          })
-        })]
-      }), jsxRuntimeExports.jsx(CalendarButton, {
-        value: dayjs().utc().subtract(selectedDayIndex, 'days').toDate(),
-        setValue: function setValue(date) {
-          return setSelectedDayIndex(dayjs().diff(date, 'days'));
-        }
-      })]
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "28px",
-      direction: switchToColumn ? 'column' : 'row',
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        width: switchToColumn ? '100%' : '54%',
-        height: "290px",
-        children: jsxRuntimeExports.jsx(AstroBentoCard, {
-          title: "".concat(Math.floor(timeSpent / 60), "h ").concat(Math.floor(timeSpent % 60), "m spent on screen"),
-          notCollapsible: true,
-          children: jsxRuntimeExports.jsx(Stack$1, {
-            mt: "33p",
-            flex: 1,
-            borderRadius: "12px",
-            bgcolor: "rgb(255,255,255)",
-            py: "8px",
-            boxSizing: "border-box",
-            spacing: "30px",
-            children: times.length > 0 ? jsxRuntimeExports.jsx(AstroTimeChart, {
-              times: times,
-              selected: dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD'),
-              setSelectedDatetime: function setSelectedDatetime(datetime) {
-                return setSelectedDayIndex(dayjs().utc().diff(datetime, 'days'));
-              }
-            }) : null
-          })
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        height: "290px",
-        flex: 1,
-        children: jsxRuntimeExports.jsx(MostVisitedSitesSection, {
-          sites: visitedSites
-        })
-      })]
-    }), jsxRuntimeExports.jsx(HistorySection, {
+    children: jsxRuntimeExports.jsx(FolderPage, {
+      folderId: parseInt(props.folderId),
+      isMobile: isMobile_1,
       deviceId: props.deviceId,
-      date: dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD')
-    })]
-  });
-};
-
-function ownKeys$9(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$9(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$9(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$9(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var DevicePageContentTab = function DevicePageContentTab(props) {
-  var navigate = useNavigate();
-  var _useState = useState(),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    folderDeviceRemovalConfirmationDialogId = _useState2[0],
-    setFolderDeviceRemovalConfirmationDialogId = _useState2[1];
-  var notificationCtx = useContext(NotificationContext);
-  return jsxRuntimeExports.jsxs(ProfilePageTabLayout, {
-    title: "".concat(props.folders.length, " Content Folder").concat(props.folders.length === 1 ? '' : 's '),
-    rightSideElement: jsxRuntimeExports.jsx(UrsorButton, {
-      dark: true,
-      variant: "tertiary",
-      size: "small",
-      endIcon: SvgPlusIcon,
-      iconSize: 18,
-      onClick: props.openAddFolderDialog,
-      children: "Add Folder"
-    }),
-    mobile: props.isMobile,
-    info: INFOS.folders,
-    children: [props.folders.length > 0 ? jsxRuntimeExports.jsx(Stack$1, {
-      pt: "20px",
-      children: jsxRuntimeExports.jsx(DynamicCardGrid, {
-        cardWidth: "292px",
-        rowGap: "40px",
-        columnGap: "20px",
-        children: props.folders.map(function (f, i) {
-          return jsxRuntimeExports.jsx(UrsorFadeIn, {
-            duration: 800,
-            delay: 100 * i,
-            children: jsxRuntimeExports.jsx(FolderCard, _objectSpread$9(_objectSpread$9({}, f), {}, {
-              clickCallback: function clickCallback() {
-                return navigate.push("/folders/".concat(f.id));
-              },
-              isMobile: props.isMobile,
-              editingCallback: props.onUpdate,
-              deletionCallback: props.onUpdate
-            }), f.id)
-          }, f.id);
-        })
-      })
-    }) : jsxRuntimeExports.jsx(Stack$1, {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      children: jsxRuntimeExports.jsx(UrsorFadeIn, {
-        delay: 600,
-        duration: 800,
-        children: jsxRuntimeExports.jsxs(Stack$1, {
-          height: props.isMobile ? '100%' : '457px',
-          justifyContent: "center",
-          alignItems: "center",
-          spacing: "13px",
-          children: [jsxRuntimeExports.jsx("img", {
-            src: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png",
-            width: props.isMobile ? 179 : 230,
-            height: props.isMobile ? 152 : 195,
-            alt: "empty state illustration"
-          }), jsxRuntimeExports.jsx(Stack$1, {
-            width: props.isMobile ? '100%' : '304px',
-            alignItems: "center",
-            children: jsxRuntimeExports.jsx(Typography$1, {
-              color: PALETTE.secondary.grey[3],
-              sx: {
-                textAlign: 'center'
-              },
-              bold: true,
-              children: "There is no Content currently assigned to this Device. Add a Folder to get started."
-            })
-          })]
-        })
-      })
-    }), folderDeviceRemovalConfirmationDialogId ? jsxRuntimeExports.jsx(FolderDeviceRemovalConfirmationDialog, {
-      open: true,
-      onClose: function onClose() {
-        return setFolderDeviceRemovalConfirmationDialogId(undefined);
-      },
-      onSubmit: function onSubmit() {
-        return ApiController.removeFolderFromDevice(folderDeviceRemovalConfirmationDialogId, props.deviceId).then(props.onUpdate).then(function () {
-          return notificationCtx.negativeSuccess('Removed Folder from Device.');
-        });
-      },
-      deviceName: props.deviceName,
-      isMobile: props.isMobile
-    }) : null]
-  });
-};
-
-var AstroSettingCard = function AstroSettingCard(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    height: "54px",
-    bgcolor: "rgb(255,255,255)",
-    borderRadius: "12px",
-    border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-    px: "16px",
-    boxSizing: "border-box",
-    justifyContent: "space-between",
-    alignItems: "center",
-    direction: "row",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      justifyContent: "space-between",
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "8px",
-        alignItems: "center",
-        direction: "row",
-        children: [props.image, jsxRuntimeExports.jsxs(Stack$1, {
-          children: [jsxRuntimeExports.jsx(Typography$1, {
-            maxLines: 1,
-            bold: true,
-            color: props.textColor,
-            children: props.title
-          }), props.subtitle ? jsxRuntimeExports.jsx(Typography$1, {
-            maxLines: 1,
-            variant: "small",
-            color: props.textColor,
-            children: props.subtitle
-          }) : null]
-        })]
-      })
-    }), props.rightContent]
-  });
-};
-
-var DeviceCardFilterSection = function DeviceCardFilterSection(props) {
-  var _allFilters$find;
-  var _useAuth = useAuth(),
-    user = _useAuth.user;
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    allFilters = _useState2[0],
-    setAllFilters = _useState2[1];
-  useEffect(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getGroupFilters(user.group_id).then(setAllFilters);
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    open = _useState4[0],
-    setOpen = _useState4[1];
-  return jsxRuntimeExports.jsx(UrsorPopover, {
-    open: open,
-    content: jsxRuntimeExports.jsx(Stack$1, {
-      bgcolor: "rgb(255,255,255)",
-      borderRadius: "12px",
-      spacing: "8px",
-      children: allFilters.map(function (f, i) {
-        return jsxRuntimeExports.jsx(Stack$1, {
-          sx: {
-            opacity: props.filterId != f.id ? 0.6 : 1,
-            pointerEvents: props.filterId == f.id ? 'none' : undefined,
-            cursor: 'pointer',
-            '&:hover': {
-              opacity: 0.7
-            },
-            transition: '0.2s'
-          },
-          onClick: function onClick() {
-            setOpen(false);
-            props.changeFilter(f.id);
-          },
-          children: jsxRuntimeExports.jsx(AstroSettingCard, {
-            image: jsxRuntimeExports.jsx(Stack$1, {
-              sx: {
-                svg: {
-                  path: {
-                    fill: PALETTE.system.orange
-                  }
-                }
-              },
-              children: jsxRuntimeExports.jsx(SvgFilterIcon, {
-                height: "20px",
-                width: "20px"
-              })
-            }),
-            title: f.title,
-            rightContent: props.filterId == f.id ? jsxRuntimeExports.jsx(SvgCheckCircleFillIcon, {
-              height: "24px",
-              width: "24px"
-            }) : undefined,
-            textColor: props.filterId == f.id ? PALETTE.secondary.purple[2] : undefined
-          })
-        }, i);
-      })
-    }),
-    closeCallback: function closeCallback() {
-      return setOpen(false);
-    },
-    buttonWidth: true,
-    flexButton: true,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      onClick: function onClick() {
-        return setOpen(true);
-      },
-      flex: 1,
-      children: jsxRuntimeExports.jsx(DeviceCardSection, {
-        title: "Filter",
-        children: jsxRuntimeExports.jsxs(Stack$1, {
-          direction: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          sx: {
-            cursor: 'pointer',
-            '&:hover': {
-              opacity: 0.7
-            },
-            transition: '0.2s'
-          },
-          children: [jsxRuntimeExports.jsxs(Stack$1, {
-            spacing: "8px",
-            sx: {
-              svg: {
-                path: {
-                  fill: PALETTE.system.orange
-                }
-              }
-            },
-            direction: "row",
-            children: [jsxRuntimeExports.jsx(Stack$1, {
-              justifyContent: "center",
-              children: jsxRuntimeExports.jsx(SvgFilterIcon, {
-                direction: "row",
-                height: "20px",
-                width: "20px"
-              })
-            }), jsxRuntimeExports.jsx(Typography$1, {
-              bold: true,
-              color: PALETTE.secondary.grey[5],
-              children: allFilters === null || allFilters === void 0 || (_allFilters$find = allFilters.find(function (f) {
-                return f.id == props.filterId;
-              })) === null || _allFilters$find === void 0 ? void 0 : _allFilters$find.title
-            })]
-          }), jsxRuntimeExports.jsx(SvgChevronDown, {
-            height: "20px",
-            width: "20px"
-          })]
-        })
-      })
-    })
-  });
-};
-var HorizontalDeviceCard = function HorizontalDeviceCard(props) {
-  var _props$config2, _props$latestBrowsing, _props$latestBrowsing2, _props$latestBrowsing3, _props$screenTime$all, _props$screenTime, _props$screenTime$cur, _props$screenTime2;
-  var _useState5 = useState(false),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    browsingEnabled = _useState6[0],
-    setBrowsingEnabled = _useState6[1];
-  useEffect(function () {
-    var _props$config;
-    return setBrowsingEnabled(!!((_props$config = props.config) !== null && _props$config !== void 0 && _props$config.browsingAllowed));
-  }, [(_props$config2 = props.config) === null || _props$config2 === void 0 ? void 0 : _props$config2.browsingAllowed]);
-  var navigate = useNavigate();
-  var onClick = function onClick() {
-    return navigate.push("/profiles/".concat(props.id));
-  };
-  var notificationCtx = useContext(NotificationContext);
-  var changeFilter = function changeFilter(id) {
-    return ApiController.addFilterToDevice(id, props.id).then(props.onUpdate).then(function () {
-      return notificationCtx.success('Changed Filter');
-    });
-  };
-  return jsxRuntimeExports.jsx(AstroCard, {
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      alignItems: "center",
-      px: "16px",
-      spacing: "20px",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        direction: "row",
-        spacing: "20px",
-        position: "relative",
-        height: "104px",
-        alignItems: "center",
-        boxSizing: "border-box",
-        children: jsxRuntimeExports.jsxs(Stack$1, {
-          position: "relative",
-          children: [jsxRuntimeExports.jsx(Stack$1, {
-            minHeight: "70px",
-            minWidth: "70px",
-            borderRadius: "100%",
-            overflow: "hidden",
-            bgcolor: PALETTE.secondary.blue[2],
-            justifyContent: "center",
-            alignItems: "center",
-            onClick: onClick,
-            sx: {
-              cursor: 'pointer',
-              transition: '0.2s',
-              '&:hover': {
-                opacity: 0.6
-              }
-            },
-            children: props.profileAvatarUrl ? jsxRuntimeExports.jsx("img", {
-              src: props.profileAvatarUrl,
-              height: 70,
-              width: 70,
-              alt: "device profile"
-            }) : jsxRuntimeExports.jsx(Typography$1, {
-              color: "rgb(255,255,255)",
-              bold: true,
-              variant: "h5",
-              children: getInitials(props.name)
-            })
-          }), jsxRuntimeExports.jsx(Stack$1, {
-            position: "absolute",
-            bottom: -2,
-            right: -2,
-            height: "22px",
-            width: "22px",
-            borderRadius: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            bgcolor: props.online && browsingEnabled ? PALETTE.secondary.green[4] : PALETTE.secondary.grey[3],
-            border: "2px solid rgb(255,255,255)",
-            sx: {
-              svg: {
-                path: {
-                  fill: 'rgb(255,255,255)'
-                }
-              }
-            },
-            children: props.online && browsingEnabled ? jsxRuntimeExports.jsx(SvgGlobeIcon, {
-              height: "12px",
-              width: "12px"
-            }) : jsxRuntimeExports.jsx(SvgStrikeThroughGlobeIcon, {
-              height: "12px",
-              width: "12px"
-            })
-          })]
-        })
-      }), jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "12px",
-        direction: "row",
-        flex: 1,
-        children: [jsxRuntimeExports.jsx(DeviceCardCurrentUrlSection, {
-          url: (_props$latestBrowsing = props.latestBrowsing) === null || _props$latestBrowsing === void 0 ? void 0 : _props$latestBrowsing.url,
-          title: (_props$latestBrowsing2 = props.latestBrowsing) === null || _props$latestBrowsing2 === void 0 ? void 0 : _props$latestBrowsing2.title,
-          disabled: !browsingEnabled ? 'browsingDisabled' : !props.online ? 'offline' : undefined,
-          faviconUrl: (_props$latestBrowsing3 = props.latestBrowsing) === null || _props$latestBrowsing3 === void 0 ? void 0 : _props$latestBrowsing3.faviconUrl
-        }), jsxRuntimeExports.jsx(DeviceCardScreenTimeSection, {
-          totalTime: (_props$screenTime$all = (_props$screenTime = props.screenTime) === null || _props$screenTime === void 0 ? void 0 : _props$screenTime.allowed) !== null && _props$screenTime$all !== void 0 ? _props$screenTime$all : 0,
-          elapsedTime: (_props$screenTime$cur = (_props$screenTime2 = props.screenTime) === null || _props$screenTime2 === void 0 ? void 0 : _props$screenTime2.current) !== null && _props$screenTime$cur !== void 0 ? _props$screenTime$cur : 0,
-          onClickView: props.onClickViewScreenTime
-        }), jsxRuntimeExports.jsx(DeviceCardFilterSection, {
-          filterId: props.filterId,
-          changeFilter: changeFilter
-        }), jsxRuntimeExports.jsx(DeviceCardBrowsingStatusSection, {
-          browsingEnabled: browsingEnabled,
-          flipBrowsingEnabled: function flipBrowsingEnabled() {
-            setBrowsingEnabled(!browsingEnabled);
-            ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
-            notificationCtx.success("Browsing is now ".concat(!browsingEnabled ? 'enabled' : 'disabled', " on ").concat(props.name));
-          }
-        })]
-      })]
+      authUrl: props.authUrl
     })
   });
 };
 
-function ownKeys$8(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$8(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$8(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$8(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var RequestedSiteRow = function RequestedSiteRow(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    direction: "row",
-    height: "58px",
-    alignItems: "center",
-    px: "16px",
-    justifyContent: "space-between",
-    spacing: "10px",
-    border: "2px solid ".concat(PALETTE.secondary.orange[3]),
-    borderRadius: "8px",
-    bgcolor: PALETTE.secondary.orange[1],
-    overflow: "hidden",
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      spacing: "10px",
-      alignItems: "center",
-      flex: 1,
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        borderRadius: "100%",
-        overflow: "hidden",
-        minWidth: "32px",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          minHeight: "32px",
-          minWidth: "32px",
-          borderRadius: "100%",
-          overflow: "hidden",
-          children: props.faviconUrl ? jsxRuntimeExports.jsx("img", {
-            src: props.faviconUrl,
-            height: 32,
-            width: 32,
-            alt: "favicon"
-          }) : null
-        })
-      }), jsxRuntimeExports.jsxs(Stack$1, {
-        sx: {
-          transform: 'translateY(-2px)'
-        },
-        flex: 1,
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          maxLines: 1,
-          children: props.title
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          flex: 1,
-          children: jsxRuntimeExports.jsx(Typography$1, {
-            variant: "tiny",
-            bold: true,
-            color: PALETTE.secondary.grey[3],
-            maxLines: 1,
-            children: props.url
-          })
-        })]
-      })]
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      spacing: "6px",
-      children: [jsxRuntimeExports.jsx(UrsorButton, {
-        dark: true,
-        variant: "tertiary",
-        size: "small",
-        onClick: props.onApprove,
-        children: "Approve"
-      }), jsxRuntimeExports.jsx(UrsorButton, {
-        size: "small",
-        backgroundColor: "transparent",
-        variant: "secondary",
-        onClick: props.onDeny,
-        children: "Deny"
-      })]
-    })]
-  });
-};
-var RequestedSitesSection = function RequestedSitesSection(props) {
-  var notificationCtx = useContext(NotificationContext);
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    spacing: "12px",
-    children: [jsxRuntimeExports.jsx(Typography$1, {
-      variant: "large",
-      bold: true,
-      children: "".concat(props.sites.length, " requested site").concat(props.sites.length === 1 ? '' : 's ')
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "12px",
-      children: props.sites.slice(0, 3).map(function (s) {
-        return jsxRuntimeExports.jsx(RequestedSiteRow, _objectSpread$8(_objectSpread$8({}, s), {}, {
-          onApprove: function onApprove() {
-            return ApiController.approveRequestedSite(s.id).then(function () {
-              props.onUpdate();
-              notificationCtx.success('Approved site');
-            });
-          },
-          onDeny: function onDeny() {
-            return ApiController.denyRequestedSite(s.id).then(function () {
-              props.onUpdate();
-              notificationCtx.negativeSuccess('Denied site');
-            });
-          }
-        }), s.id);
-      })
-    })]
-  });
-};
-
-var _path$1;
-function _extends$1() { return _extends$1 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$1.apply(null, arguments); }
-var SvgTimeMinusIcon = function SvgTimeMinusIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends$1({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 20 20"
-  }, props), _path$1 || (_path$1 = /*#__PURE__*/React$1.createElement("path", {
-    fill: "#A9A9A9",
-    fillRule: "evenodd",
-    d: "M2.5 9.688c0-.518.42-.938.938-.938h12.5a.937.937 0 1 1 0 1.875h-12.5a.937.937 0 0 1-.938-.937",
-    clipRule: "evenodd"
-  })));
-};
-
-var _path;
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-var SvgTimePlusIcon = function SvgTimePlusIcon(props) {
-  return /*#__PURE__*/React$1.createElement("svg", _extends({
-    xmlns: "http://www.w3.org/2000/svg",
-    fill: "none",
-    viewBox: "0 0 20 20"
-  }, props), _path || (_path = /*#__PURE__*/React$1.createElement("path", {
-    fill: "#A9A9A9",
-    fillRule: "evenodd",
-    d: "M10.074 3a.937.937 0 0 1 .938.938V9.25h5.312a.937.937 0 0 1 0 1.875h-5.312v5.313a.938.938 0 0 1-1.875 0v-5.313H3.824a.938.938 0 0 1 0-1.875h5.313V3.938A.937.937 0 0 1 10.074 3",
-    clipRule: "evenodd"
-  })));
-};
-
-var TimeLimitRow = function TimeLimitRow(props) {
-  var _props$allowedMinutes, _props$allowedMinutes2;
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    decrementDisabled = _useState2[0],
-    setDecrementDisabled = _useState2[1];
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    incrementDisabled = _useState4[0],
-    setIncrementDisabled = _useState4[1];
-  useEffect(function () {
-    setDecrementDisabled(props.allowedMinutes < DAILY_LIMIT_INCREMENT);
-    setIncrementDisabled(props.allowedMinutes > 24 * 60 - DAILY_LIMIT_INCREMENT);
-  }, [props.allowedMinutes]);
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    direction: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    children: [jsxRuntimeExports.jsx(Typography$1, {
-      variant: "large",
-      bold: true,
-      color: PALETTE.secondary.grey[3],
-      children: _.capitalize(props.dayName)
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      spacing: "6px",
-      alignItems: "center",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          cursor: 'pointer',
-          '&:hover': {
-            opacity: 0.6
-          },
-          transition: '0.2s',
-          opacity: decrementDisabled ? 0.3 : 1,
-          pointerEvents: decrementDisabled ? 'none' : undefined
-        },
-        onClick: props.decrement,
-        children: jsxRuntimeExports.jsx(SvgTimeMinusIcon, {
-          height: "20px",
-          width: "20px"
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        width: "86px",
-        alignItems: "center",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          variant: "large",
-          bold: true,
-          children: "".concat(Math.floor(Math.min(((_props$allowedMinutes = props.allowedMinutes) !== null && _props$allowedMinutes !== void 0 ? _props$allowedMinutes : 0) / 60)), ":").concat(((_props$allowedMinutes2 = props.allowedMinutes) !== null && _props$allowedMinutes2 !== void 0 ? _props$allowedMinutes2 : 0) % 60 || '00', " hr")
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          cursor: 'pointer',
-          '&:hover': {
-            opacity: 0.6
-          },
-          transition: '0.2s',
-          opacity: incrementDisabled ? 0.3 : 1,
-          pointerEvents: incrementDisabled ? 'none' : undefined
-        },
-        onClick: props.increment,
-        children: jsxRuntimeExports.jsx(SvgTimePlusIcon, {
-          height: "20px",
-          width: "20px"
-        })
-      })]
-    })]
-  });
-};
-
-var TimeLimitsSection = function TimeLimitsSection(props) {
-  return jsxRuntimeExports.jsx(AstroBentoCard, {
-    title: "Daily limits",
-    notCollapsible: true,
-    info: {
-      title: 's etting your daily limits',
-      text: 'This is the total amount of time you are happy with being spent on the Browser for the specific day. Turn this off to remove all time limits.'
-    },
-    infoButtonBelowTitle: true,
-    isMobile: props.isMobile,
-    topRightStuff: props.topRightElement,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "36px",
-      pb: "12px",
-      sx: {
-        opacity: props.disabled ? 0.4 : 1,
-        pointerEvents: props.disabled ? 'none' : undefined,
-        transition: '0.2s'
-      },
-      children: ['mon', 'tue', 'wed', 'thu', 'fri', 's at', 's un'].map(function (day, i) {
-        var _props$timeLimits$fin, _props$timeLimits$fin2;
-        return jsxRuntimeExports.jsx(TimeLimitRow, {
-          dayName: day,
-          decrement: function decrement() {
-            return props.decrement(day === 's un' ? 0 : i + 1);
-          },
-          increment: function increment() {
-            return props.increment(day === 's un' ? 0 : i + 1);
-          },
-          allowedMinutes: (_props$timeLimits$fin = (_props$timeLimits$fin2 = props.timeLimits.find(function (l) {
-            return day === 's un' ? l.day === 0 : l.day === i + 1;
-          })) === null || _props$timeLimits$fin2 === void 0 ? void 0 : _props$timeLimits$fin2.allowedMinutes) !== null && _props$timeLimits$fin !== void 0 ? _props$timeLimits$fin : 0
-        }, day);
-      })
-    })
-  });
-};
-
-var MIN_ALLOWED_TIME_ADDITION_PERIOD = 0.75; // hour
-var useNewSegmentTimes = function useNewSegmentTimes(times) {
-  var _useState = useState(null),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    newSegmentTimes = _useState2[0],
-    setNewSegmentTimes = _useState2[1];
-  useEffect(function () {
-    if (times && times.length > 0) {
-      var possibleStartTime = 0;
-      var possibleEndTime = dayjs(times[0].startTime).utc().hour() + (dayjs(times[0].startTime).utc().minute() - 30) / 60;
-      var finalizedStartTime;
-      var finalizedEndTime;
-      for (var i = 0; i < times.length + 1; i++) {
-        if (possibleStartTime < possibleEndTime && possibleEndTime - possibleStartTime >= MIN_ALLOWED_TIME_ADDITION_PERIOD) {
-          finalizedStartTime = possibleStartTime;
-          finalizedEndTime = possibleEndTime;
-          break;
-        } else if (i + 1 < times.length) {
-          possibleStartTime = dayjs(times[i].endTime).utc().hour() + (dayjs(times[i].endTime).utc().minute() + 30) / 60;
-          possibleEndTime = dayjs(times[i + 1].startTime).utc().hour() + (dayjs(times[i + 1].startTime).utc().minute() - 30) / 60;
-        } else if (i + 1 === times.length && dayjs(times[i].endTime).utc().hour() > 0 // if the end time's hour is 0 at this point, it is at midnight so there is no space
-        ) {
-          possibleStartTime = dayjs(times[i].endTime).utc().hour() + (dayjs(times[i].endTime).utc().minute() + 30) / 60;
-          possibleEndTime = 24;
-        }
-      }
-      if (_.isNumber(finalizedStartTime) && finalizedEndTime) {
-        setNewSegmentTimes([finalizedStartTime, finalizedEndTime]);
-      } else {
-        setNewSegmentTimes(null);
-      }
-    }
-  }, [times]);
-  return {
-    newSegmentTimes: newSegmentTimes,
-    clearNewSegmentTimes: function clearNewSegmentTimes() {
-      return setNewSegmentTimes(null);
-    }
-  };
-};
-
-var DISPLAY_INTERVAL = 2; // hours
-// const MIN = 0;
-// const MAX = 24;
-var DRAG_INTERVAL = 0.25; // hours
-var BrowsingTimeSelectorRange = function BrowsingTimeSelectorRange(props) {
-  var _useState = useState(false),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    draggingDot1 = _useState2[0],
-    setDraggingDot1 = _useState2[1];
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    draggingDot2 = _useState4[0],
-    setDraggingDot2 = _useState4[1];
-  var _useState5 = useState(0),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    dot1X = _useState6[0],
-    setDot1X = _useState6[1];
-  var _useState7 = useState(0),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    dot2X = _useState8[0],
-    setDot2X = _useState8[1];
-  useEffect(function () {
-    if (_.isNumber(props.start) && _.isNumber(props.end)) {
-      setDot1X(props.lineWidth * props.start / 24);
-      setDot2X(props.lineWidth * props.end / 24);
-    }
-  }, [props.start, props.end, props.lineWidth]);
-  useEffect(function () {
-    if (draggingDot1) {
-      var newDotX = Math.max(0, Math.min(props.lineWidth, props.mouseX - props.lineLeftX));
-      var lockedEndLineX = Math.round(newDotX / props.dragInterval) * props.dragInterval; // the closest interval
-      setDot1X(lockedEndLineX);
-    }
-  }, [draggingDot1, props.mouseX]);
-  useEffect(function () {
-    if (draggingDot2) {
-      var newDotX = Math.max(0, Math.min(props.lineWidth, props.mouseX - props.lineLeftX));
-      var lockedEndLineX = Math.round(newDotX / props.dragInterval) * props.dragInterval; // the closest interval
-      setDot2X(lockedEndLineX);
-    }
-  }, [draggingDot2, props.mouseX]);
-  var handleDraggingEnd = useCallback(function () {
-    if (draggingDot1 || draggingDot2) {
-      setDraggingDot1(false);
-      setDraggingDot2(false);
-      props.setTimes(Math.max(0, Math.min(dot1X, dot2X) / props.lineWidth * 24), Math.min(24, Math.max(dot1X, dot2X) / props.lineWidth * 24));
-    }
-  }, [dot1X, dot2X, props.lineWidth, draggingDot1, draggingDot2]);
-  useEffect(function () {
-    window.addEventListener('mouseup', handleDraggingEnd);
-    return function () {
-      window.removeEventListener('mouseup', handleDraggingEnd);
-    };
-  }, [handleDraggingEnd]);
-  var _useState9 = useState(false),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    hovering = _useState10[0],
-    setHovering = _useState10[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      position: "absolute",
-      left: dot1X,
-      zIndex: 3,
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        position: "relative",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          sx: {
-            transform: 'translate(-50%, -35%)',
-            cursor: draggingDot1 ? 'grabbing' : 'grab'
-          },
-          height: "14px",
-          width: "14px",
-          bgcolor: PALETTE.secondary.blue[2],
-          borderRadius: "100%",
-          onMouseDown: function onMouseDown(e) {
-            setDraggingDot1(true);
-            e.preventDefault();
-          }
-        })
-      })
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      position: "absolute",
-      left: dot2X,
-      zIndex: 3,
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        position: "relative",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          sx: {
-            transform: 'translate(-50%, -35%)',
-            cursor: draggingDot2 ? 'grabbing' : 'grab'
-          },
-          height: "14px",
-          width: "14px",
-          bgcolor: PALETTE.secondary.blue[2],
-          borderRadius: "100%",
-          onMouseDown: function onMouseDown(e) {
-            setDraggingDot2(true);
-            e.preventDefault();
-          }
-        })
-      })
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      position: "absolute",
-      left: Math.min(dot1X, dot2X),
-      width: Math.abs(dot2X - dot1X),
-      height: "20px",
-      alignItems: "center",
-      zIndex: 2,
-      onMouseEnter: function onMouseEnter() {
-        setHovering(true);
-      },
-      onMouseLeave: function onMouseLeave() {
-        setHovering(false);
-      },
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        height: "4px",
-        width: "100%",
-        bgcolor: PALETTE.secondary.blue[1],
-        position: "relative",
-        children: !props.noDeletion ? jsxRuntimeExports.jsx(Stack$1, {
-          position: "absolute",
-          left: props.mouseX - props.lineLeftX - dot1X,
-          top: "-26px",
-          zIndex: 3,
-          sx: {
-            transform: 'translate(-50%)',
-            opacity: hovering && !draggingDot1 && !draggingDot2 ? 1 : 0,
-            transition: '0.2s',
-            svg: {
-              path: {
-                fill: PALETTE.system.red
-              }
-            },
-            cursor: 'pointer',
-            '&:hover': {
-              opacity: 0.6
-            },
-            pointerEvents: hovering ? undefined : 'none'
-          },
-          pb: "6px",
-          onClick: props["delete"],
-          children: jsxRuntimeExports.jsx(SvgTrashcanIcon, {
-            height: "20px",
-            width: "20px"
-          })
-        }) : null
-      })
-    })]
-  });
-};
-var BrowsingTimeSelector = function BrowsingTimeSelector(props) {
-  var _lineRef$getBoundingC5, _lineRef$getBoundingC6, _props$ranges;
-  var _useState11 = useState(null),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    lineRef = _useState12[0],
-    setLineRef = _useState12[1];
-  var _useState13 = useState(0),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    lineWidth = _useState14[0],
-    setLineWidth = _useState14[1];
-  var _useState15 = useState(0),
-    _useState16 = _slicedToArray$2(_useState15, 2),
-    lineLeftX = _useState16[0],
-    setLineLeftX = _useState16[1];
-  useEffect(function () {
-    var _lineRef$getBoundingC, _lineRef$getBoundingC2, _lineRef$getBoundingC3, _lineRef$getBoundingC4;
-    setLineWidth((_lineRef$getBoundingC = lineRef === null || lineRef === void 0 || (_lineRef$getBoundingC2 = lineRef.getBoundingClientRect) === null || _lineRef$getBoundingC2 === void 0 ? void 0 : _lineRef$getBoundingC2.call(lineRef).width) !== null && _lineRef$getBoundingC !== void 0 ? _lineRef$getBoundingC : 0);
-    setLineLeftX((_lineRef$getBoundingC3 = lineRef === null || lineRef === void 0 || (_lineRef$getBoundingC4 = lineRef.getBoundingClientRect) === null || _lineRef$getBoundingC4 === void 0 ? void 0 : _lineRef$getBoundingC4.call(lineRef).left) !== null && _lineRef$getBoundingC3 !== void 0 ? _lineRef$getBoundingC3 : 0);
-  }, [lineRef === null || lineRef === void 0 || (_lineRef$getBoundingC5 = lineRef.getBoundingClientRect) === null || _lineRef$getBoundingC5 === void 0 ? void 0 : _lineRef$getBoundingC5.call(lineRef).width, lineRef === null || lineRef === void 0 || (_lineRef$getBoundingC6 = lineRef.getBoundingClientRect) === null || _lineRef$getBoundingC6 === void 0 ? void 0 : _lineRef$getBoundingC6.call(lineRef).left]);
-  var _useState17 = useState(0),
-    _useState18 = _slicedToArray$2(_useState17, 2),
-    mouseX = _useState18[0],
-    setMouseX = _useState18[1];
-  var handleMouseMove = useCallback(function (event) {
-    setMouseX(event.pageX);
-  }, []);
-  useEffect(function () {
-    window.addEventListener('mousemove', handleMouseMove);
-    return function () {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [handleMouseMove]);
-  var _useState19 = useState(1),
-    _useState20 = _slicedToArray$2(_useState19, 2),
-    dragInterval = _useState20[0],
-    setDragInterval = _useState20[1]; // px
-  useEffect(function () {
-    return setDragInterval(lineWidth * DRAG_INTERVAL / 24);
-  }, [lineWidth]);
-  return jsxRuntimeExports.jsx(Stack$1, {
-    width: "100%",
-    height: "22px",
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      width: "100%",
-      height: "4px",
-      bgcolor: PALETTE.secondary.grey[2],
-      borderRadius: "2px",
-      ref: setLineRef,
-      position: "relative",
-      children: [(_props$ranges = props.ranges) === null || _props$ranges === void 0 ? void 0 : _props$ranges.map(function (allowedTimeRange, i) {
-        var _props$ranges2;
-        var decimalStartTime = dayjs(allowedTimeRange.startTime).utc().hour() + dayjs(allowedTimeRange.startTime).utc().minute() / 60;
-        var decimalEndTime = dayjs(allowedTimeRange.endTime).utc().hour() + dayjs(allowedTimeRange.endTime).utc().minute() / 60;
-        var endTimeIsMidnight = dayjs(allowedTimeRange.endTime).utc().day() > dayjs(allowedTimeRange.startTime).utc().day();
-        return jsxRuntimeExports.jsx(BrowsingTimeSelectorRange, {
-          lineWidth: lineWidth,
-          lineLeftX: lineLeftX,
-          dragInterval: dragInterval,
-          mouseX: mouseX,
-          start: decimalStartTime,
-          end: endTimeIsMidnight ? 24 : decimalEndTime,
-          setTimes: function setTimes(start, end) {
-            return props.setRangeTimes(allowedTimeRange.id, getISODateString(allowedTimeRange.day, Math.floor(start), Math.floor(start % 1 * 60)), getISODateString(allowedTimeRange.day, Math.floor(end), Math.floor(end % 1 * 60)));
-          },
-          "delete": function _delete() {
-            return props.deleteRange(allowedTimeRange.id);
-          },
-          noDeletion: ((_props$ranges2 = props.ranges) === null || _props$ranges2 === void 0 ? void 0 : _props$ranges2.length) === 1
-        }, i);
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        justifyContent: "space-between",
-        direction: "row",
-        children: _toConsumableArray(Array(1 + 24 / DISPLAY_INTERVAL).keys()).filter(function (x) {
-          return !props.halveLabelFrequency || (x - 1) % 2;
-        }).map(function (i) {
-          return i * DISPLAY_INTERVAL;
-        }).map(function (hour) {
-          return jsxRuntimeExports.jsx(Stack$1, {
-            height: "4px",
-            width: "2px",
-            bgcolor: PALETTE.secondary.grey[3],
-            position: "relative",
-            children: jsxRuntimeExports.jsx(Stack$1, {
-              position: "absolute",
-              bottom: "-20px",
-              sx: {
-                transform: 'translateX(-50%)'
-              },
-              children: jsxRuntimeExports.jsx(Typography$1, {
-                sx: {
-                  fontSize: props.smallerLabelFont ? 8 : 10
-                },
-                variant: "tiny",
-                bold: true,
-                children: "".concat(hour % 12 || 12, ":00").concat(hour === 24 || hour < 12 ? 'am' : 'pm')
-              })
-            })
-          }, "".concat(hour).concat(props.halveLabelFrequency));
-        })
-      })]
-    })
-  });
-};
-var AllowedTimeRow = function AllowedTimeRow(props) {
-  var _useState21 = useState([]),
-    _useState22 = _slicedToArray$2(_useState21, 2),
-    sortedTimes = _useState22[0],
-    setSortedTimes = _useState22[1];
-  useEffect(function () {
-    return setSortedTimes(_.sortBy(props.times, function (t) {
-      return new Date(t.startTime);
-    }));
-  }, [props.times]);
-  var _useNewSegmentTimes = useNewSegmentTimes(sortedTimes),
-    newSegmentTimes = _useNewSegmentTimes.newSegmentTimes,
-    clearNewSegmentTimes = _useNewSegmentTimes.clearNewSegmentTimes;
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    direction: "row",
-    alignItems: "center",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      width: "120px",
-      children: jsxRuntimeExports.jsx(Typography$1, {
-        bold: true,
-        color: PALETTE.secondary.grey[3],
-        children: _.capitalize(props.dayName)
-      })
-    }), jsxRuntimeExports.jsx(BrowsingTimeSelector, {
-      ranges: sortedTimes,
-      setRangeTimes: props.setAllowedTimes,
-      deleteRange: props.deleteRange,
-      smallerLabelFont: props.smallerLabelFont,
-      halveLabelFrequency: props.halveLabelFrequency
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      pl: "60px",
-      direction: "row",
-      spacing: "8px",
-      children: [jsxRuntimeExports.jsx(UrsorButton, {
-        size: "small",
-        variant: "secondary",
-        backgroundColor: "rgb(255,255,255)",
-        onClick: function onClick() {
-          newSegmentTimes && props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
-          clearNewSegmentTimes();
-        },
-        disabled: !newSegmentTimes,
-        children: "Add"
-      }), jsxRuntimeExports.jsx(UrsorButton, {
-        size: "small",
-        variant: "secondary",
-        backgroundColor: PALETTE.secondary.grey[1],
-        borderColor: PALETTE.secondary.grey[1],
-        onClick: props.reset,
-        children: "Reset"
-      })]
-    })]
-  });
-};
-
-var AllowedTimesSection = function AllowedTimesSection(props) {
-  return jsxRuntimeExports.jsx(AstroBentoCard, {
-    title: "Time scheduler",
-    info: {
-      title: 's et when the Browser can be used',
-      text: 's elect the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.'
-    },
-    infoButtonBelowTitle: true,
-    notCollapsible: true,
-    topRightStuff: props.topRightElement,
-    children: props.allowedTimes ? jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "36px",
-      pb: "12px",
-      sx: {
-        opacity: props.disabled ? 0.4 : 1,
-        pointerEvents: props.disabled ? 'none' : undefined,
-        transition: '0.2s'
-      },
-      children: ['mon', 'tue', 'wed', 'thu', 'fri', 's at', 's un'].map(function (day, i) {
-        return jsxRuntimeExports.jsx(AllowedTimeRow, {
-          dayName: day,
-          times: props.allowedTimes.filter(function (t) {
-            return day === 's un' ? t.day === 0 : t.day === i + 1;
-          }),
-          deleteRange: props.deleteRange,
-          reset: function reset() {
-            return props.reset(day === 's un' ? 0 : i + 1);
-          },
-          addAllowedTime: function addAllowedTime(startTime, endTime) {
-            return props.addTimeLimit(day === 's un' ? 0 : i + 1, startTime, endTime);
-          },
-          setAllowedTimes: props.setAllowedTimes,
-          halveLabelFrequency: props.halveLabelFrequency
-        }, day);
-      })
-    }) : null
-  });
-};
-
-var utc$1 = {exports: {}};
-
-(function (module, exports) {
-	!function(t,i){module.exports=i();}(commonjsGlobal,(function(){var t="minute",i=/[+-]\d\d(?::?\d\d)?/g,e=/([+-]|\d\d)/g;return function(s,f,n){var u=f.prototype;n.utc=function(t){var i={date:t,utc:!0,args:arguments};return new f(i)},u.utc=function(i){var e=n(this.toDate(),{locale:this.$L,utc:!0});return i?e.add(this.utcOffset(),t):e},u.local=function(){return n(this.toDate(),{locale:this.$L,utc:!1})};var o=u.parse;u.parse=function(t){t.utc&&(this.$u=!0),this.$utils().u(t.$offset)||(this.$offset=t.$offset),o.call(this,t);};var r=u.init;u.init=function(){if(this.$u){var t=this.$d;this.$y=t.getUTCFullYear(),this.$M=t.getUTCMonth(),this.$D=t.getUTCDate(),this.$W=t.getUTCDay(),this.$H=t.getUTCHours(),this.$m=t.getUTCMinutes(),this.$s=t.getUTCSeconds(),this.$ms=t.getUTCMilliseconds();}else r.call(this);};var a=u.utcOffset;u.utcOffset=function(s,f){var n=this.$utils().u;if(n(s))return this.$u?0:n(this.$offset)?a.call(this):this.$offset;if("string"==typeof s&&(s=function(t){void 0===t&&(t="");var s=t.match(i);if(!s)return null;var f=(""+s[0]).match(e)||["-",0,0],n=f[0],u=60*+f[1]+ +f[2];return 0===u?0:"+"===n?u:-u}(s),null===s))return this;var u=Math.abs(s)<=16?60*s:s,o=this;if(f)return o.$offset=u,o.$u=0===s,o;if(0!==s){var r=this.$u?this.toDate().getTimezoneOffset():-1*this.utcOffset();(o=this.local().add(u+r,t)).$offset=u,o.$x.$localOffset=r;}else o=this.utc();return o};var h=u.format;u.format=function(t){var i=t||(this.$u?"YYYY-MM-DDTHH:mm:ss[Z]":"");return h.call(this,i)},u.valueOf=function(){var t=this.$utils().u(this.$offset)?0:this.$offset+(this.$x.$localOffset||this.$d.getTimezoneOffset());return this.$d.valueOf()-6e4*t},u.isUTC=function(){return !!this.$u},u.toISOString=function(){return this.toDate().toISOString()},u.toString=function(){return this.toDate().toUTCString()};var l=u.toDate;u.toDate=function(t){return "s"===t&&this.$offset?n(this.format("YYYY-MM-DD HH:mm:ss:SSS")).toDate():l.call(this)};var c=u.diff;u.diff=function(t,i,e){if(t&&this.$u===t.$u)return c.call(this,t,i,e);var s=this.local(),f=n(t).local();return c.call(s,f,i,e)};}})); 
-} (utc$1));
-
-var utcExports = utc$1.exports;
-var utc = /*@__PURE__*/getDefaultExportFromCjs(utcExports);
-
-var DAY_FULL_NAMES = {
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 's aturday',
-  0: 's unday'
-};
-var TimeSelectionColumn = function TimeSelectionColumn(props) {
-  var _useState = useState(null),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    gridRef = _useState2[0],
-    setGridRef = _useState2[1];
-  var _useState3 = useState(true),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    hideTopGradient = _useState4[0],
-    setHideTopGradient = _useState4[1];
-  var _useState5 = useState(false),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    hideBottomGradient = _useState6[0],
-    setHideBottomGradient = _useState6[1];
-  var handleScroll = function handleScroll() {
-    if (gridRef) {
-      var scrollTop = gridRef.scrollTop,
-        scrollHeight = gridRef.scrollHeight,
-        clientHeight = gridRef.clientHeight;
-      setHideTopGradient(scrollTop < 3);
-      setHideBottomGradient(scrollTop + clientHeight >= scrollHeight);
-    }
-  };
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    spacing: "12px",
-    alignItems: "center",
-    children: [jsxRuntimeExports.jsx(Typography$1, {
-      bold: true,
-      variant: "h5",
-      color: PALETTE.secondary.grey[5],
-      children: dayjs(props.time).utc().format('hh:mma')
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      position: "relative",
-      overflow: "hidden",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        position: "absolute",
-        top: -1,
-        left: 0,
-        height: "80px",
-        width: "100%",
-        sx: {
-          opacity: hideTopGradient ? 0 : 1,
-          transition: '0.3s',
-          pointerEvents: 'none',
-          background: "linear-gradient(rgb(255,255,255), rgba(255,255,255,0))",
-          transform: 'translateY(1px)'
-        },
-        zIndex: 2
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        position: "absolute",
-        bottom: -1,
-        left: 0,
-        height: "80px",
-        width: "100%",
-        sx: {
-          opacity: hideBottomGradient ? 0 : 1,
-          transition: '0.3s',
-          pointerEvents: 'none',
-          background: "linear-gradient(rgba(255,255,255,0), rgb(255,255,255))",
-          transform: 'translateY(1px)'
-        },
-        zIndex: 2
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        overflow: "scroll",
-        ref: setGridRef,
-        onScroll: handleScroll,
-        pt: "10px",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          height: "170px",
-          spacing: "6px",
-          children: [].concat(_toConsumableArray(_toConsumableArray(Array(24 * 60 / 15).keys()).map(function (i) {
-            return jsxRuntimeExports.jsx(Stack$1, {
-              alignItems: "center",
-              onClick: function onClick() {
-                return props.setTime(getISODateString(props.day, Math.floor(i * 15 / 60), i * 15 % 60));
-              },
-              children: jsxRuntimeExports.jsx(Typography$1, {
-                color: PALETTE.secondary.grey[5],
-                children: dayjs().utc().hour(0).minute(0).millisecond(0).add(i * 15, 'minutes').format('hh:mm a')
-              })
-            }, i);
-          })), [jsxRuntimeExports.jsx(Stack$1, {
-            alignItems: "center",
-            onClick: function onClick() {
-              return props.setTime(getISODateString(props.day < 6 ? props.day + 1 : 0, 24, 0));
-            },
-            children: jsxRuntimeExports.jsx(Typography$1, {
-              color: PALETTE.secondary.grey[5],
-              children: '00:00am'
-            })
-          }, "midnight")])
-        })
-      })]
-    })]
-  });
-};
-var MobileTimeSelectionDialog = function MobileTimeSelectionDialog(props) {
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Select times",
-    subtitle: ["Choose this browsing period's start and end time."],
-    width: "422px",
-    dynamicHeight: true,
-    isMobile: true,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      width: "100%",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        justifyContent: "center",
-        children: jsxRuntimeExports.jsx(TimeSelectionColumn, {
-          day: props.day,
-          time: props.startTime,
-          setTime: props.setStartTime
-        })
-      }), jsxRuntimeExports.jsx(Typography$1, {
-        variant: "h5",
-        color: PALETTE.secondary.grey[3],
-        children: "to"
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        children: jsxRuntimeExports.jsx(TimeSelectionColumn, {
-          day: props.day,
-          time: props.endTime,
-          setTime: props.setEndTime
-        })
-      })]
-    })
-  });
-};
-var MobileAllowedTimeRowDisplayButton = function MobileAllowedTimeRowDisplayButton(props) {
-  var _useState7 = useState(false),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    dialogOpen = _useState8[0],
-    setDialogOpen = _useState8[1];
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      borderRadius: "8px",
-      bgcolor: PALETTE.secondary.grey[1],
-      alignItems: "center",
-      justifyContent: "center",
-      direction: "row",
-      height: "39px",
-      width: "210px",
-      px: "14px",
-      boxSizing: "border-box",
-      spacing: "10px",
-      onClick: function onClick() {
-        return setDialogOpen(true);
-      },
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        alignItems: "center",
-        direction: "row",
-        spacing: "5px",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          children: dayjs(props.startTime).utc().format('hh:mma')
-        })
-      }), jsxRuntimeExports.jsx(Typography$1, {
-        bold: true,
-        color: PALETTE.secondary.grey[3],
-        children: "to"
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        alignItems: "center",
-        direction: "row",
-        spacing: "5px",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          bold: true,
-          children: dayjs(props.endTime).utc().format('hh:mma')
-        })
-      })]
-    }), dialogOpen ? jsxRuntimeExports.jsx(MobileTimeSelectionDialog, {
-      open: true,
-      onClose: function onClose() {
-        return setDialogOpen(false);
-      },
-      day: props.day,
-      startTime: props.startTime,
-      setStartTime: props.setStartTime,
-      endTime: props.endTime,
-      setEndTime: props.setEndTime
-    }) : null]
-  });
-};
-var MobileAllowedTimeRow = function MobileAllowedTimeRow(props) {
-  var _useState9 = useState([]),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    sortedTimes = _useState10[0],
-    setSortedTimes = _useState10[1];
-  useEffect(function () {
-    return setSortedTimes(_.sortBy(props.times, function (t) {
-      return new Date(t.startTime);
-    }));
-  }, [props.times]);
-  var _useNewSegmentTimes = useNewSegmentTimes(sortedTimes),
-    newSegmentTimes = _useNewSegmentTimes.newSegmentTimes,
-    clearNewSegmentTimes = _useNewSegmentTimes.clearNewSegmentTimes;
-  //@ts-ignore
-  var dayName = DAY_FULL_NAMES[props.day];
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    spacing: "4px",
-    children: [jsxRuntimeExports.jsx(Typography$1, {
-      bold: true,
-      color: PALETTE.secondary.grey[3],
-      children: dayName
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      direction: "row",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        spacing: "4px",
-        children: sortedTimes.map(function (t) {
-          return jsxRuntimeExports.jsxs(Stack$1, {
-            direction: "row",
-            spacing: "10px",
-            alignItems: "center",
-            justifyContent: "space-between",
-            children: [jsxRuntimeExports.jsx(MobileAllowedTimeRowDisplayButton, {
-              day: props.day,
-              dayName: dayName,
-              startTime: t.startTime,
-              setStartTime: function setStartTime(time) {
-                return props.setRangeTimes(t.id, time, t.endTime);
-              },
-              endTime: t.endTime,
-              setEndTime: function setEndTime(time) {
-                return props.setRangeTimes(t.id, t.startTime, time);
-              }
-            }), sortedTimes.length > 1 ? jsxRuntimeExports.jsx(Stack$1, {
-              sx: {
-                svg: {
-                  path: {
-                    fill: PALETTE.system.red
-                  }
-                }
-              },
-              onClick: function onClick() {
-                return props.deleteRange(t.id);
-              },
-              children: jsxRuntimeExports.jsx(SvgX, {
-                height: "20px",
-                width: "20px"
-              })
-            }) : null]
-          }, t.id);
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "flex-end",
-        pb: "3px",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          width: "30px",
-          height: "30px",
-          bgcolor: PALETTE.secondary.purple[2],
-          borderRadius: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          sx: {
-            svg: {
-              path: {
-                fill: 'rgb(255,255,255)'
-              }
-            }
-          },
-          onClick: function onClick() {
-            newSegmentTimes && props.addRange(newSegmentTimes[0], newSegmentTimes[1]);
-            clearNewSegmentTimes();
-          },
-          children: jsxRuntimeExports.jsx(SvgPlusIcon, {
-            height: "20px",
-            width: "20px"
-          })
-        })
-      })]
-    })]
-  });
-};
-
-// const AllowedTimesSectionTimeSelector = () => {
-//   const [open, setOpen] = useState<boolean>(false);
-//   return (
-//     <UrsorPopover
-//       open={open}
-//       content={<Stack></Stack>}
-//       closeCallback={() => setOpen(false)}
-//       placement=""
-//     >
-//       <Stack alignItems="center" direction="row" spacing="5px">
-//         <Typography bold>{dayjs(t.startTime).format("hh:mma")}</Typography>
-//         <PencilIcon height="16px" width="16px" />
-//       </Stack>
-//     </UrsorPopover>
-//   );
-// };
-var MobileAllowedTimesSection = function MobileAllowedTimesSection(props) {
-  return jsxRuntimeExports.jsx(AstroBentoCard, {
-    title: "Time scheduler",
-    info: {
-      title: 's et when the Browser can be used',
-      text: 's elect the times of the day when you want the Browser to be accessible. Click add to create a new time period if you want an offline period in the middle of the day. Turn this off to allow the Browser to be accessible 24/7.'
-    },
-    notCollapsible: true,
-    isMobile: true,
-    topRightStuff: props.topRightElement,
-    children: props.allowedTimes ? jsxRuntimeExports.jsx(Stack$1, {
-      spacing: "18px",
-      pb: "12px",
-      sx: {
-        opacity: props.disabled ? 0.4 : 1,
-        pointerEvents: props.disabled ? 'none' : undefined,
-        transition: '0.2s'
-      },
-      children: ['mon', 'tue', 'wed', 'thu', 'fri', 's at', 's un'].map(function (day, i) {
-        return jsxRuntimeExports.jsx(MobileAllowedTimeRow, {
-          day: day === 's un' ? 0 : i + 1,
-          times: props.allowedTimes.filter(function (t) {
-            return day === 's un' ? t.day === 0 : t.day === i + 1;
-          }),
-          reset: function reset() {
-            return props.reset(day === 's un' ? 0 : i + 1);
-          },
-          addRange: function addRange(startTime, endTime) {
-            return props.addTimeLimit(day === 's un' ? 0 : i + 1, startTime, endTime);
-          },
-          setRangeTimes: props.setAllowedTime,
-          deleteRange: props.deleteRange
-        }, day);
-      })
-    }) : null
-  });
-};
-
-function ownKeys$7(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$7(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$7(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$7(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-dayjs.extend(utc);
-var getISODateString = function getISODateString(day, hours, minutes) {
-  return dayjs.utc().day(day).hour(hours).minute(minutes).second(0).millisecond(0).toISOString();
-};
-var DAILY_LIMIT_INCREMENT = 15; // minutes
-var ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
-var HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1450;
-var SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1080;
-var DevicePageLimitsTab = function DevicePageLimitsTab(props) {
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    allowedTimes = _useState2[0],
-    _setAllowedTimes = _useState2[1];
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    timeLimits = _useState4[0],
-    setTimeLimits = _useState4[1];
-  var _useState5 = useState(),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    deviceConfig = _useState6[0],
-    setDeviceConfig = _useState6[1];
-  var loadData = useCallback(function () {
-    return ApiController.getDeviceWithTimesAndConfig(props.deviceId).then(function (d) {
-      _setAllowedTimes(d.allowedTimes);
-      setTimeLimits(d.timeLimits);
-      setDeviceConfig(d.config);
-    });
-  }, [props.deviceId]);
-  useEffect(function () {
-    loadData();
-  }, [loadData]);
-  var addAllowedTime = function addAllowedTime(day, startTime, endTime) {
-    ApiController.addAllowedTimeRange(props.deviceId, day, getISODateString(day, Math.floor(startTime), Math.floor(startTime % 1 * 60)), getISODateString(day, Math.floor(endTime), Math.floor(endTime % 1 * 60))).then(loadData);
-  };
-  var reset = function reset(day) {
-    ApiController.resetAllowedTimes(props.deviceId, day).then(loadData);
-  };
-  var deleteRange = function deleteRange(id) {
-    ApiController.removeAllowedTimeRange(id).then(loadData);
-  };
-  var _useState7 = useState(false),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    allowedTimesEnabled = _useState8[0],
-    setAllowedTimesEnabled = _useState8[1];
-  var _useState9 = useState(false),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    timeLimitsEnabled = _useState10[0],
-    setTimeLimitsEnabled = _useState10[1];
-  useEffect(function () {
-    if (deviceConfig) {
-      !_.isUndefined(deviceConfig === null || deviceConfig === void 0 ? void 0 : deviceConfig.allowedTimesEnabled) && setAllowedTimesEnabled(deviceConfig.allowedTimesEnabled);
-      !_.isUndefined(deviceConfig === null || deviceConfig === void 0 ? void 0 : deviceConfig.timeLimitsEnabled) && setTimeLimitsEnabled(deviceConfig.timeLimitsEnabled);
-    }
-  }, [deviceConfig]);
-  var _useState11 = useState([]),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    requestedSites = _useState12[0],
-    setRequestedSites = _useState12[1];
-  var loadRequestedSites = useCallback(function () {
-    return ApiController.getRequestedSites(props.deviceId).then(setRequestedSites);
-  }, [props.deviceId]);
-  useEffect(function () {
-    loadRequestedSites();
-  }, [loadRequestedSites]);
-  var _useWindowSize = useWindowSize(),
-    width = _useWindowSize.width;
-  var _useState13 = useState(false),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    allowedTimesLabelsSmallerFontSize = _useState14[0],
-    setAllowedTimesLabelsSmallerFontSize = _useState14[1];
-  useEffect(function () {
-    return setAllowedTimesLabelsSmallerFontSize(width < ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD && width > SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD);
-  }, [width]);
-  var _useState15 = useState(false),
-    _useState16 = _slicedToArray$2(_useState15, 2),
-    switchToColumn = _useState16[0],
-    setSwitchToColumn = _useState16[1];
-  useEffect(function () {
-    return setSwitchToColumn(width < SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD);
-  }, [width]);
-  var _useState17 = useState(false),
-    _useState18 = _slicedToArray$2(_useState17, 2),
-    halveLabelFrequency = _useState18[0],
-    setHalveLabelFrequency = _useState18[1];
-  useEffect(function () {
-    return setHalveLabelFrequency(width < HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD);
-  }, [width]);
-  var notificationCtx = useContext(NotificationContext);
-  return jsxRuntimeExports.jsx(ProfilePageTabLayout, {
-    title: "Limits",
-    info: {
-      title: 'How do limits work?',
-      text: "For each day you can choose what time you want the Browser to be accessible and set the total amount of time you want your child to be able to spend online. If you don't want to use these features just toggle them off in the top right corner of their respective box!"
-    },
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "24px",
-      pb: "33px",
-      children: [requestedSites.length > 0 ? jsxRuntimeExports.jsx(RequestedSitesSection, {
-        sites: requestedSites,
-        onUpdate: loadRequestedSites
-      }) : null, jsxRuntimeExports.jsxs(Stack$1, {
-        direction: switchToColumn ? 'column' : 'row',
-        spacing: "24px",
-        children: [jsxRuntimeExports.jsx(Stack$1, {
-          width: switchToColumn ? undefined : '70%',
-          children: props.isMobile ? jsxRuntimeExports.jsx(MobileAllowedTimesSection, {
-            topRightElement: jsxRuntimeExports.jsx(AstroSwitch, {
-              on: allowedTimesEnabled,
-              callback: function callback() {
-                setAllowedTimesEnabled(!allowedTimesEnabled);
-                ApiController.flipAllowedTimesEnabled(props.deviceId, !allowedTimesEnabled);
-              }
-            }),
-            allowedTimes: allowedTimes,
-            setAllowedTime: function setAllowedTime(id, startTime, endTime) {
-              _setAllowedTimes(allowedTimes.map(function (t) {
-                return t.id === id ? _objectSpread$7(_objectSpread$7({}, t), {}, {
-                  startTime: startTime,
-                  endTime: endTime
-                }) : t;
-              }));
-              ApiController.changeAllowedTimeRange(id, startTime, endTime);
-            },
-            deleteRange: deleteRange,
-            addTimeLimit: addAllowedTime,
-            reset: reset,
-            smallerLabelFont: allowedTimesLabelsSmallerFontSize,
-            disabled: !allowedTimesEnabled
-          }) : jsxRuntimeExports.jsx(AllowedTimesSection, {
-            topRightElement: jsxRuntimeExports.jsx(AstroSwitch, {
-              on: allowedTimesEnabled,
-              callback: function callback() {
-                setAllowedTimesEnabled(!allowedTimesEnabled);
-                ApiController.flipAllowedTimesEnabled(props.deviceId, !allowedTimesEnabled);
-                notificationCtx.success("Switched allowed times ".concat(allowedTimesEnabled ? 'off' : 'on', " on this Device"));
-              }
-            }),
-            allowedTimes: allowedTimes,
-            setAllowedTimes: function setAllowedTimes(id, startTime, endTime) {
-              _setAllowedTimes(allowedTimes.map(function (t) {
-                return t.id === id ? _objectSpread$7(_objectSpread$7({}, t), {}, {
-                  startTime: startTime,
-                  endTime: endTime
-                }) : t;
-              }));
-              ApiController.changeAllowedTimeRange(id, startTime, endTime);
-            },
-            addTimeLimit: addAllowedTime,
-            reset: reset,
-            deleteRange: deleteRange,
-            smallerLabelFont: allowedTimesLabelsSmallerFontSize,
-            halveLabelFrequency: halveLabelFrequency,
-            disabled: !allowedTimesEnabled
-          })
-        }), jsxRuntimeExports.jsx(TimeLimitsSection, {
-          topRightElement: jsxRuntimeExports.jsx(AstroSwitch, {
-            on: timeLimitsEnabled,
-            callback: function callback() {
-              setTimeLimitsEnabled(!timeLimitsEnabled);
-              ApiController.flipTimeLimitsEnabled(props.deviceId, !timeLimitsEnabled);
-              notificationCtx.success("Switched time limits ".concat(timeLimitsEnabled ? 'off' : 'on', " on this Device"));
-            }
-          }),
-          isMobile: props.isMobile,
-          timeLimits: timeLimits,
-          increment: function increment(day) {
-            var _timeLimits$find;
-            var limitId = (_timeLimits$find = timeLimits.find(function (l) {
-              return l.day === day;
-            })) === null || _timeLimits$find === void 0 ? void 0 : _timeLimits$find.id;
-            if (limitId) {
-              var _timeLimits$find$allo, _timeLimits$find2;
-              setTimeLimits(timeLimits.map(function (l) {
-                return l.day === day ? {
-                  id: limitId,
-                  day: l.day,
-                  allowedMinutes: l.allowedMinutes + DAILY_LIMIT_INCREMENT
-                } : l;
-              }));
-              ApiController.setTimeLimit(limitId, ((_timeLimits$find$allo = (_timeLimits$find2 = timeLimits.find(function (l) {
-                return l.day === day;
-              })) === null || _timeLimits$find2 === void 0 ? void 0 : _timeLimits$find2.allowedMinutes) !== null && _timeLimits$find$allo !== void 0 ? _timeLimits$find$allo : 0) + DAILY_LIMIT_INCREMENT);
-            }
-          },
-          decrement: function decrement(day) {
-            var _timeLimits$find3;
-            var limitId = (_timeLimits$find3 = timeLimits.find(function (l) {
-              return l.day === day;
-            })) === null || _timeLimits$find3 === void 0 ? void 0 : _timeLimits$find3.id;
-            if (limitId) {
-              var _timeLimits$find$allo2, _timeLimits$find4;
-              setTimeLimits(timeLimits.map(function (l) {
-                return l.day === day ? {
-                  id: limitId,
-                  day: l.day,
-                  allowedMinutes: l.allowedMinutes - DAILY_LIMIT_INCREMENT
-                } : l;
-              }));
-              ApiController.setTimeLimit(limitId, ((_timeLimits$find$allo2 = (_timeLimits$find4 = timeLimits.find(function (l) {
-                return l.day === day;
-              })) === null || _timeLimits$find4 === void 0 ? void 0 : _timeLimits$find4.allowedMinutes) !== null && _timeLimits$find$allo2 !== void 0 ? _timeLimits$find$allo2 : 0) - DAILY_LIMIT_INCREMENT);
-            }
-          },
-          disabled: !timeLimitsEnabled
-        })]
-      })]
-    })
-  });
-};
-
-var AppToggleCard = function AppToggleCard(props) {
-  return jsxRuntimeExports.jsx(Stack$1, {
-    bgcolor: "rgb(255,255,255)",
-    borderRadius: "12px",
-    border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-    p: "16px",
-    boxSizing: "border-box",
-    alignItems: "space-between",
-    justifyContent: "center",
-    height: "130px",
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      justifyContent: "space-between",
-      spacing: "12px",
-      flex: 1,
-      children: [jsxRuntimeExports.jsxs(Stack$1, {
-        justifyContent: "space-between",
-        direction: "row",
-        alignItems: "center",
-        children: [jsxRuntimeExports.jsxs(Stack$1, {
-          spacing: "16px",
-          direction: "row",
-          flex: 1,
-          children: [jsxRuntimeExports.jsxs(Stack$1, {
-            position: "relative",
-            children: [props.enabled ? jsxRuntimeExports.jsx(Stack$1, {
-              position: "absolute",
-              top: "-6px",
-              right: "-10px",
-              width: "20px",
-              height: "20px",
-              bgcolor: PALETTE.secondary.green[4],
-              sx: {
-                svg: {
-                  path: {
-                    fill: 'rgb(255,255,255)'
-                  }
-                }
-              },
-              borderRadius: "100%",
-              overflow: "hidden",
-              border: "1.5px solid white",
-              justifyContent: "center",
-              alignItems: "center",
-              children: jsxRuntimeExports.jsx(SvgCheckIcon, {
-                width: "12px",
-                height: "12px"
-              })
-            }) : null, jsxRuntimeExports.jsx(Stack$1, {
-              borderRadius: "8px",
-              overflow: "hidden",
-              boxShadow: "0 0 16px rgba(0,0,0,0.08)",
-              children: jsxRuntimeExports.jsx("img", {
-                src: props.imageUrl,
-                height: 41,
-                width: 41,
-                alt: "platform image"
-              })
-            })]
-          }), jsxRuntimeExports.jsxs(Stack$1, {
-            overflow: "hidden",
-            children: [jsxRuntimeExports.jsx(Typography$1, {
-              maxLines: 1,
-              bold: true,
-              children: props.title
-            }), jsxRuntimeExports.jsx(Typography$1, {
-              variant: "small",
-              bold: true,
-              color: PALETTE.secondary.grey[3],
-              maxLines: 1,
-              sx: {
-                wordBreak: 'break-all'
-              },
-              children: cleanUrl(props.url).replace(/\/$/, '')
-            })]
-          })]
-        }), jsxRuntimeExports.jsx(AstroSwitch, {
-          on: props.enabled,
-          callback: props.callback
-        })]
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          variant: "small",
-          bold: true,
-          color: PALETTE.secondary.grey[3],
-          children: props.description
-        })
-      })]
-    })
-  });
-};
-
-function ownKeys$6(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$6(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var PAGE_SIZE = 20;
-var AppsLegend = function AppsLegend(props) {
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    direction: "row",
-    spacing: "20px",
-    children: [jsxRuntimeExports.jsx(Stack$1, {
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        alignItems: "center",
-        spacing: props.small ? '7px' : '10px',
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          variant: props.small ? 'small' : 'normal',
-          bold: true,
-          children: "Enabled"
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          height: props.small ? '12px' : '16px',
-          width: props.small ? '12px' : '16px',
-          borderRadius: "100%",
-          bgcolor: PALETTE.system.green
-        })]
-      })
-    }), jsxRuntimeExports.jsx(Stack$1, {
-      children: jsxRuntimeExports.jsxs(Stack$1, {
-        direction: "row",
-        alignItems: "center",
-        spacing: props.small ? '7px' : '10px',
-        children: [jsxRuntimeExports.jsx(Typography$1, {
-          variant: props.small ? 'small' : 'normal',
-          bold: true,
-          children: "Disabled"
-        }), jsxRuntimeExports.jsx(Stack$1, {
-          height: props.small ? '12px' : '16px',
-          width: props.small ? '12px' : '16px',
-          borderRadius: "100%",
-          bgcolor: PALETTE.secondary.grey[3]
-        })]
-      })
-    })]
-  });
-};
-var DevicePageAppsTab = function DevicePageAppsTab(props) {
-  var _useState = useState(),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    selectedCategory = _useState2[0],
-    setSelectedCategory = _useState2[1];
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    categories = _useState4[0],
-    setCategories = _useState4[1];
-  useEffect(function () {
-    ApiController.getAllFilterCategories().then(setCategories);
-  }, []);
-  var _useState5 = useState(1),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    nPages = _useState6[0],
-    setNPages = _useState6[1];
-  var _useState7 = useState(0),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    pageIndex = _useState8[0],
-    setPageIndex = _useState8[1];
-  useEffect(function () {
-    return setPageIndex(0);
-  }, [selectedCategory]);
-  var _useState9 = useState(''),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    searchValue = _useState10[0],
-    setSearchValue = _useState10[1];
-  var _useState11 = useState([]),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    apps = _useState12[0],
-    setApps = _useState12[1];
-  var _useState13 = useState([]),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    filteredApps = _useState14[0],
-    setFilteredApps = _useState14[1];
-  useEffect(function () {
-    ApiController.getApps(props.deviceId, pageIndex + 1, PAGE_SIZE, selectedCategory, searchValue).then(function (response) {
-      setApps(_.sortBy(response.apps, function (a) {
-        return a.id;
-      }));
-      setNPages(response.pages);
-    });
-  }, [props.deviceId, pageIndex, selectedCategory, searchValue]);
-  useEffect(function () {
-    return setFilteredApps(apps.filter(function (d) {
-      return !searchValue || d.title.toLowerCase().includes(searchValue.toLowerCase());
-    }));
-  }, [apps, searchValue]);
-  var notificationCtx = useContext(NotificationContext);
-  return jsxRuntimeExports.jsxs(ProfilePageTabLayout, {
-    title: "Apps",
-    rightSideElement: !props.isMobile ? jsxRuntimeExports.jsx(AppsLegend, {}) : undefined,
-    info: {
-      title: 'How do apps work?',
-      text: "Apps provide quick access on your kid's Browser to hand-picked resources that provide a lot of value. Toggle them on and they'll be accessible on your kid's Device and we'll make sure the Filter doesn't interfere with access to them. Please note that we do override the Filter to allow access to the Apps that you select! So if you have social media access turned off but toggle on a social media app we will allow access to it."
-    },
-    children: [props.isMobile ? jsxRuntimeExports.jsx(Stack$1, {
-      alignItems: "flex-end",
-      children: jsxRuntimeExports.jsx(AppsLegend, {
-        small: props.isMobile
-      })
-    }) : null, jsxRuntimeExports.jsx(Stack$1, {
-      pb: "32px",
-      children: jsxRuntimeExports.jsx(AstroCard, {
-        children: jsxRuntimeExports.jsxs(Stack$1, {
-          px: "16px",
-          pt: "16px",
-          justifyContent: "center",
-          children: [jsxRuntimeExports.jsxs(Stack$1, {
-            direction: "row",
-            spacing: "12px",
-            justifyContent: "space-between",
-            children: [jsxRuntimeExports.jsx(Stack$1, {
-              overflow: "scroll",
-              children: jsxRuntimeExports.jsx(Stack$1, {
-                direction: "row",
-                spacing: "12px",
-                pb: "20px",
-                children: [jsxRuntimeExports.jsx(Stack$1, {
-                  height: "32px",
-                  borderRadius: "6px",
-                  bgcolor: PALETTE.secondary.grey[1],
-                  justifyContent: "center",
-                  alignItems: "center",
-                  px: "12px",
-                  onClick: function onClick() {
-                    return setSelectedCategory(undefined);
-                  },
-                  sx: {
-                    cursor: 'pointer',
-                    transition: '0.2s',
-                    '&:hover': {
-                      opacity: 0.7
-                    }
-                  },
-                  children: jsxRuntimeExports.jsx(Typography$1, {
-                    bold: true,
-                    sx: {
-                      fontSize: 14,
-                      whiteSpace: 'nowrap'
-                    },
-                    color: _.isUndefined(selectedCategory) ? PALETTE.secondary.purple[2] : undefined,
-                    children: "All"
-                  })
-                }, "all")].concat(_toConsumableArray(categories.map(function (c) {
-                  return jsxRuntimeExports.jsx(Stack$1, {
-                    height: "32px",
-                    borderRadius: "6px",
-                    bgcolor: PALETTE.secondary.grey[1],
-                    justifyContent: "center",
-                    alignItems: "center",
-                    px: "12px",
-                    onClick: function onClick() {
-                      return setSelectedCategory(c.categoryId);
-                    },
-                    sx: {
-                      cursor: 'pointer',
-                      transition: '0.2s',
-                      '&:hover': {
-                        opacity: 0.7
-                      }
-                    },
-                    children: jsxRuntimeExports.jsx(Typography$1, {
-                      bold: true,
-                      sx: {
-                        fontSize: 14,
-                        whiteSpace: 'nowrap'
-                      },
-                      color: selectedCategory === c.categoryId ? PALETTE.secondary.purple[2] : undefined,
-                      children: c.title
-                    })
-                  }, c.categoryId);
-                })))
-              })
-            }), jsxRuntimeExports.jsx(Stack$1, {
-              pt: "2px",
-              children: jsxRuntimeExports.jsx(SearchInput, {
-                value: searchValue,
-                callback: setSearchValue,
-                clearCallback: function clearCallback() {
-                  return setSearchValue('');
-                },
-                grey: true
-              })
-            })]
-          }), jsxRuntimeExports.jsx(DynamicCardGrid, {
-            cardWidth: "292px",
-            rowGap: "8px",
-            columnGap: "20px",
-            children: filteredApps.map(function (a, i) {
-              return jsxRuntimeExports.jsx(UrsorFadeIn, {
-                duration: 800,
-                delay: i * 80,
-                children: jsxRuntimeExports.jsx(AppToggleCard, _objectSpread$6(_objectSpread$6({}, a), {}, {
-                  callback: function callback() {
-                    setFilteredApps(filteredApps.map(function (app) {
-                      return app.id === a.id ? _objectSpread$6(_objectSpread$6({}, app), {}, {
-                        enabled: !app.enabled
-                      }) : app;
-                    }));
-                    (a.enabled ? ApiController.disableApp : ApiController.enableApp)(props.deviceId, a.id).then(function () {
-                      return notificationCtx.success(a.enabled ? "Disabled ".concat(a.title) : "Enabled ".concat(a.title));
-                    });
-                  }
-                }))
-              }, a.id);
-            })
-          }), jsxRuntimeExports.jsx(Stack$1, {
-            py: "20px",
-            children: jsxRuntimeExports.jsx(PageSelector, {
-              pageIndex: pageIndex,
-              setPageIndex: setPageIndex,
-              nPages: nPages
-            })
-          })]
-        })
-      })
-    })]
-  });
-};
-
-function ownKeys$5(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$5(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$5(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD = 1283;
-var ProfilePageDesktopBody = function ProfilePageDesktopBody(props) {
-  var _props$tab;
-  var navigate = useNavigate();
-  var _useState = useState((_props$tab = props.tab) !== null && _props$tab !== void 0 ? _props$tab : 'content'),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    selectedTab = _useState2[0],
-    setSelectedTab = _useState2[1];
-  var _useWindowSize = useWindowSize(),
-    width = _useWindowSize.width;
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    switchToMobileDeviceCard = _useState4[0],
-    setSwitchToMobileDeviceCard = _useState4[1];
-  useEffect(function () {
-    setSwitchToMobileDeviceCard(width < SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD);
-  }, [width]);
-  return jsxRuntimeExports.jsxs(PageLayout, {
-    titleRow: props.titleRow,
-    titleBackButtonCallback: function titleBackButtonCallback() {
-      return navigate.push('/profiles');
-    },
-    bodyWidth: "100%",
-    fullHeight: true,
-    selectedSidebarItemId: "devices",
-    actions: props.actions,
-    maxWidth: 834,
-    scrollable: true,
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      pl: "48px",
-      children: [switchToMobileDeviceCard ? jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$5(_objectSpread$5({}, props.device), {}, {
-        onClickViewScreenTime: function onClickViewScreenTime() {
-          return setSelectedTab('limits');
-        },
-        onUpdate: props.onUpdateDevice,
-        noDeviceTypeUnderAvatar: true
-      })) : jsxRuntimeExports.jsx(HorizontalDeviceCard, _objectSpread$5(_objectSpread$5({}, props.device), {}, {
-        onClickViewScreenTime: function onClickViewScreenTime() {
-          return setSelectedTab('limits');
-        },
-        onUpdate: props.onUpdateDevice
-      })), jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        height: "56px",
-        minHeight: "56px",
-        justifyContent: "center",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          height: "1px",
-          width: "100%",
-          bgcolor: PALETTE.secondary.grey[2]
-        })
-      })]
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      pl: "48px",
-      spacing: "24px",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        direction: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        height: "fit",
-        children: jsxRuntimeExports.jsx(AstroTabSwitch, {
-          select: function select(id) {
-            return setSelectedTab(id);
-          },
-          selected: selectedTab,
-          items: [{
-            text: 'Content',
-            id: 'content'
-          }, {
-            text: 'Apps',
-            id: 'apps'
-          }, {
-            text: 'Insights',
-            id: 'insights'
-          }, {
-            text: 'Limits',
-            id: 'limits'
-          }]
-        })
-      }), selectedTab === 'insights' ? jsxRuntimeExports.jsx(DevicePageInsightsTab, {
-        deviceId: props.device.id
-      }) : selectedTab === 'apps' ? jsxRuntimeExports.jsx(DevicePageAppsTab, {
-        deviceId: props.device.id
-      }) : selectedTab === 'content' ? jsxRuntimeExports.jsx(DevicePageContentTab, {
-        deviceId: props.device.id,
-        deviceName: props.device.name,
-        folders: props.folders,
-        onUpdate: props.onUpdateFolders,
-        openAddFolderDialog: props.openAddFolderDialog
-      }) : selectedTab === 'limits' ? jsxRuntimeExports.jsx(DevicePageLimitsTab, {
-        deviceId: props.device.id
-      }) : null]
-    })]
-  });
-};
-
-var DeviceRenameDialog = function DeviceRenameDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    name = _useState2[0],
-    setName = _useState2[1];
-  useEffect(function () {
-    return setName(props.name);
-  }, [props.name]);
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Rename Device",
-    subtitle: ['Give this Device a new name', 'of your choice.'],
-    width: "422px",
-    height: props.isMobile ? undefined : '343px',
-    dynamicHeight: props.isMobile,
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      spacing: props.isMobile ? '12px' : undefined,
-      children: [jsxRuntimeExports.jsx(LabeledInputField, {
-        label: "Name",
-        children: jsxRuntimeExports.jsx(UrsorInputField, {
-          value: name,
-          onChange: function onChange(event) {
-            return setName(event.target.value);
-          },
-          placeholder: "Write a new name",
-          width: "100%",
-          leftAlign: true
-        })
-      }), jsxRuntimeExports.jsx(UrsorButton, {
-        dark: true,
-        variant: "tertiary",
-        width: "100%",
-        onClick: function onClick() {
-          return props.onSubmit(name);
-        },
-        children: "Save"
-      })]
-    })
-  });
-};
-
-var INPUT_PHRASE = 'yes';
-var DeviceDisconnectDialog = function DeviceDisconnectDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    inputValue = _useState2[0],
-    setInputValue = _useState2[1];
-  var notificationCtx = useContext(NotificationContext);
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Are you sure?",
-    subtitle: ['If you delete this Device, all of the configurations, browsing history, and insights will be lost. The Browser on this Device will also be reset and has to be set up again.'],
-    width: "422px",
-    height: "432px",
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      children: [jsxRuntimeExports.jsx(LabeledInputField, {
-        label: "Type \"".concat(INPUT_PHRASE, "\" to remove this device"),
-        children: jsxRuntimeExports.jsx(UrsorInputField, {
-          value: inputValue,
-          onChange: function onChange(event) {
-            return setInputValue(event.target.value);
-          },
-          placeholder: "yes",
-          width: "100%",
-          leftAlign: true
-        })
-      }), jsxRuntimeExports.jsxs(Stack$1, {
-        spacing: "8px",
-        width: "100%",
-        children: [jsxRuntimeExports.jsx(UrsorButton, {
-          dark: true,
-          variant: "tertiary",
-          backgroundColor: PALETTE.system.red,
-          width: "100%",
-          disabled: inputValue !== INPUT_PHRASE,
-          onClick: function onClick() {
-            props.onSubmit();
-            notificationCtx.negativeSuccess('Disconnected Device.');
-          },
-          children: "Disconnect"
-        }), jsxRuntimeExports.jsx(UrsorButton, {
-          variant: "secondary",
-          width: "100%",
-          onClick: props.onClose,
-          children: "Keep Device"
-        })]
-      })]
-    })
-  });
-};
-
-function ownKeys$4(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var ProfilePageMobileBody = function ProfilePageMobileBody(props) {
-  var _props$tab;
-  var navigate = useNavigate();
-  var _useState = useState((_props$tab = props.tab) !== null && _props$tab !== void 0 ? _props$tab : 'content'),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    selectedTab = _useState2[0],
-    setSelectedTab = _useState2[1];
-  return jsxRuntimeExports.jsx(MobilePageLayout, {
-    titleRow: props.titleRow.slice(-1)[0],
-    titleBackButtonCallback: function titleBackButtonCallback() {
-      return navigate.push('/profiles');
-    },
-    selectedPage: "profiles",
-    actions: props.actions,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "24px",
-      flex: 1,
-      children: [jsxRuntimeExports.jsx(MobileDeviceCard, _objectSpread$4(_objectSpread$4({}, props.device), {}, {
-        onClickViewScreenTime: function onClickViewScreenTime() {
-          return setSelectedTab('limits');
-        },
-        onUpdate: props.onUpdateDevice,
-        noDeviceTypeUnderAvatar: true
-      })), jsxRuntimeExports.jsx(Stack$1, {
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        children: jsxRuntimeExports.jsx(Stack$1, {
-          height: "1px",
-          width: "100%",
-          bgcolor: PALETTE.secondary.grey[2]
-        })
-      }), jsxRuntimeExports.jsx(AstroTabSwitch, {
-        select: function select(id) {
-          return setSelectedTab(id);
-        },
-        selected: selectedTab,
-        items: [{
-          text: 'Content',
-          id: 'content'
-        }, {
-          text: 'Apps',
-          id: 'apps'
-        }, {
-          text: 'Insights',
-          id: 'insights'
-        }, {
-          text: 'Limits',
-          id: 'limits'
-        }]
-      }), selectedTab === 'insights' ? jsxRuntimeExports.jsx(DevicePageMobileInsightsTab, {
-        deviceId: props.device.id
-      }) : selectedTab === 'apps' ? jsxRuntimeExports.jsx(DevicePageAppsTab, {
-        deviceId: props.device.id,
-        isMobile: true
-      }) : selectedTab === 'content' ? jsxRuntimeExports.jsx(DevicePageContentTab, {
-        deviceId: props.device.id,
-        deviceName: props.device.name,
-        folders: props.folders,
-        onUpdate: props.onUpdateFolders,
-        openAddFolderDialog: props.openAddFolderDialog,
-        isMobile: true
-      }) : selectedTab === 'limits' ? jsxRuntimeExports.jsx(DevicePageLimitsTab, {
-        deviceId: props.device.id,
-        isMobile: true
-      }) : null]
-    })
-  });
-};
-
-var AddFolderDialog = function AddFolderDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    searchValue = _useState2[0],
-    setSearchValue = _useState2[1];
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    allFolders = _useState4[0],
-    setAllFolders = _useState4[1];
-  useEffect(function () {
-    ApiController.getGroupFolders(props.groupId).then(function (d) {
-      return setAllFolders(d);
-    });
-  }, [props.groupId]);
-  var _useState5 = useState([]),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    nonAddedFolders = _useState6[0],
-    setNonAddedFolders = _useState6[1];
-  useEffect(function () {
-    return setNonAddedFolders(allFolders.filter(function (d) {
-      return !props.addedFolders.find(function (device) {
-        return device.id === d.id;
-      });
-    }));
-  }, [allFolders, props.addedFolders]);
-  var _useState7 = useState([]),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    filteredFolders = _useState8[0],
-    setFilteredFolders = _useState8[1];
-  useEffect(function () {
-    return setFilteredFolders(nonAddedFolders.filter(function (d) {
-      return !searchValue || d.title.toLowerCase().includes(searchValue.toLowerCase());
-    }));
-  }, [nonAddedFolders, searchValue]);
-  return jsxRuntimeExports.jsxs(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Add a Folder",
-    subtitle: ['Add all of the Content from the selected Folder to this Device. Or create a new one.'],
-    width: "434px",
-    height: props.isMobile ? '76%' : undefined,
-    isMobile: props.isMobile,
-    children: [jsxRuntimeExports.jsx(SearchInput, {
-      value: searchValue,
-      callback: setSearchValue,
-      clearCallback: function clearCallback() {
-        return setSearchValue('');
-      },
-      fullWidth: true,
-      height: "41px",
-      grey: true
-    }), nonAddedFolders.length === 0 ? jsxRuntimeExports.jsx(Stack$1, {
-      flex: 1,
-      justifyContent: "center",
-      width: "66%",
-      children: jsxRuntimeExports.jsx(Typography$1, {
-        color: PALETTE.secondary.grey[3],
-        bold: true,
-        sx: {
-          textAlign: 'center'
-        },
-        children: "All of your Content Folders are already on this Device."
-      })
-    }) : jsxRuntimeExports.jsx(Stack$1, {
-      overflow: "scroll",
-      flex: 1,
-      width: "100%",
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        pt: "16px",
-        spacing: "16px",
-        width: "100%",
-        flex: 1,
-        pb: "12px",
-        children: filteredFolders.map(function (d) {
-          return jsxRuntimeExports.jsx(Stack$1, {
-            direction: "row",
-            spacing: "8px",
-            px: "8px",
-            sx: {
-              cursor: 'pointer',
-              transition: '0.2s',
-              '&:hover': {
-                opacity: 0.7
-              }
-            },
-            onClick: function onClick() {
-              return props.onAdd(d.id);
-            },
-            children: jsxRuntimeExports.jsx(Typography$1, {
-              maxLines: 1,
-              bold: true,
-              children: d.title
-            })
-          }, d.id);
-        })
-      })
-    }), jsxRuntimeExports.jsx(UrsorButton, {
-      dark: true,
-      variant: "tertiary",
-      endIcon: SvgPlusIcon,
-      width: "100%",
-      onClick: props.openCreateNewDialog,
-      children: "Create new"
-    })]
-  });
-};
-
-function ProfilePage(props) {
-  var _device$name, _device$profileAvatar, _device$name2, _device$name3;
-  var _useAuth = useAuth(),
-    user = _useAuth.user;
-  var _useState = useState(),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    device = _useState2[0],
-    setDevice = _useState2[1];
-  var loadDevice = useCallback(function () {
-    return ApiController.getEnrichedDevice(props.deviceId).then(function (d) {
-      return setDevice(d);
-    });
-  }, [props.deviceId]);
-  var _useDeviceOnlineStatu = useDeviceOnlineStatus(device ? [device] : []),
-    _useDeviceOnlineStatu2 = _slicedToArray$2(_useDeviceOnlineStatu, 1),
-    cuttingEdgeOnlineStatusDevice = _useDeviceOnlineStatu2[0];
-  useEffect(function () {
-    loadDevice();
-  }, [loadDevice]);
-  var navigate = useNavigate();
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    renameDialogOpen = _useState4[0],
-    setRenameDialogOpen = _useState4[1];
-  var _useState5 = useState(false),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    disconnectDialogOpen = _useState6[0],
-    setDisconnectDialogOpen = _useState6[1];
-  var _useState7 = useState(false),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    addFolderDialogOpen = _useState8[0],
-    setAddFolderDialogOpen = _useState8[1];
-  var _useState9 = useState(false),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    createFolderDialogOpen = _useState10[0],
-    setCreateFolderDialogOpen = _useState10[1];
-  var _useState11 = useState([]),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    allDevices = _useState12[0],
-    setAllDevices = _useState12[1];
-  useEffect(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getGroupEnrichedDevices(user.group_id).then(function (d) {
-      return setAllDevices(d);
-    });
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  var _useState13 = useState([]),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    deviceFolders = _useState14[0],
-    setDeviceFolders = _useState14[1];
-  var loadFolders = useCallback(function () {
-    return ApiController.getDeviceFolders(props.deviceId).then(function (folders) {
-      return setDeviceFolders(_.reverse(_.sortBy(folders, function (f) {
-        return f.id;
-      })));
-    });
-  }, [props.deviceId]);
-  useEffect(function () {
-    loadFolders();
-  }, [loadFolders]);
-  var titleRow = [{
-    text: 'All Kids',
-    callback: function callback() {
-      return navigate.push('/profiles');
-    }
-  }, {
-    text: (_device$name = device === null || device === void 0 ? void 0 : device.name) !== null && _device$name !== void 0 ? _device$name : '',
-    image: jsxRuntimeExports.jsxs(Stack$1, {
-      position: "relative",
-      borderRadius: "100%",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        borderRadius: "100%",
-        overflow: "hidden",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: PALETTE.secondary.blue[2],
-        height: props.isMobile ? 24 : 36,
-        width: props.isMobile ? 24 : 36,
-        children: device !== null && device !== void 0 && device.profileAvatarUrl ? jsxRuntimeExports.jsx("img", {
-          src: (_device$profileAvatar = device === null || device === void 0 ? void 0 : device.profileAvatarUrl) !== null && _device$profileAvatar !== void 0 ? _device$profileAvatar : '',
-          height: props.isMobile ? 24 : 36,
-          width: props.isMobile ? 24 : 36,
-          alt: "device profile"
-        }) : jsxRuntimeExports.jsx(Typography$1, {
-          color: "rgb(255,255,255)",
-          bold: true,
-          variant: "small",
-          sx: {
-            transform: 'translateY(0.5px)'
-          },
-          children: getInitials((_device$name2 = device === null || device === void 0 ? void 0 : device.name) !== null && _device$name2 !== void 0 ? _device$name2 : '')
-        })
-      }), cuttingEdgeOnlineStatusDevice !== null && cuttingEdgeOnlineStatusDevice !== void 0 && cuttingEdgeOnlineStatusDevice.online ? jsxRuntimeExports.jsx(Stack$1, {
-        height: "11px",
-        width: "11px",
-        border: "2px solid ".concat(PALETTE.secondary.grey[1]),
-        borderRadius: "100%",
-        bgcolor: PALETTE.system.green,
-        position: "absolute",
-        bottom: 0,
-        right: 0,
-        sx: {
-          transform: 'translate(2px, 2px)'
-        }
-      }) : null]
-    }),
-    options: allDevices.filter(function (d) {
-      return d.id !== props.deviceId;
-    }).map(function (d) {
-      return {
-        text: d.name,
-        imageUrl: d.profileAvatarUrl,
-        callback: function callback() {
-          return navigate.push("/profiles/".concat(d.id));
-        }
-      };
-    }),
-    label: !props.isMobile && device !== null && device !== void 0 && device.deviceType ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType] : undefined
-  }];
-  var actions = [{
-    text: 'Edit name',
-    kallback: function kallback() {
-      return setRenameDialogOpen(true);
-    },
-    icon: SvgPencil
-  }];
-  var notificationCtx = useContext(NotificationContext);
-  var createAndAddFolder = function createAndAddFolder(title) {
-    return (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.createFolder(title, user.group_id).then(function (response) {
-      ApiController.addFolderToDevice(response.contentBucketId, props.deviceId);
-      navigate.push("/folders/".concat(response.contentBucketId));
-      notificationCtx.success('Created Folder and added it to the Device.');
-    });
-  };
-  return device ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [props.isMobile ? jsxRuntimeExports.jsx(ProfilePageMobileBody, {
-      device: cuttingEdgeOnlineStatusDevice || device,
-      titleRow: titleRow,
-      actions: actions,
-      folders: deviceFolders,
-      tab: props.tab,
-      onUpdateDevice: loadDevice,
-      onUpdateFolders: loadFolders,
-      openAddFolderDialog: function openAddFolderDialog() {
-        return setAddFolderDialogOpen(true);
-      }
-    }) : jsxRuntimeExports.jsx(ProfilePageDesktopBody, {
-      device: cuttingEdgeOnlineStatusDevice || device,
-      titleRow: titleRow,
-      actions: actions,
-      folders: deviceFolders,
-      tab: props.tab,
-      onUpdateDevice: loadDevice,
-      onUpdateFolders: loadFolders,
-      openAddFolderDialog: function openAddFolderDialog() {
-        return setAddFolderDialogOpen(true);
-      }
-    }), jsxRuntimeExports.jsx(DeviceRenameDialog, {
-      open: renameDialogOpen,
-      onClose: function onClose() {
-        return setRenameDialogOpen(false);
-      },
-      onSubmit: function onSubmit(name) {
-        ApiController.renameDevice(props.deviceId, name).then(loadDevice).then(function () {
-          return notificationCtx.success('Renamed Device');
-        });
-        setRenameDialogOpen(false);
-      },
-      name: (_device$name3 = device.name) !== null && _device$name3 !== void 0 ? _device$name3 : '',
-      isMobile: props.isMobile
-    }), jsxRuntimeExports.jsx(DeviceDisconnectDialog, {
-      open: disconnectDialogOpen,
-      onClose: function onClose() {
-        return setDisconnectDialogOpen(false);
-      },
-      onSubmit: function onSubmit() {
-        return null;
-      }
-    }), jsxRuntimeExports.jsx(AddFolderDialog, {
-      open: addFolderDialogOpen,
-      groupId: user === null || user === void 0 ? void 0 : user.group_id,
-      onClose: function onClose() {
-        return setAddFolderDialogOpen(false);
-      },
-      addedFolders: deviceFolders,
-      onAdd: function onAdd(id) {
-        return ApiController.addFolderToDevice(id, props.deviceId).then(loadFolders).then(function () {
-          return setAddFolderDialogOpen(false);
-        }).then(function () {
-          return notificationCtx.success('Added Folder to Device.');
-        });
-      },
-      openCreateNewDialog: function openCreateNewDialog() {
-        setCreateFolderDialogOpen(true);
-        setAddFolderDialogOpen(false);
-      },
-      isMobile: props.isMobile
-    }), jsxRuntimeExports.jsx(FolderCreationDialog, {
-      open: createFolderDialogOpen,
-      onClose: function onClose() {
-        return setCreateFolderDialogOpen(false);
-      },
-      onSubmit: createAndAddFolder,
-      isMobile: props.isMobile
-    })]
-  }) : jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
-}
-
-var Profile$1 = function Profile(_ref) {
-  var params = _ref.params,
-    searchParams = _ref.searchParams;
-  return jsxRuntimeExports.jsx(ProfilePage, {
-    deviceId: parseInt(params.id),
-    isMobile: isMobile_1,
-    tab: searchParams.tab
-  });
-};
-
-var QRCodeView = function QRCodeView() {
-  var _useAuth = useAuth(),
-    user = _useAuth.user;
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    image = _useState2[0],
-    setImage = _useState2[1];
-  useEffect(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getQRCode(user.group_id).then(setImage);
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  return jsxRuntimeExports.jsxs(Stack$1, {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-    position: "relative",
-    spacing: "65px",
-    children: [jsxRuntimeExports.jsxs(Stack$1, {
-      spacing: "8px",
-      alignItems: "center",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        sx: {
-          background: "linear-gradient(".concat(PALETTE.secondary.purple[2], ", ").concat(PALETTE.secondary.blue[2], ")"),
-          '-webkit-text-fill-color': 'transparent',
-          backgroundClip: 'text',
-          '-webkit-background-clip': 'text'
-        },
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          variant: "h4",
-          children: "Welcome to AstroSafe"
-        })
-      }), jsxRuntimeExports.jsx(Stack$1, {
-        width: "444px",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          variant: "medium",
-          bold: true,
-          sx: {
-            textAlign: 'center'
-          },
-          color: PALETTE.secondary.grey[4],
-          children: "Connect your child or student's device to start exploring the internet with them safely!"
-        })
-      })]
-    }), jsxRuntimeExports.jsxs(Stack$1, {
-      bgcolor: "rgb(255,255,255)",
-      borderRadius: "16px",
-      width: "347px",
-      height: "438px",
-      alignItems: "center",
-      justifyContent: "space-between",
-      py: "20px",
-      boxSizing: "border-box",
-      children: [jsxRuntimeExports.jsx(Stack$1, {
-        width: "267px",
-        children: jsxRuntimeExports.jsx(Typography$1, {
-          variant: "large",
-          bold: true,
-          sx: {
-            textAlign: 'center'
-          },
-          color: PALETTE.secondary.grey[5],
-          children: "Scan and download the browser on your kids device"
-        })
-      }), image ? jsxRuntimeExports.jsx("img", {
-        src: image,
-        width: 237,
-        height: 237,
-        alt: "qr"
-      }) : null, jsxRuntimeExports.jsx(UrsorButton, {
-        dark: true,
-        variant: "tertiary",
-        children: "Or follow this link"
-      })]
-    })]
-  });
-};
-
-function ownKeys$3(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var AllDevicesPageDesktopBody = function AllDevicesPageDesktopBody(props) {
-  var navigate = useNavigate();
-  return jsxRuntimeExports.jsx(PageLayout, {
-    title: "My Kids",
-    titleBackButton: true,
-    bodyWidth: "100%",
-    fullHeight: true,
-    selectedSidebarItemId: "devices",
-    button: {
-      text: 'Add a Device',
-      callback: props.setConnectDialogOpen,
-      icon: SvgPlusIcon
-    },
-    //   secondaryButton={{
-    //     text: "Get Browser",
-    //     callback: props.setDownloadDialogOpen,
-    //     icon: DownloadIcon,
-    //   }}
-    maxWidth: 834,
-    scrollable: true,
-    children: jsxRuntimeExports.jsx(Stack$1, {
-      pl: "50px",
-      flex: 1,
-      pb: "31px",
-      children: props.devices.length > 0 ? jsxRuntimeExports.jsx(DynamicCardGrid, {
-        cardWidth: "355px",
-        rowGap: "20px",
-        columnGap: "20px",
-        children: props.devices.map(function (d, i) {
-          var _props$filters$find$t, _props$filters$find;
-          return jsxRuntimeExports.jsx(UrsorFadeIn, {
-            delay: i * 100,
-            duration: 800,
-            children: jsxRuntimeExports.jsx(DeviceCard, _objectSpread$3(_objectSpread$3({}, d), {}, {
-              showBrowsing: true,
-              filterName: (_props$filters$find$t = (_props$filters$find = props.filters.find(function (f) {
-                return f.id === d.filterId;
-              })) === null || _props$filters$find === void 0 ? void 0 : _props$filters$find.title) !== null && _props$filters$find$t !== void 0 ? _props$filters$find$t : '',
-              button: jsxRuntimeExports.jsx(UrsorActionButton, {
-                size: "18px",
-                iconSize: "18px",
-                actions: [{
-                  text: 'Open',
-                  kallback: function kallback() {
-                    return navigate.push("/profiles/".concat(d.id));
-                  },
-                  icon: SvgArrowUpRight
-                }, {
-                  text: 'Edit name',
-                  kallback: function kallback() {
-                    return props.setRenameDeviceDialogId(d.id);
-                  },
-                  icon: SvgPencil
-                }
-                // {
-                //   text: "Disconnect",
-                //   kallback: () => props.setDisconnectDialogOpen(d.id),
-                //   icon: PlugIcon,
-                //   color: PALETTE.system.red,
-                // },
-                ]
-              })
-            }))
-          }, d.id);
-        })
-      }) : jsxRuntimeExports.jsx(UrsorFadeIn, {
-        delay: 700,
-        duration: 800,
-        children: jsxRuntimeExports.jsx(QRCodeView, {})
-      })
-    })
-  });
-};
-
-function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var AllDevicesPageMobileBody = function AllDevicesPageMobileBody(props) {
-  var navigate = useNavigate();
-  return (
-    // <PageLayout
-    //   title="My Devices"
-    //   titleBackButton={true}
-    //   bodyWidth="100%"
-    //   fullHeight
-    //   selectedSidebarItemId="devices"
-    //   button={{
-    //     text: "Add a Device",
-    //     callback: props.setConnectDialogOpen,
-    //     icon: PlusIcon,
-    //   }}
-    //   secondaryButton={{
-    //     text: "Get Browser",
-    //     callback: props.setDownloadDialogOpen,
-    //     icon: DownloadIcon,
-    //   }}
-    //   maxWidth={834}
-    //   scrollable
-    // >
-    jsxRuntimeExports.jsx(MobilePageLayout, {
-      title: "My Kids",
-      selectedPage: "profiles",
-      topRightElement: jsxRuntimeExports.jsx(Stack$1, {
-        direction: "row",
-        spacing: "8px",
-        children: jsxRuntimeExports.jsx(UrsorButton, {
-          size: "small",
-          endIcon: SvgPlusIcon,
-          dark: true,
-          variant: "tertiary",
-          onClick: props.setConnectDialogOpen,
-          children: "Add a Device"
-        })
-      }),
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        flex: 1,
-        children: props.devices.length > 0 ? jsxRuntimeExports.jsx(Stack$1, {
-          spacing: "12px",
-          children: props.devices.map(function (d) {
-            var _props$filters$find$t, _props$filters$find;
-            return jsxRuntimeExports.jsx(DeviceCard, _objectSpread$2(_objectSpread$2({}, d), {}, {
-              showBrowsing: true,
-              filterName: (_props$filters$find$t = (_props$filters$find = props.filters.find(function (f) {
-                return f.id === d.filterId;
-              })) === null || _props$filters$find === void 0 ? void 0 : _props$filters$find.title) !== null && _props$filters$find$t !== void 0 ? _props$filters$find$t : '',
-              button: jsxRuntimeExports.jsx(UrsorActionButton, {
-                size: "16px",
-                iconSize: "16px",
-                actions: [{
-                  text: 'Open',
-                  kallback: function kallback() {
-                    return navigate.push("/profiles/".concat(d.id));
-                  },
-                  icon: SvgArrowUpRight
-                }, {
-                  text: 'Edit name',
-                  kallback: function kallback() {
-                    return props.setRenameDeviceDialogId(d.id);
-                  },
-                  icon: SvgPencil
-                }
-                // {
-                //   text: "Disconnect",
-                //   kallback: () => props.setDisconnectDialogOpen(d.id),
-                //   icon: PlugIcon,
-                //   color: PALETTE.system.red,
-                // },
-                ]
-              })
-            }), d.id);
-          })
-        }) : jsxRuntimeExports.jsx(DeviceInstructionsView, {})
-      })
-    })
-  );
-};
-
-function AllDevicesPage(props) {
-  var _devices$find$name, _devices$find;
-  var _useAuth = useAuth(),
-    user = _useAuth.user;
-  var _useState = useState([]),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    devices = _useState2[0],
-    setDevices = _useState2[1];
-  useEffect(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getGroupEnrichedDevices(user === null || user === void 0 ? void 0 : user.group_id).then(setDevices);
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  var _useState3 = useState([]),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    filters = _useState4[0],
-    setFilters = _useState4[1];
-  useEffect(function () {
-    (user === null || user === void 0 ? void 0 : user.group_id) && ApiController.getGroupFilters(user.group_id).then(setFilters);
-  }, [user === null || user === void 0 ? void 0 : user.group_id]);
-  var _useState5 = useState(),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    renameDeviceDialogId = _useState6[0],
-    setRenameDeviceDialogId = _useState6[1];
-  var _useState7 = useState(false),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    connectDialogOpen = _useState8[0],
-    _setConnectDialogOpen = _useState8[1];
-  var _useState9 = useState(),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    disconnectDeviceDialogId = _useState10[0],
-    setDisconnectDeviceDialogId = _useState10[1];
-  var _useState11 = useState(false),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    downloadDialogOpen = _useState12[0],
-    setDownloadDialogOpen = _useState12[1];
-  var cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [props.isMobile ? jsxRuntimeExports.jsx(AllDevicesPageMobileBody, {
-      devices: cuttingEdgeOnlineStatusDevices,
-      filters: filters,
-      setConnectDialogOpen: function setConnectDialogOpen() {
-        return _setConnectDialogOpen(true);
-      },
-      setRenameDeviceDialogId: setRenameDeviceDialogId,
-      setDisconnectDialogOpen: setDisconnectDeviceDialogId
-    }) : jsxRuntimeExports.jsx(AllDevicesPageDesktopBody, {
-      devices: cuttingEdgeOnlineStatusDevices,
-      filters: filters,
-      setConnectDialogOpen: function setConnectDialogOpen() {
-        return _setConnectDialogOpen(true);
-      },
-      setRenameDeviceDialogId: setRenameDeviceDialogId,
-      setDisconnectDialogOpen: setDisconnectDeviceDialogId
-    }), renameDeviceDialogId ? jsxRuntimeExports.jsx(DeviceRenameDialog, {
-      open: true,
-      onClose: function onClose() {
-        return setRenameDeviceDialogId(undefined);
-      },
-      onSubmit: function onSubmit(name) {
-        ApiController.renameDevice(renameDeviceDialogId, name).then();
-        setRenameDeviceDialogId(undefined);
-      },
-      name: (_devices$find$name = (_devices$find = devices.find(function (d) {
-        return d.id === renameDeviceDialogId;
-      })) === null || _devices$find === void 0 ? void 0 : _devices$find.name) !== null && _devices$find$name !== void 0 ? _devices$find$name : ''
-    }) : null, disconnectDeviceDialogId ? jsxRuntimeExports.jsx(DeviceDisconnectDialog, {
-      open: true,
-      onClose: function onClose() {
-        return setDisconnectDeviceDialogId(undefined);
-      },
-      onSubmit: function onSubmit() {
-        return null;
-      }
-    }) : null, jsxRuntimeExports.jsx(DeviceConnectDialog, {
-      open: connectDialogOpen,
-      onClose: function onClose() {
-        return _setConnectDialogOpen(false);
-      },
-      onOpen: function onOpen() {
-        setDownloadDialogOpen(true);
-        _setConnectDialogOpen(false);
-      },
-      isMobile: props.isMobile
-    }), jsxRuntimeExports.jsx(DownloadDialog, {
-      open: downloadDialogOpen,
-      onClose: function onClose() {
-        return setDownloadDialogOpen(false);
-      },
-      isMobile: props.isMobile
-    })]
-  });
-}
-
-var Profile = function Profile() {
-  return jsxRuntimeExports.jsx(RootLayout, {
-    children: jsxRuntimeExports.jsx(AllDevicesPage, {
-      isMobile: isMobile_1
-    })
-  });
-};
-
-function ownKeys$1(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var ChannelPageDesktopBody = function ChannelPageDesktopBody(props) {
-  return jsxRuntimeExports.jsx(PageLayout, {
-    titleRow: props.titleRow,
-    titleBackButtonCallback: props.onBack,
-    bodyWidth: "100%",
-    fullHeight: true,
-    selectedSidebarItemId: "content",
-    actions: props.actions,
-    maxWidth: 834,
-    scrollable: true,
-    children: props.videos.length > 0 ? jsxRuntimeExports.jsx(Stack$1, {
-      pt: "20px",
-      pb: "33px",
-      pl: "51px",
-      children: jsxRuntimeExports.jsx(DynamicCardGrid, {
-        cardWidth: "292px",
-        rowGap: "40px",
-        columnGap: "20px",
-        children: props.videos.map(function (v, i) {
-          return jsxRuntimeExports.jsx(UrsorFadeIn, {
-            duration: 800,
-            delay: i * 90,
-            children: jsxRuntimeExports.jsx(VideoCard, _objectSpread$1(_objectSpread$1({}, v), {}, {
-              onDelete: props.onUpdate,
-              onOpenEditingDialog: function onOpenEditingDialog() {
-                return props.setVideoEditingDialogId(v.id);
-              },
-              twoLineTitleSectionHeight: true
-            }))
-          }, v.id);
-        })
-      })
-    }) : jsxRuntimeExports.jsx(EmptyStateIllustration, {
-      paddingTop: 20,
-      children: "No Videos in this Channel"
-    })
-  });
-};
-
-var ChannelRenameDialog = function ChannelRenameDialog(props) {
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    name = _useState2[0],
-    setName = _useState2[1];
-  useEffect(function () {
-    return setName(props.name);
-  }, [props.name]);
-  return jsxRuntimeExports.jsx(UrsorDialog, {
-    open: props.open,
-    onCloseCallback: props.onClose,
-    title: "Rename Channel",
-    width: "422px",
-    height: "226px",
-    isMobile: props.isMobile,
-    children: jsxRuntimeExports.jsxs(Stack$1, {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      justifyContent: "space-between",
-      children: [jsxRuntimeExports.jsx(LabeledInputField, {
-        label: "Name",
-        children: jsxRuntimeExports.jsx(UrsorInputField, {
-          value: name,
-          onChange: function onChange(event) {
-            return setName(event.target.value);
-          },
-          placeholder: "Choose a new name",
-          width: "100%",
-          leftAlign: true
-        })
-      }), jsxRuntimeExports.jsx(UrsorButton, {
-        dark: true,
-        variant: "tertiary",
-        width: "100%",
-        onClick: function onClick() {
-          props.onSubmit(name);
-          props.onClose();
-        },
-        children: "Save"
-      })]
-    })
-  });
-};
-
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var ChannelPageMobileBody = function ChannelPageMobileBody(props) {
-  return jsxRuntimeExports.jsx(MobilePageLayout, {
-    titleRow: props.titleRow.slice(-1)[0],
-    titleBackButtonCallback: props.onBack,
-    selectedPage: "content",
-    actions: props.actions,
-    children: props.videos.length > 0 ? jsxRuntimeExports.jsx(Stack$1, {
-      pb: "33px",
-      children: jsxRuntimeExports.jsx(Stack$1, {
-        spacing: "20px",
-        children: props.videos.map(function (v, i) {
-          return jsxRuntimeExports.jsx(UrsorFadeIn, {
-            duration: 800,
-            delay: i * 90,
-            children: jsxRuntimeExports.jsx(VideoCard, _objectSpread(_objectSpread({}, v), {}, {
-              onDelete: props.onUpdate,
-              onOpenEditingDialog: function onOpenEditingDialog() {
-                return props.setVideoEditingDialogId(v.id);
-              },
-              twoLineTitleSectionHeight: true
-            }))
-          }, v.id);
-        })
-      })
-    }) : jsxRuntimeExports.jsx(EmptyStateIllustration, {
-      paddingTop: 20,
-      children: "No Videos in this Channel"
-    })
-  });
-};
-
-var ChannelPage = function ChannelPage(props) {
-  var _folder$title;
-  var navigate = useNavigate();
-  var _useState = useState(''),
-    _useState2 = _slicedToArray$2(_useState, 2),
-    title = _useState2[0],
-    setTitle = _useState2[1];
-  var _useState3 = useState(),
-    _useState4 = _slicedToArray$2(_useState3, 2),
-    folderId = _useState4[0],
-    setFolderId = _useState4[1];
-  var _useState5 = useState([]),
-    _useState6 = _slicedToArray$2(_useState5, 2),
-    videos = _useState6[0],
-    setVideos = _useState6[1];
-  var load = useCallback(function () {
-    return ApiController.getChannel(props.id).then(function (c) {
-      setTitle(c.title);
-      setFolderId(c.contentBucketId);
-      setVideos(c.videos);
-    });
-  }, [props.id]);
-  useEffect(function () {
-    load();
-  }, [load]);
-  var _useState7 = useState(),
-    _useState8 = _slicedToArray$2(_useState7, 2),
-    folder = _useState8[0],
-    setFolder = _useState8[1];
-  useEffect(function () {
-    folderId && ApiController.getFolder(folderId).then(setFolder);
-  }, [folderId]);
-  var _useState9 = useState(),
-    _useState10 = _slicedToArray$2(_useState9, 2),
-    videoEditingDialogId = _useState10[0],
-    setVideoEditingDialogId = _useState10[1];
-  var titleRow = [].concat(_toConsumableArray(folder ? [{
-    text: 'My Folders',
-    callback: function callback() {
-      return navigate.push('/folders');
-    }
-  }, {
-    text: (_folder$title = folder === null || folder === void 0 ? void 0 : folder.title) !== null && _folder$title !== void 0 ? _folder$title : '',
-    callback: function callback() {
-      return navigate.push("/folders/".concat(folderId));
-    }
-  }] : []), [{
-    text: title
-  }]);
-  var _useState11 = useState(false),
-    _useState12 = _slicedToArray$2(_useState11, 2),
-    deletionDialogOpen = _useState12[0],
-    setDeletionDialogOpen = _useState12[1];
-  var _useState13 = useState(false),
-    _useState14 = _slicedToArray$2(_useState13, 2),
-    renameDialogOpen = _useState14[0],
-    setRenameDialogOpen = _useState14[1];
-  var actions = [{
-    text: 'Edit name',
-    kallback: function kallback() {
-      return setRenameDialogOpen(true);
-    },
-    icon: SvgPencil
-  }, {
-    text: 'Delete',
-    kallback: function kallback() {
-      return setDeletionDialogOpen(true);
-    },
-    icon: SvgTrashcanIcon,
-    color: PALETTE.system.red
-  }];
-  var notificationCtx = useContext(NotificationContext);
-  var deleteChannel = function deleteChannel() {
-    return ApiController.deleteChannel(props.id).then(function () {
-      return navigate.push(folderId ? "/folders/".concat(folderId) : '/folders');
-    });
-  };
-  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [props.isMobile ? jsxRuntimeExports.jsx(ChannelPageMobileBody, {
-      videos: videos,
-      onUpdate: load,
-      titleRow: titleRow,
-      setVideoEditingDialogId: setVideoEditingDialogId,
-      actions: actions,
-      onBack: function onBack() {
-        return navigate.push(folderId ? "/folders/".concat(folderId) : '/folders');
-      }
-    }) : jsxRuntimeExports.jsx(ChannelPageDesktopBody, {
-      videos: videos,
-      onUpdate: load,
-      titleRow: titleRow,
-      setVideoEditingDialogId: setVideoEditingDialogId,
-      actions: actions,
-      onBack: function onBack() {
-        return navigate.push(folderId ? "/folders/".concat(folderId) : '/folders');
-      }
-    }), videoEditingDialogId && folderId ? jsxRuntimeExports.jsx(VideoCreationDialog, {
-      open: true,
-      onClose: function onClose() {
-        setVideoEditingDialogId(undefined);
-      },
-      folderId: folderId,
-      creationCallback: load,
-      updateDetails: {
-        video: videos.find(function (v) {
-          return v.id === videoEditingDialogId;
-        }),
-        callback: load
-      },
-      belongsToChannel: true
-    }) : null, jsxRuntimeExports.jsx(DeletionDialog, {
-      open: deletionDialogOpen,
-      type: "channel",
-      onClose: function onClose() {
-        return setDeletionDialogOpen(false);
-      },
-      subtitle: "If you remove this Channel, all of its Videos too will be deleted.",
-      onSubmit: deleteChannel,
-      isMobile: props.isMobile
-    }), jsxRuntimeExports.jsx(ChannelRenameDialog, {
-      open: renameDialogOpen,
-      onClose: function onClose() {
-        return setRenameDialogOpen(false);
-      },
-      name: title,
-      onSubmit: function onSubmit(title) {
-        return ApiController.changeChannelName(props.id, title).then(load).then(function () {
-          return notificationCtx.success('Renamed Channel');
-        });
-      },
-      isMobile: props.isMobile
-    })]
-  });
-};
-
-var Channel = function Channel(_ref) {
-  var params = _ref.params;
-  return jsxRuntimeExports.jsx(RootLayout, {
-    children: jsxRuntimeExports.jsx(ChannelPage, {
-      id: parseInt(params.id),
-      isMobile: isMobile_1
-    })
-  });
-};
-
-export { Channel as ChannelPage, Filter as FilterPage, Filters as FiltersPage, Folder as FolderPage, Folders as FoldersPage, Profile$1 as ProfilePage, Profile as ProfilesPage };
+export { Folder as FolderPage, Folders as FoldersPage };

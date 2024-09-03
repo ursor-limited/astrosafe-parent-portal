@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
 import { UserInfo } from './../../auth/model'
 import { AUTH_URL, post } from './../../api'
 import { getUserInfo } from './../../auth'
@@ -15,7 +14,7 @@ const useAuth = (deviceId: string, authUrl: string) => {
         return
       })
       .catch(
-        () =>
+        () => {
           login()
             .then(() => {
               getUserInfo().then((data) => {
@@ -26,17 +25,24 @@ const useAuth = (deviceId: string, authUrl: string) => {
                 return
               })
             })
-            .catch((err) => {}) // Failing login after first failed login = death?
+            .catch((err) => {})
+        } // Failing login after first failed login = death?
       )
   }, [])
 
   const login = async () => {
-    const resp = await post(authUrl, {
-      deviceId: deviceId,
+    const resp = await fetch(authUrl, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        deviceId: deviceId,
+      }),
     })
-    // TODO: Change before launch to actual user/parent ID... or maybe don't since Troomi uses device_id to authenticate meaning we can't authenticate properly
 
-    if (!resp) return
+    if (!resp.ok) throw new Error('Login failed.')
 
     return await resp.json()
   }

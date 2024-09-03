@@ -19,4 +19,6 @@ export interface IContentCard {
 export default function FolderPage(props: {
     folderId: number;
     isMobile: boolean;
+    deviceId: string;
+    authUrl: string;
 }): import("react/jsx-runtime").JSX.Element;

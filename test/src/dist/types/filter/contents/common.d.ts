@@ -28,4 +28,6 @@ export interface IDeviceConfig {
 export default function FilterPage(props: {
     isMobile: boolean;
     filterId: number;
+    deviceId: string;
+    authUrl: string;
 }): import("react/jsx-runtime").JSX.Element | null;
