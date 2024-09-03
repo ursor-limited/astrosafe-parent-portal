@@ -4,7 +4,7 @@ import { UserInfo } from './../../auth/model'
 import { AUTH_URL, post } from './../../api'
 import { getUserInfo } from './../../auth'
 
-const useAuth = (deviceId: string) => {
+const useAuth = (deviceId: string, authUrl: string) => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo)
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const useAuth = (deviceId: string) => {
   }, [])
 
   const login = async () => {
-    const resp = await post(process.env.AUTH_URL!, {
+    const resp = await post(authUrl, {
       deviceId: deviceId,
     })
     // TODO: Change before launch to actual user/parent ID... or maybe don't since Troomi uses device_id to authenticate meaning we can't authenticate properly

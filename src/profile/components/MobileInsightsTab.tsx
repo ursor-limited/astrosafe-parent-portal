@@ -1,38 +1,38 @@
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
-import { ReactComponent as ChevronLeftIcon } from './../../images/ChevronLeft.svg';
+import { Stack } from '@mui/system'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
+import { ReactComponent as ChevronLeftIcon } from './../../images/ChevronLeft.svg'
 
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import _ from 'lodash';
-import AstroTimeChart from './AstroTimeChart';
-import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import CalendarButton from './../../components/CalendarButton';
-import { IDayScreenTime, IVisitedSite } from './InsightsTab';
-import MobileHistorySection from './MobileHistorySection';
-import MostVisitedSitesSection from './MostVisitedSitesSection';
-import ApiController from './../../api';
-import { IDevice } from './../../filter/contents/common';
-dayjs.extend(advancedFormat);
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import _ from 'lodash'
+import AstroTimeChart from './AstroTimeChart'
+import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+import CalendarButton from './../../components/CalendarButton'
+import { IDayScreenTime, IVisitedSite } from './InsightsTab'
+import MobileHistorySection from './MobileHistorySection'
+import MostVisitedSitesSection from './MostVisitedSitesSection'
+import ApiController from './../../api'
+import { IDevice } from './../../filter/contents/common'
+dayjs.extend(advancedFormat)
 
 export const cleanUrl = (url: string) =>
-  url.replace('http://', '').replace('https://', '').replace('www.', '');
+  url.replace('http://', '').replace('https://', '').replace('www.', '')
 
 const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
-  const [times, setTimes] = useState<IDayScreenTime[]>([]);
-  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0); // days from today
-  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0);
-  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(6);
-  const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([]);
+  const [times, setTimes] = useState<IDayScreenTime[]>([])
+  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0) // days from today
+  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0)
+  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(6)
+  const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([])
   useEffect(() => {
     ApiController.getStats(
       props.deviceId,
       dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'),
       dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')
     ).then((stats) => {
-      setTimes(stats.screenTime);
+      setTimes(stats.screenTime)
       setVisitedSites(
         _.sortBy(
           stats.visitedWebsites?.find(
@@ -45,11 +45,11 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
           )?.websites || [],
           (t) => t.screenTime
         )
-      );
-    });
-  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
+      )
+    })
+  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex])
 
-  const [timeSpent, setTimeSpent] = useState<number>(0);
+  const [timeSpent, setTimeSpent] = useState<number>(0)
   useEffect(
     () =>
       setTimeSpent(
@@ -63,23 +63,23 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
         )?.screenTime ?? 0
       ),
     [times, selectedDayIndex]
-  );
+  )
 
   useEffect(() => {
     if (selectedDayIndex < 4) {
-      const shiftNDays = selectedDayIndex - 3;
-      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays);
-      setRangeEndDayIndex(Math.max(0, shiftNDays));
+      const shiftNDays = selectedDayIndex - 3
+      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays)
+      setRangeEndDayIndex(Math.max(0, shiftNDays))
       // }
       // else if (times.length - selectedDayIndex < 4) {
       //   const shiftNDays = times.length - 1 - selectedDayIndex;
       //   setRangeStartDayIndex(Math.min(times.length - 1, selectedDayIndex + 3));
       //   setRangeEndDayIndex(selectedDayIndex - 6 + shiftNDays);
     } else {
-      setRangeStartDayIndex(selectedDayIndex + 3);
-      setRangeEndDayIndex(selectedDayIndex - 3);
+      setRangeStartDayIndex(selectedDayIndex + 3)
+      setRangeEndDayIndex(selectedDayIndex - 3)
     }
-  }, [selectedDayIndex, times]);
+  }, [selectedDayIndex, times])
   return (
     <>
       <Stack spacing="12px">
@@ -264,6 +264,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
         </Stack>
         <MobileHistorySection
           deviceId={props.deviceId}
+          authUrl={props.authUrl}
           date={dayjs()
             .utc()
             .subtract(selectedDayIndex, 'days')
@@ -283,7 +284,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
         }}
       /> */}
     </>
-  );
-};
+  )
+}
 
-export default DevicePageMobileInsightsTab;
+export default DevicePageMobileInsightsTab

@@ -32,8 +32,9 @@ export type IEnrichedDevice = IDevice & {
 export default function AllDevicesPage(props: {
   isMobile: boolean
   deviceId: string
+  authUrl: string
 }) {
-  const { user } = useAuth(props.deviceId)
+  const { user } = useAuth(props.deviceId, props.authUrl)
   const [devices, setDevices] = useState<IEnrichedDevice[]>([])
   useEffect(() => {
     user?.group_id &&

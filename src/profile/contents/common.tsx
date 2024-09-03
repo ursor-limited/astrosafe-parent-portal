@@ -30,9 +30,10 @@ export default function ProfilePage(props: {
   astroDeviceId: number
   deviceId: string
   isMobile: boolean
+  authUrl: string
   tab?: AstroAccountTab
 }) {
-  const { user } = useAuth(props.deviceId)
+  const { user } = useAuth(props.deviceId, props.authUrl)
   const [device, setDevice] = useState<IEnrichedDevice | undefined>()
   const loadDevice = useCallback(
     () =>

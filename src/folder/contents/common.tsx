@@ -77,9 +77,10 @@ export default function FolderPage(props: {
   folderId: number
   isMobile: boolean
   deviceId: string
+  authUrl: string
 }) {
   const navigate = useNavigate()
-  const { user } = useAuth(props.deviceId)
+  const { user } = useAuth(props.deviceId, props.authUrl)
 
   const [devices, setDevices] = useState<IDevice[]>([])
   const loadDevices = useCallback(

@@ -58,8 +58,9 @@ export default function FilterPage(props: {
   isMobile: boolean
   filterId: number
   deviceId: string
+  authUrl: string
 }) {
-  const { user } = useAuth(props.deviceId)
+  const { user } = useAuth(props.deviceId, props.authUrl)
 
   const [filter, setFilter] = useState<IFilter | undefined>()
   const loadFilter = useCallback(
