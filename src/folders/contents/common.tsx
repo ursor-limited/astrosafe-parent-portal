@@ -1,30 +1,30 @@
-import useNavigate from '../../hooks/useNavigate';
-import ApiController from '../../api';
-import { useCallback, useEffect, useState } from 'react';
-import { IDevice } from '../../filter/contents/common';
-import AllFoldersPageDesktopBody from './body-desktop';
-import AllFoldersPageMobileBody from './body-mobile';
-import { IContentBucket } from './../../profile/components/ContentTab';
-import FolderCreationDialog from '../../folder/components/FolderCreationDialog';
-import useAuth from './../../hooks/useAuth';
+import useNavigate from '../../hooks/useNavigate'
+import ApiController from '../../api'
+import { useCallback, useEffect, useState } from 'react'
+import { IDevice } from '../../filter/contents/common'
+import AllFoldersPageDesktopBody from './body-desktop'
+import AllFoldersPageMobileBody from './body-mobile'
+import { IContentBucket } from './../../profile/components/ContentTab'
+import FolderCreationDialog from '../../folder/components/FolderCreationDialog'
+import useAuth from './../../hooks/useAuth'
 
 export interface IEnrichedContentBucket {
-  id: IContentBucket['id'];
-  title: IContentBucket['title'];
+  id: IContentBucket['id']
+  title: IContentBucket['title']
   preview: {
-    thumbnailUrls: string[];
+    thumbnailUrls: string[]
     devices: {
-      profileAvatarUrl: IDevice['profileAvatarUrl'];
-      name: IDevice['name'];
-    }[];
-    totalDeviceCount: number;
-  };
+      profileAvatarUrl: IDevice['profileAvatarUrl']
+      name: IDevice['name']
+    }[]
+    totalDeviceCount: number
+  }
 }
 
-const AllFoldersPage = (props: { isMobile: boolean }) => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [folders, setFolders] = useState<IEnrichedContentBucket[]>([]);
+const AllFoldersPage = (props: { isMobile: boolean; deviceId: string }) => {
+  const { user } = useAuth(props.deviceId)
+  const navigate = useNavigate()
+  const [folders, setFolders] = useState<IEnrichedContentBucket[]>([])
   const loadFolders = useCallback(
     () =>
       user?.group_id &&
@@ -32,16 +32,16 @@ const AllFoldersPage = (props: { isMobile: boolean }) => {
         setFolders(f)
       ),
     [user?.group_id]
-  );
+  )
   useEffect(() => {
-    loadFolders();
-  }, [loadFolders]);
+    loadFolders()
+  }, [loadFolders])
   const createFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
     ApiController.createFolder(title, user.group_id).then((response) =>
       navigate.push(`/folders/${response.contentBucketId}`)
-    );
-  const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
+    )
+  const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false)
 
   return (
     <>
@@ -65,7 +65,7 @@ const AllFoldersPage = (props: { isMobile: boolean }) => {
         isMobile={props.isMobile}
       />
     </>
-  );
-};
+  )
+}
 
-export default AllFoldersPage;
+export default AllFoldersPage

@@ -109591,20 +109591,14 @@ var useAuth = function useAuth() {
     user = _useState2[0],
     setUser = _useState2[1];
   useEffect(function () {
-    var storedUserInfo = api.get('user_info');
-    if (storedUserInfo) {
-      setUser(JSON.parse(atob(storedUserInfo)));
-      return;
-    }
     getUserInfo().then(function (data) {
       setUser(data);
-      api.set('user_info', btoa(JSON.stringify(data)));
       return;
     })["catch"](function () {
       return login().then(function () {
         getUserInfo().then(function (data) {
           setUser(data);
-          api.set('user_info', btoa(JSON.stringify(data)));
+          location.reload();
           return;
         });
       })["catch"](function (err) {});
@@ -109618,7 +109612,7 @@ var useAuth = function useAuth() {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return post('auth/login/confidential', {
+            return post(process.env.AUTH_URL, {
               client_id: 'troomi',
               client_secret: 'ay8efW7PT2zhmP6VvhnWdML07pY3Lj0l'
             });

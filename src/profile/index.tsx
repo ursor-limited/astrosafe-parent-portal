@@ -1,21 +1,22 @@
-import React from 'react';
-import { isMobile } from 'react-device-detect';
-import ProfilePage, { AstroAccountTab } from './contents/common';
+import React from 'react'
+import { isMobile } from 'react-device-detect'
+import ProfilePage, { AstroAccountTab } from './contents/common'
 
 const Profile = ({
-  params,
+  props,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { tab: AstroAccountTab };
+  props: { astroDeviceId: string; deviceId: string }
+  searchParams: { tab: AstroAccountTab }
 }) => {
   return (
     <ProfilePage
-      deviceId={parseInt(params.id)}
+      astroDeviceId={parseInt(props.astroDeviceId)}
       isMobile={isMobile}
       tab={searchParams.tab}
+      deviceId={props.deviceId}
     />
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

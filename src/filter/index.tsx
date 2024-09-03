@@ -1,9 +1,15 @@
-import React from 'react';
-import { isMobile } from 'react-device-detect';
-import FilterPage from './contents/common';
+import React from 'react'
+import { isMobile } from 'react-device-detect'
+import FilterPage from './contents/common'
 
-const Filter = ({ params }: { params: { id: string } }) => {
-  return <FilterPage filterId={parseInt(params.id)} isMobile={isMobile} />;
-};
+const Filter = ({ props }: { props: { id: string; deviceId: string } }) => {
+  return (
+    <FilterPage
+      filterId={parseInt(props.id)}
+      isMobile={isMobile}
+      deviceId={props.deviceId}
+    />
+  )
+}
 
-export default Filter;
+export default Filter

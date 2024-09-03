@@ -1,14 +1,22 @@
-import { FoldersPage, ProfilesPage } from './dist';
+import {
+  FoldersPage,
+  FolderPage,
+  ProfilesPage,
+  ProfilePage,
+  FiltersPage,
+  FilterPage,
+  ChannelPage,
+} from './dist'
 
 const App: React.FC = () => {
   return (
     <div>
       <FoldersPage />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 
 /* 
 // Add this cookie middleware if you haven't already

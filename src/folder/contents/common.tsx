@@ -1,23 +1,23 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { ReactComponent as CirclePlayIcon } from './../../images/CirclePlay.svg';
-import { ReactComponent as LinkIcon } from './../../images/LinkIcon.svg';
-import { ReactComponent as VideoCameraIcon } from './../../images/VideoCameraIcon.svg';
-import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { PALETTE } from './../../ui';
-import _ from 'lodash';
-import useNavigate from '../../hooks/useNavigate';
-import AddDeviceDialog from '../components/AddDeviceDialog';
-import LinkCreationDialog from '../components/LinkCreationDialog';
-import ChannelCreationDialog from '../components/ChannelCreationDialog';
-import ApiController from './../../api';
-import FolderRenameDialog from '../components/FolderRenameDialog';
-import NotificationContext from './../../components/NotificationContext';
-import useLoadFolderAndContents from '../components/useLoadFolderAndContents';
-import VideoCreationDialog from '../components/VideoCreationDialog';
-import FolderPageMobileBody from './body-mobile';
-import FolderPageDesktopBody from './body-desktop';
-import { IDevice } from './../../filter/contents/common';
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { ReactComponent as CirclePlayIcon } from './../../images/CirclePlay.svg'
+import { ReactComponent as LinkIcon } from './../../images/LinkIcon.svg'
+import { ReactComponent as VideoCameraIcon } from './../../images/VideoCameraIcon.svg'
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { PALETTE } from './../../ui'
+import _ from 'lodash'
+import useNavigate from '../../hooks/useNavigate'
+import AddDeviceDialog from '../components/AddDeviceDialog'
+import LinkCreationDialog from '../components/LinkCreationDialog'
+import ChannelCreationDialog from '../components/ChannelCreationDialog'
+import ApiController from './../../api'
+import FolderRenameDialog from '../components/FolderRenameDialog'
+import NotificationContext from './../../components/NotificationContext'
+import useLoadFolderAndContents from '../components/useLoadFolderAndContents'
+import VideoCreationDialog from '../components/VideoCreationDialog'
+import FolderPageMobileBody from './body-mobile'
+import FolderPageDesktopBody from './body-desktop'
+import { IDevice } from './../../filter/contents/common'
 import {
   AstroContent,
   IChannel,
@@ -25,24 +25,24 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from './../../profile/components/ContentTab';
-import DeletionDialog from './../../components/DeletionDialog';
-import useDeviceOnlineStatus from './../../profiles/components/useDeviceOnlineStatus';
-import useAuth from './../../hooks/useAuth';
+} from './../../profile/components/ContentTab'
+import DeletionDialog from './../../components/DeletionDialog'
+import useDeviceOnlineStatus from './../../profiles/components/useDeviceOnlineStatus'
+import useAuth from './../../hooks/useAuth'
 
 export const FOLDER_DELETION_DIALOG_SUBTITLE =
-  'If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.';
+  'If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.'
 
 export interface IGroup {
-  id: number;
-  title: string;
-  joinCode: string;
+  id: number
+  title: string
+  joinCode: string
 }
 
 export interface IAstroContentBranding {
-  title: string;
-  color: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  title: string
+  color: string
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
@@ -66,41 +66,42 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: PALETTE.secondary.blue[3],
     icon: LinkIcon,
   },
-};
+}
 
 export interface IContentCard {
-  type: AstroContent;
-  content: IContent;
+  type: AstroContent
+  content: IContent
 }
 
 export default function FolderPage(props: {
-  folderId: number;
-  isMobile: boolean;
+  folderId: number
+  isMobile: boolean
+  deviceId: string
 }) {
-  const navigate = useNavigate();
-  const { user } = useAuth();
+  const navigate = useNavigate()
+  const { user } = useAuth(props.deviceId)
 
-  const [devices, setDevices] = useState<IDevice[]>([]);
+  const [devices, setDevices] = useState<IDevice[]>([])
   const loadDevices = useCallback(
     () =>
       ApiController.getFolderDevices(props.folderId).then((d) => setDevices(d)),
     [props.folderId]
-  );
+  )
   useEffect(() => {
-    loadDevices();
-  }, [loadDevices]);
-  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
+    loadDevices()
+  }, [loadDevices])
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices)
 
   const { folder, contents, loadFolderAndContents } = useLoadFolderAndContents(
     props.folderId
-  );
+  )
 
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>('')
   const [selectedContentType, setSelectedContentType] = useState<
     AstroContent | 'all'
-  >('all');
+  >('all')
 
-  const [filteredContents, setFilteredContents] = useState<IContentCard[]>([]);
+  const [filteredContents, setFilteredContents] = useState<IContentCard[]>([])
 
   useEffect(
     () =>
@@ -119,37 +120,36 @@ export default function FolderPage(props: {
           .value()
       ),
     [searchValue, selectedContentType, contents]
-  );
+  )
 
-  const [addDeviceDialogOpen, setAddDeviceDialogOpen] =
-    useState<boolean>(false);
+  const [addDeviceDialogOpen, setAddDeviceDialogOpen] = useState<boolean>(false)
 
   const [contentCreationDialogOpen, setContentCreationDialogOpen] = useState<
     AstroContent | undefined
-  >();
+  >()
 
-  const [allFolders, setFolders] = useState<IContentBucket[]>([]);
+  const [allFolders, setFolders] = useState<IContentBucket[]>([])
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFolders(user.group_id).then(setFolders);
-  }, [user?.group_id]);
+      ApiController.getGroupFolders(user.group_id).then(setFolders)
+  }, [user?.group_id])
 
   const [folderRenameDialogOpen, setFolderRenameDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
   const [linkEditingDialogId, setLinkEditingDialogId] = useState<
     ILink['id'] | undefined
-  >(undefined);
+  >(undefined)
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     IVideo['id'] | undefined
-  >(undefined);
+  >(undefined)
 
   const [channelEditingDialogId, setChannelEditingDialogId] = useState<
     IChannel['id'] | undefined
-  >(undefined);
+  >(undefined)
 
   const titleRow = [
     {
@@ -165,14 +165,14 @@ export default function FolderPage(props: {
           callback: () => navigate.push(`/folders/${f.id}`),
         })),
     },
-  ];
+  ]
 
-  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false)
 
   const deleteFolder = () =>
     ApiController.removeFolder(props.folderId).then(() =>
       navigate.push('/folders')
-    );
+    )
 
   const actions = [
     {
@@ -191,7 +191,7 @@ export default function FolderPage(props: {
       icon: TrashcanIcon,
       color: PALETTE.system.red,
     },
-  ];
+  ]
 
   return (
     <>
@@ -205,11 +205,11 @@ export default function FolderPage(props: {
           setCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
-            setAddDeviceDialogOpen(true);
+            setAddDeviceDialogOpen(true)
           }}
           onRemoveDevice={() => {
-            loadDevices();
-            notificationCtx.negativeSuccess('Removed Device');
+            loadDevices()
+            notificationCtx.negativeSuccess('Removed Device')
           }}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
@@ -231,11 +231,11 @@ export default function FolderPage(props: {
           setContentCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
-            setAddDeviceDialogOpen(true);
+            setAddDeviceDialogOpen(true)
           }}
           onRemoveDevice={() => {
-            loadDevices();
-            notificationCtx.negativeSuccess('Removed Device');
+            loadDevices()
+            notificationCtx.negativeSuccess('Removed Device')
           }}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
@@ -259,10 +259,10 @@ export default function FolderPage(props: {
           addedDevices={devices}
           onAdd={(id) => {
             ApiController.addFolderToDevice(props.folderId, id).then(() => {
-              setAddDeviceDialogOpen(false);
-              loadDevices();
-              notificationCtx.success('Added Device');
-            });
+              setAddDeviceDialogOpen(false)
+              loadDevices()
+              notificationCtx.success('Added Device')
+            })
           }}
           isMobile={props.isMobile}
         />
@@ -273,8 +273,8 @@ export default function FolderPage(props: {
         name={folder?.title ?? ''}
         onSubmit={(name) =>
           ApiController.renameFolder(props.folderId, name).then(() => {
-            loadFolderAndContents();
-            notificationCtx.success('Renamed Folder');
+            loadFolderAndContents()
+            notificationCtx.success('Renamed Folder')
           })
         }
         isMobile={props.isMobile}
@@ -284,7 +284,7 @@ export default function FolderPage(props: {
           <VideoCreationDialog
             open={true}
             onClose={() => {
-              setContentCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined)
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
@@ -293,7 +293,7 @@ export default function FolderPage(props: {
           <LinkCreationDialog
             open={true}
             onClose={() => {
-              setContentCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined)
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
@@ -302,7 +302,7 @@ export default function FolderPage(props: {
           <ChannelCreationDialog
             open={true}
             onClose={() => {
-              setContentCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined)
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
@@ -313,7 +313,7 @@ export default function FolderPage(props: {
         <LinkCreationDialog
           open={true}
           onClose={() => {
-            setLinkEditingDialogId(undefined);
+            setLinkEditingDialogId(undefined)
           }}
           folderId={props.folderId}
           creationCallback={loadFolderAndContents}
@@ -329,7 +329,7 @@ export default function FolderPage(props: {
         <VideoCreationDialog
           open={true}
           onClose={() => {
-            setVideoEditingDialogId(undefined);
+            setVideoEditingDialogId(undefined)
           }}
           folderId={props.folderId}
           creationCallback={loadFolderAndContents}
@@ -345,7 +345,7 @@ export default function FolderPage(props: {
         <ChannelCreationDialog
           open={true}
           onClose={() => {
-            setChannelEditingDialogId(undefined);
+            setChannelEditingDialogId(undefined)
           }}
           folderId={props.folderId}
           creationCallback={loadFolderAndContents}
@@ -367,5 +367,5 @@ export default function FolderPage(props: {
         isMobile={props.isMobile}
       />
     </>
-  );
+  )
 }

@@ -1,84 +1,84 @@
-import { useEffect, useState } from 'react';
-import AllFiltersPageDesktopBody from './body-desktop';
-import AllFiltersPageMobileBody from './body-mobile';
-import ApiController from './../../api';
-import useNavigate from '../../hooks/useNavigate';
-import FilterCreationDialog from '../../filter/components/FilterCreationDialog';
-import { IDevice } from '../../filter/contents/common';
-import _ from 'lodash';
-import useAuth from './../../hooks/useAuth';
+import { useEffect, useState } from 'react'
+import AllFiltersPageDesktopBody from './body-desktop'
+import AllFiltersPageMobileBody from './body-mobile'
+import ApiController from './../../api'
+import useNavigate from '../../hooks/useNavigate'
+import FilterCreationDialog from '../../filter/components/FilterCreationDialog'
+import { IDevice } from '../../filter/contents/common'
+import _ from 'lodash'
+import useAuth from './../../hooks/useAuth'
 
 export interface IFilterCategory {
-  categoryId: number;
-  title: string;
-  permanentlyBlocked: boolean;
-  subCategories: IFilterSubcategory[];
+  categoryId: number
+  title: string
+  permanentlyBlocked: boolean
+  subCategories: IFilterSubcategory[]
 }
 
 export interface IFilterSubcategory {
-  id: number;
-  categoryId: IFilterCategory['categoryId'];
-  title: string;
+  id: number
+  categoryId: IFilterCategory['categoryId']
+  title: string
 }
 
 export interface IFilterUrl {
-  id: number;
-  url: string;
-  title: string;
-  imageUrl: string;
-  createdAt: string;
-  groupId: number;
+  id: number
+  url: string
+  title: string
+  imageUrl: string
+  createdAt: string
+  groupId: number
 }
 
 export interface IFilterDomain {
-  id: number;
-  domain: string;
-  title: string;
-  faviconUrl: string;
-  urls: IFilterUrl[];
+  id: number
+  domain: string
+  title: string
+  faviconUrl: string
+  urls: IFilterUrl[]
 }
 
 export interface IFilterBlacklistedWord {
-  id: number;
-  word: string;
+  id: number
+  word: string
 }
 
 export interface IFilter {
-  id: number;
-  title: string;
-  filterWordBlacklist: IFilterBlacklistedWord[];
-  filterCategoryWhitelist: IFilterSubcategory[];
-  allowedSiteExceptions: IFilterUrl[];
-  blockedSiteExceptions: IFilterUrl[];
-  official: boolean;
-  groupId: number;
+  id: number
+  title: string
+  filterWordBlacklist: IFilterBlacklistedWord[]
+  filterCategoryWhitelist: IFilterSubcategory[]
+  allowedSiteExceptions: IFilterUrl[]
+  blockedSiteExceptions: IFilterUrl[]
+  official: boolean
+  groupId: number
 }
 
 export interface IGroupFilter {
-  id: IFilter['id'];
-  title: IFilter['title'];
-  official: IFilter['official'];
+  id: IFilter['id']
+  title: IFilter['title']
+  official: IFilter['official']
   devices: {
-    profileAvatarUrl: IDevice['profileAvatarUrl'];
-    name: IDevice['name'];
-  }[];
-  totalDeviceCount: number;
-  whitelistedCategories: number;
-  blacklistedWords: number;
+    profileAvatarUrl: IDevice['profileAvatarUrl']
+    name: IDevice['name']
+  }[]
+  totalDeviceCount: number
+  whitelistedCategories: number
+  blacklistedWords: number
 }
 
-const AllFiltersPage = (props: { isMobile: boolean }) => {
-  const { user } = useAuth();
-  const [filters, setFilters] = useState<IGroupFilter[]>([]);
+const AllFiltersPage = (props: { isMobile: boolean; deviceId: string }) => {
+  const { user } = useAuth(props.deviceId)
+  const [filters, setFilters] = useState<IGroupFilter[]>([])
   useEffect(() => {
     user?.group_id &&
       ApiController.getGroupFilters(user.group_id).then((filtahs) =>
         setFilters(_.sortBy(filtahs, (f) => f.id))
-      );
-  }, [user?.group_id]);
+      )
+  }, [user?.group_id])
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
-    useState<boolean>(false);
-  const navigate = useNavigate();
+    useState<boolean>(false)
+  const navigate = useNavigate()
   return (
     <>
       {props.isMobile ? (
@@ -104,7 +104,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
         isMobile={props.isMobile}
       />
     </>
-  );
-};
+  )
+}
 
-export default AllFiltersPage;
+export default AllFiltersPage
