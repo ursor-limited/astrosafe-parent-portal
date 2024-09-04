@@ -1,12 +1,12 @@
-import PageLayout from './../../components/PageLayout';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg';
-import { ReactComponent as LogOutIcon } from './../../images/LogOutIcon.svg';
-import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
-import { ReactComponent as PersonIcon } from './../../images/PersonIcon.svg';
+import PageLayout from './../../components/PageLayout'
+import { Stack } from '@mui/system'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg'
+import { ReactComponent as LogOutIcon } from './../../images/LogOutIcon.svg'
+import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
+import { ReactComponent as PersonIcon } from './../../images/PersonIcon.svg'
 import {
   AstroPlanState,
   IUser,
@@ -14,26 +14,27 @@ import {
   PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
-} from './common';
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import UsersTable from '../components/UsersTable';
-import DevicesTable from '../components/DevicesTable';
-import AccountPageHeader from '../components/AccountPageHeader';
-import { useWindowSize } from 'usehooks-ts';
+} from './common'
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import UsersTable from '../components/UsersTable'
+import DevicesTable from '../components/DevicesTable'
+import AccountPageHeader from '../components/AccountPageHeader'
+import { useWindowSize } from 'usehooks-ts'
 
-const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1408;
+const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1408
 
 const AccountPageDesktopBody = (props: {
-  user: IUser;
-  allUsers: IUser[];
-  setUpgradeDialogOpen: () => void;
-  setEditDialogOpen: () => void;
-  setInviteDialogOpen: () => void;
-  setConnectDialogOpen: () => void;
-  planState: AstroPlanState;
-  onManagePlan: () => void;
+  email: string
+  user: IUser
+  allUsers: IUser[]
+  setUpgradeDialogOpen: () => void
+  setEditDialogOpen: () => void
+  setInviteDialogOpen: () => void
+  setConnectDialogOpen: () => void
+  planState: AstroPlanState
+  onManagePlan: () => void
 }) => {
-  const { width } = useWindowSize();
+  const { width } = useWindowSize()
   return (
     <PageLayout
       title="My Account"
@@ -213,7 +214,7 @@ const AccountPageDesktopBody = (props: {
         >
           <Stack spacing="24px">
             <UsersTable users={props.allUsers} />
-            <DevicesTable />
+            <DevicesTable email={props.email} />
           </Stack>
         </AstroBentoCard>
         <Stack
@@ -282,7 +283,7 @@ const AccountPageDesktopBody = (props: {
         </Stack>
       </Stack>
     </PageLayout>
-  );
-};
+  )
+}
 
-export default AccountPageDesktopBody;
+export default AccountPageDesktopBody

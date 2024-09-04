@@ -274,6 +274,7 @@ export default function FilterPage(props: {
     <>
       {props.isMobile ? (
         <FilterPageMobileBody
+          email={props.email}
           filterId={props.filterId}
           filter={filter}
           flipCategory={flipCategory}

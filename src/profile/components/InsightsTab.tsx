@@ -184,7 +184,7 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice['id'] }) => {
         </Stack>
       </Stack>
       <HistorySection
-        email={props.email}
+        deviceId={props.deviceId}
         date={dayjs()
           .utc()
           .subtract(selectedDayIndex, 'days')

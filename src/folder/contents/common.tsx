@@ -200,6 +200,7 @@ export default function FolderPage(props: {
     <>
       {props.isMobile ? (
         <FolderPageMobileBody
+          email={props.email}
           folderId={props.folderId}
           folder={folder}
           contents={filteredContents}

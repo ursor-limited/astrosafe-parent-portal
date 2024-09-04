@@ -1,34 +1,35 @@
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
-import { ReactComponent as XIcon } from './../../images/X.svg';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import _ from 'lodash';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { useState } from 'react';
-import { IDevice } from './../../filter/contents/common';
-import { IContentBucket } from './../../profile/components/ContentTab';
-import MobileAllDevicesDialog from './../../components/MobileAllDevicesDialog';
-import MobileDeviceCard from './../../profiles/components/MobileDeviceCard';
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
+import { ReactComponent as XIcon } from './../../images/X.svg'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { Stack } from '@mui/system'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import _ from 'lodash'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { useState } from 'react'
+import { IDevice } from './../../filter/contents/common'
+import { IContentBucket } from './../../profile/components/ContentTab'
+import MobileAllDevicesDialog from './../../components/MobileAllDevicesDialog'
+import MobileDeviceCard from './../../profiles/components/MobileDeviceCard'
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const MobileDevicesSection = (props: {
-  title: string;
-  devices: IDevice[];
-  folderId: IContentBucket['id'];
-  onAdd: () => void;
-  onRemove: (id: IDevice['id']) => void;
+  email: string
+  title: string
+  devices: IDevice[]
+  folderId: IContentBucket['id']
+  onAdd: () => void
+  onRemove: (id: IDevice['id']) => void
 }) => {
-  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
+  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
 
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
-    useState<number | undefined>();
+    useState<number | undefined>()
 
   // const removeDevice = (id: IDevice["id"]) =>
   //   ApiController.removeFolderFromDevice(props.folderId, id);
@@ -49,6 +50,7 @@ const MobileDevicesSection = (props: {
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={d.id} duration={800} delay={i * 150}>
                 <MobileDeviceCard
+                  email={props.email}
                   {...d}
                   button={
                     <Stack onClick={() => setRemovalConfirmationDialogId(d.id)}>
@@ -116,6 +118,7 @@ const MobileDevicesSection = (props: {
         </Stack>
       </AstroBentoCard>
       <MobileAllDevicesDialog
+        email={props.email}
         title={`${props.devices.length} ${
           props.devices.length === 1 ? 'Device has' : 'Devices have'
         } access to this Folder`}
@@ -123,7 +126,7 @@ const MobileDevicesSection = (props: {
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
         onAdd={() => {
-          props.onAdd();
+          props.onAdd()
         }}
         onRemove={setRemovalConfirmationDialogId}
       />
@@ -140,7 +143,7 @@ const MobileDevicesSection = (props: {
         />
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default MobileDevicesSection;
+export default MobileDevicesSection

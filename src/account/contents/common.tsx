@@ -143,6 +143,7 @@ const AccountPage = (props: { isMobile: boolean; email: string }) => {
     <>
       {props.isMobile ? (
         <AccountPageMobileBody
+          email={props.email}
           user={currentUser}
           allUsers={allUsers}
           planState={planState}
@@ -154,6 +155,7 @@ const AccountPage = (props: { isMobile: boolean; email: string }) => {
         />
       ) : (
         <AccountPageDesktopBody
+          email={props.email}
           user={currentUser}
           allUsers={allUsers}
           planState={planState}

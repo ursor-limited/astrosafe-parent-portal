@@ -1,46 +1,47 @@
-import PageLayout from './../../components/PageLayout';
-import { Stack } from '@mui/system';
-import useNavigate from '../../hooks/useNavigate';
-import { PALETTE } from './../../ui';
-import { ITitleRowItem } from './../../components/TitleRow';
-import AstroTabSwitch from '../components/AstroTabSwitch';
-import { IActionPopupItem } from './../../components/ActionPopup';
-import DevicePageInsightsTab from '../components/InsightsTab';
-import DevicePageContentTab from '../components/ContentTab';
-import { useEffect, useState } from 'react';
-import { AstroAccountTab } from './common';
-import HorizontalDeviceCard from '../../profiles/components/HorizontalDeviceCard';
-import DevicePageLimitsTab from '../components/LimitsTab';
-import { IEnrichedContentBucket } from './../../folders/contents/common';
-import { IEnrichedDevice } from '../../profiles/contents/common';
-import DevicePageAppsTab, { IApp } from '../components/AppsTab';
-import { useWindowSize } from 'usehooks-ts';
-import MobileDeviceCard from '../../profiles/components/MobileDeviceCard';
+import PageLayout from './../../components/PageLayout'
+import { Stack } from '@mui/system'
+import useNavigate from '../../hooks/useNavigate'
+import { PALETTE } from './../../ui'
+import { ITitleRowItem } from './../../components/TitleRow'
+import AstroTabSwitch from '../components/AstroTabSwitch'
+import { IActionPopupItem } from './../../components/ActionPopup'
+import DevicePageInsightsTab from '../components/InsightsTab'
+import DevicePageContentTab from '../components/ContentTab'
+import { useEffect, useState } from 'react'
+import { AstroAccountTab } from './common'
+import HorizontalDeviceCard from '../../profiles/components/HorizontalDeviceCard'
+import DevicePageLimitsTab from '../components/LimitsTab'
+import { IEnrichedContentBucket } from './../../folders/contents/common'
+import { IEnrichedDevice } from '../../profiles/contents/common'
+import DevicePageAppsTab, { IApp } from '../components/AppsTab'
+import { useWindowSize } from 'usehooks-ts'
+import MobileDeviceCard from '../../profiles/components/MobileDeviceCard'
 
-const SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD = 1283;
+const SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD = 1283
 
 const ProfilePageDesktopBody = (props: {
-  device: IEnrichedDevice;
-  titleRow: ITitleRowItem[];
-  actions: IActionPopupItem[];
-  folders: IEnrichedContentBucket[];
-  tab?: AstroAccountTab;
-  onUpdateDevice: () => void;
-  onUpdateFolders: () => void;
-  openAddFolderDialog: () => void;
+  email: string
+  device: IEnrichedDevice
+  titleRow: ITitleRowItem[]
+  actions: IActionPopupItem[]
+  folders: IEnrichedContentBucket[]
+  tab?: AstroAccountTab
+  onUpdateDevice: () => void
+  onUpdateFolders: () => void
+  openAddFolderDialog: () => void
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
     props.tab ?? 'content'
-  );
-  const { width } = useWindowSize();
+  )
+  const { width } = useWindowSize()
   const [switchToMobileDeviceCard, setSwitchToMobileDeviceCard] =
-    useState<boolean>(false);
+    useState<boolean>(false)
   useEffect(() => {
     setSwitchToMobileDeviceCard(
       width < SWITCH_TO_MOBILE_DEVICE_CARD_WINDOW_WIDTH_THRESHOLD
-    );
-  }, [width]);
+    )
+  }, [width])
   return (
     <PageLayout
       titleRow={props.titleRow}
@@ -55,6 +56,7 @@ const ProfilePageDesktopBody = (props: {
       <Stack pl="48px">
         {switchToMobileDeviceCard ? (
           <MobileDeviceCard
+            email={props.email}
             {...props.device}
             onClickViewScreenTime={() => setSelectedTab('limits')}
             onUpdate={props.onUpdateDevice}
@@ -62,6 +64,7 @@ const ProfilePageDesktopBody = (props: {
           />
         ) : (
           <HorizontalDeviceCard
+            email={props.email}
             {...props.device}
             onClickViewScreenTime={() => setSelectedTab('limits')}
             onUpdate={props.onUpdateDevice}
@@ -122,7 +125,7 @@ const ProfilePageDesktopBody = (props: {
         ) : null}
       </Stack>
     </PageLayout>
-  );
-};
+  )
+}
 
-export default ProfilePageDesktopBody;
+export default ProfilePageDesktopBody

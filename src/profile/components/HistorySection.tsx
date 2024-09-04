@@ -1,39 +1,39 @@
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import dayjs from 'dayjs';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
+import dayjs from 'dayjs'
 
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg';
-import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
-import { useEffect, useState } from 'react';
-import DynamicContainer from './../../components/DynamicContainer';
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg'
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg'
+import { useEffect, useState } from 'react'
+import DynamicContainer from './../../components/DynamicContainer'
 
-import _ from 'lodash';
-import { IDevice } from './../../filter/contents/common';
-import ApiController, { getAbsoluteUrl } from './../../api';
-import { cleanUrl } from './MobileInsightsTab';
-import PageSelector from './../../components/PageSelector';
-import { SearchInput } from './../../components/SearchInput';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
+import _ from 'lodash'
+import { IDevice } from './../../filter/contents/common'
+import ApiController, { getAbsoluteUrl } from './../../api'
+import { cleanUrl } from './MobileInsightsTab'
+import PageSelector from './../../components/PageSelector'
+import { SearchInput } from './../../components/SearchInput'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
 
-export const PAGE_LENGTH = 55;
+export const PAGE_LENGTH = 55
 
 export interface IHistoryItem {
-  url: string;
-  title: string;
-  faviconUrl: string;
-  searchedAt: string;
-  finishedAt: string;
+  url: string
+  title: string
+  faviconUrl: string
+  searchedAt: string
+  finishedAt: string
 }
 
 const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
-  const [duration, setDuration] = useState<number>(0); // seconds
+  const [duration, setDuration] = useState<number>(0) // seconds
   useEffect(() => {
     setDuration(
       props.duration ||
         dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
-    );
-  }, [props.duration, props.searchedAt, props.finishedAt]);
+    )
+  }, [props.duration, props.searchedAt, props.finishedAt])
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
@@ -103,11 +103,11 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
         ) : null}
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
 const HistoryDomainRow = (props: IDomainGroup) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(false)
   return (
     <DynamicContainer duration={650} fullWidth>
       <Stack spacing="12px">
@@ -159,25 +159,25 @@ const HistoryDomainRow = (props: IDomainGroup) => {
         ) : null}
       </Stack>
     </DynamicContainer>
-  );
-};
+  )
+}
 
 export interface ISimplisticDomainGroup {
-  domain: string;
-  rows: IHistoryItem[];
+  domain: string
+  rows: IHistoryItem[]
 }
 
 export interface IDomainGroup {
-  domain: IHistoryItem;
-  rows: IHistoryItem[];
+  domain: IHistoryItem
+  rows: IHistoryItem[]
 }
 
 const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
-  const [nPages, setNPages] = useState<number>(1);
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  const [history, setHistory] = useState<IHistoryItem[]>([]);
-  const [searchValue, setSearchValue] = useState<string>('');
-  useEffect(() => setPageIndex(0), [searchValue]);
+  const [nPages, setNPages] = useState<number>(1)
+  const [pageIndex, setPageIndex] = useState<number>(0)
+  const [history, setHistory] = useState<IHistoryItem[]>([])
+  const [searchValue, setSearchValue] = useState<string>('')
+  useEffect(() => setPageIndex(0), [searchValue])
   useEffect(() => {
     ApiController.getHistory(
       props.deviceId,
@@ -186,32 +186,32 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
       PAGE_LENGTH,
       searchValue
     ).then((response) => {
-      setHistory(response.history);
-      setNPages(response.pages);
-    });
-  }, [props.deviceId, props.date, pageIndex, searchValue]);
+      setHistory(response.history)
+      setNPages(response.pages)
+    })
+  }, [props.deviceId, props.date, pageIndex, searchValue])
 
-  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
+  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])
   useEffect(() => {
     const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
       history,
       (acc, cur) => {
-        const currentDomain = new URL(cur.url).hostname;
-        const latestGroup = acc[acc.length - 1];
+        const currentDomain = new URL(cur.url).hostname
+        const latestGroup = acc[acc.length - 1]
 
-        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url
+        if (latestUrl === cur.url) return acc // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
-        const latestDomain = latestGroup?.domain;
+        const latestDomain = latestGroup?.domain
         return currentDomain === latestDomain
           ? [
               ...acc.slice(0, -1),
               { domain: latestDomain, rows: [...latestGroup.rows, cur] },
             ]
-          : [...acc, { domain: currentDomain, rows: [cur] }];
+          : [...acc, { domain: currentDomain, rows: [cur] }]
       },
       [] as ISimplisticDomainGroup[]
-    );
+    )
     setDomainGroups(
       simplisticDomainGroups.map((dg) => ({
         domain: {
@@ -223,8 +223,8 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
         },
         rows: dg.rows,
       }))
-    );
-  }, [history]);
+    )
+  }, [history])
 
   return (
     <AstroBentoCard
@@ -260,7 +260,7 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
         </Stack>
       ) : null}
     </AstroBentoCard>
-  );
-};
+  )
+}
 
-export default HistorySection;
+export default HistorySection

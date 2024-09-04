@@ -1,29 +1,30 @@
-import React from 'react';
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import { AstroBentoCard } from './AstroBentoCard';
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { ReactComponent as XIcon } from './../../images/X.svg';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import _ from 'lodash';
-import { IDevice } from '../contents/common';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import useNavigate from '../../hooks/useNavigate';
-import { useState } from 'react';
-import MobileDeviceCard from './../../profiles/components/MobileDeviceCard';
-import MobileAllDevicesDialog from './../../components/MobileAllDevicesDialog';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import React from 'react'
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import { AstroBentoCard } from './AstroBentoCard'
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { ReactComponent as XIcon } from './../../images/X.svg'
+import { Stack } from '@mui/system'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import _ from 'lodash'
+import { IDevice } from '../contents/common'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import useNavigate from '../../hooks/useNavigate'
+import { useState } from 'react'
+import MobileDeviceCard from './../../profiles/components/MobileDeviceCard'
+import MobileAllDevicesDialog from './../../components/MobileAllDevicesDialog'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const MobileFilterPageDevicesSection = (props: {
-  devices: IDevice[];
-  onAdd: () => void;
-  openChangeFilterDialogForDevice: (device: IDevice) => void;
+  email: string
+  devices: IDevice[]
+  onAdd: () => void
+  openChangeFilterDialogForDevice: (device: IDevice) => void
 }) => {
-  const navigate = useNavigate();
-  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
+  const navigate = useNavigate()
+  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
   return (
     <>
       <AstroBentoCard
@@ -50,6 +51,7 @@ const MobileFilterPageDevicesSection = (props: {
                   }}
                 >
                   <MobileDeviceCard
+                    email={props.email}
                     {...d}
                     button={
                       <Stack
@@ -123,6 +125,7 @@ const MobileFilterPageDevicesSection = (props: {
         </Stack>
       </AstroBentoCard>
       <MobileAllDevicesDialog
+        email={props.email}
         title={`${props.devices.length} ${
           props.devices.length === 1 ? 'Device has' : 'Devices have'
         } this Filter applied`}
@@ -131,12 +134,12 @@ const MobileFilterPageDevicesSection = (props: {
         onClose={() => setDevicesGridDialogOpen(false)}
         onAdd={props.onAdd}
         onRemove={(id) => {
-          const device = props.devices.find((d) => d.id === id);
-          device && props.openChangeFilterDialogForDevice(device);
+          const device = props.devices.find((d) => d.id === id)
+          device && props.openChangeFilterDialogForDevice(device)
         }}
       />
     </>
-  );
-};
+  )
+}
 
-export default MobileFilterPageDevicesSection;
+export default MobileFilterPageDevicesSection

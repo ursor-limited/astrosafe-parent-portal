@@ -165,6 +165,7 @@ export default function ProfilePage(props: {
     <>
       {props.isMobile ? (
         <ProfilePageMobileBody
+          email={props.email}
           device={cuttingEdgeOnlineStatusDevice || device}
           titleRow={titleRow}
           actions={actions}
@@ -176,6 +177,7 @@ export default function ProfilePage(props: {
         />
       ) : (
         <ProfilePageDesktopBody
+          email={props.email}
           device={cuttingEdgeOnlineStatusDevice || device}
           titleRow={titleRow}
           actions={actions}

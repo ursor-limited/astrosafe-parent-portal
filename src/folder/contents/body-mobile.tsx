@@ -1,54 +1,55 @@
-import { Stack } from '@mui/system';
-import { CONTENT_BRANDING, IContentCard } from './common';
-import { PALETTE, Typography } from './../../ui';
-import { SearchInput } from './../../components/SearchInput';
-import SortButton from './../../components/SortButton';
-import { AddContentButton } from '../components/AddContentButton';
-import LinkCard from '../components/LinkCard';
-import VideoCard from '../components/VideoCard';
-import ChannelCard from '../components/ChannelCard';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
+import { Stack } from '@mui/system'
+import { CONTENT_BRANDING, IContentCard } from './common'
+import { PALETTE, Typography } from './../../ui'
+import { SearchInput } from './../../components/SearchInput'
+import SortButton from './../../components/SortButton'
+import { AddContentButton } from '../components/AddContentButton'
+import LinkCard from '../components/LinkCard'
+import VideoCard from '../components/VideoCard'
+import ChannelCard from '../components/ChannelCard'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
 
-import MobileDevicesSection from '../components/MobileDevicesSection';
-import TitleRow, { ITitleRowItem } from './../../components/TitleRow';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
-import MobilePageLayout from './../../components/MobilePageLayout';
-import { IDevice } from './../../filter/contents/common';
-import ApiController, { getAbsoluteUrl } from './../../api';
+import MobileDevicesSection from '../components/MobileDevicesSection'
+import TitleRow, { ITitleRowItem } from './../../components/TitleRow'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg'
+import MobilePageLayout from './../../components/MobilePageLayout'
+import { IDevice } from './../../filter/contents/common'
+import ApiController, { getAbsoluteUrl } from './../../api'
 import {
   AstroContent,
   IChannel,
   IContentBucket,
   ILink,
   IVideo,
-} from './../../profile/components/ContentTab';
-import { IActionPopupItem } from './../../components/ActionPopup';
+} from './../../profile/components/ContentTab'
+import { IActionPopupItem } from './../../components/ActionPopup'
 
-import { cleanUrl } from './../../profile/components/MobileInsightsTab';
-import useNavigate from '../../hooks/useNavigate';
+import { cleanUrl } from './../../profile/components/MobileInsightsTab'
+import useNavigate from '../../hooks/useNavigate'
 
 const FolderPageMobileBody = (props: {
-  folderId: IContentBucket['id'];
-  folder?: IContentBucket;
-  contents: IContentCard[];
-  allFolders: IContentBucket[];
-  devices: IDevice[];
-  setCreationDialogOpen: (type: AstroContent) => void;
-  loadFolderAndContents: () => void;
-  setAddDeviceDialogOpen: () => void;
-  onRemoveDevice: () => void;
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-  selectedContentType: AstroContent | 'all';
-  setSelectedContentType: (type: AstroContent | 'all') => void;
-  setLinkEditingDialogId: (id: ILink['id']) => void;
-  setVideoEditingDialogId: (id: IVideo['id']) => void;
-  setChannelEditingDialogId: (id: IChannel['id']) => void;
-  titleRow: ITitleRowItem[];
-  actions: IActionPopupItem[];
+  email: string
+  folderId: IContentBucket['id']
+  folder?: IContentBucket
+  contents: IContentCard[]
+  allFolders: IContentBucket[]
+  devices: IDevice[]
+  setCreationDialogOpen: (type: AstroContent) => void
+  loadFolderAndContents: () => void
+  setAddDeviceDialogOpen: () => void
+  onRemoveDevice: () => void
+  searchValue: string
+  setSearchValue: (value: string) => void
+  selectedContentType: AstroContent | 'all'
+  setSelectedContentType: (type: AstroContent | 'all') => void
+  setLinkEditingDialogId: (id: ILink['id']) => void
+  setVideoEditingDialogId: (id: IVideo['id']) => void
+  setChannelEditingDialogId: (id: IChannel['id']) => void
+  titleRow: ITitleRowItem[]
+  actions: IActionPopupItem[]
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
@@ -58,6 +59,7 @@ const FolderPageMobileBody = (props: {
     >
       <Stack spacing="24px" pb="32px">
         <MobileDevicesSection
+          email={props.email}
           title={`${props.devices.length} ${
             props.devices.length === 1 ? 'Device has' : 'Devices have'
           } access to this Folder`}
@@ -85,7 +87,7 @@ const FolderPageMobileBody = (props: {
             <SearchInput
               value={props.searchValue ?? ''}
               callback={(value: string) => {
-                props.setSearchValue(value);
+                props.setSearchValue(value)
               }}
               clearCallback={() => props.setSearchValue('')}
               shadow
@@ -210,7 +212,7 @@ const FolderPageMobileBody = (props: {
         </Stack>
       </Stack>
     </MobilePageLayout>
-  );
-};
+  )
+}
 
-export default FolderPageMobileBody;
+export default FolderPageMobileBody

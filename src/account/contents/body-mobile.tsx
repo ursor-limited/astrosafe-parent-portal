@@ -1,13 +1,13 @@
-import PageLayout from './../../components/PageLayout';
-import { Stack } from '@mui/system';
+import PageLayout from './../../components/PageLayout'
+import { Stack } from '@mui/system'
 
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg';
-import { ReactComponent as LogOutIcon } from './../../images/LogOutIcon.svg';
-import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
-import { ReactComponent as PersonIcon } from './../../images/PersonIcon.svg';
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg'
+import { ReactComponent as LogOutIcon } from './../../images/LogOutIcon.svg'
+import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
+import { ReactComponent as PersonIcon } from './../../images/PersonIcon.svg'
 import {
   AstroPlanState,
   IUser,
@@ -15,22 +15,23 @@ import {
   PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
-} from './common';
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import UsersTable from '../components/UsersTable';
-import DevicesTable from '../components/DevicesTable';
-import MobilePageLayout from './../../components/MobilePageLayout';
-import MobileAccountPageHeader from '../components/MobileAccountPageHeader';
+} from './common'
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import UsersTable from '../components/UsersTable'
+import DevicesTable from '../components/DevicesTable'
+import MobilePageLayout from './../../components/MobilePageLayout'
+import MobileAccountPageHeader from '../components/MobileAccountPageHeader'
 
 const AccountPageMobileBody = (props: {
-  user: IUser;
-  allUsers: IUser[];
-  setUpgradeDialogOpen: () => void;
-  setEditDialogOpen: () => void;
-  setInviteDialogOpen: () => void;
-  setConnectDialogOpen: () => void;
-  planState: AstroPlanState;
-  onManagePlan: () => void;
+  email: string
+  user: IUser
+  allUsers: IUser[]
+  setUpgradeDialogOpen: () => void
+  setEditDialogOpen: () => void
+  setInviteDialogOpen: () => void
+  setConnectDialogOpen: () => void
+  planState: AstroPlanState
+  onManagePlan: () => void
 }) => (
   <MobilePageLayout
     title="My Account"
@@ -212,7 +213,7 @@ const AccountPageMobileBody = (props: {
           </Stack>
 
           <UsersTable users={props.allUsers} />
-          <DevicesTable />
+          <DevicesTable email={props.email} />
         </Stack>
       </AstroBentoCard>
 
@@ -276,6 +277,6 @@ const AccountPageMobileBody = (props: {
       </AstroBentoCard>
     </Stack>
   </MobilePageLayout>
-);
+)
 
-export default AccountPageMobileBody;
+export default AccountPageMobileBody

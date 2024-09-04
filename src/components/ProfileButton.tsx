@@ -95,7 +95,7 @@ const ProfilePopupButton = (props: {
   )
 }
 
-const ProfileButton = (props: { light?: boolean }) => {
+const ProfileButton = (props: { email: string; light?: boolean }) => {
   const { user, logout } = useAuth(props.email)
   const userCtx = useUserContext()
   const [open, setOpen] = useState<boolean>(false)

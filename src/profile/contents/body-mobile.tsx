@@ -1,35 +1,36 @@
-import { IDevice } from './../../filter/contents/common';
-import { Stack } from '@mui/system';
-import useNavigate from '../../hooks/useNavigate';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ITitleRowItem } from './../../components/TitleRow';
-import AstroTabSwitch from '../components/AstroTabSwitch';
-import { IActionPopupItem } from './../../components/ActionPopup';
-import DevicePageContentTab from '../components/ContentTab';
-import { useState } from 'react';
-import { AstroAccountTab } from './common';
-import MobilePageLayout from './../../components/MobilePageLayout';
-import DevicePageLimitsTab from '../components/LimitsTab';
-import DevicePageMobileInsightsTab from '../components/MobileInsightsTab';
-import { IEnrichedContentBucket } from './../../folders/contents/common';
-import MobileDeviceCard from '../../profiles/components/MobileDeviceCard';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import DevicePageAppsTab from '../components/AppsTab';
+import { IDevice } from './../../filter/contents/common'
+import { Stack } from '@mui/system'
+import useNavigate from '../../hooks/useNavigate'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ITitleRowItem } from './../../components/TitleRow'
+import AstroTabSwitch from '../components/AstroTabSwitch'
+import { IActionPopupItem } from './../../components/ActionPopup'
+import DevicePageContentTab from '../components/ContentTab'
+import { useState } from 'react'
+import { AstroAccountTab } from './common'
+import MobilePageLayout from './../../components/MobilePageLayout'
+import DevicePageLimitsTab from '../components/LimitsTab'
+import DevicePageMobileInsightsTab from '../components/MobileInsightsTab'
+import { IEnrichedContentBucket } from './../../folders/contents/common'
+import MobileDeviceCard from '../../profiles/components/MobileDeviceCard'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import DevicePageAppsTab from '../components/AppsTab'
 
 const ProfilePageMobileBody = (props: {
-  device: IDevice;
-  titleRow: ITitleRowItem[];
-  actions: IActionPopupItem[];
-  folders: IEnrichedContentBucket[];
-  tab?: AstroAccountTab;
-  onUpdateDevice: () => void;
-  onUpdateFolders: () => void;
-  openAddFolderDialog: () => void;
+  email: string
+  device: IDevice
+  titleRow: ITitleRowItem[]
+  actions: IActionPopupItem[]
+  folders: IEnrichedContentBucket[]
+  tab?: AstroAccountTab
+  onUpdateDevice: () => void
+  onUpdateFolders: () => void
+  openAddFolderDialog: () => void
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
     props.tab ?? 'content'
-  );
+  )
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
@@ -39,6 +40,7 @@ const ProfilePageMobileBody = (props: {
     >
       <Stack spacing="24px" flex={1}>
         <MobileDeviceCard
+          email={props.email}
           {...props.device}
           onClickViewScreenTime={() => setSelectedTab('limits')}
           onUpdate={props.onUpdateDevice}
@@ -74,7 +76,10 @@ const ProfilePageMobileBody = (props: {
           ]}
         />
         {selectedTab === 'insights' ? (
-          <DevicePageMobileInsightsTab deviceId={props.device.id} />
+          <DevicePageMobileInsightsTab
+            email={props.email}
+            deviceId={props.device.id}
+          />
         ) : selectedTab === 'apps' ? (
           <DevicePageAppsTab deviceId={props.device.id} isMobile />
         ) : selectedTab === 'content' ? (
@@ -91,7 +96,7 @@ const ProfilePageMobileBody = (props: {
         ) : null}
       </Stack>
     </MobilePageLayout>
-  );
-};
+  )
+}
 
-export default ProfilePageMobileBody;
+export default ProfilePageMobileBody
