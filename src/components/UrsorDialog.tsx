@@ -1,78 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Dialog, keyframes, Stack } from '@mui/material';
-import { ReactComponent as X } from './../images/X.svg';
-import { ReactComponent as ChevronLeft } from './../images/ChevronLeftIcon.svg';
-import _ from 'lodash';
-import { useWindowSize } from 'usehooks-ts';
-import { ButtonVariant, UrsorButton } from './../ui/ursor-button';
-import { PALETTE, Typography } from './../ui';
-import { UrsorTypographyVariant } from './../ui/typography';
-import InfoButton, { IInfoButtonProps } from './InfoButton';
-import { INFOS } from '../profile/components/ProfilePageTabLayout';
-import ByteStepper from './ByteStepper';
+import React, { useEffect, useState } from 'react'
+import { Box, Dialog, keyframes, Stack } from '@mui/material'
+import { ReactComponent as X } from './../images/X.svg'
+import { ReactComponent as ChevronLeft } from './../images/ChevronLeftIcon.svg'
+import _ from 'lodash'
+import { useWindowSize } from 'usehooks-ts'
+import { ButtonVariant, UrsorButton } from './../ui/ursor-button'
+import { PALETTE, Typography } from './../ui'
+import { UrsorTypographyVariant } from './../ui/typography'
+import InfoButton, { IInfoButtonProps } from './InfoButton'
+import { INFOS } from '../profile/components/ProfilePageTabLayout'
+import ByteStepper from './ByteStepper'
 
-const WIDTH = '926px';
-const HEIGHT = '630px';
-export const BORDER_RADIUS = '24px';
-export const PADDING = '32px';
-export const PADDING_MOBILE = '20px';
-const BUTTON_WIDTH = '280px';
-export const DEFAULT_FADEIN_DURATION = 400;
-const LONG_FADEIN_DURATION = 2000;
-export const Z_INDEX = 999;
-const STEPPER_TITLE_SEPARATION = '30px';
+const WIDTH = '926px'
+const HEIGHT = '630px'
+export const BORDER_RADIUS = '24px'
+export const PADDING = '32px'
+export const PADDING_MOBILE = '20px'
+const BUTTON_WIDTH = '280px'
+export const DEFAULT_FADEIN_DURATION = 400
+const LONG_FADEIN_DURATION = 2000
+export const Z_INDEX = 999
+const STEPPER_TITLE_SEPARATION = '30px'
 export const BACKDROP_STYLE = {
   backdropFilter: 'blur(3px)',
   backgroundColor: 'rgba(0, 0, 0, 0.3) !important',
-};
+}
 
-export const BODY_FADE_DURATION = 850;
+export const BODY_FADE_DURATION = 850
 
 export interface IDialogButtonDetails {
-  text: string;
-  disabled?: boolean;
-  callback: () => void;
-  variant?: ButtonVariant;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  color?: string;
+  text: string
+  disabled?: boolean
+  callback: () => void
+  variant?: ButtonVariant
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>
+  color?: string
 }
 
 export interface IUrsorDialogProps {
   // there is a lot of legacy stuff in here. Got to declutter.
-  open: boolean;
-  width?: string;
-  maxWidth?: string;
-  titleMaxWidth?: string;
-  height?: string;
-  loading?: boolean;
-  title?: string;
-  subtitle?: (string | JSX.Element)[];
-  supertitle?: string;
-  titleSize?: UrsorTypographyVariant;
-  button?: IDialogButtonDetails | JSX.Element;
-  secondaryButton?: IDialogButtonDetails | JSX.Element;
-  googleButton?: IDialogButtonDetails | JSX.Element;
-  onCloseCallback?: () => void;
-  backButtonCallback?: () => void;
-  noCloseButton?: boolean;
-  noPadding?: boolean;
-  noBackdrop?: boolean;
-  paddingX?: string;
-  paddingY?: string;
-  paddingTop?: string;
-  xButtonRight?: string;
-  xButtonTop?: string;
-  longFadeIn?: boolean;
-  bunchedUpContent?: boolean;
-  scrollable?: boolean;
-  dynamicHeight?: boolean;
-  step?: number;
-  nSteps?: number;
-  noOverflowHidden?: boolean;
-  children?: React.ReactNode; // the contents
-  fitContent?: boolean;
-  isMobile?: boolean;
-  info?: IInfoButtonProps;
+  open: boolean
+  width?: string
+  maxWidth?: string
+  titleMaxWidth?: string
+  height?: string
+  loading?: boolean
+  title?: string
+  subtitle?: (string | JSX.Element)[]
+  supertitle?: string
+  titleSize?: UrsorTypographyVariant
+  button?: IDialogButtonDetails | JSX.Element
+  secondaryButton?: IDialogButtonDetails | JSX.Element
+  googleButton?: IDialogButtonDetails | JSX.Element
+  onCloseCallback?: () => void
+  backButtonCallback?: () => void
+  noCloseButton?: boolean
+  noPadding?: boolean
+  noBackdrop?: boolean
+  paddingX?: string
+  paddingY?: string
+  paddingTop?: string
+  xButtonRight?: string
+  xButtonTop?: string
+  longFadeIn?: boolean
+  bunchedUpContent?: boolean
+  scrollable?: boolean
+  dynamicHeight?: boolean
+  step?: number
+  nSteps?: number
+  noOverflowHidden?: boolean
+  children?: React.ReactNode // the contents
+  fitContent?: boolean
+  isMobile?: boolean
+  info?: IInfoButtonProps
 }
 
 export const fadeIn = keyframes`
@@ -82,7 +82,7 @@ from {
 to {
   opacity: 1;
 }
-`;
+`
 
 export const fadeOut = keyframes`
 from {
@@ -91,37 +91,37 @@ from {
 to {
   opacity: 0;
 }
-`;
+`
 
 export default function UrsorDialog(props: IUrsorDialogProps) {
-  const [bodyFadeout, setBodyFadeout] = useState<boolean>(false);
-  const [canFade, setCanFade] = useState<boolean>(false);
+  const [bodyFadeout, setBodyFadeout] = useState<boolean>(false)
+  const [canFade, setCanFade] = useState<boolean>(false)
 
   useEffect(() => {
     if (canFade && _.isNumber(props.step)) {
-      setBodyFadeout(true);
+      setBodyFadeout(true)
       setTimeout(() => {
-        setBodyFadeout(false);
-      }, BODY_FADE_DURATION);
+        setBodyFadeout(false)
+      }, BODY_FADE_DURATION)
     }
-    setCanFade(true);
-  }, [props.step]);
+    setCanFade(true)
+  }, [props.step])
 
   const animation = {
     animation: `${bodyFadeout ? fadeOut : fadeIn} ${
       BODY_FADE_DURATION / 1000
     }s ease-in-out`,
-  };
+  }
 
   const PrimaryButtonEndIcon = React.isValidElement(props.button)
     ? undefined
-    : (props.button as IDialogButtonDetails)?.icon;
+    : (props.button as IDialogButtonDetails)?.icon
 
   const SecondaryButtonEndIcon = React.isValidElement(props.secondaryButton)
     ? undefined
-    : (props.secondaryButton as IDialogButtonDetails)?.icon;
+    : (props.secondaryButton as IDialogButtonDetails)?.icon
 
-  const { width: windowWidth } = useWindowSize();
+  const { width: windowWidth } = useWindowSize()
 
   return (
     <Dialog
@@ -130,7 +130,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
       }
       open={props.open}
       onClose={() => {
-        props.onCloseCallback?.();
+        props.onCloseCallback?.()
       }}
       PaperProps={{
         style: {
@@ -163,7 +163,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         py={props.paddingY}
         pt={props.paddingTop || `calc(${PADDING} - 4px)`}
         borderRadius="25px"
-        overflow={props.scrollable ? 's croll' : 'hidden'}
+        overflow={props.scrollable ? 'scroll' : 'hidden'}
         flex={1}
       >
         {props.backButtonCallback ? (
@@ -346,7 +346,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                       bodyFadeout
                     }
                     onClick={() => {
-                      (props.button as IDialogButtonDetails).callback();
+                      ;(props.button as IDialogButtonDetails).callback()
                     }}
                     backgroundColor={
                       (props.button as IDialogButtonDetails).color
@@ -398,9 +398,9 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                             .disabled || bodyFadeout
                         }
                         onClick={() => {
-                          (
+                          ;(
                             props.secondaryButton as IDialogButtonDetails
-                          ).callback();
+                          ).callback()
                         }}
                         backgroundColor={
                           (props.secondaryButton as IDialogButtonDetails).color
@@ -423,5 +423,5 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         </Stack>
       </Stack>
     </Dialog>
-  );
+  )
 }

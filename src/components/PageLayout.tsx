@@ -1,69 +1,69 @@
-import React, { forwardRef } from 'react';
-import { Box, Stack } from '@mui/material';
-import { ReactComponent as ChevronLeft } from './../images/ChevronLeft.svg';
-import { useWindowSize } from 'usehooks-ts';
-import { PALETTE, Typography, UrsorButton } from './../ui';
-import UrsorFadeIn from './UrsorFadeIn';
-import { IActionPopupItem } from './ActionPopup';
-import UrsorActionButton from './UrsorActionButton';
-import TitleRow, { ITitleRowItem } from './TitleRow';
-import Sidebar, { SideBarItemId, WIDTH as SIDEBAR_WIDTH } from './Sidebar';
-import InfoButton, { IInfoButtonProps } from './InfoButton';
-import Portal from './DynamicallyLoadedPortal';
+import React, { forwardRef } from 'react'
+import { Box, Stack } from '@mui/material'
+import { ReactComponent as ChevronLeft } from './../images/ChevronLeft.svg'
+import { useWindowSize } from 'usehooks-ts'
+import { PALETTE, Typography, UrsorButton } from './../ui'
+import UrsorFadeIn from './UrsorFadeIn'
+import { IActionPopupItem } from './ActionPopup'
+import UrsorActionButton from './UrsorActionButton'
+import TitleRow, { ITitleRowItem } from './TitleRow'
+import Sidebar, { SideBarItemId, WIDTH as SIDEBAR_WIDTH } from './Sidebar'
+import InfoButton, { IInfoButtonProps } from './InfoButton'
+import Portal from './DynamicallyLoadedPortal'
 
-const PADDING_TOP = '51px';
-export const SIDEBAR_X_MARGIN = 48;
-export const SIDEBAR_Y_MARGIN = '31px';
-const SHOW_JOINCLASSCODE_WINDOW_WIDTH_THRESHOLD = 1130;
-const GRADIENT = 'linear-gradient(178deg, #F279C5, #FD9B41)';
+const PADDING_TOP = '51px'
+export const SIDEBAR_X_MARGIN = 48
+export const SIDEBAR_Y_MARGIN = '31px'
+const SHOW_JOINCLASSCODE_WINDOW_WIDTH_THRESHOLD = 1130
+const GRADIENT = 'linear-gradient(178deg, #F279C5, #FD9B41)'
 
 export interface IPageLayoutProps {
-  dark?: boolean;
-  title: string;
-  titleRow?: ITitleRowItem[];
-  info?: IInfoButtonProps;
-  description?: string;
-  dotColor?: string;
-  titleBackButton?: boolean;
-  titleBackButtonCallback?: () => void;
-  particles?: boolean;
-  bodyWidth?: string;
-  noSidebar?: boolean;
-  scrollable?: boolean;
+  dark?: boolean
+  title: string
+  titleRow?: ITitleRowItem[]
+  info?: IInfoButtonProps
+  description?: string
+  dotColor?: string
+  titleBackButton?: boolean
+  titleBackButtonCallback?: () => void
+  particles?: boolean
+  bodyWidth?: string
+  noSidebar?: boolean
+  scrollable?: boolean
   button?: {
-    text: string;
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
-    callback: () => void;
-    disabled?: boolean;
-    tourId?: string;
-  };
+    text: string
+    icon: React.FC<React.SVGProps<SVGSVGElement>>
+    callback: () => void
+    disabled?: boolean
+    tourId?: string
+  }
   secondaryButton?: {
-    text: string;
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
-    callback: () => void;
-    svgStrokeInsteadOfFill?: boolean;
-    disabled?: boolean;
-    tourId?: string;
-  };
-  selectedSidebarItemId: SideBarItemId;
-  buttonRowExtraElement?: JSX.Element;
-  buttonRowExtraElementRight?: JSX.Element;
-  titleRowLefthandElement?: JSX.Element;
-  disableSearchBarCollapsing?: boolean;
-  classroomId?: string;
-  disableConnectionBar?: boolean;
-  buttonsDelay?: number;
-  onScroll?: () => void;
-  fullHeight?: string;
-  maxWidth?: number;
-  actions: IActionPopupItem[];
-  header?: React.ReactNode;
-  children: React.ReactNode;
+    text: string
+    icon: React.FC<React.SVGProps<SVGSVGElement>>
+    callback: () => void
+    svgStrokeInsteadOfFill?: boolean
+    disabled?: boolean
+    tourId?: string
+  }
+  selectedSidebarItemId: SideBarItemId
+  buttonRowExtraElement?: JSX.Element
+  buttonRowExtraElementRight?: JSX.Element
+  titleRowLefthandElement?: JSX.Element
+  disableSearchBarCollapsing?: boolean
+  classroomId?: string
+  disableConnectionBar?: boolean
+  buttonsDelay?: number
+  onScroll?: () => void
+  fullHeight?: string
+  maxWidth?: number
+  actions: IActionPopupItem[]
+  header?: React.ReactNode
+  children: React.ReactNode
 }
 
 export const PageLayout = forwardRef<HTMLDivElement, any>(
   (props: IPageLayoutProps, ref) => {
-    const { width } = useWindowSize();
+    const { width } = useWindowSize()
     return (
       <>
         <Stack
@@ -94,7 +94,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
               height: props.scrollable ? undefined : '100%',
               width: '100%',
             }}
-            overflow={props.scrollable ? 's croll' : 'hidden'}
+            overflow={props.scrollable ? 'scroll' : 'hidden'}
             spacing="20px"
             pr={`${SIDEBAR_X_MARGIN}px`}
             pt={PADDING_TOP}
@@ -312,10 +312,10 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
           </Portal>
         ) : null}
       </>
-    );
+    )
   }
-);
+)
 
-PageLayout.displayName = 'Page layout';
+PageLayout.displayName = 'Page layout'
 
-export default PageLayout;
+export default PageLayout
