@@ -1,12 +1,12 @@
 const useNavigate = () => {
   const push = (path: string) => {
     const newUrl =
-      window.location.href + path.startsWith('/') ? path.substring(1) : path;
+      window.location.origin + path.startsWith('/') ? path.substring(1) : path
 
-    window.location.href = newUrl;
-  };
+    window.location.href = newUrl
+  }
 
-  return { push };
-};
+  return { push }
+}
 
-export default useNavigate;
+export default useNavigate
