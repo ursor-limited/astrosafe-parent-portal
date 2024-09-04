@@ -1,6 +1,6 @@
 {
-  "name": "astro-parent-portal-test-1",
-  "version": "0.104.0",
+  "name": "astrosafe-parent-portal-test",
+  "version": "0.2.0",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,6 +24,7 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
+    "astrosafe-parent-portal-test": "^0.1.0",
     "axios": "^1.6.0",
     "axios-retry": "^3.8.1",
     "dayjs": "^1.11.10",
