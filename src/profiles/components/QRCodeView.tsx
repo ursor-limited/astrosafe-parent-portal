@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { PALETTE, Typography, UrsorButton } from './../../ui'
 import useAuth from './../../hooks/useAuth'
 
-const QRCodeView = () => {
+const QRCodeView = (props: { email: string }) => {
   const { user } = useAuth(props.email)
   const [image, setImage] = useState<string>('')
   useEffect(() => {

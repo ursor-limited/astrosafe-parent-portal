@@ -1,35 +1,39 @@
 declare module '*.png' {
-  const value: string;
+  const value: string
 
-  export default value;
+  export default value
 }
 
 declare module '*.jpg' {
-  const value: string;
+  const value: string
 
-  export default value;
+  export default value
 }
 
 declare module '*.jpeg' {
-  const value: string;
+  const value: string
 
-  export default value;
+  export default value
 }
 
 declare module '*.svg' {
-  const value: React.FC<React.SVGProps<SVGSVGElement>>;
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >
 
-  export default value;
+  const src: string
+
+  export default src
 }
 
 declare module '*.webp' {
-  const value: string;
+  const value: string
 
-  export default value;
+  export default value
 }
 
 declare module '*.gif' {
-  const value: string;
+  const value: string
 
-  export default value;
+  export default value
 }

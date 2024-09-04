@@ -72,6 +72,7 @@ export default function AllDevicesPage(props: {
         <AllDevicesPageDesktopBody
           devices={cuttingEdgeOnlineStatusDevices}
           filters={filters}
+          email={props.email}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}
           setDisconnectDialogOpen={setDisconnectDeviceDialogId}

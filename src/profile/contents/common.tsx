@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
-
 import { Stack } from '@mui/system'
 import { PALETTE, Typography } from './../../ui'
 import _ from 'lodash'
@@ -27,7 +26,7 @@ export type DeviceType = 'chrome' | 'android' | 'ios'
 export type AstroAccountTab = 'content' | 'insights' | 'apps' | 'limits'
 
 export default function ProfilePage(props: {
-  astroDeviceId: number
+  deviceId: number
   email: string
   isMobile: boolean
 
@@ -37,10 +36,8 @@ export default function ProfilePage(props: {
   const [device, setDevice] = useState<IEnrichedDevice | undefined>()
   const loadDevice = useCallback(
     () =>
-      ApiController.getEnrichedDevice(props.astroDeviceId).then((d) =>
-        setDevice(d)
-      ),
-    [props.astroDeviceId]
+      ApiController.getEnrichedDevice(props.deviceId).then((d) => setDevice(d)),
+    [props.deviceId]
   )
 
   const [cuttingEdgeOnlineStatusDevice]: IEnrichedDevice[] =
@@ -72,10 +69,10 @@ export default function ProfilePage(props: {
   )
   const loadFolders = useCallback(
     () =>
-      ApiController.getDeviceFolders(props.astroDeviceId).then((folders) =>
+      ApiController.getDeviceFolders(props.deviceId).then((folders) =>
         setDeviceFolders(_.reverse(_.sortBy(folders, (f) => f.id)))
       ),
-    [props.astroDeviceId]
+    [props.deviceId]
   )
   useEffect(() => {
     loadFolders()
@@ -133,7 +130,7 @@ export default function ProfilePage(props: {
         </Stack>
       ),
       options: allDevices
-        .filter((d) => d.id !== props.astroDeviceId)
+        .filter((d) => d.id !== props.deviceId)
         .map((d) => ({
           text: d.name,
           imageUrl: d.profileAvatarUrl,
@@ -159,10 +156,7 @@ export default function ProfilePage(props: {
   const createAndAddFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
     ApiController.createFolder(title, user.group_id).then((response) => {
-      ApiController.addFolderToDevice(
-        response.contentBucketId,
-        props.astroDeviceId
-      )
+      ApiController.addFolderToDevice(response.contentBucketId, props.deviceId)
       navigate.push(`/folders/${response.contentBucketId}`)
       notificationCtx.success('Created Folder and added it to the Device.')
     })
@@ -196,7 +190,7 @@ export default function ProfilePage(props: {
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
         onSubmit={(name) => {
-          ApiController.renameDevice(props.astroDeviceId, name)
+          ApiController.renameDevice(props.deviceId, name)
             .then(loadDevice)
             .then(() => notificationCtx.success('Renamed Device'))
           setRenameDialogOpen(false)
@@ -215,7 +209,7 @@ export default function ProfilePage(props: {
         onClose={() => setAddFolderDialogOpen(false)}
         addedFolders={deviceFolders}
         onAdd={(id) =>
-          ApiController.addFolderToDevice(id, props.astroDeviceId)
+          ApiController.addFolderToDevice(id, props.deviceId)
             .then(loadFolders)
             .then(() => setAddFolderDialogOpen(false))
             .then(() => notificationCtx.success('Added Folder to Device.'))

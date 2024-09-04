@@ -4,11 +4,7 @@ import AllFiltersPage from './contents/common'
 import RootLayout from './../layout'
 
 const Filters = (props: { email: string }) => {
-  return (
-    <RootLayout>
-      <AllFiltersPage isMobile={isMobile} email={props.email} />
-    </RootLayout>
-  )
+  return <AllFiltersPage isMobile={isMobile} email={props.email} />
 }
 
 export default Filters

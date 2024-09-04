@@ -68,7 +68,7 @@ export interface IGroupFilter {
 }
 
 const AllFiltersPage = (props: { isMobile: boolean; email: string }) => {
-  const { user } = useAuth(props.deviceId, props.authUrl)
+  const { user } = useAuth(props.email)
   const [filters, setFilters] = useState<IGroupFilter[]>([])
   useEffect(() => {
     user?.group_id &&

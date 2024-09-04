@@ -1,34 +1,34 @@
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import dayjs from 'dayjs';
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg';
-import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
-import { useEffect, useState } from 'react';
-import DynamicContainer from './../../components/DynamicContainer';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
+import dayjs from 'dayjs'
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg'
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg'
+import { useEffect, useState } from 'react'
+import DynamicContainer from './../../components/DynamicContainer'
 
 import {
   IDomainGroup,
   IHistoryItem,
   ISimplisticDomainGroup,
   PAGE_LENGTH,
-} from './HistorySection';
-import ApiController from './../../api';
-import { IDevice } from './../../filter/contents/common';
-import _ from 'lodash';
-import { cleanUrl } from './MobileInsightsTab';
-import PageSelector from './../../components/PageSelector';
-import { SearchInput } from './../../components/SearchInput';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
+} from './HistorySection'
+import ApiController from './../../api'
+import { IDevice } from './../../filter/contents/common'
+import _ from 'lodash'
+import { cleanUrl } from './MobileInsightsTab'
+import PageSelector from './../../components/PageSelector'
+import { SearchInput } from './../../components/SearchInput'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
 
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
-  const [duration, setDuration] = useState<number>(0); // seconds
+  const [duration, setDuration] = useState<number>(0) // seconds
   useEffect(() => {
     setDuration(
       props.duration ||
         dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
-    );
-  }, [props.duration, props.searchedAt, props.finishedAt]);
+    )
+  }, [props.duration, props.searchedAt, props.finishedAt])
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
       {/* <Stack spacing="4px">
@@ -145,11 +145,11 @@ const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
 const MobileHistoryDomainRow = (props: IDomainGroup) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(false)
   return (
     <DynamicContainer duration={650} fullWidth>
       <Stack spacing="5px" py="8px">
@@ -203,18 +203,19 @@ const MobileHistoryDomainRow = (props: IDomainGroup) => {
         ) : null}
       </Stack>
     </DynamicContainer>
-  );
-};
+  )
+}
 
 const MobileHistorySection = (props: {
-  deviceId: IDevice['id'];
-  date: string;
+  email: string
+  deviceId: IDevice['id']
+  date: string
 }) => {
-  const [nPages, setNPages] = useState<number>(1);
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  const [history, setHistory] = useState<IHistoryItem[]>([]);
-  const [searchValue, setSearchValue] = useState<string>('');
-  useEffect(() => setPageIndex(0), [searchValue]);
+  const [nPages, setNPages] = useState<number>(1)
+  const [pageIndex, setPageIndex] = useState<number>(0)
+  const [history, setHistory] = useState<IHistoryItem[]>([])
+  const [searchValue, setSearchValue] = useState<string>('')
+  useEffect(() => setPageIndex(0), [searchValue])
   useEffect(() => {
     ApiController.getHistory(
       props.deviceId,
@@ -223,32 +224,32 @@ const MobileHistorySection = (props: {
       PAGE_LENGTH,
       searchValue
     ).then((response) => {
-      setHistory(response.history);
-      setNPages(response.pages);
-    });
-  }, [props.deviceId, props.date, pageIndex, searchValue]);
+      setHistory(response.history)
+      setNPages(response.pages)
+    })
+  }, [props.deviceId, props.date, pageIndex, searchValue])
 
-  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
+  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])
   useEffect(() => {
     const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
       history,
       (acc, cur) => {
-        const currentDomain = new URL(cur.url).hostname;
-        const latestGroup = acc[acc.length - 1];
+        const currentDomain = new URL(cur.url).hostname
+        const latestGroup = acc[acc.length - 1]
 
-        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url
+        if (latestUrl === cur.url) return acc // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
-        const latestDomain = latestGroup?.domain;
+        const latestDomain = latestGroup?.domain
         return currentDomain === latestDomain
           ? [
               ...acc.slice(0, -1),
               { domain: latestDomain, rows: [...latestGroup.rows, cur] },
             ]
-          : [...acc, { domain: currentDomain, rows: [cur] }];
+          : [...acc, { domain: currentDomain, rows: [cur] }]
       },
       [] as ISimplisticDomainGroup[]
-    );
+    )
     setDomainGroups(
       simplisticDomainGroups.map((dg) => ({
         domain: {
@@ -260,8 +261,8 @@ const MobileHistorySection = (props: {
         },
         rows: dg.rows,
       }))
-    );
-  }, [history]);
+    )
+  }, [history])
 
   return (
     <AstroBentoCard
@@ -294,7 +295,7 @@ const MobileHistorySection = (props: {
         </Stack>
       ) : null}
     </AstroBentoCard>
-  );
-};
+  )
+}
 
-export default MobileHistorySection;
+export default MobileHistorySection

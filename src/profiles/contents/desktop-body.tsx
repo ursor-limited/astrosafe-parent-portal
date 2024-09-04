@@ -1,27 +1,28 @@
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import PageLayout from './../../components/PageLayout';
-import { Stack } from '@mui/system';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { ReactComponent as ArrowUpRightIcon } from './../../images/ArrowUpRight.svg';
-import { IDevice } from './../../filter/contents/common';
-import UrsorActionButton from './../../components/UrsorActionButton';
-import useNavigate from '../../hooks/useNavigate';
-import DeviceCard from '../components/DeviceCard';
-import QRCodeView from '../components/QRCodeView';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { IEnrichedDevice } from './common';
-import { IFilter } from './../../filters/contents/common';
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import PageLayout from './../../components/PageLayout'
+import { Stack } from '@mui/system'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { ReactComponent as ArrowUpRightIcon } from './../../images/ArrowUpRight.svg'
+import { IDevice } from './../../filter/contents/common'
+import UrsorActionButton from './../../components/UrsorActionButton'
+import useNavigate from '../../hooks/useNavigate'
+import DeviceCard from '../components/DeviceCard'
+import QRCodeView from '../components/QRCodeView'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { IEnrichedDevice } from './common'
+import { IFilter } from './../../filters/contents/common'
 
 const AllDevicesPageDesktopBody = (props: {
-  devices: IEnrichedDevice[];
-  filters: IFilter[];
-  setConnectDialogOpen: () => void;
+  devices: IEnrichedDevice[]
+  filters: IFilter[]
+  setConnectDialogOpen: () => void
   // setDownloadDialogOpen: () => void;
-  setRenameDeviceDialogId: (id: IDevice['id']) => void;
-  setDisconnectDialogOpen: (id: IDevice['id']) => void;
+  setRenameDeviceDialogId: (id: IDevice['id']) => void
+  setDisconnectDialogOpen: (id: IDevice['id']) => void
+  email: string
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <PageLayout
       title="My Kids"
@@ -83,12 +84,12 @@ const AllDevicesPageDesktopBody = (props: {
           </DynamicCardGrid>
         ) : (
           <UrsorFadeIn delay={700} duration={800}>
-            <QRCodeView />
+            <QRCodeView email={props.email} />
           </UrsorFadeIn>
         )}
       </Stack>
     </PageLayout>
-  );
-};
+  )
+}
 
-export default AllDevicesPageDesktopBody;
+export default AllDevicesPageDesktopBody

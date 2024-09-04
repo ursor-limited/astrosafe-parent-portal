@@ -1,26 +1,27 @@
-import { Stack } from '@mui/system';
-import { IDevice } from '../filter/contents/common';
-import UrsorFadeIn from './UrsorFadeIn';
-import { ReactComponent as XIcon } from './../images/X.svg';
-import { ReactComponent as PlusIcon } from './../images/PlusIcon.svg';
-import { BACKDROP_STYLE, BORDER_RADIUS } from './UrsorDialog';
-import { Dialog } from '@mui/material';
-import { Typography, UrsorButton } from './../ui';
-import { useEffect, useState } from 'react';
-import { SearchInput } from './SearchInput';
-import MobileDeviceCard from '../profiles/components/MobileDeviceCard';
-import DynamicCardGrid from './DynamicCardGrid';
+import { Stack } from '@mui/system'
+import { IDevice } from '../filter/contents/common'
+import UrsorFadeIn from './UrsorFadeIn'
+import { ReactComponent as XIcon } from './../images/X.svg'
+import { ReactComponent as PlusIcon } from './../images/PlusIcon.svg'
+import { BACKDROP_STYLE, BORDER_RADIUS } from './UrsorDialog'
+import { Dialog } from '@mui/material'
+import { Typography, UrsorButton } from './../ui'
+import { useEffect, useState } from 'react'
+import { SearchInput } from './SearchInput'
+import MobileDeviceCard from '../profiles/components/MobileDeviceCard'
+import DynamicCardGrid from './DynamicCardGrid'
 
 const MobileAllDevicesDialog = (props: {
-  title: string;
-  open: boolean;
-  onClose: () => void;
-  onAdd: () => void;
-  onRemove: (id: IDevice['id']) => void;
-  devices: IDevice[];
+  email: string
+  title: string
+  open: boolean
+  onClose: () => void
+  onAdd: () => void
+  onRemove: (id: IDevice['id']) => void
+  devices: IDevice[]
 }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([])
   useEffect(
     () =>
       setFilteredDevices(
@@ -29,7 +30,7 @@ const MobileAllDevicesDialog = (props: {
         )
       ),
     [props.devices, searchValue]
-  );
+  )
   return (
     <Dialog
       transitionDuration={800}
@@ -82,6 +83,7 @@ const MobileAllDevicesDialog = (props: {
           {filteredDevices.map((d, i) => (
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
               <MobileDeviceCard
+                email={props.email}
                 {...d}
                 button={
                   <Stack onClick={() => props.onRemove(d.id)}>
@@ -104,7 +106,7 @@ const MobileAllDevicesDialog = (props: {
         Add Device
       </UrsorButton>
     </Dialog>
-  );
-};
+  )
+}
 
-export default MobileAllDevicesDialog;
+export default MobileAllDevicesDialog

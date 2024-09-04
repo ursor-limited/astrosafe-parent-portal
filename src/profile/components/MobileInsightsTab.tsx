@@ -20,7 +20,10 @@ dayjs.extend(advancedFormat)
 export const cleanUrl = (url: string) =>
   url.replace('http://', '').replace('https://', '').replace('www.', '')
 
-const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
+const DevicePageMobileInsightsTab = (props: {
+  deviceId: IDevice['id']
+  email: string
+}) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([])
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0) // days from today
   const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0)
@@ -264,6 +267,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
         </Stack>
         <MobileHistorySection
           email={props.email}
+          deviceId={props.deviceId}
           date={dayjs()
             .utc()
             .subtract(selectedDayIndex, 'days')
