@@ -4,7 +4,11 @@ import ChannelPage from './contents/common'
 import RootLayout from './../layout'
 
 const Channel = ({ params }: { params: { id: string } }) => {
-  return <ChannelPage id={parseInt(params.id)} isMobile={isMobile} />
+  return (
+    <RootLayout>
+      <ChannelPage id={parseInt(params.id)} isMobile={isMobile} />
+    </RootLayout>
+  )
 }
 
 export default Channel

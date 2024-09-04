@@ -4,7 +4,11 @@ import AllDevicesPage from './contents/common'
 import RootLayout from './../layout'
 
 const Profile = (props: { email: string }) => {
-  return <AllDevicesPage isMobile={isMobile} email={props.email} />
+  return (
+    <RootLayout>
+      <AllDevicesPage isMobile={isMobile} email={props.email} />
+    </RootLayout>
+  )
 }
 
 export default Profile

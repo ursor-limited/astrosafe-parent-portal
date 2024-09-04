@@ -5,11 +5,13 @@ import RootLayout from '../layout'
 
 const Folder = (props: { folderId: string; email: string }) => {
   return (
-    <FolderPage
-      folderId={parseInt(props.folderId)}
-      isMobile={isMobile}
-      email={props.email}
-    />
+    <RootLayout>
+      <FolderPage
+        folderId={parseInt(props.folderId)}
+        isMobile={isMobile}
+        email={props.email}
+      />
+    </RootLayout>
   )
 }
 

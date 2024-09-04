@@ -11,12 +11,14 @@ const Profile = ({
   searchParams: { tab: AstroAccountTab }
 }) => {
   return (
-    <ProfilePage
-      deviceId={parseInt(props.deviceId)}
-      isMobile={isMobile}
-      tab={searchParams.tab}
-      email={props.email}
-    />
+    <RootLayout>
+      <ProfilePage
+        deviceId={parseInt(props.deviceId)}
+        isMobile={isMobile}
+        tab={searchParams.tab}
+        email={props.email}
+      />
+    </RootLayout>
   )
 }
 

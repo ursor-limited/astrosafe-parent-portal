@@ -5,11 +5,14 @@ import RootLayout from '../layout'
 
 const Filter = (props: { id: string; email: string }) => {
   return (
-    <FilterPage
-      filterId={parseInt(props.id)}
-      isMobile={isMobile}
-      email={props.email}
-    />
+    <RootLayout>
+      {' '}
+      <FilterPage
+        filterId={parseInt(props.id)}
+        isMobile={isMobile}
+        email={props.email}
+      />
+    </RootLayout>
   )
 }
 
