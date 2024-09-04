@@ -16,9 +16,17 @@
   }
 }
 
+@font-face {
+  font-family: 'Rubik';
+  src: url('./assets/fonts/rubik_medium.ttf') format('ttf'),
+    url('./assets/fonts/rubik_regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  /* background-image: url("background.png") */
+  font-family: 'Rubik', sans-serif;
 }
 
 div:not(textarea)::-webkit-scrollbar {
@@ -29,6 +37,7 @@ div:not(textarea)::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
 }
+
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.5);
