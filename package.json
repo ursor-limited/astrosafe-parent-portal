@@ -1,6 +1,6 @@
 {
-  "name": "absfdbfsbdsgds-asfsafsafsafafasfsa-safasfsaf-test",
-  "version": "0.16.0",
+  "name": "astrosafe-parent-portal",
+  "version": "0.2.0",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
