@@ -1,21 +1,21 @@
-import { Stack } from '@mui/system';
-import UrsorPopover from './UrsorPopover';
-import { PALETTE, Typography } from './../ui';
-import useAuth from './../hooks/useAuth';
-import { useState } from 'react';
-import { ReactComponent as ListUnorderedIcon } from './../images/ListUnorderedIcon.svg';
-import { ReactComponent as CreditCardIcon } from './../images/CreditCard.svg';
-import { ReactComponent as LogOutIcon } from './../images/LogOutIcon.svg';
-import useNavigate from '../hooks/useNavigate';
-import { useUserContext } from './UserContext';
-import { useLocalStorage } from 'usehooks-ts';
+import { Stack } from '@mui/system'
+import UrsorPopover from './UrsorPopover'
+import { PALETTE, Typography } from './../ui'
+import useAuth from './../hooks/useAuth'
+import { useState } from 'react'
+import { ReactComponent as ListUnorderedIcon } from './../images/ListUnorderedIcon.svg'
+import { ReactComponent as CreditCardIcon } from './../images/CreditCard.svg'
+import { ReactComponent as LogOutIcon } from './../images/LogOutIcon.svg'
+import useNavigate from '../hooks/useNavigate'
+import { useUserContext } from './UserContext'
+import { useLocalStorage } from 'usehooks-ts'
 
 export const ASTRO_MAGICAL_GRADIENT =
-  'linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)';
+  'linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)'
 
 const ProfileButtonActualButton = (props: {
-  initials: string;
-  light?: boolean;
+  initials: string
+  light?: boolean
 }) => (
   <Stack
     p="2px"
@@ -42,16 +42,16 @@ const ProfileButtonActualButton = (props: {
       </Typography>
     </Stack>
   </Stack>
-);
+)
 
 const ProfilePopupButton = (props: {
-  callback: () => void;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  text: string;
+  callback: () => void
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  text: string
   // hoveringOnCallback: () => void;
   // hoveringOffCallback: () => void;
 }) => {
-  const [hovering, setHovering] = useState<boolean>(false);
+  const [hovering, setHovering] = useState<boolean>(false)
   return (
     <Stack
       height="36px"
@@ -75,10 +75,10 @@ const ProfilePopupButton = (props: {
       px="20px"
       bgcolor={hovering ? PALETTE.secondary.grey[1] : undefined}
       onMouseEnter={() => {
-        setHovering(true);
+        setHovering(true)
       }}
       onMouseLeave={() => {
-        setHovering(false);
+        setHovering(false)
       }}
     >
       <props.icon height="16px" width="16px" />
@@ -92,14 +92,14 @@ const ProfilePopupButton = (props: {
         {props.text}
       </Typography>
     </Stack>
-  );
-};
+  )
+}
 
 const ProfileButton = (props: { light?: boolean }) => {
-  const { user, logout } = useAuth();
-  const userCtx = useUserContext();
-  const [open, setOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const { user, logout } = useAuth(props.email)
+  const userCtx = useUserContext()
+  const [open, setOpen] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const [
     subscriptionStatusChangePossible,
@@ -107,7 +107,7 @@ const ProfileButton = (props: { light?: boolean }) => {
   ] = useLocalStorage<'cancelled' | 'renewed' | null>(
     's ubscriptionStatusChangePossible',
     null
-  );
+  )
 
   return (
     <Stack
@@ -172,8 +172,8 @@ const ProfileButton = (props: { light?: boolean }) => {
             ) : null} */}
             <ProfilePopupButton
               callback={() => {
-                logout();
-                localStorage.clear();
+                logout()
+                localStorage.clear()
                 //mixpanel.reset();
               }}
               icon={LogOutIcon}
@@ -196,7 +196,7 @@ const ProfileButton = (props: { light?: boolean }) => {
         </Stack>
       </UrsorPopover>
     </Stack>
-  );
-};
+  )
+}
 
-export default ProfileButton;
+export default ProfileButton

@@ -1,47 +1,48 @@
-import { Stack } from '@mui/system';
-import AstroCard from '../../filter/components/AstroCard';
+import { Stack } from '@mui/system'
+import AstroCard from '../../filter/components/AstroCard'
 
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg';
-import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
-import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg';
-import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg';
-import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
-import { DeviceType } from '../../filter/contents/common';
-import { useContext, useEffect, useState } from 'react';
-import useNavigate from '../../hooks/useNavigate';
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg'
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
+import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg'
+import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg'
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg'
+import { DeviceType } from '../../filter/contents/common'
+import { useContext, useEffect, useState } from 'react'
+import useNavigate from '../../hooks/useNavigate'
 import {
   DeviceCardBrowsingStatusSection,
   DeviceCardCurrentUrlSection,
   DeviceCardScreenTimeSection,
   DeviceCardSection,
-} from './DeviceCard';
-import { IFilter } from './../../filters/contents/common';
-import ApiController from './../../api';
-import UrsorPopover from './../../components/UrsorPopover';
-import AstroSettingCard from './../../filter/components/AstroSettingCard';
-import { IEnrichedDevice } from '../contents/common';
-import NotificationContext from './../../components/NotificationContext';
-import { getInitials } from './../../account/contents/common';
-import useAuth from './../../hooks/useAuth';
+} from './DeviceCard'
+import { IFilter } from './../../filters/contents/common'
+import ApiController from './../../api'
+import UrsorPopover from './../../components/UrsorPopover'
+import AstroSettingCard from './../../filter/components/AstroSettingCard'
+import { IEnrichedDevice } from '../contents/common'
+import NotificationContext from './../../components/NotificationContext'
+import { getInitials } from './../../account/contents/common'
+import useAuth from './../../hooks/useAuth'
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: 'Android',
   chrome: 'Chromebook',
   ios: 'iOS',
-};
+}
 
 export const DeviceCardFilterSection = (props: {
-  filterId: IFilter['id'];
-  changeFilter: (id: IFilter['id']) => void;
+  filterId: IFilter['id']
+  email: string
+  changeFilter: (id: IFilter['id']) => void
 }) => {
-  const { user } = useAuth();
-  const [allFilters, setAllFilters] = useState<IFilter[]>([]);
+  const { user } = useAuth(props.email)
+  const [allFilters, setAllFilters] = useState<IFilter[]>([])
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then(setAllFilters);
-  }, [user?.group_id]);
-  const [open, setOpen] = useState<boolean>(false);
+      ApiController.getGroupFilters(user.group_id).then(setAllFilters)
+  }, [user?.group_id])
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <UrsorPopover
       open={open}
@@ -58,8 +59,8 @@ export const DeviceCardFilterSection = (props: {
                 transition: '0.2s',
               }}
               onClick={() => {
-                setOpen(false);
-                props.changeFilter(f.id);
+                setOpen(false)
+                props.changeFilter(f.id)
               }}
             >
               <AstroSettingCard
@@ -131,28 +132,29 @@ export const DeviceCardFilterSection = (props: {
         </DeviceCardSection>
       </Stack>
     </UrsorPopover>
-  );
-};
+  )
+}
 
 const HorizontalDeviceCard = (
   props: IEnrichedDevice & {
-    onClickViewScreenTime: () => void;
-    onUpdate: () => void;
+    email: string
+    onClickViewScreenTime: () => void
+    onUpdate: () => void
   }
 ) => {
-  const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)
   useEffect(
     () => setBrowsingEnabled(!!props.config?.browsingAllowed),
     [props.config?.browsingAllowed]
-  );
-  const navigate = useNavigate();
-  const onClick = () => navigate.push(`/profiles/${props.id}`);
+  )
+  const navigate = useNavigate()
+  const onClick = () => navigate.push(`/profiles/${props.id}`)
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
   const changeFilter = (id: IFilter['id']) =>
     ApiController.addFilterToDevice(id, props.id)
       .then(props.onUpdate)
-      .then(() => notificationCtx.success('Changed Filter'));
+      .then(() => notificationCtx.success('Changed Filter'))
   return (
     <AstroCard>
       <Stack direction="row" alignItems="center" px="16px" spacing="20px">
@@ -243,25 +245,26 @@ const HorizontalDeviceCard = (
             onClickView={props.onClickViewScreenTime}
           />
           <DeviceCardFilterSection
+            email={props.email}
             filterId={props.filterId}
             changeFilter={changeFilter}
           />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
             flipBrowsingEnabled={() => {
-              setBrowsingEnabled(!browsingEnabled);
-              ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+              setBrowsingEnabled(!browsingEnabled)
+              ApiController.flipBrowsingAllowed(props.id, !browsingEnabled)
               notificationCtx.success(
                 `Browsing is now ${
                   !browsingEnabled ? 'enabled' : 'disabled'
                 } on ${props.name}`
-              );
+              )
             }}
           />
         </Stack>
       </Stack>
     </AstroCard>
-  );
-};
+  )
+}
 
-export default HorizontalDeviceCard;
+export default HorizontalDeviceCard

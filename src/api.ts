@@ -34,15 +34,9 @@ if (window.location.hostname !== 'localhost' && !process.env.AUTH_URL)
     'You must set AUTH_URL (Endpoint to call to login your users) in your .env'
   )
 
-export const BACKEND_URL =
-  window.location.hostname === 'localhost'
-    ? 'https://localhost:8000'
-    : 'https://api.astrosafe.co'
+export const BACKEND_URL = 'https://api.astrosafe.co'
 
-export const AUTH_URL =
-  window.location.hostname === 'localhost'
-    ? 'https://localhost:8000'
-    : 'https://auth.astrosafe.co'
+export const AUTH_URL = 'https://auth.astrosafe.co'
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`
 
@@ -53,6 +47,7 @@ export const get = (route: string) =>
     {
       method: 'GET',
       credentials: 'include',
+      headers: { Origin: 'https://localhost:3000' },
     }
   ).catch((err) => {
     if (err.statusCode === 401) {
@@ -70,6 +65,7 @@ export const post = (route: string, body?: any) =>
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Origin: 'https://localhost:3000',
       },
       credentials: 'include',
       body: body ? JSON.stringify(body) : undefined,
@@ -91,6 +87,7 @@ export const put = (route: string, body: any) =>
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Origin: 'https://localhost:3000',
       },
       credentials: 'include',
       body: JSON.stringify(body),
@@ -111,6 +108,7 @@ export const patch = (route: string, body: any) =>
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Origin: 'https://localhost:3000',
       },
       credentials: 'include',
       body: JSON.stringify(body),
@@ -129,7 +127,7 @@ const dellete = (route: string) =>
     `${BACKEND_URL}/${route}`,
     {
       method: 'DELETE',
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: { Origin: 'https://localhost:3000' },
       credentials: 'include',
     }
   ).catch((err) => {

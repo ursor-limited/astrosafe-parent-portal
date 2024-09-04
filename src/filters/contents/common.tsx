@@ -67,11 +67,7 @@ export interface IGroupFilter {
   blacklistedWords: number
 }
 
-const AllFiltersPage = (props: {
-  isMobile: boolean
-  deviceId: string
-  authUrl: string
-}) => {
+const AllFiltersPage = (props: { isMobile: boolean; email: string }) => {
   const { user } = useAuth(props.deviceId, props.authUrl)
   const [filters, setFilters] = useState<IGroupFilter[]>([])
   useEffect(() => {

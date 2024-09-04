@@ -263,8 +263,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice['id'] }) => {
           <MostVisitedSitesSection sites={visitedSites} isMobile />
         </Stack>
         <MobileHistorySection
-          deviceId={props.deviceId}
-          authUrl={props.authUrl}
+          email={props.email}
           date={dayjs()
             .utc()
             .subtract(selectedDayIndex, 'days')

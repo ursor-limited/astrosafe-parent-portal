@@ -3,10 +3,7 @@ import { FoldersPage, FolderPage } from './dist'
 const App: React.FC = () => {
   return (
     <div>
-      <FoldersPage
-        deviceId="a5dbd744c347cfd9"
-        authUrl="https://localhost:8000/auth/login/troomi"
-      />
+      <FoldersPage email="test@abadbda.com" />
     </div>
   )
 }

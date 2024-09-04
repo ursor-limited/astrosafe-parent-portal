@@ -1,16 +1,16 @@
-import ApiController from './../../api';
-import { Stack } from '@mui/system';
+import ApiController from './../../api'
+import { Stack } from '@mui/system'
 
-import { useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import useAuth from './../../hooks/useAuth';
+import { useEffect, useState } from 'react'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import useAuth from './../../hooks/useAuth'
 
 const QRCodeView = () => {
-  const { user } = useAuth();
-  const [image, setImage] = useState<string>('');
+  const { user } = useAuth(props.email)
+  const [image, setImage] = useState<string>('')
   useEffect(() => {
-    user?.group_id && ApiController.getQRCode(user.group_id).then(setImage);
-  }, [user?.group_id]);
+    user?.group_id && ApiController.getQRCode(user.group_id).then(setImage)
+  }, [user?.group_id])
   return (
     <Stack
       justifyContent="center"
@@ -70,7 +70,7 @@ const QRCodeView = () => {
         </UrsorButton>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default QRCodeView;
+export default QRCodeView

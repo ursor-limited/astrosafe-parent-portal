@@ -21,12 +21,8 @@ export interface IEnrichedContentBucket {
   }
 }
 
-const AllFoldersPage = (props: {
-  isMobile: boolean
-  deviceId: string
-  authUrl: string
-}) => {
-  const { user } = useAuth(props.deviceId, props.authUrl)
+const AllFoldersPage = (props: { isMobile: boolean; email: string }) => {
+  const { user } = useAuth(props.email)
   const navigate = useNavigate()
   const [folders, setFolders] = useState<IEnrichedContentBucket[]>([])
   const loadFolders = useCallback(

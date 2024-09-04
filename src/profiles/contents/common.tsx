@@ -31,10 +31,9 @@ export type IEnrichedDevice = IDevice & {
 
 export default function AllDevicesPage(props: {
   isMobile: boolean
-  deviceId: string
-  authUrl: string
+  email: string
 }) {
-  const { user } = useAuth(props.deviceId, props.authUrl)
+  const { user } = useAuth(props.email)
   const [devices, setDevices] = useState<IEnrichedDevice[]>([])
   useEffect(() => {
     user?.group_id &&
@@ -54,7 +53,10 @@ export default function AllDevicesPage(props: {
   >()
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false)
 
-  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices)
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(
+    devices,
+    props.email
+  )
 
   return (
     <>

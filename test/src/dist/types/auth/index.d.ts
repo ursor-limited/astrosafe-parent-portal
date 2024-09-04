@@ -1,2 +1,2 @@
 import { UserInfo } from './model';
-export declare const getUserInfo: () => Promise<UserInfo>;
+export declare const getUserInfo: (email: string) => Promise<UserInfo>;

@@ -1,8 +1,8 @@
-import { isMobile } from 'react-device-detect';
-import AccountPage from './contents/common';
+import { isMobile } from 'react-device-detect'
+import AccountPage from './contents/common'
 
-const Account = () => {
-  return <AccountPage isMobile={isMobile} />;
-};
+const Account = (props: { email: string }) => {
+  return <AccountPage isMobile={isMobile} email={props.email} />
+}
 
-export default Account;
+export default Account

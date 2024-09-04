@@ -7,7 +7,7 @@ const Profile = ({
   props,
   searchParams,
 }: {
-  props: { astroDeviceId: string; deviceId: string; authUrl: string }
+  props: { astroemail: string; email: string }
   searchParams: { tab: AstroAccountTab }
 }) => {
   return (
@@ -16,8 +16,7 @@ const Profile = ({
         astroDeviceId={parseInt(props.astroDeviceId)}
         isMobile={isMobile}
         tab={searchParams.tab}
-        deviceId={props.deviceId}
-        authUrl={props.authUrl}
+        email={props.email}
       />
     </RootLayout>
   )

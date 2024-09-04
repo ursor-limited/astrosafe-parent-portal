@@ -1,38 +1,39 @@
-import { Stack } from '@mui/system';
-import AstroCard from '../../filter/components/AstroCard';
+import { Stack } from '@mui/system'
+import AstroCard from '../../filter/components/AstroCard'
 
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg';
-import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg';
-import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg';
-import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg';
-import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
-import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg';
-import AstroSwitch from './../../components/AstroSwitch';
-import { useContext, useEffect, useState } from 'react';
-import useNavigate from '../../hooks/useNavigate';
-import { IFilter } from './../../filters/contents/common';
-import ApiController from './../../api';
-import { IEnrichedDevice } from '../contents/common';
-import UrsorPopover from './../../components/UrsorPopover';
-import { DEVICE_TYPE_DISPLAY_NAMES } from './DeviceCard';
-import NotificationContext from './../../components/NotificationContext';
-import { getInitials } from './../../account/contents/common';
-import useAuth from './../../hooks/useAuth';
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg'
+import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg'
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg'
+import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg'
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
+import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg'
+import AstroSwitch from './../../components/AstroSwitch'
+import { useContext, useEffect, useState } from 'react'
+import useNavigate from '../../hooks/useNavigate'
+import { IFilter } from './../../filters/contents/common'
+import ApiController from './../../api'
+import { IEnrichedDevice } from '../contents/common'
+import UrsorPopover from './../../components/UrsorPopover'
+import { DEVICE_TYPE_DISPLAY_NAMES } from './DeviceCard'
+import NotificationContext from './../../components/NotificationContext'
+import { getInitials } from './../../account/contents/common'
+import useAuth from './../../hooks/useAuth'
 
 export const MobileDeviceCardFilterRow = (props: {
-  filterId: IFilter['id'];
-  changeFilter: (id: IFilter['id']) => void;
+  filterId: IFilter['id']
+  email: string
+  changeFilter: (id: IFilter['id']) => void
 }) => {
-  const { user } = useAuth();
-  const [allFilters, setAllFilters] = useState<IFilter[]>([]);
+  const { user } = useAuth(props.email)
+  const [allFilters, setAllFilters] = useState<IFilter[]>([])
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then(setAllFilters);
-  }, [user?.group_id]);
-  const [open, setOpen] = useState<boolean>(false);
+      ApiController.getGroupFilters(user.group_id).then(setAllFilters)
+  }, [user?.group_id])
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <UrsorPopover
       open={open}
@@ -49,8 +50,8 @@ export const MobileDeviceCardFilterRow = (props: {
                 transition: '0.2s',
               }}
               onClick={() => {
-                setOpen(false);
-                props.changeFilter(f.id);
+                setOpen(false)
+                props.changeFilter(f.id)
               }}
               direction="row"
               alignItems="center"
@@ -93,14 +94,14 @@ export const MobileDeviceCardFilterRow = (props: {
         />
       </Stack>
     </UrsorPopover>
-  );
-};
+  )
+}
 
 export const MobileDeviceCardRow = (props: {
-  text: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  iconColor: string;
-  rightSideElement?: React.ReactNode;
+  text: string
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  iconColor: string
+  rightSideElement?: React.ReactNode
 }) => (
   <Stack
     maxHeight="20px"
@@ -127,7 +128,7 @@ export const MobileDeviceCardRow = (props: {
     </Stack>
     {props.rightSideElement}
   </Stack>
-);
+)
 
 // export const DeviceCardScreenTimeSection = (props: {
 //   totalTime: number;
@@ -225,27 +226,28 @@ export const MobileDeviceCardRow = (props: {
 
 const MobileDeviceCard = (
   props: IEnrichedDevice & {
-    showBrowsing?: boolean;
-    noExtras?: boolean;
-    noDeviceTypeUnderAvatar?: boolean;
-    onUpdate?: () => void;
-    onClickViewScreenTime?: () => void;
-    button?: React.ReactNode;
-    onClick?: () => void;
+    email: string
+    showBrowsing?: boolean
+    noExtras?: boolean
+    noDeviceTypeUnderAvatar?: boolean
+    onUpdate?: () => void
+    onClickViewScreenTime?: () => void
+    button?: React.ReactNode
+    onClick?: () => void
   }
 ) => {
-  const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)
   useEffect(
     () => setBrowsingEnabled(!!props.config?.browsingAllowed),
     [props.config?.browsingAllowed]
-  );
-  const navigate = useNavigate();
-  const notificationCtx = useContext(NotificationContext);
-  const onClick = () => navigate.push(`/profiles/${props.id}`);
+  )
+  const navigate = useNavigate()
+  const notificationCtx = useContext(NotificationContext)
+  const onClick = () => navigate.push(`/profiles/${props.id}`)
   const changeFilter = (id: IFilter['id']) =>
     ApiController.addFilterToDevice(id, props.id)
       .then(props.onUpdate)
-      .then(() => notificationCtx.success('Changed Filter'));
+      .then(() => notificationCtx.success('Changed Filter'))
   return (
     <AstroCard>
       <Stack
@@ -402,6 +404,7 @@ const MobileDeviceCard = (
                 }}
               >
                 <MobileDeviceCardFilterRow
+                  email={props.email}
                   filterId={props.filterId}
                   changeFilter={changeFilter}
                 />
@@ -415,11 +418,11 @@ const MobileDeviceCard = (
                     on={browsingEnabled}
                     small
                     callback={() => {
-                      setBrowsingEnabled(!browsingEnabled);
+                      setBrowsingEnabled(!browsingEnabled)
                       ApiController.flipBrowsingAllowed(
                         props.id,
                         !browsingEnabled
-                      );
+                      )
                     }}
                   />
                 }
@@ -429,7 +432,7 @@ const MobileDeviceCard = (
         </Stack>
       </Stack>
     </AstroCard>
-  );
-};
+  )
+}
 
-export default MobileDeviceCard;
+export default MobileDeviceCard

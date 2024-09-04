@@ -3,14 +3,10 @@ import { isMobile } from 'react-device-detect'
 import AllFiltersPage from './contents/common'
 import RootLayout from './../layout'
 
-const Filters = (props: { deviceId: string; authUrl: string }) => {
+const Filters = (props: { email: string }) => {
   return (
     <RootLayout>
-      <AllFiltersPage
-        isMobile={isMobile}
-        deviceId={props.deviceId}
-        authUrl={props.authUrl}
-      />
+      <AllFiltersPage isMobile={isMobile} email={props.email} />
     </RootLayout>
   )
 }

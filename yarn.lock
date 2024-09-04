@@ -1514,6 +1514,14 @@
     is-reference "1.2.1"
     magic-string "^0.30.3"
 
+"@rollup/plugin-eslint@^9.0.5":
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-eslint/-/plugin-eslint-9.0.5.tgz#6153f5b72bad1833f5b5ce88cc03c3fe767a9c66"
+  integrity sha512-C4nh0sSeJuxVW5u5tDX+dCMjKcNfHm4hS+zeUVh1si7gttnhgGbrmPkUxIX7iZgYABwdEh/ewyMbZB+WXjSJdA==
+  dependencies:
+    "@rollup/pluginutils" "^5.0.1"
+    eslint "^8.24.0"
+
 "@rollup/plugin-image@^3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-image/-/plugin-image-3.0.3.tgz#025b557180bae20f2349ff5130ef2114169feaac"
@@ -4104,7 +4112,7 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8:
+eslint@^8, eslint@^8.24.0:
   version "8.57.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.57.0.tgz#c786a6fd0e0b68941aaf624596fb987089195668"
   integrity sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==

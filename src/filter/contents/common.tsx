@@ -57,10 +57,9 @@ export interface IDeviceConfig {
 export default function FilterPage(props: {
   isMobile: boolean
   filterId: number
-  deviceId: string
-  authUrl: string
+  email: string
 }) {
-  const { user } = useAuth(props.deviceId, props.authUrl)
+  const { user } = useAuth(props.email)
 
   const [filter, setFilter] = useState<IFilter | undefined>()
   const loadFilter = useCallback(
@@ -124,7 +123,10 @@ export default function FilterPage(props: {
   useEffect(() => {
     loadDevices()
   }, [loadDevices])
-  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices)
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(
+    devices,
+    props.email
+  )
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
   useEffect(() => {

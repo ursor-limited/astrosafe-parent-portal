@@ -28,12 +28,12 @@ export type AstroAccountTab = 'content' | 'insights' | 'apps' | 'limits'
 
 export default function ProfilePage(props: {
   astroDeviceId: number
-  deviceId: string
+  email: string
   isMobile: boolean
-  authUrl: string
+
   tab?: AstroAccountTab
 }) {
-  const { user } = useAuth(props.deviceId, props.authUrl)
+  const { user } = useAuth(props.email)
   const [device, setDevice] = useState<IEnrichedDevice | undefined>()
   const loadDevice = useCallback(
     () =>
@@ -44,7 +44,7 @@ export default function ProfilePage(props: {
   )
 
   const [cuttingEdgeOnlineStatusDevice]: IEnrichedDevice[] =
-    useDeviceOnlineStatus(device ? [device] : [])
+    useDeviceOnlineStatus(device ? [device] : [], props.email)
 
   useEffect(() => {
     loadDevice()

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { UserInfo } from './../../auth/model'
-import { AUTH_URL, post } from './../../api'
 import { getUserInfo } from './../../auth'
 
-const useAuth = (deviceId: string, authUrl: string) => {
+const useAuth = (email: string) => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo)
 
   useEffect(() => {
-    getUserInfo()
+    getUserInfo(email)
       .then((data) => {
         setUser(data)
 
@@ -17,7 +16,7 @@ const useAuth = (deviceId: string, authUrl: string) => {
         () => {
           login()
             .then(() => {
-              getUserInfo().then((data) => {
+              getUserInfo(email).then((data) => {
                 setUser(data)
 
                 location.reload()
@@ -31,15 +30,9 @@ const useAuth = (deviceId: string, authUrl: string) => {
   }, [])
 
   const login = async () => {
-    const resp = await fetch(authUrl, {
+    const resp = await fetch('https://api.astrosafe.co/troomi/login', {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        deviceId: deviceId,
-      }),
     })
 
     if (!resp.ok) throw new Error('Login failed.')
@@ -48,7 +41,7 @@ const useAuth = (deviceId: string, authUrl: string) => {
   }
 
   const logout = () => {
-    window.location.href = `${AUTH_URL}/logout`
+    window.location.href = 'https://api.astrosafe.co/logout'
 
     return
   }

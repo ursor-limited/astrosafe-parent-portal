@@ -101085,8 +101085,7 @@ function init (converter, defaultAttributes) {
 var api = init(defaultConverter, { path: '/' });
 
 if (window.location.hostname !== 'localhost' && !process.env.AUTH_URL) throw new Error('You must set AUTH_URL (Endpoint to call to login your users) in your .env');
-var BACKEND_URL = window.location.hostname === 'localhost' ? 'https://localhost:8000' : 'https://api.astrosafe.co';
-var AUTH_URL = window.location.hostname === 'localhost' ? 'https://localhost:8000' : 'https://auth.astrosafe.co';
+var BACKEND_URL = 'https://api.astrosafe.co';
 var getAbsoluteUrl = function getAbsoluteUrl(url) {
   return "https://".concat(url);
 };
@@ -101094,7 +101093,10 @@ var get = function get(route) {
   return fetch(//@ts-ignore
   "".concat(BACKEND_URL, "/").concat(route), {
     method: 'GET',
-    credentials: 'include'
+    credentials: 'include',
+    headers: {
+      Origin: 'https://localhost:3000'
+    }
   })["catch"](function (err) {
     if (err.statusCode === 401) {
       api.remove('access_token');
@@ -101107,7 +101109,8 @@ var post = function post(route, body) {
   "".concat(BACKEND_URL, "/").concat(route), {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Origin: 'https://localhost:3000'
     },
     credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
@@ -101124,7 +101127,8 @@ var put = function put(route, body) {
   "".concat(BACKEND_URL, "/").concat(route), {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Origin: 'https://localhost:3000'
     },
     credentials: 'include',
     body: JSON.stringify(body)
@@ -101140,7 +101144,8 @@ var patch = function patch(route, body) {
   "".concat(BACKEND_URL, "/").concat(route), {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Origin: 'https://localhost:3000'
     },
     credentials: 'include',
     body: JSON.stringify(body)
@@ -101156,7 +101161,7 @@ var dellete = function dellete(route) {
   "".concat(BACKEND_URL, "/").concat(route), {
     method: 'DELETE',
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      Origin: 'https://localhost:3000'
     },
     credentials: 'include'
   })["catch"](function (err) {
@@ -103622,13 +103627,13 @@ var DeviceCard = function DeviceCard(props) {
 };
 
 var getUserInfo = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(email) {
     var resp, data;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return fetch("".concat(BACKEND_URL, "/users/self"), {
+          return fetch("".concat(BACKEND_URL, "/troomi/users/self?email=").concat(email), {
             credentials: 'include'
           });
         case 2:
@@ -103650,23 +103655,24 @@ var getUserInfo = /*#__PURE__*/function () {
       }
     }, _callee);
   }));
-  return function getUserInfo() {
+  return function getUserInfo(_x) {
     return _ref.apply(this, arguments);
   };
 }();
 
-var useAuth = function useAuth(deviceId, authUrl) {
+var useAuth = function useAuth(email) {
   var _useState = useState({}),
     _useState2 = _slicedToArray$2(_useState, 2),
     user = _useState2[0],
     setUser = _useState2[1];
   useEffect(function () {
-    getUserInfo().then(function (data) {
+    getUserInfo(email).then(function (data) {
+      console.log(data);
       setUser(data);
       return;
     })["catch"](function () {
       login().then(function () {
-        getUserInfo().then(function (data) {
+        getUserInfo(email).then(function (data) {
           setUser(data);
           location.reload();
           return;
@@ -103682,15 +103688,9 @@ var useAuth = function useAuth(deviceId, authUrl) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return fetch(authUrl, {
+            return fetch('https://api.astrosafe.co/troomi/login', {
               method: 'POST',
-              credentials: 'include',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                deviceId: deviceId
-              })
+              credentials: 'include'
             });
           case 2:
             resp = _context.sent;
@@ -103715,7 +103715,7 @@ var useAuth = function useAuth(deviceId, authUrl) {
     };
   }();
   var logout = function logout() {
-    window.location.href = "".concat(AUTH_URL, "/logout");
+    window.location.href = 'https://api.astrosafe.co/logout';
     return;
   };
   return {
@@ -106961,7 +106961,7 @@ var SvgCheckCircleFillIcon = function SvgCheckCircleFillIcon(props) {
 
 var MobileDeviceCardFilterRow = function MobileDeviceCardFilterRow(props) {
   var _allFilters$find$titl, _allFilters$find;
-  var _useAuth = useAuth(),
+  var _useAuth = useAuth(props.email),
     user = _useAuth.user;
   var _useState = useState([]),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -107334,6 +107334,7 @@ var MobileDeviceCard = function MobileDeviceCard(props) {
               }
             },
             children: jsxRuntimeExports.jsx(MobileDeviceCardFilterRow, {
+              email: props.email,
               filterId: props.filterId,
               changeFilter: changeFilter
             })
@@ -108237,8 +108238,8 @@ var FolderPageDesktopBody = function FolderPageDesktopBody(props) {
 
 function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty$2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-var useDeviceOnlineStatus = function useDeviceOnlineStatus(devices) {
-  var _useAuth = useAuth(),
+var useDeviceOnlineStatus = function useDeviceOnlineStatus(devices, email) {
+  var _useAuth = useAuth(email),
     user = _useAuth.user;
   var _useState = useState([]),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -108299,7 +108300,7 @@ var CONTENT_BRANDING = {
 function FolderPage(props) {
   var _folder$title, _folder$title2, _contents$find, _contents$find2, _contents$find3;
   var navigate = useNavigate();
-  var _useAuth = useAuth(props.deviceId, props.authUrl),
+  var _useAuth = useAuth(props.email),
     user = _useAuth.user;
   var _useState = useState([]),
     _useState2 = _slicedToArray$2(_useState, 2),
@@ -108313,7 +108314,7 @@ function FolderPage(props) {
   useEffect(function () {
     loadDevices();
   }, [loadDevices]);
-  var cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices);
+  var cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices, props.email);
   var _useLoadFolderAndCont = useLoadFolderAndContents(props.folderId),
     folder = _useLoadFolderAndCont.folder,
     contents = _useLoadFolderAndCont.contents,
@@ -109027,7 +109028,7 @@ var FolderCreationDialog = function FolderCreationDialog(props) {
 };
 
 var AllFoldersPage = function AllFoldersPage(props) {
-  var _useAuth = useAuth(props.deviceId, props.authUrl),
+  var _useAuth = useAuth(props.email),
     user = _useAuth.user;
   var navigate = useNavigate();
   var _useState = useState([]),
@@ -109218,8 +109219,7 @@ var Folders = function Folders(props) {
   return jsxRuntimeExports.jsx(RootLayout, {
     children: jsxRuntimeExports.jsx(AllFoldersPage, {
       isMobile: isMobile_1,
-      deviceId: props.deviceId,
-      authUrl: props.authUrl
+      email: props.email
     })
   });
 };
@@ -109230,8 +109230,7 @@ var Folder = function Folder(_ref) {
     children: jsxRuntimeExports.jsx(FolderPage, {
       folderId: parseInt(props.folderId),
       isMobile: isMobile_1,
-      deviceId: props.deviceId,
-      authUrl: props.authUrl
+      email: props.email
     })
   });
 };

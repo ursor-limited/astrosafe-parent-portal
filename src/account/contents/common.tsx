@@ -1,42 +1,42 @@
-import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg';
-import { ReactComponent as PeopleIcon } from './../../images/PeopleIcon.svg';
-import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg';
-import { Stack } from '@mui/system';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { PALETTE, Typography } from './../../ui';
-import _ from 'lodash';
-import EditProfileDialog from '../components/EditProfileDialog';
-import InviteDialog from '../components/InviteDialog';
-import { IGroup } from '../../folder/contents/common';
-import DeviceConnectDialog from '../../profiles/components/DeviceConnectDialog';
-import DownloadDialog from '../../profiles/components/DownloadDialog';
-import UpgradeDialog from '../../components/UpgradeDialog';
-import ApiController from '../../api';
-import AccountPageDesktopBody from './body-desktop';
-import AccountPageMobileBody from './body-mobile';
-import TroomiManagePlanDialog from '../components/TroomiManagePlanDialog';
-import NotificationContext from './../../components/NotificationContext';
-import useAuth from './../../hooks/useAuth';
+import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg'
+import { ReactComponent as PeopleIcon } from './../../images/PeopleIcon.svg'
+import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg'
+import { Stack } from '@mui/system'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { PALETTE, Typography } from './../../ui'
+import _ from 'lodash'
+import EditProfileDialog from '../components/EditProfileDialog'
+import InviteDialog from '../components/InviteDialog'
+import { IGroup } from '../../folder/contents/common'
+import DeviceConnectDialog from '../../profiles/components/DeviceConnectDialog'
+import DownloadDialog from '../../profiles/components/DownloadDialog'
+import UpgradeDialog from '../../components/UpgradeDialog'
+import ApiController from '../../api'
+import AccountPageDesktopBody from './body-desktop'
+import AccountPageMobileBody from './body-mobile'
+import TroomiManagePlanDialog from '../components/TroomiManagePlanDialog'
+import NotificationContext from './../../components/NotificationContext'
+import useAuth from './../../hooks/useAuth'
 
-export const DUMMY_USER_ID = 1;
+export const DUMMY_USER_ID = 1
 
-export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
+export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`
 
 export interface IUser {
-  id: number;
-  realName: string;
-  displayName: string;
-  email: string;
-  groupId: IGroup['id'];
-  createdAt: string;
+  id: number
+  realName: string
+  displayName: string
+  email: string
+  groupId: IGroup['id']
+  createdAt: string
 }
 
-export type AstroPlanState = 'freeTrial' | 'troomi';
+export type AstroPlanState = 'freeTrial' | 'troomi'
 
 export const PLAN_DISPLAY_NAMES: Record<AstroPlanState, string> = {
   freeTrial: 'Free trial',
   troomi: 'Troomi Plan',
-};
+}
 
 export const PLAN_BANNER_ITEMS: Record<
   AstroPlanState,
@@ -66,19 +66,19 @@ export const PLAN_BANNER_ITEMS: Record<
       text: 'Add unlimited parents or teachers',
     },
   ],
-};
+}
 
 export const getInitials = (name: string) =>
   name
     ?.split(' ')
     .map((x) => _.capitalize(x)[0])
     ?.slice(0, 2)
-    .join('');
+    .join('')
 
 export const UserInitialsCircle = (props: {
-  name: IUser['realName'];
-  size?: number;
-  fontSize?: number;
+  name: IUser['realName']
+  size?: number
+  fontSize?: number
 }) => (
   <Stack
     height={`${props.size || 132}px`}
@@ -99,46 +99,45 @@ export const UserInitialsCircle = (props: {
       {props.name ? getInitials(props.name) : ''}
     </Typography>
   </Stack>
-);
+)
 
-const AccountPage = (props: { isMobile: boolean }) => {
-  const { user } = useAuth();
+const AccountPage = (props: { isMobile: boolean; email: string }) => {
+  const { user } = useAuth(props.email)
 
-  const [planState, setPlanState] = useState<AstroPlanState>('troomi');
+  const [planState, setPlanState] = useState<AstroPlanState>('troomi')
 
-  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
-  const [inviteDialogOpen, setInviteDialogOpen] = useState<boolean>(false);
+  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false)
+  const [inviteDialogOpen, setInviteDialogOpen] = useState<boolean>(false)
 
-  const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);
-  const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
-  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false)
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false)
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false)
 
-  const [allUsers, setAllUsers] = useState<IUser[]>([]);
+  const [allUsers, setAllUsers] = useState<IUser[]>([])
   const loadUsers = useCallback(() => {
     user?.group_id &&
-      ApiController.getGroupUsers(user.group_id).then(setAllUsers);
-  }, [user?.group_id]);
+      ApiController.getGroupUsers(user.group_id).then(setAllUsers)
+  }, [user?.group_id])
 
   useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
+    loadUsers()
+  }, [loadUsers])
 
-  const [currentUser, setCurrentUser] = useState<IUser | undefined>();
+  const [currentUser, setCurrentUser] = useState<IUser | undefined>()
 
   useEffect(() => {
-    user?.user_id &&
-      setCurrentUser(allUsers.find((u) => u.id === user.user_id));
-  }, [user?.user_id, allUsers]);
+    user?.user_id && setCurrentUser(allUsers.find((u) => u.id === user.user_id))
+  }, [user?.user_id, allUsers])
 
   const [troomiManagePlanDialogOpen, setTroomiManagePlanDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   const MANAGE_PLAN_CALLBACKS: Record<AstroPlanState, () => void> = {
     freeTrial: () => null,
     troomi: () => setTroomiManagePlanDialogOpen(true),
-  };
+  }
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
   return currentUser ? (
     <>
@@ -187,8 +186,8 @@ const AccountPage = (props: { isMobile: boolean }) => {
         open={connectDialogOpen}
         onClose={() => setConnectDialogOpen(false)}
         onOpen={() => {
-          setDownloadDialogOpen(true);
-          setConnectDialogOpen(false);
+          setDownloadDialogOpen(true)
+          setConnectDialogOpen(false)
         }}
       />
       <DownloadDialog
@@ -207,7 +206,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
     </>
   ) : (
     <></>
-  );
-};
+  )
+}
 
-export default AccountPage;
+export default AccountPage

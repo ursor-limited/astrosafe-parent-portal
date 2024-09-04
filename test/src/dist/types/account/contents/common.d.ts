@@ -23,5 +23,6 @@ export declare const UserInitialsCircle: (props: {
 }) => import("react/jsx-runtime").JSX.Element;
 declare const AccountPage: (props: {
     isMobile: boolean;
+    email: string;
 }) => import("react/jsx-runtime").JSX.Element;
 export default AccountPage;

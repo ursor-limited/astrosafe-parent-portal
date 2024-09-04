@@ -76,11 +76,10 @@ export interface IContentCard {
 export default function FolderPage(props: {
   folderId: number
   isMobile: boolean
-  deviceId: string
-  authUrl: string
+  email: string
 }) {
   const navigate = useNavigate()
-  const { user } = useAuth(props.deviceId, props.authUrl)
+  const { user } = useAuth(props.email)
 
   const [devices, setDevices] = useState<IDevice[]>([])
   const loadDevices = useCallback(
@@ -91,7 +90,10 @@ export default function FolderPage(props: {
   useEffect(() => {
     loadDevices()
   }, [loadDevices])
-  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices)
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(
+    devices,
+    props.email
+  )
 
   const { folder, contents, loadFolderAndContents } = useLoadFolderAndContents(
     props.folderId

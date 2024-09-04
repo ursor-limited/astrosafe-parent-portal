@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useCallback } from 'react';
-import { IEnrichedDevice } from '../contents/common';
-import { IDevice } from './../../filter/contents/common';
-import useAuth from './../../hooks/useAuth';
+import React, { useEffect, useState } from 'react'
+import { useCallback } from 'react'
+import { IEnrichedDevice } from '../contents/common'
+import { IDevice } from './../../filter/contents/common'
+import useAuth from './../../hooks/useAuth'
 
-const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
-  const { user } = useAuth();
+const useDeviceOnlineStatus = (
+  devices: (IDevice | IEnrichedDevice)[],
+  email: string
+) => {
+  const { user } = useAuth(email)
 
   const [cuttingEdgeOnlineStatusDevices, setCuttingEdgeOnlineStatusDevices] =
-    useState<(IDevice | IEnrichedDevice)[]>([]);
+    useState<(IDevice | IEnrichedDevice)[]>([])
 
-  useEffect(() => setCuttingEdgeOnlineStatusDevices(devices), [devices.length]);
+  useEffect(() => setCuttingEdgeOnlineStatusDevices(devices), [devices.length])
 
   const setDeviceOnlineStatus = useCallback(
     (deviceId: IDevice['id'], online: IDevice['online']) => {
@@ -19,33 +22,33 @@ const useDeviceOnlineStatus = (devices: (IDevice | IEnrichedDevice)[]) => {
           prev.map((device) =>
             device.id === deviceId ? { ...device, online } : device
           )
-        );
+        )
     },
     []
-  );
+  )
 
   const websocketUrl =
     process.env.NEXT_PUBLIC_VERCEL_ENV === 'local'
       ? 'ws://localhost:8000'
-      : 'wss://api.astrosafe.co';
+      : 'wss://api.astrosafe.co'
 
   useEffect(() => {
-    if (!user?.group_id) return;
+    if (!user?.group_id) return
     const socket = new WebSocket(
       `${websocketUrl}/sessions/groups/${user.group_id}`
-    );
+    )
     const handleMessage = (event: any) => {
-      if (!event.data) return;
-      const data = JSON.parse(event.data);
-      data.deviceId && setDeviceOnlineStatus(data.deviceId, data.online);
-    };
-    socket.addEventListener('message', handleMessage);
+      if (!event.data) return
+      const data = JSON.parse(event.data)
+      data.deviceId && setDeviceOnlineStatus(data.deviceId, data.online)
+    }
+    socket.addEventListener('message', handleMessage)
     return () => {
-      socket.removeEventListener('message', handleMessage);
-    };
-  }, [setDeviceOnlineStatus, user?.group_id]);
+      socket.removeEventListener('message', handleMessage)
+    }
+  }, [setDeviceOnlineStatus, user?.group_id])
 
-  return cuttingEdgeOnlineStatusDevices;
-};
+  return cuttingEdgeOnlineStatusDevices
+}
 
-export default useDeviceOnlineStatus;
+export default useDeviceOnlineStatus

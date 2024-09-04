@@ -10,8 +10,8 @@ export interface IVideoComment {
     value: string;
     time: number;
 }
-export declare const BACKEND_URL: string;
-export declare const AUTH_URL: string;
+export declare const BACKEND_URL = "https://api.astrosafe.co";
+export declare const AUTH_URL = "https://auth.astrosafe.co";
 export declare const getAbsoluteUrl: (url: string) => string;
 export declare const get: (route: string) => Promise<void | Response>;
 export declare const post: (route: string, body?: any) => Promise<void | Response>;

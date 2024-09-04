@@ -1,9 +1,8 @@
 import { AstroAccountTab } from './contents/common';
 declare const Profile: ({ props, searchParams, }: {
     props: {
-        astroDeviceId: string;
-        deviceId: string;
-        authUrl: string;
+        astroemail: string;
+        email: string;
     };
     searchParams: {
         tab: AstroAccountTab;

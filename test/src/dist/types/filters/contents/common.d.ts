@@ -53,7 +53,6 @@ export interface IGroupFilter {
 }
 declare const AllFiltersPage: (props: {
     isMobile: boolean;
-    deviceId: string;
-    authUrl: string;
+    email: string;
 }) => import("react/jsx-runtime").JSX.Element;
 export default AllFiltersPage;
