@@ -27,10 +27,7 @@ const useDeviceOnlineStatus = (
     []
   )
 
-  const websocketUrl =
-    process.env.NEXT_PUBLIC_VERCEL_ENV === 'local'
-      ? 'ws://localhost:8000'
-      : 'wss://api.astrosafe.co'
+  const websocketUrl = 'wss://api.astrosafe.co'
 
   useEffect(() => {
     if (!user?.group_id) return

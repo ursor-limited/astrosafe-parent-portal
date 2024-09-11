@@ -1,37 +1,36 @@
-import React, { createContext, useEffect, useState } from 'react';
-import NotificationContext from './NotificationContext';
+import React, { createContext, useEffect, useState } from 'react'
+import NotificationContext from './NotificationContext'
 
 export interface INotificationProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-export type NotificationType = 'success' | 'negativeSuccess' | 'error';
+export type NotificationType = 'success' | 'negativeSuccess' | 'error'
 
 export default function NotificationProvider(
   props: INotificationProviderProps
 ) {
-  const [type, setType] = useState<NotificationType | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
+  const [type, setType] = useState<NotificationType | null>(null)
+
+  const [message, setMessage] = useState<string | null>(null)
+
   const success = (text: string) => {
-    window.scroll(0, 0);
-    setMessage(text);
-    setType('success');
-  };
+    window.scroll(0, 0)
+    setMessage(text)
+    setType('success')
+  }
+
   const negativeSuccess = (text: string) => {
-    window.scroll(0, 0);
-    setMessage(text);
-    setType('negativeSuccess');
-  };
-  const error = (text: string) => {
-    if (process.env.REACT_APP_BUILD_ENV !== 'prod') {
-      window.scroll(0, 0);
-      setMessage(text);
-      setType('error');
-    }
-  };
+    window.scroll(0, 0)
+    setMessage(text)
+    setType('negativeSuccess')
+  }
+
+  const error = (text: string) => {}
+
   useEffect(() => {
-    message && setTimeout(() => setMessage(null), 2500);
-  }, [message]);
+    message && setTimeout(() => setMessage(null), 2500)
+  }, [message])
 
   return (
     <NotificationContext.Provider
@@ -45,5 +44,5 @@ export default function NotificationProvider(
     >
       {props.children}
     </NotificationContext.Provider>
-  );
+  )
 }

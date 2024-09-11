@@ -29,11 +29,6 @@ export interface IVideoComment {
   time: number
 }
 
-if (window.location.hostname !== 'localhost' && !process.env.AUTH_URL)
-  throw new Error(
-    'You must set AUTH_URL (Endpoint to call to login your users) in your .env'
-  )
-
 export const BACKEND_URL = 'https://api.astrosafe.co'
 
 export const AUTH_URL = 'https://auth.astrosafe.co'

@@ -1,49 +1,43 @@
-import { ReactComponent as VerifiedIcon } from './../images/VerifiedIcon.svg';
-import { ReactComponent as CheckIcon } from './../images/CheckIcon.svg';
-import { Stack, alpha } from '@mui/system';
-import { PALETTE, Typography, UrsorButton, UrsorInputField } from './../ui';
-import UrsorDialog from './UrsorDialog';
-import { useUserContext } from './UserContext';
-import useNavigate from '../hooks/useNavigate';
-import { useLocalStorage } from 'usehooks-ts';
-import { useEffect, useState } from 'react';
-import AstroSwitch from './AstroSwitch';
+import { ReactComponent as VerifiedIcon } from './../images/VerifiedIcon.svg'
+import { ReactComponent as CheckIcon } from './../images/CheckIcon.svg'
+import { Stack, alpha } from '@mui/system'
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from './../ui'
+import UrsorDialog from './UrsorDialog'
+import { useUserContext } from './UserContext'
+import useNavigate from '../hooks/useNavigate'
+import { useLocalStorage } from 'usehooks-ts'
+import { useEffect, useState } from 'react'
+import AstroSwitch from './AstroSwitch'
 
-export const astroCurrency = ['USD', 'GBP', 'CAD', 'EUR'] as const;
-export type AstroCurrency = (typeof astroCurrency)[number];
+export const astroCurrency = ['USD', 'GBP', 'CAD', 'EUR'] as const
+export type AstroCurrency = (typeof astroCurrency)[number]
 
 export const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
   USD: '$',
   GBP: '£',
   CAD: 'CA$',
   EUR: '€',
-};
+}
 
 interface IAstroProduct {
-  monthlyId: string;
-  annualId: string;
-  plan: 'home' | 's chool';
-  items: string[];
-  title: string;
-  subtitle: string;
+  monthlyId: string
+  annualId: string
+  plan: 'home' | 'school'
+  items: string[]
+  title: string
+  subtitle: string
   monthlyPrices: {
-    [locale in AstroCurrency]: number;
-  };
+    [locale in AstroCurrency]: number
+  }
   annualPrices: {
-    [locale in AstroCurrency]: number;
-  };
+    [locale in AstroCurrency]: number
+  }
 }
 
 export const PRODUCT_DETAILS: IAstroProduct[] = [
   {
-    monthlyId:
-      process.env.REACT_ENV === 'production'
-        ? 'prod_PlC9OCbk8oBkWW'
-        : 'prod_QBufh97tFHY0PT',
-    annualId:
-      process.env.REACT_ENV === 'production'
-        ? 'prod_PlWrHG8V57yjrn'
-        : 'prod_QBufh97tFHY0PT',
+    monthlyId: 'prod_PlC9OCbk8oBkWW',
+    annualId: 'prod_PlWrHG8V57yjrn',
     plan: 'home',
     items: [
       '10 devices monitored',
@@ -66,21 +60,15 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
     },
   },
   {
-    monthlyId:
-      process.env.REACT_ENV === 'production'
-        ? 'prod_QAEaFpLDEJnlli'
-        : 'prod_QBufZ1xT1eUOx8',
-    annualId:
-      process.env.REACT_ENV === 'production'
-        ? 'prod_QAEYttD39HvFKz'
-        : 'prod_QBufZ1xT1eUOx8',
-    plan: 's chool',
+    monthlyId: 'prod_QAEaFpLDEJnlli',
+    annualId: 'prod_QAEYttD39HvFKz',
+    plan: 'school',
     items: [
       '10 devices monitored',
       'Unlimited parents/teachers',
       'All features included',
     ],
-    title: 's chool',
+    title: 'school',
     subtitle: 'Ideal for Schools',
     monthlyPrices: {
       USD: 59.99,
@@ -95,11 +83,11 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
       EUR: 499.99,
     },
   },
-];
+]
 
 export const FrequencySwitch = (props: {
-  value: 'monthly' | 'annual';
-  callback: () => void;
+  value: 'monthly' | 'annual'
+  callback: () => void
 }) => (
   <Stack direction="row" spacing="12px" alignItems="center" height="26px">
     <Typography bold color={PALETTE.secondary.grey[4]}>
@@ -107,7 +95,7 @@ export const FrequencySwitch = (props: {
     </Typography>
     <AstroSwitch on={props.value === 'annual'} callback={props.callback} />
   </Stack>
-);
+)
 
 export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
   US: 'USD',
@@ -164,39 +152,39 @@ export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
   TR: 'EUR',
   UA: 'EUR',
   VA: 'EUR',
-};
+}
 
 export const getPaymentUrl = (
   email: string,
-  plan: 'home' | 's chool',
+  plan: 'home' | 'school',
   frequency: 'monthly' | 'annual'
 ) =>
   `${
     frequency === 'monthly'
       ? plan === 'home'
-        ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY_INDIVIDUAL
-        : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY_DEPARTMENT
+        ? ''
+        : ''
       : plan === 'home'
-      ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL_INDIVIDUAL
-      : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL_DEPARTMENT
-  }?prefilled_email=${encodeURIComponent(email)}`;
+      ? ''
+      : ''
+  }?prefilled_email=${encodeURIComponent(email)}`
 
 const PricingCard = (props: {
-  title: string;
-  subtitle: string;
-  buttonText: string;
-  price: string;
-  currency: string;
-  unit: string;
-  items?: string[];
-  text?: string;
-  dark?: boolean;
-  tinyText?: string;
-  border?: boolean;
-  notif?: string;
-  noButtonIcon?: boolean;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  callback: () => void;
+  title: string
+  subtitle: string
+  buttonText: string
+  price: string
+  currency: string
+  unit: string
+  items?: string[]
+  text?: string
+  dark?: boolean
+  tinyText?: string
+  border?: boolean
+  notif?: string
+  noButtonIcon?: boolean
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>
+  callback: () => void
 }) => (
   <Stack
     flex={1}
@@ -361,40 +349,40 @@ const PricingCard = (props: {
       </Stack>
     ) : null}
   </Stack>
-);
+)
 
 const UpgradeDialog = (props: {
-  open: boolean;
-  closeCallback: () => void;
-  mobile?: boolean;
+  open: boolean
+  closeCallback: () => void
+  mobile?: boolean
 }) => {
-  const user = useUserContext().user;
+  const user = useUserContext().user
 
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
-    useLocalStorage<boolean>('upgradedNotificationPending', false);
-  const navigate = useNavigate();
+    useLocalStorage<boolean>('upgradedNotificationPending', false)
+  const navigate = useNavigate()
 
-  const [locale, setLocale] = useState<string>('US');
+  const [locale, setLocale] = useState<string>('US')
 
   const getIp = async () => {
     // Connect ipapi.co with fetch()
     const response = await fetch('https://ipapi.co/json/').then(
       async (response) => {
-        const data = await response.json();
+        const data = await response.json()
         // Set the IP address to the constant `ip`
-        data.country_code && setLocale(data.country_code);
+        data.country_code && setLocale(data.country_code)
       }
-    );
-  };
+    )
+  }
 
   // Run `getIP` function above just once when the page is rendered
   useEffect(() => {
-    getIp();
-  }, []);
+    getIp()
+  }, [])
 
-  const [frequency, setFrequency] = useState<'monthly' | 'annual'>('annual');
+  const [frequency, setFrequency] = useState<'monthly' | 'annual'>('annual')
 
-  const [licenseKeyInputValue, setLicenseKeyInputValue] = useState<string>('');
+  const [licenseKeyInputValue, setLicenseKeyInputValue] = useState<string>('')
 
   return (
     <UrsorDialog
@@ -441,8 +429,8 @@ const UpgradeDialog = (props: {
           callback={() => {
             navigate.push(
               user?.email ? getPaymentUrl(user.email, 'home', frequency) : ''
-            );
-            setUpgradedNotificationPending(true);
+            )
+            setUpgradedNotificationPending(true)
           }}
         />
         <PricingCard
@@ -464,9 +452,9 @@ const UpgradeDialog = (props: {
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
             navigate.push(
-              user?.email ? getPaymentUrl(user.email, 's chool', frequency) : ''
-            );
-            setUpgradedNotificationPending(true);
+              user?.email ? getPaymentUrl(user.email, 'school', frequency) : ''
+            )
+            setUpgradedNotificationPending(true)
           }}
         />
         <Stack
@@ -491,7 +479,7 @@ const UpgradeDialog = (props: {
             <UrsorInputField
               value={licenseKeyInputValue}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setLicenseKeyInputValue(event.target.value);
+                setLicenseKeyInputValue(event.target.value)
               }}
               leftAlign
               backgroundColor="rgb(255,255,255)"
@@ -527,7 +515,7 @@ const UpgradeDialog = (props: {
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default UpgradeDialog;
+export default UpgradeDialog
