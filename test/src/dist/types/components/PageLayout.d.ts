@@ -1,0 +1,52 @@
+import React from 'react';
+import { IActionPopupItem } from './ActionPopup';
+import { ITitleRowItem } from './TitleRow';
+import { SideBarItemId } from './Sidebar';
+import { IInfoButtonProps } from './InfoButton';
+export declare const SIDEBAR_X_MARGIN = 48;
+export declare const SIDEBAR_Y_MARGIN = "31px";
+export interface IPageLayoutProps {
+    dark?: boolean;
+    title: string;
+    titleRow?: ITitleRowItem[];
+    info?: IInfoButtonProps;
+    description?: string;
+    dotColor?: string;
+    titleBackButton?: boolean;
+    titleBackButtonCallback?: () => void;
+    particles?: boolean;
+    bodyWidth?: string;
+    noSidebar?: boolean;
+    scrollable?: boolean;
+    button?: {
+        text: string;
+        icon: React.FC<React.SVGProps<SVGSVGElement>>;
+        callback: () => void;
+        disabled?: boolean;
+        tourId?: string;
+    };
+    secondaryButton?: {
+        text: string;
+        icon: React.FC<React.SVGProps<SVGSVGElement>>;
+        callback: () => void;
+        svgStrokeInsteadOfFill?: boolean;
+        disabled?: boolean;
+        tourId?: string;
+    };
+    selectedSidebarItemId: SideBarItemId;
+    buttonRowExtraElement?: JSX.Element;
+    buttonRowExtraElementRight?: JSX.Element;
+    titleRowLefthandElement?: JSX.Element;
+    disableSearchBarCollapsing?: boolean;
+    classroomId?: string;
+    disableConnectionBar?: boolean;
+    buttonsDelay?: number;
+    onScroll?: () => void;
+    fullHeight?: string;
+    maxWidth?: number;
+    actions: IActionPopupItem[];
+    header?: React.ReactNode;
+    children: React.ReactNode;
+}
+export declare const PageLayout: React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<HTMLDivElement>>;
+export default PageLayout;

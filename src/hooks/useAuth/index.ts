@@ -16,6 +16,8 @@ const useAuth = (email: string) => {
         () => {
           login()
             .then(() => {
+              console.log('noooooo')
+
               getUserInfo(email).then((data) => {
                 setUser(data)
 
