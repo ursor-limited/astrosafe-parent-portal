@@ -3,7 +3,13 @@ import { DeviceCard } from './dist'
 const App: React.FC = () => {
   return (
     <div style={{ width: '500px', marginLeft: '100px', marginTop: '100px' }}>
-      <DeviceCard email="test1@test.com" deviceId={1} />
+      <DeviceCard
+        email="jaren.jeffery22@gmail.com"
+        deviceId="00b53a37d8d8834f"
+        onClickOpen={() => {
+          console.log('test')
+        }}
+      />
     </div>
   )
 }

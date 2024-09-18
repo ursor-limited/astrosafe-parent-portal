@@ -52976,6 +52976,26 @@ var useAuth = function useAuth(email) {
   };
 };
 
+var useDevice = function useDevice(externalDeviceId) {
+  var _useState = useState(),
+    _useState2 = _slicedToArray(_useState, 2),
+    deviceId = _useState2[0],
+    setDeviceId = _useState2[1];
+  useEffect(function () {
+    fetch("".concat(BACKEND_URL, "/devices/discover/").concat(externalDeviceId), {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    }).then(function (resp) {
+      return resp.json();
+    }).then(function (data) {
+      return setDeviceId(data.id);
+    });
+  });
+  return deviceId;
+};
+
 var DEVICE_TYPE_DISPLAY_NAMES = {
   android: 'Android',
   chrome: 'Chromebook',
@@ -53170,12 +53190,23 @@ var DeviceCard = function DeviceCard(_ref) {
     _useState6 = _slicedToArray(_useState5, 2),
     deviceData = _useState6[0],
     setEnrichedDeviceData = _useState6[1];
+  var _useState7 = useState(),
+    _useState8 = _slicedToArray(_useState7, 2),
+    filterData = _useState8[0],
+    setFilterData = _useState8[1];
+  var id = useDevice(deviceId);
   useEffect(function () {
-    ApiController.getEnrichedDevice(deviceId).then(function (data) {
-      console.log(data);
+    if (!id) return;
+    ApiController.getEnrichedDevice(id).then(function (data) {
       setEnrichedDeviceData(data);
     });
-  }, []);
+  }, [id]);
+  useEffect(function () {
+    if (!(deviceData !== null && deviceData !== void 0 && deviceData.filterId)) return;
+    ApiController.getFilter(deviceData.filterId).then(function (data) {
+      setFilterData(data);
+    });
+  }, [deviceData === null || deviceData === void 0 ? void 0 : deviceData.filterId]);
   var button = jsxRuntimeExports.jsx(UrsorActionButton, {
     size: "16px",
     iconSize: "16px",
@@ -53247,7 +53278,7 @@ var DeviceCard = function DeviceCard(_ref) {
               color: "rgb(255,255,255)",
               bold: true,
               variant: "h4",
-              children: getInitials(deviceData === null || deviceData === void 0 ? void 0 : deviceData.name)
+              children: getInitials((deviceData === null || deviceData === void 0 ? void 0 : deviceData.name) || '')
             })
           }), jsxRuntimeExports.jsx(Stack, {
             position: "absolute",
@@ -53307,7 +53338,7 @@ var DeviceCard = function DeviceCard(_ref) {
               maxLines: 1,
               children: DEVICE_TYPE_DISPLAY_NAMES[(deviceData === null || deviceData === void 0 ? void 0 : deviceData.deviceType) || 'chrome']
             })]
-          }), deviceData !== null && deviceData !== void 0 && deviceData.filterName ? jsxRuntimeExports.jsxs(Stack, {
+          }), filterData !== null && filterData !== void 0 && filterData.title ? jsxRuntimeExports.jsxs(Stack, {
             direction: "row",
             spacing: "8px",
             alignItems: "center",
@@ -53331,7 +53362,7 @@ var DeviceCard = function DeviceCard(_ref) {
               width: "16px"
             }), jsxRuntimeExports.jsx(Typography, {
               maxLines: 1,
-              children: deviceData === null || deviceData === void 0 ? void 0 : deviceData.filterName
+              children: filterData === null || filterData === void 0 ? void 0 : filterData.title
             })]
           }) : null]
         })]
@@ -53353,8 +53384,9 @@ var DeviceCard = function DeviceCard(_ref) {
           }), jsxRuntimeExports.jsx(DeviceCardBrowsingStatusSection, {
             browsingEnabled: browsingEnabled,
             flipBrowsingEnabled: function flipBrowsingEnabled() {
+              if (!id) return;
               setBrowsingEnabled(!browsingEnabled);
-              ApiController.flipBrowsingAllowed(deviceId, !browsingEnabled);
+              ApiController.flipBrowsingAllowed(id, !browsingEnabled);
               notificationCtx.success("Browsing is now ".concat(!browsingEnabled ? 'enabled' : 'disabled', " on ").concat(name));
             }
           })]

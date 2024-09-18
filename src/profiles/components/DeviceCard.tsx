@@ -7,13 +7,12 @@ import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg'
 import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg'
 import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
 import { ReactComponent as LinkExternalIcon } from './../../images/LinkExternalIcon.svg'
-import { DeviceType, IDevice } from '../../filter/contents/common'
+import { DeviceType } from '../../filter/contents/common'
 import AstroSwitch from './../../components/AstroSwitch'
 import { useContext, useEffect, useState } from 'react'
 import useNavigate from '../../hooks/useNavigate'
 import { IFilter, IFilterUrl } from './../../filters/contents/common'
 import ApiController, { getAbsoluteUrl } from './../../api'
-import { IEnrichedDevice } from '../contents/common'
 import { useElementSize } from 'usehooks-ts'
 import { cleanUrl } from '../../profile/components/MobileInsightsTab'
 import NotificationContext from './../../components/NotificationContext'
@@ -22,6 +21,8 @@ import UrsorActionButton from '../../../src/components/UrsorActionButton'
 import { ReactComponent as ArrowUpRightIcon } from '../../images/ArrowUpRight.svg'
 import { ReactComponent as PencilIcon } from '../../images/Pencil.svg'
 import useAuth from '../../hooks/useAuth'
+import { IEnrichedDevice } from '../contents/common'
+import useDevice from '../../../src/hooks/useDevice'
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: 'Android',
@@ -230,7 +231,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 
 interface DeviceCardProps {
   email: string
-  deviceId: number
+  deviceId: string
   small?: boolean
   noExtras?: boolean
   onClick?: () => void
@@ -258,15 +259,26 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
 
   const notificationCtx = useContext(NotificationContext)
 
-  const [deviceData, setEnrichedDeviceData] = useState<any>()
+  const [deviceData, setEnrichedDeviceData] = useState<IEnrichedDevice>()
+  const [filterData, setFilterData] = useState<IFilter>()
+
+  const id = useDevice(deviceId)
 
   useEffect(() => {
-    ApiController.getEnrichedDevice(deviceId).then((data) => {
-      console.log(data)
+    if (!id) return
 
+    ApiController.getEnrichedDevice(id).then((data) => {
       setEnrichedDeviceData(data)
     })
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    if (!deviceData?.filterId) return
+
+    ApiController.getFilter(deviceData.filterId).then((data) => {
+      setFilterData(data)
+    })
+  }, [deviceData?.filterId])
 
   const button = (
     <UrsorActionButton
@@ -287,7 +299,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
     />
   )
 
-  const { user } = useAuth(email)
+  useAuth(email)
 
   return (
     <AstroCard>
@@ -342,7 +354,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 />
               ) : (
                 <Typography color="rgb(255,255,255)" bold variant="h4">
-                  {getInitials(deviceData?.name)}
+                  {getInitials(deviceData?.name || '')}
                 </Typography>
               )}
             </Stack>
@@ -406,7 +418,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 }
               </Typography>
             </Stack>
-            {deviceData?.filterName ? (
+            {filterData?.title ? (
               <Stack
                 direction="row"
                 spacing="8px"
@@ -424,7 +436,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 onClick={() => onFilterClick()}
               >
                 <FilterIcon height="16px" width="16px" />
-                <Typography maxLines={1}>{deviceData?.filterName}</Typography>
+                <Typography maxLines={1}>{filterData?.title}</Typography>
               </Stack>
             ) : null}
           </Stack>
@@ -452,8 +464,10 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
                 flipBrowsingEnabled={() => {
+                  if (!id) return
+
                   setBrowsingEnabled(!browsingEnabled)
-                  ApiController.flipBrowsingAllowed(deviceId, !browsingEnabled)
+                  ApiController.flipBrowsingAllowed(id, !browsingEnabled)
                   notificationCtx.success(
                     `Browsing is now ${
                       !browsingEnabled ? 'enabled' : 'disabled'

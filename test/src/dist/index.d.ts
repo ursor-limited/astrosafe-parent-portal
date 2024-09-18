@@ -1,6 +1,6 @@
 interface DeviceCardProps {
     email: string;
-    deviceId: number;
+    deviceId: string;
     small?: boolean;
     noExtras?: boolean;
     onClick?: () => void;

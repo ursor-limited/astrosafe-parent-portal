@@ -2639,10 +2639,10 @@ ast-types-flow@^0.0.8:
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.8.tgz#0a85e1c92695769ac13a428bb653e7538bea27d6"
   integrity sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==
 
-astrosafe-parent-portal-test@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/astrosafe-parent-portal-test/-/astrosafe-parent-portal-test-0.1.0.tgz#828e3cb29e1960192f71914e8cb5614db48a8c9d"
-  integrity sha512-fHPZk06akUV8+d5VJjrzs2QpzXcxYEDAPw/QaVsszW3N18WC+rZ4xefaKdXwIAnJIn901NXsabYLOmwAYXxD2Q==
+astro-parent-components@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/astro-parent-components/-/astro-parent-components-0.6.0.tgz#39daca73b60960ece9d2ae4b712f9c5579fef480"
+  integrity sha512-4nElR02gsovpsCq2DjQfe2ts4vlrCLd9hL5enMiFosjEVu50vt/MkcwTbY9KB/rDD/mxYf6HCZ5nOp/xi9qDKg==
   dependencies:
     "@dnd-kit/core" "^6.1.0"
     "@emotion/react" "^11.11.1"
