@@ -7,11 +7,14 @@ import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.
 import { ReactComponent as ChevronLeftIcon } from './../../images/ChevronLeft.svg'
 import _ from 'lodash'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import CalendarButton from '../../components/CalendarButton'
 import { IDayScreenTime, IVisitedSite } from './InsightsTab'
 import ApiController from '../../api'
 import useDevice from '../../hooks/useDevice'
 import useAuth from '../../hooks/useAuth'
+
+dayjs.extend(utc)
 
 interface DeviceScreenTimeCardProps {
   email: string
@@ -77,7 +80,7 @@ const DeviceScreenTimeCard: React.FC<DeviceScreenTimeCardProps> = ({
   }, [selectedDayIndex, times])
 
   return (
-    <Stack spacing="12px">
+    <Stack spacing="12px" width="100%">
       <Stack direction="row" justifyContent="space-between">
         <Stack direction="row" spacing="8px" alignItems="center">
           <Stack

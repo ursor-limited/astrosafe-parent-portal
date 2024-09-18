@@ -1,24 +1,24 @@
-import { Stack } from '@mui/system';
-import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg';
-import { useState } from 'react';
-import DynamicContainer from './../../components/DynamicContainer';
-import InfoButton, { IInfoButtonProps } from './../../components/InfoButton';
-import { PALETTE, Typography } from './../../ui';
+import { Stack } from '@mui/system'
+import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg'
+import { useState } from 'react'
+import DynamicContainer from './../../components/DynamicContainer'
+import InfoButton, { IInfoButtonProps } from './../../components/InfoButton'
+import { PALETTE, Typography } from './../../ui'
 
 export const AstroBentoCard = (props: {
-  title: string;
-  subtitle?: string;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  iconColor?: string;
-  topRightStuff?: React.ReactNode;
-  infoButtonBelowTitle?: boolean;
-  notCollapsible?: boolean;
-  children: React.ReactNode;
-  paddingBottom?: string;
-  info?: IInfoButtonProps;
-  isMobile?: boolean;
+  title: string
+  subtitle?: string
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>
+  iconColor?: string
+  topRightStuff?: React.ReactNode
+  infoButtonBelowTitle?: boolean
+  notCollapsible?: boolean
+  children: React.ReactNode
+  paddingBottom?: string
+  info?: IInfoButtonProps
+  isMobile?: boolean
 }) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(false)
   return (
     <Stack
       bgcolor="rgb(255,255,255)"
@@ -28,6 +28,7 @@ export const AstroBentoCard = (props: {
       paddingBottom={props.paddingBottom}
       flex={1}
       border={`1px solid ${PALETTE.secondary.grey[2]}`}
+      width="100%"
     >
       <Stack>
         <Stack justifyContent="space-between" direction="row">
@@ -96,5 +97,5 @@ export const AstroBentoCard = (props: {
         <Stack flex={1}>{props.children}</Stack>
       )}
     </Stack>
-  );
-};
+  )
+}

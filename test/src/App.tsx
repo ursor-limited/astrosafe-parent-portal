@@ -1,14 +1,48 @@
-import { DeviceCard } from './dist'
+import {
+  AddDeviceButton,
+  DeviceCard,
+  DeviceMostVisitedSitesCard,
+  DeviceScreenTimeCard,
+} from './dist'
 
 const App: React.FC = () => {
   return (
-    <div style={{ width: '500px', marginLeft: '100px', marginTop: '100px' }}>
+    <div
+      style={{
+        position: 'relative',
+        width: '50%',
+        height: '110vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyItems: 'start',
+        justifyContent: 'start',
+        alignItems: 'start',
+        alignContent: 'start',
+        rowGap: '20px',
+        marginLeft: '100px',
+        marginTop: '100px',
+        margin: 0,
+        padding: '48px',
+      }}
+    >
       <DeviceCard
         email="jaren.jeffery22@gmail.com"
         deviceId="00b53a37d8d8834f"
         onClickOpen={() => {
           console.log('test')
         }}
+      />
+
+      <AddDeviceButton onClick={() => console.log('hi I was clicked :)')} />
+
+      <DeviceMostVisitedSitesCard
+        email="jaren.jeffery22@gmail.com"
+        deviceId="00b53a37d8d8834f"
+      />
+
+      <DeviceScreenTimeCard
+        email="jaren.jeffery22@gmail.com"
+        deviceId="00b53a37d8d8834f"
       />
     </div>
   )

@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { AstroBentoCard } from '../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import { IVisitedSite } from './InsightsTab';
-
-import _ from 'lodash';
-import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog';
-import { cleanUrl } from './MobileInsightsTab';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
+import React, { useState } from 'react'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { AstroBentoCard } from '../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
+import { IVisitedSite } from './InsightsTab'
+import _ from 'lodash'
+import AllMostVisitedSitesDialog from './AllMostVisitedSitesDialog'
+import { cleanUrl } from './MobileInsightsTab'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import InsightsEmptyStateIndicator from './InsightsEmptyStateIndicator'
 
 export const VisitedSiteRow = (
   props: IVisitedSite & {
-    maxScreenTime: IVisitedSite['screenTime'];
-    borderTop: boolean;
+    maxScreenTime: IVisitedSite['screenTime']
+    borderTop: boolean
   }
 ) => (
   <Stack
@@ -85,14 +85,14 @@ export const VisitedSiteRow = (
       </Stack>
     </a>
   </Stack>
-);
+)
 
 const MostVisitedSitesSection = (props: {
-  sites: IVisitedSite[];
-  isMobile?: boolean;
+  sites: IVisitedSite[]
+  isMobile?: boolean
 }) => {
   const [allMostVisitedSitesDialogOpen, setAllMostVisitedSitesDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
   return (
     <>
       <AstroBentoCard
@@ -110,16 +110,25 @@ const MostVisitedSitesSection = (props: {
           </UrsorButton>
         }
       >
-        {_.reverse(props.sites.slice(-3)).map((site, i) => (
-          <UrsorFadeIn key={site.url} delay={i * 90} duration={800}>
-            <VisitedSiteRow
-              {...site}
-              maxScreenTime={_.max(props.sites.map((s) => s.screenTime)) ?? 1}
-              borderTop={i > 0}
-            />
-          </UrsorFadeIn>
-        ))}
+        {props.sites.length === 0 ? (
+          <InsightsEmptyStateIndicator
+            imageSrc="https://ursorassets.s3.eu-west-1.amazonaws.com/windowsNodata.svg"
+            width={129}
+            height={51}
+          />
+        ) : (
+          _.reverse(props.sites.slice(-3)).map((site, i) => (
+            <UrsorFadeIn key={site.url} delay={i * 90} duration={800}>
+              <VisitedSiteRow
+                {...site}
+                maxScreenTime={_.max(props.sites.map((s) => s.screenTime)) ?? 1}
+                borderTop={i > 0}
+              />
+            </UrsorFadeIn>
+          ))
+        )}
       </AstroBentoCard>
+
       <AllMostVisitedSitesDialog
         sites={props.sites}
         open={allMostVisitedSitesDialogOpen}
@@ -127,7 +136,7 @@ const MostVisitedSitesSection = (props: {
         isMobile={props.isMobile}
       />
     </>
-  );
-};
+  )
+}
 
-export default MostVisitedSitesSection;
+export default MostVisitedSitesSection

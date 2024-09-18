@@ -1,13 +1,13 @@
-import * as React from 'react';
-import React__default, { forwardRef, useContext, useState, useEffect, useLayoutEffect, useRef, useMemo, useCallback, createContext } from 'react';
+import * as React$1 from 'react';
+import React__default$1, { forwardRef, useContext, useState, useEffect, useRef, useLayoutEffect, useMemo, useCallback, Children, cloneElement, useImperativeHandle, createContext } from 'react';
 import * as ReactDOM from 'react-dom';
 import ReactDOM__default, { createPortal } from 'react-dom';
 
-function _arrayWithHoles(r) {
+function _arrayWithHoles$1(r) {
   if (Array.isArray(r)) return r;
 }
 
-function _iterableToArrayLimit(r, l) {
+function _iterableToArrayLimit$1(r, l) {
   var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (null != t) {
     var e,
@@ -18,7 +18,10 @@ function _iterableToArrayLimit(r, l) {
       f = !0,
       o = !1;
     try {
-      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
     } catch (r) {
       o = !0, n = r;
     } finally {
@@ -32,26 +35,26 @@ function _iterableToArrayLimit(r, l) {
   }
 }
 
-function _arrayLikeToArray(r, a) {
+function _arrayLikeToArray$1(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
 }
 
-function _unsupportedIterableToArray(r, a) {
+function _unsupportedIterableToArray$1(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray$1(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray$1(r, a) : void 0;
   }
 }
 
-function _nonIterableRest() {
+function _nonIterableRest$1() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-function _slicedToArray(r, e) {
-  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+function _slicedToArray$1(r, e) {
+  return _arrayWithHoles$1(r) || _iterableToArrayLimit$1(r, e) || _unsupportedIterableToArray$1(r, e) || _nonIterableRest$1();
 }
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -104,7 +107,7 @@ var hasRequiredReactJsxRuntime_production_min;
 function requireReactJsxRuntime_production_min () {
 	if (hasRequiredReactJsxRuntime_production_min) return reactJsxRuntime_production_min;
 	hasRequiredReactJsxRuntime_production_min = 1;
-var f=React__default,k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
+var f=React__default$1,k=Symbol.for("react.element"),l=Symbol.for("react.fragment"),m=Object.prototype.hasOwnProperty,n=f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,p={key:!0,ref:!0,__self:!0,__source:!0};
 	function q(c,a,g){var b,d={},e=null,h=null;void 0!==g&&(e=""+g);void 0!==a.key&&(e=""+a.key);void 0!==a.ref&&(h=a.ref);for(b in a)m.call(a,b)&&!p.hasOwnProperty(b)&&(d[b]=a[b]);if(c&&c.defaultProps)for(b in a=c.defaultProps,a)void 0===d[b]&&(d[b]=a[b]);return {$$typeof:k,type:c,key:e,ref:h,props:d,_owner:n.current}}reactJsxRuntime_production_min.Fragment=l;reactJsxRuntime_production_min.jsx=q;reactJsxRuntime_production_min.jsxs=q;
 	return reactJsxRuntime_production_min;
 }
@@ -130,7 +133,7 @@ function requireReactJsxRuntime_development () {
 	if (process.env.NODE_ENV !== "production") {
 	  (function() {
 
-	var React = React__default;
+	var React = React__default$1;
 
 	// ATTENTION
 	// When adding new symbols to this file,
@@ -1478,14 +1481,14 @@ var formatMuiErrorMessage = /*#__PURE__*/Object.freeze({
   default: formatMuiErrorMessage$1
 });
 
-function _extends$a() {
-  return _extends$a = Object.assign ? Object.assign.bind() : function (n) {
+function _extends$i() {
+  return _extends$i = Object.assign ? Object.assign.bind() : function (n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
     return n;
-  }, _extends$a.apply(null, arguments);
+  }, _extends$i.apply(null, arguments);
 }
 
 function memoize$1(fn) {
@@ -2261,7 +2264,7 @@ var weakMemoize = function weakMemoize(func) {
   };
 };
 
-var isBrowser$4 = typeof document !== 'undefined';
+var isBrowser$5 = typeof document !== 'undefined';
 
 var identifierWithPointTracking = function identifierWithPointTracking(begin, points, index) {
   var previous = 0;
@@ -2614,7 +2617,7 @@ export type Options = {
 }
 */
 
-var getServerStylisCache = isBrowser$4 ? undefined : weakMemoize(function () {
+var getServerStylisCache = isBrowser$5 ? undefined : weakMemoize(function () {
   return memoize$1(function () {
     var cache = {};
     return function (name) {
@@ -2631,7 +2634,7 @@ createCache(options
 ) {
   var key = options.key;
 
-  if (isBrowser$4 && key === 'css') {
+  if (isBrowser$5 && key === 'css') {
     var ssrStyles = document.querySelectorAll("style[data-emotion]:not([data-s])"); // get SSRed styles out of the way of React's hydration
     // document.head is a safe place to move them to(though note document.head is not necessarily the last place they will be)
     // note this very very intentionally targets all style elements regardless of the key to ensure
@@ -2665,7 +2668,7 @@ createCache(options
 
   var nodesToHydrate = [];
 
-  if (isBrowser$4) {
+  if (isBrowser$5) {
     container = options.container || document.head;
     Array.prototype.forEach.call( // this means we will ignore elements which don't have a space in them which
     // means that the style elements we're looking at are only Emotion 11 server-rendered style elements
@@ -2693,7 +2696,7 @@ createCache(options
 
   var omnipresentPlugins = [compat, removeLabel];
 
-  if (isBrowser$4) {
+  if (isBrowser$5) {
     var currentSheet;
     var finalizingPlugins = [stringify, rulesheet(function (rule) {
       currentSheet.insert(rule);
@@ -3061,7 +3064,7 @@ var TYPE_STATICS = {};
 TYPE_STATICS[reactIs$1.ForwardRef] = FORWARD_REF_STATICS;
 TYPE_STATICS[reactIs$1.Memo] = MEMO_STATICS;
 
-var isBrowser$3 = typeof document !== 'undefined';
+var isBrowser$4 = typeof document !== 'undefined';
 
 function getRegisteredStyles(registered, registeredStyles, classNames) {
   var rawClassName = '';
@@ -3086,7 +3089,7 @@ var registerStyles = function registerStyles(cache, serialized, isStringTag) {
   // in node since emotion-server relies on whether a style is in
   // the registered cache to know whether a style is global or not
   // also, note that this check will be dead code eliminated in the browser
-  isBrowser$3 === false && cache.compat !== undefined) && cache.registered[className] === undefined) {
+  isBrowser$4 === false && cache.compat !== undefined) && cache.registered[className] === undefined) {
     cache.registered[className] = serialized.styles;
   }
 };
@@ -3101,14 +3104,14 @@ var insertStyles = function insertStyles(cache, serialized, isStringTag) {
     do {
       var maybeStyles = cache.insert(serialized === current ? "." + className : '', current, cache.sheet, true);
 
-      if (!isBrowser$3 && maybeStyles !== undefined) {
+      if (!isBrowser$4 && maybeStyles !== undefined) {
         stylesForSSR += maybeStyles;
       }
 
       current = current.next;
     } while (current !== undefined);
 
-    if (!isBrowser$3 && stylesForSSR.length !== 0) {
+    if (!isBrowser$4 && stylesForSSR.length !== 0) {
       return stylesForSSR;
     }
   }
@@ -3452,22 +3455,22 @@ function serializeStyles(args, registered, mergedProps) {
   };
 }
 
-var isBrowser$2 = typeof document !== 'undefined';
+var isBrowser$3 = typeof document !== 'undefined';
 
 var syncFallback = function syncFallback(create) {
   return create();
 };
 
-var useInsertionEffect = React['useInsertion' + 'Effect'] ? React['useInsertion' + 'Effect'] : false;
-var useInsertionEffectAlwaysWithSyncFallback = !isBrowser$2 ? syncFallback : useInsertionEffect || syncFallback;
-var useInsertionEffectWithLayoutFallback = useInsertionEffect || React.useLayoutEffect;
+var useInsertionEffect = React$1['useInsertion' + 'Effect'] ? React$1['useInsertion' + 'Effect'] : false;
+var useInsertionEffectAlwaysWithSyncFallback = !isBrowser$3 ? syncFallback : useInsertionEffect || syncFallback;
+var useInsertionEffectWithLayoutFallback = useInsertionEffect || React$1.useLayoutEffect;
 
-var isBrowser$1 = typeof document !== 'undefined';
+var isBrowser$2 = typeof document !== 'undefined';
 
 /* import { type EmotionCache } from '@emotion/utils' */
 var EmotionCacheContext
 /*: React.Context<EmotionCache | null> */
-= /* #__PURE__ */React.createContext( // we're doing this to avoid preconstruct's dead code elimination in this one case
+= /* #__PURE__ */React$1.createContext( // we're doing this to avoid preconstruct's dead code elimination in this one case
 // because this module is primarily intended for the browser and node
 // but it's also required in react native and similar environments sometimes
 // and we could have a special build just for that
@@ -3497,7 +3500,7 @@ var withEmotionCache = function withEmotionCache
   });
 };
 
-if (!isBrowser$1) {
+if (!isBrowser$2) {
   withEmotionCache = function withEmotionCache
   /* <Props> */
   (func
@@ -3519,7 +3522,7 @@ if (!isBrowser$1) {
         cache = createCache({
           key: 'css'
         });
-        return /*#__PURE__*/React.createElement(EmotionCacheContext.Provider, {
+        return /*#__PURE__*/React$1.createElement(EmotionCacheContext.Provider, {
           value: cache
         }, func(props, cache));
       } else {
@@ -3529,7 +3532,7 @@ if (!isBrowser$1) {
   };
 }
 
-var ThemeContext = /* #__PURE__ */React.createContext({});
+var ThemeContext = /* #__PURE__ */React$1.createContext({});
 
 // initial render from browser, insertBefore context.sheet.tags[0] or if a style hasn't been inserted there yet, appendChild
 // initial client-side render from SSR, use place of hydrating tag
@@ -3543,9 +3546,9 @@ GlobalProps
 , cache) {
 
   var styles = props.styles;
-  var serialized = serializeStyles([styles], undefined, React.useContext(ThemeContext));
+  var serialized = serializeStyles([styles], undefined, React$1.useContext(ThemeContext));
 
-  if (!isBrowser$1) {
+  if (!isBrowser$2) {
     var _ref;
 
     var serializedNames = serialized.name;
@@ -3568,7 +3571,7 @@ GlobalProps
       return null;
     }
 
-    return /*#__PURE__*/React.createElement("style", (_ref = {}, _ref["data-emotion"] = cache.key + "-global " + serializedNames, _ref.dangerouslySetInnerHTML = {
+    return /*#__PURE__*/React$1.createElement("style", (_ref = {}, _ref["data-emotion"] = cache.key + "-global " + serializedNames, _ref.dangerouslySetInnerHTML = {
       __html: rules
     }, _ref.nonce = cache.sheet.nonce, _ref));
   } // yes, i know these hooks are used conditionally
@@ -3577,7 +3580,7 @@ GlobalProps
   // so it's not actually breaking anything
 
 
-  var sheetRef = React.useRef();
+  var sheetRef = React$1.useRef();
   useInsertionEffectWithLayoutFallback(function () {
     var key = cache.key + "-global"; // use case of https://github.com/emotion-js/emotion/issues/2675
 
@@ -3763,7 +3766,7 @@ export type CreateStyled = {
 
 var isDevelopment = false;
 
-var isBrowser = typeof document !== 'undefined';
+var isBrowser$1 = typeof document !== 'undefined';
 
 var Insertion = function Insertion(_ref) {
   var cache = _ref.cache,
@@ -3774,7 +3777,7 @@ var Insertion = function Insertion(_ref) {
     return insertStyles(cache, serialized, isStringTag);
   });
 
-  if (!isBrowser && rules !== undefined) {
+  if (!isBrowser$1 && rules !== undefined) {
     var _ref2;
 
     var serializedNames = serialized.name;
@@ -3785,7 +3788,7 @@ var Insertion = function Insertion(_ref) {
       next = next.next;
     }
 
-    return /*#__PURE__*/React.createElement("style", (_ref2 = {}, _ref2["data-emotion"] = cache.key + " " + serializedNames, _ref2.dangerouslySetInnerHTML = {
+    return /*#__PURE__*/React$1.createElement("style", (_ref2 = {}, _ref2["data-emotion"] = cache.key + " " + serializedNames, _ref2.dangerouslySetInnerHTML = {
       __html: rules
     }, _ref2.nonce = cache.sheet.nonce, _ref2));
   }
@@ -3855,7 +3858,7 @@ var createStyled$3
           mergedProps[key] = props[key];
         }
 
-        mergedProps.theme = React.useContext(ThemeContext);
+        mergedProps.theme = React$1.useContext(ThemeContext);
       }
 
       if (typeof props.className === 'string') {
@@ -3888,11 +3891,11 @@ var createStyled$3
         newProps.ref = ref;
       }
 
-      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Insertion, {
+      return /*#__PURE__*/React$1.createElement(React$1.Fragment, null, /*#__PURE__*/React$1.createElement(Insertion, {
         cache: cache,
         serialized: serialized,
         isStringTag: typeof FinalTag === 'string'
-      }), /*#__PURE__*/React.createElement(FinalTag, newProps));
+      }), /*#__PURE__*/React$1.createElement(FinalTag, newProps));
     });
     Styled.displayName = identifierName !== undefined ? identifierName : "Styled(" + (typeof baseTag === 'string' ? baseTag : baseTag.displayName || baseTag.name || 'Component') + ")";
     Styled.defaultProps = tag.defaultProps;
@@ -3915,7 +3918,7 @@ var createStyled$3
     , nextOptions
     /* ?: StyledOptions */
     ) {
-      return createStyled(nextTag, _extends$a({}, options, nextOptions, {
+      return createStyled(nextTag, _extends$i({}, options, nextOptions, {
         shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
       })).apply(void 0, styles);
     };
@@ -4915,20 +4918,20 @@ process.env.NODE_ENV !== "production" ? StyledEngineProvider.propTypes = {
   injectFirst: PropTypes.bool
 } : void 0;
 
-function isEmpty$2(obj) {
+function isEmpty$3(obj) {
   return obj === undefined || obj === null || Object.keys(obj).length === 0;
 }
-function GlobalStyles(props) {
+function GlobalStyles$2(props) {
   const {
     styles,
     defaultTheme = {}
   } = props;
-  const globalStyles = typeof styles === 'function' ? themeInput => styles(isEmpty$2(themeInput) ? defaultTheme : themeInput) : styles;
+  const globalStyles = typeof styles === 'function' ? themeInput => styles(isEmpty$3(themeInput) ? defaultTheme : themeInput) : styles;
   return /*#__PURE__*/jsxRuntimeExports.jsx(Global, {
     styles: globalStyles
   });
 }
-process.env.NODE_ENV !== "production" ? GlobalStyles.propTypes = {
+process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
   defaultTheme: PropTypes.object,
   styles: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.object, PropTypes.func])
 } : void 0;
@@ -4967,7 +4970,7 @@ const internal_processStyles = (tag, processor) => {
 
 var styledEngine = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  GlobalStyles: GlobalStyles,
+  GlobalStyles: GlobalStyles$2,
   StyledEngineProvider: StyledEngineProvider,
   ThemeContext: ThemeContext,
   css: css,
@@ -4976,7 +4979,7 @@ var styledEngine = /*#__PURE__*/Object.freeze({
   keyframes: keyframes
 });
 
-function _objectWithoutPropertiesLoose(r, e) {
+function _objectWithoutPropertiesLoose$1(r, e) {
   if (null == r) return {};
   var t = {};
   for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
@@ -5007,7 +5010,7 @@ function deepClone(source) {
 function deepmerge$1(target, source, options = {
   clone: true
 }) {
-  const output = options.clone ? _extends$a({}, target) : target;
+  const output = options.clone ? _extends$i({}, target) : target;
   if (isPlainObject(target) && isPlainObject(source)) {
     Object.keys(source).forEach(key => {
       if (isPlainObject(source[key]) &&
@@ -5031,7 +5034,7 @@ var deepmerge = /*#__PURE__*/Object.freeze({
   isPlainObject: isPlainObject
 });
 
-const _excluded$c = ["values", "unit", "step"];
+const _excluded$k = ["values", "unit", "step"];
 const sortBreakpointsValues = values => {
   const breakpointsAsArray = Object.keys(values).map(key => ({
     key,
@@ -5040,7 +5043,7 @@ const sortBreakpointsValues = values => {
   // Sort in ascending order
   breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
   return breakpointsAsArray.reduce((acc, obj) => {
-    return _extends$a({}, acc, {
+    return _extends$i({}, acc, {
       [obj.key]: obj.val
     });
   }, {});
@@ -5065,7 +5068,7 @@ function createBreakpoints(breakpoints) {
       unit = 'px',
       step = 5
     } = breakpoints,
-    other = _objectWithoutPropertiesLoose(breakpoints, _excluded$c);
+    other = _objectWithoutPropertiesLoose$1(breakpoints, _excluded$k);
   const sortedValues = sortBreakpointsValues(values);
   const keys = Object.keys(sortedValues);
   function up(key) {
@@ -5097,7 +5100,7 @@ function createBreakpoints(breakpoints) {
     }
     return between(key, keys[keys.indexOf(key) + 1]).replace('@media', '@media not all and');
   }
-  return _extends$a({
+  return _extends$i({
     keys,
     values: sortedValues,
     up,
@@ -5279,7 +5282,7 @@ function getPath(obj, path, checkVars = true) {
     return null;
   }, obj);
 }
-function getStyleValue(themeMapping, transform, propValueFinal, userValue = propValueFinal) {
+function getStyleValue$1(themeMapping, transform, propValueFinal, userValue = propValueFinal) {
   let value;
   if (typeof themeMapping === 'function') {
     value = themeMapping(propValueFinal);
@@ -5311,10 +5314,10 @@ function style$2(options) {
     const theme = props.theme;
     const themeMapping = getPath(theme, themeKey) || {};
     const styleFromPropValue = propValueFinal => {
-      let value = getStyleValue(themeMapping, transform, propValueFinal);
+      let value = getStyleValue$1(themeMapping, transform, propValueFinal);
       if (propValueFinal === value && typeof propValueFinal === 'string') {
         // Haven't found value
-        value = getStyleValue(themeMapping, transform, `${prop}${propValueFinal === 'default' ? '' : capitalize$1(propValueFinal)}`, propValueFinal);
+        value = getStyleValue$1(themeMapping, transform, `${prop}${propValueFinal === 'default' ? '' : capitalize$1(propValueFinal)}`, propValueFinal);
       }
       if (cssProperty === false) {
         return value;
@@ -5423,7 +5426,7 @@ function createUnaryUnit(theme, themeKey, defaultValue, propName) {
 function createUnarySpacing(theme) {
   return createUnaryUnit(theme, 'spacing', 8, 'spacing');
 }
-function getValue(transformer, propValue) {
+function getValue$1(transformer, propValue) {
   if (typeof propValue === 'string' || propValue == null) {
     return propValue;
   }
@@ -5439,7 +5442,7 @@ function getValue(transformer, propValue) {
 }
 function getStyleFromPropValue(cssProperties, transformer) {
   return propValue => cssProperties.reduce((acc, cssProperty) => {
-    acc[cssProperty] = getValue(transformer, propValue);
+    acc[cssProperty] = getValue$1(transformer, propValue);
     return acc;
   }, {});
 }
@@ -5565,7 +5568,7 @@ const borderRadius = props => {
   if (props.borderRadius !== undefined && props.borderRadius !== null) {
     const transformer = createUnaryUnit(props.theme, 'shape.borderRadius', 4, 'borderRadius');
     const styleFromPropValue = propValue => ({
-      borderRadius: getValue(transformer, propValue)
+      borderRadius: getValue$1(transformer, propValue)
     });
     return handleBreakpoints(props, props.borderRadius, styleFromPropValue);
   }
@@ -5583,7 +5586,7 @@ const gap = props => {
   if (props.gap !== undefined && props.gap !== null) {
     const transformer = createUnaryUnit(props.theme, 'spacing', 8, 'gap');
     const styleFromPropValue = propValue => ({
-      gap: getValue(transformer, propValue)
+      gap: getValue$1(transformer, propValue)
     });
     return handleBreakpoints(props, props.gap, styleFromPropValue);
   }
@@ -5600,7 +5603,7 @@ const columnGap = props => {
   if (props.columnGap !== undefined && props.columnGap !== null) {
     const transformer = createUnaryUnit(props.theme, 'spacing', 8, 'columnGap');
     const styleFromPropValue = propValue => ({
-      columnGap: getValue(transformer, propValue)
+      columnGap: getValue$1(transformer, propValue)
     });
     return handleBreakpoints(props, props.columnGap, styleFromPropValue);
   }
@@ -5617,7 +5620,7 @@ const rowGap = props => {
   if (props.rowGap !== undefined && props.rowGap !== null) {
     const transformer = createUnaryUnit(props.theme, 'spacing', 8, 'rowGap');
     const styleFromPropValue = propValue => ({
-      rowGap: getValue(transformer, propValue)
+      rowGap: getValue$1(transformer, propValue)
     });
     return handleBreakpoints(props, props.rowGap, styleFromPropValue);
   }
@@ -6071,10 +6074,10 @@ function unstable_createStyleFunctionSx() {
       return style(props);
     }
     const styleFromPropValue = propValueFinal => {
-      let value = getStyleValue(themeMapping, transform, propValueFinal);
+      let value = getStyleValue$1(themeMapping, transform, propValueFinal);
       if (propValueFinal === value && typeof propValueFinal === 'string') {
         // Haven't found value
-        value = getStyleValue(themeMapping, transform, `${prop}${propValueFinal === 'default' ? '' : capitalize$1(propValueFinal)}`, propValueFinal);
+        value = getStyleValue$1(themeMapping, transform, `${prop}${propValueFinal === 'default' ? '' : capitalize$1(propValueFinal)}`, propValueFinal);
       }
       if (cssProperty === false) {
         return value;
@@ -6225,7 +6228,7 @@ function applyStyles$2(key, styles) {
   return {};
 }
 
-const _excluded$b = ["breakpoints", "palette", "spacing", "shape"];
+const _excluded$j = ["breakpoints", "palette", "spacing", "shape"];
 function createTheme$2(options = {}, ...args) {
   const {
       breakpoints: breakpointsInput = {},
@@ -6233,7 +6236,7 @@ function createTheme$2(options = {}, ...args) {
       spacing: spacingInput,
       shape: shapeInput = {}
     } = options,
-    other = _objectWithoutPropertiesLoose(options, _excluded$b);
+    other = _objectWithoutPropertiesLoose$1(options, _excluded$j);
   const breakpoints = createBreakpoints(breakpointsInput);
   const spacing = createSpacing(spacingInput);
   let muiTheme = deepmerge$1({
@@ -6241,15 +6244,15 @@ function createTheme$2(options = {}, ...args) {
     direction: 'ltr',
     components: {},
     // Inject component definitions.
-    palette: _extends$a({
+    palette: _extends$i({
       mode: 'light'
     }, paletteInput),
     spacing,
-    shape: _extends$a({}, shape, shapeInput)
+    shape: _extends$i({}, shape, shapeInput)
   }, other);
   muiTheme.applyStyles = applyStyles$2;
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
-  muiTheme.unstable_sxConfig = _extends$a({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$i({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -6270,7 +6273,7 @@ function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 function useTheme$2(defaultTheme = null) {
-  const contextTheme = React.useContext(ThemeContext);
+  const contextTheme = React$1.useContext(ThemeContext);
   return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme : contextTheme;
 }
 
@@ -6279,7 +6282,37 @@ function useTheme$1(defaultTheme = systemDefaultTheme$2) {
   return useTheme$2(defaultTheme);
 }
 
-const _excluded$a = ["sx"];
+function GlobalStyles$1({
+  styles,
+  themeId,
+  defaultTheme = {}
+}) {
+  const upperTheme = useTheme$1(defaultTheme);
+  const globalStyles = typeof styles === 'function' ? styles(themeId ? upperTheme[themeId] || upperTheme : upperTheme) : styles;
+  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$2, {
+    styles: globalStyles
+  });
+}
+process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * @ignore
+   */
+  defaultTheme: PropTypes.object,
+  /**
+   * @ignore
+   */
+  styles: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.array, PropTypes.func, PropTypes.number, PropTypes.object, PropTypes.string, PropTypes.bool]),
+  /**
+   * @ignore
+   */
+  themeId: PropTypes.string
+} : void 0;
+
+const _excluded$i = ["sx"];
 const splitProps = props => {
   var _props$theme$unstable, _props$theme;
   const result = {
@@ -6300,7 +6333,7 @@ function extendSxProp(props) {
   const {
       sx: inSx
     } = props,
-    other = _objectWithoutPropertiesLoose(props, _excluded$a);
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$i);
   const {
     systemProps,
     otherProps
@@ -6314,12 +6347,12 @@ function extendSxProp(props) {
       if (!isPlainObject(result)) {
         return systemProps;
       }
-      return _extends$a({}, systemProps, result);
+      return _extends$i({}, systemProps, result);
     };
   } else {
-    finalSx = _extends$a({}, systemProps, inSx);
+    finalSx = _extends$i({}, systemProps, inSx);
   }
-  return _extends$a({}, otherProps, {
+  return _extends$i({}, otherProps, {
     sx: finalSx
   });
 }
@@ -6351,7 +6384,7 @@ const ClassNameGenerator = createClassNameGenerator();
 
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f);}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}
 
-const _excluded$9 = ["className", "component"];
+const _excluded$h = ["className", "component"];
 function createBox(options = {}) {
   const {
     themeId,
@@ -6362,15 +6395,15 @@ function createBox(options = {}) {
   const BoxRoot = styled$2('div', {
     shouldForwardProp: prop => prop !== 'theme' && prop !== 'sx' && prop !== 'as'
   })(styleFunctionSx$1);
-  const Box = /*#__PURE__*/React.forwardRef(function Box(inProps, ref) {
+  const Box = /*#__PURE__*/React$1.forwardRef(function Box(inProps, ref) {
     const theme = useTheme$1(defaultTheme);
     const _extendSxProp = extendSxProp(inProps),
       {
         className,
         component = 'div'
       } = _extendSxProp,
-      other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$9);
-    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$a({
+      other = _objectWithoutPropertiesLoose$1(_extendSxProp, _excluded$h);
+    return /*#__PURE__*/jsxRuntimeExports.jsx(BoxRoot, _extends$i({
       as: component,
       ref: ref,
       className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
@@ -6749,10 +6782,10 @@ var getDisplayName = /*#__PURE__*/Object.freeze({
   getFunctionName: getFunctionName
 });
 
-const _excluded$8 = ["ownerState"],
+const _excluded$g = ["ownerState"],
   _excluded2$1 = ["variants"],
   _excluded3$1 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
-function isEmpty$1(obj) {
+function isEmpty$2(obj) {
   return Object.keys(obj).length === 0;
 }
 
@@ -6781,7 +6814,7 @@ function resolveTheme$1({
   theme,
   themeId
 }) {
-  return isEmpty$1(theme) ? defaultTheme : theme[themeId] || theme;
+  return isEmpty$2(theme) ? defaultTheme : theme[themeId] || theme;
 }
 function defaultOverridesResolver$1(slot) {
   if (!slot) {
@@ -6793,12 +6826,12 @@ function processStyleArg$1(callableStyle, _ref) {
   let {
       ownerState
     } = _ref,
-    props = _objectWithoutPropertiesLoose(_ref, _excluded$8);
-  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$a({
+    props = _objectWithoutPropertiesLoose$1(_ref, _excluded$g);
+  const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle(_extends$i({
     ownerState
   }, props)) : callableStyle;
   if (Array.isArray(resolvedStylesArg)) {
-    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$a({
+    return resolvedStylesArg.flatMap(resolvedStyle => processStyleArg$1(resolvedStyle, _extends$i({
       ownerState
     }, props)));
   }
@@ -6806,12 +6839,12 @@ function processStyleArg$1(callableStyle, _ref) {
     const {
         variants = []
       } = resolvedStylesArg,
-      otherStyles = _objectWithoutPropertiesLoose(resolvedStylesArg, _excluded2$1);
+      otherStyles = _objectWithoutPropertiesLoose$1(resolvedStylesArg, _excluded2$1);
     let result = otherStyles;
     variants.forEach(variant => {
       let isMatch = true;
       if (typeof variant.props === 'function') {
-        isMatch = variant.props(_extends$a({
+        isMatch = variant.props(_extends$i({
           ownerState
         }, props, ownerState));
       } else {
@@ -6825,7 +6858,7 @@ function processStyleArg$1(callableStyle, _ref) {
         if (!Array.isArray(result)) {
           result = [result];
         }
-        result.push(typeof variant.style === 'function' ? variant.style(_extends$a({
+        result.push(typeof variant.style === 'function' ? variant.style(_extends$i({
           ownerState
         }, props, ownerState)) : variant.style);
       }
@@ -6842,8 +6875,8 @@ function createStyled$2(input = {}) {
     slotShouldForwardProp = shouldForwardProp$1
   } = input;
   const systemSx = props => {
-    return styleFunctionSx$1(_extends$a({}, props, {
-      theme: resolveTheme$1(_extends$a({}, props, {
+    return styleFunctionSx$1(_extends$i({}, props, {
+      theme: resolveTheme$1(_extends$i({}, props, {
         defaultTheme,
         themeId
       }))
@@ -6862,7 +6895,7 @@ function createStyled$2(input = {}) {
         // For more details: https://github.com/mui/material-ui/pull/37908
         overridesResolver = defaultOverridesResolver$1(lowercaseFirstLetter$1(componentSlot))
       } = inputOptions,
-      options = _objectWithoutPropertiesLoose(inputOptions, _excluded3$1);
+      options = _objectWithoutPropertiesLoose$1(inputOptions, _excluded3$1);
 
     // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
     const skipVariantsResolver = inputSkipVariantsResolver !== undefined ? inputSkipVariantsResolver :
@@ -6891,7 +6924,7 @@ function createStyled$2(input = {}) {
       // for string (html) tag, preserve the behavior in emotion & styled-components.
       shouldForwardPropOption = undefined;
     }
-    const defaultStyledResolver = styled$2(tag, _extends$a({
+    const defaultStyledResolver = styled$2(tag, _extends$i({
       shouldForwardProp: shouldForwardPropOption,
       label
     }, options));
@@ -6900,7 +6933,7 @@ function createStyled$2(input = {}) {
       // component stays as a function. This condition makes sure that we do not interpolate functions
       // which are basically components used as a selectors.
       if (typeof stylesArg === 'function' && stylesArg.__emotion_real !== stylesArg || isPlainObject(stylesArg)) {
-        return props => processStyleArg$1(stylesArg, _extends$a({}, props, {
+        return props => processStyleArg$1(stylesArg, _extends$i({}, props, {
           theme: resolveTheme$1({
             theme: props.theme,
             defaultTheme,
@@ -6915,7 +6948,7 @@ function createStyled$2(input = {}) {
       const expressionsWithDefaultTheme = expressions ? expressions.map(transformStyleArg) : [];
       if (componentName && overridesResolver) {
         expressionsWithDefaultTheme.push(props => {
-          const theme = resolveTheme$1(_extends$a({}, props, {
+          const theme = resolveTheme$1(_extends$i({}, props, {
             defaultTheme,
             themeId
           }));
@@ -6926,7 +6959,7 @@ function createStyled$2(input = {}) {
           const resolvedStyleOverrides = {};
           // TODO: v7 remove iteration and use `resolveStyleArg(styleOverrides[slot])` directly
           Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
-            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$a({}, props, {
+            resolvedStyleOverrides[slotKey] = processStyleArg$1(slotStyle, _extends$i({}, props, {
               theme
             }));
           });
@@ -6936,14 +6969,14 @@ function createStyled$2(input = {}) {
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push(props => {
           var _theme$components;
-          const theme = resolveTheme$1(_extends$a({}, props, {
+          const theme = resolveTheme$1(_extends$i({}, props, {
             defaultTheme,
             themeId
           }));
           const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[componentName]) == null ? void 0 : _theme$components.variants;
           return processStyleArg$1({
             variants: themeVariants
-          }, _extends$a({}, props, {
+          }, _extends$i({}, props, {
             theme
           }));
         });
@@ -6990,10 +7023,10 @@ const styled$1 = createStyled$2();
  * @returns {object} resolved props
  */
 function resolveProps(defaultProps, props) {
-  const output = _extends$a({}, props);
+  const output = _extends$i({}, props);
   Object.keys(defaultProps).forEach(propName => {
     if (propName.toString().match(/^(components|slots)$/)) {
-      output[propName] = _extends$a({}, defaultProps[propName], output[propName]);
+      output[propName] = _extends$i({}, defaultProps[propName], output[propName]);
     } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
       const defaultSlotProps = defaultProps[propName] || {};
       const slotProps = props[propName];
@@ -7005,7 +7038,7 @@ function resolveProps(defaultProps, props) {
         // Reduce the iteration if the default slot props is empty
         output[propName] = slotProps;
       } else {
-        output[propName] = _extends$a({}, slotProps);
+        output[propName] = _extends$i({}, slotProps);
         Object.keys(defaultSlotProps).forEach(slotPropName => {
           output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
         });
@@ -7047,6 +7080,15 @@ function useThemeProps({
   return mergedProps;
 }
 
+/**
+ * A version of `React.useLayoutEffect` that does not show a warning when server-side rendering.
+ * This is useful for effects that are only needed for client-side rendering but not for SSR.
+ *
+ * Before you use this hook, make sure to read https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85
+ * and confirm it doesn't apply to your use-case.
+ */
+const useEnhancedEffect = typeof window !== 'undefined' ? React$1.useLayoutEffect : React$1.useEffect;
+
 function clamp$1(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
   return Math.max(min, Math.min(val, max));
 }
@@ -7065,7 +7107,7 @@ function chainPropTypes(propType1, propType2) {
   };
 }
 
-function isClassComponent(elementType) {
+function isClassComponent$1(elementType) {
   // elementType.prototype?.isReactComponent
   const {
     prototype = {}
@@ -7094,7 +7136,7 @@ function acceptingRef(props, propName, componentName, location, propFullName) {
    * or class components. "Safe" means there's no public API.
    *
    */
-  if (typeof elementType === 'function' && !isClassComponent(elementType)) {
+  if (typeof elementType === 'function' && !isClassComponent$1(elementType)) {
     warningHint = 'Did you accidentally use a plain function component for an element instead?';
   }
   if (warningHint !== undefined) {
@@ -7104,6 +7146,127 @@ function acceptingRef(props, propName, componentName, location, propFullName) {
 }
 const elementAcceptingRef = chainPropTypes(PropTypes.element, acceptingRef);
 elementAcceptingRef.isRequired = chainPropTypes(PropTypes.element.isRequired, acceptingRef);
+
+function isClassComponent(elementType) {
+  // elementType.prototype?.isReactComponent
+  const {
+    prototype = {}
+  } = elementType;
+  return Boolean(prototype.isReactComponent);
+}
+function elementTypeAcceptingRef(props, propName, componentName, location, propFullName) {
+  const propValue = props[propName];
+  const safePropName = propFullName || propName;
+  if (propValue == null ||
+  // When server-side rendering React doesn't warn either.
+  // This is not an accurate check for SSR.
+  // This is only in place for emotion compat.
+  // TODO: Revisit once https://github.com/facebook/react/issues/20047 is resolved.
+  typeof window === 'undefined') {
+    return null;
+  }
+  let warningHint;
+
+  /**
+   * Blacklisting instead of whitelisting
+   *
+   * Blacklisting will miss some components, such as React.Fragment. Those will at least
+   * trigger a warning in React.
+   * We can't whitelist because there is no safe way to detect React.forwardRef
+   * or class components. "Safe" means there's no public API.
+   *
+   */
+  if (typeof propValue === 'function' && !isClassComponent(propValue)) {
+    warningHint = 'Did you accidentally provide a plain function component instead?';
+  }
+  if (warningHint !== undefined) {
+    return new Error(`Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. ` + `Expected an element type that can hold a ref. ${warningHint} ` + 'For more information see https://mui.com/r/caveat-with-refs-guide');
+  }
+  return null;
+}
+var elementTypeAcceptingRef$1 = chainPropTypes(PropTypes.elementType, elementTypeAcceptingRef);
+
+// This module is based on https://github.com/airbnb/prop-types-exact repository.
+// However, in order to reduce the number of dependencies and to remove some extra safe checks
+// the module was forked.
+
+const specialProperty = 'exact-prop: \u200b';
+function exactProp(propTypes) {
+  if (process.env.NODE_ENV === 'production') {
+    return propTypes;
+  }
+  return _extends$i({}, propTypes, {
+    [specialProperty]: props => {
+      const unsupportedProps = Object.keys(props).filter(prop => !propTypes.hasOwnProperty(prop));
+      if (unsupportedProps.length > 0) {
+        return new Error(`The following props are not supported: ${unsupportedProps.map(prop => `\`${prop}\``).join(', ')}. Please remove them.`);
+      }
+      return null;
+    }
+  });
+}
+
+function HTMLElementType(props, propName, componentName, location, propFullName) {
+  if (process.env.NODE_ENV === 'production') {
+    return null;
+  }
+  const propValue = props[propName];
+  const safePropName = propFullName || propName;
+  if (propValue == null) {
+    return null;
+  }
+  if (propValue && propValue.nodeType !== 1) {
+    return new Error(`Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. ` + `Expected an HTMLElement.`);
+  }
+  return null;
+}
+
+const refType = PropTypes.oneOfType([PropTypes.func, PropTypes.object]);
+
+/**
+ * Safe chained function.
+ *
+ * Will only create a new function if needed,
+ * otherwise will pass back existing functions or null.
+ */
+function createChainedFunction(...funcs) {
+  return funcs.reduce((acc, func) => {
+    if (func == null) {
+      return acc;
+    }
+    return function chainedFunction(...args) {
+      acc.apply(this, args);
+      func.apply(this, args);
+    };
+  }, () => {});
+}
+
+// Corresponds to 10 frames at 60 Hz.
+// A few bytes payload overhead when lodash/debounce is ~3 kB and debounce ~300 B.
+function debounce$3(func, wait = 166) {
+  let timeout;
+  function debounced(...args) {
+    const later = () => {
+      // @ts-ignore
+      func.apply(this, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  }
+  debounced.clear = () => {
+    clearTimeout(timeout);
+  };
+  return debounced;
+}
+
+function ownerDocument(node) {
+  return node && node.ownerDocument || document;
+}
+
+function ownerWindow(node) {
+  const doc = ownerDocument(node);
+  return doc.defaultView || window;
+}
 
 /**
  * TODO v5: consider making it private
@@ -7126,13 +7289,62 @@ function setRef(ref, value) {
   }
 }
 
+let globalId = 0;
+function useGlobalId(idOverride) {
+  const [defaultId, setDefaultId] = React$1.useState(idOverride);
+  const id = idOverride || defaultId;
+  React$1.useEffect(() => {
+    if (defaultId == null) {
+      // Fallback to this default id when possible.
+      // Use the incrementing value for client-side rendering only.
+      // We can't use it server-side.
+      // If you want to use random values please consider the Birthday Problem: https://en.wikipedia.org/wiki/Birthday_problem
+      globalId += 1;
+      setDefaultId(`mui-${globalId}`);
+    }
+  }, [defaultId]);
+  return id;
+}
+
+// downstream bundlers may remove unnecessary concatenation, but won't remove toString call -- Workaround for https://github.com/webpack/webpack/issues/14814
+const maybeReactUseId = React$1['useId'.toString()];
+/**
+ *
+ * @example <div id={useId()} />
+ * @param idOverride
+ * @returns {string}
+ */
+function useId(idOverride) {
+  if (maybeReactUseId !== undefined) {
+    const reactId = maybeReactUseId();
+    return idOverride != null ? idOverride : reactId;
+  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- `React.useId` is invariant at runtime.
+  return useGlobalId(idOverride);
+}
+
+/**
+ * Inspired by https://github.com/facebook/react/issues/14099#issuecomment-440013892
+ * See RFC in https://github.com/reactjs/rfcs/pull/220
+ */
+
+function useEventCallback(fn) {
+  const ref = React$1.useRef(fn);
+  useEnhancedEffect(() => {
+    ref.current = fn;
+  });
+  return React$1.useRef((...args) =>
+  // @ts-expect-error hide `this`
+  (0, ref.current)(...args)).current;
+}
+
 function useForkRef(...refs) {
   /**
    * This will create a new function if the refs passed to this hook change and are all defined.
    * This means react will call the old forkRef with `null` and the new forkRef
    * with the ref. Cleanup naturally emerges from this behavior.
    */
-  return React.useMemo(() => {
+  return React$1.useMemo(() => {
     if (refs.every(ref => ref == null)) {
       return null;
     }
@@ -7144,6 +7356,66 @@ function useForkRef(...refs) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, refs);
 }
+
+// A change of the browser zoom change the scrollbar size.
+// Credit https://github.com/twbs/bootstrap/blob/488fd8afc535ca3a6ad4dc581f5e89217b6a36ac/js/src/util/scrollbar.js#L14-L18
+function getScrollbarSize(doc) {
+  // https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth#usage_notes
+  const documentWidth = doc.documentElement.clientWidth;
+  return Math.abs(window.innerWidth - documentWidth);
+}
+
+function getTypeByValue(value) {
+  const valueType = typeof value;
+  switch (valueType) {
+    case 'number':
+      if (Number.isNaN(value)) {
+        return 'NaN';
+      }
+      if (!Number.isFinite(value)) {
+        return 'Infinity';
+      }
+      if (value !== Math.floor(value)) {
+        return 'float';
+      }
+      return 'number';
+    case 'object':
+      if (value === null) {
+        return 'null';
+      }
+      return value.constructor.name;
+    default:
+      return valueType;
+  }
+}
+
+// IE 11 support
+function ponyfillIsInteger(x) {
+  // eslint-disable-next-line no-restricted-globals
+  return typeof x === 'number' && isFinite(x) && Math.floor(x) === x;
+}
+const isInteger = Number.isInteger || ponyfillIsInteger;
+function requiredInteger(props, propName, componentName, location) {
+  const propValue = props[propName];
+  if (propValue == null || !isInteger(propValue)) {
+    const propType = getTypeByValue(propValue);
+    return new RangeError(`Invalid ${location} \`${propName}\` of type \`${propType}\` supplied to \`${componentName}\`, expected \`integer\`.`);
+  }
+  return null;
+}
+function validator(props, propName, ...other) {
+  const propValue = props[propName];
+  if (propValue === undefined) {
+    return null;
+  }
+  return requiredInteger(props, propName, ...other);
+}
+function validatorNoop() {
+  return null;
+}
+validator.isRequired = requiredInteger;
+validatorNoop.isRequired = validatorNoop;
+var integerPropType = process.env.NODE_ENV === 'production' ? validatorNoop : validator;
 
 function composeClasses(slots, getUtilityClass, classes = undefined) {
   const output = {};
@@ -7167,7 +7439,181 @@ function composeClasses(slots, getUtilityClass, classes = undefined) {
   return output;
 }
 
-const PropsContext = /*#__PURE__*/React.createContext(undefined);
+/**
+ * Determines if a given element is a DOM element name (i.e. not a React component).
+ */
+function isHostComponent(element) {
+  return typeof element === 'string';
+}
+
+/**
+ * Type of the ownerState based on the type of an element it applies to.
+ * This resolves to the provided OwnerState for React components and `undefined` for host components.
+ * Falls back to `OwnerState | undefined` when the exact type can't be determined in development time.
+ */
+
+/**
+ * Appends the ownerState object to the props, merging with the existing one if necessary.
+ *
+ * @param elementType Type of the element that owns the `existingProps`. If the element is a DOM node or undefined, `ownerState` is not applied.
+ * @param otherProps Props of the element.
+ * @param ownerState
+ */
+function appendOwnerState(elementType, otherProps, ownerState) {
+  if (elementType === undefined || isHostComponent(elementType)) {
+    return otherProps;
+  }
+  return _extends$i({}, otherProps, {
+    ownerState: _extends$i({}, otherProps.ownerState, ownerState)
+  });
+}
+
+/**
+ * Extracts event handlers from a given object.
+ * A prop is considered an event handler if it is a function and its name starts with `on`.
+ *
+ * @param object An object to extract event handlers from.
+ * @param excludeKeys An array of keys to exclude from the returned object.
+ */
+function extractEventHandlers(object, excludeKeys = []) {
+  if (object === undefined) {
+    return {};
+  }
+  const result = {};
+  Object.keys(object).filter(prop => prop.match(/^on[A-Z]/) && typeof object[prop] === 'function' && !excludeKeys.includes(prop)).forEach(prop => {
+    result[prop] = object[prop];
+  });
+  return result;
+}
+
+/**
+ * Removes event handlers from the given object.
+ * A field is considered an event handler if it is a function with a name beginning with `on`.
+ *
+ * @param object Object to remove event handlers from.
+ * @returns Object with event handlers removed.
+ */
+function omitEventHandlers(object) {
+  if (object === undefined) {
+    return {};
+  }
+  const result = {};
+  Object.keys(object).filter(prop => !(prop.match(/^on[A-Z]/) && typeof object[prop] === 'function')).forEach(prop => {
+    result[prop] = object[prop];
+  });
+  return result;
+}
+
+/**
+ * Merges the slot component internal props (usually coming from a hook)
+ * with the externally provided ones.
+ *
+ * The merge order is (the latter overrides the former):
+ * 1. The internal props (specified as a getter function to work with get*Props hook result)
+ * 2. Additional props (specified internally on a Base UI component)
+ * 3. External props specified on the owner component. These should only be used on a root slot.
+ * 4. External props specified in the `slotProps.*` prop.
+ * 5. The `className` prop - combined from all the above.
+ * @param parameters
+ * @returns
+ */
+function mergeSlotProps(parameters) {
+  const {
+    getSlotProps,
+    additionalProps,
+    externalSlotProps,
+    externalForwardedProps,
+    className
+  } = parameters;
+  if (!getSlotProps) {
+    // The simpler case - getSlotProps is not defined, so no internal event handlers are defined,
+    // so we can simply merge all the props without having to worry about extracting event handlers.
+    const joinedClasses = clsx(additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
+    const mergedStyle = _extends$i({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+    const props = _extends$i({}, additionalProps, externalForwardedProps, externalSlotProps);
+    if (joinedClasses.length > 0) {
+      props.className = joinedClasses;
+    }
+    if (Object.keys(mergedStyle).length > 0) {
+      props.style = mergedStyle;
+    }
+    return {
+      props,
+      internalRef: undefined
+    };
+  }
+
+  // In this case, getSlotProps is responsible for calling the external event handlers.
+  // We don't need to include them in the merged props because of this.
+
+  const eventHandlers = extractEventHandlers(_extends$i({}, externalForwardedProps, externalSlotProps));
+  const componentsPropsWithoutEventHandlers = omitEventHandlers(externalSlotProps);
+  const otherPropsWithoutEventHandlers = omitEventHandlers(externalForwardedProps);
+  const internalSlotProps = getSlotProps(eventHandlers);
+
+  // The order of classes is important here.
+  // Emotion (that we use in libraries consuming Base UI) depends on this order
+  // to properly override style. It requires the most important classes to be last
+  // (see https://github.com/mui/material-ui/pull/33205) for the related discussion.
+  const joinedClasses = clsx(internalSlotProps == null ? void 0 : internalSlotProps.className, additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
+  const mergedStyle = _extends$i({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
+  const props = _extends$i({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
+  if (joinedClasses.length > 0) {
+    props.className = joinedClasses;
+  }
+  if (Object.keys(mergedStyle).length > 0) {
+    props.style = mergedStyle;
+  }
+  return {
+    props,
+    internalRef: internalSlotProps.ref
+  };
+}
+
+/**
+ * If `componentProps` is a function, calls it with the provided `ownerState`.
+ * Otherwise, just returns `componentProps`.
+ */
+function resolveComponentProps(componentProps, ownerState, slotState) {
+  if (typeof componentProps === 'function') {
+    return componentProps(ownerState, slotState);
+  }
+  return componentProps;
+}
+
+const _excluded$f = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
+/**
+ * @ignore - do not document.
+ * Builds the props to be passed into the slot of an unstyled component.
+ * It merges the internal props of the component with the ones supplied by the user, allowing to customize the behavior.
+ * If the slot component is not a host component, it also merges in the `ownerState`.
+ *
+ * @param parameters.getSlotProps - A function that returns the props to be passed to the slot component.
+ */
+function useSlotProps(parameters) {
+  var _parameters$additiona;
+  const {
+      elementType,
+      externalSlotProps,
+      ownerState,
+      skipResolvingSlotProps = false
+    } = parameters,
+    rest = _objectWithoutPropertiesLoose$1(parameters, _excluded$f);
+  const resolvedComponentsProps = skipResolvingSlotProps ? {} : resolveComponentProps(externalSlotProps, ownerState);
+  const {
+    props: mergedProps,
+    internalRef
+  } = mergeSlotProps(_extends$i({}, rest, {
+    externalSlotProps: resolvedComponentsProps
+  }));
+  const ref = useForkRef(internalRef, resolvedComponentsProps == null ? void 0 : resolvedComponentsProps.ref, (_parameters$additiona = parameters.additionalProps) == null ? void 0 : _parameters$additiona.ref);
+  const props = appendOwnerState(elementType, _extends$i({}, mergedProps, {
+    ref
+  }), ownerState);
+  return props;
+}
+
+const PropsContext = /*#__PURE__*/React$1.createContext(undefined);
 process.env.NODE_ENV !== "production" ? {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
   // │ These PropTypes are generated from the TypeScript type definitions. │
@@ -7206,7 +7652,7 @@ function useDefaultProps$1({
   props,
   name
 }) {
-  const ctx = React.useContext(PropsContext);
+  const ctx = React$1.useContext(PropsContext);
   return getThemeProps({
     props,
     name,
@@ -7216,22 +7662,22 @@ function useDefaultProps$1({
   });
 }
 
-function _typeof$1(o) {
+function _typeof$2(o) {
   "@babel/helpers - typeof";
 
-  return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+  return _typeof$2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
     return typeof o;
   } : function (o) {
     return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, _typeof$1(o);
+  }, _typeof$2(o);
 }
 
 function toPrimitive(t, r) {
-  if ("object" != _typeof$1(t) || !t) return t;
+  if ("object" != _typeof$2(t) || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
     var i = e.call(t, r || "default");
-    if ("object" != _typeof$1(i)) return i;
+    if ("object" != _typeof$2(i)) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
   return ("string" === r ? String : Number)(t);
@@ -7239,10 +7685,10 @@ function toPrimitive(t, r) {
 
 function toPropertyKey(t) {
   var i = toPrimitive(t, "string");
-  return "symbol" == _typeof$1(i) ? i : i + "";
+  return "symbol" == _typeof$2(i) ? i : i + "";
 }
 
-const _excluded$7 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
+const _excluded$e = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
 const defaultTheme$1 = createTheme$2();
 // widening Theme to any so that the consumer can own the theme structure.
 const defaultCreateStyledComponent = styled$1('div', {
@@ -7266,11 +7712,11 @@ function useThemePropsDefault(props) {
  * [1,0,2,0,3]
  */
 function joinChildren(children, separator) {
-  const childrenArray = React.Children.toArray(children).filter(Boolean);
+  const childrenArray = React$1.Children.toArray(children).filter(Boolean);
   return childrenArray.reduce((output, child, index) => {
     output.push(child);
     if (index < childrenArray.length - 1) {
-      output.push( /*#__PURE__*/React.cloneElement(separator, {
+      output.push( /*#__PURE__*/React$1.cloneElement(separator, {
         key: `separator-${index}`
       }));
     }
@@ -7289,7 +7735,7 @@ const style = ({
   ownerState,
   theme
 }) => {
-  let styles = _extends$a({
+  let styles = _extends$i({
     display: 'flex',
     flexDirection: 'column'
   }, handleBreakpoints({
@@ -7328,7 +7774,7 @@ const style = ({
     const styleFromPropValue = (propValue, breakpoint) => {
       if (ownerState.useFlexGap) {
         return {
-          gap: getValue(transformer, propValue)
+          gap: getValue$1(transformer, propValue)
         };
       }
       return {
@@ -7338,7 +7784,7 @@ const style = ({
           margin: 0
         },
         '& > :not(style) ~ :not(style)': {
-          [`margin${getSideFromDirection(breakpoint ? directionValues[breakpoint] : ownerState.direction)}`]: getValue(transformer, propValue)
+          [`margin${getSideFromDirection(breakpoint ? directionValues[breakpoint] : ownerState.direction)}`]: getValue$1(transformer, propValue)
         }
       };
     };
@@ -7363,7 +7809,7 @@ function createStack(options = {}) {
     return composeClasses(slots, slot => generateUtilityClass(componentName, slot), {});
   };
   const StackRoot = createStyledComponent(style);
-  const Stack = /*#__PURE__*/React.forwardRef(function Grid(inProps, ref) {
+  const Stack = /*#__PURE__*/React$1.forwardRef(function Grid(inProps, ref) {
     const themeProps = useThemeProps(inProps);
     const props = extendSxProp(themeProps); // `color` type conflicts with html color attribute.
     const {
@@ -7375,14 +7821,14 @@ function createStack(options = {}) {
         className,
         useFlexGap = false
       } = props,
-      other = _objectWithoutPropertiesLoose(props, _excluded$7);
+      other = _objectWithoutPropertiesLoose$1(props, _excluded$e);
     const ownerState = {
       direction,
       spacing,
       useFlexGap
     };
     const classes = useUtilityClasses();
-    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$a({
+    return /*#__PURE__*/jsxRuntimeExports.jsx(StackRoot, _extends$i({
       as: component,
       ownerState: ownerState,
       ref: ref,
@@ -7413,8 +7859,8 @@ function createStack(options = {}) {
  *
  * - [Stack API](https://mui.com/system/api/stack/)
  */
-const Stack = createStack();
-process.env.NODE_ENV !== "production" ? Stack.propTypes /* remove-proptypes */ = {
+const Stack$1 = createStack();
+process.env.NODE_ENV !== "production" ? Stack$1.propTypes /* remove-proptypes */ = {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
   // │ These PropTypes are generated from the TypeScript type definitions. │
   // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
@@ -7459,7 +7905,7 @@ process.env.NODE_ENV !== "production" ? Stack.propTypes /* remove-proptypes */ =
   useFlexGap: PropTypes.bool
 } : void 0;
 
-function _defineProperty(e, r, t) {
+function _defineProperty$1(e, r, t) {
   return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
     value: t,
     enumerable: !0,
@@ -7551,8 +7997,8 @@ var PALETTE = {
   }
 };
 
-function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$6(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$5(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$6(Object(t), !0).forEach(function (r) { _defineProperty$1(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var DEFAULT_FONT_WEIGHT = 360;
 var BOLD_FONT_WEIGHT = 500;
 var getMaxLinesStyle = function getMaxLinesStyle(n) {
@@ -7591,7 +8037,7 @@ var LINE_HEIGHTS = {
   tiny: 11
 };
 var DEFAULT_BOLD = ['h0', 'h1', 'h2', 'h3', 'h4', 'h5'];
-function Typography(props) {
+function Typography$1(props) {
   var _props$variant, _props$variant2;
   return jsxRuntimeExports.jsx(Box, {
     color: props.color || PALETTE.font.dark,
@@ -7601,7 +8047,7 @@ function Typography(props) {
     maxWidth: "fit-content",
     onClick: props.onClick,
     //@ts-expect-error
-    sx: _objectSpread$2(_objectSpread$2(_objectSpread$2(_objectSpread$2(_objectSpread$2({}, props.sx), props.faded ? {
+    sx: _objectSpread$5(_objectSpread$5(_objectSpread$5(_objectSpread$5(_objectSpread$5({}, props.sx), props.faded ? {
       opacity: 0.6
     } : null), props.noWrap ? {
       whiteSpace: 'nowrap',
@@ -7624,8 +8070,8 @@ function Typography(props) {
 }
 
 var _templateObject$3;
-function ownKeys$1(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$5(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$5(Object(t), !0).forEach(function (r) { _defineProperty$1(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var spin = keyframes(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteral(["\nfrom {\n  transform: rotate(0deg);\n}\nto {\n  transform: rotate(180deg);\n}\n"])));
 var HEIGHTS = {
   large: 52,
@@ -7736,15 +8182,15 @@ function UrsorButton(props) {
   var variant = (_props$variant = props.variant) !== null && _props$variant !== void 0 ? _props$variant : 'primary';
   var size = (_props$size = props.size) !== null && _props$size !== void 0 ? _props$size : 'medium';
   var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray$1(_useState, 2),
     hovering = _useState2[0],
     setHovering = _useState2[1];
   var _useState3 = useState(false),
-    _useState4 = _slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray$1(_useState3, 2),
     pressed = _useState4[0],
     setPressed = _useState4[1];
   var _useState5 = useState('enabled'),
-    _useState6 = _slicedToArray(_useState5, 2),
+    _useState6 = _slicedToArray$1(_useState5, 2),
     state = _useState6[0],
     setState = _useState6[1];
   useEffect(function () {
@@ -7756,7 +8202,7 @@ function UrsorButton(props) {
       setState('enabled');
     }
   }, [hovering, pressed]);
-  return jsxRuntimeExports.jsxs(Stack, {
+  return jsxRuntimeExports.jsxs(Stack$1, {
     alignItems: "center",
     bgcolor: (_BACKGROUND_COLORS$mo = BACKGROUND_COLORS[mode][variant]) === null || _BACKGROUND_COLORS$mo === void 0 ? void 0 : _BACKGROUND_COLORS$mo[state],
     border: "2px solid ".concat(props.borderColor || ((_BORDER_COLORS$mode$v = BORDER_COLORS[mode][variant]) === null || _BORDER_COLORS$mode$v === void 0 ? void 0 : _BORDER_COLORS$mode$v[state])),
@@ -7805,11 +8251,11 @@ function UrsorButton(props) {
     children: [props.startIcon ? jsxRuntimeExports.jsx(props.startIcon, {
       height: props.iconSize || ICON_SIZES[props.size || 'medium'],
       width: props.iconSize || ICON_SIZES[props.size || 'medium']
-    }) : null, jsxRuntimeExports.jsx(Typography, {
+    }) : null, jsxRuntimeExports.jsx(Typography$1, {
       bold: true,
       color: (_ref = (_props$fontColor = props.fontColor) !== null && _props$fontColor !== void 0 ? _props$fontColor : (_FONT_COLORS$mode$var2 = FONT_COLORS[mode][variant]) === null || _FONT_COLORS$mode$var2 === void 0 ? void 0 : _FONT_COLORS$mode$var2[state]) !== null && _ref !== void 0 ? _ref : PALETTE.font.dark,
       noWrap: true,
-      sx: _objectSpread$1({
+      sx: _objectSpread$4({
         transition: '0.2s',
         paddingY: props.paddingY
       }, props.fontSize ? {
@@ -7951,7 +8397,7 @@ const grey = {
 var THEME_ID = '$$material';
 
 function createMixins(breakpoints, mixins) {
-  return _extends$a({
+  return _extends$i({
     toolbar: {
       minHeight: 56,
       [breakpoints.up('xs')]: {
@@ -7989,7 +8435,7 @@ var _interopRequireDefault$1 = interopRequireDefaultExports;
 Object.defineProperty(colorManipulator, "__esModule", {
   value: true
 });
-colorManipulator.alpha = alpha;
+var alpha_1 = colorManipulator.alpha = alpha;
 colorManipulator.blend = blend;
 colorManipulator.colorChannel = void 0;
 var darken_1 = colorManipulator.darken = darken;
@@ -8356,7 +8802,7 @@ function blend(background, overlay, opacity, gamma = 1.0) {
   });
 }
 
-const _excluded$6 = ["mode", "contrastThreshold", "tonalOffset"];
+const _excluded$d = ["mode", "contrastThreshold", "tonalOffset"];
 const light = {
   // The colors used to style the text.
   text: {
@@ -8525,7 +8971,7 @@ function createPalette(palette) {
       contrastThreshold = 3,
       tonalOffset = 0.2
     } = palette,
-    other = _objectWithoutPropertiesLoose(palette, _excluded$6);
+    other = _objectWithoutPropertiesLoose$1(palette, _excluded$d);
   const primary = palette.primary || getDefaultPrimary(mode);
   const secondary = palette.secondary || getDefaultSecondary(mode);
   const error = palette.error || getDefaultError(mode);
@@ -8553,7 +8999,7 @@ function createPalette(palette) {
     lightShade = 300,
     darkShade = 700
   }) => {
-    color = _extends$a({}, color);
+    color = _extends$i({}, color);
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
     }
@@ -8593,9 +9039,9 @@ const theme2 = createTheme({ palette: {
       console.error(`MUI: The palette mode \`${mode}\` is not supported.`);
     }
   }
-  const paletteOutput = deepmerge$1(_extends$a({
+  const paletteOutput = deepmerge$1(_extends$i({
     // A collection of common colors.
-    common: _extends$a({}, common),
+    common: _extends$i({}, common),
     // prevent mutable object.
     // The palette mode, can be light or dark.
     mode,
@@ -8649,7 +9095,7 @@ const theme2 = createTheme({ palette: {
   return paletteOutput;
 }
 
-const _excluded$5 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+const _excluded$c = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
 function round$1(value) {
   return Math.round(value * 1e5) / 1e5;
 }
@@ -8680,7 +9126,7 @@ function createTypography(palette, typography) {
       allVariants,
       pxToRem: pxToRem2
     } = _ref,
-    other = _objectWithoutPropertiesLoose(_ref, _excluded$5);
+    other = _objectWithoutPropertiesLoose$1(_ref, _excluded$c);
   if (process.env.NODE_ENV !== 'production') {
     if (typeof fontSize !== 'number') {
       console.error('MUI: `fontSize` is required to be a number.');
@@ -8691,7 +9137,7 @@ function createTypography(palette, typography) {
   }
   const coef = fontSize / 14;
   const pxToRem = pxToRem2 || (size => `${size / htmlFontSize * coef}rem`);
-  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$a({
+  const buildVariant = (fontWeight, size, lineHeight, letterSpacing, casing) => _extends$i({
     fontFamily,
     fontWeight,
     fontSize: pxToRem(size),
@@ -8723,7 +9169,7 @@ function createTypography(palette, typography) {
       letterSpacing: 'inherit'
     }
   };
-  return deepmerge$1(_extends$a({
+  return deepmerge$1(_extends$i({
     htmlFontSize,
     pxToRem,
     fontFamily,
@@ -8747,7 +9193,7 @@ function createShadow(...px) {
 // Values from https://github.com/material-components/material-components-web/blob/be8747f94574669cb5e7add1a7c54fa41a89cec7/packages/mdc-elevation/_variables.scss
 const shadows = ['none', createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
 
-const _excluded$4 = ["duration", "easing", "delay"];
+const _excluded$b = ["duration", "easing", "delay"];
 // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.
 const easing = {
@@ -8790,15 +9236,15 @@ function getAutoHeightDuration(height) {
   return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
 }
 function createTransitions(inputTransitions) {
-  const mergedEasing = _extends$a({}, easing, inputTransitions.easing);
-  const mergedDuration = _extends$a({}, duration, inputTransitions.duration);
+  const mergedEasing = _extends$i({}, easing, inputTransitions.easing);
+  const mergedDuration = _extends$i({}, duration, inputTransitions.duration);
   const create = (props = ['all'], options = {}) => {
     const {
         duration: durationOption = mergedDuration.standard,
         easing: easingOption = mergedEasing.easeInOut,
         delay = 0
       } = options,
-      other = _objectWithoutPropertiesLoose(options, _excluded$4);
+      other = _objectWithoutPropertiesLoose$1(options, _excluded$b);
     if (process.env.NODE_ENV !== 'production') {
       const isString = value => typeof value === 'string';
       // IE11 support, replace with Number.isNaN
@@ -8825,7 +9271,7 @@ function createTransitions(inputTransitions) {
     }
     return (Array.isArray(props) ? props : [props]).map(animatedProp => `${animatedProp} ${typeof durationOption === 'string' ? durationOption : formatMs(durationOption)} ${easingOption} ${typeof delay === 'string' ? delay : formatMs(delay)}`).join(',');
   };
-  return _extends$a({
+  return _extends$i({
     getAutoHeightDuration,
     create
   }, inputTransitions, {
@@ -8847,7 +9293,7 @@ const zIndex = {
   tooltip: 1500
 };
 
-const _excluded$3 = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+const _excluded$a = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
 function createTheme(options = {}, ...args) {
   const {
       mixins: mixinsInput = {},
@@ -8855,7 +9301,7 @@ function createTheme(options = {}, ...args) {
       transitions: transitionsInput = {},
       typography: typographyInput = {}
     } = options,
-    other = _objectWithoutPropertiesLoose(options, _excluded$3);
+    other = _objectWithoutPropertiesLoose$1(options, _excluded$a);
   if (options.vars) {
     throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`vars\` is a private field used for CSS variables support.
 Please use another name.` : formatMuiErrorMessage$1(18));
@@ -8869,7 +9315,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     shadows: shadows.slice(),
     typography: createTypography(palette, typographyInput),
     transitions: createTransitions(transitionsInput),
-    zIndex: _extends$a({}, zIndex)
+    zIndex: _extends$i({}, zIndex)
   });
   muiTheme = deepmerge$1(muiTheme, other);
   muiTheme = args.reduce((acc, argument) => deepmerge$1(acc, argument), muiTheme);
@@ -8903,7 +9349,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
       }
     });
   }
-  muiTheme.unstable_sxConfig = _extends$a({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _extends$i({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx$1({
       sx: props,
@@ -8919,19 +9365,19 @@ function useTheme() {
   const theme = useTheme$1(defaultTheme);
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useDebugValue(theme);
+    React$1.useDebugValue(theme);
   }
   return theme[THEME_ID] || theme;
 }
 
 var createStyled$1 = {};
 
-var _extends$9 = {exports: {}};
+var _extends$h = {exports: {}};
 
 var hasRequired_extends;
 
 function require_extends () {
-	if (hasRequired_extends) return _extends$9.exports;
+	if (hasRequired_extends) return _extends$h.exports;
 	hasRequired_extends = 1;
 	(function (module) {
 		function _extends() {
@@ -8944,8 +9390,8 @@ function require_extends () {
 		  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _extends.apply(null, arguments);
 		}
 		module.exports = _extends, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-	} (_extends$9));
-	return _extends$9.exports;
+	} (_extends$h));
+	return _extends$h.exports;
 }
 
 var objectWithoutPropertiesLoose = {exports: {}};
@@ -8997,13 +9443,13 @@ var _capitalize = _interopRequireDefault(require$$5);
 var _getDisplayName = _interopRequireDefault(require$$6);
 var _createTheme = _interopRequireDefault(require$$7);
 var _styleFunctionSx = _interopRequireDefault(require$$8);
-const _excluded$2 = ["ownerState"],
+const _excluded$9 = ["ownerState"],
   _excluded2 = ["variants"],
   _excluded3 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 /* eslint-disable no-underscore-dangle */
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function isEmpty(obj) {
+function isEmpty$1(obj) {
   return Object.keys(obj).length === 0;
 }
 
@@ -9032,7 +9478,7 @@ function resolveTheme({
   theme,
   themeId
 }) {
-  return isEmpty(theme) ? defaultTheme : theme[themeId] || theme;
+  return isEmpty$1(theme) ? defaultTheme : theme[themeId] || theme;
 }
 function defaultOverridesResolver(slot) {
   if (!slot) {
@@ -9044,7 +9490,7 @@ function processStyleArg(callableStyle, _ref) {
   let {
       ownerState
     } = _ref,
-    props = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded$2);
+    props = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded$9);
   const resolvedStylesArg = typeof callableStyle === 'function' ? callableStyle((0, _extends2.default)({
     ownerState
   }, props)) : callableStyle;
@@ -9245,6 +9691,17 @@ const styled = _default({
   rootShouldForwardProp
 });
 
+// Inspired by https://github.com/material-components/material-components-ios/blob/bca36107405594d5b7b16265a5b0ed698f85a5ee/components/Elevation/src/UIColor%2BMaterialElevation.m#L61
+const getOverlayAlpha = elevation => {
+  let alphaValue;
+  if (elevation < 1) {
+    alphaValue = 5.11916 * elevation ** 2;
+  } else {
+    alphaValue = 4.5 * Math.log(elevation + 1) + 2;
+  }
+  return (alphaValue / 100).toFixed(2);
+};
+
 process.env.NODE_ENV !== "production" ? {
   // ┌────────────────────────────── Warning ──────────────────────────────┐
   // │ These PropTypes are generated from the TypeScript type definitions. │
@@ -9263,14 +9720,14 @@ function useDefaultProps(params) {
   return useDefaultProps$1(params);
 }
 
-function _setPrototypeOf(t, e) {
-  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
+function _setPrototypeOf$1(t, e) {
+  return _setPrototypeOf$1 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
     return t.__proto__ = e, t;
-  }, _setPrototypeOf(t, e);
+  }, _setPrototypeOf$1(t, e);
 }
 
 function _inheritsLoose(t, o) {
-  t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o);
+  t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf$1(t, o);
 }
 
 var config = {
@@ -9295,7 +9752,7 @@ process.env.NODE_ENV !== 'production' ? PropTypes.oneOfType([PropTypes.string, P
   exitActive: PropTypes.string
 })]) : null;
 
-var TransitionGroupContext = React__default.createContext(null);
+var TransitionGroupContext = React__default$1.createContext(null);
 
 var forceReflow = function forceReflow(node) {
   return node.scrollTop;
@@ -9692,19 +10149,19 @@ var Transition = /*#__PURE__*/function (_React$Component) {
         _this$props.onExiting;
         _this$props.onExited;
         _this$props.nodeRef;
-        var childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+        var childProps = _objectWithoutPropertiesLoose$1(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
 
     return (
       /*#__PURE__*/
       // allows for nested Transitions
-      React__default.createElement(TransitionGroupContext.Provider, {
+      React__default$1.createElement(TransitionGroupContext.Provider, {
         value: null
-      }, typeof children === 'function' ? children(status, childProps) : React__default.cloneElement(React__default.Children.only(children), childProps))
+      }, typeof children === 'function' ? children(status, childProps) : React__default$1.cloneElement(React__default$1.Children.only(children), childProps))
     );
   };
 
   return Transition;
-}(React__default.Component);
+}(React__default$1.Component);
 
 Transition.contextType = TransitionGroupContext;
 Transition.propTypes = process.env.NODE_ENV !== "production" ? {
@@ -9931,6 +10388,330 @@ function getTransitionProps(props, options) {
     delay: style.transitionDelay
   };
 }
+
+function getPaperUtilityClass(slot) {
+  return generateUtilityClass('MuiPaper', slot);
+}
+generateUtilityClasses('MuiPaper', ['root', 'rounded', 'outlined', 'elevation', 'elevation0', 'elevation1', 'elevation2', 'elevation3', 'elevation4', 'elevation5', 'elevation6', 'elevation7', 'elevation8', 'elevation9', 'elevation10', 'elevation11', 'elevation12', 'elevation13', 'elevation14', 'elevation15', 'elevation16', 'elevation17', 'elevation18', 'elevation19', 'elevation20', 'elevation21', 'elevation22', 'elevation23', 'elevation24']);
+
+const _excluded$8 = ["className", "component", "elevation", "square", "variant"];
+const useUtilityClasses$6 = ownerState => {
+  const {
+    square,
+    elevation,
+    variant,
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root', variant, !square && 'rounded', variant === 'elevation' && `elevation${elevation}`]
+  };
+  return composeClasses(slots, getPaperUtilityClass, classes);
+};
+const PaperRoot = styled('div', {
+  name: 'MuiPaper',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant], !ownerState.square && styles.rounded, ownerState.variant === 'elevation' && styles[`elevation${ownerState.elevation}`]];
+  }
+})(({
+  theme,
+  ownerState
+}) => {
+  var _theme$vars$overlays;
+  return _extends$i({
+    backgroundColor: (theme.vars || theme).palette.background.paper,
+    color: (theme.vars || theme).palette.text.primary,
+    transition: theme.transitions.create('box-shadow')
+  }, !ownerState.square && {
+    borderRadius: theme.shape.borderRadius
+  }, ownerState.variant === 'outlined' && {
+    border: `1px solid ${(theme.vars || theme).palette.divider}`
+  }, ownerState.variant === 'elevation' && _extends$i({
+    boxShadow: (theme.vars || theme).shadows[ownerState.elevation]
+  }, !theme.vars && theme.palette.mode === 'dark' && {
+    backgroundImage: `linear-gradient(${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))}, ${alpha_1('#fff', getOverlayAlpha(ownerState.elevation))})`
+  }, theme.vars && {
+    backgroundImage: (_theme$vars$overlays = theme.vars.overlays) == null ? void 0 : _theme$vars$overlays[ownerState.elevation]
+  }));
+});
+const Paper = /*#__PURE__*/React$1.forwardRef(function Paper(inProps, ref) {
+  const props = useDefaultProps({
+    props: inProps,
+    name: 'MuiPaper'
+  });
+  const {
+      className,
+      component = 'div',
+      elevation = 1,
+      square = false,
+      variant = 'elevation'
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$8);
+  const ownerState = _extends$i({}, props, {
+    component,
+    elevation,
+    square,
+    variant
+  });
+  const classes = useUtilityClasses$6(ownerState);
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const theme = useTheme();
+    if (theme.shadows[elevation] === undefined) {
+      console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join('\n'));
+    }
+  }
+  return /*#__PURE__*/jsxRuntimeExports.jsx(PaperRoot, _extends$i({
+    as: component,
+    ownerState: ownerState,
+    className: clsx(classes.root, className),
+    ref: ref
+  }, other));
+});
+process.env.NODE_ENV !== "production" ? Paper.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: PropTypes.object,
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
+  /**
+   * Shadow depth, corresponds to `dp` in the spec.
+   * It accepts values between 0 and 24 inclusive.
+   * @default 1
+   */
+  elevation: chainPropTypes(integerPropType, props => {
+    const {
+      elevation,
+      variant
+    } = props;
+    if (elevation > 0 && variant === 'outlined') {
+      return new Error(`MUI: Combining \`elevation={${elevation}}\` with \`variant="${variant}"\` has no effect. Either use \`elevation={0}\` or use a different \`variant\`.`);
+    }
+    return null;
+  }),
+  /**
+   * If `true`, rounded corners are disabled.
+   * @default false
+   */
+  square: PropTypes.bool,
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+  /**
+   * The variant to use.
+   * @default 'elevation'
+   */
+  variant: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['elevation', 'outlined']), PropTypes.string])
+} : void 0;
+
+function getTypographyUtilityClass(slot) {
+  return generateUtilityClass('MuiTypography', slot);
+}
+generateUtilityClasses('MuiTypography', ['root', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'inherit', 'button', 'caption', 'overline', 'alignLeft', 'alignRight', 'alignCenter', 'alignJustify', 'noWrap', 'gutterBottom', 'paragraph']);
+
+const _excluded$7 = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
+const useUtilityClasses$5 = ownerState => {
+  const {
+    align,
+    gutterBottom,
+    noWrap,
+    paragraph,
+    variant,
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root', variant, ownerState.align !== 'inherit' && `align${capitalize$1(align)}`, gutterBottom && 'gutterBottom', noWrap && 'noWrap', paragraph && 'paragraph']
+  };
+  return composeClasses(slots, getTypographyUtilityClass, classes);
+};
+const TypographyRoot = styled('span', {
+  name: 'MuiTypography',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, ownerState.variant && styles[ownerState.variant], ownerState.align !== 'inherit' && styles[`align${capitalize$1(ownerState.align)}`], ownerState.noWrap && styles.noWrap, ownerState.gutterBottom && styles.gutterBottom, ownerState.paragraph && styles.paragraph];
+  }
+})(({
+  theme,
+  ownerState
+}) => _extends$i({
+  margin: 0
+}, ownerState.variant === 'inherit' && {
+  // Some elements, like <button> on Chrome have default font that doesn't inherit, reset this.
+  font: 'inherit'
+}, ownerState.variant !== 'inherit' && theme.typography[ownerState.variant], ownerState.align !== 'inherit' && {
+  textAlign: ownerState.align
+}, ownerState.noWrap && {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap'
+}, ownerState.gutterBottom && {
+  marginBottom: '0.35em'
+}, ownerState.paragraph && {
+  marginBottom: 16
+}));
+const defaultVariantMapping = {
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+  h6: 'h6',
+  subtitle1: 'h6',
+  subtitle2: 'h6',
+  body1: 'p',
+  body2: 'p',
+  inherit: 'p'
+};
+
+// TODO v6: deprecate these color values in v5.x and remove the transformation in v6
+const colorTransformations = {
+  primary: 'primary.main',
+  textPrimary: 'text.primary',
+  secondary: 'secondary.main',
+  textSecondary: 'text.secondary',
+  error: 'error.main'
+};
+const transformDeprecatedColors = color => {
+  return colorTransformations[color] || color;
+};
+const Typography = /*#__PURE__*/React$1.forwardRef(function Typography(inProps, ref) {
+  const themeProps = useDefaultProps({
+    props: inProps,
+    name: 'MuiTypography'
+  });
+  const color = transformDeprecatedColors(themeProps.color);
+  const props = extendSxProp(_extends$i({}, themeProps, {
+    color
+  }));
+  const {
+      align = 'inherit',
+      className,
+      component,
+      gutterBottom = false,
+      noWrap = false,
+      paragraph = false,
+      variant = 'body1',
+      variantMapping = defaultVariantMapping
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$7);
+  const ownerState = _extends$i({}, props, {
+    align,
+    color,
+    className,
+    component,
+    gutterBottom,
+    noWrap,
+    paragraph,
+    variant,
+    variantMapping
+  });
+  const Component = component || (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) || 'span';
+  const classes = useUtilityClasses$5(ownerState);
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TypographyRoot, _extends$i({
+    as: Component,
+    ref: ref,
+    ownerState: ownerState,
+    className: clsx(classes.root, className)
+  }, other));
+});
+process.env.NODE_ENV !== "production" ? Typography.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * Set the text-align on the component.
+   * @default 'inherit'
+   */
+  align: PropTypes.oneOf(['center', 'inherit', 'justify', 'left', 'right']),
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: PropTypes.object,
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
+  /**
+   * If `true`, the text will have a bottom margin.
+   * @default false
+   */
+  gutterBottom: PropTypes.bool,
+  /**
+   * If `true`, the text will not wrap, but instead will truncate with a text overflow ellipsis.
+   *
+   * Note that text overflow can only happen with block or inline-block level elements
+   * (the element needs to have a width in order to overflow).
+   * @default false
+   */
+  noWrap: PropTypes.bool,
+  /**
+   * If `true`, the element will be a paragraph element.
+   * @default false
+   */
+  paragraph: PropTypes.bool,
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+  /**
+   * Applies the theme typography styles.
+   * @default 'body1'
+   */
+  variant: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['body1', 'body2', 'button', 'caption', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'inherit', 'overline', 'subtitle1', 'subtitle2']), PropTypes.string]),
+  /**
+   * The component maps the variant prop to a range of different HTML element types.
+   * For instance, subtitle1 to `<h6>`.
+   * If you wish to change that mapping, you can provide your own.
+   * Alternatively, you can use the `component` prop.
+   * @default {
+   *   h1: 'h1',
+   *   h2: 'h2',
+   *   h3: 'h3',
+   *   h4: 'h4',
+   *   h5: 'h5',
+   *   h6: 'h6',
+   *   subtitle1: 'h6',
+   *   subtitle2: 'h6',
+   *   body1: 'p',
+   *   body2: 'p',
+   *   inherit: 'p',
+   * }
+   */
+  variantMapping: PropTypes /* @typescript-to-proptypes-ignore */.object
+} : void 0;
 
 var top = 'top';
 var bottom = 'bottom';
@@ -11723,7 +12504,1067 @@ var createPopper = /*#__PURE__*/popperGenerator({
   defaultModifiers: defaultModifiers
 }); // eslint-disable-next-line import/no-unused-modules
 
-const _excluded$1 = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+function getContainer$1(container) {
+  return typeof container === 'function' ? container() : container;
+}
+
+/**
+ * Portals provide a first-class way to render children into a DOM node
+ * that exists outside the DOM hierarchy of the parent component.
+ *
+ * Demos:
+ *
+ * - [Portal](https://mui.com/material-ui/react-portal/)
+ *
+ * API:
+ *
+ * - [Portal API](https://mui.com/material-ui/api/portal/)
+ */
+const Portal = /*#__PURE__*/React$1.forwardRef(function Portal(props, forwardedRef) {
+  const {
+    children,
+    container,
+    disablePortal = false
+  } = props;
+  const [mountNode, setMountNode] = React$1.useState(null);
+  // @ts-expect-error TODO upstream fix
+  const handleRef = useForkRef( /*#__PURE__*/React$1.isValidElement(children) ? children.ref : null, forwardedRef);
+  useEnhancedEffect(() => {
+    if (!disablePortal) {
+      setMountNode(getContainer$1(container) || document.body);
+    }
+  }, [container, disablePortal]);
+  useEnhancedEffect(() => {
+    if (mountNode && !disablePortal) {
+      setRef(forwardedRef, mountNode);
+      return () => {
+        setRef(forwardedRef, null);
+      };
+    }
+    return undefined;
+  }, [forwardedRef, mountNode, disablePortal]);
+  if (disablePortal) {
+    if ( /*#__PURE__*/React$1.isValidElement(children)) {
+      const newProps = {
+        ref: handleRef
+      };
+      return /*#__PURE__*/React$1.cloneElement(children, newProps);
+    }
+    return /*#__PURE__*/jsxRuntimeExports.jsx(React$1.Fragment, {
+      children: children
+    });
+  }
+  return /*#__PURE__*/jsxRuntimeExports.jsx(React$1.Fragment, {
+    children: mountNode ? /*#__PURE__*/ReactDOM.createPortal(children, mountNode) : mountNode
+  });
+});
+process.env.NODE_ENV !== "production" ? Portal.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * The children to render into the `container`.
+   */
+  children: PropTypes.node,
+  /**
+   * An HTML element or function that returns one.
+   * The `container` will have the portal children appended to it.
+   *
+   * You can also provide a callback, which is called in a React layout effect.
+   * This lets you set the container from a ref, and also makes server-side rendering possible.
+   *
+   * By default, it uses the body of the top-level document object,
+   * so it's simply `document.body` most of the time.
+   */
+  container: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([HTMLElementType, PropTypes.func]),
+  /**
+   * The `children` will be under the DOM hierarchy of the parent component.
+   * @default false
+   */
+  disablePortal: PropTypes.bool
+} : void 0;
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line
+  Portal['propTypes' + ''] = exactProp(Portal.propTypes);
+}
+
+const _excluded$6 = ["onChange", "maxRows", "minRows", "style", "value"];
+function getStyleValue(value) {
+  return parseInt(value, 10) || 0;
+}
+const styles$1 = {
+  shadow: {
+    // Visibility needed to hide the extra text area on iPads
+    visibility: 'hidden',
+    // Remove from the content flow
+    position: 'absolute',
+    // Ignore the scrollbar width
+    overflow: 'hidden',
+    height: 0,
+    top: 0,
+    left: 0,
+    // Create a new layer, increase the isolation of the computed values
+    transform: 'translateZ(0)'
+  }
+};
+function isEmpty(obj) {
+  return obj === undefined || obj === null || Object.keys(obj).length === 0 || obj.outerHeightStyle === 0 && !obj.overflowing;
+}
+
+/**
+ *
+ * Demos:
+ *
+ * - [Textarea Autosize](https://mui.com/material-ui/react-textarea-autosize/)
+ *
+ * API:
+ *
+ * - [TextareaAutosize API](https://mui.com/material-ui/api/textarea-autosize/)
+ */
+const TextareaAutosize = /*#__PURE__*/React$1.forwardRef(function TextareaAutosize(props, forwardedRef) {
+  const {
+      onChange,
+      maxRows,
+      minRows = 1,
+      style,
+      value
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$6);
+  const {
+    current: isControlled
+  } = React$1.useRef(value != null);
+  const inputRef = React$1.useRef(null);
+  const handleRef = useForkRef(forwardedRef, inputRef);
+  const heightRef = React$1.useRef(null);
+  const shadowRef = React$1.useRef(null);
+  const calculateTextareaStyles = React$1.useCallback(() => {
+    const input = inputRef.current;
+    const containerWindow = ownerWindow(input);
+    const computedStyle = containerWindow.getComputedStyle(input);
+
+    // If input's width is shrunk and it's not visible, don't sync height.
+    if (computedStyle.width === '0px') {
+      return {
+        outerHeightStyle: 0,
+        overflowing: false
+      };
+    }
+    const inputShallow = shadowRef.current;
+    inputShallow.style.width = computedStyle.width;
+    inputShallow.value = input.value || props.placeholder || 'x';
+    if (inputShallow.value.slice(-1) === '\n') {
+      // Certain fonts which overflow the line height will cause the textarea
+      // to report a different scrollHeight depending on whether the last line
+      // is empty. Make it non-empty to avoid this issue.
+      inputShallow.value += ' ';
+    }
+    const boxSizing = computedStyle.boxSizing;
+    const padding = getStyleValue(computedStyle.paddingBottom) + getStyleValue(computedStyle.paddingTop);
+    const border = getStyleValue(computedStyle.borderBottomWidth) + getStyleValue(computedStyle.borderTopWidth);
+
+    // The height of the inner content
+    const innerHeight = inputShallow.scrollHeight;
+
+    // Measure height of a textarea with a single row
+    inputShallow.value = 'x';
+    const singleRowHeight = inputShallow.scrollHeight;
+
+    // The height of the outer content
+    let outerHeight = innerHeight;
+    if (minRows) {
+      outerHeight = Math.max(Number(minRows) * singleRowHeight, outerHeight);
+    }
+    if (maxRows) {
+      outerHeight = Math.min(Number(maxRows) * singleRowHeight, outerHeight);
+    }
+    outerHeight = Math.max(outerHeight, singleRowHeight);
+
+    // Take the box sizing into account for applying this value as a style.
+    const outerHeightStyle = outerHeight + (boxSizing === 'border-box' ? padding + border : 0);
+    const overflowing = Math.abs(outerHeight - innerHeight) <= 1;
+    return {
+      outerHeightStyle,
+      overflowing
+    };
+  }, [maxRows, minRows, props.placeholder]);
+  const syncHeight = React$1.useCallback(() => {
+    const textareaStyles = calculateTextareaStyles();
+    if (isEmpty(textareaStyles)) {
+      return;
+    }
+    const outerHeightStyle = textareaStyles.outerHeightStyle;
+    const input = inputRef.current;
+    if (heightRef.current !== outerHeightStyle) {
+      heightRef.current = outerHeightStyle;
+      input.style.height = `${outerHeightStyle}px`;
+    }
+    input.style.overflow = textareaStyles.overflowing ? 'hidden' : '';
+  }, [calculateTextareaStyles]);
+  useEnhancedEffect(() => {
+    const handleResize = () => {
+      syncHeight();
+    };
+    // Workaround a "ResizeObserver loop completed with undelivered notifications" error
+    // in test.
+    // Note that we might need to use this logic in production per https://github.com/WICG/resize-observer/issues/38
+    // Also see https://github.com/mui/mui-x/issues/8733
+    let rAF;
+    const rAFHandleResize = () => {
+      cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(() => {
+        handleResize();
+      });
+    };
+    const debounceHandleResize = debounce$3(handleResize);
+    const input = inputRef.current;
+    const containerWindow = ownerWindow(input);
+    containerWindow.addEventListener('resize', debounceHandleResize);
+    let resizeObserver;
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(process.env.NODE_ENV === 'test' ? rAFHandleResize : handleResize);
+      resizeObserver.observe(input);
+    }
+    return () => {
+      debounceHandleResize.clear();
+      cancelAnimationFrame(rAF);
+      containerWindow.removeEventListener('resize', debounceHandleResize);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, [calculateTextareaStyles, syncHeight]);
+  useEnhancedEffect(() => {
+    syncHeight();
+  });
+  const handleChange = event => {
+    if (!isControlled) {
+      syncHeight();
+    }
+    if (onChange) {
+      onChange(event);
+    }
+  };
+  return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
+    children: [/*#__PURE__*/jsxRuntimeExports.jsx("textarea", _extends$i({
+      value: value,
+      onChange: handleChange,
+      ref: handleRef
+      // Apply the rows prop to get a "correct" first SSR paint
+      ,
+      rows: minRows,
+      style: style
+    }, other)), /*#__PURE__*/jsxRuntimeExports.jsx("textarea", {
+      "aria-hidden": true,
+      className: props.className,
+      readOnly: true,
+      ref: shadowRef,
+      tabIndex: -1,
+      style: _extends$i({}, styles$1.shadow, style, {
+        paddingTop: 0,
+        paddingBottom: 0
+      })
+    })]
+  });
+});
+process.env.NODE_ENV !== "production" ? TextareaAutosize.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+  /**
+   * Maximum number of rows to display.
+   */
+  maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * Minimum number of rows to display.
+   * @default 1
+   */
+  minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * @ignore
+   */
+  onChange: PropTypes.func,
+  /**
+   * @ignore
+   */
+  placeholder: PropTypes.string,
+  /**
+   * @ignore
+   */
+  style: PropTypes.object,
+  /**
+   * @ignore
+   */
+  value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.number, PropTypes.string])
+} : void 0;
+
+function formControlState({
+  props,
+  states,
+  muiFormControl
+}) {
+  return states.reduce((acc, state) => {
+    acc[state] = props[state];
+    if (muiFormControl) {
+      if (typeof props[state] === 'undefined') {
+        acc[state] = muiFormControl[state];
+      }
+    }
+    return acc;
+  }, {});
+}
+
+/**
+ * @ignore - internal component.
+ */
+const FormControlContext = /*#__PURE__*/React$1.createContext(undefined);
+if (process.env.NODE_ENV !== 'production') {
+  FormControlContext.displayName = 'FormControlContext';
+}
+
+function useFormControl() {
+  return React$1.useContext(FormControlContext);
+}
+
+function GlobalStyles(props) {
+  return /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles$1, _extends$i({}, props, {
+    defaultTheme: defaultTheme,
+    themeId: THEME_ID
+  }));
+}
+process.env.NODE_ENV !== "production" ? GlobalStyles.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * The styles you want to apply globally.
+   */
+  styles: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.array, PropTypes.func, PropTypes.number, PropTypes.object, PropTypes.string, PropTypes.bool])
+} : void 0;
+
+// Supports determination of isControlled().
+// Controlled input accepts its current value as a prop.
+//
+// @see https://facebook.github.io/react/docs/forms.html#controlled-components
+// @param value
+// @returns {boolean} true if string (including '') or number (including zero)
+function hasValue(value) {
+  return value != null && !(Array.isArray(value) && value.length === 0);
+}
+
+// Determine if field is empty or filled.
+// Response determines if label is presented above field or as placeholder.
+//
+// @param obj
+// @param SSR
+// @returns {boolean} False when not present or empty string.
+//                    True when any number or string with length.
+function isFilled(obj, SSR = false) {
+  return obj && (hasValue(obj.value) && obj.value !== '' || SSR && hasValue(obj.defaultValue) && obj.defaultValue !== '');
+}
+
+function getInputBaseUtilityClass(slot) {
+  return generateUtilityClass('MuiInputBase', slot);
+}
+const inputBaseClasses = generateUtilityClasses('MuiInputBase', ['root', 'formControl', 'focused', 'disabled', 'adornedStart', 'adornedEnd', 'error', 'sizeSmall', 'multiline', 'colorSecondary', 'fullWidth', 'hiddenLabel', 'readOnly', 'input', 'inputSizeSmall', 'inputMultiline', 'inputTypeSearch', 'inputAdornedStart', 'inputAdornedEnd', 'inputHiddenLabel']);
+
+const _excluded$5 = ["aria-describedby", "autoComplete", "autoFocus", "className", "color", "components", "componentsProps", "defaultValue", "disabled", "disableInjectingGlobalStyles", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "size", "slotProps", "slots", "startAdornment", "type", "value"];
+const rootOverridesResolver = (props, styles) => {
+  const {
+    ownerState
+  } = props;
+  return [styles.root, ownerState.formControl && styles.formControl, ownerState.startAdornment && styles.adornedStart, ownerState.endAdornment && styles.adornedEnd, ownerState.error && styles.error, ownerState.size === 'small' && styles.sizeSmall, ownerState.multiline && styles.multiline, ownerState.color && styles[`color${capitalize$1(ownerState.color)}`], ownerState.fullWidth && styles.fullWidth, ownerState.hiddenLabel && styles.hiddenLabel];
+};
+const inputOverridesResolver = (props, styles) => {
+  const {
+    ownerState
+  } = props;
+  return [styles.input, ownerState.size === 'small' && styles.inputSizeSmall, ownerState.multiline && styles.inputMultiline, ownerState.type === 'search' && styles.inputTypeSearch, ownerState.startAdornment && styles.inputAdornedStart, ownerState.endAdornment && styles.inputAdornedEnd, ownerState.hiddenLabel && styles.inputHiddenLabel];
+};
+const useUtilityClasses$4 = ownerState => {
+  const {
+    classes,
+    color,
+    disabled,
+    error,
+    endAdornment,
+    focused,
+    formControl,
+    fullWidth,
+    hiddenLabel,
+    multiline,
+    readOnly,
+    size,
+    startAdornment,
+    type
+  } = ownerState;
+  const slots = {
+    root: ['root', `color${capitalize$1(color)}`, disabled && 'disabled', error && 'error', fullWidth && 'fullWidth', focused && 'focused', formControl && 'formControl', size && size !== 'medium' && `size${capitalize$1(size)}`, multiline && 'multiline', startAdornment && 'adornedStart', endAdornment && 'adornedEnd', hiddenLabel && 'hiddenLabel', readOnly && 'readOnly'],
+    input: ['input', disabled && 'disabled', type === 'search' && 'inputTypeSearch', multiline && 'inputMultiline', size === 'small' && 'inputSizeSmall', hiddenLabel && 'inputHiddenLabel', startAdornment && 'inputAdornedStart', endAdornment && 'inputAdornedEnd', readOnly && 'readOnly']
+  };
+  return composeClasses(slots, getInputBaseUtilityClass, classes);
+};
+const InputBaseRoot = styled('div', {
+  name: 'MuiInputBase',
+  slot: 'Root',
+  overridesResolver: rootOverridesResolver
+})(({
+  theme,
+  ownerState
+}) => _extends$i({}, theme.typography.body1, {
+  color: (theme.vars || theme).palette.text.primary,
+  lineHeight: '1.4375em',
+  // 23px
+  boxSizing: 'border-box',
+  // Prevent padding issue with fullWidth.
+  position: 'relative',
+  cursor: 'text',
+  display: 'inline-flex',
+  alignItems: 'center',
+  [`&.${inputBaseClasses.disabled}`]: {
+    color: (theme.vars || theme).palette.text.disabled,
+    cursor: 'default'
+  }
+}, ownerState.multiline && _extends$i({
+  padding: '4px 0 5px'
+}, ownerState.size === 'small' && {
+  paddingTop: 1
+}), ownerState.fullWidth && {
+  width: '100%'
+}));
+const InputBaseComponent = styled('input', {
+  name: 'MuiInputBase',
+  slot: 'Input',
+  overridesResolver: inputOverridesResolver
+})(({
+  theme,
+  ownerState
+}) => {
+  const light = theme.palette.mode === 'light';
+  const placeholder = _extends$i({
+    color: 'currentColor'
+  }, theme.vars ? {
+    opacity: theme.vars.opacity.inputPlaceholder
+  } : {
+    opacity: light ? 0.42 : 0.5
+  }, {
+    transition: theme.transitions.create('opacity', {
+      duration: theme.transitions.duration.shorter
+    })
+  });
+  const placeholderHidden = {
+    opacity: '0 !important'
+  };
+  const placeholderVisible = theme.vars ? {
+    opacity: theme.vars.opacity.inputPlaceholder
+  } : {
+    opacity: light ? 0.42 : 0.5
+  };
+  return _extends$i({
+    font: 'inherit',
+    letterSpacing: 'inherit',
+    color: 'currentColor',
+    padding: '4px 0 5px',
+    border: 0,
+    boxSizing: 'content-box',
+    background: 'none',
+    height: '1.4375em',
+    // Reset 23pxthe native input line-height
+    margin: 0,
+    // Reset for Safari
+    WebkitTapHighlightColor: 'transparent',
+    display: 'block',
+    // Make the flex item shrink with Firefox
+    minWidth: 0,
+    width: '100%',
+    // Fix IE11 width issue
+    animationName: 'mui-auto-fill-cancel',
+    animationDuration: '10ms',
+    '&::-webkit-input-placeholder': placeholder,
+    '&::-moz-placeholder': placeholder,
+    // Firefox 19+
+    '&:-ms-input-placeholder': placeholder,
+    // IE11
+    '&::-ms-input-placeholder': placeholder,
+    // Edge
+    '&:focus': {
+      outline: 0
+    },
+    // Reset Firefox invalid required input style
+    '&:invalid': {
+      boxShadow: 'none'
+    },
+    '&::-webkit-search-decoration': {
+      // Remove the padding when type=search.
+      WebkitAppearance: 'none'
+    },
+    // Show and hide the placeholder logic
+    [`label[data-shrink=false] + .${inputBaseClasses.formControl} &`]: {
+      '&::-webkit-input-placeholder': placeholderHidden,
+      '&::-moz-placeholder': placeholderHidden,
+      // Firefox 19+
+      '&:-ms-input-placeholder': placeholderHidden,
+      // IE11
+      '&::-ms-input-placeholder': placeholderHidden,
+      // Edge
+      '&:focus::-webkit-input-placeholder': placeholderVisible,
+      '&:focus::-moz-placeholder': placeholderVisible,
+      // Firefox 19+
+      '&:focus:-ms-input-placeholder': placeholderVisible,
+      // IE11
+      '&:focus::-ms-input-placeholder': placeholderVisible // Edge
+    },
+    [`&.${inputBaseClasses.disabled}`]: {
+      opacity: 1,
+      // Reset iOS opacity
+      WebkitTextFillColor: (theme.vars || theme).palette.text.disabled // Fix opacity Safari bug
+    },
+    '&:-webkit-autofill': {
+      animationDuration: '5000s',
+      animationName: 'mui-auto-fill'
+    }
+  }, ownerState.size === 'small' && {
+    paddingTop: 1
+  }, ownerState.multiline && {
+    height: 'auto',
+    resize: 'none',
+    padding: 0,
+    paddingTop: 0
+  }, ownerState.type === 'search' && {
+    // Improve type search style.
+    MozAppearance: 'textfield'
+  });
+});
+const inputGlobalStyles = /*#__PURE__*/jsxRuntimeExports.jsx(GlobalStyles, {
+  styles: {
+    '@keyframes mui-auto-fill': {
+      from: {
+        display: 'block'
+      }
+    },
+    '@keyframes mui-auto-fill-cancel': {
+      from: {
+        display: 'block'
+      }
+    }
+  }
+});
+
+/**
+ * `InputBase` contains as few styles as possible.
+ * It aims to be a simple building block for creating an input.
+ * It contains a load of style reset and some state logic.
+ */
+const InputBase = /*#__PURE__*/React$1.forwardRef(function InputBase(inProps, ref) {
+  var _slotProps$input;
+  const props = useDefaultProps({
+    props: inProps,
+    name: 'MuiInputBase'
+  });
+  const {
+      'aria-describedby': ariaDescribedby,
+      autoComplete,
+      autoFocus,
+      className,
+      components = {},
+      componentsProps = {},
+      defaultValue,
+      disabled,
+      disableInjectingGlobalStyles,
+      endAdornment,
+      fullWidth = false,
+      id,
+      inputComponent = 'input',
+      inputProps: inputPropsProp = {},
+      inputRef: inputRefProp,
+      maxRows,
+      minRows,
+      multiline = false,
+      name,
+      onBlur,
+      onChange,
+      onClick,
+      onFocus,
+      onKeyDown,
+      onKeyUp,
+      placeholder,
+      readOnly,
+      renderSuffix,
+      rows,
+      slotProps = {},
+      slots = {},
+      startAdornment,
+      type = 'text',
+      value: valueProp
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$5);
+  const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
+  const {
+    current: isControlled
+  } = React$1.useRef(value != null);
+  const inputRef = React$1.useRef();
+  const handleInputRefWarning = React$1.useCallback(instance => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (instance && instance.nodeName !== 'INPUT' && !instance.focus) {
+        console.error(['MUI: You have provided a `inputComponent` to the input component', 'that does not correctly handle the `ref` prop.', 'Make sure the `ref` prop is called with a HTMLInputElement.'].join('\n'));
+      }
+    }
+  }, []);
+  const handleInputRef = useForkRef(inputRef, inputRefProp, inputPropsProp.ref, handleInputRefWarning);
+  const [focused, setFocused] = React$1.useState(false);
+  const muiFormControl = useFormControl();
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React$1.useEffect(() => {
+      if (muiFormControl) {
+        return muiFormControl.registerEffect();
+      }
+      return undefined;
+    }, [muiFormControl]);
+  }
+  const fcs = formControlState({
+    props,
+    muiFormControl,
+    states: ['color', 'disabled', 'error', 'hiddenLabel', 'size', 'required', 'filled']
+  });
+  fcs.focused = muiFormControl ? muiFormControl.focused : focused;
+
+  // The blur won't fire when the disabled state is set on a focused input.
+  // We need to book keep the focused state manually.
+  React$1.useEffect(() => {
+    if (!muiFormControl && disabled && focused) {
+      setFocused(false);
+      if (onBlur) {
+        onBlur();
+      }
+    }
+  }, [muiFormControl, disabled, focused, onBlur]);
+  const onFilled = muiFormControl && muiFormControl.onFilled;
+  const onEmpty = muiFormControl && muiFormControl.onEmpty;
+  const checkDirty = React$1.useCallback(obj => {
+    if (isFilled(obj)) {
+      if (onFilled) {
+        onFilled();
+      }
+    } else if (onEmpty) {
+      onEmpty();
+    }
+  }, [onFilled, onEmpty]);
+  useEnhancedEffect(() => {
+    if (isControlled) {
+      checkDirty({
+        value
+      });
+    }
+  }, [value, checkDirty, isControlled]);
+  const handleFocus = event => {
+    // Fix a bug with IE11 where the focus/blur events are triggered
+    // while the component is disabled.
+    if (fcs.disabled) {
+      event.stopPropagation();
+      return;
+    }
+    if (onFocus) {
+      onFocus(event);
+    }
+    if (inputPropsProp.onFocus) {
+      inputPropsProp.onFocus(event);
+    }
+    if (muiFormControl && muiFormControl.onFocus) {
+      muiFormControl.onFocus(event);
+    } else {
+      setFocused(true);
+    }
+  };
+  const handleBlur = event => {
+    if (onBlur) {
+      onBlur(event);
+    }
+    if (inputPropsProp.onBlur) {
+      inputPropsProp.onBlur(event);
+    }
+    if (muiFormControl && muiFormControl.onBlur) {
+      muiFormControl.onBlur(event);
+    } else {
+      setFocused(false);
+    }
+  };
+  const handleChange = (event, ...args) => {
+    if (!isControlled) {
+      const element = event.target || inputRef.current;
+      if (element == null) {
+        throw new Error(process.env.NODE_ENV !== "production" ? `MUI: Expected valid input target. Did you use a custom \`inputComponent\` and forget to forward refs? See https://mui.com/r/input-component-ref-interface for more info.` : formatMuiErrorMessage$1(1));
+      }
+      checkDirty({
+        value: element.value
+      });
+    }
+    if (inputPropsProp.onChange) {
+      inputPropsProp.onChange(event, ...args);
+    }
+
+    // Perform in the willUpdate
+    if (onChange) {
+      onChange(event, ...args);
+    }
+  };
+
+  // Check the input state on mount, in case it was filled by the user
+  // or auto filled by the browser before the hydration (for SSR).
+  React$1.useEffect(() => {
+    checkDirty(inputRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const handleClick = event => {
+    if (inputRef.current && event.currentTarget === event.target) {
+      inputRef.current.focus();
+    }
+    if (onClick) {
+      onClick(event);
+    }
+  };
+  let InputComponent = inputComponent;
+  let inputProps = inputPropsProp;
+  if (multiline && InputComponent === 'input') {
+    if (rows) {
+      if (process.env.NODE_ENV !== 'production') {
+        if (minRows || maxRows) {
+          console.warn('MUI: You can not use the `minRows` or `maxRows` props when the input `rows` prop is set.');
+        }
+      }
+      inputProps = _extends$i({
+        type: undefined,
+        minRows: rows,
+        maxRows: rows
+      }, inputProps);
+    } else {
+      inputProps = _extends$i({
+        type: undefined,
+        maxRows,
+        minRows
+      }, inputProps);
+    }
+    InputComponent = TextareaAutosize;
+  }
+  const handleAutoFill = event => {
+    // Provide a fake value as Chrome might not let you access it for security reasons.
+    checkDirty(event.animationName === 'mui-auto-fill-cancel' ? inputRef.current : {
+      value: 'x'
+    });
+  };
+  React$1.useEffect(() => {
+    if (muiFormControl) {
+      muiFormControl.setAdornedStart(Boolean(startAdornment));
+    }
+  }, [muiFormControl, startAdornment]);
+  const ownerState = _extends$i({}, props, {
+    color: fcs.color || 'primary',
+    disabled: fcs.disabled,
+    endAdornment,
+    error: fcs.error,
+    focused: fcs.focused,
+    formControl: muiFormControl,
+    fullWidth,
+    hiddenLabel: fcs.hiddenLabel,
+    multiline,
+    size: fcs.size,
+    startAdornment,
+    type
+  });
+  const classes = useUtilityClasses$4(ownerState);
+  const Root = slots.root || components.Root || InputBaseRoot;
+  const rootProps = slotProps.root || componentsProps.root || {};
+  const Input = slots.input || components.Input || InputBaseComponent;
+  inputProps = _extends$i({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
+  return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
+    children: [!disableInjectingGlobalStyles && inputGlobalStyles, /*#__PURE__*/jsxRuntimeExports.jsxs(Root, _extends$i({}, rootProps, !isHostComponent(Root) && {
+      ownerState: _extends$i({}, ownerState, rootProps.ownerState)
+    }, {
+      ref: ref,
+      onClick: handleClick
+    }, other, {
+      className: clsx(classes.root, rootProps.className, className, readOnly && 'MuiInputBase-readOnly'),
+      children: [startAdornment, /*#__PURE__*/jsxRuntimeExports.jsx(FormControlContext.Provider, {
+        value: null,
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(Input, _extends$i({
+          ownerState: ownerState,
+          "aria-invalid": fcs.error,
+          "aria-describedby": ariaDescribedby,
+          autoComplete: autoComplete,
+          autoFocus: autoFocus,
+          defaultValue: defaultValue,
+          disabled: fcs.disabled,
+          id: id,
+          onAnimationStart: handleAutoFill,
+          name: name,
+          placeholder: placeholder,
+          readOnly: readOnly,
+          required: fcs.required,
+          rows: rows,
+          value: value,
+          onKeyDown: onKeyDown,
+          onKeyUp: onKeyUp,
+          type: type
+        }, inputProps, !isHostComponent(Input) && {
+          as: InputComponent,
+          ownerState: _extends$i({}, ownerState, inputProps.ownerState)
+        }, {
+          ref: handleInputRef,
+          className: clsx(classes.input, inputProps.className, readOnly && 'MuiInputBase-readOnly'),
+          onBlur: handleBlur,
+          onChange: handleChange,
+          onFocus: handleFocus
+        }))
+      }), endAdornment, renderSuffix ? renderSuffix(_extends$i({}, fcs, {
+        startAdornment
+      })) : null]
+    }))]
+  });
+});
+process.env.NODE_ENV !== "production" ? InputBase.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * @ignore
+   */
+  'aria-describedby': PropTypes.string,
+  /**
+   * This prop helps users to fill forms faster, especially on mobile devices.
+   * The name can be confusing, as it's more like an autofill.
+   * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
+   */
+  autoComplete: PropTypes.string,
+  /**
+   * If `true`, the `input` element is focused during the first mount.
+   */
+  autoFocus: PropTypes.bool,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: PropTypes.object,
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+  /**
+   * The color of the component.
+   * It supports both default and custom theme colors, which can be added as shown in the
+   * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+   * The prop defaults to the value (`'primary'`) inherited from the parent FormControl component.
+   */
+  color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['primary', 'secondary', 'error', 'info', 'success', 'warning']), PropTypes.string]),
+  /**
+   * The components used for each slot inside.
+   *
+   * This prop is an alias for the `slots` prop.
+   * It's recommended to use the `slots` prop instead.
+   *
+   * @default {}
+   */
+  components: PropTypes.shape({
+    Input: PropTypes.elementType,
+    Root: PropTypes.elementType
+  }),
+  /**
+   * The extra props for the slot components.
+   * You can override the existing props or add new ones.
+   *
+   * This prop is an alias for the `slotProps` prop.
+   * It's recommended to use the `slotProps` prop instead, as `componentsProps` will be deprecated in the future.
+   *
+   * @default {}
+   */
+  componentsProps: PropTypes.shape({
+    input: PropTypes.object,
+    root: PropTypes.object
+  }),
+  /**
+   * The default value. Use when the component is not controlled.
+   */
+  defaultValue: PropTypes.any,
+  /**
+   * If `true`, the component is disabled.
+   * The prop defaults to the value (`false`) inherited from the parent FormControl component.
+   */
+  disabled: PropTypes.bool,
+  /**
+   * If `true`, GlobalStyles for the auto-fill keyframes will not be injected/removed on mount/unmount. Make sure to inject them at the top of your application.
+   * This option is intended to help with boosting the initial rendering performance if you are loading a big amount of Input components at once.
+   * @default false
+   */
+  disableInjectingGlobalStyles: PropTypes.bool,
+  /**
+   * End `InputAdornment` for this component.
+   */
+  endAdornment: PropTypes.node,
+  /**
+   * If `true`, the `input` will indicate an error.
+   * The prop defaults to the value (`false`) inherited from the parent FormControl component.
+   */
+  error: PropTypes.bool,
+  /**
+   * If `true`, the `input` will take up the full width of its container.
+   * @default false
+   */
+  fullWidth: PropTypes.bool,
+  /**
+   * The id of the `input` element.
+   */
+  id: PropTypes.string,
+  /**
+   * The component used for the `input` element.
+   * Either a string to use a HTML element or a component.
+   * @default 'input'
+   */
+  inputComponent: elementTypeAcceptingRef$1,
+  /**
+   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * @default {}
+   */
+  inputProps: PropTypes.object,
+  /**
+   * Pass a ref to the `input` element.
+   */
+  inputRef: refType,
+  /**
+   * If `dense`, will adjust vertical spacing. This is normally obtained via context from
+   * FormControl.
+   * The prop defaults to the value (`'none'`) inherited from the parent FormControl component.
+   */
+  margin: PropTypes.oneOf(['dense', 'none']),
+  /**
+   * Maximum number of rows to display when multiline option is set to true.
+   */
+  maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * Minimum number of rows to display when multiline option is set to true.
+   */
+  minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * If `true`, a [TextareaAutosize](/material-ui/react-textarea-autosize/) element is rendered.
+   * @default false
+   */
+  multiline: PropTypes.bool,
+  /**
+   * Name attribute of the `input` element.
+   */
+  name: PropTypes.string,
+  /**
+   * Callback fired when the `input` is blurred.
+   *
+   * Notice that the first argument (event) might be undefined.
+   */
+  onBlur: PropTypes.func,
+  /**
+   * Callback fired when the value is changed.
+   *
+   * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
+   * You can pull out the new value by accessing `event.target.value` (string).
+   */
+  onChange: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onClick: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onFocus: PropTypes.func,
+  /**
+   * Callback fired when the `input` doesn't satisfy its constraints.
+   */
+  onInvalid: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onKeyDown: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onKeyUp: PropTypes.func,
+  /**
+   * The short hint displayed in the `input` before the user enters a value.
+   */
+  placeholder: PropTypes.string,
+  /**
+   * It prevents the user from changing the value of the field
+   * (not from interacting with the field).
+   */
+  readOnly: PropTypes.bool,
+  /**
+   * @ignore
+   */
+  renderSuffix: PropTypes.func,
+  /**
+   * If `true`, the `input` element is required.
+   * The prop defaults to the value (`false`) inherited from the parent FormControl component.
+   */
+  required: PropTypes.bool,
+  /**
+   * Number of rows to display when multiline option is set to true.
+   */
+  rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * The size of the component.
+   */
+  size: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['medium', 'small']), PropTypes.string]),
+  /**
+   * The extra props for the slot components.
+   * You can override the existing props or add new ones.
+   *
+   * This prop is an alias for the `componentsProps` prop, which will be deprecated in the future.
+   *
+   * @default {}
+   */
+  slotProps: PropTypes.shape({
+    input: PropTypes.object,
+    root: PropTypes.object
+  }),
+  /**
+   * The components used for each slot inside.
+   *
+   * This prop is an alias for the `components` prop, which will be deprecated in the future.
+   *
+   * @default {}
+   */
+  slots: PropTypes.shape({
+    input: PropTypes.elementType,
+    root: PropTypes.elementType
+  }),
+  /**
+   * Start `InputAdornment` for this component.
+   */
+  startAdornment: PropTypes.node,
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+  /**
+   * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
+   * @default 'text'
+   */
+  type: PropTypes.string,
+  /**
+   * The value of the `input` element, required for a controlled component.
+   */
+  value: PropTypes.any
+} : void 0;
+var InputBase$1 = InputBase;
+
+function getInputUtilityClass(slot) {
+  return generateUtilityClass('MuiInput', slot);
+}
+const inputClasses = _extends$i({}, inputBaseClasses, generateUtilityClasses('MuiInput', ['root', 'underline', 'input']));
+
+const _excluded$4 = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
 const styles = {
   entering: {
     opacity: 1
@@ -11737,7 +13578,7 @@ const styles = {
  * The Fade transition is used by the [Modal](/material-ui/react-modal/) component.
  * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
-const Fade = /*#__PURE__*/React.forwardRef(function Fade(props, ref) {
+const Fade = /*#__PURE__*/React$1.forwardRef(function Fade(props, ref) {
   const theme = useTheme();
   const defaultTimeout = {
     enter: theme.transitions.duration.enteringScreen,
@@ -11760,8 +13601,8 @@ const Fade = /*#__PURE__*/React.forwardRef(function Fade(props, ref) {
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
     } = props,
-    other = _objectWithoutPropertiesLoose(props, _excluded$1);
-  const nodeRef = React.useRef(null);
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$4);
+  const nodeRef = React$1.useRef(null);
   const handleRef = useForkRef(nodeRef, children.ref, ref);
   const normalizedTransitionCallback = callback => maybeIsAppearing => {
     if (callback) {
@@ -11815,7 +13656,7 @@ const Fade = /*#__PURE__*/React.forwardRef(function Fade(props, ref) {
       addEndListener(nodeRef.current, next);
     }
   };
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$a({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$i({
     appear: appear,
     in: inProp,
     nodeRef: nodeRef ,
@@ -11829,8 +13670,8 @@ const Fade = /*#__PURE__*/React.forwardRef(function Fade(props, ref) {
     timeout: timeout
   }, other, {
     children: (state, childProps) => {
-      return /*#__PURE__*/React.cloneElement(children, _extends$a({
-        style: _extends$a({
+      return /*#__PURE__*/React$1.cloneElement(children, _extends$i({
+        style: _extends$i({
           opacity: 0,
           visibility: state === 'exited' && !inProp ? 'hidden' : undefined
         }, styles[state], style, children.props.style),
@@ -11920,8 +13761,8 @@ function getBackdropUtilityClass(slot) {
 }
 generateUtilityClasses('MuiBackdrop', ['root', 'invisible']);
 
-const _excluded = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
-const useUtilityClasses = ownerState => {
+const _excluded$3 = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
+const useUtilityClasses$3 = ownerState => {
   const {
     classes,
     invisible
@@ -11942,7 +13783,7 @@ const BackdropRoot = styled('div', {
   }
 })(({
   ownerState
-}) => _extends$a({
+}) => _extends$i({
   position: 'fixed',
   display: 'flex',
   alignItems: 'center',
@@ -11956,7 +13797,7 @@ const BackdropRoot = styled('div', {
 }, ownerState.invisible && {
   backgroundColor: 'transparent'
 }));
-const Backdrop = /*#__PURE__*/React.forwardRef(function Backdrop(inProps, ref) {
+const Backdrop = /*#__PURE__*/React$1.forwardRef(function Backdrop(inProps, ref) {
   var _slotProps$root, _ref, _slots$root;
   const props = useDefaultProps({
     props: inProps,
@@ -11975,23 +13816,23 @@ const Backdrop = /*#__PURE__*/React.forwardRef(function Backdrop(inProps, ref) {
       TransitionComponent = Fade,
       transitionDuration
     } = props,
-    other = _objectWithoutPropertiesLoose(props, _excluded);
-  const ownerState = _extends$a({}, props, {
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$3);
+  const ownerState = _extends$i({}, props, {
     component,
     invisible
   });
-  const classes = useUtilityClasses(ownerState);
+  const classes = useUtilityClasses$3(ownerState);
   const rootSlotProps = (_slotProps$root = slotProps.root) != null ? _slotProps$root : componentsProps.root;
-  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$a({
+  return /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$i({
     in: open,
     timeout: transitionDuration
   }, other, {
-    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$a({
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(BackdropRoot, _extends$i({
       "aria-hidden": true
     }, rootSlotProps, {
       as: (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : component,
       className: clsx(classes.root, className, rootSlotProps == null ? void 0 : rootSlotProps.className),
-      ownerState: _extends$a({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
+      ownerState: _extends$i({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
       classes: classes,
       ref: ref,
       children: children
@@ -12095,26 +13936,1896 @@ process.env.NODE_ENV !== "production" ? Backdrop.propTypes /* remove-proptypes *
   })])
 } : void 0;
 
+// Is a vertical scrollbar displayed?
+function isOverflowing(container) {
+  const doc = ownerDocument(container);
+  if (doc.body === container) {
+    return ownerWindow(container).innerWidth > doc.documentElement.clientWidth;
+  }
+  return container.scrollHeight > container.clientHeight;
+}
+function ariaHidden(element, show) {
+  if (show) {
+    element.setAttribute('aria-hidden', 'true');
+  } else {
+    element.removeAttribute('aria-hidden');
+  }
+}
+function getPaddingRight(element) {
+  return parseInt(ownerWindow(element).getComputedStyle(element).paddingRight, 10) || 0;
+}
+function isAriaHiddenForbiddenOnElement(element) {
+  // The forbidden HTML tags are the ones from ARIA specification that
+  // can be children of body and can't have aria-hidden attribute.
+  // cf. https://www.w3.org/TR/html-aria/#docconformance
+  const forbiddenTagNames = ['TEMPLATE', 'SCRIPT', 'STYLE', 'LINK', 'MAP', 'META', 'NOSCRIPT', 'PICTURE', 'COL', 'COLGROUP', 'PARAM', 'SLOT', 'SOURCE', 'TRACK'];
+  const isForbiddenTagName = forbiddenTagNames.indexOf(element.tagName) !== -1;
+  const isInputHidden = element.tagName === 'INPUT' && element.getAttribute('type') === 'hidden';
+  return isForbiddenTagName || isInputHidden;
+}
+function ariaHiddenSiblings(container, mountElement, currentElement, elementsToExclude, show) {
+  const blacklist = [mountElement, currentElement, ...elementsToExclude];
+  [].forEach.call(container.children, element => {
+    const isNotExcludedElement = blacklist.indexOf(element) === -1;
+    const isNotForbiddenElement = !isAriaHiddenForbiddenOnElement(element);
+    if (isNotExcludedElement && isNotForbiddenElement) {
+      ariaHidden(element, show);
+    }
+  });
+}
+function findIndexOf(items, callback) {
+  let idx = -1;
+  items.some((item, index) => {
+    if (callback(item)) {
+      idx = index;
+      return true;
+    }
+    return false;
+  });
+  return idx;
+}
+function handleContainer(containerInfo, props) {
+  const restoreStyle = [];
+  const container = containerInfo.container;
+  if (!props.disableScrollLock) {
+    if (isOverflowing(container)) {
+      // Compute the size before applying overflow hidden to avoid any scroll jumps.
+      const scrollbarSize = getScrollbarSize(ownerDocument(container));
+      restoreStyle.push({
+        value: container.style.paddingRight,
+        property: 'padding-right',
+        el: container
+      });
+      // Use computed style, here to get the real padding to add our scrollbar width.
+      container.style.paddingRight = `${getPaddingRight(container) + scrollbarSize}px`;
+
+      // .mui-fixed is a global helper.
+      const fixedElements = ownerDocument(container).querySelectorAll('.mui-fixed');
+      [].forEach.call(fixedElements, element => {
+        restoreStyle.push({
+          value: element.style.paddingRight,
+          property: 'padding-right',
+          el: element
+        });
+        element.style.paddingRight = `${getPaddingRight(element) + scrollbarSize}px`;
+      });
+    }
+    let scrollContainer;
+    if (container.parentNode instanceof DocumentFragment) {
+      scrollContainer = ownerDocument(container).body;
+    } else {
+      // Support html overflow-y: auto for scroll stability between pages
+      // https://css-tricks.com/snippets/css/force-vertical-scrollbar/
+      const parent = container.parentElement;
+      const containerWindow = ownerWindow(container);
+      scrollContainer = (parent == null ? void 0 : parent.nodeName) === 'HTML' && containerWindow.getComputedStyle(parent).overflowY === 'scroll' ? parent : container;
+    }
+
+    // Block the scroll even if no scrollbar is visible to account for mobile keyboard
+    // screensize shrink.
+    restoreStyle.push({
+      value: scrollContainer.style.overflow,
+      property: 'overflow',
+      el: scrollContainer
+    }, {
+      value: scrollContainer.style.overflowX,
+      property: 'overflow-x',
+      el: scrollContainer
+    }, {
+      value: scrollContainer.style.overflowY,
+      property: 'overflow-y',
+      el: scrollContainer
+    });
+    scrollContainer.style.overflow = 'hidden';
+  }
+  const restore = () => {
+    restoreStyle.forEach(({
+      value,
+      el,
+      property
+    }) => {
+      if (value) {
+        el.style.setProperty(property, value);
+      } else {
+        el.style.removeProperty(property);
+      }
+    });
+  };
+  return restore;
+}
+function getHiddenSiblings(container) {
+  const hiddenSiblings = [];
+  [].forEach.call(container.children, element => {
+    if (element.getAttribute('aria-hidden') === 'true') {
+      hiddenSiblings.push(element);
+    }
+  });
+  return hiddenSiblings;
+}
+/**
+ * @ignore - do not document.
+ *
+ * Proper state management for containers and the modals in those containers.
+ * Simplified, but inspired by react-overlay's ModalManager class.
+ * Used by the Modal to ensure proper styling of containers.
+ */
+class ModalManager {
+  constructor() {
+    this.containers = void 0;
+    this.modals = void 0;
+    this.modals = [];
+    this.containers = [];
+  }
+  add(modal, container) {
+    let modalIndex = this.modals.indexOf(modal);
+    if (modalIndex !== -1) {
+      return modalIndex;
+    }
+    modalIndex = this.modals.length;
+    this.modals.push(modal);
+
+    // If the modal we are adding is already in the DOM.
+    if (modal.modalRef) {
+      ariaHidden(modal.modalRef, false);
+    }
+    const hiddenSiblings = getHiddenSiblings(container);
+    ariaHiddenSiblings(container, modal.mount, modal.modalRef, hiddenSiblings, true);
+    const containerIndex = findIndexOf(this.containers, item => item.container === container);
+    if (containerIndex !== -1) {
+      this.containers[containerIndex].modals.push(modal);
+      return modalIndex;
+    }
+    this.containers.push({
+      modals: [modal],
+      container,
+      restore: null,
+      hiddenSiblings
+    });
+    return modalIndex;
+  }
+  mount(modal, props) {
+    const containerIndex = findIndexOf(this.containers, item => item.modals.indexOf(modal) !== -1);
+    const containerInfo = this.containers[containerIndex];
+    if (!containerInfo.restore) {
+      containerInfo.restore = handleContainer(containerInfo, props);
+    }
+  }
+  remove(modal, ariaHiddenState = true) {
+    const modalIndex = this.modals.indexOf(modal);
+    if (modalIndex === -1) {
+      return modalIndex;
+    }
+    const containerIndex = findIndexOf(this.containers, item => item.modals.indexOf(modal) !== -1);
+    const containerInfo = this.containers[containerIndex];
+    containerInfo.modals.splice(containerInfo.modals.indexOf(modal), 1);
+    this.modals.splice(modalIndex, 1);
+
+    // If that was the last modal in a container, clean up the container.
+    if (containerInfo.modals.length === 0) {
+      // The modal might be closed before it had the chance to be mounted in the DOM.
+      if (containerInfo.restore) {
+        containerInfo.restore();
+      }
+      if (modal.modalRef) {
+        // In case the modal wasn't in the DOM yet.
+        ariaHidden(modal.modalRef, ariaHiddenState);
+      }
+      ariaHiddenSiblings(containerInfo.container, modal.mount, modal.modalRef, containerInfo.hiddenSiblings, false);
+      this.containers.splice(containerIndex, 1);
+    } else {
+      // Otherwise make sure the next top modal is visible to a screen reader.
+      const nextTop = containerInfo.modals[containerInfo.modals.length - 1];
+      // as soon as a modal is adding its modalRef is undefined. it can't set
+      // aria-hidden because the dom element doesn't exist either
+      // when modal was unmounted before modalRef gets null
+      if (nextTop.modalRef) {
+        ariaHidden(nextTop.modalRef, false);
+      }
+    }
+    return modalIndex;
+  }
+  isTopModal(modal) {
+    return this.modals.length > 0 && this.modals[this.modals.length - 1] === modal;
+  }
+}
+
+// Inspired by https://github.com/focus-trap/tabbable
+const candidatesSelector = ['input', 'select', 'textarea', 'a[href]', 'button', '[tabindex]', 'audio[controls]', 'video[controls]', '[contenteditable]:not([contenteditable="false"])'].join(',');
+function getTabIndex(node) {
+  const tabindexAttr = parseInt(node.getAttribute('tabindex') || '', 10);
+  if (!Number.isNaN(tabindexAttr)) {
+    return tabindexAttr;
+  }
+
+  // Browsers do not return `tabIndex` correctly for contentEditable nodes;
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=661108&q=contenteditable%20tabindex&can=2
+  // so if they don't have a tabindex attribute specifically set, assume it's 0.
+  // in Chrome, <details/>, <audio controls/> and <video controls/> elements get a default
+  //  `tabIndex` of -1 when the 'tabindex' attribute isn't specified in the DOM,
+  //  yet they are still part of the regular tab order; in FF, they get a default
+  //  `tabIndex` of 0; since Chrome still puts those elements in the regular tab
+  //  order, consider their tab index to be 0.
+  if (node.contentEditable === 'true' || (node.nodeName === 'AUDIO' || node.nodeName === 'VIDEO' || node.nodeName === 'DETAILS') && node.getAttribute('tabindex') === null) {
+    return 0;
+  }
+  return node.tabIndex;
+}
+function isNonTabbableRadio(node) {
+  if (node.tagName !== 'INPUT' || node.type !== 'radio') {
+    return false;
+  }
+  if (!node.name) {
+    return false;
+  }
+  const getRadio = selector => node.ownerDocument.querySelector(`input[type="radio"]${selector}`);
+  let roving = getRadio(`[name="${node.name}"]:checked`);
+  if (!roving) {
+    roving = getRadio(`[name="${node.name}"]`);
+  }
+  return roving !== node;
+}
+function isNodeMatchingSelectorFocusable(node) {
+  if (node.disabled || node.tagName === 'INPUT' && node.type === 'hidden' || isNonTabbableRadio(node)) {
+    return false;
+  }
+  return true;
+}
+function defaultGetTabbable(root) {
+  const regularTabNodes = [];
+  const orderedTabNodes = [];
+  Array.from(root.querySelectorAll(candidatesSelector)).forEach((node, i) => {
+    const nodeTabIndex = getTabIndex(node);
+    if (nodeTabIndex === -1 || !isNodeMatchingSelectorFocusable(node)) {
+      return;
+    }
+    if (nodeTabIndex === 0) {
+      regularTabNodes.push(node);
+    } else {
+      orderedTabNodes.push({
+        documentOrder: i,
+        tabIndex: nodeTabIndex,
+        node: node
+      });
+    }
+  });
+  return orderedTabNodes.sort((a, b) => a.tabIndex === b.tabIndex ? a.documentOrder - b.documentOrder : a.tabIndex - b.tabIndex).map(a => a.node).concat(regularTabNodes);
+}
+function defaultIsEnabled() {
+  return true;
+}
+
+/**
+ * @ignore - internal component.
+ */
+function FocusTrap(props) {
+  const {
+    children,
+    disableAutoFocus = false,
+    disableEnforceFocus = false,
+    disableRestoreFocus = false,
+    getTabbable = defaultGetTabbable,
+    isEnabled = defaultIsEnabled,
+    open
+  } = props;
+  const ignoreNextEnforceFocus = React$1.useRef(false);
+  const sentinelStart = React$1.useRef(null);
+  const sentinelEnd = React$1.useRef(null);
+  const nodeToRestore = React$1.useRef(null);
+  const reactFocusEventTarget = React$1.useRef(null);
+  // This variable is useful when disableAutoFocus is true.
+  // It waits for the active element to move into the component to activate.
+  const activated = React$1.useRef(false);
+  const rootRef = React$1.useRef(null);
+  // @ts-expect-error TODO upstream fix
+  const handleRef = useForkRef(children.ref, rootRef);
+  const lastKeydown = React$1.useRef(null);
+  React$1.useEffect(() => {
+    // We might render an empty child.
+    if (!open || !rootRef.current) {
+      return;
+    }
+    activated.current = !disableAutoFocus;
+  }, [disableAutoFocus, open]);
+  React$1.useEffect(() => {
+    // We might render an empty child.
+    if (!open || !rootRef.current) {
+      return;
+    }
+    const doc = ownerDocument(rootRef.current);
+    if (!rootRef.current.contains(doc.activeElement)) {
+      if (!rootRef.current.hasAttribute('tabIndex')) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(['MUI: The modal content node does not accept focus.', 'For the benefit of assistive technologies, ' + 'the tabIndex of the node is being set to "-1".'].join('\n'));
+        }
+        rootRef.current.setAttribute('tabIndex', '-1');
+      }
+      if (activated.current) {
+        rootRef.current.focus();
+      }
+    }
+    return () => {
+      // restoreLastFocus()
+      if (!disableRestoreFocus) {
+        // In IE11 it is possible for document.activeElement to be null resulting
+        // in nodeToRestore.current being null.
+        // Not all elements in IE11 have a focus method.
+        // Once IE11 support is dropped the focus() call can be unconditional.
+        if (nodeToRestore.current && nodeToRestore.current.focus) {
+          ignoreNextEnforceFocus.current = true;
+          nodeToRestore.current.focus();
+        }
+        nodeToRestore.current = null;
+      }
+    };
+    // Missing `disableRestoreFocus` which is fine.
+    // We don't support changing that prop on an open FocusTrap
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+  React$1.useEffect(() => {
+    // We might render an empty child.
+    if (!open || !rootRef.current) {
+      return;
+    }
+    const doc = ownerDocument(rootRef.current);
+    const loopFocus = nativeEvent => {
+      lastKeydown.current = nativeEvent;
+      if (disableEnforceFocus || !isEnabled() || nativeEvent.key !== 'Tab') {
+        return;
+      }
+
+      // Make sure the next tab starts from the right place.
+      // doc.activeElement refers to the origin.
+      if (doc.activeElement === rootRef.current && nativeEvent.shiftKey) {
+        // We need to ignore the next contain as
+        // it will try to move the focus back to the rootRef element.
+        ignoreNextEnforceFocus.current = true;
+        if (sentinelEnd.current) {
+          sentinelEnd.current.focus();
+        }
+      }
+    };
+    const contain = () => {
+      const rootElement = rootRef.current;
+
+      // Cleanup functions are executed lazily in React 17.
+      // Contain can be called between the component being unmounted and its cleanup function being run.
+      if (rootElement === null) {
+        return;
+      }
+      if (!doc.hasFocus() || !isEnabled() || ignoreNextEnforceFocus.current) {
+        ignoreNextEnforceFocus.current = false;
+        return;
+      }
+
+      // The focus is already inside
+      if (rootElement.contains(doc.activeElement)) {
+        return;
+      }
+
+      // The disableEnforceFocus is set and the focus is outside of the focus trap (and sentinel nodes)
+      if (disableEnforceFocus && doc.activeElement !== sentinelStart.current && doc.activeElement !== sentinelEnd.current) {
+        return;
+      }
+
+      // if the focus event is not coming from inside the children's react tree, reset the refs
+      if (doc.activeElement !== reactFocusEventTarget.current) {
+        reactFocusEventTarget.current = null;
+      } else if (reactFocusEventTarget.current !== null) {
+        return;
+      }
+      if (!activated.current) {
+        return;
+      }
+      let tabbable = [];
+      if (doc.activeElement === sentinelStart.current || doc.activeElement === sentinelEnd.current) {
+        tabbable = getTabbable(rootRef.current);
+      }
+
+      // one of the sentinel nodes was focused, so move the focus
+      // to the first/last tabbable element inside the focus trap
+      if (tabbable.length > 0) {
+        var _lastKeydown$current, _lastKeydown$current2;
+        const isShiftTab = Boolean(((_lastKeydown$current = lastKeydown.current) == null ? void 0 : _lastKeydown$current.shiftKey) && ((_lastKeydown$current2 = lastKeydown.current) == null ? void 0 : _lastKeydown$current2.key) === 'Tab');
+        const focusNext = tabbable[0];
+        const focusPrevious = tabbable[tabbable.length - 1];
+        if (typeof focusNext !== 'string' && typeof focusPrevious !== 'string') {
+          if (isShiftTab) {
+            focusPrevious.focus();
+          } else {
+            focusNext.focus();
+          }
+        }
+        // no tabbable elements in the trap focus or the focus was outside of the focus trap
+      } else {
+        rootElement.focus();
+      }
+    };
+    doc.addEventListener('focusin', contain);
+    doc.addEventListener('keydown', loopFocus, true);
+
+    // With Edge, Safari and Firefox, no focus related events are fired when the focused area stops being a focused area.
+    // for example https://bugzilla.mozilla.org/show_bug.cgi?id=559561.
+    // Instead, we can look if the active element was restored on the BODY element.
+    //
+    // The whatwg spec defines how the browser should behave but does not explicitly mention any events:
+    // https://html.spec.whatwg.org/multipage/interaction.html#focus-fixup-rule.
+    const interval = setInterval(() => {
+      if (doc.activeElement && doc.activeElement.tagName === 'BODY') {
+        contain();
+      }
+    }, 50);
+    return () => {
+      clearInterval(interval);
+      doc.removeEventListener('focusin', contain);
+      doc.removeEventListener('keydown', loopFocus, true);
+    };
+  }, [disableAutoFocus, disableEnforceFocus, disableRestoreFocus, isEnabled, open, getTabbable]);
+  const onFocus = event => {
+    if (nodeToRestore.current === null) {
+      nodeToRestore.current = event.relatedTarget;
+    }
+    activated.current = true;
+    reactFocusEventTarget.current = event.target;
+    const childrenPropsHandler = children.props.onFocus;
+    if (childrenPropsHandler) {
+      childrenPropsHandler(event);
+    }
+  };
+  const handleFocusSentinel = event => {
+    if (nodeToRestore.current === null) {
+      nodeToRestore.current = event.relatedTarget;
+    }
+    activated.current = true;
+  };
+  return /*#__PURE__*/jsxRuntimeExports.jsxs(React$1.Fragment, {
+    children: [/*#__PURE__*/jsxRuntimeExports.jsx("div", {
+      tabIndex: open ? 0 : -1,
+      onFocus: handleFocusSentinel,
+      ref: sentinelStart,
+      "data-testid": "sentinelStart"
+    }), /*#__PURE__*/React$1.cloneElement(children, {
+      ref: handleRef,
+      onFocus
+    }), /*#__PURE__*/jsxRuntimeExports.jsx("div", {
+      tabIndex: open ? 0 : -1,
+      onFocus: handleFocusSentinel,
+      ref: sentinelEnd,
+      "data-testid": "sentinelEnd"
+    })]
+  });
+}
+process.env.NODE_ENV !== "production" ? FocusTrap.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * A single child content element.
+   */
+  children: elementAcceptingRef,
+  /**
+   * If `true`, the focus trap will not automatically shift focus to itself when it opens, and
+   * replace it to the last focused element when it closes.
+   * This also works correctly with any focus trap children that have the `disableAutoFocus` prop.
+   *
+   * Generally this should never be set to `true` as it makes the focus trap less
+   * accessible to assistive technologies, like screen readers.
+   * @default false
+   */
+  disableAutoFocus: PropTypes.bool,
+  /**
+   * If `true`, the focus trap will not prevent focus from leaving the focus trap while open.
+   *
+   * Generally this should never be set to `true` as it makes the focus trap less
+   * accessible to assistive technologies, like screen readers.
+   * @default false
+   */
+  disableEnforceFocus: PropTypes.bool,
+  /**
+   * If `true`, the focus trap will not restore focus to previously focused element once
+   * focus trap is hidden or unmounted.
+   * @default false
+   */
+  disableRestoreFocus: PropTypes.bool,
+  /**
+   * Returns an array of ordered tabbable nodes (i.e. in tab order) within the root.
+   * For instance, you can provide the "tabbable" npm dependency.
+   * @param {HTMLElement} root
+   */
+  getTabbable: PropTypes.func,
+  /**
+   * This prop extends the `open` prop.
+   * It allows to toggle the open state without having to wait for a rerender when changing the `open` prop.
+   * This prop should be memoized.
+   * It can be used to support multiple focus trap mounted at the same time.
+   * @default function defaultIsEnabled(): boolean {
+   *   return true;
+   * }
+   */
+  isEnabled: PropTypes.func,
+  /**
+   * If `true`, focus is locked.
+   */
+  open: PropTypes.bool.isRequired
+} : void 0;
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line
+  FocusTrap['propTypes' + ''] = exactProp(FocusTrap.propTypes);
+}
+
+function getContainer(container) {
+  return typeof container === 'function' ? container() : container;
+}
+function getHasTransition(children) {
+  return children ? children.props.hasOwnProperty('in') : false;
+}
+
+// A modal manager used to track and manage the state of open Modals.
+// Modals don't open on the server so this won't conflict with concurrent requests.
+const defaultManager = new ModalManager();
+/**
+ *
+ * Demos:
+ *
+ * - [Modal](https://mui.com/base-ui/react-modal/#hook)
+ *
+ * API:
+ *
+ * - [useModal API](https://mui.com/base-ui/react-modal/hooks-api/#use-modal)
+ */
+function useModal(parameters) {
+  const {
+    container,
+    disableEscapeKeyDown = false,
+    disableScrollLock = false,
+    // @ts-ignore internal logic - Base UI supports the manager as a prop too
+    manager = defaultManager,
+    closeAfterTransition = false,
+    onTransitionEnter,
+    onTransitionExited,
+    children,
+    onClose,
+    open,
+    rootRef
+  } = parameters;
+
+  // @ts-ignore internal logic
+  const modal = React$1.useRef({});
+  const mountNodeRef = React$1.useRef(null);
+  const modalRef = React$1.useRef(null);
+  const handleRef = useForkRef(modalRef, rootRef);
+  const [exited, setExited] = React$1.useState(!open);
+  const hasTransition = getHasTransition(children);
+  let ariaHiddenProp = true;
+  if (parameters['aria-hidden'] === 'false' || parameters['aria-hidden'] === false) {
+    ariaHiddenProp = false;
+  }
+  const getDoc = () => ownerDocument(mountNodeRef.current);
+  const getModal = () => {
+    modal.current.modalRef = modalRef.current;
+    modal.current.mount = mountNodeRef.current;
+    return modal.current;
+  };
+  const handleMounted = () => {
+    manager.mount(getModal(), {
+      disableScrollLock
+    });
+
+    // Fix a bug on Chrome where the scroll isn't initially 0.
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  };
+  const handleOpen = useEventCallback(() => {
+    const resolvedContainer = getContainer(container) || getDoc().body;
+    manager.add(getModal(), resolvedContainer);
+
+    // The element was already mounted.
+    if (modalRef.current) {
+      handleMounted();
+    }
+  });
+  const isTopModal = React$1.useCallback(() => manager.isTopModal(getModal()), [manager]);
+  const handlePortalRef = useEventCallback(node => {
+    mountNodeRef.current = node;
+    if (!node) {
+      return;
+    }
+    if (open && isTopModal()) {
+      handleMounted();
+    } else if (modalRef.current) {
+      ariaHidden(modalRef.current, ariaHiddenProp);
+    }
+  });
+  const handleClose = React$1.useCallback(() => {
+    manager.remove(getModal(), ariaHiddenProp);
+  }, [ariaHiddenProp, manager]);
+  React$1.useEffect(() => {
+    return () => {
+      handleClose();
+    };
+  }, [handleClose]);
+  React$1.useEffect(() => {
+    if (open) {
+      handleOpen();
+    } else if (!hasTransition || !closeAfterTransition) {
+      handleClose();
+    }
+  }, [open, handleClose, hasTransition, closeAfterTransition, handleOpen]);
+  const createHandleKeyDown = otherHandlers => event => {
+    var _otherHandlers$onKeyD;
+    (_otherHandlers$onKeyD = otherHandlers.onKeyDown) == null || _otherHandlers$onKeyD.call(otherHandlers, event);
+
+    // The handler doesn't take event.defaultPrevented into account:
+    //
+    // event.preventDefault() is meant to stop default behaviors like
+    // clicking a checkbox to check it, hitting a button to submit a form,
+    // and hitting left arrow to move the cursor in a text input etc.
+    // Only special HTML elements have these default behaviors.
+    if (event.key !== 'Escape' || event.which === 229 ||
+    // Wait until IME is settled.
+    !isTopModal()) {
+      return;
+    }
+    if (!disableEscapeKeyDown) {
+      // Swallow the event, in case someone is listening for the escape key on the body.
+      event.stopPropagation();
+      if (onClose) {
+        onClose(event, 'escapeKeyDown');
+      }
+    }
+  };
+  const createHandleBackdropClick = otherHandlers => event => {
+    var _otherHandlers$onClic;
+    (_otherHandlers$onClic = otherHandlers.onClick) == null || _otherHandlers$onClic.call(otherHandlers, event);
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    if (onClose) {
+      onClose(event, 'backdropClick');
+    }
+  };
+  const getRootProps = (otherHandlers = {}) => {
+    const propsEventHandlers = extractEventHandlers(parameters);
+
+    // The custom event handlers shouldn't be spread on the root element
+    delete propsEventHandlers.onTransitionEnter;
+    delete propsEventHandlers.onTransitionExited;
+    const externalEventHandlers = _extends$i({}, propsEventHandlers, otherHandlers);
+    return _extends$i({
+      role: 'presentation'
+    }, externalEventHandlers, {
+      onKeyDown: createHandleKeyDown(externalEventHandlers),
+      ref: handleRef
+    });
+  };
+  const getBackdropProps = (otherHandlers = {}) => {
+    const externalEventHandlers = otherHandlers;
+    return _extends$i({
+      'aria-hidden': true
+    }, externalEventHandlers, {
+      onClick: createHandleBackdropClick(externalEventHandlers),
+      open
+    });
+  };
+  const getTransitionProps = () => {
+    const handleEnter = () => {
+      setExited(false);
+      if (onTransitionEnter) {
+        onTransitionEnter();
+      }
+    };
+    const handleExited = () => {
+      setExited(true);
+      if (onTransitionExited) {
+        onTransitionExited();
+      }
+      if (closeAfterTransition) {
+        handleClose();
+      }
+    };
+    return {
+      onEnter: createChainedFunction(handleEnter, children == null ? void 0 : children.props.onEnter),
+      onExited: createChainedFunction(handleExited, children == null ? void 0 : children.props.onExited)
+    };
+  };
+  return {
+    getRootProps,
+    getBackdropProps,
+    getTransitionProps,
+    rootRef: handleRef,
+    portalRef: handlePortalRef,
+    isTopModal,
+    exited,
+    hasTransition
+  };
+}
+
+function getModalUtilityClass(slot) {
+  return generateUtilityClass('MuiModal', slot);
+}
+generateUtilityClasses('MuiModal', ['root', 'hidden', 'backdrop']);
+
+const _excluded$2 = ["BackdropComponent", "BackdropProps", "classes", "className", "closeAfterTransition", "children", "container", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onTransitionEnter", "onTransitionExited", "open", "slotProps", "slots", "theme"];
+const useUtilityClasses$2 = ownerState => {
+  const {
+    open,
+    exited,
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root', !open && exited && 'hidden'],
+    backdrop: ['backdrop']
+  };
+  return composeClasses(slots, getModalUtilityClass, classes);
+};
+const ModalRoot = styled('div', {
+  name: 'MuiModal',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, !ownerState.open && ownerState.exited && styles.hidden];
+  }
+})(({
+  theme,
+  ownerState
+}) => _extends$i({
+  position: 'fixed',
+  zIndex: (theme.vars || theme).zIndex.modal,
+  right: 0,
+  bottom: 0,
+  top: 0,
+  left: 0
+}, !ownerState.open && ownerState.exited && {
+  visibility: 'hidden'
+}));
+const ModalBackdrop = styled(Backdrop, {
+  name: 'MuiModal',
+  slot: 'Backdrop',
+  overridesResolver: (props, styles) => {
+    return styles.backdrop;
+  }
+})({
+  zIndex: -1
+});
+
+/**
+ * Modal is a lower-level construct that is leveraged by the following components:
+ *
+ * - [Dialog](/material-ui/api/dialog/)
+ * - [Drawer](/material-ui/api/drawer/)
+ * - [Menu](/material-ui/api/menu/)
+ * - [Popover](/material-ui/api/popover/)
+ *
+ * If you are creating a modal dialog, you probably want to use the [Dialog](/material-ui/api/dialog/) component
+ * rather than directly using Modal.
+ *
+ * This component shares many concepts with [react-overlays](https://react-bootstrap.github.io/react-overlays/#modals).
+ */
+const Modal = /*#__PURE__*/React$1.forwardRef(function Modal(inProps, ref) {
+  var _ref, _slots$root, _ref2, _slots$backdrop, _slotProps$root, _slotProps$backdrop;
+  const props = useDefaultProps({
+    name: 'MuiModal',
+    props: inProps
+  });
+  const {
+      BackdropComponent = ModalBackdrop,
+      BackdropProps,
+      className,
+      closeAfterTransition = false,
+      children,
+      container,
+      component,
+      components = {},
+      componentsProps = {},
+      disableAutoFocus = false,
+      disableEnforceFocus = false,
+      disableEscapeKeyDown = false,
+      disablePortal = false,
+      disableRestoreFocus = false,
+      disableScrollLock = false,
+      hideBackdrop = false,
+      keepMounted = false,
+      onBackdropClick,
+      open,
+      slotProps,
+      slots
+      // eslint-disable-next-line react/prop-types
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$2);
+  const propsWithDefaults = _extends$i({}, props, {
+    closeAfterTransition,
+    disableAutoFocus,
+    disableEnforceFocus,
+    disableEscapeKeyDown,
+    disablePortal,
+    disableRestoreFocus,
+    disableScrollLock,
+    hideBackdrop,
+    keepMounted
+  });
+  const {
+    getRootProps,
+    getBackdropProps,
+    getTransitionProps,
+    portalRef,
+    isTopModal,
+    exited,
+    hasTransition
+  } = useModal(_extends$i({}, propsWithDefaults, {
+    rootRef: ref
+  }));
+  const ownerState = _extends$i({}, propsWithDefaults, {
+    exited
+  });
+  const classes = useUtilityClasses$2(ownerState);
+  const childProps = {};
+  if (children.props.tabIndex === undefined) {
+    childProps.tabIndex = '-1';
+  }
+
+  // It's a Transition like component
+  if (hasTransition) {
+    const {
+      onEnter,
+      onExited
+    } = getTransitionProps();
+    childProps.onEnter = onEnter;
+    childProps.onExited = onExited;
+  }
+  const RootSlot = (_ref = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : components.Root) != null ? _ref : ModalRoot;
+  const BackdropSlot = (_ref2 = (_slots$backdrop = slots == null ? void 0 : slots.backdrop) != null ? _slots$backdrop : components.Backdrop) != null ? _ref2 : BackdropComponent;
+  const rootSlotProps = (_slotProps$root = slotProps == null ? void 0 : slotProps.root) != null ? _slotProps$root : componentsProps.root;
+  const backdropSlotProps = (_slotProps$backdrop = slotProps == null ? void 0 : slotProps.backdrop) != null ? _slotProps$backdrop : componentsProps.backdrop;
+  const rootProps = useSlotProps({
+    elementType: RootSlot,
+    externalSlotProps: rootSlotProps,
+    externalForwardedProps: other,
+    getSlotProps: getRootProps,
+    additionalProps: {
+      ref,
+      as: component
+    },
+    ownerState,
+    className: clsx(className, rootSlotProps == null ? void 0 : rootSlotProps.className, classes == null ? void 0 : classes.root, !ownerState.open && ownerState.exited && (classes == null ? void 0 : classes.hidden))
+  });
+  const backdropProps = useSlotProps({
+    elementType: BackdropSlot,
+    externalSlotProps: backdropSlotProps,
+    additionalProps: BackdropProps,
+    getSlotProps: otherHandlers => {
+      return getBackdropProps(_extends$i({}, otherHandlers, {
+        onClick: e => {
+          if (onBackdropClick) {
+            onBackdropClick(e);
+          }
+          if (otherHandlers != null && otherHandlers.onClick) {
+            otherHandlers.onClick(e);
+          }
+        }
+      }));
+    },
+    className: clsx(backdropSlotProps == null ? void 0 : backdropSlotProps.className, BackdropProps == null ? void 0 : BackdropProps.className, classes == null ? void 0 : classes.backdrop),
+    ownerState
+  });
+  if (!keepMounted && !open && (!hasTransition || exited)) {
+    return null;
+  }
+  return /*#__PURE__*/jsxRuntimeExports.jsx(Portal, {
+    ref: portalRef,
+    container: container,
+    disablePortal: disablePortal,
+    children: /*#__PURE__*/jsxRuntimeExports.jsxs(RootSlot, _extends$i({}, rootProps, {
+      children: [!hideBackdrop && BackdropComponent ? /*#__PURE__*/jsxRuntimeExports.jsx(BackdropSlot, _extends$i({}, backdropProps)) : null, /*#__PURE__*/jsxRuntimeExports.jsx(FocusTrap, {
+        disableEnforceFocus: disableEnforceFocus,
+        disableAutoFocus: disableAutoFocus,
+        disableRestoreFocus: disableRestoreFocus,
+        isEnabled: isTopModal,
+        open: open,
+        children: /*#__PURE__*/React$1.cloneElement(children, childProps)
+      })]
+    }))
+  });
+});
+process.env.NODE_ENV !== "production" ? Modal.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * A backdrop component. This prop enables custom backdrop rendering.
+   * @deprecated Use `slots.backdrop` instead. While this prop currently works, it will be removed in the next major version.
+   * Use the `slots.backdrop` prop to make your application ready for the next version of Material UI.
+   * @default styled(Backdrop, {
+   *   name: 'MuiModal',
+   *   slot: 'Backdrop',
+   *   overridesResolver: (props, styles) => {
+   *     return styles.backdrop;
+   *   },
+   * })({
+   *   zIndex: -1,
+   * })
+   */
+  BackdropComponent: PropTypes.elementType,
+  /**
+   * Props applied to the [`Backdrop`](/material-ui/api/backdrop/) element.
+   * @deprecated Use `slotProps.backdrop` instead.
+   */
+  BackdropProps: PropTypes.object,
+  /**
+   * A single child content element.
+   */
+  children: elementAcceptingRef.isRequired,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: PropTypes.object,
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+  /**
+   * When set to true the Modal waits until a nested Transition is completed before closing.
+   * @default false
+   */
+  closeAfterTransition: PropTypes.bool,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
+  /**
+   * The components used for each slot inside.
+   *
+   * This prop is an alias for the `slots` prop.
+   * It's recommended to use the `slots` prop instead.
+   *
+   * @default {}
+   */
+  components: PropTypes.shape({
+    Backdrop: PropTypes.elementType,
+    Root: PropTypes.elementType
+  }),
+  /**
+   * The extra props for the slot components.
+   * You can override the existing props or add new ones.
+   *
+   * This prop is an alias for the `slotProps` prop.
+   * It's recommended to use the `slotProps` prop instead, as `componentsProps` will be deprecated in the future.
+   *
+   * @default {}
+   */
+  componentsProps: PropTypes.shape({
+    backdrop: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+  }),
+  /**
+   * An HTML element or function that returns one.
+   * The `container` will have the portal children appended to it.
+   *
+   * You can also provide a callback, which is called in a React layout effect.
+   * This lets you set the container from a ref, and also makes server-side rendering possible.
+   *
+   * By default, it uses the body of the top-level document object,
+   * so it's simply `document.body` most of the time.
+   */
+  container: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([HTMLElementType, PropTypes.func]),
+  /**
+   * If `true`, the modal will not automatically shift focus to itself when it opens, and
+   * replace it to the last focused element when it closes.
+   * This also works correctly with any modal children that have the `disableAutoFocus` prop.
+   *
+   * Generally this should never be set to `true` as it makes the modal less
+   * accessible to assistive technologies, like screen readers.
+   * @default false
+   */
+  disableAutoFocus: PropTypes.bool,
+  /**
+   * If `true`, the modal will not prevent focus from leaving the modal while open.
+   *
+   * Generally this should never be set to `true` as it makes the modal less
+   * accessible to assistive technologies, like screen readers.
+   * @default false
+   */
+  disableEnforceFocus: PropTypes.bool,
+  /**
+   * If `true`, hitting escape will not fire the `onClose` callback.
+   * @default false
+   */
+  disableEscapeKeyDown: PropTypes.bool,
+  /**
+   * The `children` will be under the DOM hierarchy of the parent component.
+   * @default false
+   */
+  disablePortal: PropTypes.bool,
+  /**
+   * If `true`, the modal will not restore focus to previously focused element once
+   * modal is hidden or unmounted.
+   * @default false
+   */
+  disableRestoreFocus: PropTypes.bool,
+  /**
+   * Disable the scroll lock behavior.
+   * @default false
+   */
+  disableScrollLock: PropTypes.bool,
+  /**
+   * If `true`, the backdrop is not rendered.
+   * @default false
+   */
+  hideBackdrop: PropTypes.bool,
+  /**
+   * Always keep the children in the DOM.
+   * This prop can be useful in SEO situation or
+   * when you want to maximize the responsiveness of the Modal.
+   * @default false
+   */
+  keepMounted: PropTypes.bool,
+  /**
+   * Callback fired when the backdrop is clicked.
+   * @deprecated Use the `onClose` prop with the `reason` argument to handle the `backdropClick` events.
+   */
+  onBackdropClick: PropTypes.func,
+  /**
+   * Callback fired when the component requests to be closed.
+   * The `reason` parameter can optionally be used to control the response to `onClose`.
+   *
+   * @param {object} event The event source of the callback.
+   * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
+   */
+  onClose: PropTypes.func,
+  /**
+   * A function called when a transition enters.
+   */
+  onTransitionEnter: PropTypes.func,
+  /**
+   * A function called when a transition has exited.
+   */
+  onTransitionExited: PropTypes.func,
+  /**
+   * If `true`, the component is shown.
+   */
+  open: PropTypes.bool.isRequired,
+  /**
+   * The props used for each slot inside the Modal.
+   * @default {}
+   */
+  slotProps: PropTypes.shape({
+    backdrop: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+  }),
+  /**
+   * The components used for each slot inside the Modal.
+   * Either a string to use a HTML element or a component.
+   * @default {}
+   */
+  slots: PropTypes.shape({
+    backdrop: PropTypes.elementType,
+    root: PropTypes.elementType
+  }),
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
+} : void 0;
+
+function getDialogUtilityClass(slot) {
+  return generateUtilityClass('MuiDialog', slot);
+}
+const dialogClasses = generateUtilityClasses('MuiDialog', ['root', 'scrollPaper', 'scrollBody', 'container', 'paper', 'paperScrollPaper', 'paperScrollBody', 'paperWidthFalse', 'paperWidthXs', 'paperWidthSm', 'paperWidthMd', 'paperWidthLg', 'paperWidthXl', 'paperFullWidth', 'paperFullScreen']);
+
+const DialogContext = /*#__PURE__*/React$1.createContext({});
+if (process.env.NODE_ENV !== 'production') {
+  DialogContext.displayName = 'DialogContext';
+}
+
+const _excluded$1 = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
+const DialogBackdrop = styled(Backdrop, {
+  name: 'MuiDialog',
+  slot: 'Backdrop',
+  overrides: (props, styles) => styles.backdrop
+})({
+  // Improve scrollable dialog support.
+  zIndex: -1
+});
+const useUtilityClasses$1 = ownerState => {
+  const {
+    classes,
+    scroll,
+    maxWidth,
+    fullWidth,
+    fullScreen
+  } = ownerState;
+  const slots = {
+    root: ['root'],
+    container: ['container', `scroll${capitalize$1(scroll)}`],
+    paper: ['paper', `paperScroll${capitalize$1(scroll)}`, `paperWidth${capitalize$1(String(maxWidth))}`, fullWidth && 'paperFullWidth', fullScreen && 'paperFullScreen']
+  };
+  return composeClasses(slots, getDialogUtilityClass, classes);
+};
+const DialogRoot = styled(Modal, {
+  name: 'MuiDialog',
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})({
+  '@media print': {
+    // Use !important to override the Modal inline-style.
+    position: 'absolute !important'
+  }
+});
+const DialogContainer = styled('div', {
+  name: 'MuiDialog',
+  slot: 'Container',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.container, styles[`scroll${capitalize$1(ownerState.scroll)}`]];
+  }
+})(({
+  ownerState
+}) => _extends$i({
+  height: '100%',
+  '@media print': {
+    height: 'auto'
+  },
+  // We disable the focus ring for mouse, touch and keyboard users.
+  outline: 0
+}, ownerState.scroll === 'paper' && {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+}, ownerState.scroll === 'body' && {
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  textAlign: 'center',
+  '&::after': {
+    content: '""',
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    height: '100%',
+    width: '0'
+  }
+}));
+const DialogPaper = styled(Paper, {
+  name: 'MuiDialog',
+  slot: 'Paper',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.paper, styles[`scrollPaper${capitalize$1(ownerState.scroll)}`], styles[`paperWidth${capitalize$1(String(ownerState.maxWidth))}`], ownerState.fullWidth && styles.paperFullWidth, ownerState.fullScreen && styles.paperFullScreen];
+  }
+})(({
+  theme,
+  ownerState
+}) => _extends$i({
+  margin: 32,
+  position: 'relative',
+  overflowY: 'auto',
+  // Fix IE11 issue, to remove at some point.
+  '@media print': {
+    overflowY: 'visible',
+    boxShadow: 'none'
+  }
+}, ownerState.scroll === 'paper' && {
+  display: 'flex',
+  flexDirection: 'column',
+  maxHeight: 'calc(100% - 64px)'
+}, ownerState.scroll === 'body' && {
+  display: 'inline-block',
+  verticalAlign: 'middle',
+  textAlign: 'left' // 'initial' doesn't work on IE11
+}, !ownerState.maxWidth && {
+  maxWidth: 'calc(100% - 64px)'
+}, ownerState.maxWidth === 'xs' && {
+  maxWidth: theme.breakpoints.unit === 'px' ? Math.max(theme.breakpoints.values.xs, 444) : `max(${theme.breakpoints.values.xs}${theme.breakpoints.unit}, 444px)`,
+  [`&.${dialogClasses.paperScrollBody}`]: {
+    [theme.breakpoints.down(Math.max(theme.breakpoints.values.xs, 444) + 32 * 2)]: {
+      maxWidth: 'calc(100% - 64px)'
+    }
+  }
+}, ownerState.maxWidth && ownerState.maxWidth !== 'xs' && {
+  maxWidth: `${theme.breakpoints.values[ownerState.maxWidth]}${theme.breakpoints.unit}`,
+  [`&.${dialogClasses.paperScrollBody}`]: {
+    [theme.breakpoints.down(theme.breakpoints.values[ownerState.maxWidth] + 32 * 2)]: {
+      maxWidth: 'calc(100% - 64px)'
+    }
+  }
+}, ownerState.fullWidth && {
+  width: 'calc(100% - 64px)'
+}, ownerState.fullScreen && {
+  margin: 0,
+  width: '100%',
+  maxWidth: '100%',
+  height: '100%',
+  maxHeight: 'none',
+  borderRadius: 0,
+  [`&.${dialogClasses.paperScrollBody}`]: {
+    margin: 0,
+    maxWidth: '100%'
+  }
+}));
+
+/**
+ * Dialogs are overlaid modal paper based components with a backdrop.
+ */
+const Dialog = /*#__PURE__*/React$1.forwardRef(function Dialog(inProps, ref) {
+  const props = useDefaultProps({
+    props: inProps,
+    name: 'MuiDialog'
+  });
+  const theme = useTheme();
+  const defaultTransitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen
+  };
+  const {
+      'aria-describedby': ariaDescribedby,
+      'aria-labelledby': ariaLabelledbyProp,
+      BackdropComponent,
+      BackdropProps,
+      children,
+      className,
+      disableEscapeKeyDown = false,
+      fullScreen = false,
+      fullWidth = false,
+      maxWidth = 'sm',
+      onBackdropClick,
+      onClick,
+      onClose,
+      open,
+      PaperComponent = Paper,
+      PaperProps = {},
+      scroll = 'paper',
+      TransitionComponent = Fade,
+      transitionDuration = defaultTransitionDuration,
+      TransitionProps
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded$1);
+  const ownerState = _extends$i({}, props, {
+    disableEscapeKeyDown,
+    fullScreen,
+    fullWidth,
+    maxWidth,
+    scroll
+  });
+  const classes = useUtilityClasses$1(ownerState);
+  const backdropClick = React$1.useRef();
+  const handleMouseDown = event => {
+    // We don't want to close the dialog when clicking the dialog content.
+    // Make sure the event starts and ends on the same DOM element.
+    backdropClick.current = event.target === event.currentTarget;
+  };
+  const handleBackdropClick = event => {
+    if (onClick) {
+      onClick(event);
+    }
+
+    // Ignore the events not coming from the "backdrop".
+    if (!backdropClick.current) {
+      return;
+    }
+    backdropClick.current = null;
+    if (onBackdropClick) {
+      onBackdropClick(event);
+    }
+    if (onClose) {
+      onClose(event, 'backdropClick');
+    }
+  };
+  const ariaLabelledby = useId(ariaLabelledbyProp);
+  const dialogContextValue = React$1.useMemo(() => {
+    return {
+      titleId: ariaLabelledby
+    };
+  }, [ariaLabelledby]);
+  return /*#__PURE__*/jsxRuntimeExports.jsx(DialogRoot, _extends$i({
+    className: clsx(classes.root, className),
+    closeAfterTransition: true,
+    components: {
+      Backdrop: DialogBackdrop
+    },
+    componentsProps: {
+      backdrop: _extends$i({
+        transitionDuration,
+        as: BackdropComponent
+      }, BackdropProps)
+    },
+    disableEscapeKeyDown: disableEscapeKeyDown,
+    onClose: onClose,
+    open: open,
+    ref: ref,
+    onClick: handleBackdropClick,
+    ownerState: ownerState
+  }, other, {
+    children: /*#__PURE__*/jsxRuntimeExports.jsx(TransitionComponent, _extends$i({
+      appear: true,
+      in: open,
+      timeout: transitionDuration,
+      role: "presentation"
+    }, TransitionProps, {
+      children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogContainer, {
+        className: clsx(classes.container),
+        onMouseDown: handleMouseDown,
+        ownerState: ownerState,
+        children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogPaper, _extends$i({
+          as: PaperComponent,
+          elevation: 24,
+          role: "dialog",
+          "aria-describedby": ariaDescribedby,
+          "aria-labelledby": ariaLabelledby
+        }, PaperProps, {
+          className: clsx(classes.paper, PaperProps.className),
+          ownerState: ownerState,
+          children: /*#__PURE__*/jsxRuntimeExports.jsx(DialogContext.Provider, {
+            value: dialogContextValue,
+            children: children
+          })
+        }))
+      })
+    }))
+  }));
+});
+process.env.NODE_ENV !== "production" ? Dialog.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * The id(s) of the element(s) that describe the dialog.
+   */
+  'aria-describedby': PropTypes.string,
+  /**
+   * The id(s) of the element(s) that label the dialog.
+   */
+  'aria-labelledby': PropTypes.string,
+  /**
+   * A backdrop component. This prop enables custom backdrop rendering.
+   * @deprecated Use `slots.backdrop` instead. While this prop currently works, it will be removed in the next major version.
+   * Use the `slots.backdrop` prop to make your application ready for the next version of Material UI.
+   * @default styled(Backdrop, {
+   *   name: 'MuiModal',
+   *   slot: 'Backdrop',
+   *   overridesResolver: (props, styles) => {
+   *     return styles.backdrop;
+   *   },
+   * })({
+   *   zIndex: -1,
+   * })
+   */
+  BackdropComponent: PropTypes.elementType,
+  /**
+   * @ignore
+   */
+  BackdropProps: PropTypes.object,
+  /**
+   * Dialog children, usually the included sub-components.
+   */
+  children: PropTypes.node,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: PropTypes.object,
+  /**
+   * @ignore
+   */
+  className: PropTypes.string,
+  /**
+   * If `true`, hitting escape will not fire the `onClose` callback.
+   * @default false
+   */
+  disableEscapeKeyDown: PropTypes.bool,
+  /**
+   * If `true`, the dialog is full-screen.
+   * @default false
+   */
+  fullScreen: PropTypes.bool,
+  /**
+   * If `true`, the dialog stretches to `maxWidth`.
+   *
+   * Notice that the dialog width grow is limited by the default margin.
+   * @default false
+   */
+  fullWidth: PropTypes.bool,
+  /**
+   * Determine the max-width of the dialog.
+   * The dialog width grows with the size of the screen.
+   * Set to `false` to disable `maxWidth`.
+   * @default 'sm'
+   */
+  maxWidth: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', false]), PropTypes.string]),
+  /**
+   * Callback fired when the backdrop is clicked.
+   * @deprecated Use the `onClose` prop with the `reason` argument to handle the `backdropClick` events.
+   */
+  onBackdropClick: PropTypes.func,
+  /**
+   * @ignore
+   */
+  onClick: PropTypes.func,
+  /**
+   * Callback fired when the component requests to be closed.
+   *
+   * @param {object} event The event source of the callback.
+   * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
+   */
+  onClose: PropTypes.func,
+  /**
+   * If `true`, the component is shown.
+   */
+  open: PropTypes.bool.isRequired,
+  /**
+   * The component used to render the body of the dialog.
+   * @default Paper
+   */
+  PaperComponent: PropTypes.elementType,
+  /**
+   * Props applied to the [`Paper`](/material-ui/api/paper/) element.
+   * @default {}
+   */
+  PaperProps: PropTypes.object,
+  /**
+   * Determine the container for scrolling the dialog.
+   * @default 'paper'
+   */
+  scroll: PropTypes.oneOf(['body', 'paper']),
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+  /**
+   * The component used for the transition.
+   * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+   * @default Fade
+   */
+  TransitionComponent: PropTypes.elementType,
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   * @default {
+   *   enter: theme.transitions.duration.enteringScreen,
+   *   exit: theme.transitions.duration.leavingScreen,
+   * }
+   */
+  transitionDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+    appear: PropTypes.number,
+    enter: PropTypes.number,
+    exit: PropTypes.number
+  })]),
+  /**
+   * Props applied to the transition element.
+   * By default, the element is based on this [`Transition`](https://reactcommunity.org/react-transition-group/transition/) component.
+   */
+  TransitionProps: PropTypes.object
+} : void 0;
+
+const Stack = createStack({
+  createStyledComponent: styled('div', {
+    name: 'MuiStack',
+    slot: 'Root',
+    overridesResolver: (props, styles) => styles.root
+  }),
+  useThemeProps: inProps => useDefaultProps({
+    props: inProps,
+    name: 'MuiStack'
+  })
+});
+process.env.NODE_ENV !== "production" ? Stack.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * The content of the component.
+   */
+  children: PropTypes.node,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: PropTypes.elementType,
+  /**
+   * Defines the `flex-direction` style property.
+   * It is applied for all screen sizes.
+   * @default 'column'
+   */
+  direction: PropTypes.oneOfType([PropTypes.oneOf(['column-reverse', 'column', 'row-reverse', 'row']), PropTypes.arrayOf(PropTypes.oneOf(['column-reverse', 'column', 'row-reverse', 'row'])), PropTypes.object]),
+  /**
+   * Add an element between each child.
+   */
+  divider: PropTypes.node,
+  /**
+   * Defines the space between immediate children.
+   * @default 0
+   */
+  spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
+  /**
+   * The system prop, which allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+  /**
+   * If `true`, the CSS flexbox `gap` is used instead of applying `margin` to children.
+   *
+   * While CSS `gap` removes the [known limitations](https://mui.com/joy-ui/react-stack/#limitations),
+   * it is not fully supported in some browsers. We recommend checking https://caniuse.com/?search=flex%20gap before using this flag.
+   *
+   * To enable this flag globally, follow the [theme's default props](https://mui.com/material-ui/customization/theme-components/#default-props) configuration.
+   * @default false
+   */
+  useFlexGap: PropTypes.bool
+} : void 0;
+
+const _excluded = ["disableUnderline", "components", "componentsProps", "fullWidth", "inputComponent", "multiline", "slotProps", "slots", "type"];
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    disableUnderline
+  } = ownerState;
+  const slots = {
+    root: ['root', !disableUnderline && 'underline'],
+    input: ['input']
+  };
+  const composedClasses = composeClasses(slots, getInputUtilityClass, classes);
+  return _extends$i({}, classes, composedClasses);
+};
+const InputRoot = styled(InputBaseRoot, {
+  shouldForwardProp: prop => rootShouldForwardProp(prop) || prop === 'classes',
+  name: 'MuiInput',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [...rootOverridesResolver(props, styles), !ownerState.disableUnderline && styles.underline];
+  }
+})(({
+  theme,
+  ownerState
+}) => {
+  const light = theme.palette.mode === 'light';
+  let bottomLineColor = light ? 'rgba(0, 0, 0, 0.42)' : 'rgba(255, 255, 255, 0.7)';
+  if (theme.vars) {
+    bottomLineColor = `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})`;
+  }
+  return _extends$i({
+    position: 'relative'
+  }, ownerState.formControl && {
+    'label + &': {
+      marginTop: 16
+    }
+  }, !ownerState.disableUnderline && {
+    '&::after': {
+      borderBottom: `2px solid ${(theme.vars || theme).palette[ownerState.color].main}`,
+      left: 0,
+      bottom: 0,
+      // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
+      content: '""',
+      position: 'absolute',
+      right: 0,
+      transform: 'scaleX(0)',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shorter,
+        easing: theme.transitions.easing.easeOut
+      }),
+      pointerEvents: 'none' // Transparent to the hover style.
+    },
+    [`&.${inputClasses.focused}:after`]: {
+      // translateX(0) is a workaround for Safari transform scale bug
+      // See https://github.com/mui/material-ui/issues/31766
+      transform: 'scaleX(1) translateX(0)'
+    },
+    [`&.${inputClasses.error}`]: {
+      '&::before, &::after': {
+        borderBottomColor: (theme.vars || theme).palette.error.main
+      }
+    },
+    '&::before': {
+      borderBottom: `1px solid ${bottomLineColor}`,
+      left: 0,
+      bottom: 0,
+      // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
+      content: '"\\00a0"',
+      position: 'absolute',
+      right: 0,
+      transition: theme.transitions.create('border-bottom-color', {
+        duration: theme.transitions.duration.shorter
+      }),
+      pointerEvents: 'none' // Transparent to the hover style.
+    },
+    [`&:hover:not(.${inputClasses.disabled}, .${inputClasses.error}):before`]: {
+      borderBottom: `2px solid ${(theme.vars || theme).palette.text.primary}`,
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        borderBottom: `1px solid ${bottomLineColor}`
+      }
+    },
+    [`&.${inputClasses.disabled}:before`]: {
+      borderBottomStyle: 'dotted'
+    }
+  });
+});
+const InputInput = styled(InputBaseComponent, {
+  name: 'MuiInput',
+  slot: 'Input',
+  overridesResolver: inputOverridesResolver
+})({});
+const Input = /*#__PURE__*/React$1.forwardRef(function Input(inProps, ref) {
+  var _ref, _slots$root, _ref2, _slots$input;
+  const props = useDefaultProps({
+    props: inProps,
+    name: 'MuiInput'
+  });
+  const {
+      disableUnderline,
+      components = {},
+      componentsProps: componentsPropsProp,
+      fullWidth = false,
+      inputComponent = 'input',
+      multiline = false,
+      slotProps,
+      slots = {},
+      type = 'text'
+    } = props,
+    other = _objectWithoutPropertiesLoose$1(props, _excluded);
+  const classes = useUtilityClasses(props);
+  const ownerState = {
+    disableUnderline
+  };
+  const inputComponentsProps = {
+    root: {
+      ownerState
+    }
+  };
+  const componentsProps = (slotProps != null ? slotProps : componentsPropsProp) ? deepmerge$1(slotProps != null ? slotProps : componentsPropsProp, inputComponentsProps) : inputComponentsProps;
+  const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : InputRoot;
+  const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : InputInput;
+  return /*#__PURE__*/jsxRuntimeExports.jsx(InputBase$1, _extends$i({
+    slots: {
+      root: RootSlot,
+      input: InputSlot
+    },
+    slotProps: componentsProps,
+    fullWidth: fullWidth,
+    inputComponent: inputComponent,
+    multiline: multiline,
+    ref: ref,
+    type: type
+  }, other, {
+    classes: classes
+  }));
+});
+process.env.NODE_ENV !== "production" ? Input.propTypes /* remove-proptypes */ = {
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
+  /**
+   * This prop helps users to fill forms faster, especially on mobile devices.
+   * The name can be confusing, as it's more like an autofill.
+   * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
+   */
+  autoComplete: PropTypes.string,
+  /**
+   * If `true`, the `input` element is focused during the first mount.
+   */
+  autoFocus: PropTypes.bool,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: PropTypes.object,
+  /**
+   * The color of the component.
+   * It supports both default and custom theme colors, which can be added as shown in the
+   * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+   * The prop defaults to the value (`'primary'`) inherited from the parent FormControl component.
+   */
+  color: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([PropTypes.oneOf(['primary', 'secondary']), PropTypes.string]),
+  /**
+   * The components used for each slot inside.
+   *
+   * This prop is an alias for the `slots` prop.
+   * It's recommended to use the `slots` prop instead.
+   *
+   * @default {}
+   */
+  components: PropTypes.shape({
+    Input: PropTypes.elementType,
+    Root: PropTypes.elementType
+  }),
+  /**
+   * The extra props for the slot components.
+   * You can override the existing props or add new ones.
+   *
+   * This prop is an alias for the `slotProps` prop.
+   * It's recommended to use the `slotProps` prop instead, as `componentsProps` will be deprecated in the future.
+   *
+   * @default {}
+   */
+  componentsProps: PropTypes.shape({
+    input: PropTypes.object,
+    root: PropTypes.object
+  }),
+  /**
+   * The default value. Use when the component is not controlled.
+   */
+  defaultValue: PropTypes.any,
+  /**
+   * If `true`, the component is disabled.
+   * The prop defaults to the value (`false`) inherited from the parent FormControl component.
+   */
+  disabled: PropTypes.bool,
+  /**
+   * If `true`, the `input` will not have an underline.
+   */
+  disableUnderline: PropTypes.bool,
+  /**
+   * End `InputAdornment` for this component.
+   */
+  endAdornment: PropTypes.node,
+  /**
+   * If `true`, the `input` will indicate an error.
+   * The prop defaults to the value (`false`) inherited from the parent FormControl component.
+   */
+  error: PropTypes.bool,
+  /**
+   * If `true`, the `input` will take up the full width of its container.
+   * @default false
+   */
+  fullWidth: PropTypes.bool,
+  /**
+   * The id of the `input` element.
+   */
+  id: PropTypes.string,
+  /**
+   * The component used for the `input` element.
+   * Either a string to use a HTML element or a component.
+   * @default 'input'
+   */
+  inputComponent: PropTypes.elementType,
+  /**
+   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * @default {}
+   */
+  inputProps: PropTypes.object,
+  /**
+   * Pass a ref to the `input` element.
+   */
+  inputRef: refType,
+  /**
+   * If `dense`, will adjust vertical spacing. This is normally obtained via context from
+   * FormControl.
+   * The prop defaults to the value (`'none'`) inherited from the parent FormControl component.
+   */
+  margin: PropTypes.oneOf(['dense', 'none']),
+  /**
+   * Maximum number of rows to display when multiline option is set to true.
+   */
+  maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * Minimum number of rows to display when multiline option is set to true.
+   */
+  minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * If `true`, a [TextareaAutosize](/material-ui/react-textarea-autosize/) element is rendered.
+   * @default false
+   */
+  multiline: PropTypes.bool,
+  /**
+   * Name attribute of the `input` element.
+   */
+  name: PropTypes.string,
+  /**
+   * Callback fired when the value is changed.
+   *
+   * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
+   * You can pull out the new value by accessing `event.target.value` (string).
+   */
+  onChange: PropTypes.func,
+  /**
+   * The short hint displayed in the `input` before the user enters a value.
+   */
+  placeholder: PropTypes.string,
+  /**
+   * It prevents the user from changing the value of the field
+   * (not from interacting with the field).
+   */
+  readOnly: PropTypes.bool,
+  /**
+   * If `true`, the `input` element is required.
+   * The prop defaults to the value (`false`) inherited from the parent FormControl component.
+   */
+  required: PropTypes.bool,
+  /**
+   * Number of rows to display when multiline option is set to true.
+   */
+  rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /**
+   * The extra props for the slot components.
+   * You can override the existing props or add new ones.
+   *
+   * This prop is an alias for the `componentsProps` prop, which will be deprecated in the future.
+   *
+   * @default {}
+   */
+  slotProps: PropTypes.shape({
+    input: PropTypes.object,
+    root: PropTypes.object
+  }),
+  /**
+   * The components used for each slot inside.
+   *
+   * This prop is an alias for the `components` prop, which will be deprecated in the future.
+   *
+   * @default {}
+   */
+  slots: PropTypes.shape({
+    input: PropTypes.elementType,
+    root: PropTypes.elementType
+  }),
+  /**
+   * Start `InputAdornment` for this component.
+   */
+  startAdornment: PropTypes.node,
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+  /**
+   * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
+   * @default 'text'
+   */
+  type: PropTypes.string,
+  /**
+   * The value of the `input` element, required for a controlled component.
+   */
+  value: PropTypes.any
+} : void 0;
+Input.muiName = 'Input';
+
 var AstroCard = function AstroCard(props) {
-  return jsxRuntimeExports.jsx(Stack, {
+  return jsxRuntimeExports.jsx(Stack$1, {
     borderRadius: "12px",
     // px="16px"
     // boxSizing="border-box"
     justifyContent: "center",
     border: "1px solid ".concat(PALETTE.secondary.grey[2]),
     bgcolor: "rgb(255,255,255)",
+    width: "100%",
     children: props.children
   });
 };
 
-var _path$6;
-function _extends$8() { return _extends$8 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$8.apply(null, arguments); }
+var _path$c;
+function _extends$g() { return _extends$g = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$g.apply(null, arguments); }
 var SvgChevronRight = function SvgChevronRight(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$8({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$g({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$6 || (_path$6 = /*#__PURE__*/React.createElement("path", {
+  }, props), _path$c || (_path$c = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M12.44 6.44a1.5 1.5 0 0 1 2.12 0l8.5 8.5a1.5 1.5 0 0 1 0 2.12l-8.5 8.5a1.5 1.5 0 0 1-2.12-2.12L19.878 16l-7.44-7.44a1.5 1.5 0 0 1 0-2.12",
@@ -12122,85 +15833,85 @@ var SvgChevronRight = function SvgChevronRight(props) {
   })));
 };
 
-var _g$2, _defs$2;
-function _extends$7() { return _extends$7 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$7.apply(null, arguments); }
+var _g$3, _defs$3;
+function _extends$f() { return _extends$f = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$f.apply(null, arguments); }
 var SvgPhoneIcon = function SvgPhoneIcon(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$7({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$f({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 8 8"
-  }, props), _g$2 || (_g$2 = /*#__PURE__*/React.createElement("g", {
+  }, props), _g$3 || (_g$3 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#PhoneIcon_svg__a)"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M1.875 0A.875.875 0 0 0 1 .875v6.25c0 .483.392.875.875.875h4.25A.875.875 0 0 0 7 7.125V.875A.875.875 0 0 0 6.125 0zM1.75.875c0-.069.056-.125.125-.125h4.25c.069 0 .125.056.125.125v6.25a.125.125 0 0 1-.125.125h-4.25a.125.125 0 0 1-.125-.125zM4 6.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1",
     clipRule: "evenodd"
-  }))), _defs$2 || (_defs$2 = /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("clipPath", {
+  }))), _defs$3 || (_defs$3 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "PhoneIcon_svg__a"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     d: "M0 0h8v8H0z"
   })))));
 };
 
-var _g$1, _defs$1;
-function _extends$6() { return _extends$6 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$6.apply(null, arguments); }
+var _g$2, _defs$2;
+function _extends$e() { return _extends$e = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$e.apply(null, arguments); }
 var SvgGlobeIcon = function SvgGlobeIcon(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$6({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$e({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 28 28"
-  }, props), _g$1 || (_g$1 = /*#__PURE__*/React.createElement("g", {
+  }, props), _g$2 || (_g$2 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#GlobeIcon_svg__a)"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M2.7 12.688h4.783c.252-3.63 1.515-6.574 2.766-8.66q.312-.518.617-.966C6.514 4.307 3.23 8.078 2.7 12.687m4.783 2.624H2.7c.53 4.61 3.815 8.381 8.166 9.626a21 21 0 0 1-.617-.966c-1.251-2.086-2.514-5.03-2.766-8.66m2.633 0h7.768c-.245 3.038-1.31 5.518-2.385 7.31A17.5 17.5 0 0 1 14 24.749a17.5 17.5 0 0 1-1.5-2.127c-1.074-1.792-2.139-4.272-2.384-7.31m7.769-2.624h-7.77c.246-3.038 1.31-5.519 2.386-7.31A17.5 17.5 0 0 1 14 3.251c.429.519.964 1.234 1.5 2.127 1.074 1.791 2.139 4.272 2.385 7.31m2.632 2.624c-.252 3.63-1.515 6.574-2.767 8.66a20 20 0 0 1-.616.966c4.351-1.245 7.636-5.016 8.166-9.625zm4.783-2.624h-4.783c-.252-3.63-1.515-6.574-2.767-8.66a21 21 0 0 0-.616-.966c4.352 1.245 7.636 5.016 8.166 9.626M14 0C6.268 0 0 6.268 0 14s6.268 14 14 14 14-6.268 14-14S21.732 0 14 0",
     clipRule: "evenodd"
-  }))), _defs$1 || (_defs$1 = /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("clipPath", {
+  }))), _defs$2 || (_defs$2 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "GlobeIcon_svg__a"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     d: "M0 0h28v28H0z"
   })))));
 };
 
-var _g, _path$5, _defs;
-function _extends$5() { return _extends$5 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$5.apply(null, arguments); }
+var _g$1, _path$b, _defs$1;
+function _extends$d() { return _extends$d = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$d.apply(null, arguments); }
 var SvgStrikeThroughGlobeIcon = function SvgStrikeThroughGlobeIcon(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$5({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$d({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 16 16"
-  }, props), _g || (_g = /*#__PURE__*/React.createElement("g", {
+  }, props), _g$1 || (_g$1 = /*#__PURE__*/React$1.createElement("g", {
     clipPath: "url(#StrikeThroughGlobeIcon_svg__a)"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     fillRule: "evenodd",
     d: "M4.276 7.25H1.543a6.51 6.51 0 0 1 4.666-5.5q-.174.256-.352.552C5.142 3.494 4.42 5.176 4.276 7.25m-2.733 1.5h2.733q.017.242.044.476L6.296 7.25H5.78a9.64 9.64 0 0 1 1.363-4.177c.306-.51.612-.919.857-1.215a10.154 10.154 0 0 1 1.412 2.277l1.124-1.125a12 12 0 0 0-.745-1.26q.748.215 1.412.593l1.093-1.093A8 8 0 0 0 1.25 12.296l1.093-1.093a6.5 6.5 0 0 1-.8-2.453M14.615 3.5l-1.084 1.084a6.5 6.5 0 0 1 .926 2.666h-2.733a11 11 0 0 0-.083-.782v.006L9.366 8.75h.855a9.64 9.64 0 0 1-1.363 4.177c-.306.51-.612.919-.857 1.215a10.114 10.114 0 0 1-1.514-2.513l-1.134 1.134a12 12 0 0 0 .857 1.487 6.5 6.5 0 0 1-1.625-.719L3.5 14.615A8 8 0 0 0 14.615 3.5m-4.472 10.198c.715-1.192 1.437-2.874 1.581-4.948h2.733a6.51 6.51 0 0 1-4.666 5.5q.175-.256.352-.552",
     clipRule: "evenodd"
-  }))), _path$5 || (_path$5 = /*#__PURE__*/React.createElement("path", {
+  }))), _path$b || (_path$b = /*#__PURE__*/React$1.createElement("path", {
     stroke: "#fff",
     strokeLinecap: "round",
     strokeWidth: 1.4,
     d: "M1 15 15 1"
-  })), _defs || (_defs = /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("clipPath", {
+  })), _defs$1 || (_defs$1 = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
     id: "StrikeThroughGlobeIcon_svg__a"
-  }, /*#__PURE__*/React.createElement("path", {
+  }, /*#__PURE__*/React$1.createElement("path", {
     fill: "#fff",
     d: "M0 0h16v16H0z"
   })))));
 };
 
-var _path$4;
-function _extends$4() { return _extends$4 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$4.apply(null, arguments); }
+var _path$a;
+function _extends$c() { return _extends$c = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$c.apply(null, arguments); }
 var SvgFilterIcon = function SvgFilterIcon(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$4({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$c({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$4 || (_path$4 = /*#__PURE__*/React.createElement("path", {
+  }, props), _path$a || (_path$a = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M1.5 6a1.5 1.5 0 0 0 0 3h29a1.5 1.5 0 0 0 0-3zM6 15.5A1.5 1.5 0 0 1 7.5 14h17a1.5 1.5 0 0 1 0 3h-17A1.5 1.5 0 0 1 6 15.5m6 8a1.5 1.5 0 0 1 1.5-1.5h5a1.5 1.5 0 0 1 0 3h-5a1.5 1.5 0 0 1-1.5-1.5",
@@ -12208,14 +15919,14 @@ var SvgFilterIcon = function SvgFilterIcon(props) {
   })));
 };
 
-var _path$3;
-function _extends$3() { return _extends$3 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$3.apply(null, arguments); }
+var _path$9;
+function _extends$b() { return _extends$b = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$b.apply(null, arguments); }
 var SvgLinkExternalIcon = function SvgLinkExternalIcon(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$3({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$b({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$3 || (_path$3 = /*#__PURE__*/React.createElement("path", {
+  }, props), _path$9 || (_path$9 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M21.207 2H29.5a.5.5 0 0 1 .5.5v8.293a.5.5 0 0 1-.854.353l-3.085-3.085-7.5 7.5a1.5 1.5 0 0 1-2.122-2.122l7.5-7.5-3.085-3.085A.5.5 0 0 1 21.207 2M7.5 4A3.5 3.5 0 0 0 4 7.5v17A3.5 3.5 0 0 0 7.5 28h17a3.5 3.5 0 0 0 3.5-3.5v-7a1.5 1.5 0 0 0-3 0v7a.5.5 0 0 1-.5.5h-17a.5.5 0 0 1-.5-.5v-17a.5.5 0 0 1 .5-.5h7a1.5 1.5 0 0 0 0-3z",
@@ -12225,10 +15936,10 @@ var SvgLinkExternalIcon = function SvgLinkExternalIcon(props) {
 
 var AstroSwitch = function AstroSwitch(props) {
   var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray$1(_useState, 2),
     hovering = _useState2[0],
     setHovering = _useState2[1];
-  return jsxRuntimeExports.jsx(Stack, {
+  return jsxRuntimeExports.jsx(Stack$1, {
     height: props.small ? '16px' : '28px',
     minHeight: props.small ? '16px' : '28px',
     width: props.small ? '34px' : '60px',
@@ -12248,7 +15959,7 @@ var AstroSwitch = function AstroSwitch(props) {
       cursor: 'pointer'
     },
     onClick: props.callback,
-    children: jsxRuntimeExports.jsx(Stack, {
+    children: jsxRuntimeExports.jsx(Stack$1, {
       height: props.small ? '13px' : '24px',
       width: props.small ? '13px' : '24px',
       borderRadius: "100%",
@@ -12309,25 +16020,25 @@ function _asyncToGenerator(n) {
   };
 }
 
-function _classCallCheck(a, n) {
+function _classCallCheck$1(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
 
-function _defineProperties(e, r) {
+function _defineProperties$1(e, r) {
   for (var t = 0; t < r.length; t++) {
     var o = r[t];
     o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, toPropertyKey(o.key), o);
   }
 }
-function _createClass(e, r, t) {
-  return t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+function _createClass$1(e, r, t) {
+  return t && _defineProperties$1(e, t), Object.defineProperty(e, "prototype", {
     writable: !1
   }), e;
 }
 
 var regeneratorRuntime$1 = {exports: {}};
 
-var _typeof = {exports: {}};
+var _typeof$1 = {exports: {}};
 
 (function (module) {
 	function _typeof(o) {
@@ -12340,9 +16051,9 @@ var _typeof = {exports: {}};
 	  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _typeof(o);
 	}
 	module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-} (_typeof));
+} (_typeof$1));
 
-var _typeofExports = _typeof.exports;
+var _typeofExports = _typeof$1.exports;
 
 (function (module) {
 	var _typeof = _typeofExports["default"];
@@ -12670,6 +16381,125 @@ try {
 
 var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
+var _path$8;
+function _extends$a() { return _extends$a = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$a.apply(null, arguments); }
+var SvgChevronLeft = function SvgChevronLeft(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$a({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$8 || (_path$8 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M19.557 25.56a1.5 1.5 0 0 1-2.122 0l-8.5-8.5a1.5 1.5 0 0 1 0-2.12l8.5-8.5a1.5 1.5 0 1 1 2.122 2.12L12.117 16l7.44 7.44a1.5 1.5 0 0 1 0 2.12",
+    clipRule: "evenodd"
+  })));
+};
+
+var _path$7;
+function _extends$9() { return _extends$9 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$9.apply(null, arguments); }
+var SvgChevronDown = function SvgChevronDown(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$9({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$7 || (_path$7 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M25.56 12.44a1.5 1.5 0 0 1 0 2.12l-8.5 8.5a1.5 1.5 0 0 1-2.12 0l-8.5-8.5a1.5 1.5 0 0 1 2.12-2.12L16 19.878l7.44-7.44a1.5 1.5 0 0 1 2.12 0",
+    clipRule: "evenodd"
+  })));
+};
+
+/* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
+function useResizeObserver(ref) {
+  var _useState = useState(null),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    element = _useState2[0],
+    setElement = _useState2[1];
+  var _useState3 = useState(undefined),
+    _useState4 = _slicedToArray$1(_useState3, 2),
+    rect = _useState4[0],
+    setRect = _useState4[1];
+  var observer = useRef(undefined);
+  //Clean up observer
+  var cleanOb = function cleanOb() {
+    if (observer.current) {
+      observer.current.disconnect();
+    }
+  };
+  useEffect(function () {
+    setElement(ref.current);
+  }, [ref]);
+  useEffect(function () {
+    if (!element) return;
+    // Element has changed, disconnect old observer
+    cleanOb();
+    var ob = observer.current = new ResizeObserver(function (_ref) {
+      var _ref2 = _slicedToArray$1(_ref, 1),
+        entry = _ref2[0];
+      // inlineSize and blockSize in entry.borderBoxSize and contentBoxSize
+      // inlineSize means height when write-mode is horizontal, and width when write-mode is vertical.
+      // blockSize means width when write-mode is horizontal, and height when write-mode is vertical.
+      // So, for the sake of simplicity, I will use getBoundingClientRect
+      setRect(entry.target.getBoundingClientRect());
+    });
+    ob.observe(element);
+    // disconnect when component is unmounted
+    return function () {
+      cleanOb();
+    };
+  }, [element]);
+  return rect;
+}
+
+/* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
+function DynamicContainer(props) {
+  var content = useRef(null);
+  var rect = useResizeObserver(content);
+  return jsxRuntimeExports.jsx("div", {
+    style: {
+      transition: "".concat(props.duration, "ms"),
+      height: "".concat(rect === null || rect === void 0 ? void 0 : rect.height, "px"),
+      width: props.fullWidth ? '100%' : "".concat(rect === null || rect === void 0 ? void 0 : rect.width, "px"),
+      maxWidth: props.fullWidth ? '100%' : "".concat(rect === null || rect === void 0 ? void 0 : rect.width, "px"),
+      overflowY: 'hidden'
+    },
+    children: jsxRuntimeExports.jsx("div", {
+      ref: content,
+      style: {
+        width: props.fullWidth ? '100%' : 'fit-content',
+        maxWidth: props.fullWidth ? '100%' : 'fit-content',
+        height: 'fit-content',
+        overflow: 'visible'
+      },
+      children: props.children
+    })
+  });
+}
+
+var _g, _defs;
+function _extends$8() { return _extends$8 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$8.apply(null, arguments); }
+var SvgInfoIcon = function SvgInfoIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$8({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 16 17"
+  }, props), _g || (_g = /*#__PURE__*/React$1.createElement("g", {
+    clipPath: "url(#InfoIcon_svg__a)"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M8 2a6.5 6.5 0 1 0 0 13A6.5 6.5 0 0 0 8 2M0 8.5a8 8 0 1 1 16 0 8 8 0 0 1-16 0m6.5-.25a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 .75.75V11h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25V9h-.25a.75.75 0 0 1-.75-.75M8 6.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2",
+    clipRule: "evenodd"
+  }))), _defs || (_defs = /*#__PURE__*/React$1.createElement("defs", null, /*#__PURE__*/React$1.createElement("clipPath", {
+    id: "InfoIcon_svg__a"
+  }, /*#__PURE__*/React$1.createElement("path", {
+    fill: "#fff",
+    d: "M0 .5h16v16H0z"
+  })))));
+};
+
 /**
  * Simple ponyfill for Object.fromEntries
  */
@@ -12686,7 +16516,7 @@ var fromEntries = function fromEntries(entries) {
  * Small wrapper around `useLayoutEffect` to get rid of the warning on SSR envs
  */
 
-var useIsomorphicLayoutEffect$1 = typeof window !== 'undefined' && window.document && window.document.createElement ? React.useLayoutEffect : React.useEffect;
+var useIsomorphicLayoutEffect$1 = typeof window !== 'undefined' && window.document && window.document.createElement ? React$1.useLayoutEffect : React$1.useEffect;
 
 /* global Map:readonly, Set:readonly, ArrayBuffer:readonly */
 
@@ -12836,7 +16666,7 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
     options = {};
   }
 
-  var prevOptions = React.useRef(null);
+  var prevOptions = React$1.useRef(null);
   var optionsWithDefaults = {
     onFirstUpdate: options.onFirstUpdate,
     placement: options.placement || 'bottom',
@@ -12844,7 +16674,7 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
     modifiers: options.modifiers || EMPTY_MODIFIERS
   };
 
-  var _React$useState = React.useState({
+  var _React$useState = React$1.useState({
     styles: {
       popper: {
         position: optionsWithDefaults.strategy,
@@ -12860,7 +16690,7 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
       state = _React$useState[0],
       setState = _React$useState[1];
 
-  var updateStateModifier = React.useMemo(function () {
+  var updateStateModifier = React$1.useMemo(function () {
     return {
       name: 'updateState',
       enabled: true,
@@ -12882,7 +16712,7 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
       requires: ['computeStyles']
     };
   }, []);
-  var popperOptions = React.useMemo(function () {
+  var popperOptions = React$1.useMemo(function () {
     var newOptions = {
       onFirstUpdate: optionsWithDefaults.onFirstUpdate,
       placement: optionsWithDefaults.placement,
@@ -12900,7 +16730,7 @@ var usePopper = function usePopper(referenceElement, popperElement, options) {
       return newOptions;
     }
   }, [optionsWithDefaults.onFirstUpdate, optionsWithDefaults.placement, optionsWithDefaults.strategy, optionsWithDefaults.modifiers, updateStateModifier]);
-  var popperInstanceRef = React.useRef();
+  var popperInstanceRef = React$1.useRef();
   useIsomorphicLayoutEffect$1(function () {
     if (popperInstanceRef.current) {
       popperInstanceRef.current.setOptions(popperOptions);
@@ -13434,8 +17264,8 @@ function useWindowSize(options = {}) {
 }
 
 var _templateObject$2, _templateObject2$1;
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function ownKeys$4(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$3(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$4(Object(t), !0).forEach(function (r) { _defineProperty$1(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 var fadeIn = keyframes(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteral(["\nfrom {\n  opacity: 0;\n}\nto {\n  opacity: 1;\n}\n"])));
 keyframes(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteral(["\nfrom {\n  opacity: 1;\n}\nto {\n  opacity: 0;\n}\n"])));
 var DEFAULT_CORNER_RADIUS = '12px';
@@ -13443,27 +17273,27 @@ var PADDING = '16px';
 function UrsorPopover(props) {
   var _props$margin, _props$width, _props$cornerRadius;
   var _useState = useState(undefined),
-    _useState2 = _slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray$1(_useState, 2),
     width = _useState2[0],
     setWidth = _useState2[1];
   var _useState3 = useState(undefined),
-    _useState4 = _slicedToArray(_useState3, 2);
+    _useState4 = _slicedToArray$1(_useState3, 2);
     _useState4[0];
     var setYOffset = _useState4[1];
   var _useState5 = useState(undefined),
-    _useState6 = _slicedToArray(_useState5, 2);
+    _useState6 = _slicedToArray$1(_useState5, 2);
     _useState6[0];
     var setMaxWidth = _useState6[1];
   var _useState7 = useState(undefined),
-    _useState8 = _slicedToArray(_useState7, 2),
+    _useState8 = _slicedToArray$1(_useState7, 2),
     maxHeight = _useState8[0],
     setMaxHeight = _useState8[1];
-  var _React$useState = React__default.useState(null),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
+  var _React$useState = React__default$1.useState(null),
+    _React$useState2 = _slicedToArray$1(_React$useState, 2),
     referenceElement = _React$useState2[0],
     setReferenceElement = _React$useState2[1];
-  var _React$useState3 = React__default.useState(null),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
+  var _React$useState3 = React__default$1.useState(null),
+    _React$useState4 = _slicedToArray$1(_React$useState3, 2),
     popperElement = _React$useState4[0],
     setPopperElement = _React$useState4[1];
   var _usePopper = usePopper(referenceElement, popperElement, {
@@ -13476,11 +17306,11 @@ function UrsorPopover(props) {
     styles = _usePopper.styles,
     attributes = _usePopper.attributes;
   var _useState9 = useState(null),
-    _useState10 = _slicedToArray(_useState9, 2),
+    _useState10 = _slicedToArray$1(_useState9, 2),
     buttonRef = _useState10[0],
     setButtonRef = _useState10[1];
   var _useState11 = useState(false),
-    _useState12 = _slicedToArray(_useState11, 2);
+    _useState12 = _slicedToArray$1(_useState11, 2);
     _useState12[0];
     var setIsFlipped = _useState12[1];
   useEffect(function () {
@@ -13501,7 +17331,7 @@ function UrsorPopover(props) {
     setMaxHeight((height !== null && height !== void 0 ? height : window.innerHeight) - ((_referenceElement$get2 = referenceElement === null || referenceElement === void 0 ? void 0 : referenceElement.getBoundingClientRect().top) !== null && _referenceElement$get2 !== void 0 ? _referenceElement$get2 : 0) - 62);
   }, [width, referenceElement, referenceElement === null || referenceElement === void 0 ? void 0 : referenceElement.offsetTop, referenceElement === null || referenceElement === void 0 ? void 0 : referenceElement.getBoundingClientRect().top, props.yOffset, height, windowWidth]);
   return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-    children: [jsxRuntimeExports.jsx(Stack, {
+    children: [jsxRuntimeExports.jsx(Stack$1, {
       ref: setReferenceElement,
       flex: props.flexButton ? 1 : undefined,
       // zIndex={
@@ -13526,12 +17356,12 @@ function UrsorPopover(props) {
         },
         open: props.open,
         onClick: props.closeCallback
-      }) : null, jsxRuntimeExports.jsx(Box, _objectSpread(_objectSpread({
+      }) : null, jsxRuntimeExports.jsx(Box, _objectSpread$3(_objectSpread$3({
         ref: setPopperElement,
         style: styles.popper
       }, attributes.popper), {}, {
         zIndex: props.zIndex || 3,
-        children: jsxRuntimeExports.jsx(Stack
+        children: jsxRuntimeExports.jsx(Stack$1
         //spacing={props.margin ?? "10px"}
         , {
           //spacing={props.margin ?? "10px"}
@@ -13573,6 +17403,167 @@ function UrsorPopover(props) {
     }), document.body) : null]
   });
 }
+
+var InfoButton = function InfoButton(props) {
+  var _useState = useState(false),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    open = _useState2[0],
+    setOpen = _useState2[1];
+  return jsxRuntimeExports.jsx(UrsorPopover, {
+    open: open,
+    content: jsxRuntimeExports.jsx(Stack$1, {
+      bgcolor: "rgb(255,255,255)",
+      borderRadius: "12px",
+      p: "16px",
+      boxSizing: "border-box",
+      spacing: "6px",
+      maxWidth: "333px",
+      children: jsxRuntimeExports.jsx(Typography$1, {
+        variant: "small",
+        children: props.text
+      })
+    }),
+    closeCallback: function closeCallback() {
+      return setOpen(false);
+    },
+    placement: props.rightAlign ? 'right' : 'left',
+    noPadding: true,
+    zIndex: 9999,
+    children: jsxRuntimeExports.jsx(Stack$1, {
+      onClick: function onClick() {
+        return setOpen(true);
+      },
+      sx: {
+        cursor: 'pointer',
+        '&:hover': {
+          opacity: 0.6
+        },
+        transition: '0.2s'
+      },
+      children: jsxRuntimeExports.jsxs(Stack$1, {
+        sx: {
+          cursor: 'pointer',
+          transition: '0.2s',
+          '&:hover': {
+            opacity: 0.8
+          },
+          svg: {
+            path: {
+              fill: PALETTE.secondary.grey[3]
+            }
+          }
+        },
+        direction: "row",
+        spacing: "6px",
+        alignItems: "center",
+        children: [jsxRuntimeExports.jsx(Typography$1, {
+          variant: "small",
+          bold: true,
+          color: PALETTE.secondary.grey[3],
+          maxLines: 1,
+          children: props.title
+        }), jsxRuntimeExports.jsx(SvgInfoIcon, {
+          width: "14px",
+          height: "14px"
+        })]
+      })
+    })
+  });
+};
+
+function ownKeys$3(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$2(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$3(Object(t), !0).forEach(function (r) { _defineProperty$1(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+var AstroBentoCard = function AstroBentoCard(props) {
+  var _useState = useState(false),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    collapsed = _useState2[0],
+    setCollapsed = _useState2[1];
+  return jsxRuntimeExports.jsxs(Stack$1, {
+    bgcolor: "rgb(255,255,255)",
+    borderRadius: "12px",
+    spacing: "20px",
+    p: "16px",
+    paddingBottom: props.paddingBottom,
+    flex: 1,
+    border: "1px solid ".concat(PALETTE.secondary.grey[2]),
+    width: "100%",
+    children: [jsxRuntimeExports.jsx(Stack$1, {
+      children: jsxRuntimeExports.jsxs(Stack$1, {
+        justifyContent: "space-between",
+        direction: "row",
+        children: [jsxRuntimeExports.jsxs(Stack$1, {
+          spacing: props.isMobile ? '6px' : undefined,
+          children: [jsxRuntimeExports.jsxs(Stack$1, {
+            children: [jsxRuntimeExports.jsxs(Stack$1, {
+              direction: "row",
+              sx: props.iconColor ? {
+                svg: {
+                  path: {
+                    fill: props.iconColor
+                  }
+                }
+              } : undefined,
+              alignItems: "center",
+              spacing: "6px",
+              children: [props.icon ? jsxRuntimeExports.jsx(props.icon, {
+                height: "20px",
+                width: "20px"
+              }) : null, jsxRuntimeExports.jsx(Typography$1, {
+                variant: props.isMobile ? 'normal' : 'large',
+                bold: true,
+                children: props.title
+              }), props.info && !props.isMobile && !props.infoButtonBelowTitle ? jsxRuntimeExports.jsx(Stack$1, {
+                pl: "12px",
+                height: "100%",
+                justifyContent: "flex-end",
+                sx: {
+                  transform: 'translateY(-2px)'
+                },
+                children: jsxRuntimeExports.jsx(InfoButton, _objectSpread$2({
+                  small: true
+                }, props.info))
+              }) : null]
+            }), props.info && (props.isMobile || props.infoButtonBelowTitle) ? jsxRuntimeExports.jsx(InfoButton, _objectSpread$2({
+              small: true
+            }, props.info)) : null]
+          }), props.subtitle ? jsxRuntimeExports.jsx(Typography$1, {
+            color: PALETTE.secondary.grey[4],
+            variant: "small",
+            children: props.subtitle
+          }) : null]
+        }), jsxRuntimeExports.jsxs(Stack$1, {
+          direction: "row",
+          spacing: "24px",
+          height: "fit-content",
+          children: [props.topRightStuff, !props.notCollapsible ? jsxRuntimeExports.jsx(Stack$1, {
+            sx: {
+              transform: "rotate(".concat(collapsed ? 0 : 180, "deg)"),
+              transition: '0.2s',
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.6
+              }
+            },
+            onClick: function onClick() {
+              return setCollapsed(!collapsed);
+            },
+            children: jsxRuntimeExports.jsx(SvgChevronDown, {
+              height: "24px",
+              width: "24px"
+            })
+          }) : null]
+        })]
+      })
+    }), !props.notCollapsible ? jsxRuntimeExports.jsx(DynamicContainer, {
+      duration: 800,
+      fullWidth: true,
+      children: collapsed ? null : props.children
+    }) : jsxRuntimeExports.jsx(Stack$1, {
+      flex: 1,
+      children: props.children
+    })]
+  });
+};
 
 var lodash = {exports: {}};
 
@@ -30779,6 +34770,22 @@ lodash.exports;
 var lodashExports = lodash.exports;
 var _ = /*@__PURE__*/getDefaultExportFromCjs(lodashExports);
 
+function _arrayWithoutHoles(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray$1(r);
+}
+
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _toConsumableArray(r) {
+  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray$1(r) || _nonIterableSpread();
+}
+
 var dayjs_min = {exports: {}};
 
 (function (module, exports) {
@@ -30787,6 +34794,147 @@ var dayjs_min = {exports: {}};
 
 var dayjs_minExports = dayjs_min.exports;
 var dayjs = /*@__PURE__*/getDefaultExportFromCjs(dayjs_minExports);
+
+var yInterval = 1; // hours
+var AstroTimeChart = function AstroTimeChart(props) {
+  var _useState = useState(0),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    maxTime = _useState2[0],
+    setMaxTime = _useState2[1]; // minutes
+  useEffect(function () {
+    var _$max, _props$times$;
+    return setMaxTime((_$max = _.max(props.times.map(function (t) {
+      return t.screenTime;
+    }))) !== null && _$max !== void 0 ? _$max : (_props$times$ = props.times[0]) === null || _props$times$ === void 0 ? void 0 : _props$times$.screenTime);
+  }, [props.times]);
+  var _useState3 = useState(1),
+    _useState4 = _slicedToArray$1(_useState3, 2),
+    nHorizontalLines = _useState4[0],
+    setNHorizontalLines = _useState4[1];
+  useEffect(function () {
+    var nIntervals = Math.ceil(maxTime / (60 * yInterval));
+    setNHorizontalLines(nIntervals === 1 ? 1 : nIntervals + 1); // if the total time is less than 1 hour, the y range should be only 1 hour for ease of viewing
+  }, [maxTime]);
+  return jsxRuntimeExports.jsxs(Stack$1, {
+    flex: 1,
+    px: props.barsXPadding ? "".concat(props.barsXPadding, "px") : '24px',
+    position: "relative",
+    mr: "56px !important",
+    children: [jsxRuntimeExports.jsx(Stack$1, {
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      position: "absolute",
+      children: jsxRuntimeExports.jsx(Stack$1, {
+        flex: 1,
+        justifyContent: "space-between",
+        pb: "28px",
+        children: _.reverse(_toConsumableArray(Array(nHorizontalLines + 1).keys())).map(function (i) {
+          return jsxRuntimeExports.jsx(Stack$1, {
+            height: "2px",
+            width: "100%",
+            bgcolor: PALETTE.secondary.grey[2],
+            position: "relative",
+            sx: {
+              opacity: nHorizontalLines > 9 && i % 2 ? 0 : 1
+            },
+            children: jsxRuntimeExports.jsx(Stack$1, {
+              width: "30px",
+              right: "-42px",
+              position: "absolute",
+              sx: {
+                transform: 'translateY(-50%)'
+              },
+              children: jsxRuntimeExports.jsx(Typography$1, {
+                bold: true,
+                color: PALETTE.secondary.grey[3],
+                children: "".concat(i * yInterval, "h")
+              })
+            })
+          }, i);
+        })
+      })
+    }), jsxRuntimeExports.jsx(Stack$1, {
+      direction: "row",
+      flex: 1,
+      justifyContent: "space-between",
+      zIndex: 2,
+      children: props.times.map(function (dayTime, i) {
+        var _props$barWidth, _props$labelFontSize;
+        return jsxRuntimeExports.jsxs(Stack$1, {
+          alignItems: "center",
+          width: "60px",
+          justifyContent: "flex-end",
+          spacing: "6px",
+          sx: props.selected !== dayTime.date ? {
+            cursor: 'pointer',
+            '&:hover': {
+              opacity: 0.7
+            },
+            transition: '0.2s'
+          } : null,
+          onClick: function onClick() {
+            return props.setSelectedDatetime(dayTime.date);
+          },
+          children: [jsxRuntimeExports.jsx(Stack$1, {
+            height: "".concat(100 * dayTime.screenTime / 60 / (yInterval * nHorizontalLines), "%"),
+            width: (_props$barWidth = props.barWidth) !== null && _props$barWidth !== void 0 ? _props$barWidth : '32px',
+            borderRadius: "4px 4px 0 0",
+            bgcolor: props.selected === dayTime.date ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[2],
+            sx: {
+              transition: '0.2s'
+            },
+            position: "relative",
+            children: dayTime.timeLimitReached ? jsxRuntimeExports.jsx(Stack$1, {
+              position: "absolute",
+              left: 0,
+              right: 0,
+              margin: "0 auto",
+              width: 0,
+              overflow: "visible",
+              alignItems: "center",
+              children: jsxRuntimeExports.jsx(Stack$1, {
+                width: "50px",
+                justifyContent: "center",
+                position: "absolute",
+                top: "-25px",
+                sx: {
+                  // transform: `translateX(-${
+                  //   props.limitReachedXTranslation ?? "8.5"
+                  // }px)`,
+                },
+                children: jsxRuntimeExports.jsx(Typography$1, {
+                  variant: "tiny",
+                  bold: true,
+                  color: PALETTE.secondary.grey[3],
+                  sx: {
+                    textAlign: 'center'
+                  },
+                  children: "Limit reached"
+                })
+              })
+            }) : null
+          }), jsxRuntimeExports.jsxs(Stack$1, {
+            children: [jsxRuntimeExports.jsx(Typography$1, {
+              bold: true,
+              color: props.selected === dayTime.date ? undefined : PALETTE.secondary.grey[3],
+              variant: (_props$labelFontSize = props.labelFontSize) !== null && _props$labelFontSize !== void 0 ? _props$labelFontSize : 'normal',
+              children: dayjs(dayTime.date).format(dayjs().utc().diff(dayTime.date, 'days') < 7 ? 'ddd' : 'MM/DD')
+            }), jsxRuntimeExports.jsx(Stack$1, {
+              width: "100%",
+              height: "2px",
+              bgcolor: props.selected === dayTime.date ? PALETTE.secondary.purple[2] : undefined,
+              sx: {
+                transition: '0.2s'
+              }
+            })]
+          })]
+        }, dayTime.date);
+      })
+    })]
+  });
+};
 
 var advancedFormat$1 = {exports: {}};
 
@@ -30797,9 +34945,2705 @@ var advancedFormat$1 = {exports: {}};
 var advancedFormatExports = advancedFormat$1.exports;
 var advancedFormat = /*@__PURE__*/getDefaultExportFromCjs(advancedFormatExports);
 
-var lib = {};
+const copyProperty = (to, from, property, ignoreNonConfigurable) => {
+	// `Function#length` should reflect the parameters of `to` not `from` since we keep its body.
+	// `Function#prototype` is non-writable and non-configurable so can never be modified.
+	if (property === 'length' || property === 'prototype') {
+		return;
+	}
 
-var FadeIn$1 = {};
+	// `Function#arguments` and `Function#caller` should not be copied. They were reported to be present in `Reflect.ownKeys` for some devices in React Native (#41), so we explicitly ignore them here.
+	if (property === 'arguments' || property === 'caller') {
+		return;
+	}
+
+	const toDescriptor = Object.getOwnPropertyDescriptor(to, property);
+	const fromDescriptor = Object.getOwnPropertyDescriptor(from, property);
+
+	if (!canCopyProperty(toDescriptor, fromDescriptor) && ignoreNonConfigurable) {
+		return;
+	}
+
+	Object.defineProperty(to, property, fromDescriptor);
+};
+
+// `Object.defineProperty()` throws if the property exists, is not configurable and either:
+//  - one its descriptors is changed
+//  - it is non-writable and its value is changed
+const canCopyProperty = function (toDescriptor, fromDescriptor) {
+	return toDescriptor === undefined || toDescriptor.configurable || (
+		toDescriptor.writable === fromDescriptor.writable &&
+		toDescriptor.enumerable === fromDescriptor.enumerable &&
+		toDescriptor.configurable === fromDescriptor.configurable &&
+		(toDescriptor.writable || toDescriptor.value === fromDescriptor.value)
+	);
+};
+
+const changePrototype = (to, from) => {
+	const fromPrototype = Object.getPrototypeOf(from);
+	if (fromPrototype === Object.getPrototypeOf(to)) {
+		return;
+	}
+
+	Object.setPrototypeOf(to, fromPrototype);
+};
+
+const wrappedToString = (withName, fromBody) => `/* Wrapped ${withName}*/\n${fromBody}`;
+
+const toStringDescriptor = Object.getOwnPropertyDescriptor(Function.prototype, 'toString');
+const toStringName = Object.getOwnPropertyDescriptor(Function.prototype.toString, 'name');
+
+// We call `from.toString()` early (not lazily) to ensure `from` can be garbage collected.
+// We use `bind()` instead of a closure for the same reason.
+// Calling `from.toString()` early also allows caching it in case `to.toString()` is called several times.
+const changeToString = (to, from, name) => {
+	const withName = name === '' ? '' : `with ${name.trim()}() `;
+	const newToString = wrappedToString.bind(null, withName, from.toString());
+	// Ensure `to.toString.toString` is non-enumerable and has the same `same`
+	Object.defineProperty(newToString, 'name', toStringName);
+	Object.defineProperty(to, 'toString', {...toStringDescriptor, value: newToString});
+};
+
+const mimicFn$1 = (to, from, {ignoreNonConfigurable = false} = {}) => {
+	const {name} = to;
+
+	for (const property of Reflect.ownKeys(from)) {
+		copyProperty(to, from, property, ignoreNonConfigurable);
+	}
+
+	changePrototype(to, from);
+	changeToString(to, from, name);
+
+	return to;
+};
+
+var mimicFn_1 = mimicFn$1;
+
+var dist$1 = {exports: {}};
+
+var pDefer = () => {
+	const ret = {};
+
+	ret.promise = new Promise((resolve, reject) => {
+		ret.resolve = resolve;
+		ret.reject = reject;
+	});
+
+	return ret;
+};
+
+(function (module, exports) {
+	var __awaiter = (commonjsGlobal && commonjsGlobal.__awaiter) || function (thisArg, _arguments, P, generator) {
+	    return new (P || (P = Promise))(function (resolve, reject) {
+	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+	        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+	        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
+	    });
+	};
+	var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+	    return (mod && mod.__esModule) ? mod : { "default": mod };
+	};
+	Object.defineProperty(exports, "__esModule", { value: true });
+	const p_defer_1 = __importDefault(pDefer);
+	function mapAgeCleaner(map, property = 'maxAge') {
+	    let processingKey;
+	    let processingTimer;
+	    let processingDeferred;
+	    const cleanup = () => __awaiter(this, void 0, void 0, function* () {
+	        if (processingKey !== undefined) {
+	            // If we are already processing an item, we can safely exit
+	            return;
+	        }
+	        const setupTimer = (item) => __awaiter(this, void 0, void 0, function* () {
+	            processingDeferred = p_defer_1.default();
+	            const delay = item[1][property] - Date.now();
+	            if (delay <= 0) {
+	                // Remove the item immediately if the delay is equal to or below 0
+	                map.delete(item[0]);
+	                processingDeferred.resolve();
+	                return;
+	            }
+	            // Keep track of the current processed key
+	            processingKey = item[0];
+	            processingTimer = setTimeout(() => {
+	                // Remove the item when the timeout fires
+	                map.delete(item[0]);
+	                if (processingDeferred) {
+	                    processingDeferred.resolve();
+	                }
+	            }, delay);
+	            // tslint:disable-next-line:strict-type-predicates
+	            if (typeof processingTimer.unref === 'function') {
+	                // Don't hold up the process from exiting
+	                processingTimer.unref();
+	            }
+	            return processingDeferred.promise;
+	        });
+	        try {
+	            for (const entry of map) {
+	                yield setupTimer(entry);
+	            }
+	        }
+	        catch (_a) {
+	            // Do nothing if an error occurs, this means the timer was cleaned up and we should stop processing
+	        }
+	        processingKey = undefined;
+	    });
+	    const reset = () => {
+	        processingKey = undefined;
+	        if (processingTimer !== undefined) {
+	            clearTimeout(processingTimer);
+	            processingTimer = undefined;
+	        }
+	        if (processingDeferred !== undefined) { // tslint:disable-line:early-exit
+	            processingDeferred.reject(undefined);
+	            processingDeferred = undefined;
+	        }
+	    };
+	    const originalSet = map.set.bind(map);
+	    map.set = (key, value) => {
+	        if (map.has(key)) {
+	            // If the key already exist, remove it so we can add it back at the end of the map.
+	            map.delete(key);
+	        }
+	        // Call the original `map.set`
+	        const result = originalSet(key, value);
+	        // If we are already processing a key and the key added is the current processed key, stop processing it
+	        if (processingKey && processingKey === key) {
+	            reset();
+	        }
+	        // Always run the cleanup method in case it wasn't started yet
+	        cleanup(); // tslint:disable-line:no-floating-promises
+	        return result;
+	    };
+	    cleanup(); // tslint:disable-line:no-floating-promises
+	    return map;
+	}
+	exports.default = mapAgeCleaner;
+	// Add support for CJS
+	module.exports = mapAgeCleaner;
+	module.exports.default = mapAgeCleaner; 
+} (dist$1, dist$1.exports));
+
+var distExports = dist$1.exports;
+
+const mimicFn = mimicFn_1;
+const mapAgeCleaner = distExports;
+const decoratorInstanceMap = new WeakMap();
+const cacheStore = new WeakMap();
+/**
+[Memoize](https://en.wikipedia.org/wiki/Memoization) functions - An optimization used to speed up consecutive function calls by caching the result of calls with identical input.
+
+@param fn - Function to be memoized.
+
+@example
+```
+import mem = require('mem');
+
+let i = 0;
+const counter = () => ++i;
+const memoized = mem(counter);
+
+memoized('foo');
+//=> 1
+
+// Cached as it's the same arguments
+memoized('foo');
+//=> 1
+
+// Not cached anymore as the arguments changed
+memoized('bar');
+//=> 2
+
+memoized('bar');
+//=> 2
+```
+*/
+const mem = (fn, { cacheKey, cache = new Map(), maxAge } = {}) => {
+    if (typeof maxAge === 'number') {
+        // TODO: Drop after https://github.com/SamVerschueren/map-age-cleaner/issues/5
+        // @ts-expect-error
+        mapAgeCleaner(cache);
+    }
+    const memoized = function (...arguments_) {
+        const key = cacheKey ? cacheKey(arguments_) : arguments_[0];
+        const cacheItem = cache.get(key);
+        if (cacheItem) {
+            return cacheItem.data;
+        }
+        const result = fn.apply(this, arguments_);
+        cache.set(key, {
+            data: result,
+            maxAge: maxAge ? Date.now() + maxAge : Number.POSITIVE_INFINITY
+        });
+        return result;
+    };
+    mimicFn(memoized, fn, {
+        ignoreNonConfigurable: true
+    });
+    cacheStore.set(memoized, cache);
+    return memoized;
+};
+/**
+@returns A [decorator](https://github.com/tc39/proposal-decorators) to memoize class methods or static class methods.
+
+@example
+```
+import mem = require('mem');
+
+class Example {
+    index = 0
+
+    @mem.decorator()
+    counter() {
+        return ++this.index;
+    }
+}
+
+class ExampleWithOptions {
+    index = 0
+
+    @mem.decorator({maxAge: 1000})
+    counter() {
+        return ++this.index;
+    }
+}
+```
+*/
+mem.decorator = (options = {}) => (target, propertyKey, descriptor) => {
+    const input = target[propertyKey];
+    if (typeof input !== 'function') {
+        throw new TypeError('The decorated value must be a function');
+    }
+    delete descriptor.value;
+    delete descriptor.writable;
+    descriptor.get = function () {
+        if (!decoratorInstanceMap.has(this)) {
+            const value = mem(input, options);
+            decoratorInstanceMap.set(this, value);
+            return value;
+        }
+        return decoratorInstanceMap.get(this);
+    };
+};
+/**
+Clear all cached data of a memoized function.
+
+@param fn - Memoized function.
+*/
+mem.clear = (fn) => {
+    const cache = cacheStore.get(fn);
+    if (!cache) {
+        throw new TypeError('Can\'t clear a function that was not memoized!');
+    }
+    if (typeof cache.clear !== 'function') {
+        throw new TypeError('The cache Map can\'t be cleared!');
+    }
+    cache.clear();
+};
+var dist = mem;
+
+var mem$1 = /*@__PURE__*/getDefaultExportFromCjs(dist);
+
+function isString(el) {
+    return typeof el === 'string';
+}
+function isUnique(el, index, arr) {
+    return arr.indexOf(el) === index;
+}
+function isAllLowerCase(el) {
+    return el.toLowerCase() === el;
+}
+function fixCommas(el) {
+    return el.indexOf(',') === -1 ? el : el.split(',');
+}
+function normalizeLocale(locale) {
+    if (!locale) {
+        return locale;
+    }
+    if (locale === 'C' || locale === 'posix' || locale === 'POSIX') {
+        return 'en-US';
+    }
+    // If there's a dot (.) in the locale, it's likely in the format of "en-US.UTF-8", so we only take the first part
+    if (locale.indexOf('.') !== -1) {
+        var _a = locale.split('.')[0], actualLocale = _a === void 0 ? '' : _a;
+        return normalizeLocale(actualLocale);
+    }
+    // If there's an at sign (@) in the locale, it's likely in the format of "en-US@posix", so we only take the first part
+    if (locale.indexOf('@') !== -1) {
+        var _b = locale.split('@')[0], actualLocale = _b === void 0 ? '' : _b;
+        return normalizeLocale(actualLocale);
+    }
+    // If there's a dash (-) in the locale and it's not all lower case, it's already in the format of "en-US", so we return it
+    if (locale.indexOf('-') === -1 || !isAllLowerCase(locale)) {
+        return locale;
+    }
+    var _c = locale.split('-'), splitEl1 = _c[0], _d = _c[1], splitEl2 = _d === void 0 ? '' : _d;
+    return "".concat(splitEl1, "-").concat(splitEl2.toUpperCase());
+}
+function getUserLocalesInternal(_a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.useFallbackLocale, useFallbackLocale = _c === void 0 ? true : _c, _d = _b.fallbackLocale, fallbackLocale = _d === void 0 ? 'en-US' : _d;
+    var languageList = [];
+    if (typeof navigator !== 'undefined') {
+        var rawLanguages = navigator.languages || [];
+        var languages = [];
+        for (var _i = 0, rawLanguages_1 = rawLanguages; _i < rawLanguages_1.length; _i++) {
+            var rawLanguagesItem = rawLanguages_1[_i];
+            languages = languages.concat(fixCommas(rawLanguagesItem));
+        }
+        var rawLanguage = navigator.language;
+        var language = rawLanguage ? fixCommas(rawLanguage) : rawLanguage;
+        languageList = languageList.concat(languages, language);
+    }
+    if (useFallbackLocale) {
+        languageList.push(fallbackLocale);
+    }
+    return languageList.filter(isString).map(normalizeLocale).filter(isUnique);
+}
+var getUserLocales = mem$1(getUserLocalesInternal, { cacheKey: JSON.stringify });
+function getUserLocaleInternal(options) {
+    return getUserLocales(options)[0] || null;
+}
+var getUserLocale = mem$1(getUserLocaleInternal, { cacheKey: JSON.stringify });
+
+/**
+ * Utils
+ */
+function makeGetEdgeOfNeighbor(getPeriod, getEdgeOfPeriod, defaultOffset) {
+    return function makeGetEdgeOfNeighborInternal(date, offset) {
+        if (offset === void 0) { offset = defaultOffset; }
+        var previousPeriod = getPeriod(date) + offset;
+        return getEdgeOfPeriod(previousPeriod);
+    };
+}
+function makeGetEnd(getBeginOfNextPeriod) {
+    return function makeGetEndInternal(date) {
+        return new Date(getBeginOfNextPeriod(date).getTime() - 1);
+    };
+}
+function makeGetRange(getStart, getEnd) {
+    return function makeGetRangeInternal(date) {
+        return [getStart(date), getEnd(date)];
+    };
+}
+/**
+ * Simple getters - getting a property of a given point in time
+ */
+/**
+ * Gets year from a given date.
+ *
+ * @param {DateLike} date Date to get year from
+ * @returns {number} Year
+ */
+function getYear(date) {
+    if (date instanceof Date) {
+        return date.getFullYear();
+    }
+    if (typeof date === 'number') {
+        return date;
+    }
+    var year = parseInt(date, 10);
+    if (typeof date === 'string' && !isNaN(year)) {
+        return year;
+    }
+    throw new Error("Failed to get year from date: ".concat(date, "."));
+}
+/**
+ * Gets month from a given date.
+ *
+ * @param {Date} date Date to get month from
+ * @returns {number} Month
+ */
+function getMonth(date) {
+    if (date instanceof Date) {
+        return date.getMonth();
+    }
+    throw new Error("Failed to get month from date: ".concat(date, "."));
+}
+/**
+ * Gets day of the month from a given date.
+ *
+ * @param {Date} date Date to get day of the month from
+ * @returns {number} Day of the month
+ */
+function getDate(date) {
+    if (date instanceof Date) {
+        return date.getDate();
+    }
+    throw new Error("Failed to get year from date: ".concat(date, "."));
+}
+/**
+ * Century
+ */
+/**
+ * Gets century start date from a given date.
+ *
+ * @param {DateLike} date Date to get century start from
+ * @returns {Date} Century start date
+ */
+function getCenturyStart(date) {
+    var year = getYear(date);
+    var centuryStartYear = year + ((-year + 1) % 100);
+    var centuryStartDate = new Date();
+    centuryStartDate.setFullYear(centuryStartYear, 0, 1);
+    centuryStartDate.setHours(0, 0, 0, 0);
+    return centuryStartDate;
+}
+/**
+ * Gets previous century start date from a given date.
+ *
+ * @param {DateLike} date Date to get previous century start from
+ * @returns {Date} Previous century start date
+ */
+var getPreviousCenturyStart = makeGetEdgeOfNeighbor(getYear, getCenturyStart, -100);
+/**
+ * Gets next century start date from a given date.
+ *
+ * @param {DateLike} date Date to get next century start from
+ * @returns {Date} Next century start date
+ */
+var getNextCenturyStart = makeGetEdgeOfNeighbor(getYear, getCenturyStart, 100);
+/**
+ * Gets century end date from a given date.
+ *
+ * @param {DateLike} date Date to get century end from
+ * @returns {Date} Century end date
+ */
+var getCenturyEnd = makeGetEnd(getNextCenturyStart);
+/**
+ * Gets previous century end date from a given date.
+ *
+ * @param {DateLike} date Date to get previous century end from
+ * @returns {Date} Previous century end date
+ */
+var getPreviousCenturyEnd = makeGetEdgeOfNeighbor(getYear, getCenturyEnd, -100);
+/**
+ * Gets century start and end dates from a given date.
+ *
+ * @param {DateLike} date Date to get century start and end from
+ * @returns {[Date, Date]} Century start and end dates
+ */
+var getCenturyRange = makeGetRange(getCenturyStart, getCenturyEnd);
+/**
+ * Decade
+ */
+/**
+ * Gets decade start date from a given date.
+ *
+ * @param {DateLike} date Date to get decade start from
+ * @returns {Date} Decade start date
+ */
+function getDecadeStart(date) {
+    var year = getYear(date);
+    var decadeStartYear = year + ((-year + 1) % 10);
+    var decadeStartDate = new Date();
+    decadeStartDate.setFullYear(decadeStartYear, 0, 1);
+    decadeStartDate.setHours(0, 0, 0, 0);
+    return decadeStartDate;
+}
+/**
+ * Gets previous decade start date from a given date.
+ *
+ * @param {DateLike} date Date to get previous decade start from
+ * @returns {Date} Previous decade start date
+ */
+var getPreviousDecadeStart = makeGetEdgeOfNeighbor(getYear, getDecadeStart, -10);
+/**
+ * Gets next decade start date from a given date.
+ *
+ * @param {DateLike} date Date to get next decade start from
+ * @returns {Date} Next decade start date
+ */
+var getNextDecadeStart = makeGetEdgeOfNeighbor(getYear, getDecadeStart, 10);
+/**
+ * Gets decade end date from a given date.
+ *
+ * @param {DateLike} date Date to get decade end from
+ * @returns {Date} Decade end date
+ */
+var getDecadeEnd = makeGetEnd(getNextDecadeStart);
+/**
+ * Gets previous decade end date from a given date.
+ *
+ * @param {DateLike} date Date to get previous decade end from
+ * @returns {Date} Previous decade end date
+ */
+var getPreviousDecadeEnd = makeGetEdgeOfNeighbor(getYear, getDecadeEnd, -10);
+/**
+ * Gets decade start and end dates from a given date.
+ *
+ * @param {DateLike} date Date to get decade start and end from
+ * @returns {[Date, Date]} Decade start and end dates
+ */
+var getDecadeRange = makeGetRange(getDecadeStart, getDecadeEnd);
+/**
+ * Year
+ */
+/**
+ * Gets year start date from a given date.
+ *
+ * @param {DateLike} date Date to get year start from
+ * @returns {Date} Year start date
+ */
+function getYearStart(date) {
+    var year = getYear(date);
+    var yearStartDate = new Date();
+    yearStartDate.setFullYear(year, 0, 1);
+    yearStartDate.setHours(0, 0, 0, 0);
+    return yearStartDate;
+}
+/**
+ * Gets previous year start date from a given date.
+ *
+ * @param {DateLike} date Date to get previous year start from
+ * @returns {Date} Previous year start date
+ */
+var getPreviousYearStart = makeGetEdgeOfNeighbor(getYear, getYearStart, -1);
+/**
+ * Gets next year start date from a given date.
+ *
+ * @param {DateLike} date Date to get next year start from
+ * @returns {Date} Next year start date
+ */
+var getNextYearStart = makeGetEdgeOfNeighbor(getYear, getYearStart, 1);
+/**
+ * Gets year end date from a given date.
+ *
+ * @param {DateLike} date Date to get year end from
+ * @returns {Date} Year end date
+ */
+var getYearEnd = makeGetEnd(getNextYearStart);
+/**
+ * Gets previous year end date from a given date.
+ *
+ * @param {DateLike} date Date to get previous year end from
+ * @returns {Date} Previous year end date
+ */
+var getPreviousYearEnd = makeGetEdgeOfNeighbor(getYear, getYearEnd, -1);
+/**
+ * Gets year start and end dates from a given date.
+ *
+ * @param {DateLike} date Date to get year start and end from
+ * @returns {[Date, Date]} Year start and end dates
+ */
+var getYearRange = makeGetRange(getYearStart, getYearEnd);
+/**
+ * Month
+ */
+function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
+    return function makeGetEdgeOfNeighborMonthInternal(date, offset) {
+        if (offset === void 0) { offset = defaultOffset; }
+        var year = getYear(date);
+        var month = getMonth(date) + offset;
+        var previousPeriod = new Date();
+        previousPeriod.setFullYear(year, month, 1);
+        previousPeriod.setHours(0, 0, 0, 0);
+        return getEdgeOfPeriod(previousPeriod);
+    };
+}
+/**
+ * Gets month start date from a given date.
+ *
+ * @param {DateLike} date Date to get month start from
+ * @returns {Date} Month start date
+ */
+function getMonthStart(date) {
+    var year = getYear(date);
+    var month = getMonth(date);
+    var monthStartDate = new Date();
+    monthStartDate.setFullYear(year, month, 1);
+    monthStartDate.setHours(0, 0, 0, 0);
+    return monthStartDate;
+}
+/**
+ * Gets previous month start date from a given date.
+ *
+ * @param {DateLike} date Date to get previous month start from
+ * @returns {Date} Previous month start date
+ */
+var getPreviousMonthStart = makeGetEdgeOfNeighborMonth(getMonthStart, -1);
+/**
+ * Gets next month start date from a given date.
+ *
+ * @param {DateLike} date Date to get next month start from
+ * @returns {Date} Next month start date
+ */
+var getNextMonthStart = makeGetEdgeOfNeighborMonth(getMonthStart, 1);
+/**
+ * Gets month end date from a given date.
+ *
+ * @param {DateLike} date Date to get month end from
+ * @returns {Date} Month end date
+ */
+var getMonthEnd = makeGetEnd(getNextMonthStart);
+/**
+ * Gets previous month end date from a given date.
+ *
+ * @param {DateLike} date Date to get previous month end from
+ * @returns {Date} Previous month end date
+ */
+var getPreviousMonthEnd = makeGetEdgeOfNeighborMonth(getMonthEnd, -1);
+/**
+ * Gets month start and end dates from a given date.
+ *
+ * @param {DateLike} date Date to get month start and end from
+ * @returns {[Date, Date]} Month start and end dates
+ */
+var getMonthRange = makeGetRange(getMonthStart, getMonthEnd);
+/**
+ * Day
+ */
+function makeGetEdgeOfNeighborDay(getEdgeOfPeriod, defaultOffset) {
+    return function makeGetEdgeOfNeighborDayInternal(date, offset) {
+        if (offset === void 0) { offset = defaultOffset; }
+        var year = getYear(date);
+        var month = getMonth(date);
+        var day = getDate(date) + offset;
+        var previousPeriod = new Date();
+        previousPeriod.setFullYear(year, month, day);
+        previousPeriod.setHours(0, 0, 0, 0);
+        return getEdgeOfPeriod(previousPeriod);
+    };
+}
+/**
+ * Gets day start date from a given date.
+ *
+ * @param {DateLike} date Date to get day start from
+ * @returns {Date} Day start date
+ */
+function getDayStart(date) {
+    var year = getYear(date);
+    var month = getMonth(date);
+    var day = getDate(date);
+    var dayStartDate = new Date();
+    dayStartDate.setFullYear(year, month, day);
+    dayStartDate.setHours(0, 0, 0, 0);
+    return dayStartDate;
+}
+/**
+ * Gets next day start date from a given date.
+ *
+ * @param {DateLike} date Date to get next day start from
+ * @returns {Date} Next day start date
+ */
+var getNextDayStart = makeGetEdgeOfNeighborDay(getDayStart, 1);
+/**
+ * Gets day end date from a given date.
+ *
+ * @param {DateLike} date Date to get day end from
+ * @returns {Date} Day end date
+ */
+var getDayEnd = makeGetEnd(getNextDayStart);
+/**
+ * Gets day start and end dates from a given date.
+ *
+ * @param {DateLike} date Date to get day start and end from
+ * @returns {[Date, Date]} Day start and end dates
+ */
+var getDayRange = makeGetRange(getDayStart, getDayEnd);
+/**
+ * Other
+ */
+/**
+ * Returns a number of days in a month of a given date.
+ *
+ * @param {Date} date Date
+ * @returns {number} Number of days in a month
+ */
+function getDaysInMonth(date) {
+    return getDate(getMonthEnd(date));
+}
+
+var _a;
+var CALENDAR_TYPES = {
+    GREGORY: 'gregory',
+    HEBREW: 'hebrew',
+    ISLAMIC: 'islamic',
+    ISO_8601: 'iso8601',
+};
+var CALENDAR_TYPE_LOCALES = (_a = {},
+    _a[CALENDAR_TYPES.GREGORY] = [
+        'en-CA',
+        'en-US',
+        'es-AR',
+        'es-BO',
+        'es-CL',
+        'es-CO',
+        'es-CR',
+        'es-DO',
+        'es-EC',
+        'es-GT',
+        'es-HN',
+        'es-MX',
+        'es-NI',
+        'es-PA',
+        'es-PE',
+        'es-PR',
+        'es-SV',
+        'es-VE',
+        'pt-BR',
+    ],
+    _a[CALENDAR_TYPES.HEBREW] = ['he', 'he-IL'],
+    _a[CALENDAR_TYPES.ISLAMIC] = [
+        // ar-LB, ar-MA intentionally missing
+        'ar',
+        'ar-AE',
+        'ar-BH',
+        'ar-DZ',
+        'ar-EG',
+        'ar-IQ',
+        'ar-JO',
+        'ar-KW',
+        'ar-LY',
+        'ar-OM',
+        'ar-QA',
+        'ar-SA',
+        'ar-SD',
+        'ar-SY',
+        'ar-YE',
+        'dv',
+        'dv-MV',
+        'ps',
+        'ps-AR',
+    ],
+    _a);
+var WEEKDAYS = [0, 1, 2, 3, 4, 5, 6];
+
+var formatterCache = new Map();
+function getFormatter(options) {
+    return function formatter(locale, date) {
+        var localeWithDefault = locale || getUserLocale();
+        if (!formatterCache.has(localeWithDefault)) {
+            formatterCache.set(localeWithDefault, new Map());
+        }
+        var formatterCacheLocale = formatterCache.get(localeWithDefault);
+        if (!formatterCacheLocale.has(options)) {
+            formatterCacheLocale.set(options, new Intl.DateTimeFormat(localeWithDefault || undefined, options).format);
+        }
+        return formatterCacheLocale.get(options)(date);
+    };
+}
+/**
+ * Changes the hour in a Date to ensure right date formatting even if DST is messed up.
+ * Workaround for bug in WebKit and Firefox with historical dates.
+ * For more details, see:
+ * https://bugs.chromium.org/p/chromium/issues/detail?id=750465
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1385643
+ *
+ * @param {Date} date Date.
+ * @returns {Date} Date with hour set to 12.
+ */
+function toSafeHour(date) {
+    var safeDate = new Date(date);
+    return new Date(safeDate.setHours(12));
+}
+function getSafeFormatter(options) {
+    return function (locale, date) { return getFormatter(options)(locale, toSafeHour(date)); };
+}
+var formatDayOptions = { day: 'numeric' };
+var formatLongDateOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+};
+var formatMonthOptions = { month: 'long' };
+var formatMonthYearOptions = {
+    month: 'long',
+    year: 'numeric',
+};
+var formatShortWeekdayOptions = { weekday: 'short' };
+var formatWeekdayOptions = { weekday: 'long' };
+var formatYearOptions = { year: 'numeric' };
+var formatDay = getSafeFormatter(formatDayOptions);
+var formatLongDate = getSafeFormatter(formatLongDateOptions);
+var formatMonth = getSafeFormatter(formatMonthOptions);
+var formatMonthYear = getSafeFormatter(formatMonthYearOptions);
+var formatShortWeekday = getSafeFormatter(formatShortWeekdayOptions);
+var formatWeekday = getSafeFormatter(formatWeekdayOptions);
+var formatYear = getSafeFormatter(formatYearOptions);
+
+var SUNDAY = WEEKDAYS[0];
+var FRIDAY = WEEKDAYS[5];
+var SATURDAY = WEEKDAYS[6];
+/* Simple getters - getting a property of a given point in time */
+/**
+ * Gets day of the week of a given date.
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {number} Day of the week.
+ */
+function getDayOfWeek(date, calendarType) {
+    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
+    var weekday = date.getDay();
+    switch (calendarType) {
+        case CALENDAR_TYPES.ISO_8601:
+            // Shifts days of the week so that Monday is 0, Sunday is 6
+            return (weekday + 6) % 7;
+        case CALENDAR_TYPES.ISLAMIC:
+            return (weekday + 1) % 7;
+        case CALENDAR_TYPES.HEBREW:
+        case CALENDAR_TYPES.GREGORY:
+            return weekday;
+        default:
+            throw new Error('Unsupported calendar type.');
+    }
+}
+/**
+ * Century
+ */
+/**
+ * Gets the year of the beginning of a century of a given date.
+ * @param {Date} date Date.
+ * @returns {number} Year of the beginning of a century.
+ */
+function getBeginOfCenturyYear(date) {
+    var beginOfCentury = getCenturyStart(date);
+    return getYear(beginOfCentury);
+}
+/**
+ * Decade
+ */
+/**
+ * Gets the year of the beginning of a decade of a given date.
+ * @param {Date} date Date.
+ * @returns {number} Year of the beginning of a decade.
+ */
+function getBeginOfDecadeYear(date) {
+    var beginOfDecade = getDecadeStart(date);
+    return getYear(beginOfDecade);
+}
+/**
+ * Week
+ */
+/**
+ * Returns the beginning of a given week.
+ *
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {Date} Beginning of a given week.
+ */
+function getBeginOfWeek(date, calendarType) {
+    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
+    var year = getYear(date);
+    var monthIndex = getMonth(date);
+    var day = date.getDate() - getDayOfWeek(date, calendarType);
+    return new Date(year, monthIndex, day);
+}
+/**
+ * Gets week number according to ISO 8601 or US standard.
+ * In ISO 8601, Arabic and Hebrew week 1 is the one with January 4.
+ * In US calendar week 1 is the one with January 1.
+ *
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {number} Week number.
+ */
+function getWeekNumber(date, calendarType) {
+    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
+    var calendarTypeForWeekNumber = calendarType === CALENDAR_TYPES.GREGORY ? CALENDAR_TYPES.GREGORY : CALENDAR_TYPES.ISO_8601;
+    var beginOfWeek = getBeginOfWeek(date, calendarType);
+    var year = getYear(date) + 1;
+    var dayInWeekOne;
+    var beginOfFirstWeek;
+    // Look for the first week one that does not come after a given date
+    do {
+        dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === CALENDAR_TYPES.ISO_8601 ? 4 : 1);
+        beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
+        year -= 1;
+    } while (date < beginOfFirstWeek);
+    return Math.round((beginOfWeek.getTime() - beginOfFirstWeek.getTime()) / (8.64e7 * 7)) + 1;
+}
+/**
+ * Others
+ */
+/**
+ * Returns the beginning of a given range.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ * @returns {Date} Beginning of a given range.
+ */
+function getBegin(rangeType, date) {
+    switch (rangeType) {
+        case 'century':
+            return getCenturyStart(date);
+        case 'decade':
+            return getDecadeStart(date);
+        case 'year':
+            return getYearStart(date);
+        case 'month':
+            return getMonthStart(date);
+        case 'day':
+            return getDayStart(date);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+/**
+ * Returns the beginning of a previous given range.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ * @returns {Date} Beginning of a previous given range.
+ */
+function getBeginPrevious(rangeType, date) {
+    switch (rangeType) {
+        case 'century':
+            return getPreviousCenturyStart(date);
+        case 'decade':
+            return getPreviousDecadeStart(date);
+        case 'year':
+            return getPreviousYearStart(date);
+        case 'month':
+            return getPreviousMonthStart(date);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+/**
+ * Returns the beginning of a next given range.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ * @returns {Date} Beginning of a next given range.
+ */
+function getBeginNext(rangeType, date) {
+    switch (rangeType) {
+        case 'century':
+            return getNextCenturyStart(date);
+        case 'decade':
+            return getNextDecadeStart(date);
+        case 'year':
+            return getNextYearStart(date);
+        case 'month':
+            return getNextMonthStart(date);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+function getBeginPrevious2(rangeType, date) {
+    switch (rangeType) {
+        case 'decade':
+            return getPreviousDecadeStart(date, -100);
+        case 'year':
+            return getPreviousYearStart(date, -10);
+        case 'month':
+            return getPreviousMonthStart(date, -12);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+function getBeginNext2(rangeType, date) {
+    switch (rangeType) {
+        case 'decade':
+            return getNextDecadeStart(date, 100);
+        case 'year':
+            return getNextYearStart(date, 10);
+        case 'month':
+            return getNextMonthStart(date, 12);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+/**
+ * Returns the end of a given range.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ * @returns {Date} End of a given range.
+ */
+function getEnd(rangeType, date) {
+    switch (rangeType) {
+        case 'century':
+            return getCenturyEnd(date);
+        case 'decade':
+            return getDecadeEnd(date);
+        case 'year':
+            return getYearEnd(date);
+        case 'month':
+            return getMonthEnd(date);
+        case 'day':
+            return getDayEnd(date);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+/**
+ * Returns the end of a previous given range.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ * @returns {Date} End of a previous given range.
+ */
+function getEndPrevious(rangeType, date) {
+    switch (rangeType) {
+        case 'century':
+            return getPreviousCenturyEnd(date);
+        case 'decade':
+            return getPreviousDecadeEnd(date);
+        case 'year':
+            return getPreviousYearEnd(date);
+        case 'month':
+            return getPreviousMonthEnd(date);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+function getEndPrevious2(rangeType, date) {
+    switch (rangeType) {
+        case 'decade':
+            return getPreviousDecadeEnd(date, -100);
+        case 'year':
+            return getPreviousYearEnd(date, -10);
+        case 'month':
+            return getPreviousMonthEnd(date, -12);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+/**
+ * Returns an array with the beginning and the end of a given range.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date Date.
+ * @returns {Date[]} Beginning and end of a given range.
+ */
+function getRange(rangeType, date) {
+    switch (rangeType) {
+        case 'century':
+            return getCenturyRange(date);
+        case 'decade':
+            return getDecadeRange(date);
+        case 'year':
+            return getYearRange(date);
+        case 'month':
+            return getMonthRange(date);
+        case 'day':
+            return getDayRange(date);
+        default:
+            throw new Error("Invalid rangeType: ".concat(rangeType));
+    }
+}
+/**
+ * Creates a range out of two values, ensuring they are in order and covering entire period ranges.
+ *
+ * @param {RangeType} rangeType Range type (e.g. 'day')
+ * @param {Date} date1 First date.
+ * @param {Date} date2 Second date.
+ * @returns {Date[]} Beginning and end of a given range.
+ */
+function getValueRange(rangeType, date1, date2) {
+    var rawNextValue = [date1, date2].sort(function (a, b) { return a.getTime() - b.getTime(); });
+    return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
+}
+function toYearLabel(locale, formatYear$1, dates) {
+    if (formatYear$1 === void 0) { formatYear$1 = formatYear; }
+    return dates.map(function (date) { return formatYear$1(locale, date); }).join(' – ');
+}
+/**
+ * @callback FormatYear
+ * @param {string} locale Locale.
+ * @param {Date} date Date.
+ * @returns {string} Formatted year.
+ */
+/**
+ * Returns a string labelling a century of a given date.
+ * For example, for 2017 it will return 2001-2100.
+ *
+ * @param {string} locale Locale.
+ * @param {FormatYear} formatYear Function to format a year.
+ * @param {Date|string|number} date Date or a year as a string or as a number.
+ * @returns {string} String labelling a century of a given date.
+ */
+function getCenturyLabel(locale, formatYear, date) {
+    return toYearLabel(locale, formatYear, getCenturyRange(date));
+}
+/**
+ * Returns a string labelling a decade of a given date.
+ * For example, for 2017 it will return 2011-2020.
+ *
+ * @param {string} locale Locale.
+ * @param {FormatYear} formatYear Function to format a year.
+ * @param {Date|string|number} date Date or a year as a string or as a number.
+ * @returns {string} String labelling a decade of a given date.
+ */
+function getDecadeLabel(locale, formatYear, date) {
+    return toYearLabel(locale, formatYear, getDecadeRange(date));
+}
+/**
+ * Returns a boolean determining whether a given date is the current day of the week.
+ *
+ * @param {Date} date Date.
+ * @returns {boolean} Whether a given date is the current day of the week.
+ */
+function isCurrentDayOfWeek(date) {
+    return date.getDay() === new Date().getDay();
+}
+/**
+ * Returns a boolean determining whether a given date is a weekend day.
+ *
+ * @param {Date} date Date.
+ * @param {CalendarType} [calendarType="iso8601"] Calendar type.
+ * @returns {boolean} Whether a given date is a weekend day.
+ */
+function isWeekend(date, calendarType) {
+    if (calendarType === void 0) { calendarType = CALENDAR_TYPES.ISO_8601; }
+    var weekday = date.getDay();
+    switch (calendarType) {
+        case CALENDAR_TYPES.ISLAMIC:
+        case CALENDAR_TYPES.HEBREW:
+            return weekday === FRIDAY || weekday === SATURDAY;
+        case CALENDAR_TYPES.ISO_8601:
+        case CALENDAR_TYPES.GREGORY:
+            return weekday === SATURDAY || weekday === SUNDAY;
+        default:
+            throw new Error('Unsupported calendar type.');
+    }
+}
+
+var className$6 = 'react-calendar__navigation';
+function Navigation(_a) {
+    var activeStartDate = _a.activeStartDate, drillUp = _a.drillUp, _b = _a.formatMonthYear, formatMonthYear$1 = _b === void 0 ? formatMonthYear : _b, _c = _a.formatYear, formatYear$1 = _c === void 0 ? formatYear : _c, locale = _a.locale, maxDate = _a.maxDate, minDate = _a.minDate, _d = _a.navigationAriaLabel, navigationAriaLabel = _d === void 0 ? '' : _d, navigationAriaLive = _a.navigationAriaLive, navigationLabel = _a.navigationLabel, _e = _a.next2AriaLabel, next2AriaLabel = _e === void 0 ? '' : _e, _f = _a.next2Label, next2Label = _f === void 0 ? '»' : _f, _g = _a.nextAriaLabel, nextAriaLabel = _g === void 0 ? '' : _g, _h = _a.nextLabel, nextLabel = _h === void 0 ? '›' : _h, _j = _a.prev2AriaLabel, prev2AriaLabel = _j === void 0 ? '' : _j, _k = _a.prev2Label, prev2Label = _k === void 0 ? '«' : _k, _l = _a.prevAriaLabel, prevAriaLabel = _l === void 0 ? '' : _l, _m = _a.prevLabel, prevLabel = _m === void 0 ? '‹' : _m, setActiveStartDate = _a.setActiveStartDate, showDoubleView = _a.showDoubleView, view = _a.view, views = _a.views;
+    var drillUpAvailable = views.indexOf(view) > 0;
+    var shouldShowPrevNext2Buttons = view !== 'century';
+    var previousActiveStartDate = getBeginPrevious(view, activeStartDate);
+    var previousActiveStartDate2 = shouldShowPrevNext2Buttons
+        ? getBeginPrevious2(view, activeStartDate)
+        : undefined;
+    var nextActiveStartDate = getBeginNext(view, activeStartDate);
+    var nextActiveStartDate2 = shouldShowPrevNext2Buttons
+        ? getBeginNext2(view, activeStartDate)
+        : undefined;
+    var prevButtonDisabled = (function () {
+        if (previousActiveStartDate.getFullYear() < 0) {
+            return true;
+        }
+        var previousActiveEndDate = getEndPrevious(view, activeStartDate);
+        return minDate && minDate >= previousActiveEndDate;
+    })();
+    var prev2ButtonDisabled = shouldShowPrevNext2Buttons &&
+        (function () {
+            if (previousActiveStartDate2.getFullYear() < 0) {
+                return true;
+            }
+            var previousActiveEndDate = getEndPrevious2(view, activeStartDate);
+            return minDate && minDate >= previousActiveEndDate;
+        })();
+    var nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
+    var next2ButtonDisabled = shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
+    function onClickPrevious() {
+        setActiveStartDate(previousActiveStartDate, 'prev');
+    }
+    function onClickPrevious2() {
+        setActiveStartDate(previousActiveStartDate2, 'prev2');
+    }
+    function onClickNext() {
+        setActiveStartDate(nextActiveStartDate, 'next');
+    }
+    function onClickNext2() {
+        setActiveStartDate(nextActiveStartDate2, 'next2');
+    }
+    function renderLabel(date) {
+        var label = (function () {
+            switch (view) {
+                case 'century':
+                    return getCenturyLabel(locale, formatYear$1, date);
+                case 'decade':
+                    return getDecadeLabel(locale, formatYear$1, date);
+                case 'year':
+                    return formatYear$1(locale, date);
+                case 'month':
+                    return formatMonthYear$1(locale, date);
+                default:
+                    throw new Error("Invalid view: ".concat(view, "."));
+            }
+        })();
+        return navigationLabel
+            ? navigationLabel({
+                date: date,
+                label: label,
+                locale: locale || getUserLocale() || undefined,
+                view: view,
+            })
+            : label;
+    }
+    function renderButton() {
+        var labelClassName = "".concat(className$6, "__label");
+        return (jsxRuntimeExports.jsxs("button", { "aria-label": navigationAriaLabel, "aria-live": navigationAriaLive, className: labelClassName, disabled: !drillUpAvailable, onClick: drillUp, style: { flexGrow: 1 }, type: "button", children: [jsxRuntimeExports.jsx("span", { className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--from"), children: renderLabel(activeStartDate) }), showDoubleView ? (jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx("span", { className: "".concat(labelClassName, "__divider"), children: " \u2013 " }), jsxRuntimeExports.jsx("span", { className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--to"), children: renderLabel(nextActiveStartDate) })] })) : null] }));
+    }
+    return (jsxRuntimeExports.jsxs("div", { className: className$6, children: [prev2Label !== null && shouldShowPrevNext2Buttons ? (jsxRuntimeExports.jsx("button", { "aria-label": prev2AriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__prev2-button"), disabled: prev2ButtonDisabled, onClick: onClickPrevious2, type: "button", children: prev2Label })) : null, prevLabel !== null && (jsxRuntimeExports.jsx("button", { "aria-label": prevAriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__prev-button"), disabled: prevButtonDisabled, onClick: onClickPrevious, type: "button", children: prevLabel })), renderButton(), nextLabel !== null && (jsxRuntimeExports.jsx("button", { "aria-label": nextAriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__next-button"), disabled: nextButtonDisabled, onClick: onClickNext, type: "button", children: nextLabel })), next2Label !== null && shouldShowPrevNext2Buttons ? (jsxRuntimeExports.jsx("button", { "aria-label": next2AriaLabel, className: "".concat(className$6, "__arrow ").concat(className$6, "__next2-button"), disabled: next2ButtonDisabled, onClick: onClickNext2, type: "button", children: next2Label })) : null] }));
+}
+
+var __assign$e = (undefined && undefined.__assign) || function () {
+    __assign$e = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$e.apply(this, arguments);
+};
+var __rest$a = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+function toPercent(num) {
+    return "".concat(num, "%");
+}
+function Flex(_a) {
+    var children = _a.children, className = _a.className, count = _a.count, direction = _a.direction, offset = _a.offset, style = _a.style, wrap = _a.wrap, otherProps = __rest$a(_a, ["children", "className", "count", "direction", "offset", "style", "wrap"]);
+    return (jsxRuntimeExports.jsx("div", __assign$e({ className: className, style: __assign$e({ display: 'flex', flexDirection: direction, flexWrap: wrap ? 'wrap' : 'nowrap' }, style) }, otherProps, { children: Children.map(children, function (child, index) {
+            var marginInlineStart = offset && index === 0 ? toPercent((100 * offset) / count) : null;
+            return cloneElement(child, __assign$e(__assign$e({}, child.props), { style: {
+                    flexBasis: toPercent(100 / count),
+                    flexShrink: 0,
+                    flexGrow: 0,
+                    overflow: 'hidden',
+                    marginLeft: marginInlineStart,
+                    marginInlineStart: marginInlineStart,
+                    marginInlineEnd: 0,
+                } }));
+        }) })));
+}
+
+/**
+ * Returns a value no smaller than min and no larger than max.
+ *
+ * @param {Date} value Value to return.
+ * @param {Date} min Minimum return value.
+ * @param {Date} max Maximum return value.
+ * @returns {Date} Value between min and max.
+ */
+function between(value, min, max) {
+    if (min && min > value) {
+        return min;
+    }
+    if (max && max < value) {
+        return max;
+    }
+    return value;
+}
+function isValueWithinRange(value, range) {
+    return range[0] <= value && range[1] >= value;
+}
+function isRangeWithinRange(greaterRange, smallerRange) {
+    return greaterRange[0] <= smallerRange[0] && greaterRange[1] >= smallerRange[1];
+}
+function doRangesOverlap(range1, range2) {
+    return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
+}
+function getRangeClassNames(valueRange, dateRange, baseClassName) {
+    var isRange = doRangesOverlap(dateRange, valueRange);
+    var classes = [];
+    if (isRange) {
+        classes.push(baseClassName);
+        var isRangeStart = isValueWithinRange(valueRange[0], dateRange);
+        var isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
+        if (isRangeStart) {
+            classes.push("".concat(baseClassName, "Start"));
+        }
+        if (isRangeEnd) {
+            classes.push("".concat(baseClassName, "End"));
+        }
+        if (isRangeStart && isRangeEnd) {
+            classes.push("".concat(baseClassName, "BothEnds"));
+        }
+    }
+    return classes;
+}
+function isCompleteValue(value) {
+    if (Array.isArray(value)) {
+        return value[0] !== null && value[1] !== null;
+    }
+    return value !== null;
+}
+function getTileClasses(args) {
+    if (!args) {
+        throw new Error('args is required');
+    }
+    var value = args.value, date = args.date, hover = args.hover;
+    var className = 'react-calendar__tile';
+    var classes = [className];
+    if (!date) {
+        return classes;
+    }
+    var now = new Date();
+    var dateRange = (function () {
+        if (Array.isArray(date)) {
+            return date;
+        }
+        var dateType = args.dateType;
+        if (!dateType) {
+            throw new Error('dateType is required when date is not an array of two dates');
+        }
+        return getRange(dateType, date);
+    })();
+    if (isValueWithinRange(now, dateRange)) {
+        classes.push("".concat(className, "--now"));
+    }
+    if (!value || !isCompleteValue(value)) {
+        return classes;
+    }
+    var valueRange = (function () {
+        if (Array.isArray(value)) {
+            return value;
+        }
+        var valueType = args.valueType;
+        if (!valueType) {
+            throw new Error('valueType is required when value is not an array of two dates');
+        }
+        return getRange(valueType, value);
+    })();
+    if (isRangeWithinRange(valueRange, dateRange)) {
+        classes.push("".concat(className, "--active"));
+    }
+    else if (doRangesOverlap(valueRange, dateRange)) {
+        classes.push("".concat(className, "--hasActive"));
+    }
+    var valueRangeClassNames = getRangeClassNames(valueRange, dateRange, "".concat(className, "--range"));
+    classes.push.apply(classes, valueRangeClassNames);
+    var valueArray = Array.isArray(value) ? value : [value];
+    if (hover && valueArray.length === 1) {
+        var hoverRange = hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
+        var hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, "".concat(className, "--hover"));
+        classes.push.apply(classes, hoverRangeClassNames);
+    }
+    return classes;
+}
+
+function TileGroup(_a) {
+    var className = _a.className, _b = _a.count, count = _b === void 0 ? 3 : _b, dateTransform = _a.dateTransform, dateType = _a.dateType, end = _a.end, hover = _a.hover, offset = _a.offset, renderTile = _a.renderTile, start = _a.start, _c = _a.step, step = _c === void 0 ? 1 : _c, value = _a.value, valueType = _a.valueType;
+    var tiles = [];
+    for (var point = start; point <= end; point += step) {
+        var date = dateTransform(point);
+        tiles.push(renderTile({
+            classes: getTileClasses({
+                date: date,
+                dateType: dateType,
+                hover: hover,
+                value: value,
+                valueType: valueType,
+            }),
+            date: date,
+        }));
+    }
+    return (jsxRuntimeExports.jsx(Flex, { className: className, count: count, offset: offset, wrap: true, children: tiles }));
+}
+
+function Tile(props) {
+    var activeStartDate = props.activeStartDate, children = props.children, classes = props.classes, date = props.date, formatAbbr = props.formatAbbr, locale = props.locale, maxDate = props.maxDate, maxDateTransform = props.maxDateTransform, minDate = props.minDate, minDateTransform = props.minDateTransform, onClick = props.onClick, onMouseOver = props.onMouseOver, style = props.style, tileClassNameProps = props.tileClassName, tileContentProps = props.tileContent, tileDisabled = props.tileDisabled, view = props.view;
+    var tileClassName = useMemo(function () {
+        var args = { activeStartDate: activeStartDate, date: date, view: view };
+        return typeof tileClassNameProps === 'function' ? tileClassNameProps(args) : tileClassNameProps;
+    }, [activeStartDate, date, tileClassNameProps, view]);
+    var tileContent = useMemo(function () {
+        var args = { activeStartDate: activeStartDate, date: date, view: view };
+        return typeof tileContentProps === 'function' ? tileContentProps(args) : tileContentProps;
+    }, [activeStartDate, date, tileContentProps, view]);
+    return (jsxRuntimeExports.jsxs("button", { className: clsx(classes, tileClassName), disabled: (minDate && minDateTransform(minDate) > date) ||
+            (maxDate && maxDateTransform(maxDate) < date) ||
+            (tileDisabled && tileDisabled({ activeStartDate: activeStartDate, date: date, view: view })), onClick: onClick ? function (event) { return onClick(date, event); } : undefined, onFocus: onMouseOver ? function () { return onMouseOver(date); } : undefined, onMouseOver: onMouseOver ? function () { return onMouseOver(date); } : undefined, style: style, type: "button", children: [formatAbbr ? jsxRuntimeExports.jsx("abbr", { "aria-label": formatAbbr(locale, date), children: children }) : children, tileContent] }));
+}
+
+var __assign$d = (undefined && undefined.__assign) || function () {
+    __assign$d = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$d.apply(this, arguments);
+};
+var __rest$9 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var className$5 = 'react-calendar__century-view__decades__decade';
+function Decade(_a) {
+    var _b = _a.classes, classes = _b === void 0 ? [] : _b, currentCentury = _a.currentCentury, _c = _a.formatYear, formatYear$1 = _c === void 0 ? formatYear : _c, otherProps = __rest$9(_a, ["classes", "currentCentury", "formatYear"]);
+    var date = otherProps.date, locale = otherProps.locale;
+    var classesProps = [];
+    if (classes) {
+        classesProps.push.apply(classesProps, classes);
+    }
+    if (className$5) {
+        classesProps.push(className$5);
+    }
+    if (getCenturyStart(date).getFullYear() !== currentCentury) {
+        classesProps.push("".concat(className$5, "--neighboringCentury"));
+    }
+    return (jsxRuntimeExports.jsx(Tile, __assign$d({}, otherProps, { classes: classesProps, maxDateTransform: getDecadeEnd, minDateTransform: getDecadeStart, view: "century", children: getDecadeLabel(locale, formatYear$1, date) })));
+}
+
+var __assign$c = (undefined && undefined.__assign) || function () {
+    __assign$c = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$c.apply(this, arguments);
+};
+var __rest$8 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+function Decades(props) {
+    var activeStartDate = props.activeStartDate, hover = props.hover, showNeighboringCentury = props.showNeighboringCentury, value = props.value, valueType = props.valueType, otherProps = __rest$8(props, ["activeStartDate", "hover", "showNeighboringCentury", "value", "valueType"]);
+    var start = getBeginOfCenturyYear(activeStartDate);
+    var end = start + (showNeighboringCentury ? 119 : 99);
+    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__century-view__decades", dateTransform: getDecadeStart, dateType: "decade", end: end, hover: hover, renderTile: function (_a) {
+            var date = _a.date, otherTileProps = __rest$8(_a, ["date"]);
+            return (jsxRuntimeExports.jsx(Decade, __assign$c({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, currentCentury: start, date: date }), date.getTime()));
+        }, start: start, step: 10, value: value, valueType: valueType }));
+}
+
+var __assign$b = (undefined && undefined.__assign) || function () {
+    __assign$b = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$b.apply(this, arguments);
+};
+/**
+ * Displays a given century.
+ */
+function CenturyView(props) {
+    function renderDecades() {
+        return jsxRuntimeExports.jsx(Decades, __assign$b({}, props));
+    }
+    return jsxRuntimeExports.jsx("div", { className: "react-calendar__century-view", children: renderDecades() });
+}
+
+var __assign$a = (undefined && undefined.__assign) || function () {
+    __assign$a = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$a.apply(this, arguments);
+};
+var __rest$7 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var className$4 = 'react-calendar__decade-view__years__year';
+function Year(_a) {
+    var _b = _a.classes, classes = _b === void 0 ? [] : _b, currentDecade = _a.currentDecade, _c = _a.formatYear, formatYear$1 = _c === void 0 ? formatYear : _c, otherProps = __rest$7(_a, ["classes", "currentDecade", "formatYear"]);
+    var date = otherProps.date, locale = otherProps.locale;
+    var classesProps = [];
+    if (classes) {
+        classesProps.push.apply(classesProps, classes);
+    }
+    if (className$4) {
+        classesProps.push(className$4);
+    }
+    if (getDecadeStart(date).getFullYear() !== currentDecade) {
+        classesProps.push("".concat(className$4, "--neighboringDecade"));
+    }
+    return (jsxRuntimeExports.jsx(Tile, __assign$a({}, otherProps, { classes: classesProps, maxDateTransform: getYearEnd, minDateTransform: getYearStart, view: "decade", children: formatYear$1(locale, date) })));
+}
+
+var __assign$9 = (undefined && undefined.__assign) || function () {
+    __assign$9 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$9.apply(this, arguments);
+};
+var __rest$6 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+function Years(props) {
+    var activeStartDate = props.activeStartDate, hover = props.hover, showNeighboringDecade = props.showNeighboringDecade, value = props.value, valueType = props.valueType, otherProps = __rest$6(props, ["activeStartDate", "hover", "showNeighboringDecade", "value", "valueType"]);
+    var start = getBeginOfDecadeYear(activeStartDate);
+    var end = start + (showNeighboringDecade ? 11 : 9);
+    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__decade-view__years", dateTransform: getYearStart, dateType: "year", end: end, hover: hover, renderTile: function (_a) {
+            var date = _a.date, otherTileProps = __rest$6(_a, ["date"]);
+            return (jsxRuntimeExports.jsx(Year, __assign$9({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, currentDecade: start, date: date }), date.getTime()));
+        }, start: start, value: value, valueType: valueType }));
+}
+
+var __assign$8 = (undefined && undefined.__assign) || function () {
+    __assign$8 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$8.apply(this, arguments);
+};
+/**
+ * Displays a given decade.
+ */
+function DecadeView(props) {
+    function renderYears() {
+        return jsxRuntimeExports.jsx(Years, __assign$8({}, props));
+    }
+    return jsxRuntimeExports.jsx("div", { className: "react-calendar__decade-view", children: renderYears() });
+}
+
+var __assign$7 = (undefined && undefined.__assign) || function () {
+    __assign$7 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$7.apply(this, arguments);
+};
+var __rest$5 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+var className$3 = 'react-calendar__year-view__months__month';
+function Month(_a) {
+    var _b = _a.classes, classes = _b === void 0 ? [] : _b, _c = _a.formatMonth, formatMonth$1 = _c === void 0 ? formatMonth : _c, _d = _a.formatMonthYear, formatMonthYear$1 = _d === void 0 ? formatMonthYear : _d, otherProps = __rest$5(_a, ["classes", "formatMonth", "formatMonthYear"]);
+    var date = otherProps.date, locale = otherProps.locale;
+    return (jsxRuntimeExports.jsx(Tile, __assign$7({}, otherProps, { classes: __spreadArray(__spreadArray([], classes, true), [className$3], false), formatAbbr: formatMonthYear$1, maxDateTransform: getMonthEnd, minDateTransform: getMonthStart, view: "year", children: formatMonth$1(locale, date) })));
+}
+
+var __assign$6 = (undefined && undefined.__assign) || function () {
+    __assign$6 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$6.apply(this, arguments);
+};
+var __rest$4 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+function Months(props) {
+    var activeStartDate = props.activeStartDate, hover = props.hover, value = props.value, valueType = props.valueType, otherProps = __rest$4(props, ["activeStartDate", "hover", "value", "valueType"]);
+    var start = 0;
+    var end = 11;
+    var year = getYear(activeStartDate);
+    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__year-view__months", dateTransform: function (monthIndex) {
+            var date = new Date();
+            date.setFullYear(year, monthIndex, 1);
+            return getMonthStart(date);
+        }, dateType: "month", end: end, hover: hover, renderTile: function (_a) {
+            var date = _a.date, otherTileProps = __rest$4(_a, ["date"]);
+            return (jsxRuntimeExports.jsx(Month, __assign$6({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, date: date }), date.getTime()));
+        }, start: start, value: value, valueType: valueType }));
+}
+
+var __assign$5 = (undefined && undefined.__assign) || function () {
+    __assign$5 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$5.apply(this, arguments);
+};
+/**
+ * Displays a given year.
+ */
+function YearView(props) {
+    function renderMonths() {
+        return jsxRuntimeExports.jsx(Months, __assign$5({}, props));
+    }
+    return jsxRuntimeExports.jsx("div", { className: "react-calendar__year-view", children: renderMonths() });
+}
+
+var __assign$4 = (undefined && undefined.__assign) || function () {
+    __assign$4 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$4.apply(this, arguments);
+};
+var __rest$3 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var className$2 = 'react-calendar__month-view__days__day';
+function Day(_a) {
+    var calendarType = _a.calendarType, _b = _a.classes, classes = _b === void 0 ? [] : _b, currentMonthIndex = _a.currentMonthIndex, _c = _a.formatDay, formatDay$1 = _c === void 0 ? formatDay : _c, _d = _a.formatLongDate, formatLongDate$1 = _d === void 0 ? formatLongDate : _d, otherProps = __rest$3(_a, ["calendarType", "classes", "currentMonthIndex", "formatDay", "formatLongDate"]);
+    var date = otherProps.date, locale = otherProps.locale;
+    var classesProps = [];
+    if (classes) {
+        classesProps.push.apply(classesProps, classes);
+    }
+    if (className$2) {
+        classesProps.push(className$2);
+    }
+    if (isWeekend(date, calendarType)) {
+        classesProps.push("".concat(className$2, "--weekend"));
+    }
+    if (date.getMonth() !== currentMonthIndex) {
+        classesProps.push("".concat(className$2, "--neighboringMonth"));
+    }
+    return (jsxRuntimeExports.jsx(Tile, __assign$4({}, otherProps, { classes: classesProps, formatAbbr: formatLongDate$1, maxDateTransform: getDayEnd, minDateTransform: getDayStart, view: "month", children: formatDay$1(locale, date) })));
+}
+
+var __assign$3 = (undefined && undefined.__assign) || function () {
+    __assign$3 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$3.apply(this, arguments);
+};
+var __rest$2 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+function Days(props) {
+    var activeStartDate = props.activeStartDate, calendarType = props.calendarType, hover = props.hover, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks, showNeighboringMonth = props.showNeighboringMonth, value = props.value, valueType = props.valueType, otherProps = __rest$2(props, ["activeStartDate", "calendarType", "hover", "showFixedNumberOfWeeks", "showNeighboringMonth", "value", "valueType"]);
+    var year = getYear(activeStartDate);
+    var monthIndex = getMonth(activeStartDate);
+    var hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
+    var dayOfWeek = getDayOfWeek(activeStartDate, calendarType);
+    var offset = hasFixedNumberOfWeeks ? 0 : dayOfWeek;
+    /**
+     * Defines on which day of the month the grid shall start. If we simply show current
+     * month, we obviously start on day one, but if showNeighboringMonth is set to
+     * true, we need to find the beginning of the week the first day of the month is in.
+     */
+    var start = (hasFixedNumberOfWeeks ? -dayOfWeek : 0) + 1;
+    /**
+     * Defines on which day of the month the grid shall end. If we simply show current
+     * month, we need to stop on the last day of the month, but if showNeighboringMonth
+     * is set to true, we need to find the end of the week the last day of the month is in.
+     */
+    var end = (function () {
+        if (showFixedNumberOfWeeks) {
+            // Always show 6 weeks
+            return start + 6 * 7 - 1;
+        }
+        var daysInMonth = getDaysInMonth(activeStartDate);
+        if (showNeighboringMonth) {
+            var activeEndDate = new Date();
+            activeEndDate.setFullYear(year, monthIndex, daysInMonth);
+            activeEndDate.setHours(0, 0, 0, 0);
+            var daysUntilEndOfTheWeek = 7 - getDayOfWeek(activeEndDate, calendarType) - 1;
+            return daysInMonth + daysUntilEndOfTheWeek;
+        }
+        return daysInMonth;
+    })();
+    return (jsxRuntimeExports.jsx(TileGroup, { className: "react-calendar__month-view__days", count: 7, dateTransform: function (day) {
+            var date = new Date();
+            date.setFullYear(year, monthIndex, day);
+            return getDayStart(date);
+        }, dateType: "day", hover: hover, end: end, renderTile: function (_a) {
+            var date = _a.date, otherTileProps = __rest$2(_a, ["date"]);
+            return (jsxRuntimeExports.jsx(Day, __assign$3({}, otherProps, otherTileProps, { activeStartDate: activeStartDate, calendarType: calendarType, currentMonthIndex: monthIndex, date: date }), date.getTime()));
+        }, offset: offset, start: start, value: value, valueType: valueType }));
+}
+
+var className$1 = 'react-calendar__month-view__weekdays';
+var weekdayClassName = "".concat(className$1, "__weekday");
+function Weekdays(props) {
+    var calendarType = props.calendarType, _a = props.formatShortWeekday, formatShortWeekday$1 = _a === void 0 ? formatShortWeekday : _a, _b = props.formatWeekday, formatWeekday$1 = _b === void 0 ? formatWeekday : _b, locale = props.locale, onMouseLeave = props.onMouseLeave;
+    var anyDate = new Date();
+    var beginOfMonth = getMonthStart(anyDate);
+    var year = getYear(beginOfMonth);
+    var monthIndex = getMonth(beginOfMonth);
+    var weekdays = [];
+    for (var weekday = 1; weekday <= 7; weekday += 1) {
+        var weekdayDate = new Date(year, monthIndex, weekday - getDayOfWeek(beginOfMonth, calendarType));
+        var abbr = formatWeekday$1(locale, weekdayDate);
+        weekdays.push(jsxRuntimeExports.jsx("div", { className: clsx(weekdayClassName, isCurrentDayOfWeek(weekdayDate) && "".concat(weekdayClassName, "--current"), isWeekend(weekdayDate, calendarType) && "".concat(weekdayClassName, "--weekend")), children: jsxRuntimeExports.jsx("abbr", { "aria-label": abbr, title: abbr, children: formatShortWeekday$1(locale, weekdayDate).replace('.', '') }) }, weekday));
+    }
+    return (jsxRuntimeExports.jsx(Flex, { className: className$1, count: 7, onFocus: onMouseLeave, onMouseOver: onMouseLeave, children: weekdays }));
+}
+
+var __assign$2 = (undefined && undefined.__assign) || function () {
+    __assign$2 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$2.apply(this, arguments);
+};
+var __rest$1 = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var className = 'react-calendar__tile';
+function WeekNumber(props) {
+    var onClickWeekNumber = props.onClickWeekNumber, weekNumber = props.weekNumber;
+    var children = jsxRuntimeExports.jsx("span", { children: weekNumber });
+    if (onClickWeekNumber) {
+        var date_1 = props.date, onClickWeekNumber_1 = props.onClickWeekNumber, weekNumber_1 = props.weekNumber, otherProps = __rest$1(props, ["date", "onClickWeekNumber", "weekNumber"]);
+        return (jsxRuntimeExports.jsx("button", __assign$2({}, otherProps, { className: className, onClick: function (event) { return onClickWeekNumber_1(weekNumber_1, date_1, event); }, type: "button", children: children })));
+    }
+    else {
+        props.date; props.onClickWeekNumber; props.weekNumber; var otherProps = __rest$1(props, ["date", "onClickWeekNumber", "weekNumber"]);
+        return (jsxRuntimeExports.jsx("div", __assign$2({}, otherProps, { className: className, children: children })));
+    }
+}
+
+function WeekNumbers(props) {
+    var activeStartDate = props.activeStartDate, calendarType = props.calendarType, onClickWeekNumber = props.onClickWeekNumber, onMouseLeave = props.onMouseLeave, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
+    var numberOfWeeks = (function () {
+        if (showFixedNumberOfWeeks) {
+            return 6;
+        }
+        var numberOfDays = getDaysInMonth(activeStartDate);
+        var startWeekday = getDayOfWeek(activeStartDate, calendarType);
+        var days = numberOfDays - (7 - startWeekday);
+        return 1 + Math.ceil(days / 7);
+    })();
+    var dates = (function () {
+        var year = getYear(activeStartDate);
+        var monthIndex = getMonth(activeStartDate);
+        var day = getDate(activeStartDate);
+        var result = [];
+        for (var index = 0; index < numberOfWeeks; index += 1) {
+            result.push(getBeginOfWeek(new Date(year, monthIndex, day + index * 7), calendarType));
+        }
+        return result;
+    })();
+    var weekNumbers = dates.map(function (date) { return getWeekNumber(date, calendarType); });
+    return (jsxRuntimeExports.jsx(Flex, { className: "react-calendar__month-view__weekNumbers", count: numberOfWeeks, direction: "column", onFocus: onMouseLeave, onMouseOver: onMouseLeave, style: { flexBasis: 'calc(100% * (1 / 8)', flexShrink: 0 }, children: weekNumbers.map(function (weekNumber, weekIndex) {
+            var date = dates[weekIndex];
+            if (!date) {
+                throw new Error('date is not defined');
+            }
+            return (jsxRuntimeExports.jsx(WeekNumber, { date: date, onClickWeekNumber: onClickWeekNumber, weekNumber: weekNumber }, weekNumber));
+        }) }));
+}
+
+var __assign$1 = (undefined && undefined.__assign) || function () {
+    __assign$1 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$1.apply(this, arguments);
+};
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+function getCalendarTypeFromLocale(locale) {
+    if (locale) {
+        for (var _i = 0, _a = Object.entries(CALENDAR_TYPE_LOCALES); _i < _a.length; _i++) {
+            var _b = _a[_i], calendarType = _b[0], locales = _b[1];
+            if (locales.includes(locale)) {
+                return calendarType;
+            }
+        }
+    }
+    return CALENDAR_TYPES.ISO_8601;
+}
+/**
+ * Displays a given month.
+ */
+function MonthView(props) {
+    var activeStartDate = props.activeStartDate, locale = props.locale, onMouseLeave = props.onMouseLeave, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
+    var _a = props.calendarType, calendarType = _a === void 0 ? getCalendarTypeFromLocale(locale) : _a, formatShortWeekday = props.formatShortWeekday, formatWeekday = props.formatWeekday, onClickWeekNumber = props.onClickWeekNumber, showWeekNumbers = props.showWeekNumbers, childProps = __rest(props, ["calendarType", "formatShortWeekday", "formatWeekday", "onClickWeekNumber", "showWeekNumbers"]);
+    function renderWeekdays() {
+        return (jsxRuntimeExports.jsx(Weekdays, { calendarType: calendarType, formatShortWeekday: formatShortWeekday, formatWeekday: formatWeekday, locale: locale, onMouseLeave: onMouseLeave }));
+    }
+    function renderWeekNumbers() {
+        if (!showWeekNumbers) {
+            return null;
+        }
+        return (jsxRuntimeExports.jsx(WeekNumbers, { activeStartDate: activeStartDate, calendarType: calendarType, onClickWeekNumber: onClickWeekNumber, onMouseLeave: onMouseLeave, showFixedNumberOfWeeks: showFixedNumberOfWeeks }));
+    }
+    function renderDays() {
+        return jsxRuntimeExports.jsx(Days, __assign$1({ calendarType: calendarType }, childProps));
+    }
+    var className = 'react-calendar__month-view';
+    return (jsxRuntimeExports.jsx("div", { className: clsx(className, showWeekNumbers ? "".concat(className, "--weekNumbers") : ''), children: jsxRuntimeExports.jsxs("div", { style: {
+                display: 'flex',
+                alignItems: 'flex-end',
+            }, children: [renderWeekNumbers(), jsxRuntimeExports.jsxs("div", { style: {
+                        flexGrow: 1,
+                        width: '100%',
+                    }, children: [renderWeekdays(), renderDays()] })] }) }));
+}
+
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var baseClassName = 'react-calendar';
+var allViews = ['century', 'decade', 'year', 'month'];
+var allValueTypes = ['decade', 'year', 'month', 'day'];
+var defaultMinDate = new Date();
+defaultMinDate.setFullYear(1, 0, 1);
+defaultMinDate.setHours(0, 0, 0, 0);
+var defaultMaxDate = new Date(8.64e15);
+function toDate(value) {
+    if (value instanceof Date) {
+        return value;
+    }
+    return new Date(value);
+}
+/**
+ * Returns views array with disallowed values cut off.
+ */
+function getLimitedViews(minDetail, maxDetail) {
+    return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
+}
+/**
+ * Determines whether a given view is allowed with currently applied settings.
+ */
+function isViewAllowed(view, minDetail, maxDetail) {
+    var views = getLimitedViews(minDetail, maxDetail);
+    return views.indexOf(view) !== -1;
+}
+/**
+ * Gets either provided view if allowed by minDetail and maxDetail, or gets
+ * the default view if not allowed.
+ */
+function getView(view, minDetail, maxDetail) {
+    if (!view) {
+        return maxDetail;
+    }
+    if (isViewAllowed(view, minDetail, maxDetail)) {
+        return view;
+    }
+    return maxDetail;
+}
+/**
+ * Returns value type that can be returned with currently applied settings.
+ */
+function getValueType(view) {
+    var index = allViews.indexOf(view);
+    return allValueTypes[index];
+}
+function getValue(value, index) {
+    var rawValue = Array.isArray(value) ? value[index] : value;
+    if (!rawValue) {
+        return null;
+    }
+    var valueDate = toDate(rawValue);
+    if (isNaN(valueDate.getTime())) {
+        throw new Error("Invalid date: ".concat(value));
+    }
+    return valueDate;
+}
+function getDetailValue(_a, index) {
+    var value = _a.value, minDate = _a.minDate, maxDate = _a.maxDate, maxDetail = _a.maxDetail;
+    var valuePiece = getValue(value, index);
+    if (!valuePiece) {
+        return null;
+    }
+    var valueType = getValueType(maxDetail);
+    var detailValueFrom = (function () {
+        switch (index) {
+            case 0:
+                return getBegin(valueType, valuePiece);
+            case 1:
+                return getEnd(valueType, valuePiece);
+            default:
+                throw new Error("Invalid index value: ".concat(index));
+        }
+    })();
+    return between(detailValueFrom, minDate, maxDate);
+}
+var getDetailValueFrom = function (args) { return getDetailValue(args, 0); };
+var getDetailValueTo = function (args) { return getDetailValue(args, 1); };
+var getDetailValueArray = function (args) {
+    return [getDetailValueFrom, getDetailValueTo].map(function (fn) { return fn(args); });
+};
+function getActiveStartDate(_a) {
+    var maxDate = _a.maxDate, maxDetail = _a.maxDetail, minDate = _a.minDate, minDetail = _a.minDetail, value = _a.value, view = _a.view;
+    var rangeType = getView(view, minDetail, maxDetail);
+    var valueFrom = getDetailValueFrom({
+        value: value,
+        minDate: minDate,
+        maxDate: maxDate,
+        maxDetail: maxDetail,
+    }) || new Date();
+    return getBegin(rangeType, valueFrom);
+}
+function getInitialActiveStartDate(_a) {
+    var activeStartDate = _a.activeStartDate, defaultActiveStartDate = _a.defaultActiveStartDate, defaultValue = _a.defaultValue, defaultView = _a.defaultView, maxDate = _a.maxDate, maxDetail = _a.maxDetail, minDate = _a.minDate, minDetail = _a.minDetail, value = _a.value, view = _a.view;
+    var rangeType = getView(view, minDetail, maxDetail);
+    var valueFrom = activeStartDate || defaultActiveStartDate;
+    if (valueFrom) {
+        return getBegin(rangeType, valueFrom);
+    }
+    return getActiveStartDate({
+        maxDate: maxDate,
+        maxDetail: maxDetail,
+        minDate: minDate,
+        minDetail: minDetail,
+        value: value || defaultValue,
+        view: view || defaultView,
+    });
+}
+function getIsSingleValue(value) {
+    return value && (!Array.isArray(value) || value.length === 1);
+}
+function areDatesEqual(date1, date2) {
+    return date1 instanceof Date && date2 instanceof Date && date1.getTime() === date2.getTime();
+}
+var Calendar = forwardRef(function Calendar(props, ref) {
+    var activeStartDateProps = props.activeStartDate, allowPartialRange = props.allowPartialRange, calendarType = props.calendarType, className = props.className, defaultActiveStartDate = props.defaultActiveStartDate, defaultValue = props.defaultValue, defaultView = props.defaultView, formatDay = props.formatDay, formatLongDate = props.formatLongDate, formatMonth = props.formatMonth, formatMonthYear = props.formatMonthYear, formatShortWeekday = props.formatShortWeekday, formatWeekday = props.formatWeekday, formatYear = props.formatYear, _a = props.goToRangeStartOnSelect, goToRangeStartOnSelect = _a === void 0 ? true : _a, inputRef = props.inputRef, locale = props.locale, _b = props.maxDate, maxDate = _b === void 0 ? defaultMaxDate : _b, _c = props.maxDetail, maxDetail = _c === void 0 ? 'month' : _c, _d = props.minDate, minDate = _d === void 0 ? defaultMinDate : _d, _e = props.minDetail, minDetail = _e === void 0 ? 'century' : _e, navigationAriaLabel = props.navigationAriaLabel, navigationAriaLive = props.navigationAriaLive, navigationLabel = props.navigationLabel, next2AriaLabel = props.next2AriaLabel, next2Label = props.next2Label, nextAriaLabel = props.nextAriaLabel, nextLabel = props.nextLabel, onActiveStartDateChange = props.onActiveStartDateChange, onChangeProps = props.onChange, onClickDay = props.onClickDay, onClickDecade = props.onClickDecade, onClickMonth = props.onClickMonth, onClickWeekNumber = props.onClickWeekNumber, onClickYear = props.onClickYear, onDrillDown = props.onDrillDown, onDrillUp = props.onDrillUp, onViewChange = props.onViewChange, prev2AriaLabel = props.prev2AriaLabel, prev2Label = props.prev2Label, prevAriaLabel = props.prevAriaLabel, prevLabel = props.prevLabel, _f = props.returnValue, returnValue = _f === void 0 ? 'start' : _f, selectRange = props.selectRange, showDoubleView = props.showDoubleView, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks, _g = props.showNavigation, showNavigation = _g === void 0 ? true : _g, showNeighboringCentury = props.showNeighboringCentury, showNeighboringDecade = props.showNeighboringDecade, _h = props.showNeighboringMonth, showNeighboringMonth = _h === void 0 ? true : _h, showWeekNumbers = props.showWeekNumbers, tileClassName = props.tileClassName, tileContent = props.tileContent, tileDisabled = props.tileDisabled, valueProps = props.value, viewProps = props.view;
+    var _j = useState(defaultActiveStartDate), activeStartDateState = _j[0], setActiveStartDateState = _j[1];
+    var _k = useState(null), hoverState = _k[0], setHoverState = _k[1];
+    var _l = useState(Array.isArray(defaultValue)
+        ? defaultValue.map(function (el) { return (el !== null ? toDate(el) : null); })
+        : defaultValue !== null && defaultValue !== undefined
+            ? toDate(defaultValue)
+            : null), valueState = _l[0], setValueState = _l[1];
+    var _m = useState(defaultView), viewState = _m[0], setViewState = _m[1];
+    var activeStartDate = activeStartDateProps ||
+        activeStartDateState ||
+        getInitialActiveStartDate({
+            activeStartDate: activeStartDateProps,
+            defaultActiveStartDate: defaultActiveStartDate,
+            defaultValue: defaultValue,
+            defaultView: defaultView,
+            maxDate: maxDate,
+            maxDetail: maxDetail,
+            minDate: minDate,
+            minDetail: minDetail,
+            value: valueProps,
+            view: viewProps,
+        });
+    var value = (function () {
+        var rawValue = (function () {
+            // In the middle of range selection, use value from state
+            if (selectRange && getIsSingleValue(valueState)) {
+                return valueState;
+            }
+            return valueProps !== undefined ? valueProps : valueState;
+        })();
+        if (!rawValue) {
+            return null;
+        }
+        return Array.isArray(rawValue)
+            ? rawValue.map(function (el) { return (el !== null ? toDate(el) : null); })
+            : rawValue !== null
+                ? toDate(rawValue)
+                : null;
+    })();
+    var valueType = getValueType(maxDetail);
+    var view = getView(viewProps || viewState, minDetail, maxDetail);
+    var views = getLimitedViews(minDetail, maxDetail);
+    var hover = selectRange ? hoverState : null;
+    var drillDownAvailable = views.indexOf(view) < views.length - 1;
+    var drillUpAvailable = views.indexOf(view) > 0;
+    var getProcessedValue = useCallback(function (value) {
+        var processFunction = (function () {
+            switch (returnValue) {
+                case 'start':
+                    return getDetailValueFrom;
+                case 'end':
+                    return getDetailValueTo;
+                case 'range':
+                    return getDetailValueArray;
+                default:
+                    throw new Error('Invalid returnValue.');
+            }
+        })();
+        return processFunction({
+            maxDate: maxDate,
+            maxDetail: maxDetail,
+            minDate: minDate,
+            value: value,
+        });
+    }, [maxDate, maxDetail, minDate, returnValue]);
+    var setActiveStartDate = useCallback(function (nextActiveStartDate, action) {
+        setActiveStartDateState(nextActiveStartDate);
+        var args = {
+            action: action,
+            activeStartDate: nextActiveStartDate,
+            value: value,
+            view: view,
+        };
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+            onActiveStartDateChange(args);
+        }
+    }, [activeStartDate, onActiveStartDateChange, value, view]);
+    var onClickTile = useCallback(function (value, event) {
+        var callback = (function () {
+            switch (view) {
+                case 'century':
+                    return onClickDecade;
+                case 'decade':
+                    return onClickYear;
+                case 'year':
+                    return onClickMonth;
+                case 'month':
+                    return onClickDay;
+                default:
+                    throw new Error("Invalid view: ".concat(view, "."));
+            }
+        })();
+        if (callback)
+            callback(value, event);
+    }, [onClickDay, onClickDecade, onClickMonth, onClickYear, view]);
+    var drillDown = useCallback(function (nextActiveStartDate, event) {
+        if (!drillDownAvailable) {
+            return;
+        }
+        onClickTile(nextActiveStartDate, event);
+        var nextView = views[views.indexOf(view) + 1];
+        if (!nextView) {
+            throw new Error('Attempted to drill down from the lowest view.');
+        }
+        setActiveStartDateState(nextActiveStartDate);
+        setViewState(nextView);
+        var args = {
+            action: 'drillDown',
+            activeStartDate: nextActiveStartDate,
+            value: value,
+            view: nextView,
+        };
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+            onActiveStartDateChange(args);
+        }
+        if (onViewChange && view !== nextView) {
+            onViewChange(args);
+        }
+        if (onDrillDown) {
+            onDrillDown(args);
+        }
+    }, [
+        activeStartDate,
+        drillDownAvailable,
+        onActiveStartDateChange,
+        onClickTile,
+        onDrillDown,
+        onViewChange,
+        value,
+        view,
+        views,
+    ]);
+    var drillUp = useCallback(function () {
+        if (!drillUpAvailable) {
+            return;
+        }
+        var nextView = views[views.indexOf(view) - 1];
+        if (!nextView) {
+            throw new Error('Attempted to drill up from the highest view.');
+        }
+        var nextActiveStartDate = getBegin(nextView, activeStartDate);
+        setActiveStartDateState(nextActiveStartDate);
+        setViewState(nextView);
+        var args = {
+            action: 'drillUp',
+            activeStartDate: nextActiveStartDate,
+            value: value,
+            view: nextView,
+        };
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+            onActiveStartDateChange(args);
+        }
+        if (onViewChange && view !== nextView) {
+            onViewChange(args);
+        }
+        if (onDrillUp) {
+            onDrillUp(args);
+        }
+    }, [
+        activeStartDate,
+        drillUpAvailable,
+        onActiveStartDateChange,
+        onDrillUp,
+        onViewChange,
+        value,
+        view,
+        views,
+    ]);
+    var onChange = useCallback(function (rawNextValue, event) {
+        var previousValue = value;
+        onClickTile(rawNextValue, event);
+        var isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
+        var nextValue;
+        if (selectRange) {
+            // Range selection turned on
+            if (isFirstValueInRange) {
+                // Value has 0 or 2 elements - either way we're starting a new array
+                // First value
+                nextValue = getBegin(valueType, rawNextValue);
+            }
+            else {
+                if (!previousValue) {
+                    throw new Error('previousValue is required');
+                }
+                if (Array.isArray(previousValue)) {
+                    throw new Error('previousValue must not be an array');
+                }
+                // Second value
+                nextValue = getValueRange(valueType, previousValue, rawNextValue);
+            }
+        }
+        else {
+            // Range selection turned off
+            nextValue = getProcessedValue(rawNextValue);
+        }
+        var nextActiveStartDate = 
+        // Range selection turned off
+        !selectRange ||
+            // Range selection turned on, first value
+            isFirstValueInRange ||
+            // Range selection turned on, second value, goToRangeStartOnSelect toggled on
+            goToRangeStartOnSelect
+            ? getActiveStartDate({
+                maxDate: maxDate,
+                maxDetail: maxDetail,
+                minDate: minDate,
+                minDetail: minDetail,
+                value: nextValue,
+                view: view,
+            })
+            : null;
+        event.persist();
+        setActiveStartDateState(nextActiveStartDate);
+        setValueState(nextValue);
+        var args = {
+            action: 'onChange',
+            activeStartDate: nextActiveStartDate,
+            value: nextValue,
+            view: view,
+        };
+        if (onActiveStartDateChange && !areDatesEqual(activeStartDate, nextActiveStartDate)) {
+            onActiveStartDateChange(args);
+        }
+        if (onChangeProps) {
+            if (selectRange) {
+                var isSingleValue = getIsSingleValue(nextValue);
+                if (!isSingleValue) {
+                    onChangeProps(nextValue || null, event);
+                }
+                else if (allowPartialRange) {
+                    if (Array.isArray(nextValue)) {
+                        throw new Error('value must not be an array');
+                    }
+                    onChangeProps([nextValue || null, null], event);
+                }
+            }
+            else {
+                onChangeProps(nextValue || null, event);
+            }
+        }
+    }, [
+        activeStartDate,
+        allowPartialRange,
+        getProcessedValue,
+        goToRangeStartOnSelect,
+        maxDate,
+        maxDetail,
+        minDate,
+        minDetail,
+        onActiveStartDateChange,
+        onChangeProps,
+        onClickTile,
+        selectRange,
+        value,
+        valueType,
+        view,
+    ]);
+    function onMouseOver(nextHover) {
+        setHoverState(nextHover);
+    }
+    function onMouseLeave() {
+        setHoverState(null);
+    }
+    useImperativeHandle(ref, function () { return ({
+        activeStartDate: activeStartDate,
+        drillDown: drillDown,
+        drillUp: drillUp,
+        onChange: onChange,
+        setActiveStartDate: setActiveStartDate,
+        value: value,
+        view: view,
+    }); }, [activeStartDate, drillDown, drillUp, onChange, setActiveStartDate, value, view]);
+    function renderContent(next) {
+        var currentActiveStartDate = next
+            ? getBeginNext(view, activeStartDate)
+            : getBegin(view, activeStartDate);
+        var onClick = drillDownAvailable ? drillDown : onChange;
+        var commonProps = {
+            activeStartDate: currentActiveStartDate,
+            hover: hover,
+            locale: locale,
+            maxDate: maxDate,
+            minDate: minDate,
+            onClick: onClick,
+            onMouseOver: selectRange ? onMouseOver : undefined,
+            tileClassName: tileClassName,
+            tileContent: tileContent,
+            tileDisabled: tileDisabled,
+            value: value,
+            valueType: valueType,
+        };
+        switch (view) {
+            case 'century': {
+                return (jsxRuntimeExports.jsx(CenturyView, __assign({ formatYear: formatYear, showNeighboringCentury: showNeighboringCentury }, commonProps)));
+            }
+            case 'decade': {
+                return (jsxRuntimeExports.jsx(DecadeView, __assign({ formatYear: formatYear, showNeighboringDecade: showNeighboringDecade }, commonProps)));
+            }
+            case 'year': {
+                return (jsxRuntimeExports.jsx(YearView, __assign({ formatMonth: formatMonth, formatMonthYear: formatMonthYear }, commonProps)));
+            }
+            case 'month': {
+                return (jsxRuntimeExports.jsx(MonthView, __assign({ calendarType: calendarType, formatDay: formatDay, formatLongDate: formatLongDate, formatShortWeekday: formatShortWeekday, formatWeekday: formatWeekday, onClickWeekNumber: onClickWeekNumber, onMouseLeave: selectRange ? onMouseLeave : undefined, showFixedNumberOfWeeks: typeof showFixedNumberOfWeeks !== 'undefined'
+                        ? showFixedNumberOfWeeks
+                        : showDoubleView, showNeighboringMonth: showNeighboringMonth, showWeekNumbers: showWeekNumbers }, commonProps)));
+            }
+            default:
+                throw new Error("Invalid view: ".concat(view, "."));
+        }
+    }
+    function renderNavigation() {
+        if (!showNavigation) {
+            return null;
+        }
+        return (jsxRuntimeExports.jsx(Navigation, { activeStartDate: activeStartDate, drillUp: drillUp, formatMonthYear: formatMonthYear, formatYear: formatYear, locale: locale, maxDate: maxDate, minDate: minDate, navigationAriaLabel: navigationAriaLabel, navigationAriaLive: navigationAriaLive, navigationLabel: navigationLabel, next2AriaLabel: next2AriaLabel, next2Label: next2Label, nextAriaLabel: nextAriaLabel, nextLabel: nextLabel, prev2AriaLabel: prev2AriaLabel, prev2Label: prev2Label, prevAriaLabel: prevAriaLabel, prevLabel: prevLabel, setActiveStartDate: setActiveStartDate, showDoubleView: showDoubleView, view: view, views: views }));
+    }
+    var valueArray = Array.isArray(value) ? value : [value];
+    return (jsxRuntimeExports.jsxs("div", { className: clsx(baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "".concat(baseClassName, "--doubleView"), className), ref: inputRef, children: [renderNavigation(), jsxRuntimeExports.jsxs("div", { className: "".concat(baseClassName, "__viewContainer"), onBlur: selectRange ? onMouseLeave : undefined, onMouseLeave: selectRange ? onMouseLeave : undefined, children: [renderContent(), showDoubleView ? renderContent(true) : null] })] }));
+});
+
+var _path$6;
+function _extends$7() { return _extends$7 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$7.apply(null, arguments); }
+var SvgChevronLeftIcon = function SvgChevronLeftIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$7({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$6 || (_path$6 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M19.56 25.56a1.5 1.5 0 0 1-2.12 0l-8.5-8.5a1.5 1.5 0 0 1 0-2.12l8.5-8.5a1.5 1.5 0 0 1 2.12 2.12L12.122 16l7.44 7.44a1.5 1.5 0 0 1 0 2.12",
+    clipRule: "evenodd"
+  })));
+};
+
+function UrsorCalendar(props) {
+  var _useState = useState(dayjs().isAfter(props.value) ? new Date() : new Date(props.value.getFullYear(), props.value.getMonth(), 1)),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    viewMonthStartDate = _useState2[0],
+    setViewMonthStartDate = _useState2[1];
+  var showingCurrentMonth = (viewMonthStartDate === null || viewMonthStartDate === void 0 ? void 0 : viewMonthStartDate.getMonth()) === new Date().getMonth() && (viewMonthStartDate === null || viewMonthStartDate === void 0 ? void 0 : viewMonthStartDate.getFullYear()) === new Date().getFullYear();
+  return jsxRuntimeExports.jsx(Box, {
+    p: "10px",
+    pb: "5px",
+    width: "320px",
+    sx: {
+      '.react-calendar__tile': {
+        color: PALETTE.font.dark,
+        transition: '0.2s',
+        borderRadius: '100%',
+        height: '42px',
+        border: 'none',
+        fontSize: 15,
+        background: 'transparent',
+        fontFamily: 'inherit',
+        '&:hover': {
+          opacity: 0.7
+        },
+        cursor: 'pointer'
+      },
+      '.react-calendar__tile--active': {
+        '> abbr': {
+          color: 'white !important',
+          background: PALETTE.secondary.purple[2],
+          width: '36px',
+          height: '34px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '100%'
+        },
+        '&:hover': {
+          '> abbr': {
+            background: PALETTE.secondary.purple[2]
+          },
+          opacity: 1
+        },
+        cursor: 'default'
+      },
+      '.react-calendar__month-view__weekdays__weekday': {
+        color: PALETTE.font.dark,
+        fontSize: 13,
+        fontWeight: 500,
+        //opacity: 0.8,
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        '> abbr': {
+          textDecoration: 'none !important',
+          border: 'none !important'
+        },
+        pointerEvents: 'none'
+      },
+      '.react-calendar__navigation': {
+        display: 'flex',
+        marginBottom: '17px'
+      },
+      '.react-calendar__navigation__label': {
+        color: PALETTE.font.dark,
+        background: 'none',
+        border: 'none',
+        fontSize: 15,
+        fontFamily: 'inherit'
+      },
+      '.react-calendar__navigation__arrow': {
+        display: 'flex',
+        alignItems: 'center',
+        background: 'none',
+        border: 'none',
+        '&:hover': {
+          opacity: 0.6
+        },
+        cursor: 'pointer',
+        transition: '0.2s'
+      },
+      '.react-calendar__navigation__prev-button': {
+        opacity: props.hidePast && showingCurrentMonth ? 0 : 1,
+        pointerEvents: props.hidePast && showingCurrentMonth ? 'none' : 'auto'
+      },
+      '.hidePast': {
+        opacity: 0.16,
+        pointerEvents: 'none'
+      },
+      '.disableFuture': {
+        opacity: 0.16,
+        pointerEvents: 'none'
+      }
+    },
+    children: jsxRuntimeExports.jsx(DynamicContainer, {
+      duration: 800,
+      children: jsxRuntimeExports.jsx(Calendar //@ts-ignore
+      , {
+        onChange: props.onChange,
+        onActiveStartDateChange: function onActiveStartDateChange(x) {
+          return setViewMonthStartDate(x.activeStartDate);
+        },
+        value: props.value,
+        prevLabel: jsxRuntimeExports.jsx(SvgChevronLeftIcon, {
+          height: "20px",
+          width: "20px"
+        }),
+        nextLabel: jsxRuntimeExports.jsx(SvgChevronLeftIcon, {
+          height: "20px",
+          width: "20px",
+          style: {
+            transform: 'rotate(180deg)'
+          }
+        }),
+        prev2Label: null,
+        next2Label: null,
+        tileClassName: function tileClassName(tileProps) {
+          return props.hidePast && dayjs().diff(tileProps.date, 'days') >= 1 ? 'hidePast' : props.disableFuture && dayjs(tileProps.date).isAfter(dayjs(), 'days') ? 'hidePast' : '';
+        },
+        maxDate: new Date(),
+        minDetail: "month"
+      })
+    })
+  });
+}
+
+var CalendarButton = function CalendarButton(props) {
+  var _useState = useState(false),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    open = _useState2[0],
+    setOpen = _useState2[1];
+  return jsxRuntimeExports.jsx(UrsorPopover, {
+    open: open,
+    content: jsxRuntimeExports.jsx(UrsorCalendar, {
+      value: props.value,
+      onChange: function onChange(value) {
+        setOpen(false);
+        props.setValue(value);
+      },
+      disableFuture: true
+    }),
+    closeCallback: function closeCallback() {
+      return setOpen(false);
+    },
+    placement: "right",
+    noPadding: true,
+    children: jsxRuntimeExports.jsxs(Stack$1, {
+      bgcolor: "rgb(255,255,255)",
+      height: "32px",
+      alignItems: "center",
+      borderRadius: "8px",
+      pl: "12px",
+      pr: "8px",
+      boxSizing: "border-box",
+      spacing: "8px",
+      direction: "row",
+      sx: {
+        cursor: 'pointer',
+        transition: '0.2s',
+        '&:hover': {
+          opacity: 0.6
+        }
+      },
+      onClick: function onClick() {
+        return setOpen(true);
+      },
+      children: [jsxRuntimeExports.jsx(Typography$1, {
+        variant: "small",
+        bold: true,
+        children: "Select date"
+      }), jsxRuntimeExports.jsx(SvgChevronDown, {
+        height: "20px",
+        width: "20px"
+      })]
+    })
+  });
+};
+
+var _path$5;
+function _extends$6() { return _extends$6 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$6.apply(null, arguments); }
+var SvgSearchIcon = function SvgSearchIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$6({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$5 || (_path$5 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M22.999 14a9 9 0 0 1-9 9A9.001 9.001 0 0 1 7.635 7.638 9 9 0 0 1 22.999 14m-1.64 9.48a12 12 0 1 1 2.12-2.12l6.08 6.08a1.501 1.501 0 1 1-2.12 2.12z",
+    clipRule: "evenodd"
+  })));
+};
+
+var _path$4;
+function _extends$5() { return _extends$5 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$5.apply(null, arguments); }
+var SvgX = function SvgX(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$5({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path$4 || (_path$4 = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M7.439 7.44a1.5 1.5 0 0 1 2.12 0l6.44 6.44 6.44-6.44a1.5 1.5 0 1 1 2.12 2.12L18.119 16l6.44 6.44a1.501 1.501 0 1 1-2.12 2.12l-6.44-6.44-6.44 6.44a1.5 1.5 0 0 1-2.12-2.12l6.44-6.44-6.44-6.44a1.5 1.5 0 0 1 0-2.12",
+    clipRule: "evenodd"
+  })));
+};
+
+var SearchInput = function SearchInput(props) {
+  var _useState = useState(false),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    active = _useState2[0],
+    setActive = _useState2[1];
+  var _useState3 = useState(false),
+    _useState4 = _slicedToArray$1(_useState3, 2),
+    hovering = _useState4[0],
+    setHovering = _useState4[1];
+  return jsxRuntimeExports.jsxs(Stack$1, {
+    height: props.height || '28px',
+    width: props.fullWidth ? '100%' : '160px',
+    direction: "row",
+    borderRadius: "8px",
+    alignItems: "center",
+    bgcolor: props.grey ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)',
+    px: "10px",
+    spacing: "8px",
+    boxSizing: "border-box",
+    sx: {
+      svg: {
+        path: {
+          fill: PALETTE.secondary.grey[4]
+        }
+      },
+      transition: '0.2s'
+    },
+    border: "".concat(active || hovering ? 2 : 0, "px solid ").concat(PALETTE.secondary.purple[active ? 2 : 1]),
+    onMouseEnter: function onMouseEnter() {
+      return setHovering(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setHovering(false);
+    },
+    boxShadow: props.shadow ? '0 0 16px rgba(0,0,0,0.03)' : undefined,
+    children: [jsxRuntimeExports.jsx(SvgSearchIcon, {
+      width: props.iconSize || '24px',
+      height: props.iconSize || '24px'
+    }), jsxRuntimeExports.jsx(Input, {
+      style: {
+        textAlign: 'left',
+        textOverflow: 'ellipsis',
+        fontSize: FONT_SIZES['small'],
+        color: PALETTE.font.dark,
+        fontWeight: 480,
+        lineHeight: '100%',
+        transition: '0.2s',
+        fontFamily: 'inherit',
+        width: props.fullWidth ? '100%' : undefined
+      },
+      value: props.value,
+      disableUnderline: true,
+      sx: {
+        background: props.grey ? PALETTE.secondary.grey[1] : 'rgb(255,255,255)',
+        input: {
+          padding: '0 !important'
+        }
+      },
+      onChange: function onChange(event) {
+        props.callback(event.target.value);
+      },
+      placeholder: "Search",
+      onBlur: function onBlur() {
+        return setActive(false);
+      },
+      onFocus: function onFocus() {
+        return setActive(true);
+      }
+    }), jsxRuntimeExports.jsx(Stack$1, {
+      sx: {
+        cursor: 'pointer',
+        '&:hover': {
+          opacity: 0.6
+        },
+        transition: '0.2s',
+        opacity: props.value ? 1 : 0
+      },
+      onClick: props.clearCallback,
+      children: jsxRuntimeExports.jsx(SvgX, {
+        width: "16px",
+        height: "16px"
+      })
+    })]
+  });
+};
+
+var lib$1 = {};
+
+var FadeIn$2 = {};
 
 var __createBinding = (commonjsGlobal && commonjsGlobal.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -30820,9 +37664,9 @@ var __importStar = (commonjsGlobal && commonjsGlobal.__importStar) || function (
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(FadeIn$1, "__esModule", { value: true });
-var react_1 = __importStar(React__default);
-function FadeIn(props) {
+Object.defineProperty(FadeIn$2, "__esModule", { value: true });
+var react_1 = __importStar(React__default$1);
+function FadeIn$1(props) {
     var _a = react_1.useState(0), maxIsVisible = _a[0], setMaxIsVisible = _a[1];
     var transitionDuration = props.transitionDuration || 400;
     var delay = props.delay || 50;
@@ -30864,7 +37708,7 @@ function FadeIn(props) {
             } }, child));
     })));
 }
-FadeIn$1.default = FadeIn;
+FadeIn$2.default = FadeIn$1;
 
 (function (exports) {
 	var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
@@ -30872,9 +37716,34 @@ FadeIn$1.default = FadeIn;
 	};
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = void 0;
-	var FadeIn_1 = FadeIn$1;
+	var FadeIn_1 = FadeIn$2;
 	Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(FadeIn_1).default; } }); 
-} (lib));
+} (lib$1));
+
+var FadeIn = /*@__PURE__*/getDefaultExportFromCjs(lib$1);
+
+var FULL_SIZE_CLASSNAME = 'fullSize';
+function UrsorFadeIn(props) {
+  return jsxRuntimeExports.jsx(Stack$1, {
+    height: props.fullHeight ? '100%' : 'auto',
+    width: props.fullWidth ? '100%' : 'auto',
+    sx: _defineProperty$1({}, "& .".concat(FULL_SIZE_CLASSNAME), {
+      height: props.fullHeight ? '100%' : 'auto',
+      width: props.fullWidth ? '100%' : 'auto',
+      overflow: 'visible',
+      display: props.centerAlign ? 'flex' : undefined,
+      justifyContent: props.centerAlign ? 'center' : undefined
+    }),
+    overflow: "visible",
+    children: jsxRuntimeExports.jsx(FadeIn, {
+      transitionDuration: props.duration,
+      delay: props.delay,
+      className: FULL_SIZE_CLASSNAME,
+      childClassName: FULL_SIZE_CLASSNAME,
+      children: props.children
+    })
+  });
+}
 
 var lottie = {exports: {}};
 
@@ -50965,8 +57834,266 @@ var PULSE_AMPLITUDE = '1.5px';
 keyframes(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  from {\n    transform: translateY(-", ")\n  }\n  to {\n    transform: translateY(", ")\n  }\n"])), PULSE_AMPLITUDE, PULSE_AMPLITUDE);
 
 var _templateObject, _templateObject2;
+var BORDER_RADIUS = '24px';
+var BACKDROP_STYLE = {
+  backdropFilter: 'blur(3px)',
+  backgroundColor: 'rgba(0, 0, 0, 0.3) !important'
+};
 keyframes(_templateObject || (_templateObject = _taggedTemplateLiteral(["\nfrom {\n  opacity: 0;\n}\nto {\n  opacity: 1;\n}\n"])));
 keyframes(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\nfrom {\n  opacity: 1;\n}\nto {\n  opacity: 0;\n}\n"])));
+
+function ownKeys$2(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread$1(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$2(Object(t), !0).forEach(function (r) { _defineProperty$1(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+var AllMostVisitedSitesDialog = function AllMostVisitedSitesDialog(props) {
+  var _useState = useState(''),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    searchValue = _useState2[0],
+    setSearchValue = _useState2[1];
+  var _useState3 = useState([]),
+    _useState4 = _slicedToArray$1(_useState3, 2),
+    filteredSites = _useState4[0],
+    setFilteredSites = _useState4[1];
+  useEffect(function () {
+    return setFilteredSites(props.sites.filter(function (d) {
+      return !searchValue || d.title.toLowerCase().includes(searchValue.toLowerCase());
+    }));
+  }, [props.sites, searchValue]);
+  return jsxRuntimeExports.jsx(Dialog, {
+    transitionDuration: 800,
+    open: props.open,
+    onClose: props.onClose,
+    PaperProps: {
+      style: {
+        maxWidth: 1308,
+        width: props.isMobile ? '100%' : '70%',
+        maxHeight: 726,
+        height: '70%',
+        borderRadius: BORDER_RADIUS,
+        margin: '20px',
+        padding: props.isMobile ? '20px' : '32px'
+      }
+    },
+    sx: {
+      py: '10px',
+      '.MuiBackdrop-root': BACKDROP_STYLE
+    },
+    children: jsxRuntimeExports.jsxs(Stack$1, {
+      spacing: "32px",
+      children: [jsxRuntimeExports.jsxs(Stack$1, {
+        direction: props.isMobile ? 'column' : 'row',
+        justifyContent: "space-between",
+        spacing: props.isMobile ? '6px' : undefined,
+        children: [jsxRuntimeExports.jsxs(Stack$1, {
+          direction: "row",
+          justifyContent: "space-between",
+          children: [jsxRuntimeExports.jsx(Typography$1, {
+            bold: true,
+            variant: props.isMobile ? 'large' : 'h5',
+            children: "Most visited sites today"
+          }), jsxRuntimeExports.jsx(Stack$1, {
+            width: "40px",
+            alignItems: "flex-end",
+            pt: "3px",
+            onClick: props.onClose,
+            children: jsxRuntimeExports.jsx(SvgX, {
+              height: "22px",
+              width: "22px"
+            })
+          })]
+        }), jsxRuntimeExports.jsxs(Stack$1, {
+          direction: "row",
+          spacing: "0px",
+          alignItems: "center",
+          children: [jsxRuntimeExports.jsx(SearchInput, {
+            value: searchValue,
+            callback: setSearchValue,
+            clearCallback: function clearCallback() {
+              return setSearchValue('');
+            },
+            fullWidth: props.isMobile,
+            iconSize: props.isMobile ? '16px' : undefined,
+            grey: true
+          }), !props.isMobile ? jsxRuntimeExports.jsx(Stack$1, {
+            width: "40px",
+            alignItems: "flex-end",
+            pt: "3px",
+            onClick: props.onClose,
+            children: jsxRuntimeExports.jsx(SvgX, {
+              height: "22px",
+              width: "22px"
+            })
+          }) : null]
+        })]
+      }), jsxRuntimeExports.jsx(Stack$1, {
+        children: _.reverse(filteredSites.slice()).map(function (site, i) {
+          var _$max;
+          return jsxRuntimeExports.jsx(VisitedSiteRow, _objectSpread$1(_objectSpread$1({}, site), {}, {
+            maxScreenTime: (_$max = _.max(props.sites.map(function (s) {
+              return s.screenTime;
+            }))) !== null && _$max !== void 0 ? _$max : 1,
+            borderTop: i > 0
+          }), i);
+        })
+      })]
+    })
+  });
+};
+
+var InsightsEmptyStateIndicator = function InsightsEmptyStateIndicator(_ref) {
+  var imageSrc = _ref.imageSrc,
+    width = _ref.width,
+    height = _ref.height;
+  return jsxRuntimeExports.jsxs(Stack, {
+    spacing: "12px",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    children: [jsxRuntimeExports.jsx("img", {
+      src: imageSrc,
+      alt: "No data available",
+      width: width,
+      height: height
+    }), jsxRuntimeExports.jsx(Typography, {
+      variant: "h5",
+      color: PALETTE.secondary.grey[4],
+      fontWeight: "bold",
+      children: "No data available"
+    })]
+  });
+};
+
+function ownKeys$1(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys$1(Object(t), !0).forEach(function (r) { _defineProperty$1(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+var VisitedSiteRow = function VisitedSiteRow(props) {
+  return jsxRuntimeExports.jsx(Stack$1, {
+    height: "73px",
+    borderTop: props.borderTop ? "2px solid ".concat(PALETTE.secondary.grey[2]) : undefined,
+    sx: {
+      cursor: 'pointer',
+      '&:hover': {
+        opacity: 0.7
+      },
+      transition: '0.2s'
+    },
+    justifyContent: "center",
+    children: jsxRuntimeExports.jsx("a", {
+      href: props.url,
+      target: "_blank",
+      style: {
+        textDecoration: 'none'
+      },
+      children: jsxRuntimeExports.jsxs(Stack$1, {
+        flex: 1,
+        direction: "row",
+        spacing: "12px",
+        alignItems: "center",
+        children: [jsxRuntimeExports.jsx(Stack$1, {
+          borderRadius: "8px",
+          overflow: "hidden",
+          minHeight: 42,
+          minWidth: 42,
+          boxShadow: "0 0 12px rgba(0,0,0,0.1)",
+          children: jsxRuntimeExports.jsx("img", {
+            src: props.faviconUrl,
+            height: 42,
+            width: 42,
+            alt: "favicon"
+          })
+        }), jsxRuntimeExports.jsxs(Stack$1, {
+          spacing: "8px",
+          width: "100%",
+          children: [jsxRuntimeExports.jsxs(Stack$1, {
+            direction: "row",
+            spacing: "8px",
+            alignItems: "center",
+            children: [jsxRuntimeExports.jsx(Typography$1, {
+              bold: true,
+              maxLines: 1,
+              sx: {
+                wordBreak: 'break-all'
+              },
+              children: props.title
+            }), jsxRuntimeExports.jsx(Stack$1, {
+              minWidth: "20%",
+              children: jsxRuntimeExports.jsx(Typography$1, {
+                bold: true,
+                color: PALETTE.secondary.grey[3],
+                maxLines: 1,
+                sx: {
+                  wordBreak: 'break-all'
+                },
+                children: cleanUrl(props.url).replace(/\/$/, '')
+              })
+            })]
+          }), jsxRuntimeExports.jsxs(Stack$1, {
+            direction: "row",
+            alignItems: "center",
+            spacing: "12px",
+            children: [jsxRuntimeExports.jsx(Stack$1, {
+              width: "".concat(100 * props.screenTime / props.maxScreenTime, "%"),
+              height: "8px",
+              bgcolor: PALETTE.secondary.purple[1],
+              borderRadius: "4px"
+            }), jsxRuntimeExports.jsx(Stack$1, {
+              width: "60px",
+              children: jsxRuntimeExports.jsx(Typography$1, {
+                bold: true,
+                variant: "tiny",
+                children: "".concat(Math.floor(props.screenTime / 60), "h ").concat(Math.floor(props.screenTime % 60), "m")
+              })
+            })]
+          })]
+        })]
+      })
+    })
+  });
+};
+var MostVisitedSitesSection = function MostVisitedSitesSection(props) {
+  var _useState = useState(false),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    allMostVisitedSitesDialogOpen = _useState2[0],
+    setAllMostVisitedSitesDialogOpen = _useState2[1];
+  return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    children: [jsxRuntimeExports.jsx(AstroBentoCard, {
+      title: "Most visited sites today",
+      notCollapsible: true,
+      paddingBottom: "0",
+      isMobile: props.isMobile,
+      topRightStuff: jsxRuntimeExports.jsx(UrsorButton, {
+        size: "small",
+        variant: "secondary",
+        onClick: function onClick() {
+          return setAllMostVisitedSitesDialogOpen(true);
+        },
+        children: "View all"
+      }),
+      children: props.sites.length === 0 ? jsxRuntimeExports.jsx(InsightsEmptyStateIndicator, {
+        imageSrc: "https://ursorassets.s3.eu-west-1.amazonaws.com/windowsNodata.svg",
+        width: 129,
+        height: 51
+      }) : _.reverse(props.sites.slice(-3)).map(function (site, i) {
+        var _$max;
+        return jsxRuntimeExports.jsx(UrsorFadeIn, {
+          delay: i * 90,
+          duration: 800,
+          children: jsxRuntimeExports.jsx(VisitedSiteRow, _objectSpread(_objectSpread({}, site), {}, {
+            maxScreenTime: (_$max = _.max(props.sites.map(function (s) {
+              return s.screenTime;
+            }))) !== null && _$max !== void 0 ? _$max : 1,
+            borderTop: i > 0
+          }))
+        }, site.url);
+      })
+    }), jsxRuntimeExports.jsx(AllMostVisitedSitesDialog, {
+      sites: props.sites,
+      open: allMostVisitedSitesDialogOpen,
+      onClose: function onClose() {
+        return setAllMostVisitedSitesDialogOpen(false);
+      },
+      isMobile: props.isMobile
+    })]
+  });
+};
 
 dayjs.extend(advancedFormat);
 var cleanUrl = function cleanUrl(url) {
@@ -51193,9 +58320,9 @@ var dellete = function dellete(route) {
 };
 var ApiController = /*#__PURE__*/function () {
   function ApiController() {
-    _classCallCheck(this, ApiController);
+    _classCallCheck$1(this, ApiController);
   }
-  return _createClass(ApiController, null, [{
+  return _createClass$1(ApiController, null, [{
     key: "getDevice",
     value: function () {
       var _getDevice = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime.mark(function _callee(id) {
@@ -52729,11 +59856,11 @@ var getInitials = function getInitials(name) {
 var SPACING = '8px';
 var ICON_SIZE = '16px';
 var PopupList = function PopupList(props) {
-  return jsxRuntimeExports.jsx(Stack, {
+  return jsxRuntimeExports.jsx(Stack$1, {
     spacing: SPACING,
     children: props.items.map(function (item, index) {
       var _item$color;
-      return jsxRuntimeExports.jsxs(Stack, {
+      return jsxRuntimeExports.jsxs(Stack$1, {
         sx: {
           cursor: 'pointer',
           transition: '0.2s',
@@ -52756,7 +59883,7 @@ var PopupList = function PopupList(props) {
         children: [item.icon ? jsxRuntimeExports.jsx(item.icon, {
           height: ICON_SIZE,
           width: ICON_SIZE
-        }) : null, jsxRuntimeExports.jsx(Typography, {
+        }) : null, jsxRuntimeExports.jsx(Typography$1, {
           color: item.color,
           variant: "normal",
           bold: true,
@@ -52781,14 +59908,14 @@ function ActionPopup(props) {
   });
 }
 
-var _path$2;
-function _extends$2() { return _extends$2 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$2.apply(null, arguments); }
+var _path$3;
+function _extends$4() { return _extends$4 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$4.apply(null, arguments); }
 var SvgMoreIcon = function SvgMoreIcon(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$2({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$4({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$2 || (_path$2 = /*#__PURE__*/React.createElement("path", {
+  }, props), _path$3 || (_path$3 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     d: "M3 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6M16 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6M32 15a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
   })));
@@ -52799,7 +59926,7 @@ var LARGE_SIZE = '20px';
 function UrsorActionButton(props) {
   var _props$size, _props$size2;
   var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray$1(_useState, 2),
     open = _useState2[0],
     setOpen = _useState2[1];
   return jsxRuntimeExports.jsx(ActionPopup, {
@@ -52810,7 +59937,7 @@ function UrsorActionButton(props) {
     },
     placement: "right",
     zIndex: 9999,
-    children: jsxRuntimeExports.jsx(Stack, {
+    children: jsxRuntimeExports.jsx(Stack$1, {
       height: (_props$size = props.size) !== null && _props$size !== void 0 ? _props$size : '40px',
       width: (_props$size2 = props.size) !== null && _props$size2 !== void 0 ? _props$size2 : '40px',
       justifyContent: "center",
@@ -52847,14 +59974,14 @@ function UrsorActionButton(props) {
   });
 }
 
-var _path$1;
-function _extends$1() { return _extends$1 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$1.apply(null, arguments); }
+var _path$2;
+function _extends$3() { return _extends$3 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$3.apply(null, arguments); }
 var SvgArrowUpRight = function SvgArrowUpRight(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$1({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$3({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path$1 || (_path$1 = /*#__PURE__*/React.createElement("path", {
+  }, props), _path$2 || (_path$2 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M9.06 9.501a1.5 1.5 0 0 1 1.5-1.5h12.021a1.5 1.5 0 0 1 1.5 1.5v12.02a1.5 1.5 0 0 1-3 0v-8.399l-10.52 10.521a1.5 1.5 0 0 1-2.122-2.121L18.96 11h-8.4a1.5 1.5 0 0 1-1.5-1.5",
@@ -52862,14 +59989,14 @@ var SvgArrowUpRight = function SvgArrowUpRight(props) {
   })));
 };
 
-var _path;
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+var _path$1;
+function _extends$2() { return _extends$2 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$2.apply(null, arguments); }
 var SvgPencil = function SvgPencil(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends({
+  return /*#__PURE__*/React$1.createElement("svg", _extends$2({
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 32 32"
-  }, props), _path || (_path = /*#__PURE__*/React.createElement("path", {
+  }, props), _path$1 || (_path$1 = /*#__PURE__*/React$1.createElement("path", {
     fill: "#0D2839",
     fillRule: "evenodd",
     d: "M22.025 2.853a3.5 3.5 0 0 1 4.95 0l2.171 2.171a3.5 3.5 0 0 1 0 4.95l-17.219 17.22a3.5 3.5 0 0 1-1.513.89L3.912 29.94a1.5 1.5 0 0 1-1.854-1.854l1.857-6.502a3.5 3.5 0 0 1 .89-1.513zm2.829 2.121a.5.5 0 0 0-.707 0L21.62 7.5l2.88 2.879 2.524-2.525a.5.5 0 0 0 0-.707zM22.379 12.5 19.5 9.621 6.927 22.193a.5.5 0 0 0-.127.217l-1.116 3.905L9.59 25.2a.5.5 0 0 0 .216-.127z",
@@ -52913,7 +60040,7 @@ var getUserInfo = /*#__PURE__*/function () {
 
 var useAuth = function useAuth(email) {
   var _useState = useState({}),
-    _useState2 = _slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray$1(_useState, 2),
     user = _useState2[0],
     setUser = _useState2[1];
   useEffect(function () {
@@ -52978,9 +60105,9 @@ var useAuth = function useAuth(email) {
 
 var useDevice = function useDevice(externalDeviceId) {
   var _useState = useState(),
-    _useState2 = _slicedToArray(_useState, 2),
-    deviceId = _useState2[0],
-    setDeviceId = _useState2[1];
+    _useState2 = _slicedToArray$1(_useState, 2),
+    deviceData = _useState2[0],
+    setDeviceData = _useState2[1];
   useEffect(function () {
     fetch("".concat(BACKEND_URL, "/devices/discover/").concat(externalDeviceId), {
       headers: {
@@ -52990,10 +60117,12 @@ var useDevice = function useDevice(externalDeviceId) {
     }).then(function (resp) {
       return resp.json();
     }).then(function (data) {
-      return setDeviceId(data.id);
+      return ApiController.getEnrichedDevice(data.id).then(function (data) {
+        setDeviceData(data);
+      });
     });
-  });
-  return deviceId;
+  }, []);
+  return deviceData;
 };
 
 var DEVICE_TYPE_DISPLAY_NAMES = {
@@ -53002,7 +60131,7 @@ var DEVICE_TYPE_DISPLAY_NAMES = {
   ios: 'iOS'
 };
 var DeviceCardSection = function DeviceCardSection(props) {
-  return jsxRuntimeExports.jsxs(Stack, {
+  return jsxRuntimeExports.jsxs(Stack$1, {
     flex: 1,
     height: "72px",
     minHeight: "72px",
@@ -53012,7 +60141,7 @@ var DeviceCardSection = function DeviceCardSection(props) {
     justifyContent: "space-between",
     borderRadius: "8px",
     border: "1px solid ".concat(PALETTE.secondary.grey[2]),
-    children: [jsxRuntimeExports.jsx(Typography, {
+    children: [jsxRuntimeExports.jsx(Typography$1, {
       variant: "small",
       bold: true,
       color: PALETTE.secondary.grey[3],
@@ -53023,20 +60152,20 @@ var DeviceCardSection = function DeviceCardSection(props) {
 var DeviceCardBrowsingStatusSection = function DeviceCardBrowsingStatusSection(props) {
   var _size$width;
   var _useElementSize = useElementSize(),
-    _useElementSize2 = _slicedToArray(_useElementSize, 2),
+    _useElementSize2 = _slicedToArray$1(_useElementSize, 2),
     setRef = _useElementSize2[0],
     size = _useElementSize2[1];
-  return jsxRuntimeExports.jsx(Stack, {
+  return jsxRuntimeExports.jsx(Stack$1, {
     ref: setRef,
     flex: 1,
     children: jsxRuntimeExports.jsx(DeviceCardSection, {
       title: "Browsing status",
-      children: jsxRuntimeExports.jsxs(Stack, {
+      children: jsxRuntimeExports.jsxs(Stack$1, {
         direction: "row",
         alignItems: "center",
         justifyContent: "space-between",
         spacing: "6px",
-        children: [jsxRuntimeExports.jsxs(Stack, {
+        children: [jsxRuntimeExports.jsxs(Stack$1, {
           spacing: "8px",
           direction: "row",
           alignItems: "center",
@@ -53050,7 +60179,7 @@ var DeviceCardBrowsingStatusSection = function DeviceCardBrowsingStatusSection(p
           children: [((_size$width = size.width) !== null && _size$width !== void 0 ? _size$width : 0) > 276 ? jsxRuntimeExports.jsx(SvgGlobeIcon, {
             height: "20px",
             width: "20px"
-          }) : null, jsxRuntimeExports.jsx(Typography, {
+          }) : null, jsxRuntimeExports.jsx(Typography$1, {
             bold: true,
             color: PALETTE.secondary.grey[5],
             maxLines: 1,
@@ -53071,30 +60200,30 @@ var DeviceCardBrowsingStatusSection = function DeviceCardBrowsingStatusSection(p
 var DeviceCardScreenTimeSection = function DeviceCardScreenTimeSection(props) {
   return jsxRuntimeExports.jsx(DeviceCardSection, {
     title: "Screen time left today",
-    children: jsxRuntimeExports.jsxs(Stack, {
+    children: jsxRuntimeExports.jsxs(Stack$1, {
       direction: "row",
       alignItems: "center",
       spacing: "38px",
-      children: [jsxRuntimeExports.jsxs(Stack, {
+      children: [jsxRuntimeExports.jsxs(Stack$1, {
         direction: "row",
         alignItems: "center",
         justifyContent: "space-between",
         spacing: "8px",
         width: "100%",
-        children: [jsxRuntimeExports.jsx(Stack, {
+        children: [jsxRuntimeExports.jsx(Stack$1, {
           flex: 1,
           height: "11px",
           bgcolor: PALETTE.secondary.grey[2],
           borderRadius: "6px",
           position: "relative",
           overflow: "hidden",
-          children: jsxRuntimeExports.jsx(Stack, {
+          children: jsxRuntimeExports.jsx(Stack$1, {
             height: "100%",
             width: "".concat(Math.min(100, 100 * props.elapsedTime / props.totalTime), "%"),
             bgcolor: PALETTE.secondary.purple[1],
             borderRadius: "6px"
           })
-        }), jsxRuntimeExports.jsx(Typography, {
+        }), jsxRuntimeExports.jsx(Typography$1, {
           bold: true,
           color: PALETTE.secondary.grey[3],
           children: "".concat(Math.floor(Math.max(0, props.totalTime - props.elapsedTime) / 60), "h ").concat(Math.floor(Math.max(0, props.totalTime - props.elapsedTime) % 60), "m")
@@ -53112,7 +60241,7 @@ var DeviceCardCurrentUrlSection = function DeviceCardCurrentUrlSection(props) {
   var navigate = useNavigate();
   return jsxRuntimeExports.jsx(DeviceCardSection, {
     title: "Currently visiting",
-    children: jsxRuntimeExports.jsxs(Stack, {
+    children: jsxRuntimeExports.jsxs(Stack$1, {
       direction: "row",
       alignItems: "center",
       justifyContent: "space-between",
@@ -53132,10 +60261,10 @@ var DeviceCardCurrentUrlSection = function DeviceCardCurrentUrlSection(props) {
       onClick: !props.disabled ? function () {
         return navigate.push(getAbsoluteUrl(cleanUrl(props.url)));
       } : undefined,
-      children: [jsxRuntimeExports.jsxs(Stack, {
+      children: [jsxRuntimeExports.jsxs(Stack$1, {
         direction: "row",
         spacing: "8px",
-        children: [!props.disabled && props.faviconUrl ? jsxRuntimeExports.jsx(Stack, {
+        children: [!props.disabled && props.faviconUrl ? jsxRuntimeExports.jsx(Stack$1, {
           height: "20px",
           width: "20px",
           borderRadius: "5px",
@@ -53146,7 +60275,7 @@ var DeviceCardCurrentUrlSection = function DeviceCardCurrentUrlSection(props) {
             width: 20,
             alt: "favicon"
           })
-        }) : null, jsxRuntimeExports.jsx(Typography, {
+        }) : null, jsxRuntimeExports.jsx(Typography$1, {
           bold: true,
           color: props.disabled ? PALETTE.secondary.grey[4] : PALETTE.secondary.purple[2],
           maxLines: 1,
@@ -53178,29 +60307,19 @@ var DeviceCard = function DeviceCard(_ref) {
     _ref$onClickOpen = _ref.onClickOpen,
     onClickOpen = _ref$onClickOpen === void 0 ? function () {} : _ref$onClickOpen;
   var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray$1(_useState, 2),
     browsingEnabled = _useState2[0],
     setBrowsingEnabled = _useState2[1];
   var _useState3 = useState(),
-    _useState4 = _slicedToArray(_useState3, 2);
+    _useState4 = _slicedToArray$1(_useState3, 2);
     _useState4[0];
     var setRenameDeviceDialogOpen = _useState4[1];
   var notificationCtx = useContext(NotificationContext);
   var _useState5 = useState(),
-    _useState6 = _slicedToArray(_useState5, 2),
-    deviceData = _useState6[0],
-    setEnrichedDeviceData = _useState6[1];
-  var _useState7 = useState(),
-    _useState8 = _slicedToArray(_useState7, 2),
-    filterData = _useState8[0],
-    setFilterData = _useState8[1];
-  var id = useDevice(deviceId);
-  useEffect(function () {
-    if (!id) return;
-    ApiController.getEnrichedDevice(id).then(function (data) {
-      setEnrichedDeviceData(data);
-    });
-  }, [id]);
+    _useState6 = _slicedToArray$1(_useState5, 2),
+    filterData = _useState6[0],
+    setFilterData = _useState6[1];
+  var deviceData = useDevice(deviceId);
   useEffect(function () {
     if (!(deviceData !== null && deviceData !== void 0 && deviceData.filterId)) return;
     ApiController.getFilter(deviceData.filterId).then(function (data) {
@@ -53226,11 +60345,11 @@ var DeviceCard = function DeviceCard(_ref) {
   });
   useAuth(email);
   return jsxRuntimeExports.jsx(AstroCard, {
-    children: jsxRuntimeExports.jsxs(Stack, {
+    children: jsxRuntimeExports.jsxs(Stack$1, {
       p: "20px",
       boxSizing: "border-box",
       position: "relative",
-      children: [button ? jsxRuntimeExports.jsx(Stack, {
+      children: [button ? jsxRuntimeExports.jsx(Stack$1, {
         position: "absolute",
         top: "28px",
         right: "15px",
@@ -53243,7 +60362,7 @@ var DeviceCard = function DeviceCard(_ref) {
         },
         zIndex: 2,
         children: button
-      }) : null, jsxRuntimeExports.jsxs(Stack, {
+      }) : null, jsxRuntimeExports.jsxs(Stack$1, {
         direction: "row",
         spacing: "18px",
         position: "relative",
@@ -53251,9 +60370,9 @@ var DeviceCard = function DeviceCard(_ref) {
         alignItems: "center",
         width: "94%",
         onClick: onClick,
-        children: [jsxRuntimeExports.jsxs(Stack, {
+        children: [jsxRuntimeExports.jsxs(Stack$1, {
           position: "relative",
-          children: [jsxRuntimeExports.jsx(Stack, {
+          children: [jsxRuntimeExports.jsx(Stack$1, {
             minHeight: small ? '40px' : '84px',
             minWidth: small ? '40px' : '84px',
             borderRadius: "100%",
@@ -53274,13 +60393,13 @@ var DeviceCard = function DeviceCard(_ref) {
               height: small ? 40 : 84,
               width: small ? 40 : 84,
               alt: "device profile"
-            }) : jsxRuntimeExports.jsx(Typography, {
+            }) : jsxRuntimeExports.jsx(Typography$1, {
               color: "rgb(255,255,255)",
               bold: true,
               variant: "h4",
               children: getInitials((deviceData === null || deviceData === void 0 ? void 0 : deviceData.name) || '')
             })
-          }), jsxRuntimeExports.jsx(Stack, {
+          }), jsxRuntimeExports.jsx(Stack$1, {
             position: "absolute",
             bottom: -2,
             right: -2,
@@ -53306,10 +60425,10 @@ var DeviceCard = function DeviceCard(_ref) {
               width: "12px"
             })
           })]
-        }), jsxRuntimeExports.jsxs(Stack, {
+        }), jsxRuntimeExports.jsxs(Stack$1, {
           justifyContent: "center",
           spacing: "4px",
-          children: [jsxRuntimeExports.jsx(Stack, {
+          children: [jsxRuntimeExports.jsx(Stack$1, {
             onClick: onClick,
             sx: {
               cursor: 'pointer',
@@ -53318,7 +60437,7 @@ var DeviceCard = function DeviceCard(_ref) {
                 opacity: 0.6
               }
             },
-            children: jsxRuntimeExports.jsx(Typography, {
+            children: jsxRuntimeExports.jsx(Typography$1, {
               bold: true,
               variant: "h5",
               maxLines: 1,
@@ -53327,18 +60446,18 @@ var DeviceCard = function DeviceCard(_ref) {
               },
               children: deviceData === null || deviceData === void 0 ? void 0 : deviceData.name
             })
-          }), jsxRuntimeExports.jsxs(Stack, {
+          }), jsxRuntimeExports.jsxs(Stack$1, {
             direction: "row",
             spacing: "8px",
             alignItems: "center",
             children: [jsxRuntimeExports.jsx(SvgPhoneIcon, {
               height: "16px",
               width: "16px"
-            }), jsxRuntimeExports.jsx(Typography, {
+            }), jsxRuntimeExports.jsx(Typography$1, {
               maxLines: 1,
               children: DEVICE_TYPE_DISPLAY_NAMES[(deviceData === null || deviceData === void 0 ? void 0 : deviceData.deviceType) || 'chrome']
             })]
-          }), filterData !== null && filterData !== void 0 && filterData.title ? jsxRuntimeExports.jsxs(Stack, {
+          }), filterData !== null && filterData !== void 0 && filterData.title ? jsxRuntimeExports.jsxs(Stack$1, {
             direction: "row",
             spacing: "8px",
             alignItems: "center",
@@ -53360,14 +60479,14 @@ var DeviceCard = function DeviceCard(_ref) {
             children: [jsxRuntimeExports.jsx(SvgFilterIcon, {
               height: "16px",
               width: "16px"
-            }), jsxRuntimeExports.jsx(Typography, {
+            }), jsxRuntimeExports.jsx(Typography$1, {
               maxLines: 1,
               children: filterData === null || filterData === void 0 ? void 0 : filterData.title
             })]
           }) : null]
         })]
       }), !noExtras ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
-        children: [jsxRuntimeExports.jsxs(Stack, {
+        children: [jsxRuntimeExports.jsxs(Stack$1, {
           spacing: "12px",
           pt: "20px",
           children: [jsxRuntimeExports.jsx(DeviceCardCurrentUrlSection, {
@@ -53384,13 +60503,13 @@ var DeviceCard = function DeviceCard(_ref) {
           }), jsxRuntimeExports.jsx(DeviceCardBrowsingStatusSection, {
             browsingEnabled: browsingEnabled,
             flipBrowsingEnabled: function flipBrowsingEnabled() {
-              if (!id) return;
+              if (!(deviceData !== null && deviceData !== void 0 && deviceData.id)) return;
               setBrowsingEnabled(!browsingEnabled);
-              ApiController.flipBrowsingAllowed(id, !browsingEnabled);
+              ApiController.flipBrowsingAllowed(deviceData.id, !browsingEnabled);
               notificationCtx.success("Browsing is now ".concat(!browsingEnabled ? 'enabled' : 'disabled', " on ").concat(name));
             }
           })]
-        }), jsxRuntimeExports.jsx(Stack, {
+        }), jsxRuntimeExports.jsx(Stack$1, {
           pt: "20px",
           children: jsxRuntimeExports.jsx(UrsorButton, {
             variant: "secondary",
@@ -53408,4 +60527,1333 @@ var DeviceCard = function DeviceCard(_ref) {
   });
 };
 
-export { DeviceCard };
+var _path;
+function _extends$1() { return _extends$1 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$1.apply(null, arguments); }
+var SvgPlusIcon = function SvgPlusIcon(props) {
+  return /*#__PURE__*/React$1.createElement("svg", _extends$1({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 32 32"
+  }, props), _path || (_path = /*#__PURE__*/React$1.createElement("path", {
+    fill: "#0D2839",
+    fillRule: "evenodd",
+    d: "M16.117 4.798a1.5 1.5 0 0 1 1.5 1.5v8.5h8.5a1.5 1.5 0 1 1 0 3h-8.5v8.5a1.5 1.5 0 0 1-3 0v-8.5h-8.5a1.5 1.5 0 0 1 0-3h8.5v-8.5a1.5 1.5 0 0 1 1.5-1.5",
+    clipRule: "evenodd"
+  })));
+};
+
+var AddDeviceButton = function AddDeviceButton(_ref) {
+  var _ref$onClick = _ref.onClick,
+    onClick = _ref$onClick === void 0 ? function () {} : _ref$onClick;
+  return jsxRuntimeExports.jsx(UrsorButton, {
+    size: "small",
+    endIcon: SvgPlusIcon,
+    dark: true,
+    variant: "tertiary",
+    onClick: onClick,
+    children: "Add a Device"
+  });
+};
+
+var utc$1 = {exports: {}};
+
+(function (module, exports) {
+	!function(t,i){module.exports=i();}(commonjsGlobal,(function(){var t="minute",i=/[+-]\d\d(?::?\d\d)?/g,e=/([+-]|\d\d)/g;return function(s,f,n){var u=f.prototype;n.utc=function(t){var i={date:t,utc:!0,args:arguments};return new f(i)},u.utc=function(i){var e=n(this.toDate(),{locale:this.$L,utc:!0});return i?e.add(this.utcOffset(),t):e},u.local=function(){return n(this.toDate(),{locale:this.$L,utc:!1})};var o=u.parse;u.parse=function(t){t.utc&&(this.$u=!0),this.$utils().u(t.$offset)||(this.$offset=t.$offset),o.call(this,t);};var r=u.init;u.init=function(){if(this.$u){var t=this.$d;this.$y=t.getUTCFullYear(),this.$M=t.getUTCMonth(),this.$D=t.getUTCDate(),this.$W=t.getUTCDay(),this.$H=t.getUTCHours(),this.$m=t.getUTCMinutes(),this.$s=t.getUTCSeconds(),this.$ms=t.getUTCMilliseconds();}else r.call(this);};var a=u.utcOffset;u.utcOffset=function(s,f){var n=this.$utils().u;if(n(s))return this.$u?0:n(this.$offset)?a.call(this):this.$offset;if("string"==typeof s&&(s=function(t){void 0===t&&(t="");var s=t.match(i);if(!s)return null;var f=(""+s[0]).match(e)||["-",0,0],n=f[0],u=60*+f[1]+ +f[2];return 0===u?0:"+"===n?u:-u}(s),null===s))return this;var u=Math.abs(s)<=16?60*s:s,o=this;if(f)return o.$offset=u,o.$u=0===s,o;if(0!==s){var r=this.$u?this.toDate().getTimezoneOffset():-1*this.utcOffset();(o=this.local().add(u+r,t)).$offset=u,o.$x.$localOffset=r;}else o=this.utc();return o};var h=u.format;u.format=function(t){var i=t||(this.$u?"YYYY-MM-DDTHH:mm:ss[Z]":"");return h.call(this,i)},u.valueOf=function(){var t=this.$utils().u(this.$offset)?0:this.$offset+(this.$x.$localOffset||this.$d.getTimezoneOffset());return this.$d.valueOf()-6e4*t},u.isUTC=function(){return !!this.$u},u.toISOString=function(){return this.toDate().toISOString()},u.toString=function(){return this.toDate().toUTCString()};var l=u.toDate;u.toDate=function(t){return "s"===t&&this.$offset?n(this.format("YYYY-MM-DD HH:mm:ss:SSS")).toDate():l.call(this)};var c=u.diff;u.diff=function(t,i,e){if(t&&this.$u===t.$u)return c.call(this,t,i,e);var s=this.local(),f=n(t).local();return c.call(s,f,i,e)};}})); 
+} (utc$1));
+
+var utcExports = utc$1.exports;
+var utc = /*@__PURE__*/getDefaultExportFromCjs(utcExports);
+
+dayjs.extend(utc);
+var DeviceScreenTimeCard = function DeviceScreenTimeCard(_ref) {
+  var email = _ref.email,
+    deviceId = _ref.deviceId;
+  var _useState = useState([]),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    times = _useState2[0],
+    setTimes = _useState2[1];
+  var _useState3 = useState(0),
+    _useState4 = _slicedToArray$1(_useState3, 2),
+    selectedDayIndex = _useState4[0],
+    setSelectedDayIndex = _useState4[1]; // days from today
+  var _useState5 = useState(0),
+    _useState6 = _slicedToArray$1(_useState5, 2),
+    rangeEndDayIndex = _useState6[0],
+    setRangeEndDayIndex = _useState6[1];
+  var _useState7 = useState(6),
+    _useState8 = _slicedToArray$1(_useState7, 2),
+    rangeStartDayIndex = _useState8[0],
+    setRangeStartDayIndex = _useState8[1];
+  useAuth(email);
+  var device = useDevice(deviceId);
+  useEffect(function () {
+    if (!(device !== null && device !== void 0 && device.id)) return;
+    ApiController.getStats(device.id, dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'), dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')).then(function (stats) {
+      setTimes(stats.screenTime);
+    });
+  }, [device === null || device === void 0 ? void 0 : device.id, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
+  var _useState9 = useState(0),
+    _useState10 = _slicedToArray$1(_useState9, 2),
+    timeSpent = _useState10[0],
+    setTimeSpent = _useState10[1];
+  useEffect(function () {
+    var _times$find$screenTim, _times$find;
+    return setTimeSpent((_times$find$screenTim = (_times$find = times.find(function (t) {
+      return t.date === dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD');
+    })) === null || _times$find === void 0 ? void 0 : _times$find.screenTime) !== null && _times$find$screenTim !== void 0 ? _times$find$screenTim : 0);
+  }, [times, selectedDayIndex]);
+  useEffect(function () {
+    if (selectedDayIndex < 4) {
+      var shiftNDays = selectedDayIndex - 3;
+      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays);
+      setRangeEndDayIndex(Math.max(0, shiftNDays));
+      // }
+      // else if (times.length - selectedDayIndex < 4) {
+      //   const shiftNDays = times.length - 1 - selectedDayIndex;
+      //   setRangeStartDayIndex(Math.min(times.length - 1, selectedDayIndex + 3));
+      //   setRangeEndDayIndex(selectedDayIndex - 6 + shiftNDays);
+    } else {
+      setRangeStartDayIndex(selectedDayIndex + 3);
+      setRangeEndDayIndex(selectedDayIndex - 3);
+    }
+  }, [selectedDayIndex, times]);
+  return jsxRuntimeExports.jsxs(Stack$1, {
+    spacing: "12px",
+    width: "100%",
+    children: [jsxRuntimeExports.jsxs(Stack$1, {
+      direction: "row",
+      justifyContent: "space-between",
+      children: [jsxRuntimeExports.jsxs(Stack$1, {
+        direction: "row",
+        spacing: "8px",
+        alignItems: "center",
+        children: [jsxRuntimeExports.jsx(Stack$1, {
+          sx: {
+            cursor: 'pointer',
+            transition: '0.2s',
+            '&:hover': {
+              opacity: 0.6
+            }
+          },
+          onClick: function onClick() {
+            return setSelectedDayIndex(selectedDayIndex + 1);
+          },
+          children: jsxRuntimeExports.jsx(SvgChevronLeft, {
+            height: "18px",
+            width: "18px"
+          })
+        }), jsxRuntimeExports.jsx(Typography$1, {
+          variant: "medium",
+          bold: true,
+          children: "".concat(selectedDayIndex === 0 ? 'Today' : selectedDayIndex === 1 ? 'Yesterday' : "".concat(dayjs().subtract(selectedDayIndex, 'days').format('dddd')), ", ").concat(dayjs().subtract(selectedDayIndex, 'days').format('Do MMMM'))
+        }), jsxRuntimeExports.jsx(Stack$1, {
+          sx: {
+            opacity: selectedDayIndex === 0 ? 0.3 : 1,
+            pointerEvents: selectedDayIndex === 0 ? 'none' : undefined,
+            cursor: 'pointer',
+            transition: '0.2s',
+            '&:hover': {
+              opacity: 0.6
+            }
+          },
+          onClick: function onClick() {
+            return setSelectedDayIndex(selectedDayIndex - 1);
+          },
+          children: jsxRuntimeExports.jsx(SvgChevronRight, {
+            height: "18px",
+            width: "18px"
+          })
+        })]
+      }), jsxRuntimeExports.jsx(CalendarButton, {
+        value: dayjs().subtract(selectedDayIndex, 'days').toDate(),
+        setValue: function setValue(date) {
+          return setSelectedDayIndex(dayjs().diff(date, 'days'));
+        }
+      })]
+    }), jsxRuntimeExports.jsx(AstroBentoCard, {
+      title: "".concat(Math.floor(timeSpent / 60), "h ").concat(Math.floor(timeSpent % 60), "m spent on screen"),
+      notCollapsible: true,
+      isMobile: true,
+      children: jsxRuntimeExports.jsx(Stack$1, {
+        height: "200px",
+        mt: "10px",
+        borderRadius: "12px",
+        bgcolor: "rgb(255,255,255)",
+        py: "8px",
+        boxSizing: "border-box",
+        children: times.length > 0 ? jsxRuntimeExports.jsx(AstroTimeChart, {
+          times: times,
+          selected: dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD'),
+          setSelectedDatetime: function setSelectedDatetime(datetime) {
+            return setSelectedDayIndex(dayjs().utc().diff(datetime, 'days'));
+          },
+          labelFontSize: "small",
+          barsXPadding: 12,
+          barWidth: 22
+        }) : null
+      })
+    })]
+  });
+};
+
+var lib = {};
+
+var uaParser_min = {exports: {}};
+
+/* UAParser.js v1.0.38
+   Copyright © 2012-2021 Faisal Salman <f@faisalman.com>
+   MIT License */
+
+(function (module, exports) {
+	(function(window,undefined$1){var LIBVERSION="1.0.38",EMPTY="",UNKNOWN="?",FUNC_TYPE="function",UNDEF_TYPE="undefined",OBJ_TYPE="object",STR_TYPE="string",MAJOR="major",MODEL="model",NAME="name",TYPE="type",VENDOR="vendor",VERSION="version",ARCHITECTURE="architecture",CONSOLE="console",MOBILE="mobile",TABLET="tablet",SMARTTV="smarttv",WEARABLE="wearable",EMBEDDED="embedded",UA_MAX_LENGTH=500;var AMAZON="Amazon",APPLE="Apple",ASUS="ASUS",BLACKBERRY="BlackBerry",BROWSER="Browser",CHROME="Chrome",EDGE="Edge",FIREFOX="Firefox",GOOGLE="Google",HUAWEI="Huawei",LG="LG",MICROSOFT="Microsoft",MOTOROLA="Motorola",OPERA="Opera",SAMSUNG="Samsung",SHARP="Sharp",SONY="Sony",XIAOMI="Xiaomi",ZEBRA="Zebra",FACEBOOK="Facebook",CHROMIUM_OS="Chromium OS",MAC_OS="Mac OS";var extend=function(regexes,extensions){var mergedRegexes={};for(var i in regexes){if(extensions[i]&&extensions[i].length%2===0){mergedRegexes[i]=extensions[i].concat(regexes[i]);}else {mergedRegexes[i]=regexes[i];}}return mergedRegexes},enumerize=function(arr){var enums={};for(var i=0;i<arr.length;i++){enums[arr[i].toUpperCase()]=arr[i];}return enums},has=function(str1,str2){return typeof str1===STR_TYPE?lowerize(str2).indexOf(lowerize(str1))!==-1:false},lowerize=function(str){return str.toLowerCase()},majorize=function(version){return typeof version===STR_TYPE?version.replace(/[^\d\.]/g,EMPTY).split(".")[0]:undefined$1},trim=function(str,len){if(typeof str===STR_TYPE){str=str.replace(/^\s\s*/,EMPTY);return typeof len===UNDEF_TYPE?str:str.substring(0,UA_MAX_LENGTH)}};var rgxMapper=function(ua,arrays){var i=0,j,k,p,q,matches,match;while(i<arrays.length&&!matches){var regex=arrays[i],props=arrays[i+1];j=k=0;while(j<regex.length&&!matches){if(!regex[j]){break}matches=regex[j++].exec(ua);if(!!matches){for(p=0;p<props.length;p++){match=matches[++k];q=props[p];if(typeof q===OBJ_TYPE&&q.length>0){if(q.length===2){if(typeof q[1]==FUNC_TYPE){this[q[0]]=q[1].call(this,match);}else {this[q[0]]=q[1];}}else if(q.length===3){if(typeof q[1]===FUNC_TYPE&&!(q[1].exec&&q[1].test)){this[q[0]]=match?q[1].call(this,match,q[2]):undefined$1;}else {this[q[0]]=match?match.replace(q[1],q[2]):undefined$1;}}else if(q.length===4){this[q[0]]=match?q[3].call(this,match.replace(q[1],q[2])):undefined$1;}}else {this[q]=match?match:undefined$1;}}}}i+=2;}},strMapper=function(str,map){for(var i in map){if(typeof map[i]===OBJ_TYPE&&map[i].length>0){for(var j=0;j<map[i].length;j++){if(has(map[i][j],str)){return i===UNKNOWN?undefined$1:i}}}else if(has(map[i],str)){return i===UNKNOWN?undefined$1:i}}return str};var oldSafariMap={"1.0":"/8",1.2:"/1",1.3:"/3","2.0":"/412","2.0.2":"/416","2.0.3":"/417","2.0.4":"/419","?":"/"},windowsVersionMap={ME:"4.90","NT 3.11":"NT3.51","NT 4.0":"NT4.0",2e3:"NT 5.0",XP:["NT 5.1","NT 5.2"],Vista:"NT 6.0",7:"NT 6.1",8:"NT 6.2",8.1:"NT 6.3",10:["NT 6.4","NT 10.0"],RT:"ARM"};var regexes={browser:[[/\b(?:crmo|crios)\/([\w\.]+)/i],[VERSION,[NAME,"Chrome"]],[/edg(?:e|ios|a)?\/([\w\.]+)/i],[VERSION,[NAME,"Edge"]],[/(opera mini)\/([-\w\.]+)/i,/(opera [mobiletab]{3,6})\b.+version\/([-\w\.]+)/i,/(opera)(?:.+version\/|[\/ ]+)([\w\.]+)/i],[NAME,VERSION],[/opios[\/ ]+([\w\.]+)/i],[VERSION,[NAME,OPERA+" Mini"]],[/\bop(?:rg)?x\/([\w\.]+)/i],[VERSION,[NAME,OPERA+" GX"]],[/\bopr\/([\w\.]+)/i],[VERSION,[NAME,OPERA]],[/\bb[ai]*d(?:uhd|[ub]*[aekoprswx]{5,6})[\/ ]?([\w\.]+)/i],[VERSION,[NAME,"Baidu"]],[/(kindle)\/([\w\.]+)/i,/(lunascape|maxthon|netfront|jasmine|blazer)[\/ ]?([\w\.]*)/i,/(avant|iemobile|slim)\s?(?:browser)?[\/ ]?([\w\.]*)/i,/(?:ms|\()(ie) ([\w\.]+)/i,/(flock|rockmelt|midori|epiphany|silk|skyfire|bolt|iron|vivaldi|iridium|phantomjs|bowser|quark|qupzilla|falkon|rekonq|puffin|brave|whale(?!.+naver)|qqbrowserlite|qq|duckduckgo)\/([-\w\.]+)/i,/(heytap|ovi)browser\/([\d\.]+)/i,/(weibo)__([\d\.]+)/i],[NAME,VERSION],[/\bddg\/([\w\.]+)/i],[VERSION,[NAME,"DuckDuckGo"]],[/(?:\buc? ?browser|(?:juc.+)ucweb)[\/ ]?([\w\.]+)/i],[VERSION,[NAME,"UC"+BROWSER]],[/microm.+\bqbcore\/([\w\.]+)/i,/\bqbcore\/([\w\.]+).+microm/i,/micromessenger\/([\w\.]+)/i],[VERSION,[NAME,"WeChat"]],[/konqueror\/([\w\.]+)/i],[VERSION,[NAME,"Konqueror"]],[/trident.+rv[: ]([\w\.]{1,9})\b.+like gecko/i],[VERSION,[NAME,"IE"]],[/ya(?:search)?browser\/([\w\.]+)/i],[VERSION,[NAME,"Yandex"]],[/slbrowser\/([\w\.]+)/i],[VERSION,[NAME,"Smart Lenovo "+BROWSER]],[/(avast|avg)\/([\w\.]+)/i],[[NAME,/(.+)/,"$1 Secure "+BROWSER],VERSION],[/\bfocus\/([\w\.]+)/i],[VERSION,[NAME,FIREFOX+" Focus"]],[/\bopt\/([\w\.]+)/i],[VERSION,[NAME,OPERA+" Touch"]],[/coc_coc\w+\/([\w\.]+)/i],[VERSION,[NAME,"Coc Coc"]],[/dolfin\/([\w\.]+)/i],[VERSION,[NAME,"Dolphin"]],[/coast\/([\w\.]+)/i],[VERSION,[NAME,OPERA+" Coast"]],[/miuibrowser\/([\w\.]+)/i],[VERSION,[NAME,"MIUI "+BROWSER]],[/fxios\/([-\w\.]+)/i],[VERSION,[NAME,FIREFOX]],[/\bqihu|(qi?ho?o?|360)browser/i],[[NAME,"360 "+BROWSER]],[/(oculus|sailfish|huawei|vivo)browser\/([\w\.]+)/i],[[NAME,/(.+)/,"$1 "+BROWSER],VERSION],[/samsungbrowser\/([\w\.]+)/i],[VERSION,[NAME,SAMSUNG+" Internet"]],[/(comodo_dragon)\/([\w\.]+)/i],[[NAME,/_/g," "],VERSION],[/metasr[\/ ]?([\d\.]+)/i],[VERSION,[NAME,"Sogou Explorer"]],[/(sogou)mo\w+\/([\d\.]+)/i],[[NAME,"Sogou Mobile"],VERSION],[/(electron)\/([\w\.]+) safari/i,/(tesla)(?: qtcarbrowser|\/(20\d\d\.[-\w\.]+))/i,/m?(qqbrowser|2345Explorer)[\/ ]?([\w\.]+)/i],[NAME,VERSION],[/(lbbrowser)/i,/\[(linkedin)app\]/i],[NAME],[/((?:fban\/fbios|fb_iab\/fb4a)(?!.+fbav)|;fbav\/([\w\.]+);)/i],[[NAME,FACEBOOK],VERSION],[/(Klarna)\/([\w\.]+)/i,/(kakao(?:talk|story))[\/ ]([\w\.]+)/i,/(naver)\(.*?(\d+\.[\w\.]+).*\)/i,/safari (line)\/([\w\.]+)/i,/\b(line)\/([\w\.]+)\/iab/i,/(alipay)client\/([\w\.]+)/i,/(twitter)(?:and| f.+e\/([\w\.]+))/i,/(chromium|instagram|snapchat)[\/ ]([-\w\.]+)/i],[NAME,VERSION],[/\bgsa\/([\w\.]+) .*safari\//i],[VERSION,[NAME,"GSA"]],[/musical_ly(?:.+app_?version\/|_)([\w\.]+)/i],[VERSION,[NAME,"TikTok"]],[/headlesschrome(?:\/([\w\.]+)| )/i],[VERSION,[NAME,CHROME+" Headless"]],[/ wv\).+(chrome)\/([\w\.]+)/i],[[NAME,CHROME+" WebView"],VERSION],[/droid.+ version\/([\w\.]+)\b.+(?:mobile safari|safari)/i],[VERSION,[NAME,"Android "+BROWSER]],[/(chrome|omniweb|arora|[tizenoka]{5} ?browser)\/v?([\w\.]+)/i],[NAME,VERSION],[/version\/([\w\.\,]+) .*mobile\/\w+ (safari)/i],[VERSION,[NAME,"Mobile Safari"]],[/version\/([\w(\.|\,)]+) .*(mobile ?safari|safari)/i],[VERSION,NAME],[/webkit.+?(mobile ?safari|safari)(\/[\w\.]+)/i],[NAME,[VERSION,strMapper,oldSafariMap]],[/(webkit|khtml)\/([\w\.]+)/i],[NAME,VERSION],[/(navigator|netscape\d?)\/([-\w\.]+)/i],[[NAME,"Netscape"],VERSION],[/mobile vr; rv:([\w\.]+)\).+firefox/i],[VERSION,[NAME,FIREFOX+" Reality"]],[/ekiohf.+(flow)\/([\w\.]+)/i,/(swiftfox)/i,/(icedragon|iceweasel|camino|chimera|fennec|maemo browser|minimo|conkeror|klar)[\/ ]?([\w\.\+]+)/i,/(seamonkey|k-meleon|icecat|iceape|firebird|phoenix|palemoon|basilisk|waterfox)\/([-\w\.]+)$/i,/(firefox)\/([\w\.]+)/i,/(mozilla)\/([\w\.]+) .+rv\:.+gecko\/\d+/i,/(polaris|lynx|dillo|icab|doris|amaya|w3m|netsurf|sleipnir|obigo|mosaic|(?:go|ice|up)[\. ]?browser)[-\/ ]?v?([\w\.]+)/i,/(links) \(([\w\.]+)/i,/panasonic;(viera)/i],[NAME,VERSION],[/(cobalt)\/([\w\.]+)/i],[NAME,[VERSION,/master.|lts./,""]]],cpu:[[/(?:(amd|x(?:(?:86|64)[-_])?|wow|win)64)[;\)]/i],[[ARCHITECTURE,"amd64"]],[/(ia32(?=;))/i],[[ARCHITECTURE,lowerize]],[/((?:i[346]|x)86)[;\)]/i],[[ARCHITECTURE,"ia32"]],[/\b(aarch64|arm(v?8e?l?|_?64))\b/i],[[ARCHITECTURE,"arm64"]],[/\b(arm(?:v[67])?ht?n?[fl]p?)\b/i],[[ARCHITECTURE,"armhf"]],[/windows (ce|mobile); ppc;/i],[[ARCHITECTURE,"arm"]],[/((?:ppc|powerpc)(?:64)?)(?: mac|;|\))/i],[[ARCHITECTURE,/ower/,EMPTY,lowerize]],[/(sun4\w)[;\)]/i],[[ARCHITECTURE,"sparc"]],[/((?:avr32|ia64(?=;))|68k(?=\))|\barm(?=v(?:[1-7]|[5-7]1)l?|;|eabi)|(?=atmel )avr|(?:irix|mips|sparc)(?:64)?\b|pa-risc)/i],[[ARCHITECTURE,lowerize]]],device:[[/\b(sch-i[89]0\d|shw-m380s|sm-[ptx]\w{2,4}|gt-[pn]\d{2,4}|sgh-t8[56]9|nexus 10)/i],[MODEL,[VENDOR,SAMSUNG],[TYPE,TABLET]],[/\b((?:s[cgp]h|gt|sm)-\w+|sc[g-]?[\d]+a?|galaxy nexus)/i,/samsung[- ]([-\w]+)/i,/sec-(sgh\w+)/i],[MODEL,[VENDOR,SAMSUNG],[TYPE,MOBILE]],[/(?:\/|\()(ip(?:hone|od)[\w, ]*)(?:\/|;)/i],[MODEL,[VENDOR,APPLE],[TYPE,MOBILE]],[/\((ipad);[-\w\),; ]+apple/i,/applecoremedia\/[\w\.]+ \((ipad)/i,/\b(ipad)\d\d?,\d\d?[;\]].+ios/i],[MODEL,[VENDOR,APPLE],[TYPE,TABLET]],[/(macintosh);/i],[MODEL,[VENDOR,APPLE]],[/\b(sh-?[altvz]?\d\d[a-ekm]?)/i],[MODEL,[VENDOR,SHARP],[TYPE,MOBILE]],[/\b((?:ag[rs][23]?|bah2?|sht?|btv)-a?[lw]\d{2})\b(?!.+d\/s)/i],[MODEL,[VENDOR,HUAWEI],[TYPE,TABLET]],[/(?:huawei|honor)([-\w ]+)[;\)]/i,/\b(nexus 6p|\w{2,4}e?-[atu]?[ln][\dx][012359c][adn]?)\b(?!.+d\/s)/i],[MODEL,[VENDOR,HUAWEI],[TYPE,MOBILE]],[/\b(poco[\w ]+|m2\d{3}j\d\d[a-z]{2})(?: bui|\))/i,/\b; (\w+) build\/hm\1/i,/\b(hm[-_ ]?note?[_ ]?(?:\d\w)?) bui/i,/\b(redmi[\-_ ]?(?:note|k)?[\w_ ]+)(?: bui|\))/i,/oid[^\)]+; (m?[12][0-389][01]\w{3,6}[c-y])( bui|; wv|\))/i,/\b(mi[-_ ]?(?:a\d|one|one[_ ]plus|note lte|max|cc)?[_ ]?(?:\d?\w?)[_ ]?(?:plus|se|lite)?)(?: bui|\))/i],[[MODEL,/_/g," "],[VENDOR,XIAOMI],[TYPE,MOBILE]],[/oid[^\)]+; (2\d{4}(283|rpbf)[cgl])( bui|\))/i,/\b(mi[-_ ]?(?:pad)(?:[\w_ ]+))(?: bui|\))/i],[[MODEL,/_/g," "],[VENDOR,XIAOMI],[TYPE,TABLET]],[/; (\w+) bui.+ oppo/i,/\b(cph[12]\d{3}|p(?:af|c[al]|d\w|e[ar])[mt]\d0|x9007|a101op)\b/i],[MODEL,[VENDOR,"OPPO"],[TYPE,MOBILE]],[/\b(opd2\d{3}a?) bui/i],[MODEL,[VENDOR,"OPPO"],[TYPE,TABLET]],[/vivo (\w+)(?: bui|\))/i,/\b(v[12]\d{3}\w?[at])(?: bui|;)/i],[MODEL,[VENDOR,"Vivo"],[TYPE,MOBILE]],[/\b(rmx[1-3]\d{3})(?: bui|;|\))/i],[MODEL,[VENDOR,"Realme"],[TYPE,MOBILE]],[/\b(milestone|droid(?:[2-4x]| (?:bionic|x2|pro|razr))?:?( 4g)?)\b[\w ]+build\//i,/\bmot(?:orola)?[- ](\w*)/i,/((?:moto[\w\(\) ]+|xt\d{3,4}|nexus 6)(?= bui|\)))/i],[MODEL,[VENDOR,MOTOROLA],[TYPE,MOBILE]],[/\b(mz60\d|xoom[2 ]{0,2}) build\//i],[MODEL,[VENDOR,MOTOROLA],[TYPE,TABLET]],[/((?=lg)?[vl]k\-?\d{3}) bui| 3\.[-\w; ]{10}lg?-([06cv9]{3,4})/i],[MODEL,[VENDOR,LG],[TYPE,TABLET]],[/(lm(?:-?f100[nv]?|-[\w\.]+)(?= bui|\))|nexus [45])/i,/\blg[-e;\/ ]+((?!browser|netcast|android tv)\w+)/i,/\blg-?([\d\w]+) bui/i],[MODEL,[VENDOR,LG],[TYPE,MOBILE]],[/(ideatab[-\w ]+)/i,/lenovo ?(s[56]000[-\w]+|tab(?:[\w ]+)|yt[-\d\w]{6}|tb[-\d\w]{6})/i],[MODEL,[VENDOR,"Lenovo"],[TYPE,TABLET]],[/(?:maemo|nokia).*(n900|lumia \d+)/i,/nokia[-_ ]?([-\w\.]*)/i],[[MODEL,/_/g," "],[VENDOR,"Nokia"],[TYPE,MOBILE]],[/(pixel c)\b/i],[MODEL,[VENDOR,GOOGLE],[TYPE,TABLET]],[/droid.+; (pixel[\daxl ]{0,6})(?: bui|\))/i],[MODEL,[VENDOR,GOOGLE],[TYPE,MOBILE]],[/droid.+ (a?\d[0-2]{2}so|[c-g]\d{4}|so[-gl]\w+|xq-a\w[4-7][12])(?= bui|\).+chrome\/(?![1-6]{0,1}\d\.))/i],[MODEL,[VENDOR,SONY],[TYPE,MOBILE]],[/sony tablet [ps]/i,/\b(?:sony)?sgp\w+(?: bui|\))/i],[[MODEL,"Xperia Tablet"],[VENDOR,SONY],[TYPE,TABLET]],[/ (kb2005|in20[12]5|be20[12][59])\b/i,/(?:one)?(?:plus)? (a\d0\d\d)(?: b|\))/i],[MODEL,[VENDOR,"OnePlus"],[TYPE,MOBILE]],[/(alexa)webm/i,/(kf[a-z]{2}wi|aeo[c-r]{2})( bui|\))/i,/(kf[a-z]+)( bui|\)).+silk\//i],[MODEL,[VENDOR,AMAZON],[TYPE,TABLET]],[/((?:sd|kf)[0349hijorstuw]+)( bui|\)).+silk\//i],[[MODEL,/(.+)/g,"Fire Phone $1"],[VENDOR,AMAZON],[TYPE,MOBILE]],[/(playbook);[-\w\),; ]+(rim)/i],[MODEL,VENDOR,[TYPE,TABLET]],[/\b((?:bb[a-f]|st[hv])100-\d)/i,/\(bb10; (\w+)/i],[MODEL,[VENDOR,BLACKBERRY],[TYPE,MOBILE]],[/(?:\b|asus_)(transfo[prime ]{4,10} \w+|eeepc|slider \w+|nexus 7|padfone|p00[cj])/i],[MODEL,[VENDOR,ASUS],[TYPE,TABLET]],[/ (z[bes]6[027][012][km][ls]|zenfone \d\w?)\b/i],[MODEL,[VENDOR,ASUS],[TYPE,MOBILE]],[/(nexus 9)/i],[MODEL,[VENDOR,"HTC"],[TYPE,TABLET]],[/(htc)[-;_ ]{1,2}([\w ]+(?=\)| bui)|\w+)/i,/(zte)[- ]([\w ]+?)(?: bui|\/|\))/i,/(alcatel|geeksphone|nexian|panasonic(?!(?:;|\.))|sony(?!-bra))[-_ ]?([-\w]*)/i],[VENDOR,[MODEL,/_/g," "],[TYPE,MOBILE]],[/droid.+; ([ab][1-7]-?[0178a]\d\d?)/i],[MODEL,[VENDOR,"Acer"],[TYPE,TABLET]],[/droid.+; (m[1-5] note) bui/i,/\bmz-([-\w]{2,})/i],[MODEL,[VENDOR,"Meizu"],[TYPE,MOBILE]],[/; ((?:power )?armor(?:[\w ]{0,8}))(?: bui|\))/i],[MODEL,[VENDOR,"Ulefone"],[TYPE,MOBILE]],[/(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus|dell|meizu|motorola|polytron|infinix|tecno)[-_ ]?([-\w]*)/i,/(hp) ([\w ]+\w)/i,/(asus)-?(\w+)/i,/(microsoft); (lumia[\w ]+)/i,/(lenovo)[-_ ]?([-\w]+)/i,/(jolla)/i,/(oppo) ?([\w ]+) bui/i],[VENDOR,MODEL,[TYPE,MOBILE]],[/(kobo)\s(ereader|touch)/i,/(archos) (gamepad2?)/i,/(hp).+(touchpad(?!.+tablet)|tablet)/i,/(kindle)\/([\w\.]+)/i,/(nook)[\w ]+build\/(\w+)/i,/(dell) (strea[kpr\d ]*[\dko])/i,/(le[- ]+pan)[- ]+(\w{1,9}) bui/i,/(trinity)[- ]*(t\d{3}) bui/i,/(gigaset)[- ]+(q\w{1,9}) bui/i,/(vodafone) ([\w ]+)(?:\)| bui)/i],[VENDOR,MODEL,[TYPE,TABLET]],[/(surface duo)/i],[MODEL,[VENDOR,MICROSOFT],[TYPE,TABLET]],[/droid [\d\.]+; (fp\du?)(?: b|\))/i],[MODEL,[VENDOR,"Fairphone"],[TYPE,MOBILE]],[/(u304aa)/i],[MODEL,[VENDOR,"AT&T"],[TYPE,MOBILE]],[/\bsie-(\w*)/i],[MODEL,[VENDOR,"Siemens"],[TYPE,MOBILE]],[/\b(rct\w+) b/i],[MODEL,[VENDOR,"RCA"],[TYPE,TABLET]],[/\b(venue[\d ]{2,7}) b/i],[MODEL,[VENDOR,"Dell"],[TYPE,TABLET]],[/\b(q(?:mv|ta)\w+) b/i],[MODEL,[VENDOR,"Verizon"],[TYPE,TABLET]],[/\b(?:barnes[& ]+noble |bn[rt])([\w\+ ]*) b/i],[MODEL,[VENDOR,"Barnes & Noble"],[TYPE,TABLET]],[/\b(tm\d{3}\w+) b/i],[MODEL,[VENDOR,"NuVision"],[TYPE,TABLET]],[/\b(k88) b/i],[MODEL,[VENDOR,"ZTE"],[TYPE,TABLET]],[/\b(nx\d{3}j) b/i],[MODEL,[VENDOR,"ZTE"],[TYPE,MOBILE]],[/\b(gen\d{3}) b.+49h/i],[MODEL,[VENDOR,"Swiss"],[TYPE,MOBILE]],[/\b(zur\d{3}) b/i],[MODEL,[VENDOR,"Swiss"],[TYPE,TABLET]],[/\b((zeki)?tb.*\b) b/i],[MODEL,[VENDOR,"Zeki"],[TYPE,TABLET]],[/\b([yr]\d{2}) b/i,/\b(dragon[- ]+touch |dt)(\w{5}) b/i],[[VENDOR,"Dragon Touch"],MODEL,[TYPE,TABLET]],[/\b(ns-?\w{0,9}) b/i],[MODEL,[VENDOR,"Insignia"],[TYPE,TABLET]],[/\b((nxa|next)-?\w{0,9}) b/i],[MODEL,[VENDOR,"NextBook"],[TYPE,TABLET]],[/\b(xtreme\_)?(v(1[045]|2[015]|[3469]0|7[05])) b/i],[[VENDOR,"Voice"],MODEL,[TYPE,MOBILE]],[/\b(lvtel\-)?(v1[12]) b/i],[[VENDOR,"LvTel"],MODEL,[TYPE,MOBILE]],[/\b(ph-1) /i],[MODEL,[VENDOR,"Essential"],[TYPE,MOBILE]],[/\b(v(100md|700na|7011|917g).*\b) b/i],[MODEL,[VENDOR,"Envizen"],[TYPE,TABLET]],[/\b(trio[-\w\. ]+) b/i],[MODEL,[VENDOR,"MachSpeed"],[TYPE,TABLET]],[/\btu_(1491) b/i],[MODEL,[VENDOR,"Rotor"],[TYPE,TABLET]],[/(shield[\w ]+) b/i],[MODEL,[VENDOR,"Nvidia"],[TYPE,TABLET]],[/(sprint) (\w+)/i],[VENDOR,MODEL,[TYPE,MOBILE]],[/(kin\.[onetw]{3})/i],[[MODEL,/\./g," "],[VENDOR,MICROSOFT],[TYPE,MOBILE]],[/droid.+; (cc6666?|et5[16]|mc[239][23]x?|vc8[03]x?)\)/i],[MODEL,[VENDOR,ZEBRA],[TYPE,TABLET]],[/droid.+; (ec30|ps20|tc[2-8]\d[kx])\)/i],[MODEL,[VENDOR,ZEBRA],[TYPE,MOBILE]],[/smart-tv.+(samsung)/i],[VENDOR,[TYPE,SMARTTV]],[/hbbtv.+maple;(\d+)/i],[[MODEL,/^/,"SmartTV"],[VENDOR,SAMSUNG],[TYPE,SMARTTV]],[/(nux; netcast.+smarttv|lg (netcast\.tv-201\d|android tv))/i],[[VENDOR,LG],[TYPE,SMARTTV]],[/(apple) ?tv/i],[VENDOR,[MODEL,APPLE+" TV"],[TYPE,SMARTTV]],[/crkey/i],[[MODEL,CHROME+"cast"],[VENDOR,GOOGLE],[TYPE,SMARTTV]],[/droid.+aft(\w+)( bui|\))/i],[MODEL,[VENDOR,AMAZON],[TYPE,SMARTTV]],[/\(dtv[\);].+(aquos)/i,/(aquos-tv[\w ]+)\)/i],[MODEL,[VENDOR,SHARP],[TYPE,SMARTTV]],[/(bravia[\w ]+)( bui|\))/i],[MODEL,[VENDOR,SONY],[TYPE,SMARTTV]],[/(mitv-\w{5}) bui/i],[MODEL,[VENDOR,XIAOMI],[TYPE,SMARTTV]],[/Hbbtv.*(technisat) (.*);/i],[VENDOR,MODEL,[TYPE,SMARTTV]],[/\b(roku)[\dx]*[\)\/]((?:dvp-)?[\d\.]*)/i,/hbbtv\/\d+\.\d+\.\d+ +\([\w\+ ]*; *([\w\d][^;]*);([^;]*)/i],[[VENDOR,trim],[MODEL,trim],[TYPE,SMARTTV]],[/\b(android tv|smart[- ]?tv|opera tv|tv; rv:)\b/i],[[TYPE,SMARTTV]],[/(ouya)/i,/(nintendo) ([wids3utch]+)/i],[VENDOR,MODEL,[TYPE,CONSOLE]],[/droid.+; (shield) bui/i],[MODEL,[VENDOR,"Nvidia"],[TYPE,CONSOLE]],[/(playstation [345portablevi]+)/i],[MODEL,[VENDOR,SONY],[TYPE,CONSOLE]],[/\b(xbox(?: one)?(?!; xbox))[\); ]/i],[MODEL,[VENDOR,MICROSOFT],[TYPE,CONSOLE]],[/((pebble))app/i],[VENDOR,MODEL,[TYPE,WEARABLE]],[/(watch)(?: ?os[,\/]|\d,\d\/)[\d\.]+/i],[MODEL,[VENDOR,APPLE],[TYPE,WEARABLE]],[/droid.+; (glass) \d/i],[MODEL,[VENDOR,GOOGLE],[TYPE,WEARABLE]],[/droid.+; (wt63?0{2,3})\)/i],[MODEL,[VENDOR,ZEBRA],[TYPE,WEARABLE]],[/(quest( \d| pro)?)/i],[MODEL,[VENDOR,FACEBOOK],[TYPE,WEARABLE]],[/(tesla)(?: qtcarbrowser|\/[-\w\.]+)/i],[VENDOR,[TYPE,EMBEDDED]],[/(aeobc)\b/i],[MODEL,[VENDOR,AMAZON],[TYPE,EMBEDDED]],[/droid .+?; ([^;]+?)(?: bui|; wv\)|\) applew).+? mobile safari/i],[MODEL,[TYPE,MOBILE]],[/droid .+?; ([^;]+?)(?: bui|\) applew).+?(?! mobile) safari/i],[MODEL,[TYPE,TABLET]],[/\b((tablet|tab)[;\/]|focus\/\d(?!.+mobile))/i],[[TYPE,TABLET]],[/(phone|mobile(?:[;\/]| [ \w\/\.]*safari)|pda(?=.+windows ce))/i],[[TYPE,MOBILE]],[/(android[-\w\. ]{0,9});.+buil/i],[MODEL,[VENDOR,"Generic"]]],engine:[[/windows.+ edge\/([\w\.]+)/i],[VERSION,[NAME,EDGE+"HTML"]],[/webkit\/537\.36.+chrome\/(?!27)([\w\.]+)/i],[VERSION,[NAME,"Blink"]],[/(presto)\/([\w\.]+)/i,/(webkit|trident|netfront|netsurf|amaya|lynx|w3m|goanna)\/([\w\.]+)/i,/ekioh(flow)\/([\w\.]+)/i,/(khtml|tasman|links)[\/ ]\(?([\w\.]+)/i,/(icab)[\/ ]([23]\.[\d\.]+)/i,/\b(libweb)/i],[NAME,VERSION],[/rv\:([\w\.]{1,9})\b.+(gecko)/i],[VERSION,NAME]],os:[[/microsoft (windows) (vista|xp)/i],[NAME,VERSION],[/(windows (?:phone(?: os)?|mobile))[\/ ]?([\d\.\w ]*)/i],[NAME,[VERSION,strMapper,windowsVersionMap]],[/windows nt 6\.2; (arm)/i,/windows[\/ ]?([ntce\d\. ]+\w)(?!.+xbox)/i,/(?:win(?=3|9|n)|win 9x )([nt\d\.]+)/i],[[VERSION,strMapper,windowsVersionMap],[NAME,"Windows"]],[/ip[honead]{2,4}\b(?:.*os ([\w]+) like mac|; opera)/i,/(?:ios;fbsv\/|iphone.+ios[\/ ])([\d\.]+)/i,/cfnetwork\/.+darwin/i],[[VERSION,/_/g,"."],[NAME,"iOS"]],[/(mac os x) ?([\w\. ]*)/i,/(macintosh|mac_powerpc\b)(?!.+haiku)/i],[[NAME,MAC_OS],[VERSION,/_/g,"."]],[/droid ([\w\.]+)\b.+(android[- ]x86|harmonyos)/i],[VERSION,NAME],[/(android|webos|qnx|bada|rim tablet os|maemo|meego|sailfish)[-\/ ]?([\w\.]*)/i,/(blackberry)\w*\/([\w\.]*)/i,/(tizen|kaios)[\/ ]([\w\.]+)/i,/\((series40);/i],[NAME,VERSION],[/\(bb(10);/i],[VERSION,[NAME,BLACKBERRY]],[/(?:symbian ?os|symbos|s60(?=;)|series60)[-\/ ]?([\w\.]*)/i],[VERSION,[NAME,"Symbian"]],[/mozilla\/[\d\.]+ \((?:mobile|tablet|tv|mobile; [\w ]+); rv:.+ gecko\/([\w\.]+)/i],[VERSION,[NAME,FIREFOX+" OS"]],[/web0s;.+rt(tv)/i,/\b(?:hp)?wos(?:browser)?\/([\w\.]+)/i],[VERSION,[NAME,"webOS"]],[/watch(?: ?os[,\/]|\d,\d\/)([\d\.]+)/i],[VERSION,[NAME,"watchOS"]],[/crkey\/([\d\.]+)/i],[VERSION,[NAME,CHROME+"cast"]],[/(cros) [\w]+(?:\)| ([\w\.]+)\b)/i],[[NAME,CHROMIUM_OS],VERSION],[/panasonic;(viera)/i,/(netrange)mmh/i,/(nettv)\/(\d+\.[\w\.]+)/i,/(nintendo|playstation) ([wids345portablevuch]+)/i,/(xbox); +xbox ([^\);]+)/i,/\b(joli|palm)\b ?(?:os)?\/?([\w\.]*)/i,/(mint)[\/\(\) ]?(\w*)/i,/(mageia|vectorlinux)[; ]/i,/([kxln]?ubuntu|debian|suse|opensuse|gentoo|arch(?= linux)|slackware|fedora|mandriva|centos|pclinuxos|red ?hat|zenwalk|linpus|raspbian|plan 9|minix|risc os|contiki|deepin|manjaro|elementary os|sabayon|linspire)(?: gnu\/linux)?(?: enterprise)?(?:[- ]linux)?(?:-gnu)?[-\/ ]?(?!chrom|package)([-\w\.]*)/i,/(hurd|linux) ?([\w\.]*)/i,/(gnu) ?([\w\.]*)/i,/\b([-frentopcghs]{0,5}bsd|dragonfly)[\/ ]?(?!amd|[ix346]{1,2}86)([\w\.]*)/i,/(haiku) (\w+)/i],[NAME,VERSION],[/(sunos) ?([\w\.\d]*)/i],[[NAME,"Solaris"],VERSION],[/((?:open)?solaris)[-\/ ]?([\w\.]*)/i,/(aix) ((\d)(?=\.|\)| )[\w\.])*/i,/\b(beos|os\/2|amigaos|morphos|openvms|fuchsia|hp-ux|serenityos)/i,/(unix) ?([\w\.]*)/i],[NAME,VERSION]]};var UAParser=function(ua,extensions){if(typeof ua===OBJ_TYPE){extensions=ua;ua=undefined$1;}if(!(this instanceof UAParser)){return new UAParser(ua,extensions).getResult()}var _navigator=typeof window!==UNDEF_TYPE&&window.navigator?window.navigator:undefined$1;var _ua=ua||(_navigator&&_navigator.userAgent?_navigator.userAgent:EMPTY);var _uach=_navigator&&_navigator.userAgentData?_navigator.userAgentData:undefined$1;var _rgxmap=extensions?extend(regexes,extensions):regexes;var _isSelfNav=_navigator&&_navigator.userAgent==_ua;this.getBrowser=function(){var _browser={};_browser[NAME]=undefined$1;_browser[VERSION]=undefined$1;rgxMapper.call(_browser,_ua,_rgxmap.browser);_browser[MAJOR]=majorize(_browser[VERSION]);if(_isSelfNav&&_navigator&&_navigator.brave&&typeof _navigator.brave.isBrave==FUNC_TYPE){_browser[NAME]="Brave";}return _browser};this.getCPU=function(){var _cpu={};_cpu[ARCHITECTURE]=undefined$1;rgxMapper.call(_cpu,_ua,_rgxmap.cpu);return _cpu};this.getDevice=function(){var _device={};_device[VENDOR]=undefined$1;_device[MODEL]=undefined$1;_device[TYPE]=undefined$1;rgxMapper.call(_device,_ua,_rgxmap.device);if(_isSelfNav&&!_device[TYPE]&&_uach&&_uach.mobile){_device[TYPE]=MOBILE;}if(_isSelfNav&&_device[MODEL]=="Macintosh"&&_navigator&&typeof _navigator.standalone!==UNDEF_TYPE&&_navigator.maxTouchPoints&&_navigator.maxTouchPoints>2){_device[MODEL]="iPad";_device[TYPE]=TABLET;}return _device};this.getEngine=function(){var _engine={};_engine[NAME]=undefined$1;_engine[VERSION]=undefined$1;rgxMapper.call(_engine,_ua,_rgxmap.engine);return _engine};this.getOS=function(){var _os={};_os[NAME]=undefined$1;_os[VERSION]=undefined$1;rgxMapper.call(_os,_ua,_rgxmap.os);if(_isSelfNav&&!_os[NAME]&&_uach&&_uach.platform&&_uach.platform!="Unknown"){_os[NAME]=_uach.platform.replace(/chrome os/i,CHROMIUM_OS).replace(/macos/i,MAC_OS);}return _os};this.getResult=function(){return {ua:this.getUA(),browser:this.getBrowser(),engine:this.getEngine(),os:this.getOS(),device:this.getDevice(),cpu:this.getCPU()}};this.getUA=function(){return _ua};this.setUA=function(ua){_ua=typeof ua===STR_TYPE&&ua.length>UA_MAX_LENGTH?trim(ua,UA_MAX_LENGTH):ua;return this};this.setUA(_ua);return this};UAParser.VERSION=LIBVERSION;UAParser.BROWSER=enumerize([NAME,VERSION,MAJOR]);UAParser.CPU=enumerize([ARCHITECTURE]);UAParser.DEVICE=enumerize([MODEL,VENDOR,TYPE,CONSOLE,MOBILE,SMARTTV,TABLET,WEARABLE,EMBEDDED]);UAParser.ENGINE=UAParser.OS=enumerize([NAME,VERSION]);{if(module.exports){exports=module.exports=UAParser;}exports.UAParser=UAParser;}var $=typeof window!==UNDEF_TYPE&&(window.jQuery||window.Zepto);if($&&!$.ua){var parser=new UAParser;$.ua=parser.getResult();$.ua.get=function(){return parser.getUA()};$.ua.set=function(ua){parser.setUA(ua);var result=parser.getResult();for(var prop in result){$.ua[prop]=result[prop];}};}})(typeof window==="object"?window:commonjsGlobal); 
+} (uaParser_min, uaParser_min.exports));
+
+var uaParser_minExports = uaParser_min.exports;
+
+Object.defineProperty(lib, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var React = React__default$1;
+var React__default = _interopDefault(React);
+
+var UAParser = uaParser_minExports;
+
+var ClientUAInstance = new UAParser();
+var browser = ClientUAInstance.getBrowser();
+var cpu = ClientUAInstance.getCPU();
+var device = ClientUAInstance.getDevice();
+var engine = ClientUAInstance.getEngine();
+var os = ClientUAInstance.getOS();
+var ua = ClientUAInstance.getUA();
+var setUa = function setUa(userAgentString) {
+  return ClientUAInstance.setUA(userAgentString);
+};
+var parseUserAgent = function parseUserAgent(userAgent) {
+  if (!userAgent) {
+    console.error('No userAgent string was provided');
+    return;
+  }
+
+  var UserAgentInstance = new UAParser(userAgent);
+  return {
+    UA: UserAgentInstance,
+    browser: UserAgentInstance.getBrowser(),
+    cpu: UserAgentInstance.getCPU(),
+    device: UserAgentInstance.getDevice(),
+    engine: UserAgentInstance.getEngine(),
+    os: UserAgentInstance.getOS(),
+    ua: UserAgentInstance.getUA(),
+    setUserAgent: function setUserAgent(userAgentString) {
+      return UserAgentInstance.setUA(userAgentString);
+    }
+  };
+};
+
+var UAHelper = /*#__PURE__*/Object.freeze({
+  ClientUAInstance: ClientUAInstance,
+  browser: browser,
+  cpu: cpu,
+  device: device,
+  engine: engine,
+  os: os,
+  ua: ua,
+  setUa: setUa,
+  parseUserAgent: parseUserAgent
+});
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+var DeviceTypes = {
+  Mobile: 'mobile',
+  Tablet: 'tablet',
+  SmartTv: 'smarttv',
+  Console: 'console',
+  Wearable: 'wearable',
+  Embedded: 'embedded',
+  Browser: undefined
+};
+var BrowserTypes = {
+  Chrome: 'Chrome',
+  Firefox: 'Firefox',
+  Opera: 'Opera',
+  Yandex: 'Yandex',
+  Safari: 'Safari',
+  InternetExplorer: 'Internet Explorer',
+  Edge: 'Edge',
+  Chromium: 'Chromium',
+  Ie: 'IE',
+  MobileSafari: 'Mobile Safari',
+  EdgeChromium: 'Edge Chromium',
+  MIUI: 'MIUI Browser',
+  SamsungBrowser: 'Samsung Browser'
+};
+var OsTypes = {
+  IOS: 'iOS',
+  Android: 'Android',
+  WindowsPhone: 'Windows Phone',
+  Windows: 'Windows',
+  MAC_OS: 'Mac OS'
+};
+var InitialDeviceTypes = {
+  isMobile: false,
+  isTablet: false,
+  isBrowser: false,
+  isSmartTV: false,
+  isConsole: false,
+  isWearable: false
+};
+
+var checkDeviceType = function checkDeviceType(type) {
+  switch (type) {
+    case DeviceTypes.Mobile:
+      return {
+        isMobile: true
+      };
+
+    case DeviceTypes.Tablet:
+      return {
+        isTablet: true
+      };
+
+    case DeviceTypes.SmartTv:
+      return {
+        isSmartTV: true
+      };
+
+    case DeviceTypes.Console:
+      return {
+        isConsole: true
+      };
+
+    case DeviceTypes.Wearable:
+      return {
+        isWearable: true
+      };
+
+    case DeviceTypes.Browser:
+      return {
+        isBrowser: true
+      };
+
+    case DeviceTypes.Embedded:
+      return {
+        isEmbedded: true
+      };
+
+    default:
+      return InitialDeviceTypes;
+  }
+};
+var setUserAgent = function setUserAgent(userAgent) {
+  return setUa(userAgent);
+};
+var setDefaults = function setDefaults(p) {
+  var d = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'none';
+  return p ? p : d;
+};
+var getNavigatorInstance = function getNavigatorInstance() {
+  if (typeof window !== 'undefined') {
+    if (window.navigator || navigator) {
+      return window.navigator || navigator;
+    }
+  }
+
+  return false;
+};
+var isIOS13Check = function isIOS13Check(type) {
+  var nav = getNavigatorInstance();
+  return nav && nav.platform && (nav.platform.indexOf(type) !== -1 || nav.platform === 'MacIntel' && nav.maxTouchPoints > 1 && !window.MSStream);
+};
+
+var browserPayload = function browserPayload(isBrowser, browser, engine, os, ua) {
+  return {
+    isBrowser: isBrowser,
+    browserMajorVersion: setDefaults(browser.major),
+    browserFullVersion: setDefaults(browser.version),
+    browserName: setDefaults(browser.name),
+    engineName: setDefaults(engine.name),
+    engineVersion: setDefaults(engine.version),
+    osName: setDefaults(os.name),
+    osVersion: setDefaults(os.version),
+    userAgent: setDefaults(ua)
+  };
+};
+var mobilePayload = function mobilePayload(type, device, os, ua) {
+  return _objectSpread2({}, type, {
+    vendor: setDefaults(device.vendor),
+    model: setDefaults(device.model),
+    os: setDefaults(os.name),
+    osVersion: setDefaults(os.version),
+    ua: setDefaults(ua)
+  });
+};
+var smartTvPayload = function smartTvPayload(isSmartTV, engine, os, ua) {
+  return {
+    isSmartTV: isSmartTV,
+    engineName: setDefaults(engine.name),
+    engineVersion: setDefaults(engine.version),
+    osName: setDefaults(os.name),
+    osVersion: setDefaults(os.version),
+    userAgent: setDefaults(ua)
+  };
+};
+var consolePayload = function consolePayload(isConsole, engine, os, ua) {
+  return {
+    isConsole: isConsole,
+    engineName: setDefaults(engine.name),
+    engineVersion: setDefaults(engine.version),
+    osName: setDefaults(os.name),
+    osVersion: setDefaults(os.version),
+    userAgent: setDefaults(ua)
+  };
+};
+var wearablePayload = function wearablePayload(isWearable, engine, os, ua) {
+  return {
+    isWearable: isWearable,
+    engineName: setDefaults(engine.name),
+    engineVersion: setDefaults(engine.version),
+    osName: setDefaults(os.name),
+    osVersion: setDefaults(os.version),
+    userAgent: setDefaults(ua)
+  };
+};
+var embeddedPayload = function embeddedPayload(isEmbedded, device, engine, os, ua) {
+  return {
+    isEmbedded: isEmbedded,
+    vendor: setDefaults(device.vendor),
+    model: setDefaults(device.model),
+    engineName: setDefaults(engine.name),
+    engineVersion: setDefaults(engine.version),
+    osName: setDefaults(os.name),
+    osVersion: setDefaults(os.version),
+    userAgent: setDefaults(ua)
+  };
+};
+
+function deviceDetect(userAgent) {
+  var _ref = userAgent ? parseUserAgent(userAgent) : UAHelper,
+      device = _ref.device,
+      browser = _ref.browser,
+      engine = _ref.engine,
+      os = _ref.os,
+      ua = _ref.ua;
+
+  var type = checkDeviceType(device.type);
+  var isBrowser = type.isBrowser,
+      isMobile = type.isMobile,
+      isTablet = type.isTablet,
+      isSmartTV = type.isSmartTV,
+      isConsole = type.isConsole,
+      isWearable = type.isWearable,
+      isEmbedded = type.isEmbedded;
+
+  if (isBrowser) {
+    return browserPayload(isBrowser, browser, engine, os, ua);
+  }
+
+  if (isSmartTV) {
+    return smartTvPayload(isSmartTV, engine, os, ua);
+  }
+
+  if (isConsole) {
+    return consolePayload(isConsole, engine, os, ua);
+  }
+
+  if (isMobile) {
+    return mobilePayload(type, device, os, ua);
+  }
+
+  if (isTablet) {
+    return mobilePayload(type, device, os, ua);
+  }
+
+  if (isWearable) {
+    return wearablePayload(isWearable, engine, os, ua);
+  }
+
+  if (isEmbedded) {
+    return embeddedPayload(isEmbedded, device, engine, os, ua);
+  }
+}
+
+var isMobileType = function isMobileType(_ref) {
+  var type = _ref.type;
+  return type === DeviceTypes.Mobile;
+};
+var isTabletType = function isTabletType(_ref2) {
+  var type = _ref2.type;
+  return type === DeviceTypes.Tablet;
+};
+var isMobileAndTabletType = function isMobileAndTabletType(_ref3) {
+  var type = _ref3.type;
+  return type === DeviceTypes.Mobile || type === DeviceTypes.Tablet;
+};
+var isSmartTVType = function isSmartTVType(_ref4) {
+  var type = _ref4.type;
+  return type === DeviceTypes.SmartTv;
+};
+var isBrowserType = function isBrowserType(_ref5) {
+  var type = _ref5.type;
+  return type === DeviceTypes.Browser;
+};
+var isWearableType = function isWearableType(_ref6) {
+  var type = _ref6.type;
+  return type === DeviceTypes.Wearable;
+};
+var isConsoleType = function isConsoleType(_ref7) {
+  var type = _ref7.type;
+  return type === DeviceTypes.Console;
+};
+var isEmbeddedType = function isEmbeddedType(_ref8) {
+  var type = _ref8.type;
+  return type === DeviceTypes.Embedded;
+};
+var getMobileVendor = function getMobileVendor(_ref9) {
+  var vendor = _ref9.vendor;
+  return setDefaults(vendor);
+};
+var getMobileModel = function getMobileModel(_ref10) {
+  var model = _ref10.model;
+  return setDefaults(model);
+};
+var getDeviceType = function getDeviceType(_ref11) {
+  var type = _ref11.type;
+  return setDefaults(type, 'browser');
+}; // os types
+
+var isAndroidType = function isAndroidType(_ref12) {
+  var name = _ref12.name;
+  return name === OsTypes.Android;
+};
+var isWindowsType = function isWindowsType(_ref13) {
+  var name = _ref13.name;
+  return name === OsTypes.Windows;
+};
+var isMacOsType = function isMacOsType(_ref14) {
+  var name = _ref14.name;
+  return name === OsTypes.MAC_OS;
+};
+var isWinPhoneType = function isWinPhoneType(_ref15) {
+  var name = _ref15.name;
+  return name === OsTypes.WindowsPhone;
+};
+var isIOSType = function isIOSType(_ref16) {
+  var name = _ref16.name;
+  return name === OsTypes.IOS;
+};
+var getOsVersion = function getOsVersion(_ref17) {
+  var version = _ref17.version;
+  return setDefaults(version);
+};
+var getOsName = function getOsName(_ref18) {
+  var name = _ref18.name;
+  return setDefaults(name);
+}; // browser types
+
+var isChromeType = function isChromeType(_ref19) {
+  var name = _ref19.name;
+  return name === BrowserTypes.Chrome;
+};
+var isFirefoxType = function isFirefoxType(_ref20) {
+  var name = _ref20.name;
+  return name === BrowserTypes.Firefox;
+};
+var isChromiumType = function isChromiumType(_ref21) {
+  var name = _ref21.name;
+  return name === BrowserTypes.Chromium;
+};
+var isEdgeType = function isEdgeType(_ref22) {
+  var name = _ref22.name;
+  return name === BrowserTypes.Edge;
+};
+var isYandexType = function isYandexType(_ref23) {
+  var name = _ref23.name;
+  return name === BrowserTypes.Yandex;
+};
+var isSafariType = function isSafariType(_ref24) {
+  var name = _ref24.name;
+  return name === BrowserTypes.Safari || name === BrowserTypes.MobileSafari;
+};
+var isMobileSafariType = function isMobileSafariType(_ref25) {
+  var name = _ref25.name;
+  return name === BrowserTypes.MobileSafari;
+};
+var isOperaType = function isOperaType(_ref26) {
+  var name = _ref26.name;
+  return name === BrowserTypes.Opera;
+};
+var isIEType = function isIEType(_ref27) {
+  var name = _ref27.name;
+  return name === BrowserTypes.InternetExplorer || name === BrowserTypes.Ie;
+};
+var isMIUIType = function isMIUIType(_ref28) {
+  var name = _ref28.name;
+  return name === BrowserTypes.MIUI;
+};
+var isSamsungBrowserType = function isSamsungBrowserType(_ref29) {
+  var name = _ref29.name;
+  return name === BrowserTypes.SamsungBrowser;
+};
+var getBrowserFullVersion = function getBrowserFullVersion(_ref30) {
+  var version = _ref30.version;
+  return setDefaults(version);
+};
+var getBrowserVersion = function getBrowserVersion(_ref31) {
+  var major = _ref31.major;
+  return setDefaults(major);
+};
+var getBrowserName = function getBrowserName(_ref32) {
+  var name = _ref32.name;
+  return setDefaults(name);
+}; // engine types
+
+var getEngineName = function getEngineName(_ref33) {
+  var name = _ref33.name;
+  return setDefaults(name);
+};
+var getEngineVersion = function getEngineVersion(_ref34) {
+  var version = _ref34.version;
+  return setDefaults(version);
+};
+var isElectronType = function isElectronType() {
+  var nav = getNavigatorInstance();
+  var ua = nav && nav.userAgent && nav.userAgent.toLowerCase();
+  return typeof ua === 'string' ? /electron/.test(ua) : false;
+};
+var isEdgeChromiumType = function isEdgeChromiumType(ua) {
+  return typeof ua === 'string' && ua.indexOf('Edg/') !== -1;
+};
+var getIOS13 = function getIOS13() {
+  var nav = getNavigatorInstance();
+  return nav && (/iPad|iPhone|iPod/.test(nav.platform) || nav.platform === 'MacIntel' && nav.maxTouchPoints > 1) && !window.MSStream;
+};
+var getIPad13 = function getIPad13() {
+  return isIOS13Check('iPad');
+};
+var getIphone13 = function getIphone13() {
+  return isIOS13Check('iPhone');
+};
+var getIPod13 = function getIPod13() {
+  return isIOS13Check('iPod');
+};
+var getUseragent = function getUseragent(userAg) {
+  return setDefaults(userAg);
+};
+
+function buildSelectorsObject(options) {
+  var _ref = options ? options : UAHelper,
+      device = _ref.device,
+      browser = _ref.browser,
+      os = _ref.os,
+      engine = _ref.engine,
+      ua = _ref.ua;
+
+  return {
+    isSmartTV: isSmartTVType(device),
+    isConsole: isConsoleType(device),
+    isWearable: isWearableType(device),
+    isEmbedded: isEmbeddedType(device),
+    isMobileSafari: isMobileSafariType(browser) || getIPad13(),
+    isChromium: isChromiumType(browser),
+    isMobile: isMobileAndTabletType(device) || getIPad13(),
+    isMobileOnly: isMobileType(device),
+    isTablet: isTabletType(device) || getIPad13(),
+    isBrowser: isBrowserType(device),
+    isDesktop: isBrowserType(device),
+    isAndroid: isAndroidType(os),
+    isWinPhone: isWinPhoneType(os),
+    isIOS: isIOSType(os) || getIPad13(),
+    isChrome: isChromeType(browser),
+    isFirefox: isFirefoxType(browser),
+    isSafari: isSafariType(browser),
+    isOpera: isOperaType(browser),
+    isIE: isIEType(browser),
+    osVersion: getOsVersion(os),
+    osName: getOsName(os),
+    fullBrowserVersion: getBrowserFullVersion(browser),
+    browserVersion: getBrowserVersion(browser),
+    browserName: getBrowserName(browser),
+    mobileVendor: getMobileVendor(device),
+    mobileModel: getMobileModel(device),
+    engineName: getEngineName(engine),
+    engineVersion: getEngineVersion(engine),
+    getUA: getUseragent(ua),
+    isEdge: isEdgeType(browser) || isEdgeChromiumType(ua),
+    isYandex: isYandexType(browser),
+    deviceType: getDeviceType(device),
+    isIOS13: getIOS13(),
+    isIPad13: getIPad13(),
+    isIPhone13: getIphone13(),
+    isIPod13: getIPod13(),
+    isElectron: isElectronType(),
+    isEdgeChromium: isEdgeChromiumType(ua),
+    isLegacyEdge: isEdgeType(browser) && !isEdgeChromiumType(ua),
+    isWindows: isWindowsType(os),
+    isMacOs: isMacOsType(os),
+    isMIUI: isMIUIType(browser),
+    isSamsungBrowser: isSamsungBrowserType(browser)
+  };
+}
+
+var isSmartTV = isSmartTVType(device);
+var isConsole = isConsoleType(device);
+var isWearable = isWearableType(device);
+var isEmbedded = isEmbeddedType(device);
+var isMobileSafari = isMobileSafariType(browser) || getIPad13();
+var isChromium = isChromiumType(browser);
+var isMobile = isMobileAndTabletType(device) || getIPad13();
+var isMobileOnly = isMobileType(device);
+var isTablet = isTabletType(device) || getIPad13();
+var isBrowser = isBrowserType(device);
+var isDesktop = isBrowserType(device);
+var isAndroid = isAndroidType(os);
+var isWinPhone = isWinPhoneType(os);
+var isIOS = isIOSType(os) || getIPad13();
+var isChrome = isChromeType(browser);
+var isFirefox = isFirefoxType(browser);
+var isSafari = isSafariType(browser);
+var isOpera = isOperaType(browser);
+var isIE = isIEType(browser);
+var osVersion = getOsVersion(os);
+var osName = getOsName(os);
+var fullBrowserVersion = getBrowserFullVersion(browser);
+var browserVersion = getBrowserVersion(browser);
+var browserName = getBrowserName(browser);
+var mobileVendor = getMobileVendor(device);
+var mobileModel = getMobileModel(device);
+var engineName = getEngineName(engine);
+var engineVersion = getEngineVersion(engine);
+var getUA = getUseragent(ua);
+var isEdge = isEdgeType(browser) || isEdgeChromiumType(ua);
+var isYandex = isYandexType(browser);
+var deviceType = getDeviceType(device);
+var isIOS13 = getIOS13();
+var isIPad13 = getIPad13();
+var isIPhone13 = getIphone13();
+var isIPod13 = getIPod13();
+var isElectron = isElectronType();
+var isEdgeChromium = isEdgeChromiumType(ua);
+var isLegacyEdge = isEdgeType(browser) && !isEdgeChromiumType(ua);
+var isWindows = isWindowsType(os);
+var isMacOs = isMacOsType(os);
+var isMIUI = isMIUIType(browser);
+var isSamsungBrowser = isSamsungBrowserType(browser);
+var getSelectorsByUserAgent = function getSelectorsByUserAgent(userAgent) {
+  if (!userAgent || typeof userAgent !== 'string') {
+    console.error('No valid user agent string was provided');
+    return;
+  }
+
+  var _UAHelper$parseUserAg = parseUserAgent(userAgent),
+      device = _UAHelper$parseUserAg.device,
+      browser = _UAHelper$parseUserAg.browser,
+      os = _UAHelper$parseUserAg.os,
+      engine = _UAHelper$parseUserAg.engine,
+      ua = _UAHelper$parseUserAg.ua;
+
+  return buildSelectorsObject({
+    device: device,
+    browser: browser,
+    os: os,
+    engine: engine,
+    ua: ua
+  });
+};
+
+var AndroidView = function AndroidView(_ref) {
+  var renderWithFragment = _ref.renderWithFragment,
+      children = _ref.children,
+      props = _objectWithoutProperties(_ref, ["renderWithFragment", "children"]);
+
+  return isAndroid ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var BrowserView = function BrowserView(_ref2) {
+  var renderWithFragment = _ref2.renderWithFragment,
+      children = _ref2.children,
+      props = _objectWithoutProperties(_ref2, ["renderWithFragment", "children"]);
+
+  return isBrowser ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var IEView = function IEView(_ref3) {
+  var renderWithFragment = _ref3.renderWithFragment,
+      children = _ref3.children,
+      props = _objectWithoutProperties(_ref3, ["renderWithFragment", "children"]);
+
+  return isIE ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var IOSView = function IOSView(_ref4) {
+  var renderWithFragment = _ref4.renderWithFragment,
+      children = _ref4.children,
+      props = _objectWithoutProperties(_ref4, ["renderWithFragment", "children"]);
+
+  return isIOS ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var MobileView = function MobileView(_ref5) {
+  var renderWithFragment = _ref5.renderWithFragment,
+      children = _ref5.children,
+      props = _objectWithoutProperties(_ref5, ["renderWithFragment", "children"]);
+
+  return isMobile ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var TabletView = function TabletView(_ref6) {
+  var renderWithFragment = _ref6.renderWithFragment,
+      children = _ref6.children,
+      props = _objectWithoutProperties(_ref6, ["renderWithFragment", "children"]);
+
+  return isTablet ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var WinPhoneView = function WinPhoneView(_ref7) {
+  var renderWithFragment = _ref7.renderWithFragment,
+      children = _ref7.children,
+      props = _objectWithoutProperties(_ref7, ["renderWithFragment", "children"]);
+
+  return isWinPhone ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var MobileOnlyView = function MobileOnlyView(_ref8) {
+  var renderWithFragment = _ref8.renderWithFragment,
+      children = _ref8.children;
+      _ref8.viewClassName;
+      _ref8.style;
+      var props = _objectWithoutProperties(_ref8, ["renderWithFragment", "children", "viewClassName", "style"]);
+
+  return isMobileOnly ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var SmartTVView = function SmartTVView(_ref9) {
+  var renderWithFragment = _ref9.renderWithFragment,
+      children = _ref9.children,
+      props = _objectWithoutProperties(_ref9, ["renderWithFragment", "children"]);
+
+  return isSmartTV ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var ConsoleView = function ConsoleView(_ref10) {
+  var renderWithFragment = _ref10.renderWithFragment,
+      children = _ref10.children,
+      props = _objectWithoutProperties(_ref10, ["renderWithFragment", "children"]);
+
+  return isConsole ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var WearableView = function WearableView(_ref11) {
+  var renderWithFragment = _ref11.renderWithFragment,
+      children = _ref11.children,
+      props = _objectWithoutProperties(_ref11, ["renderWithFragment", "children"]);
+
+  return isWearable ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+var CustomView = function CustomView(_ref12) {
+  var renderWithFragment = _ref12.renderWithFragment,
+      children = _ref12.children;
+      _ref12.viewClassName;
+      _ref12.style;
+      var condition = _ref12.condition,
+      props = _objectWithoutProperties(_ref12, ["renderWithFragment", "children", "viewClassName", "style", "condition"]);
+
+  return condition ? renderWithFragment ? React__default.createElement(React.Fragment, null, children) : React__default.createElement("div", props, children) : null;
+};
+
+function withOrientationChange(WrappedComponent) {
+  return /*#__PURE__*/function (_React$Component) {
+    _inherits(_class, _React$Component);
+
+    function _class(props) {
+      var _this;
+
+      _classCallCheck(this, _class);
+
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(_class).call(this, props));
+      _this.isEventListenerAdded = false;
+      _this.handleOrientationChange = _this.handleOrientationChange.bind(_assertThisInitialized(_this));
+      _this.onOrientationChange = _this.onOrientationChange.bind(_assertThisInitialized(_this));
+      _this.onPageLoad = _this.onPageLoad.bind(_assertThisInitialized(_this));
+      _this.state = {
+        isLandscape: false,
+        isPortrait: false
+      };
+      return _this;
+    }
+
+    _createClass(_class, [{
+      key: "handleOrientationChange",
+      value: function handleOrientationChange() {
+        if (!this.isEventListenerAdded) {
+          this.isEventListenerAdded = true;
+        }
+
+        var orientation = window.innerWidth > window.innerHeight ? 90 : 0;
+        this.setState({
+          isPortrait: orientation === 0,
+          isLandscape: orientation === 90
+        });
+      }
+    }, {
+      key: "onOrientationChange",
+      value: function onOrientationChange() {
+        this.handleOrientationChange();
+      }
+    }, {
+      key: "onPageLoad",
+      value: function onPageLoad() {
+        this.handleOrientationChange();
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        if ((typeof window === "undefined" ? "undefined" : _typeof(window)) !== undefined && isMobile) {
+          if (!this.isEventListenerAdded) {
+            this.handleOrientationChange();
+            window.addEventListener("load", this.onPageLoad, false);
+          } else {
+            window.removeEventListener("load", this.onPageLoad, false);
+          }
+
+          window.addEventListener("resize", this.onOrientationChange, false);
+        }
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        window.removeEventListener("resize", this.onOrientationChange, false);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        return React__default.createElement(WrappedComponent, _extends({}, this.props, {
+          isLandscape: this.state.isLandscape,
+          isPortrait: this.state.isPortrait
+        }));
+      }
+    }]);
+
+    return _class;
+  }(React__default.Component);
+}
+
+function useMobileOrientation() {
+  var _useState = React.useState(function () {
+    var orientation = window.innerWidth > window.innerHeight ? 90 : 0;
+    return {
+      isPortrait: orientation === 0,
+      isLandscape: orientation === 90,
+      orientation: orientation === 0 ? 'portrait' : 'landscape'
+    };
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      state = _useState2[0],
+      setState = _useState2[1];
+
+  var handleOrientationChange = React.useCallback(function () {
+    var orientation = window.innerWidth > window.innerHeight ? 90 : 0;
+    var next = {
+      isPortrait: orientation === 0,
+      isLandscape: orientation === 90,
+      orientation: orientation === 0 ? 'portrait' : 'landscape'
+    };
+    state.orientation !== next.orientation && setState(next);
+  }, [state.orientation]);
+  React.useEffect(function () {
+    if ((typeof window === "undefined" ? "undefined" : _typeof(window)) !== undefined && isMobile) {
+      handleOrientationChange();
+      window.addEventListener("load", handleOrientationChange, false);
+      window.addEventListener("resize", handleOrientationChange, false);
+    }
+
+    return function () {
+      window.removeEventListener("resize", handleOrientationChange, false);
+      window.removeEventListener("load", handleOrientationChange, false);
+    };
+  }, [handleOrientationChange]);
+  return state;
+}
+
+function useDeviceData(userAgent) {
+  var hookUserAgent = userAgent ? userAgent : window.navigator.userAgent;
+  return parseUserAgent(hookUserAgent);
+}
+
+function useDeviceSelectors(userAgent) {
+  var hookUserAgent = userAgent ? userAgent : window.navigator.userAgent;
+  var deviceData = useDeviceData(hookUserAgent);
+  var selectors = buildSelectorsObject(deviceData);
+  return [selectors, deviceData];
+}
+
+lib.AndroidView = AndroidView;
+lib.BrowserTypes = BrowserTypes;
+lib.BrowserView = BrowserView;
+lib.ConsoleView = ConsoleView;
+lib.CustomView = CustomView;
+lib.IEView = IEView;
+lib.IOSView = IOSView;
+lib.MobileOnlyView = MobileOnlyView;
+lib.MobileView = MobileView;
+lib.OsTypes = OsTypes;
+lib.SmartTVView = SmartTVView;
+lib.TabletView = TabletView;
+lib.WearableView = WearableView;
+lib.WinPhoneView = WinPhoneView;
+lib.browserName = browserName;
+lib.browserVersion = browserVersion;
+lib.deviceDetect = deviceDetect;
+lib.deviceType = deviceType;
+lib.engineName = engineName;
+lib.engineVersion = engineVersion;
+lib.fullBrowserVersion = fullBrowserVersion;
+lib.getSelectorsByUserAgent = getSelectorsByUserAgent;
+lib.getUA = getUA;
+lib.isAndroid = isAndroid;
+lib.isBrowser = isBrowser;
+lib.isChrome = isChrome;
+lib.isChromium = isChromium;
+lib.isConsole = isConsole;
+lib.isDesktop = isDesktop;
+lib.isEdge = isEdge;
+lib.isEdgeChromium = isEdgeChromium;
+lib.isElectron = isElectron;
+lib.isEmbedded = isEmbedded;
+lib.isFirefox = isFirefox;
+lib.isIE = isIE;
+lib.isIOS = isIOS;
+lib.isIOS13 = isIOS13;
+lib.isIPad13 = isIPad13;
+lib.isIPhone13 = isIPhone13;
+lib.isIPod13 = isIPod13;
+lib.isLegacyEdge = isLegacyEdge;
+lib.isMIUI = isMIUI;
+lib.isMacOs = isMacOs;
+var isMobile_1 = lib.isMobile = isMobile;
+lib.isMobileOnly = isMobileOnly;
+lib.isMobileSafari = isMobileSafari;
+lib.isOpera = isOpera;
+lib.isSafari = isSafari;
+lib.isSamsungBrowser = isSamsungBrowser;
+lib.isSmartTV = isSmartTV;
+lib.isTablet = isTablet;
+lib.isWearable = isWearable;
+lib.isWinPhone = isWinPhone;
+lib.isWindows = isWindows;
+lib.isYandex = isYandex;
+lib.mobileModel = mobileModel;
+lib.mobileVendor = mobileVendor;
+lib.osName = osName;
+lib.osVersion = osVersion;
+lib.parseUserAgent = parseUserAgent;
+lib.setUserAgent = setUserAgent;
+lib.useDeviceData = useDeviceData;
+lib.useDeviceSelectors = useDeviceSelectors;
+lib.useMobileOrientation = useMobileOrientation;
+lib.withOrientationChange = withOrientationChange;
+
+dayjs.extend(utc);
+var DeviceMostVisitedSitesCard = function DeviceMostVisitedSitesCard(_ref) {
+  var email = _ref.email,
+    deviceId = _ref.deviceId;
+  var _useState = useState([]),
+    _useState2 = _slicedToArray$1(_useState, 2),
+    times = _useState2[0],
+    setTimes = _useState2[1];
+  var _useState3 = useState(0),
+    _useState4 = _slicedToArray$1(_useState3, 2),
+    selectedDayIndex = _useState4[0];
+    _useState4[1]; // days from today
+  var _useState5 = useState(0),
+    _useState6 = _slicedToArray$1(_useState5, 2),
+    rangeEndDayIndex = _useState6[0],
+    setRangeEndDayIndex = _useState6[1];
+  var _useState7 = useState(6),
+    _useState8 = _slicedToArray$1(_useState7, 2),
+    rangeStartDayIndex = _useState8[0],
+    setRangeStartDayIndex = _useState8[1];
+  var _useState9 = useState([]),
+    _useState10 = _slicedToArray$1(_useState9, 2),
+    visitedSites = _useState10[0],
+    setVisitedSites = _useState10[1];
+  useAuth(email);
+  var device = useDevice(deviceId);
+  useEffect(function () {
+    if (!(device !== null && device !== void 0 && device.id)) return;
+    ApiController.getStats(device.id, dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'), dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')).then(function (stats) {
+      var _stats$visitedWebsite;
+      setTimes(stats.screenTime);
+      setVisitedSites(_.sortBy(((_stats$visitedWebsite = stats.visitedWebsites) === null || _stats$visitedWebsite === void 0 || (_stats$visitedWebsite = _stats$visitedWebsite.find(function (w) {
+        return w.date === dayjs().utc().subtract(selectedDayIndex, 'days').format('YYYY-MM-DD');
+      })) === null || _stats$visitedWebsite === void 0 ? void 0 : _stats$visitedWebsite.websites) || [], function (t) {
+        return t.screenTime;
+      }));
+    });
+  }, [device === null || device === void 0 ? void 0 : device.id, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex]);
+  useEffect(function () {
+    if (selectedDayIndex < 4) {
+      var shiftNDays = selectedDayIndex - 3;
+      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays);
+      setRangeEndDayIndex(Math.max(0, shiftNDays));
+      // }
+      // else if (times.length - selectedDayIndex < 4) {
+      //   const shiftNDays = times.length - 1 - selectedDayIndex;
+      //   setRangeStartDayIndex(Math.min(times.length - 1, selectedDayIndex + 3));
+      //   setRangeEndDayIndex(selectedDayIndex - 6 + shiftNDays);
+    } else {
+      setRangeStartDayIndex(selectedDayIndex + 3);
+      setRangeEndDayIndex(selectedDayIndex - 3);
+    }
+  }, [selectedDayIndex, times]);
+  return jsxRuntimeExports.jsx(Stack$1, {
+    flex: 1,
+    width: "100%",
+    children: jsxRuntimeExports.jsx(MostVisitedSitesSection, {
+      sites: visitedSites,
+      isMobile: isMobile_1
+    })
+  });
+};
+
+export { AddDeviceButton, DeviceCard, DeviceMostVisitedSitesCard, DeviceScreenTimeCard };
