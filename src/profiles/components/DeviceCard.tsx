@@ -21,7 +21,6 @@ import UrsorActionButton from '../../../src/components/UrsorActionButton'
 import { ReactComponent as ArrowUpRightIcon } from '../../images/ArrowUpRight.svg'
 import { ReactComponent as PencilIcon } from '../../images/Pencil.svg'
 import useAuth from '../../hooks/useAuth'
-import { IEnrichedDevice } from '../contents/common'
 import useDevice from '../../../src/hooks/useDevice'
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
@@ -259,18 +258,9 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
 
   const notificationCtx = useContext(NotificationContext)
 
-  const [deviceData, setEnrichedDeviceData] = useState<IEnrichedDevice>()
   const [filterData, setFilterData] = useState<IFilter>()
 
-  const id = useDevice(deviceId)
-
-  useEffect(() => {
-    if (!id) return
-
-    ApiController.getEnrichedDevice(id).then((data) => {
-      setEnrichedDeviceData(data)
-    })
-  }, [id])
+  const deviceData = useDevice(deviceId)
 
   useEffect(() => {
     if (!deviceData?.filterId) return
@@ -464,10 +454,15 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
                 flipBrowsingEnabled={() => {
-                  if (!id) return
+                  if (!deviceData?.id) return
 
                   setBrowsingEnabled(!browsingEnabled)
-                  ApiController.flipBrowsingAllowed(id, !browsingEnabled)
+
+                  ApiController.flipBrowsingAllowed(
+                    deviceData.id,
+                    !browsingEnabled
+                  )
+
                   notificationCtx.success(
                     `Browsing is now ${
                       !browsingEnabled ? 'enabled' : 'disabled'

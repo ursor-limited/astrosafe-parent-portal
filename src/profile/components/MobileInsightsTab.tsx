@@ -1,8 +1,7 @@
 import { Stack } from '@mui/system'
-import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { Typography } from './../../ui'
 import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
 import { ReactComponent as ChevronLeftIcon } from './../../images/ChevronLeft.svg'
-
 import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
 import _ from 'lodash'
 import AstroTimeChart from './AstroTimeChart'
