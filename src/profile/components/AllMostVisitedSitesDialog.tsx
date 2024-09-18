@@ -1,23 +1,23 @@
-import React from 'react';
-import { Stack } from '@mui/system';
-import { BACKDROP_STYLE, BORDER_RADIUS } from '../../components/UrsorDialog';
-import { Dialog } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { IVisitedSite } from './InsightsTab';
-import { Typography } from './../../ui';
-import { SearchInput } from './../../components/SearchInput';
-import { VisitedSiteRow } from './MostVisitedSitesSection';
-import { ReactComponent as XIcon } from './../../images/X.svg';
-import _ from 'lodash';
+import React from 'react'
+import { Stack } from '@mui/system'
+import { BACKDROP_STYLE, BORDER_RADIUS } from '../../components/UrsorDialog'
+import { Dialog } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { IVisitedSite } from './InsightsTab'
+import { Typography } from './../../ui'
+import { SearchInput } from './../../components/SearchInput'
+import { VisitedSiteRow } from './MostVisitedSitesSection'
+import { ReactComponent as XIcon } from './../../images/X.svg'
+import _ from 'lodash'
 
 const AllMostVisitedSitesDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  sites: IVisitedSite[];
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => void
+  sites: IVisitedSite[]
+  isMobile?: boolean
 }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [filteredSites, setFilteredSites] = useState<IVisitedSite[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [filteredSites, setFilteredSites] = useState<IVisitedSite[]>([])
   useEffect(
     () =>
       setFilteredSites(
@@ -28,7 +28,8 @@ const AllMostVisitedSitesDialog = (props: {
         )
       ),
     [props.sites, searchValue]
-  );
+  )
+
   return (
     <Dialog
       transitionDuration={800}
@@ -66,7 +67,7 @@ const AllMostVisitedSitesDialog = (props: {
               pt="3px"
               onClick={props.onClose}
             >
-              <XIcon height="22px" width="22px" />
+              {props.isMobile && <XIcon height="22px" width="22px" />}
             </Stack>
           </Stack>
 
@@ -91,6 +92,7 @@ const AllMostVisitedSitesDialog = (props: {
             ) : null}
           </Stack>
         </Stack>
+
         <Stack>
           {_.reverse(filteredSites.slice()).map((site, i) => (
             <VisitedSiteRow
@@ -103,7 +105,7 @@ const AllMostVisitedSitesDialog = (props: {
         </Stack>
       </Stack>
     </Dialog>
-  );
-};
+  )
+}
 
-export default AllMostVisitedSitesDialog;
+export default AllMostVisitedSitesDialog

@@ -10,7 +10,7 @@ const App: React.FC = () => {
     <div
       style={{
         position: 'relative',
-        width: '50%',
+        width: '40%',
         height: '110vh',
         display: 'flex',
         flexDirection: 'column',
