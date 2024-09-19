@@ -1,4 +1,4 @@
-import DynamicCardGrid from '../../../components/DynamicCardGrid'
+import React, { createContext, useContext, useCallback } from 'react'
 import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
 import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svg'
 import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg'
@@ -15,6 +15,9 @@ import { IFilterUrl } from '../filters/AllFilters'
 import FilterWhitelistExceptionDialog from '../../../filter/components/FilterWhitelistExceptionDialog'
 import ApiController from '../../../api'
 import { IFilterException } from '../../../filter/contents/common'
+import useAuth from '../../../hooks/useAuth'
+import { isMobile } from 'react-device-detect'
+import { INotificationContext } from '../../../components/NotificationContext'
 
 export interface IAllowedSitesTableRowItems {
   title: string
@@ -22,12 +25,52 @@ export interface IAllowedSitesTableRowItems {
   createdAt: string
 }
 
-const FilterPageAllowedSitesSection = (props: {
-  allowedSites: IFilterException[]
-  add: (url: string) => void
-  delete: (url: IFilterException['domain']) => void
-  isMobile?: boolean
-}) => {
+interface FilterPageBlockedSitesSectionProps {
+  filterId: number
+  email: string
+}
+
+const FilterPageAllowedSitesSection: React.FC<
+  FilterPageBlockedSitesSectionProps
+> = ({ filterId, email }) => {
+  useAuth(email)
+
+  const [allowedSites, setAllowedSites] = useState<IFilterException[]>()
+
+  useEffect(() => {
+    ApiController.getAllowedSites(filterId).then((data) =>
+      setAllowedSites(data)
+    )
+  }, [])
+
+  const loadAllowedSites = useCallback(
+    () => ApiController.getAllowedSites(filterId).then(setAllowedSites),
+    [filterId]
+  )
+  useEffect(() => {
+    loadAllowedSites()
+  }, [loadAllowedSites])
+
+  const addAllowedSite = (url: string) =>
+    ApiController.addAllowedSite(filterId, url)
+      .then(loadAllowedSites)
+      .then(() => notificationCtx.success('Added allowed site.'))
+
+  const removeAllowedSite = (url: string) =>
+    ApiController.removeAllowedSite(filterId, url)
+      .then(loadAllowedSites)
+      .then(() => notificationCtx.negativeSuccess('Removed allowed site.'))
+
+  const NotificationContext = createContext<INotificationContext>({
+    message: null,
+    type: null,
+    success: (message: string) => null,
+    negativeSuccess: (message: string) => null,
+    error: (message: string) => null,
+  })
+
+  const notificationCtx = useContext(NotificationContext)
+
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
       name: 'title',
@@ -38,7 +81,7 @@ const FilterPageAllowedSitesSection = (props: {
         return (
           <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <img
-              src={props.allowedSites[parseInt(i)]?.favicon ?? ''}
+              src={allowedSites?.[parseInt(i)]?.favicon ?? ''}
               height={20}
               width={20}
               alt="allowed site favicon"
@@ -52,7 +95,7 @@ const FilterPageAllowedSitesSection = (props: {
       displayName: 'Domain',
       sortable: true,
     },
-    ...(props.isMobile
+    ...(isMobile
       ? []
       : [
           {
@@ -72,7 +115,7 @@ const FilterPageAllowedSitesSection = (props: {
   useEffect(() => {
     ;(async () => {
       const linkRows: IUrsorTableRow<IAllowedSitesTableRowItems>[] =
-        props.allowedSites?.map((a, i) => ({
+        allowedSites?.map((a, i) => ({
           id: i.toString(),
           items: {
             title: a.title ?? '',
@@ -85,7 +128,7 @@ const FilterPageAllowedSitesSection = (props: {
         })) || []
       setRows(linkRows)
     })()
-  }, [props.allowedSites])
+  }, [allowedSites])
 
   const [sortedRows, setSortedRows] = useState<
     IUrsorTableRow<IAllowedSitesTableRowItems>[]
@@ -125,11 +168,11 @@ const FilterPageAllowedSitesSection = (props: {
     <>
       <AstroBentoCard
         icon={ThumbsUpIcon}
-        title={`${props.allowedSites.length ?? 0} allowed site exception${
-          props.allowedSites.length === 1 ? '' : 's '
+        title={`${allowedSites?.length ?? 0} allowed site exception${
+          allowedSites?.length === 1 ? '' : 's '
         }`}
         subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!"
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       >
         <Stack spacing="20px">
           <UrsorInputField
@@ -164,8 +207,11 @@ const FilterPageAllowedSitesSection = (props: {
                 {
                   icon: TrashcanIcon,
                   text: 'Delete',
-                  kallback: () =>
-                    props.delete(props.allowedSites[parseInt(i)].domain),
+                  kallback: () => {
+                    if (!allowedSites?.[parseInt(i)]?.domain) return
+
+                    removeAllowedSite(allowedSites?.[parseInt(i)]?.domain)
+                  },
                   color: PALETTE.system.red,
                 },
               ]}
@@ -179,10 +225,11 @@ const FilterPageAllowedSitesSection = (props: {
         open={confirmationDialogOpen}
         onClose={() => setConfirmationDialogOpen(false)}
         onSubmit={() => {
-          props.add(inputValue)
+          addAllowedSite(inputValue)
+
           setInputValue('')
         }}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
     </>
   )
@@ -191,7 +238,7 @@ const FilterPageAllowedSitesSection = (props: {
 export default FilterPageAllowedSitesSection
 
 // <Stack>
-//   {props.allowedSites.map((s) => (
+//   {allowedSites.map((s) => (
 //     <Stack
 //       key={s.id}
 //       height="48px"

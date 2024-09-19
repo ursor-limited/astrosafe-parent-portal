@@ -356,9 +356,10 @@ class ApiController {
     )
   }
 
-  static async getFilterDevices(id: IFilter['id'], groupId: IGroup['id']) {
+  static async getFilterDevices(id: IFilter['id'], groupId?: IGroup['id']) {
     return get(
-      `devices?groupId=${groupId}&filterId=${id}&includeConfig=true`
+      `devices?filterId=${id}&includeConfig=true` +
+        (groupId ? `&groupId=${groupId}` : '')
     ).then((response: any) => response.json())
   }
 

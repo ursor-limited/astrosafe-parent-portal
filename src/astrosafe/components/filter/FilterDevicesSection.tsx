@@ -1,3 +1,4 @@
+import React, { useEffect, useCallback, createContext, useContext } from 'react'
 import DynamicCardGrid from '../../../components/DynamicCardGrid'
 import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
 import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
@@ -6,33 +7,82 @@ import { ReactComponent as XIcon } from './../../images/X.svg'
 import { Stack } from '@mui/system'
 import { PALETTE, Typography, UrsorButton } from '../../../ui'
 import _ from 'lodash'
-import { IDevice } from '../../../filter/contents/common'
 import UrsorFadeIn from '../../../components/UrsorFadeIn'
-import useNavigate from '../../../hooks/useNavigate'
 import { useState } from 'react'
 import AllDevicesDialog from '../../../components/AllDevicesDialog'
 import DeviceCard from '../../../profiles/components/DeviceCard'
 import { INFOS } from '../../../profile/components/ProfilePageTabLayout'
+import ApiController from '../../../api'
+import { IDevice } from '../../../filter/contents/common'
+import useAuth from '../../../hooks/useAuth'
+import { INotificationContext } from '../../../components/NotificationContext'
 
-const FilterPageDevicesSection = (props: {
-  devices: IDevice[]
-  onAdd: () => void
-  onRemove: () => void
-  openChangeFilterDialogForDevice: (device: IDevice) => void
+interface FilterDevicesSectionProps {
+  filterId: number
+  email: string
+  onClickDevice?: () => void
+}
+
+const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
+  filterId,
+  email,
+  onClickDevice = () => {},
 }) => {
-  const navigate = useNavigate()
+  const { user } = useAuth(email)
+
+  const [devices, setDevices] = useState<IDevice[]>()
+
+  useEffect(() => {
+    ApiController.getFilterDevices(filterId).then((data) => {
+      setDevices(data)
+    })
+  }, [])
+
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
+
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false)
+
+  const loadDevices = useCallback(() => {
+    user?.group_id &&
+      ApiController.getFilterDevices(filterId, user.group_id).then(setDevices)
+  }, [filterId, user?.group_id])
+
+  useEffect(() => {
+    loadDevices()
+  }, [loadDevices])
+
+  const NotificationContext = createContext<INotificationContext>({
+    message: null,
+    type: null,
+    success: (message: string) => null,
+    negativeSuccess: (message: string) => null,
+    error: (message: string) => null,
+  })
+
+  const notificationCtx = useContext(NotificationContext)
+
+  const [addDeviceDialogOpen, setAddDeviceDialogOpen] = useState<boolean>(false)
+
+  const applyFilterToDevice = (id: IDevice['id']) =>
+    ApiController.addFilterToDevice(filterId, id).then(() => {
+      setAddDeviceDialogOpen(false)
+      loadDevices()
+      notificationCtx.success('Applied this Filter to Device.')
+    })
+
+  const [changeFilterDialogOpenForDevice, setChangeFilterDialogOpenForDevice] =
+    useState<IDevice | undefined>()
+
   return (
     <>
       <AstroBentoCard
         title={
-          props.devices.length === 0
+          devices?.length === 0
             ? 'No Devices yet have this Filter applied'
-            : props.devices.length === 1
+            : devices?.length === 1
             ? 'Filter applied to this Device'
-            : `Filter applied to these ${props.devices.length ?? 0} Devices`
+            : `Filter applied to these ${devices?.length ?? 0} Devices`
         }
         info={INFOS.filterDevice}
         notCollapsible
@@ -53,16 +103,16 @@ const FilterPageDevicesSection = (props: {
               size="small"
               endIcon={PlusIcon}
               iconSize={16}
-              onClick={props.onAdd}
+              onClick={() => setAddDeviceDialogOpen(true)}
             >
               Add Device
             </UrsorButton>
           </Stack>
         }
       >
-        {props.devices.length > 0 ? (
+        {devices?.length || 0 > 0 ? (
           <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-            {props.devices.map((d, i) => (
+            {devices?.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <Stack
                   sx={{
@@ -75,13 +125,13 @@ const FilterPageDevicesSection = (props: {
                     {...d}
                     button={
                       <Stack
-                        onClick={() => props.openChangeFilterDialogForDevice(d)}
+                        onClick={() => setChangeFilterDialogOpenForDevice(d)}
                       >
                         <XIcon height={16} width={16} />
                       </Stack>
                     }
                     noExtras
-                    onClick={() => navigate.push(`/profiles/${d.id}`)}
+                    onClick={onClickDevice}
                   />
                 </Stack>
               </UrsorFadeIn>
@@ -109,7 +159,7 @@ const FilterPageDevicesSection = (props: {
             }}
             onMouseEnter={() => setHoveringOnButton(true)}
             onMouseLeave={() => setHoveringOnButton(false)}
-            onClick={props.onAdd}
+            onClick={() => setAddDeviceDialogOpen(true)}
           >
             <PlusIcon height="32px" width="32px" />
             <Typography
@@ -122,20 +172,20 @@ const FilterPageDevicesSection = (props: {
         )}
       </AstroBentoCard>
       <AllDevicesDialog
-        title={`${props.devices.length} ${
-          props.devices.length === 1 ? 'Device has' : 'Devices have'
+        title={`${devices?.length} ${
+          devices?.length === 1 ? 'Device has' : 'Devices have'
         } this Filter applied`}
-        devices={props.devices.slice(0, 4)}
+        devices={devices?.slice(0, 4) || []}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
-        onAdd={props.onAdd}
+        onAdd={() => setAddDeviceDialogOpen(true)}
         onRemove={(id) => {
-          const device = props.devices.find((d) => d.id === id)
-          device && props.openChangeFilterDialogForDevice(device)
+          const device = devices?.find((d) => d.id === id)
+          device && setChangeFilterDialogOpenForDevice(device)
         }}
       />
     </>
   )
 }
 
-export default FilterPageDevicesSection
+export default FilterDevicesSection
