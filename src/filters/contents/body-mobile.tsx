@@ -1,23 +1,24 @@
-import React from 'react';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { UrsorButton } from './../../ui';
-import { Stack } from '@mui/system';
-import UrsorFadeIn from '../../components/UrsorFadeIn';
-import _ from 'lodash';
-import DynamicCardGrid from '../../components/DynamicCardGrid';
-import useNavigate from '../../hooks/useNavigate';
-import FilterCard from '../../filter/components/FilterCard';
-import { IGroupFilter } from './common';
-import MobilePageLayout from './../../components/MobilePageLayout';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import React from 'react'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { UrsorButton } from './../../ui'
+import { Stack } from '@mui/system'
+import UrsorFadeIn from '../../components/UrsorFadeIn'
+import _ from 'lodash'
+import DynamicCardGrid from '../../components/DynamicCardGrid'
+import useNavigate from '../../hooks/useNavigate'
+import FilterCard from '../../filter/components/FilterCard'
+import { IGroupFilter } from '../../astrosafe/components/filters/AllFilters'
+import MobilePageLayout from './../../components/MobilePageLayout'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
-export const GRID_SPACING = '20px';
+export const GRID_SPACING = '20px'
 
 export default function AllFiltersPageMobileBody(props: {
-  filters: IGroupFilter[];
-  setCreateFilterDialogOpen: () => void;
+  filters: IGroupFilter[]
+  setCreateFilterDialogOpen: () => void
+  onClick?: (filterId: number) => void
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <MobilePageLayout
@@ -45,14 +46,18 @@ export default function AllFiltersPageMobileBody(props: {
               transition: '0.2s',
               '&:hover': { opacity: 0.6 },
             }}
-            onClick={() => navigate.push(`/filters/${f.id}`)}
+            onClick={() => {
+              if (!props?.onClick) return
+
+              props.onClick(f.id)
+            }}
           >
             <UrsorFadeIn duration={800} delay={i * 150}>
-              <FilterCard {...f} isMobile />
+              <FilterCard {...f} />
             </UrsorFadeIn>
           </Stack>
         ))}
       </DynamicCardGrid>
     </MobilePageLayout>
-  );
+  )
 }

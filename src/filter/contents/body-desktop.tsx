@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { Stack } from '@mui/system';
-import FilterPageCategoriesSection from '../components/CategoriesSection';
-import FilterPageAllowedSitesSection from '../components/AllowedSitesSection';
-import FilterPageBlockedSitesSection from '../components/BlockedSitesSection';
-import FilterPageSearchWordsSection from '../components/SearchWordsSection';
-import FilterPageDevicesSection from '../components/FilterDevicesSection';
-import PageLayout from './../../components/PageLayout';
-import { IActionPopupItem } from './../../components/ActionPopup';
-import { IDevice, IFilterException } from './common';
+import React, { useEffect, useState } from 'react'
+import { Stack } from '@mui/system'
+import FilterPageCategoriesSection from '../components/CategoriesSection'
+import FilterPageAllowedSitesSection from '../../astrosafe/components/filter/AllowedSitesSection'
+import FilterPageBlockedSitesSection from '../../astrosafe/components/filter/BlockedSitesSection'
+import FilterPageSearchWordsSection from '../../astrosafe/components/filter/SearchWordsSection'
+import FilterPageDevicesSection from '../../astrosafe/components/FilterDevicesSection'
+import PageLayout from './../../components/PageLayout'
+import { IActionPopupItem } from './../../components/ActionPopup'
+import { IDevice, IFilterException } from './common'
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from '../../filters/contents/common';
-import { ITitleRowItem } from './../../components/TitleRow';
-import useNavigate from '../../hooks/useNavigate';
+} from '../../astrosafe/components/filters/AllFilters'
+import { ITitleRowItem } from './../../components/TitleRow'
+import useNavigate from '../../hooks/useNavigate'
 
 export default function FilterPageDesktopBody(props: {
-  filterId: number;
-  filter: IFilter;
-  categories: IFilterCategory[];
-  allowedCategories: IFilterSubcategory['id'][];
-  flipCategory: (id: IFilterCategory['categoryId']) => void;
-  flipSubcategory: (id: IFilterSubcategory['id']) => void;
-  allowedSites: IFilterException[];
-  blockedSites: IFilterException[];
-  blockedSearchWords: string[];
-  addToBlockedSearchWords: (word: string) => void;
-  removeFromBlockedSearchWords: (word: string) => void;
-  devices: IDevice[];
-  actions: IActionPopupItem[];
-  setExceptionDialogOpen: (url: IFilterUrl['url']) => void;
-  titleRow: ITitleRowItem[];
-  setAddDeviceDialogOpen: () => void;
-  onRemoveDevice: () => void;
-  addBlockedSite: (url: IFilterUrl['url']) => void;
-  addAllowedSite: (url: IFilterUrl['url']) => void;
-  removeBlockedSite: (url: IFilterUrl['url']) => void;
-  removeAllowedSite: (url: IFilterUrl['url']) => void;
-  openChangeFilterDialogForDevice: (device: IDevice) => void;
+  filterId: number
+  filter: IFilter
+  categories: IFilterCategory[]
+  allowedCategories: IFilterSubcategory['id'][]
+  flipCategory: (id: IFilterCategory['categoryId']) => void
+  flipSubcategory: (id: IFilterSubcategory['id']) => void
+  allowedSites: IFilterException[]
+  blockedSites: IFilterException[]
+  blockedSearchWords: string[]
+  addToBlockedSearchWords: (word: string) => void
+  removeFromBlockedSearchWords: (word: string) => void
+  devices: IDevice[]
+  actions: IActionPopupItem[]
+  setExceptionDialogOpen: (url: IFilterUrl['url']) => void
+  titleRow: ITitleRowItem[]
+  setAddDeviceDialogOpen: () => void
+  onRemoveDevice: () => void
+  addBlockedSite: (url: IFilterUrl['url']) => void
+  addAllowedSite: (url: IFilterUrl['url']) => void
+  removeBlockedSite: (url: IFilterUrl['url']) => void
+  removeAllowedSite: (url: IFilterUrl['url']) => void
+  openChangeFilterDialogForDevice: (device: IDevice) => void
+  onClickBack: () => void
 }) {
-  const navigate = useNavigate();
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButtonCallback={() => navigate.push('/filters')}
+      titleBackButtonCallback={props.onClickBack}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="filters"
@@ -86,5 +86,5 @@ export default function FilterPageDesktopBody(props: {
         />
       </Stack>
     </PageLayout>
-  );
+  )
 }

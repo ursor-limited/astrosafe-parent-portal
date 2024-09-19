@@ -1,17 +1,14 @@
-'use client'
-
 import { useEffect, useState } from 'react'
-import AllFiltersPageDesktopBody from './body-desktop'
-import AllFiltersPageMobileBody from './body-mobile'
-import ApiController from '../../api'
-
-import FilterCreationDialog from '../../filter/components/FilterCreationDialog'
-import { IDevice } from '../../filter/contents/common'
+import AllFiltersPageDesktopBody from '../../../filters/contents/body-desktop'
+import AllFiltersPageMobileBody from '../../../filters/contents/body-mobile'
+import ApiController from '../../../api'
+import useNavigate from '../../../hooks/useNavigate'
+import FilterCreationDialog from '../../../filter/components/FilterCreationDialog'
+import { IDevice } from '../../../filter/contents/common'
 import _ from 'lodash'
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../../hooks/useAuth'
 
 export interface IFilterCategory {
-  id: number
   categoryId: number
   title: string
   permanentlyBlocked: boolean
@@ -20,7 +17,7 @@ export interface IFilterCategory {
 
 export interface IFilterSubcategory {
   id: number
-  categoryId: IFilterCategory['id']
+  categoryId: IFilterCategory['categoryId']
   title: string
 }
 
@@ -70,8 +67,18 @@ export interface IGroupFilter {
   blacklistedWords: number
 }
 
-const AllFiltersPage = (props: { email: string; isMobile: boolean }) => {
-  const { user } = useAuth(props.email)
+interface AllFiltersPageProps {
+  isMobile: boolean
+  email: string
+  onCardClick?: (filterId: number) => {}
+}
+
+const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
+  isMobile,
+  email,
+  onCardClick = () => {},
+}) => {
+  const { user } = useAuth(email)
   const [filters, setFilters] = useState<IGroupFilter[]>([])
   useEffect(() => {
     user?.group_id &&
@@ -81,27 +88,32 @@ const AllFiltersPage = (props: { email: string; isMobile: boolean }) => {
   }, [user?.group_id])
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false)
-
+  const navigate = useNavigate()
   return (
     <>
-      {props.isMobile ? (
+      {isMobile ? (
         <AllFiltersPageMobileBody
           filters={filters}
           setCreateFilterDialogOpen={() => setFilterCreationDialogOpen(true)}
+          onClick={(filterId) => onCardClick(filterId)}
         />
       ) : (
         <AllFiltersPageDesktopBody
           filters={filters}
           setCreateFilterDialogOpen={() => setFilterCreationDialogOpen(true)}
+          onClick={(filterId) => onCardClick(filterId)}
         />
       )}
       <FilterCreationDialog
         open={filterCreationDialogOpen}
         onClose={() => setFilterCreationDialogOpen(false)}
-        onSubmit={() => {
-          console.log('submitted')
-        }}
-        isMobile={props.isMobile}
+        onSubmit={(title: IFilter['title']) =>
+          user?.group_id &&
+          ApiController.createFilter(user.group_id, title).then((f) =>
+            navigate.push(`/filters/${f.filterId}`)
+          )
+        }
+        isMobile={isMobile}
       />
     </>
   )

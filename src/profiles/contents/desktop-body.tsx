@@ -11,7 +11,7 @@ import DeviceCard from '../components/DeviceCard'
 import QRCodeView from '../components/QRCodeView'
 import UrsorFadeIn from './../../components/UrsorFadeIn'
 import { IEnrichedDevice } from './common'
-import { IFilter } from './../../filters/contents/common'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IEnrichedDevice[]

@@ -16,7 +16,7 @@ import {
   DeviceCardScreenTimeSection,
   DeviceCardSection,
 } from './DeviceCard'
-import { IFilter } from './../../filters/contents/common'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 import ApiController from './../../api'
 import UrsorPopover from './../../components/UrsorPopover'
 import AstroSettingCard from './../../filter/components/AstroSettingCard'

@@ -1,34 +1,37 @@
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import AppToggleCard from './AppToggleCard';
-import { Stack } from '@mui/system';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { IFilterSubcategory, IFilterUrl } from '../../filters/contents/common';
-import ProfilePageTabLayout from './ProfilePageTabLayout';
-import { IDevice } from './../../filter/contents/common';
-import { useContext, useEffect, useState } from 'react';
-import ApiController from './../../api';
-import AstroCard from './../../filter/components/AstroCard';
-import _ from 'lodash';
-import NotificationContext from './../../components/NotificationContext';
-import PageSelector from '../../components/PageSelector';
-import { SearchInput } from './../../components/SearchInput';
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import AppToggleCard from './AppToggleCard'
+import { Stack } from '@mui/system'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import {
+  IFilterSubcategory,
+  IFilterUrl,
+} from '../../astrosafe/components/filters/AllFilters'
+import ProfilePageTabLayout from './ProfilePageTabLayout'
+import { IDevice } from './../../filter/contents/common'
+import { useContext, useEffect, useState } from 'react'
+import ApiController from './../../api'
+import AstroCard from './../../filter/components/AstroCard'
+import _ from 'lodash'
+import NotificationContext from './../../components/NotificationContext'
+import PageSelector from '../../components/PageSelector'
+import { SearchInput } from './../../components/SearchInput'
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 20
 
 export interface IAppCategory {
-  id: number;
-  title: string;
+  id: number
+  title: string
 }
 
 export interface IApp {
-  id: number;
-  title: string;
-  url: string;
-  imageUrl: string;
-  categoryId: IAppCategory['id'];
-  description: string;
-  enabled: boolean;
+  id: number
+  title: string
+  url: string
+  imageUrl: string
+  categoryId: IAppCategory['id']
+  description: string
+  enabled: boolean
 }
 
 export const AppsLegend = (props: { small?: boolean }) => (
@@ -68,28 +71,26 @@ export const AppsLegend = (props: { small?: boolean }) => (
       </Stack>
     </Stack>
   </Stack>
-);
+)
 
 const DevicePageAppsTab = (props: {
-  deviceId: IDevice['id'];
-  isMobile?: boolean;
+  deviceId: IDevice['id']
+  isMobile?: boolean
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<
-    number | undefined
-  >();
-  const [categories, setCategories] = useState<IFilterSubcategory[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>()
+  const [categories, setCategories] = useState<IFilterSubcategory[]>([])
   useEffect(() => {
-    ApiController.getAllFilterCategories().then(setCategories);
-  }, []);
+    ApiController.getAllFilterCategories().then(setCategories)
+  }, [])
 
-  const [nPages, setNPages] = useState<number>(1);
+  const [nPages, setNPages] = useState<number>(1)
 
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  useEffect(() => setPageIndex(0), [selectedCategory]);
+  const [pageIndex, setPageIndex] = useState<number>(0)
+  useEffect(() => setPageIndex(0), [selectedCategory])
 
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [apps, setApps] = useState<IApp[]>([]);
-  const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [apps, setApps] = useState<IApp[]>([])
+  const [filteredApps, setFilteredApps] = useState<IApp[]>([])
 
   useEffect(() => {
     ApiController.getApps(
@@ -99,10 +100,10 @@ const DevicePageAppsTab = (props: {
       selectedCategory,
       searchValue
     ).then((response) => {
-      setApps(_.sortBy(response.apps, (a) => a.id));
-      setNPages(response.pages);
-    });
-  }, [props.deviceId, pageIndex, selectedCategory, searchValue]);
+      setApps(_.sortBy(response.apps, (a) => a.id))
+      setNPages(response.pages)
+    })
+  }, [props.deviceId, pageIndex, selectedCategory, searchValue])
 
   useEffect(
     () =>
@@ -114,9 +115,9 @@ const DevicePageAppsTab = (props: {
         )
       ),
     [apps, searchValue]
-  );
+  )
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
   return (
     <ProfilePageTabLayout
@@ -223,8 +224,8 @@ const DevicePageAppsTab = (props: {
                             ? { ...app, enabled: !app.enabled }
                             : app
                         )
-                      );
-                      (a.enabled
+                      )
+                      ;(a.enabled
                         ? ApiController.disableApp
                         : ApiController.enableApp)(props.deviceId, a.id).then(
                         () =>
@@ -233,7 +234,7 @@ const DevicePageAppsTab = (props: {
                               ? `Disabled ${a.title}`
                               : `Enabled ${a.title}`
                           )
-                      );
+                      )
                     }}
                   />
                 </UrsorFadeIn>
@@ -250,7 +251,7 @@ const DevicePageAppsTab = (props: {
         </AstroCard>
       </Stack>
     </ProfilePageTabLayout>
-  );
-};
+  )
+}
 
-export default DevicePageAppsTab;
+export default DevicePageAppsTab

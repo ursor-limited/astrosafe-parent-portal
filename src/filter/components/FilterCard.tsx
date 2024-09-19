@@ -1,15 +1,15 @@
-import { Stack } from '@mui/system';
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as ListUnorderedIcon } from './../../images/ListUnorderedIcon.svg';
-import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg';
-import { ReactComponent as StopIcon } from './../../images/StopIcon.svg';
-import { ReactComponent as LockIcon } from './../../images/LockIcon.svg';
-import ProfileImageRow from './ProfileImageRow';
-import { IGroupFilter } from '../../filters/contents/common';
+import { Stack } from '@mui/system'
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as ListUnorderedIcon } from './../../images/ListUnorderedIcon.svg'
+import { ReactComponent as VerifiedIcon } from './../../images/VerifiedIcon.svg'
+import { ReactComponent as StopIcon } from './../../images/StopIcon.svg'
+import { ReactComponent as LockIcon } from './../../images/LockIcon.svg'
+import ProfileImageRow from './ProfileImageRow'
+import { IGroupFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const FilterCard = (
   props: IGroupFilter & {
-    isMobile?: boolean;
+    isMobile?: boolean
   }
 ) => (
   <Stack
@@ -71,6 +71,6 @@ const FilterCard = (
       totalDeviceCount={props.totalDeviceCount}
     />
   </Stack>
-);
+)
 
-export default FilterCard;
+export default FilterCard

@@ -1,17 +1,17 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { UrsorButton, UrsorInputField } from './../../ui';
-import { LabeledInputField } from './../../ui/labeled-input-field';
-import { IFilter } from '../../filters/contents/common';
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { UrsorButton, UrsorInputField } from './../../ui'
+import { LabeledInputField } from './../../ui/labeled-input-field'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const FilterCreationDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (name: string) => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => void
+  onSubmit: (name: string) => void
+  isMobile?: boolean
 }) => {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>('')
   return (
     <UrsorDialog
       open={props.open}
@@ -45,15 +45,15 @@ const FilterCreationDialog = (props: {
           variant="tertiary"
           width="100%"
           onClick={() => {
-            props.onSubmit(name);
-            props.onClose();
+            props.onSubmit(name)
+            props.onClose()
           }}
         >
           Create
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FilterCreationDialog;
+export default FilterCreationDialog

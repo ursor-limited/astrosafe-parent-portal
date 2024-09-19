@@ -1,27 +1,27 @@
-import React from 'react';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { PALETTE, Typography } from './../../ui';
-import { IFilter } from '../../filters/contents/common';
-import { IGroup } from '../../folder/contents/common';
-import ApiController from '../../api';
-import UrsorDialog from '../../components/UrsorDialog';
-import { IDevice } from '../contents/common';
-import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg';
+import React from 'react'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { PALETTE, Typography } from './../../ui'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
+import { IGroup } from '../../folder/contents/common'
+import ApiController from '../../api'
+import UrsorDialog from '../../components/UrsorDialog'
+import { IDevice } from '../contents/common'
+import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
 
 const ChangeFilterDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  submitChange: (id: IFilter['id']) => void;
-  currentFilterId: IFilter['id'];
-  groupId: IGroup['id'];
-  isMobile?: boolean;
-  deviceName: IDevice['name'];
+  open: boolean
+  onClose: () => void
+  submitChange: (id: IFilter['id']) => void
+  currentFilterId: IFilter['id']
+  groupId: IGroup['id']
+  isMobile?: boolean
+  deviceName: IDevice['name']
 }) => {
-  const [allFilters, setAllFilters] = useState<IFilter[]>([]);
+  const [allFilters, setAllFilters] = useState<IFilter[]>([])
   useEffect(() => {
-    ApiController.getGroupFilters(props.groupId).then((d) => setAllFilters(d));
-  }, [props.groupId]);
+    ApiController.getGroupFilters(props.groupId).then((d) => setAllFilters(d))
+  }, [props.groupId])
   return (
     <UrsorDialog
       open={props.open}
@@ -52,8 +52,8 @@ const ChangeFilterDialog = (props: {
                 },
               }}
               onClick={() => {
-                props.submitChange(f.id);
-                props.onClose();
+                props.submitChange(f.id)
+                props.onClose()
               }}
               alignItems="center"
             >
@@ -65,7 +65,7 @@ const ChangeFilterDialog = (props: {
           ))}
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default ChangeFilterDialog;
+export default ChangeFilterDialog

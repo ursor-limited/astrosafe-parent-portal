@@ -6,7 +6,7 @@ import {
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from './filters/contents/common'
+} from './astrosafe/components/filters/AllFilters'
 import {
   IChannel,
   IContentBucket,

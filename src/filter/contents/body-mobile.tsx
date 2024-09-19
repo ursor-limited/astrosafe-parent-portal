@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Stack } from '@mui/system'
-import FilterPageAllowedSitesSection from '../components/AllowedSitesSection'
-import FilterPageBlockedSitesSection from '../components/BlockedSitesSection'
-import FilterPageSearchWordsSection from '../components/SearchWordsSection'
+import FilterPageAllowedSitesSection from '../../astrosafe/components/filter/AllowedSitesSection'
+import FilterPageBlockedSitesSection from '../../astrosafe/components/filter/BlockedSitesSection'
+import FilterPageSearchWordsSection from '../../astrosafe/components/filter/SearchWordsSection'
 import { IActionPopupItem } from './../../components/ActionPopup'
 import { IDevice, IFilterException } from './common'
 import {
@@ -10,7 +10,7 @@ import {
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from '../../filters/contents/common'
+} from '../../astrosafe/components/filters/AllFilters'
 import MobilePageLayout from './../../components/MobilePageLayout'
 import { ITitleRowItem } from './../../components/TitleRow'
 import MobileFilterPageDevicesSection from '../components/MobileFilterDevicesSection'
@@ -41,13 +41,15 @@ export default function FilterPageMobileBody(props: {
   removeBlockedSite: (url: IFilterUrl['url']) => void
   removeAllowedSite: (url: IFilterUrl['url']) => void
   openChangeFilterDialogForDevice: (device: IDevice) => void
+  onClickBack: () => void
 }) {
   const navigate = useNavigate()
+
   return (
     <MobilePageLayout
       actions={props.actions}
       titleRow={props.titleRow.slice(-1)[0]}
-      titleBackButtonCallback={() => navigate.push('/filters')}
+      titleBackButtonCallback={props.onClickBack}
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">

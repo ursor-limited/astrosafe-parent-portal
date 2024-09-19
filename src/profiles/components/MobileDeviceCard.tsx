@@ -13,7 +13,7 @@ import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircl
 import AstroSwitch from './../../components/AstroSwitch'
 import { useContext, useEffect, useState } from 'react'
 import useNavigate from '../../hooks/useNavigate'
-import { IFilter } from './../../filters/contents/common'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 import ApiController from './../../api'
 import { IEnrichedDevice } from '../contents/common'
 import UrsorPopover from './../../components/UrsorPopover'

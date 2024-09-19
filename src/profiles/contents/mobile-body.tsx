@@ -1,26 +1,26 @@
-import { Stack } from '@mui/system';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { ReactComponent as PlugIcon } from './../../images/PlugIcon.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { ReactComponent as ArrowUpRightIcon } from './../../images/ArrowUpRight.svg';
-import { IDevice } from './../../filter/contents/common';
-import DeviceInstructionsView from '../components/DeviceInstructionsView';
-import UrsorActionButton from './../../components/UrsorActionButton';
-import { PALETTE, UrsorButton } from './../../ui';
-import useNavigate from '../../hooks/useNavigate';
-import MobilePageLayout from './../../components/MobilePageLayout';
-import DeviceCard from '../components/DeviceCard';
-import { IFilter } from './../../filters/contents/common';
+import { Stack } from '@mui/system'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { ReactComponent as PlugIcon } from './../../images/PlugIcon.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { ReactComponent as ArrowUpRightIcon } from './../../images/ArrowUpRight.svg'
+import { IDevice } from './../../filter/contents/common'
+import DeviceInstructionsView from '../components/DeviceInstructionsView'
+import UrsorActionButton from './../../components/UrsorActionButton'
+import { PALETTE, UrsorButton } from './../../ui'
+import useNavigate from '../../hooks/useNavigate'
+import MobilePageLayout from './../../components/MobilePageLayout'
+import DeviceCard from '../components/DeviceCard'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const AllDevicesPageMobileBody = (props: {
-  devices: IDevice[];
-  filters: IFilter[];
-  setConnectDialogOpen: () => void;
+  devices: IDevice[]
+  filters: IFilter[]
+  setConnectDialogOpen: () => void
   //setDownloadDialogOpen: () => void;
-  setRenameDeviceDialogId: (id: IDevice['id']) => void;
-  setDisconnectDialogOpen: (id: IDevice['id']) => void;
+  setRenameDeviceDialogId: (id: IDevice['id']) => void
+  setDisconnectDialogOpen: (id: IDevice['id']) => void
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     // <PageLayout
     //   title="My Devices"
@@ -109,7 +109,7 @@ const AllDevicesPageMobileBody = (props: {
         )}
       </Stack>
     </MobilePageLayout>
-  );
-};
+  )
+}
 
-export default AllDevicesPageMobileBody;
+export default AllDevicesPageMobileBody

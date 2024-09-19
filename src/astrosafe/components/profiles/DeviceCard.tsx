@@ -1,31 +1,26 @@
 import { Stack } from '@mui/system'
-import AstroCard from '../../filter/components/AstroCard'
-import { PALETTE, Typography, UrsorButton } from './../../ui'
+import AstroCard from '../../../filter/components/AstroCard'
+import { PALETTE, Typography, UrsorButton } from './../../../ui'
 import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
 import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg'
 import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg'
 import { ReactComponent as StrikeThroughGlobeIcon } from './../../images/StrikeThroughGlobeIcon.svg'
 import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
 import { ReactComponent as LinkExternalIcon } from './../../images/LinkExternalIcon.svg'
-import { DeviceType } from '../../filter/contents/common'
-import AstroSwitch from './../../components/AstroSwitch'
+import { DeviceType } from '../../../filter/contents/common'
+import AstroSwitch from './../../../components/AstroSwitch'
 import { useContext, useEffect, useState } from 'react'
-import useNavigate from '../../hooks/useNavigate'
-import {
-  IFilter,
-  IFilterUrl,
-} from '../../astrosafe/components/filters/AllFilters'
-import ApiController, { getAbsoluteUrl } from './../../api'
+import useNavigate from '../../../hooks/useNavigate'
+import { IFilter, IFilterUrl } from '../filters/AllFilters'
+import ApiController, { getAbsoluteUrl } from '../../../api'
 import { useElementSize } from 'usehooks-ts'
-import { cleanUrl } from '../../profile/components/MobileInsightsTab'
-import NotificationContext from './../../components/NotificationContext'
-import { getInitials } from './../../account/contents/common'
-import UrsorActionButton from '../../../src/components/UrsorActionButton'
+import { cleanUrl } from '../../../profile/components/MobileInsightsTab'
+import NotificationContext from '../../../components/NotificationContext'
+import { getInitials } from '../../../account/contents/common'
+import UrsorActionButton from '../../../components/UrsorActionButton'
 import { ReactComponent as ArrowUpRightIcon } from '../../images/ArrowUpRight.svg'
-import { ReactComponent as PencilIcon } from '../../images/Pencil.svg'
-import useAuth from '../../hooks/useAuth'
-import useDevice from '../../../src/hooks/useDevice'
-import { IEnrichedDevice } from '../contents/common'
+import useAuth from '../../../hooks/useAuth'
+import useDevice from '../../../hooks/useDevice'
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: 'Android',
@@ -232,48 +227,64 @@ export const DeviceCardCurrentUrlSection = (props: {
   )
 }
 
-interface DeviceCardProps extends IEnrichedDevice {
-  filterName?: IFilter['title']
-  hideToggles?: boolean
-  showBrowsing?: boolean
-  url?: string
-  button?: React.ReactNode
+interface DeviceCardProps {
+  email: string
+  deviceId: string
   small?: boolean
+  noExtras?: boolean
   onClick?: () => void
-  onClickFilter?: () => void
+  onFilterClick?: () => void
   onClickView?: () => void
   gotoDeviceOnClick?: () => void
-  noExtras?: boolean
+  onClickOpen?: () => void
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({
-  filterName,
-  hideToggles,
-  showBrowsing,
-  url,
-  button,
-  small,
+  email,
+  deviceId,
+  small = false,
+  noExtras = false,
   onClick = () => {},
-  onClickFilter = () => {},
+  onFilterClick = () => {},
   onClickView = () => {},
   gotoDeviceOnClick = () => {},
-  noExtras,
-  config,
-  online,
-  name,
-  profileAvatarUrl,
-  latestBrowsing,
-  screenTime,
-  id,
-  deviceType,
+  onClickOpen = () => {},
 }) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)
-  useEffect(
-    () => setBrowsingEnabled(!!config?.browsingAllowed),
-    [config?.browsingAllowed]
-  )
+
+  const [renameDeviceDialogOpen, setRenameDeviceDialogOpen] =
+    useState<boolean>()
 
   const notificationCtx = useContext(NotificationContext)
+
+  const [filterData, setFilterData] = useState<IFilter>()
+
+  const deviceData = useDevice(deviceId)
+
+  useEffect(() => {
+    if (!deviceData?.filterId) return
+
+    ApiController.getFilter(deviceData.filterId).then((data) => {
+      setFilterData(data)
+    })
+  }, [deviceData?.filterId])
+
+  const button = (
+    <UrsorActionButton
+      size="16px"
+      iconSize="16px"
+      actions={[
+        {
+          text: 'Open',
+          kallback: () => onClickOpen(),
+          icon: ArrowUpRightIcon,
+        },
+      ]}
+    />
+  )
+
+  useAuth(email)
+
   return (
     <AstroCard>
       <Stack p="20px" boxSizing="border-box" position="relative">
@@ -292,6 +303,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
             {button}
           </Stack>
         ) : null}
+
         <Stack
           direction="row"
           spacing="18px"
@@ -317,19 +329,20 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 '&:hover': { opacity: 0.6 },
               }}
             >
-              {profileAvatarUrl ? (
+              {deviceData?.profileAvatarUrl ? (
                 <img
-                  src={profileAvatarUrl}
+                  src={deviceData?.profileAvatarUrl}
                   height={small ? 40 : 84}
                   width={small ? 40 : 84}
                   alt="device profile"
                 />
               ) : (
                 <Typography color="rgb(255,255,255)" bold variant="h4">
-                  {getInitials(name)}
+                  {getInitials(deviceData?.name || '')}
                 </Typography>
               )}
             </Stack>
+
             <Stack
               position="absolute"
               bottom={-2}
@@ -340,7 +353,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
               justifyContent="center"
               alignItems="center"
               bgcolor={
-                online && browsingEnabled
+                deviceData?.online && browsingEnabled
                   ? PALETTE.secondary.green[4]
                   : PALETTE.secondary.grey[3]
               }
@@ -353,7 +366,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 },
               }}
             >
-              {online && browsingEnabled ? (
+              {deviceData?.online && browsingEnabled ? (
                 <GlobeIcon height="12px" width="12px" />
               ) : (
                 <StrikeThroughGlobeIcon height="12px" width="12px" />
@@ -375,16 +388,21 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 maxLines={1}
                 sx={{ wordBreak: 'break-all' }}
               >
-                {name}
+                {deviceData?.name}
               </Typography>
             </Stack>
             <Stack direction="row" spacing="8px" alignItems="center">
               <PhoneIcon height="16px" width="16px" />
               <Typography maxLines={1}>
-                {DEVICE_TYPE_DISPLAY_NAMES[deviceType]}
+                {
+                  DEVICE_TYPE_DISPLAY_NAMES[
+                    (deviceData?.deviceType ||
+                      'chrome') as keyof typeof DEVICE_TYPE_DISPLAY_NAMES
+                  ]
+                }
               </Typography>
             </Stack>
-            {filterName ? (
+            {filterData?.title ? (
               <Stack
                 direction="row"
                 spacing="8px"
@@ -399,10 +417,10 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                     },
                   },
                 }}
-                onClick={onClickFilter}
+                onClick={() => onFilterClick()}
               >
                 <FilterIcon height="16px" width="16px" />
-                <Typography maxLines={1}>{filterName}</Typography>
+                <Typography maxLines={1}>{filterData?.title}</Typography>
               </Stack>
             ) : null}
           </Stack>
@@ -411,27 +429,34 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
           <>
             <Stack spacing="12px" pt="20px">
               <DeviceCardCurrentUrlSection
-                url={latestBrowsing?.url}
+                url={deviceData?.latestBrowsing?.url}
                 disabled={
                   !browsingEnabled
                     ? 'browsingDisabled'
-                    : !online
+                    : !deviceData?.online
                     ? 'offline'
                     : undefined
                 }
-                title={latestBrowsing?.title}
-                faviconUrl={latestBrowsing?.faviconUrl}
+                title={deviceData?.latestBrowsing?.title}
+                faviconUrl={deviceData?.latestBrowsing?.faviconUrl}
               />
               <DeviceCardScreenTimeSection
-                totalTime={screenTime?.allowed ?? 0}
-                elapsedTime={screenTime?.current ?? 0}
-                onClickView={onClickView}
+                totalTime={deviceData?.screenTime?.allowed ?? 0}
+                elapsedTime={deviceData?.screenTime?.current ?? 0}
+                onClickView={() => onClickView()}
               />
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
                 flipBrowsingEnabled={() => {
+                  if (!deviceData?.id) return
+
                   setBrowsingEnabled(!browsingEnabled)
-                  ApiController.flipBrowsingAllowed(id, !browsingEnabled)
+
+                  ApiController.flipBrowsingAllowed(
+                    deviceData.id,
+                    !browsingEnabled
+                  )
+
                   notificationCtx.success(
                     `Browsing is now ${
                       !browsingEnabled ? 'enabled' : 'disabled'
@@ -444,7 +469,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
               <UrsorButton
                 variant="secondary"
                 endIcon={ChevronRightIcon}
-                onClick={gotoDeviceOnClick}
+                onClick={() => gotoDeviceOnClick()}
                 width="100%"
                 backgroundColor="white"
               >

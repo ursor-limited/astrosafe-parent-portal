@@ -1,36 +1,36 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Box, Stack, alpha } from '@mui/system';
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Box, Stack, alpha } from '@mui/system'
 import {
   PALETTE,
   Typography,
   UrsorButton,
   UrsorInputField,
   UrsorTextField,
-} from './../../ui';
-import _ from 'lodash';
-import { isMobile } from 'react-device-detect';
-import UrsorDialog from './../../components/UrsorDialog';
-import { CONTENT_DISPLAY_NAMES } from './ContentCard';
-import { LabeledInputField } from './../../ui/labeled-input-field';
-import { AstroContent } from './../../profile/components/ContentTab';
-import { IFilterUrl } from './../../filters/contents/common';
-import { IInfoButtonProps } from './../../components/InfoButton';
+} from './../../ui'
+import _ from 'lodash'
+import { isMobile } from 'react-device-detect'
+import UrsorDialog from './../../components/UrsorDialog'
+import { CONTENT_DISPLAY_NAMES } from './ContentCard'
+import { LabeledInputField } from './../../ui/labeled-input-field'
+import { AstroContent } from './../../profile/components/ContentTab'
+import { IFilterUrl } from '../../astrosafe/components/filters/AllFilters'
+import { IInfoButtonProps } from './../../components/InfoButton'
 
 export interface IContentCreationDialogProps {
-  open: boolean;
-  type: AstroContent;
-  title: IFilterUrl['title'];
-  setTitle: (title: IFilterUrl['title']) => void;
-  info?: IInfoButtonProps;
-  url: IFilterUrl['url'];
-  setUrl: (url: IFilterUrl['url']) => void;
-  onUrlFieldBlur?: () => void;
-  closeCallback: () => void;
-  onSubmit?: () => void;
-  editing?: boolean;
-  buttonDisabled?: boolean;
-  extraBottomElement?: React.ReactNode;
-  children?: React.ReactNode;
+  open: boolean
+  type: AstroContent
+  title: IFilterUrl['title']
+  setTitle: (title: IFilterUrl['title']) => void
+  info?: IInfoButtonProps
+  url: IFilterUrl['url']
+  setUrl: (url: IFilterUrl['url']) => void
+  onUrlFieldBlur?: () => void
+  closeCallback: () => void
+  onSubmit?: () => void
+  editing?: boolean
+  buttonDisabled?: boolean
+  extraBottomElement?: React.ReactNode
+  children?: React.ReactNode
 }
 
 export default function ContentCreationDialog(
@@ -68,7 +68,7 @@ export default function ContentCreationDialog(
                 value={props.url}
                 placeholder="Set a URL"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  props.setUrl(event.target.value);
+                  props.setUrl(event.target.value)
                 }}
                 leftAlign
                 width="100%"
@@ -80,7 +80,7 @@ export default function ContentCreationDialog(
                 value={props.title}
                 placeholder="Set a title"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  props.setTitle(event.target.value);
+                  props.setTitle(event.target.value)
                 }}
                 leftAlign
                 width="100%"
@@ -117,5 +117,5 @@ export default function ContentCreationDialog(
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
+  )
 }

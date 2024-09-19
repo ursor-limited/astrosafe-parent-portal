@@ -1,19 +1,19 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { Typography, UrsorButton, UrsorInputField } from './../../ui';
-import { LabeledInputField } from './../../ui/labeled-input-field';
-import { IFilter } from '../../filters/contents/common';
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { Typography, UrsorButton, UrsorInputField } from './../../ui'
+import { LabeledInputField } from './../../ui/labeled-input-field'
+import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const FilterRenameDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  name: IFilter['title'];
-  onSubmit: (name: string) => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => void
+  name: IFilter['title']
+  onSubmit: (name: string) => void
+  isMobile?: boolean
 }) => {
-  const [name, setName] = useState<string>('');
-  useEffect(() => setName(props.name), [props.name]);
+  const [name, setName] = useState<string>('')
+  useEffect(() => setName(props.name), [props.name])
   return (
     <UrsorDialog
       open={props.open}
@@ -40,15 +40,15 @@ const FilterRenameDialog = (props: {
           variant="tertiary"
           width="100%"
           onClick={() => {
-            props.onSubmit(name);
-            props.onClose();
+            props.onSubmit(name)
+            props.onClose()
           }}
         >
           Save
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FilterRenameDialog;
+export default FilterRenameDialog

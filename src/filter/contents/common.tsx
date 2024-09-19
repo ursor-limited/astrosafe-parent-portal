@@ -10,7 +10,7 @@ import {
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from '../../filters/contents/common'
+} from '../../astrosafe/components/filters/AllFilters'
 import useNavigate from '../../hooks/useNavigate'
 import FilterPageMobileBody from './body-mobile'
 import ApiController from './../../api'
@@ -23,6 +23,7 @@ import { Stack } from '@mui/system'
 import _ from 'lodash'
 import useDeviceOnlineStatus from './../../profiles/components/useDeviceOnlineStatus'
 import useAuth from './../../hooks/useAuth'
+import { isMobile } from 'react-device-detect'
 
 export type DeviceType = 'chrome' | 'android' | 'ios'
 
@@ -54,41 +55,52 @@ export interface IDeviceConfig {
   allowedTimesEnabled: boolean
 }
 
-export default function FilterPage(props: {
-  isMobile: boolean
+export interface FiltersProps {
   filterId: number
-  email: string
-}) {
-  const { user } = useAuth(props.email)
+}
+
+ const FilterPage: React.FC<FiltersProps> = ( {
+
+  filterId
+  email
+})  => {
+  const { user } = useAuth(email)
 
   const [filter, setFilter] = useState<IFilter | undefined>()
+
   const loadFilter = useCallback(
-    () => ApiController.getFilter(props.filterId).then(setFilter),
-    [props.filterId]
+    () => ApiController.getFilter(filterId).then(setFilter),
+    [filterId]
   )
+
   useEffect(() => {
     loadFilter()
   }, [loadFilter])
 
   const [blockedSites, setBlockedSites] = useState<IFilterException[]>([])
+
   const loadBlockedSites = useCallback(
-    () => ApiController.getBlockedSites(props.filterId).then(setBlockedSites),
-    [props.filterId]
+    () => ApiController.getBlockedSites(filterId).then(setBlockedSites),
+    [filterId]
   )
+
   useEffect(() => {
     loadBlockedSites()
   }, [loadBlockedSites])
 
   const [allowedSites, setAllowedSites] = useState<IFilterException[]>([])
+
   const loadAllowedSites = useCallback(
-    () => ApiController.getAllowedSites(props.filterId).then(setAllowedSites),
-    [props.filterId]
+    () => ApiController.getAllowedSites(filterId).then(setAllowedSites),
+    [filterId]
   )
+
   useEffect(() => {
     loadAllowedSites()
   }, [loadAllowedSites])
 
   const [categories, setCategories] = useState<IFilterCategory[]>([])
+
   useEffect(() => {
     ApiController.getAllFilterCategories().then(setCategories)
   }, [])
@@ -96,18 +108,20 @@ export default function FilterPage(props: {
   const [allowedSubcategories, setAllowedSubcategories] = useState<
     IFilterSubcategory['id'][]
   >([])
+
   useEffect(() => {
-    ApiController.getFilterCategories(props.filterId).then((response) =>
+    ApiController.getFilterCategories(filterId).then((response) =>
       setAllowedSubcategories(response.map((x: any) => x.categoryId))
     )
-  }, [props.filterId])
+  }, [filterId])
 
   const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([])
+
   useEffect(() => {
-    ApiController.getBlockedSearchWords(props.filterId).then(
+    ApiController.getBlockedSearchWords(filterId).then(
       setBlockedSearchWords
     )
-  }, [props.filterId])
+  }, [filterId])
 
   const [exceptionDialogOpen, setExceptionDialogOpen] = useState<boolean>(false)
 
@@ -116,19 +130,22 @@ export default function FilterPage(props: {
   const [devices, setDevices] = useState<IDevice[]>([])
   const loadDevices = useCallback(() => {
     user?.group_id &&
-      ApiController.getFilterDevices(props.filterId, user.group_id).then(
+      ApiController.getFilterDevices(filterId, user.group_id).then(
         setDevices
       )
-  }, [props.filterId, user?.group_id])
+  }, [filterId, user?.group_id])
+
   useEffect(() => {
     loadDevices()
   }, [loadDevices])
+
   const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(
     devices,
-    props.email
+    email
   )
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
+
   useEffect(() => {
     user.group_id &&
       ApiController.getGroupFilters(user.group_id).then(setAllFilters)
@@ -169,7 +186,7 @@ export default function FilterPage(props: {
     {
       text: filter?.title ?? '',
       options: allFilters
-        .filter((f) => f.id !== props.filterId)
+        .filter((f) => f.id !== filterId)
         .map((f) => ({
           text: f.title,
           image: (
@@ -197,21 +214,22 @@ export default function FilterPage(props: {
   const notificationCtx = useContext(NotificationContext)
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false)
+
   const [changeFilterDialogOpenForDevice, setChangeFilterDialogOpenForDevice] =
     useState<IDevice | undefined>()
 
   const deleteFilter = () =>
-    ApiController.removeFilter(props.filterId).then(() =>
+    ApiController.removeFilter(filterId).then(() =>
       navigate.push('/filters')
     )
 
   const flipSubcategory = (id: IFilterSubcategory['id']) => {
     if (allowedSubcategories.includes(id)) {
       setAllowedSubcategories(allowedSubcategories.filter((sid) => sid !== id))
-      ApiController.removeWhitelistSubcategory(props.filterId, id)
+      ApiController.removeWhitelistSubcategory(filterId, id)
     } else {
       setAllowedSubcategories([...allowedSubcategories, id])
-      ApiController.addWhitelistSubcategory(props.filterId, id)
+      ApiController.addWhitelistSubcategory(filterId, id)
     }
   }
 
@@ -224,47 +242,47 @@ export default function FilterPage(props: {
       setAllowedSubcategories(
         allowedSubcategories.filter((acid) => !subcategoryIds.includes(acid))
       )
-      ApiController.removeWhitelistCategory(props.filterId, id)
+      ApiController.removeWhitelistCategory(filterId, id)
     } else {
       setAllowedSubcategories(
         _.uniq([...allowedSubcategories, ...subcategoryIds])
       )
-      ApiController.addWhitelistCategory(props.filterId, id)
+      ApiController.addWhitelistCategory(filterId, id)
     }
   }
 
   const addToBlockedSearchWords = (word: string) => {
     setBlockedSearchWords([...blockedSearchWords, word])
-    ApiController.addBlockedSearchWord(props.filterId, word)
+    ApiController.addBlockedSearchWord(filterId, word)
   }
 
   const removeFromBlockedSearchWords = (word: string) => {
     setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
-    ApiController.removeBlockedSearchWord(props.filterId, word)
+    ApiController.removeBlockedSearchWord(filterId, word)
   }
 
   const addBlockedSite = (url: string) =>
-    ApiController.addBlockedSite(props.filterId, url)
+    ApiController.addBlockedSite(filterId, url)
       .then(loadBlockedSites)
       .then(() => notificationCtx.success('Added blocked site.'))
 
   const addAllowedSite = (url: string) =>
-    ApiController.addAllowedSite(props.filterId, url)
+    ApiController.addAllowedSite(filterId, url)
       .then(loadAllowedSites)
       .then(() => notificationCtx.success('Added allowed site.'))
 
   const removeBlockedSite = (url: string) =>
-    ApiController.removeBlockedSite(props.filterId, url)
+    ApiController.removeBlockedSite(filterId, url)
       .then(loadBlockedSites)
       .then(() => notificationCtx.negativeSuccess('Removed blocked site.'))
 
   const removeAllowedSite = (url: string) =>
-    ApiController.removeAllowedSite(props.filterId, url)
+    ApiController.removeAllowedSite(filterId, url)
       .then(loadAllowedSites)
       .then(() => notificationCtx.negativeSuccess('Removed allowed site.'))
 
   const applyFilterToDevice = (id: IDevice['id']) =>
-    ApiController.addFilterToDevice(props.filterId, id).then(() => {
+    ApiController.addFilterToDevice(filterId, id).then(() => {
       setAddDeviceDialogOpen(false)
       loadDevices()
       notificationCtx.success('Applied this Filter to Device.')
@@ -272,10 +290,10 @@ export default function FilterPage(props: {
 
   return filter ? (
     <>
-      {props.isMobile ? (
+      {isMobile ? (
         <FilterPageMobileBody
-          email={props.email}
-          filterId={props.filterId}
+          email={email}
+          filterId={filterId}
           filter={filter}
           flipCategory={flipCategory}
           flipSubcategory={flipSubcategory}
@@ -297,10 +315,11 @@ export default function FilterPage(props: {
           removeBlockedSite={removeBlockedSite}
           removeAllowedSite={removeAllowedSite}
           openChangeFilterDialogForDevice={setChangeFilterDialogOpenForDevice}
+          onClickBack={}
         />
       ) : (
         <FilterPageDesktopBody
-          filterId={props.filterId}
+          filterId={filterId}
           filter={filter}
           flipCategory={flipCategory}
           flipSubcategory={flipSubcategory}
@@ -334,7 +353,7 @@ export default function FilterPage(props: {
           emptyText="This Filter is applied to all of your Devices"
           addedDevices={cuttingEdgeOnlineStatusDevices}
           onAdd={applyFilterToDevice}
-          isMobile={props.isMobile}
+          isMobile={isMobile}
         />
       ) : null}
       <DeletionDialog
@@ -343,18 +362,18 @@ export default function FilterPage(props: {
         onClose={() => setDeletionDialogOpen(false)}
         subtitle="If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default."
         onSubmit={deleteFilter}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
       <FilterRenameDialog
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
         name={filter.title}
         onSubmit={(name) =>
-          ApiController.changeFilterName(props.filterId, name)
+          ApiController.changeFilterName(filterId, name)
             .then(loadFilter)
             .then(() => notificationCtx.success('Renamed Filter'))
         }
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
       {changeFilterDialogOpenForDevice ? (
         <ChangeFilterDialog
@@ -372,12 +391,14 @@ export default function FilterPage(props: {
                 )
               )
           }
-          currentFilterId={props.filterId}
+          currentFilterId={filterId}
           groupId={user.group_id}
           deviceName={changeFilterDialogOpenForDevice.name}
-          isMobile={props.isMobile}
+          isMobile={isMobile}
         />
       ) : null}
     </>
   ) : null
 }
+
+export default FilterPage

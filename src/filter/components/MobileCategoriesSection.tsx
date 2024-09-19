@@ -1,23 +1,23 @@
-import { AstroBentoCard } from './AstroBentoCard';
-import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svg';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography } from './../../ui';
-import AstroSwitch from './../../components/AstroSwitch';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
+import { AstroBentoCard } from './AstroBentoCard'
+import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svg'
+import { Stack } from '@mui/system'
+import { PALETTE, Typography } from './../../ui'
+import AstroSwitch from './../../components/AstroSwitch'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
 import {
   IFilter,
   IFilterSubcategory,
   IFilterCategory,
   IFilterUrl,
-} from '../../filters/contents/common';
-import { FilterLegend } from './CategoriesSection';
+} from '../../astrosafe/components/filters/AllFilters'
+import { FilterLegend } from './CategoriesSection'
 
 const MobileFilterPageCategoriesSection = (props: {
-  filter: IFilter;
-  categories: IFilterCategory[];
-  allowedCategories: IFilterUrl['id'][];
-  flipCategory: (id: number) => void;
-  flipSubcategory: (id: IFilterCategory['categoryId']) => void;
+  filter: IFilter
+  categories: IFilterCategory[]
+  allowedCategories: IFilterUrl['id'][]
+  flipCategory: (id: number) => void
+  flipSubcategory: (id: IFilterCategory['categoryId']) => void
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
@@ -60,6 +60,6 @@ const MobileFilterPageCategoriesSection = (props: {
       ))}
     </Stack>
   </AstroBentoCard>
-);
+)
 
-export default MobileFilterPageCategoriesSection;
+export default MobileFilterPageCategoriesSection
