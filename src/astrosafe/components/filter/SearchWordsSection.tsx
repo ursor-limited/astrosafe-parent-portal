@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { ReactComponent as StopIcon } from './../../images/StopIcon.svg'
-import { ReactComponent as XIcon } from './../../images/X.svg'
+import { ReactComponent as StopIcon } from '../../../images/StopIcon.svg'
+import { ReactComponent as XIcon } from '../../../images/X.svg'
 import { Stack } from '@mui/system'
 import { PALETTE, Typography, UrsorInputField } from '../../../ui'
 import _ from 'lodash'

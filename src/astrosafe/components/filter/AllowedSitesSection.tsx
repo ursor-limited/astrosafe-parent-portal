@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useCallback } from 'react'
 import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
-import { ReactComponent as ThumbsUpIcon } from './../../images/ThumbsUpIcon.svg'
-import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg'
+import { ReactComponent as ThumbsUpIcon } from '../../../images/ThumbsUpIcon.svg'
+import { ReactComponent as TrashcanIcon } from '../../../images/TrashcanIcon.svg'
 import { Stack } from '@mui/system'
 import { PALETTE, Typography, UrsorInputField } from '../../../ui'
 import UrsorTable, {

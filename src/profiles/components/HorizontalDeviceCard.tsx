@@ -7,7 +7,7 @@ import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
 import { ReactComponent as GlobeIcon } from './../../images/GlobeIcon.svg'
 import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg'
 import { ReactComponent as ChevronDownIcon } from './../../images/ChevronDown.svg'
-import { DeviceType } from '../../filter/contents/common'
+import { DeviceType } from '../contents/common'
 import { useContext, useEffect, useState } from 'react'
 import useNavigate from '../../hooks/useNavigate'
 import {

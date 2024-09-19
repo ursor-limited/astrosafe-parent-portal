@@ -4,9 +4,30 @@ import AllFiltersPageMobileBody from '../../../filters/contents/body-mobile'
 import ApiController from '../../../api'
 import useNavigate from '../../../hooks/useNavigate'
 import FilterCreationDialog from '../../../filter/components/FilterCreationDialog'
-import { IDevice } from '../../../filter/contents/common'
 import _ from 'lodash'
 import useAuth from '../../../hooks/useAuth'
+import { DeviceType } from '../../../profile/contents/common'
+
+export interface IDevice {
+  id: number
+  name: string
+  backgroundColor: string
+  profileAvatarUrl?: string
+  lastOnline: string
+  deviceType: DeviceType
+  favorites: number[]
+  requestedSites: IFilterUrl[]
+  createdAt: string
+  online: boolean
+  filterId: IFilter['id']
+}
+
+export interface IDeviceConfig {
+  browsingAllowed: boolean
+  videoAllowed: boolean
+  timeLimitsEnabled: boolean
+  allowedTimesEnabled: boolean
+}
 
 export interface IFilterCategory {
   categoryId: number
