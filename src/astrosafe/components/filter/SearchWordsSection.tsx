@@ -1,11 +1,14 @@
-import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
+import React, { useState, useEffect } from 'react'
 import { ReactComponent as StopIcon } from './../../images/StopIcon.svg'
 import { ReactComponent as XIcon } from './../../images/X.svg'
 import { Stack } from '@mui/system'
 import { PALETTE, Typography, UrsorInputField } from '../../../ui'
-import { useState } from 'react'
 import _ from 'lodash'
 import { Grid } from '@mui/material'
+import useAuth from '../../../hooks/useAuth'
+import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
+import { isMobile } from 'react-device-detect'
+import ApiController from '../../../api'
 
 const BlockedWordTag = (props: { word: string; onClick: () => void }) => (
   <Stack
@@ -35,22 +38,44 @@ const BlockedWordTag = (props: { word: string; onClick: () => void }) => (
   </Stack>
 )
 
-const SearchWordsSection = (props: {
-  blockedSearchWords: string[]
-  addWord: (word: string) => void
-  removeWord: (word: string) => void
-  isMobile?: boolean
+interface SearchWordsSectionProps {
+  filterId: number
+  email: string
+}
+
+const SearchWordsSection: React.FC<SearchWordsSectionProps> = ({
+  filterId,
+  email,
 }) => {
+  useAuth(email)
+
   const [inputValue, setInputValue] = useState<string>('')
+
+  const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([])
+
+  useEffect(() => {
+    ApiController.getBlockedSearchWords(filterId).then(setBlockedSearchWords)
+  }, [filterId])
+
+  const addToBlockedSearchWords = (word: string) => {
+    setBlockedSearchWords([...blockedSearchWords, word])
+    ApiController.addBlockedSearchWord(filterId, word)
+  }
+
+  const removeFromBlockedSearchWords = (word: string) => {
+    setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
+    ApiController.removeBlockedSearchWord(filterId, word)
+  }
+
   return (
     <AstroBentoCard
       icon={StopIcon}
       iconColor={PALETTE.system.red}
-      title={`${props.blockedSearchWords.length} blocked search word${
-        props.blockedSearchWords.length === 1 ? '' : 's '
+      title={`${blockedSearchWords.length} blocked search word${
+        blockedSearchWords.length === 1 ? '' : 's '
       }`}
       subtitle="Enter words that you want to be blocked or flagged if they are entered in the search engine on the Device."
-      isMobile={props.isMobile}
+      isMobile={isMobile}
     >
       <Stack spacing="6px">
         <UrsorInputField
@@ -59,7 +84,7 @@ const SearchWordsSection = (props: {
             setInputValue(event.target.value)
           }
           onEnterKey={() => {
-            props.addWord(inputValue)
+            addToBlockedSearchWords(inputValue)
             setInputValue('')
           }}
           placeholder="Add a word to block"
@@ -67,24 +92,24 @@ const SearchWordsSection = (props: {
           leftAlign
           boldValue
         />
-        {props.isMobile ? (
+        {isMobile ? (
           <Grid container gap="6px">
-            {props.blockedSearchWords.map((bs, i) => (
+            {blockedSearchWords.map((bs, i) => (
               <Grid key={i} item>
                 <BlockedWordTag
                   word={bs}
-                  onClick={() => props.removeWord(bs)}
+                  onClick={() => removeFromBlockedSearchWords(bs)}
                 />
               </Grid>
             ))}
           </Grid>
         ) : (
           <Stack direction="row" spacing="12px">
-            {props.blockedSearchWords.map((bs, i) => (
+            {blockedSearchWords.map((bs, i) => (
               <BlockedWordTag
                 key={i}
                 word={bs}
-                onClick={() => props.removeWord(bs)}
+                onClick={() => removeFromBlockedSearchWords(bs)}
               />
             ))}
           </Stack>
