@@ -2,8 +2,7 @@ import DynamicCardGrid from '../../../components/DynamicCardGrid'
 import AppToggleCard from '../../../profile/components/AppToggleCard'
 import { Stack } from '@mui/system'
 import UrsorFadeIn from '../../../components/UrsorFadeIn'
-import { PALETTE, Typography, UrsorButton } from '../../../ui'
-import { IFilterSubcategory, IFilterUrl } from '../filters/AllFilters'
+import { DynamicContainer, PALETTE, Typography, UrsorButton } from '../../../ui'
 import ProfilePageTabLayout from '../../../profile/components/ProfilePageTabLayout'
 import { IDevice } from '../../../filter/contents/common'
 import { useContext, useEffect, useState } from 'react'
@@ -13,9 +12,13 @@ import _ from 'lodash'
 import NotificationContext from '../../../components/NotificationContext'
 import PageSelector from '../../../components/PageSelector'
 import { SearchInput } from '../../../components/SearchInput'
+import {
+  IFilterCategory,
+  IFilterSubcategory,
+} from '../../../filters/contents/common'
 import { isMobile } from 'react-device-detect'
-import useAuth from '../../../hooks/useAuth'
 import useDevice from '../../../hooks/useDevice'
+import useAuth from '../../../hooks/useAuth'
 
 const PAGE_SIZE = 20
 
@@ -73,19 +76,26 @@ export const AppsLegend = (props: { small?: boolean }) => (
   </Stack>
 )
 
-interface DevicePageAppsSectionProps {
+interface DeviceAppsSectionProps {
   deviceId: string
   email: string
 }
 
-const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
+const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
   deviceId,
   email,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>()
-  const [categories, setCategories] = useState<IFilterSubcategory[]>([])
+  const [categories, setCategories] = useState<
+    {
+      id: IFilterSubcategory['id']
+      title: IFilterSubcategory['title']
+    }[]
+  >([])
   useEffect(() => {
-    ApiController.getAllFilterCategories().then(setCategories)
+    ApiController.getAppCategorySubGroups().then((cats: any) =>
+      setCategories(_.sortBy(cats, (c) => c.title))
+    )
   }, [])
 
   const [nPages, setNPages] = useState<number>(1)
@@ -97,9 +107,9 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
   const [apps, setApps] = useState<IApp[]>([])
   const [filteredApps, setFilteredApps] = useState<IApp[]>([])
 
-  const device = useDevice(deviceId)
-
   useAuth(email)
+
+  const device = useDevice(deviceId)
 
   useEffect(() => {
     if (!device?.id) return
@@ -110,50 +120,68 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
       PAGE_SIZE,
       selectedCategory,
       searchValue
-    ).then((response) => {
-      setApps(_.sortBy(response.apps, (a) => a.id))
+    ).then((response: any) => {
+      setApps(_.sortBy(response.apps, (a) => a.title))
       setNPages(response.pages)
     })
-  }, [device, deviceId, pageIndex, selectedCategory, searchValue])
+  }, [deviceId, pageIndex, selectedCategory, searchValue])
 
-  useEffect(
-    () =>
-      setFilteredApps(
-        apps.filter(
-          (d) =>
-            !searchValue ||
-            d.title.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      ),
-    [apps, searchValue]
-  )
+  useEffect(() => {
+    if (!device?.id) return
+
+    ApiController.getApps(
+      device.id,
+      pageIndex + 1,
+      PAGE_SIZE,
+      selectedCategory,
+      searchValue
+    ).then((response: any) => {
+      setApps(_.sortBy(response.apps, (a) => a.title))
+      setNPages(response.pages)
+    })
+  }, [device])
+
+  useEffect(() => {
+    setFilteredApps(
+      apps.filter(
+        (d) =>
+          !searchValue ||
+          d.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    )
+  }, [apps, searchValue])
+
+  useEffect(() => {
+    searchValue && setSelectedCategory(undefined)
+  }, [searchValue])
+
+  useEffect(() => {
+    selectedCategory && setSearchValue('')
+  }, [selectedCategory])
 
   const notificationCtx = useContext(NotificationContext)
 
   return (
     <ProfilePageTabLayout
       title="Apps"
-      rightSideElement={!isMobile ? <AppsLegend /> : undefined}
+      rightSideElement={<AppsLegend small={isMobile} />}
       info={{
         title: 'How do apps work?',
         text: "Apps provide quick access on your kid's Browser to hand-picked resources that provide a lot of value. Toggle them on and they'll be accessible on your kid's Device and we'll make sure the Filter doesn't interfere with access to them. Please note that we do override the Filter to allow access to the Apps that you select! So if you have social media access turned off but toggle on a social media app we will allow access to it.",
       }}
+      mobile={isMobile}
     >
-      {isMobile ? (
-        <Stack alignItems="flex-end">
-          <AppsLegend small={isMobile} />
-        </Stack>
-      ) : null}
       <Stack pb="32px">
         <AstroCard>
           <Stack px="16px" pt="16px" justifyContent="center">
             <Stack
-              direction="row"
-              spacing="12px"
+              direction={isMobile ? 'column' : 'row'}
+              spacing={isMobile ? '8px' : '12px'}
               justifyContent="space-between"
+              pb="20px"
             >
               <Stack overflow="scroll">
-                <Stack direction="row" spacing="12px" pb="20px">
+                <Stack direction="row" spacing="12px">
                   {[
                     <Stack
                       key="all"
@@ -184,14 +212,14 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
                     </Stack>,
                     ...categories.map((c) => (
                       <Stack
-                        key={c.categoryId}
+                        key={c.id}
                         height="32px"
                         borderRadius="6px"
                         bgcolor={PALETTE.secondary.grey[1]}
                         justifyContent="center"
                         alignItems="center"
                         px="12px"
-                        onClick={() => setSelectedCategory(c.categoryId)}
+                        onClick={() => setSelectedCategory(c.id)}
                         sx={{
                           cursor: 'pointer',
                           transition: '0.2s',
@@ -202,7 +230,7 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
                           bold
                           sx={{ fontSize: 14, whiteSpace: 'nowrap' }}
                           color={
-                            selectedCategory === c.categoryId
+                            selectedCategory === c.id
                               ? PALETTE.secondary.purple[2]
                               : undefined
                           }
@@ -220,37 +248,43 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
                   callback={setSearchValue}
                   clearCallback={() => setSearchValue('')}
                   grey
+                  fullWidth={isMobile}
+                  iconSize="16px"
                 />
               </Stack>
             </Stack>
-            <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-              {filteredApps.map((a, i) => (
-                <UrsorFadeIn key={a.id} duration={800} delay={i * 80}>
-                  <AppToggleCard
-                    {...a}
-                    callback={() => {
-                      setFilteredApps(
-                        filteredApps.map((app) =>
-                          app.id === a.id
-                            ? { ...app, enabled: !app.enabled }
-                            : app
+            <DynamicContainer duration={600}>
+              <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+                {filteredApps.map((a, i) => (
+                  <UrsorFadeIn key={a.id} duration={800} delay={i * 80}>
+                    <AppToggleCard
+                      {...a}
+                      callback={() => {
+                        setFilteredApps(
+                          filteredApps.map((app) =>
+                            app.id === a.id
+                              ? { ...app, enabled: !app.enabled }
+                              : app
+                          )
                         )
-                      )
-                      ;(a.enabled
-                        ? ApiController.disableApp
-                        : ApiController.enableApp)(device?.id || 0, a.id).then(
-                        () =>
+                        ;(a.enabled
+                          ? ApiController.disableApp
+                          : ApiController.enableApp)(
+                          device?.id || 0,
+                          a.id
+                        ).then(() =>
                           notificationCtx.success(
                             a.enabled
                               ? `Disabled ${a.title}`
                               : `Enabled ${a.title}`
                           )
-                      )
-                    }}
-                  />
-                </UrsorFadeIn>
-              ))}
-            </DynamicCardGrid>
+                        )
+                      }}
+                    />
+                  </UrsorFadeIn>
+                ))}
+              </DynamicCardGrid>
+            </DynamicContainer>
             <Stack py="20px">
               <PageSelector
                 pageIndex={pageIndex}
@@ -265,4 +299,4 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
   )
 }
 
-export default DevicePageAppsSection
+export default DeviceAppsSection

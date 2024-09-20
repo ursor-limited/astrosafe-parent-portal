@@ -6,9 +6,19 @@ const useAuth = (email: string) => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo)
 
   useEffect(() => {
+    const userData = localStorage.getItem('user_info')
+
+    if (userData) {
+      setUser(JSON.parse(userData))
+
+      return
+    }
+
     getUserInfo(email)
       .then((data) => {
         setUser(data)
+
+        localStorage.setItem('user_info', JSON.stringify(userData))
 
         return
       })
@@ -16,12 +26,12 @@ const useAuth = (email: string) => {
         () => {
           login()
             .then(() => {
-              console.log('noooooo')
-
               getUserInfo(email).then((data) => {
                 setUser(data)
 
                 location.reload()
+
+                localStorage.setItem('user_info', JSON.stringify(userData))
 
                 return
               })
@@ -29,6 +39,10 @@ const useAuth = (email: string) => {
             .catch((err) => {})
         } // Failing login after first failed login = death?
       )
+
+    return () => {
+      localStorage.removeItem('user_info')
+    }
   }, [])
 
   const login = async () => {

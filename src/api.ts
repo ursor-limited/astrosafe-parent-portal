@@ -634,6 +634,12 @@ class ApiController {
   static async changeChannelName(id: IChannel['id'], title: IChannel['title']) {
     return put(`content/channels/${id}`, { title })
   }
+
+  static async getAppCategorySubGroups() {
+    return get(`filters/appCategorySubGroups`).then((response: any) =>
+      response.json()
+    )
+  }
 }
 
 export default ApiController

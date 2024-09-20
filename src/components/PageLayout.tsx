@@ -68,8 +68,8 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
       <>
         <Stack
           direction="row"
-          height="100vh"
-          width="100vw"
+          height="100%"
+          width="100%"
           overflow="hidden"
           sx={{
             background: PALETTE.secondary.grey[1],
