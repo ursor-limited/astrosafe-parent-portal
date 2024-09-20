@@ -7,7 +7,7 @@ import _ from 'lodash'
 import DynamicCardGrid from '../../components/DynamicCardGrid'
 import useNavigate from '../../hooks/useNavigate'
 import FilterCard from '../../filter/components/FilterCard'
-import { IGroupFilter } from '../../astrosafe/components/filters/AllFilters'
+import { IGroupFilter } from '../../astrosafe/components/filters/filters'
 import MobilePageLayout from './../../components/MobilePageLayout'
 import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
@@ -19,7 +19,22 @@ export default function AllFiltersPageMobileBody(props: {
   onClick?: (filterId: number) => any
 }) {
   return (
-    <Stack flex={1} flexDirection="column" flexWrap="wrap" width="95%">
+    <MobilePageLayout
+      title="My Filters"
+      info={INFOS.filters}
+      selectedPage="filters"
+      topRightElement={
+        <UrsorButton
+          dark
+          variant="tertiary"
+          size="small"
+          endIcon={PlusIcon}
+          onClick={props.setCreateFilterDialogOpen}
+        >
+          Add a Filter
+        </UrsorButton>
+      }
+    >
       <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
         {props.filters.map((f, i) => (
           <Stack
@@ -34,7 +49,6 @@ export default function AllFiltersPageMobileBody(props: {
 
               props.onClick(f.id)
             }}
-            width="100%"
           >
             <UrsorFadeIn duration={800} delay={i * 150}>
               <FilterCard {...f} />
@@ -42,6 +56,6 @@ export default function AllFiltersPageMobileBody(props: {
           </Stack>
         ))}
       </DynamicCardGrid>
-    </Stack>
+    </MobilePageLayout>
   )
 }
