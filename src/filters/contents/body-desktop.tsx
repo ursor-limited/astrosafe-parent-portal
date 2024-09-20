@@ -21,7 +21,7 @@ export default function AllFiltersPageDesktopBody(props: {
   onClick?: (filterId: number) => void
 }) {
   return (
-    <Stack flex={1} flexDirection="row" flexWrap="wrap">
+    <Stack flex={1} flexDirection="row" flexWrap="wrap" width="100%">
       <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
         {props.filters.map((f, i) => (
           <Stack

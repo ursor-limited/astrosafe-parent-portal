@@ -9,3 +9,7 @@ export { default as FilterPageAllowedSitesSection } from './astrosafe/components
 export { default as FilterPageBlockedSitesSection } from './astrosafe/components/filter/BlockedSitesSection'
 export { default as FilterPageSearchWordsSection } from './astrosafe/components/filter/SearchWordsSection'
 export { default as FilterPageDevicesSection } from './astrosafe/components/filter/FilterDevicesSection'
+export { default as FolderContent } from './astrosafe/components/folder/FolderContent'
+export { default as FolderContentButton } from './astrosafe/components/folder/FolderContentButton'
+export { default as FolderDevicesSection } from './astrosafe/components/folder/FolderDevicesSection'
+export { default as FoldersSection } from './astrosafe/components/folders/FoldersSection'

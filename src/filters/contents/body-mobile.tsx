@@ -18,25 +18,8 @@ export default function AllFiltersPageMobileBody(props: {
   setCreateFilterDialogOpen: () => void
   onClick?: (filterId: number) => void
 }) {
-  const navigate = useNavigate()
-
   return (
-    <MobilePageLayout
-      title="My Filters"
-      info={INFOS.filters}
-      selectedPage="filters"
-      topRightElement={
-        <UrsorButton
-          dark
-          variant="tertiary"
-          size="small"
-          endIcon={PlusIcon}
-          onClick={props.setCreateFilterDialogOpen}
-        >
-          Add a Filter
-        </UrsorButton>
-      }
-    >
+    <Stack flex={1} flexDirection="column" flexWrap="wrap" width="95%">
       <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
         {props.filters.map((f, i) => (
           <Stack
@@ -51,6 +34,7 @@ export default function AllFiltersPageMobileBody(props: {
 
               props.onClick(f.id)
             }}
+            width="100%"
           >
             <UrsorFadeIn duration={800} delay={i * 150}>
               <FilterCard {...f} />
@@ -58,6 +42,6 @@ export default function AllFiltersPageMobileBody(props: {
           </Stack>
         ))}
       </DynamicCardGrid>
-    </MobilePageLayout>
+    </Stack>
   )
 }

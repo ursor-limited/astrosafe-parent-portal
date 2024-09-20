@@ -256,7 +256,7 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
         />
       }
     >
-      <Stack spacing="16px">
+      <Stack spacing="16px" width="100%">
         {domainGroups.map((dg, i) => (
           <UrsorFadeIn
             key={`${i}${pageIndex}${date}`}
