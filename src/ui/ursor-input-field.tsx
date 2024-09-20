@@ -1,41 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
-import { Input, InputAdornment } from '@mui/material';
-import { PALETTE } from './palette';
-import { FONT_SIZES } from './typography';
-import { useState } from 'react';
+import { Input, InputAdornment } from '@mui/material'
+import { PALETTE } from './palette'
+import { FONT_SIZES } from './typography'
+import { useState } from 'react'
 
-export const DEFAULT_WIDTH = '536px';
-export const HEIGHT = '40px';
-export const BORDER_RADIUS = '8px';
-export const BOLD_FONT_WEIGHT = 450;
+export const DEFAULT_WIDTH = '536px'
+export const HEIGHT = '40px'
+export const BORDER_RADIUS = '8px'
+export const BOLD_FONT_WEIGHT = 450
 
 export interface UrsorInputFieldProps {
-  width?: string;
-  height?: string;
-  borderRadius?: string;
-  backgroundColor?: string;
-  border?: string;
-  outline?: string;
-  backgroundBlur?: string;
-  password?: boolean;
-  paddingLeft?: string;
-  leftAlign?: boolean;
-  fontSize?: string;
-  color?: string;
-  boldValue?: boolean;
-  noBold?: boolean;
-  value?: string;
-  onEnterKey?: () => void;
-  onBlur?: () => void;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  autoFocus?: boolean;
-  placeholder?: string;
-  endIcon?: JSX.Element;
+  width?: string
+  height?: string
+  borderRadius?: string
+  backgroundColor?: string
+  border?: string
+  outline?: string
+  backgroundBlur?: string
+  password?: boolean
+  paddingLeft?: string
+  leftAlign?: boolean
+  fontSize?: string
+  color?: string
+  boldValue?: boolean
+  noBold?: boolean
+  value?: string
+  onEnterKey?: () => any
+  onBlur?: () => any
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => any
+  autoFocus?: boolean
+  placeholder?: string
+  endIcon?: JSX.Element
 }
 
 export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
-  const [hovering, setHovering] = useState<boolean>(false);
-  const [active, setActive] = useState(false);
+  const [hovering, setHovering] = useState<boolean>(false)
+  const [active, setActive] = useState(false)
 
   const customSx = {
     width: props.width ?? '100%',
@@ -59,7 +59,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
     outline: props.outline,
     backdropFilter: props.backgroundBlur,
     fontFamily: 'inherit',
-  };
+  }
 
   const inputProps = {
     type: props.password ? 'password' : undefined,
@@ -80,7 +80,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
     form: {
       autoComplete: 'off',
     },
-  };
+  }
 
   return (
     <Input
@@ -97,27 +97,27 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       //@ts-expect-error -- boo
       inputProps={inputProps}
       onBlur={() => {
-        setActive(false);
-        props.onBlur?.();
+        setActive(false)
+        props.onBlur?.()
       }}
       onChange={props.onChange}
       onFocus={() => {
-        setActive(true);
+        setActive(true)
       }}
       onKeyPress={(event) => {
         if (event.key === 'Enter') {
-          props.onEnterKey?.();
+          props.onEnterKey?.()
         }
       }}
       onMouseEnter={() => {
-        setHovering(true);
+        setHovering(true)
       }}
       onMouseLeave={() => {
-        setHovering(false);
+        setHovering(false)
       }}
       placeholder={props.placeholder} //@ts-expect-error -- boo
       sx={customSx}
       value={props.value}
     />
-  );
+  )
 }

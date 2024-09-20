@@ -57,7 +57,7 @@ export const DeviceCardSection = (props: {
 
 export const DeviceCardBrowsingStatusSection = (props: {
   browsingEnabled: boolean
-  flipBrowsingEnabled: () => void
+  flipBrowsingEnabled: () => any
 }) => {
   const [setRef, size] = useElementSize()
   return (
@@ -106,7 +106,7 @@ export const DeviceCardBrowsingStatusSection = (props: {
 export const DeviceCardScreenTimeSection = (props: {
   totalTime: number
   elapsedTime: number
-  onClickView: () => void
+  onClickView: () => any
 }) => (
   <DeviceCardSection title="Screen time left today">
     <Stack direction="row" alignItems="center" spacing="38px">
@@ -239,10 +239,10 @@ interface DeviceCardProps extends IEnrichedDevice {
   url?: string
   button?: React.ReactNode
   small?: boolean
-  onClick?: () => void
-  onClickFilter?: () => void
-  onClickView?: () => void
-  gotoDeviceOnClick?: () => void
+  onClick?: () => any
+  onClickFilter?: () => any
+  onClickView?: () => any
+  gotoDeviceOnClick?: () => any
   noExtras?: boolean
 }
 

@@ -1,19 +1,19 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { IContentBucket } from './../../profile/components/ContentTab';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { UrsorButton, UrsorInputField } from './../../ui';
-import { LabeledInputField } from './../../ui/labeled-input-field';
+import UrsorDialog from './../../components/UrsorDialog'
+import { IContentBucket } from './../../profile/components/ContentTab'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { UrsorButton, UrsorInputField } from './../../ui'
+import { LabeledInputField } from './../../ui/labeled-input-field'
 
 const FolderRenameDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  name: IContentBucket['title'];
-  onSubmit: (name: string) => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  name: IContentBucket['title']
+  onSubmit: (name: string) => any
+  isMobile?: boolean
 }) => {
-  const [name, setName] = useState<string>('');
-  useEffect(() => setName(props.name), [props.name]);
+  const [name, setName] = useState<string>('')
+  useEffect(() => setName(props.name), [props.name])
   return (
     <UrsorDialog
       open={props.open}
@@ -40,15 +40,15 @@ const FolderRenameDialog = (props: {
           variant="tertiary"
           width="100%"
           onClick={() => {
-            props.onSubmit(name);
-            props.onClose();
+            props.onSubmit(name)
+            props.onClose()
           }}
         >
           Save
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FolderRenameDialog;
+export default FolderRenameDialog

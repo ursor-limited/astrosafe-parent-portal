@@ -1,23 +1,23 @@
-import { useContext, useEffect, useState } from 'react';
-import { Stack, keyframes } from '@mui/system';
-import { PALETTE, Typography } from './../ui';
-import { ReactComponent as Star } from './../images/Star.svg';
-import useNavigate from '../hooks/useNavigate';
-import _ from 'lodash';
-import ProfileImageRow from './../filter/components/ProfileImageRow';
-import UrsorActionButton from './UrsorActionButton';
-import { ReactComponent as PencilIcon } from './../images/Pencil.svg';
-import { ReactComponent as TrashcanIcon } from './../images/TrashcanIcon.svg';
-import { ReactComponent as ArrowUpRight } from './../images/ArrowUpRight.svg';
-import DeletionDialog from './DeletionDialog';
-import { IEnrichedContentBucket } from './../folders/contents/common';
-import ApiController from './../api';
-import FolderRenameDialog from './../folder/components/FolderRenameDialog';
-import { IContentBucket } from '../profile/components/ContentTab';
-import NotificationContext from './NotificationContext';
-import { FOLDER_DELETION_DIALOG_SUBTITLE } from '../folder/contents/common';
-import { IActionPopupItem } from './ActionPopup';
-import { SecondaryColor } from './../ui/palette';
+import { useContext, useEffect, useState } from 'react'
+import { Stack, keyframes } from '@mui/system'
+import { PALETTE, Typography } from './../ui'
+import { ReactComponent as Star } from './../images/Star.svg'
+import useNavigate from '../hooks/useNavigate'
+import _ from 'lodash'
+import ProfileImageRow from './../filter/components/ProfileImageRow'
+import UrsorActionButton from './UrsorActionButton'
+import { ReactComponent as PencilIcon } from './../images/Pencil.svg'
+import { ReactComponent as TrashcanIcon } from './../images/TrashcanIcon.svg'
+import { ReactComponent as ArrowUpRight } from './../images/ArrowUpRight.svg'
+import DeletionDialog from './DeletionDialog'
+import { IEnrichedContentBucket } from './../folders/contents/common'
+import ApiController from './../api'
+import FolderRenameDialog from './../folder/components/FolderRenameDialog'
+import { IContentBucket } from '../profile/components/ContentTab'
+import NotificationContext from './NotificationContext'
+import { FOLDER_DELETION_DIALOG_SUBTITLE } from '../folder/contents/common'
+import { IActionPopupItem } from './ActionPopup'
+import { SecondaryColor } from './../ui/palette'
 
 export const spin = keyframes`
   from {
@@ -26,7 +26,7 @@ export const spin = keyframes`
   to {
     transform: rotate(360deg)
   }
-`;
+`
 
 export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
   'purple',
@@ -37,53 +37,53 @@ export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
   'grey',
   'green',
   'blue',
-];
+]
 
 const FolderCard = (
   props: IEnrichedContentBucket & {
-    clickCallback?: () => void;
-    editingCallback?: () => void;
-    deletionCallback?: () => void;
-    extraActions?: IActionPopupItem[];
-    strongShadow?: boolean;
-    isMobile?: boolean;
+    clickCallback?: () => any
+    editingCallback?: () => any
+    deletionCallback?: () => any
+    extraActions?: IActionPopupItem[]
+    strongShadow?: boolean
+    isMobile?: boolean
   }
 ) => {
-  const [stackCard1Color, setStackCard1Color] = useState<string>('#ffffff');
-  const [stackCard2Color, setStackCard2Color] = useState<string>('#ffffff');
+  const [stackCard1Color, setStackCard1Color] = useState<string>('#ffffff')
+  const [stackCard2Color, setStackCard2Color] = useState<string>('#ffffff')
   useEffect(() => {
     setStackCard1Color(
       PALETTE.secondary[
         SECONDARY_COLOR_ORDER[_.random(SECONDARY_COLOR_ORDER.length - 1)]
       ][_.random(2, 5)]
-    );
+    )
     setStackCard2Color(
       PALETTE.secondary[
         SECONDARY_COLOR_ORDER[_.random(SECONDARY_COLOR_ORDER.length - 1)]
       ][_.random(2, 5)]
-    );
-  }, []);
+    )
+  }, [])
 
-  const [hovering, setHovering] = useState<boolean>(false);
+  const [hovering, setHovering] = useState<boolean>(false)
 
-  const navigate = useNavigate();
-  const notificationCtx = useContext(NotificationContext);
+  const navigate = useNavigate()
+  const notificationCtx = useContext(NotificationContext)
 
-  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false)
 
   const deleteFolder = () =>
     ApiController.removeFolder(props.id).then(() => {
-      props.deletionCallback?.();
-      notificationCtx.negativeSuccess('Removed Folder');
-    });
+      props.deletionCallback?.()
+      notificationCtx.negativeSuccess('Removed Folder')
+    })
 
-  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false)
 
   const renameFolder = (title: IContentBucket['title']) =>
     ApiController.renameFolder(props.id, title).then(() => {
-      props.editingCallback?.();
-      notificationCtx.success('Renamed Folder');
-    });
+      props.editingCallback?.()
+      notificationCtx.success('Renamed Folder')
+    })
 
   return (
     <>
@@ -91,10 +91,10 @@ const FolderCard = (
         width="100%"
         position="relative"
         onMouseEnter={() => {
-          setHovering(true);
+          setHovering(true)
         }}
         onMouseLeave={() => {
-          setHovering(false);
+          setHovering(false)
         }}
       >
         <Stack
@@ -339,7 +339,7 @@ const FolderCard = (
         isMobile={false}
       />
     </>
-  );
-};
+  )
+}
 
-export default FolderCard;
+export default FolderCard

@@ -11,8 +11,8 @@ const LinkCard = (
   props: Partial<Omit<ILink, 'createdAt'>> & {
     noPointerEvents?: boolean
     noMenu?: boolean
-    onDelete?: () => void
-    onOpenEditingDialog?: () => void
+    onDelete?: () => any
+    onOpenEditingDialog?: () => any
     isMobile?: boolean
     twoLineTitleSectionHeight?: boolean
   }

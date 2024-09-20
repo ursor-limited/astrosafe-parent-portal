@@ -1,19 +1,19 @@
-import NotificationContext from './../../components/NotificationContext';
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useContext, useState } from 'react';
-import { PALETTE, UrsorButton, UrsorInputField } from './../../ui';
-import { LabeledInputField } from './../../ui/labeled-input-field';
+import NotificationContext from './../../components/NotificationContext'
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useContext, useState } from 'react'
+import { PALETTE, UrsorButton, UrsorInputField } from './../../ui'
+import { LabeledInputField } from './../../ui/labeled-input-field'
 
-const INPUT_PHRASE = 'yes';
+const INPUT_PHRASE = 'yes'
 
 const DeviceDisconnectDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: () => void;
+  open: boolean
+  onClose: () => any
+  onSubmit: () => any
 }) => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const notificationCtx = useContext(NotificationContext);
+  const [inputValue, setInputValue] = useState<string>('')
+  const notificationCtx = useContext(NotificationContext)
   return (
     <UrsorDialog
       open={props.open}
@@ -47,8 +47,8 @@ const DeviceDisconnectDialog = (props: {
             width="100%"
             disabled={inputValue !== INPUT_PHRASE}
             onClick={() => {
-              props.onSubmit();
-              notificationCtx.negativeSuccess('Disconnected Device.');
+              props.onSubmit()
+              notificationCtx.negativeSuccess('Disconnected Device.')
             }}
           >
             Disconnect
@@ -59,7 +59,7 @@ const DeviceDisconnectDialog = (props: {
         </Stack>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default DeviceDisconnectDialog;
+export default DeviceDisconnectDialog

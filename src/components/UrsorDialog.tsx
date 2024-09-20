@@ -31,7 +31,7 @@ export const BODY_FADE_DURATION = 850
 export interface IDialogButtonDetails {
   text: string
   disabled?: boolean
-  callback: () => void
+  callback: () => any
   variant?: ButtonVariant
   icon?: React.FC<React.SVGProps<SVGSVGElement>>
   color?: string
@@ -52,8 +52,8 @@ export interface IUrsorDialogProps {
   button?: IDialogButtonDetails | JSX.Element
   secondaryButton?: IDialogButtonDetails | JSX.Element
   googleButton?: IDialogButtonDetails | JSX.Element
-  onCloseCallback?: () => void
-  backButtonCallback?: () => void
+  onCloseCallback?: () => any
+  backButtonCallback?: () => any
   noCloseButton?: boolean
   noPadding?: boolean
   noBackdrop?: boolean

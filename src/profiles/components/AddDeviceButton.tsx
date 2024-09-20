@@ -3,7 +3,7 @@ import { UrsorButton } from '../../../src/ui'
 import { ReactComponent as PlusIcon } from '../../../src/images/PlusIcon.svg'
 
 interface AddDeviceButtonProps {
-  onClick: () => void
+  onClick: () => any
 }
 
 const AddDeviceButton: React.FC<AddDeviceButtonProps> = ({

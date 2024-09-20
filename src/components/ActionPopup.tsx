@@ -1,14 +1,14 @@
-import React from 'react';
-import { Stack } from '@mui/system';
-import UrsorPopover, { IUrsorPopoverProps } from './UrsorPopover';
-import { PALETTE, Typography } from './../ui';
+import React from 'react'
+import { Stack } from '@mui/system'
+import UrsorPopover, { IUrsorPopoverProps } from './UrsorPopover'
+import { PALETTE, Typography } from './../ui'
 
-const SPACING = '8px';
-const ICON_SIZE = '16px';
+const SPACING = '8px'
+const ICON_SIZE = '16px'
 
 export const PopupList = (props: {
-  items: IActionPopupItem[];
-  closeCallback: () => void;
+  items: IActionPopupItem[]
+  closeCallback: () => any
 }) => (
   <Stack spacing={SPACING}>
     {props.items.map((item, index) => (
@@ -21,8 +21,8 @@ export const PopupList = (props: {
           svg: { path: { fill: item.color ?? PALETTE.font.dark } },
         }}
         onClick={() => {
-          props.closeCallback();
-          item.kallback();
+          props.closeCallback()
+          item.kallback()
         }}
         direction="row"
         spacing="8px"
@@ -35,23 +35,23 @@ export const PopupList = (props: {
       </Stack>
     ))}
   </Stack>
-);
+)
 
 export interface IActionPopupItem {
-  text: string;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  kallback: () => void;
-  color?: string;
+  text: string
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>
+  kallback: () => any
+  color?: string
 }
 
 export interface IActionPopupProps {
-  open: boolean;
-  items: IActionPopupItem[];
-  placement?: IUrsorPopoverProps['placement'];
-  disableOverflowFlip?: boolean;
-  closeCallback: () => void;
-  zIndex?: number;
-  children: React.ReactNode;
+  open: boolean
+  items: IActionPopupItem[]
+  placement?: IUrsorPopoverProps['placement']
+  disableOverflowFlip?: boolean
+  closeCallback: () => any
+  zIndex?: number
+  children: React.ReactNode
 }
 
 export default function ActionPopup(props: IActionPopupProps) {
@@ -68,5 +68,5 @@ export default function ActionPopup(props: IActionPopupProps) {
     >
       {props.children}
     </UrsorPopover>
-  );
+  )
 }

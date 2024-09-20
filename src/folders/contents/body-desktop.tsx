@@ -1,20 +1,20 @@
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import PageLayout from './../../components/PageLayout';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { Stack } from '@mui/system';
-import useNavigate from '../../hooks/useNavigate';
-import { IEnrichedContentBucket } from './common';
-import FolderCard from './../../components/FolderCard';
-import EmptyStateIllustration from './../../components/EmptyStateIllustration';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import PageLayout from './../../components/PageLayout'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { Stack } from '@mui/system'
+import useNavigate from '../../hooks/useNavigate'
+import { IEnrichedContentBucket } from './common'
+import FolderCard from './../../components/FolderCard'
+import EmptyStateIllustration from './../../components/EmptyStateIllustration'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const AllFoldersPageDesktopBody = (props: {
-  folders: IEnrichedContentBucket[];
-  createFolder: () => void;
-  onUpdate: () => void;
+  folders: IEnrichedContentBucket[]
+  createFolder: () => any
+  onUpdate: () => any
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <PageLayout
       title="My Content"
@@ -51,7 +51,7 @@ const AllFoldersPageDesktopBody = (props: {
         </EmptyStateIllustration>
       )}
     </PageLayout>
-  );
-};
+  )
+}
 
-export default AllFoldersPageDesktopBody;
+export default AllFoldersPageDesktopBody

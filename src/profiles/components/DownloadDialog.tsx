@@ -1,8 +1,8 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { ReactComponent as DownloadIcon } from './../../images/DownloadIcon.svg';
-import { Stack } from '@mui/system';
+import UrsorDialog from './../../components/UrsorDialog'
+import { ReactComponent as DownloadIcon } from './../../images/DownloadIcon.svg'
+import { Stack } from '@mui/system'
 
-import { PALETTE, Typography, UrsorButton } from './../../ui';
+import { PALETTE, Typography, UrsorButton } from './../../ui'
 
 const PLATFORMS: { name: string; logoUrl: string; url: string }[] = [
   {
@@ -25,7 +25,7 @@ const PLATFORMS: { name: string; logoUrl: string; url: string }[] = [
     logoUrl: 'https://ursorassets.s3.eu-west-1.amazonaws.com/chromeLogo.png',
     url: 'https://test.com',
   },
-];
+]
 
 const DownloadCard = (props: { imageUrl: string; name: string }) => (
   <Stack
@@ -60,12 +60,12 @@ const DownloadCard = (props: { imageUrl: string; name: string }) => (
       Download
     </UrsorButton>
   </Stack>
-);
+)
 
 const DownloadDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  isMobile?: boolean
 }) => (
   <UrsorDialog
     open={props.open}
@@ -91,6 +91,6 @@ const DownloadDialog = (props: {
       ))}
     </Stack>
   </UrsorDialog>
-);
+)
 
-export default DownloadDialog;
+export default DownloadDialog

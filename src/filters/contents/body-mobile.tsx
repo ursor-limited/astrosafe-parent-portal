@@ -15,8 +15,8 @@ export const GRID_SPACING = '20px'
 
 export default function AllFiltersPageMobileBody(props: {
   filters: IGroupFilter[]
-  setCreateFilterDialogOpen: () => void
-  onClick?: (filterId: number) => void
+  setCreateFilterDialogOpen: () => any
+  onClick?: (filterId: number) => any
 }) {
   return (
     <Stack flex={1} flexDirection="column" flexWrap="wrap" width="95%">

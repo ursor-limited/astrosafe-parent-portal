@@ -11,9 +11,9 @@ const ChannelCard = (
   props: Partial<Omit<IChannel, 'createdAt'>> & {
     noPointerEvents?: boolean
     noMenu?: boolean
-    onDelete?: () => void
-    onUpdate?: () => void
-    onOpenEditingDialog?: () => void
+    onDelete?: () => any
+    onUpdate?: () => any
+    onOpenEditingDialog?: () => any
     isMobile?: boolean
     twoLineTitleSectionHeight?: boolean
     folderId?: IContentBucket['id']

@@ -1,109 +1,106 @@
-import React, { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { Box, Stack } from '@mui/material';
-import { IActionPopupItem } from './ActionPopup';
-import { alpha } from '@mui/system';
-import UrsorActionButton from './UrsorActionButton';
-import { ReactComponent as ArrowDownIcon } from './../images/ArrowDownIcon.svg';
-import _ from 'lodash';
-import { PALETTE, Typography } from './../ui';
-import dayjs from 'dayjs';
-import NewActivityTag from './NewActivityTag';
-import {
-  IUrsorDropdownButtonProps,
-  UrsorDropdownButton,
-} from './UrsorDropdown';
+import React, { useEffect, useState } from 'react'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import { Box, Stack } from '@mui/material'
+import { IActionPopupItem } from './ActionPopup'
+import { alpha } from '@mui/system'
+import UrsorActionButton from './UrsorActionButton'
+import { ReactComponent as ArrowDownIcon } from './../images/ArrowDownIcon.svg'
+import _ from 'lodash'
+import { PALETTE, Typography } from './../ui'
+import dayjs from 'dayjs'
+import NewActivityTag from './NewActivityTag'
+import { IUrsorDropdownButtonProps, UrsorDropdownButton } from './UrsorDropdown'
 
 export const FONT_SIZES = {
   normal: '22px',
   medium: '14px',
-};
+}
 
-const GLASS_WHITE_STROKE = 'rgba(251, 251, 251, 0.35)';
+const GLASS_WHITE_STROKE = 'rgba(251, 251, 251, 0.35)'
 
-const ROW_HEIGHT = '55px';
-const BORDER_THICKNESS = '1.5px';
-const BORDER = `${BORDER_THICKNESS} solid ${PALETTE.secondary.grey[2]}`;
-const ROUNDING = '12px';
-const BODY_CELL_Y_PADDING = '13px';
-const CELL_BUTTON_SIZE = '16px';
-const NEW_TAG_DURATION = 8;
+const ROW_HEIGHT = '55px'
+const BORDER_THICKNESS = '1.5px'
+const BORDER = `${BORDER_THICKNESS} solid ${PALETTE.secondary.grey[2]}`
+const ROUNDING = '12px'
+const BODY_CELL_Y_PADDING = '13px'
+const CELL_BUTTON_SIZE = '16px'
+const NEW_TAG_DURATION = 8
 
 export interface IUrsorTableColumn {
-  name: string;
-  displayName: string;
-  getAvatar?: (id: string) => JSX.Element;
-  itemDisplay?: (item: any) => string | number | JSX.Element;
-  faded?: (row: any) => boolean;
-  getButton?: (row: any) => IUrsorTableCellSimpleButton;
-  getListButton?: (item: any) => IUrsorTableCellListButton;
-  getActionButtonItems?: (id: string) => IActionPopupItem[];
-  headerButton?: JSX.Element;
-  checkbox?: boolean;
-  sortable?: boolean;
-  selectAll?: boolean;
-  link?: boolean;
-  newTag?: boolean;
-  urlPopover?: boolean;
-  noRowClick?: boolean;
-  getExtraElement?: (id: string, hovering: boolean) => JSX.Element;
+  name: string
+  displayName: string
+  getAvatar?: (id: string) => JSX.Element
+  itemDisplay?: (item: any) => string | number | JSX.Element
+  faded?: (row: any) => boolean
+  getButton?: (row: any) => IUrsorTableCellSimpleButton
+  getListButton?: (item: any) => IUrsorTableCellListButton
+  getActionButtonItems?: (id: string) => IActionPopupItem[]
+  headerButton?: JSX.Element
+  checkbox?: boolean
+  sortable?: boolean
+  selectAll?: boolean
+  link?: boolean
+  newTag?: boolean
+  urlPopover?: boolean
+  noRowClick?: boolean
+  getExtraElement?: (id: string, hovering: boolean) => JSX.Element
 }
 
 interface IUrsorTableCellButton {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 interface IUrsorTableCellSimpleButton extends IUrsorTableCellButton {
-  callback: () => void;
+  callback: () => any
 }
 
 interface IUrsorTableCellListButton extends IUrsorTableCellButton {
-  rows: IUrsorDropdownButtonProps['rows'];
-  showCount?: boolean;
+  rows: IUrsorDropdownButtonProps['rows']
+  showCount?: boolean
 }
 
 export interface IUrsorTableRow<T extends Record<string, any>> {
-  id: string;
-  items: T;
-  tags: string[];
-  url?: string;
-  newTagDatetime?: string;
-  disabled: boolean;
+  id: string
+  items: T
+  tags: string[]
+  url?: string
+  newTagDatetime?: string
+  disabled: boolean
 }
 
 export interface IUrsorTableProps<T extends Record<string, any>> {
-  columns: IUrsorTableColumn[];
-  rows: IUrsorTableRow<T>[];
-  tagColumnName?: string;
-  getActionButtonItems?: (rowId: string) => IActionPopupItem[];
-  getEndButton?: (rowId: string) => JSX.Element;
-  defaultSortedByColumn?: string;
-  defaultSortedAscending?: boolean;
+  columns: IUrsorTableColumn[]
+  rows: IUrsorTableRow<T>[]
+  tagColumnName?: string
+  getActionButtonItems?: (rowId: string) => IActionPopupItem[]
+  getEndButton?: (rowId: string) => JSX.Element
+  defaultSortedByColumn?: string
+  defaultSortedAscending?: boolean
   checkboxes?: {
-    checked: string[];
-    callback: (id: string) => void;
-    selectAllCallback: () => void;
-  };
-  selectedSort: string;
-  ascending: boolean;
-  sortSelectionCallback: (columnId: string) => void;
-  rowClickCallback?: (id: string) => void;
-  noHeaderGradient?: boolean;
-  titleColumnWidth?: string;
+    checked: string[]
+    callback: (id: string) => any
+    selectAllCallback: () => any
+  }
+  selectedSort: string
+  ascending: boolean
+  sortSelectionCallback: (columnId: string) => any
+  rowClickCallback?: (id: string) => any
+  noHeaderGradient?: boolean
+  titleColumnWidth?: string
 }
 
 const fadedRowStyle = {
   opacity: 0.7,
   transition: '0.5s',
-};
+}
 const disabledRowItemStyle = {
   opacity: 0.3,
-};
+}
 
 const headerRowStyle = {
   // "& th": {
@@ -119,7 +116,7 @@ const headerRowStyle = {
   // },
   position: 'relative',
   zIndex: 0,
-};
+}
 
 const bodyCellStyle = {
   //overflow: "visible",
@@ -165,7 +162,7 @@ const bodyCellStyle = {
   //     borderBottom: 0,
   //   },
   // },
-};
+}
 
 const Checkbox = (props: { checked: boolean }) => (
   <Stack
@@ -187,37 +184,37 @@ const Checkbox = (props: { checked: boolean }) => (
       <Box bgcolor="rgb(0,0,0)" height="7px" width="7px" borderRadius="100%" />
     ) : null}
   </Stack>
-);
+)
 
 const UrsorTableBodyCell = (props: {
-  columnName: string;
-  item: string | number | JSX.Element;
-  avatar?: JSX.Element;
-  //clickCallback: () => void;
-  disabled?: boolean;
-  tags?: string[];
-  faded?: boolean;
-  url?: string;
-  rowHovering?: boolean;
-  button?: IUrsorTableCellSimpleButton;
-  listButton?: IUrsorTableCellListButton;
-  actionButtonItems?: IActionPopupItem[];
-  checkbox?: { checked: boolean; callback: () => void };
-  extraElement?: JSX.Element;
-  newTagDatetime?: string;
-  titleColumnWidth?: string;
-  onClick?: () => void;
+  columnName: string
+  item: string | number | JSX.Element
+  avatar?: JSX.Element
+  //clickCallback: () => any;
+  disabled?: boolean
+  tags?: string[]
+  faded?: boolean
+  url?: string
+  rowHovering?: boolean
+  button?: IUrsorTableCellSimpleButton
+  listButton?: IUrsorTableCellListButton
+  actionButtonItems?: IActionPopupItem[]
+  checkbox?: { checked: boolean; callback: () => any }
+  extraElement?: JSX.Element
+  newTagDatetime?: string
+  titleColumnWidth?: string
+  onClick?: () => any
 }) => {
-  const [newTagOn, setNewTagOn] = useState<boolean>(false);
+  const [newTagOn, setNewTagOn] = useState<boolean>(false)
   React.useEffect(() => {
     if (
       props.newTagDatetime &&
       -dayjs(props.newTagDatetime).diff(dayjs(), 'seconds') < NEW_TAG_DURATION
     ) {
-      setNewTagOn(true);
-      setTimeout(() => setNewTagOn(false), NEW_TAG_DURATION * 1000);
+      setNewTagOn(true)
+      setTimeout(() => setNewTagOn(false), NEW_TAG_DURATION * 1000)
     }
-  }, [props.newTagDatetime]);
+  }, [props.newTagDatetime])
   return (
     <TableCell
       key={props.columnName}
@@ -380,13 +377,13 @@ const UrsorTableBodyCell = (props: {
         </Stack>
       </Stack>
     </TableCell>
-  );
-};
+  )
+}
 
 export default function UrsorTable<T extends Record<string, any>>(
   props: IUrsorTableProps<T> & { children?: React.ReactNode }
 ) {
-  const [hoveredRow, setHoveredRow] = useState<number | null>(null);
+  const [hoveredRow, setHoveredRow] = useState<number | null>(null)
 
   // const [sortedColumn, setSortedColumn] = useState<string | undefined>(
   //   props.defaultSortedByColumn ||
@@ -411,7 +408,7 @@ export default function UrsorTable<T extends Record<string, any>>(
 
   const getRowStyle = (index: number, clickable: boolean) => {
     const highlightStyle =
-      hoveredRow === null || index === hoveredRow ? null : fadedRowStyle;
+      hoveredRow === null || index === hoveredRow ? null : fadedRowStyle
     return {
       height: ROW_HEIGHT,
       //background: "#1A415A",
@@ -420,23 +417,23 @@ export default function UrsorTable<T extends Record<string, any>>(
       position: 'relative',
       cursor: 'pointer',
       overflow: 'visible',
-    };
-  };
+    }
+  }
 
   const getHeaderCell = (
     displayName: string,
     fitBodyContent?: boolean,
     sort?: {
-      direction?: 'asc' | 'desc';
-      callback: () => void;
+      direction?: 'asc' | 'desc'
+      callback: () => any
     },
     selectAll?: {
-      ticked: boolean;
-      callback: () => void;
+      ticked: boolean
+      callback: () => any
     },
     button?: JSX.Element
     // sorted?: "asc" | "desc",
-    // sortCallback?: () => void
+    // sortCallback?: () => any
   ) => {
     //@ts-ignore
     // const [hovering, setHovering] = useState<boolean>(false);
@@ -507,8 +504,8 @@ export default function UrsorTable<T extends Record<string, any>>(
           {button}
         </Stack>
       </TableCell>
-    );
-  };
+    )
+  }
 
   return (
     <TableContainer
@@ -539,7 +536,7 @@ export default function UrsorTable<T extends Record<string, any>>(
                         //   ? sortDirection
                         //   : undefined,
                         callback: () => {
-                          props.sortSelectionCallback(column.name);
+                          props.sortSelectionCallback(column.name)
                           // setSortDirection(
                           //   column.name !== sortedColumn ||
                           //     sortDirection === "asc"
@@ -658,5 +655,5 @@ export default function UrsorTable<T extends Record<string, any>>(
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  )
 }

@@ -1,16 +1,16 @@
-import React, { createContext } from 'react';
-import { NotificationType } from './NotificationProvider';
+import React, { createContext } from 'react'
+import { NotificationType } from './NotificationProvider'
 
 export interface INotificationProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export interface INotificationContext {
-  message: string | null;
-  type: NotificationType | null;
-  success: (message: string) => void;
-  negativeSuccess: (message: string) => void;
-  error: (message: string) => void;
+  message: string | null
+  type: NotificationType | null
+  success: (message: string) => any
+  negativeSuccess: (message: string) => any
+  error: (message: string) => any
 }
 
 const NotificationContext = createContext<INotificationContext>({
@@ -19,6 +19,6 @@ const NotificationContext = createContext<INotificationContext>({
   success: (message: string) => null,
   negativeSuccess: (message: string) => null,
   error: (message: string) => null,
-});
+})
 
-export default NotificationContext;
+export default NotificationContext

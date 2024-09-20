@@ -1,29 +1,29 @@
-import { Stack } from '@mui/system';
-import React, { useState } from 'react';
-import ActionPopup, { IActionPopupItem } from './ActionPopup';
-import { ReactComponent as MoreIcon } from './../images/MoreIcon.svg';
-import { PALETTE } from './../ui';
+import { Stack } from '@mui/system'
+import React, { useState } from 'react'
+import ActionPopup, { IActionPopupItem } from './ActionPopup'
+import { ReactComponent as MoreIcon } from './../images/MoreIcon.svg'
+import { PALETTE } from './../ui'
 
-const DEFAULT_SIZE = '12px';
-const LARGE_SIZE = '20px';
+const DEFAULT_SIZE = '12px'
+const LARGE_SIZE = '20px'
 
 export interface IUrsorActionButtonProps {
-  actions: IActionPopupItem[];
-  size?: string;
-  iconSize?: string;
-  threeDots?: boolean;
-  large?: boolean;
-  light?: boolean;
-  background?: string;
-  fontColor?: string;
-  shadow?: boolean;
-  border?: boolean;
-  notClickable?: boolean;
-  buttonClickCallback?: () => void;
+  actions: IActionPopupItem[]
+  size?: string
+  iconSize?: string
+  threeDots?: boolean
+  large?: boolean
+  light?: boolean
+  background?: string
+  fontColor?: string
+  shadow?: boolean
+  border?: boolean
+  notClickable?: boolean
+  buttonClickCallback?: () => any
 }
 
 export default function UrsorActionButton(props: IUrsorActionButtonProps) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <ActionPopup
       open={open}
@@ -64,9 +64,9 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         }
         boxSizing="border-box"
         onClick={() => {
-          if (props.notClickable) return;
-          setOpen(!open);
-          props.buttonClickCallback?.();
+          if (props.notClickable) return
+          setOpen(!open)
+          props.buttonClickCallback?.()
         }}
         boxShadow={props.shadow ? '0 0 16px rgba(0,0,0,0.08)' : undefined}
       >
@@ -76,5 +76,5 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         />
       </Stack>
     </ActionPopup>
-  );
+  )
 }

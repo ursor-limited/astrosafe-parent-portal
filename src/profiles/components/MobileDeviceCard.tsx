@@ -25,7 +25,7 @@ import useAuth from './../../hooks/useAuth'
 export const MobileDeviceCardFilterRow = (props: {
   filterId: IFilter['id']
   email: string
-  changeFilter: (id: IFilter['id']) => void
+  changeFilter: (id: IFilter['id']) => any
 }) => {
   const { user } = useAuth(props.email)
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
@@ -133,7 +133,7 @@ export const MobileDeviceCardRow = (props: {
 // export const DeviceCardScreenTimeSection = (props: {
 //   totalTime: number;
 //   elapsedTime: number;
-//   onClickView: () => void;
+//   onClickView: () => any;
 // }) => (
 //   <DeviceCardSection title="Screen time left today">
 //     <Stack direction="row" alignItems="center" spacing="38px">
@@ -230,10 +230,10 @@ const MobileDeviceCard = (
     showBrowsing?: boolean
     noExtras?: boolean
     noDeviceTypeUnderAvatar?: boolean
-    onUpdate?: () => void
-    onClickViewScreenTime?: () => void
+    onUpdate?: () => any
+    onClickViewScreenTime?: () => any
     button?: React.ReactNode
-    onClick?: () => void
+    onClick?: () => any
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)

@@ -1,25 +1,25 @@
-import NotificationContext from './NotificationContext';
-import UrsorDialog from './UrsorDialog';
-import { Stack } from '@mui/system';
-import { useContext, useState } from 'react';
-import { PALETTE, UrsorButton, UrsorInputField } from './../ui';
-import { LabeledInputField } from './../ui/labeled-input-field';
-import _ from 'lodash';
-import { AstroContent } from '../profile/components/ContentTab';
+import NotificationContext from './NotificationContext'
+import UrsorDialog from './UrsorDialog'
+import { Stack } from '@mui/system'
+import { useContext, useState } from 'react'
+import { PALETTE, UrsorButton, UrsorInputField } from './../ui'
+import { LabeledInputField } from './../ui/labeled-input-field'
+import _ from 'lodash'
+import { AstroContent } from '../profile/components/ContentTab'
 
-const INPUT_PHRASE = 'delete';
+const INPUT_PHRASE = 'delete'
 
 const DeletionDialog = (props: {
-  open: boolean;
-  type: AstroContent | 'Folder' | 'Filter';
-  onClose: () => void;
-  onSubmit: () => void;
-  noConfirmation?: boolean;
-  subtitle: string;
-  isMobile?: boolean;
+  open: boolean
+  type: AstroContent | 'Folder' | 'Filter'
+  onClose: () => any
+  onSubmit: () => any
+  noConfirmation?: boolean
+  subtitle: string
+  isMobile?: boolean
 }) => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const notificationCtx = useContext(NotificationContext);
+  const [inputValue, setInputValue] = useState<string>('')
+  const notificationCtx = useContext(NotificationContext)
   return (
     <UrsorDialog
       open={props.open}
@@ -61,10 +61,10 @@ const DeletionDialog = (props: {
             width="100%"
             disabled={!props.noConfirmation && inputValue !== INPUT_PHRASE}
             onClick={() => {
-              props.onSubmit();
+              props.onSubmit()
               notificationCtx.negativeSuccess(
                 `Deleted ${_.capitalize(props.type)}`
-              );
+              )
             }}
             backgroundColor={PALETTE.system.red}
             hoverOpacity={0.7}
@@ -77,7 +77,7 @@ const DeletionDialog = (props: {
         </Stack>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default DeletionDialog;
+export default DeletionDialog

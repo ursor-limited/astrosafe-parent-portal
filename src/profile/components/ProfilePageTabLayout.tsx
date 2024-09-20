@@ -1,7 +1,7 @@
-import React from 'react';
-import { Stack } from '@mui/system';
-import { Typography } from './../../ui';
-import InfoButton, { IInfoButtonProps } from './../../components/InfoButton';
+import React from 'react'
+import { Stack } from '@mui/system'
+import { Typography } from './../../ui'
+import InfoButton, { IInfoButtonProps } from './../../components/InfoButton'
 
 export const INFOS: Record<string, IInfoButtonProps> = {
   folders: {
@@ -32,16 +32,16 @@ export const INFOS: Record<string, IInfoButtonProps> = {
     title: 'How do I add a Safe Video Channel?',
     text: 'Copy and paste the URL of the YouTube channel you want to add into the URL field. We will automatically get the channel name and thumbnail image. Once a Channel is added all of the live videos on the Youtube channel will appear in the Channel folder on the Device. All of the new videos posted to the channel will appear too!',
   },
-};
+}
 
 const ProfilePageTabLayout = (props: {
-  title: string;
-  rightSideElement?: React.ReactNode;
-  info: IInfoButtonProps;
-  mobile?: boolean;
-  children: React.ReactNode;
+  title: string
+  rightSideElement?: React.ReactNode
+  info: IInfoButtonProps
+  mobile?: boolean
+  children: React.ReactNode
 }) => (
-  <Stack flex={1} spacing="24px">
+  <Stack flex={1} spacing="24px" width="100%">
     <Stack spacing="6px">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" alignItems="flex-end" spacing="16px">
@@ -58,6 +58,6 @@ const ProfilePageTabLayout = (props: {
     </Stack>
     {props.children}
   </Stack>
-);
+)
 
-export default ProfilePageTabLayout;
+export default ProfilePageTabLayout

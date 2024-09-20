@@ -1,82 +1,82 @@
-import { Stack } from '@mui/system';
-import { useCallback, useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { IAllowedTime, getISODateString } from './LimitsTab';
-import _ from 'lodash';
-import dayjs from 'dayjs';
-import useNewSegmentTimes from './useNewSegmentTimes';
-import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
+import { Stack } from '@mui/system'
+import { useCallback, useEffect, useState } from 'react'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { IAllowedTime, getISODateString } from './LimitsTab'
+import _ from 'lodash'
+import dayjs from 'dayjs'
+import useNewSegmentTimes from './useNewSegmentTimes'
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg'
 
-const DISPLAY_INTERVAL = 2; // hours
+const DISPLAY_INTERVAL = 2 // hours
 // const MIN = 0;
 // const MAX = 24;
-const DRAG_INTERVAL = 0.25; // hours
+const DRAG_INTERVAL = 0.25 // hours
 
 const BrowsingTimeSelectorRange = (props: {
-  lineWidth: number;
-  lineLeftX: number;
-  mouseX: number;
-  start: number;
-  end: number;
-  dragInterval: number;
-  setTimes: (start: number, end: number) => void;
-  delete: () => void;
-  noDeletion?: boolean;
+  lineWidth: number
+  lineLeftX: number
+  mouseX: number
+  start: number
+  end: number
+  dragInterval: number
+  setTimes: (start: number, end: number) => any
+  delete: () => any
+  noDeletion?: boolean
 }) => {
-  const [draggingDot1, setDraggingDot1] = useState<boolean>(false);
-  const [draggingDot2, setDraggingDot2] = useState<boolean>(false);
+  const [draggingDot1, setDraggingDot1] = useState<boolean>(false)
+  const [draggingDot2, setDraggingDot2] = useState<boolean>(false)
 
-  const [dot1X, setDot1X] = useState<number>(0);
-  const [dot2X, setDot2X] = useState<number>(0);
+  const [dot1X, setDot1X] = useState<number>(0)
+  const [dot2X, setDot2X] = useState<number>(0)
   useEffect(() => {
     if (_.isNumber(props.start) && _.isNumber(props.end)) {
-      setDot1X((props.lineWidth * props.start) / 24);
-      setDot2X((props.lineWidth * props.end) / 24);
+      setDot1X((props.lineWidth * props.start) / 24)
+      setDot2X((props.lineWidth * props.end) / 24)
     }
-  }, [props.start, props.end, props.lineWidth]);
+  }, [props.start, props.end, props.lineWidth])
 
   useEffect(() => {
     if (draggingDot1) {
       const newDotX = Math.max(
         0,
         Math.min(props.lineWidth, props.mouseX - props.lineLeftX)
-      );
+      )
       const lockedEndLineX =
-        Math.round(newDotX / props.dragInterval) * props.dragInterval; // the closest interval
-      setDot1X(lockedEndLineX);
+        Math.round(newDotX / props.dragInterval) * props.dragInterval // the closest interval
+      setDot1X(lockedEndLineX)
     }
-  }, [draggingDot1, props.mouseX]);
+  }, [draggingDot1, props.mouseX])
 
   useEffect(() => {
     if (draggingDot2) {
       const newDotX = Math.max(
         0,
         Math.min(props.lineWidth, props.mouseX - props.lineLeftX)
-      );
+      )
       const lockedEndLineX =
-        Math.round(newDotX / props.dragInterval) * props.dragInterval; // the closest interval
-      setDot2X(lockedEndLineX);
+        Math.round(newDotX / props.dragInterval) * props.dragInterval // the closest interval
+      setDot2X(lockedEndLineX)
     }
-  }, [draggingDot2, props.mouseX]);
+  }, [draggingDot2, props.mouseX])
 
   const handleDraggingEnd = useCallback(() => {
     if (draggingDot1 || draggingDot2) {
-      setDraggingDot1(false);
-      setDraggingDot2(false);
+      setDraggingDot1(false)
+      setDraggingDot2(false)
       props.setTimes(
         Math.max(0, (Math.min(dot1X, dot2X) / props.lineWidth) * 24),
         Math.min(24, (Math.max(dot1X, dot2X) / props.lineWidth) * 24)
-      );
+      )
     }
-  }, [dot1X, dot2X, props.lineWidth, draggingDot1, draggingDot2]);
+  }, [dot1X, dot2X, props.lineWidth, draggingDot1, draggingDot2])
 
   useEffect(() => {
-    window.addEventListener('mouseup', handleDraggingEnd);
+    window.addEventListener('mouseup', handleDraggingEnd)
     return () => {
-      window.removeEventListener('mouseup', handleDraggingEnd);
-    };
-  }, [handleDraggingEnd]);
-  const [hovering, setHovering] = useState<boolean>(false);
+      window.removeEventListener('mouseup', handleDraggingEnd)
+    }
+  }, [handleDraggingEnd])
+  const [hovering, setHovering] = useState<boolean>(false)
   return (
     <>
       <Stack position="absolute" left={dot1X} zIndex={3}>
@@ -94,8 +94,8 @@ const BrowsingTimeSelectorRange = (props: {
             bgcolor={PALETTE.secondary.blue[2]}
             borderRadius="100%"
             onMouseDown={(e) => {
-              setDraggingDot1(true);
-              e.preventDefault();
+              setDraggingDot1(true)
+              e.preventDefault()
             }}
           />
         </Stack>
@@ -115,8 +115,8 @@ const BrowsingTimeSelectorRange = (props: {
             bgcolor={PALETTE.secondary.blue[2]}
             borderRadius="100%"
             onMouseDown={(e) => {
-              setDraggingDot2(true);
-              e.preventDefault();
+              setDraggingDot2(true)
+              e.preventDefault()
             }}
           />
         </Stack>
@@ -129,10 +129,10 @@ const BrowsingTimeSelectorRange = (props: {
         alignItems="center"
         zIndex={2}
         onMouseEnter={() => {
-          setHovering(true);
+          setHovering(true)
         }}
         onMouseLeave={() => {
-          setHovering(false);
+          setHovering(false)
         }}
       >
         <Stack
@@ -169,44 +169,44 @@ const BrowsingTimeSelectorRange = (props: {
         </Stack>
       </Stack>
     </>
-  );
-};
+  )
+}
 
 const BrowsingTimeSelector = (props: {
-  ranges?: IAllowedTime[];
-  setRangeTimes: (id: IAllowedTime['id'], start: string, end: string) => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
-  smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
+  ranges?: IAllowedTime[]
+  setRangeTimes: (id: IAllowedTime['id'], start: string, end: string) => any
+  deleteRange: (id: IAllowedTime['id']) => any
+  smallerLabelFont?: boolean
+  halveLabelFrequency?: boolean
 }) => {
-  const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
-  const [lineWidth, setLineWidth] = useState<number>(0);
-  const [lineLeftX, setLineLeftX] = useState<number>(0);
+  const [lineRef, setLineRef] = useState<HTMLElement | null>(null)
+  const [lineWidth, setLineWidth] = useState<number>(0)
+  const [lineLeftX, setLineLeftX] = useState<number>(0)
   useEffect(() => {
-    setLineWidth(lineRef?.getBoundingClientRect?.().width ?? 0);
-    setLineLeftX(lineRef?.getBoundingClientRect?.().left ?? 0);
+    setLineWidth(lineRef?.getBoundingClientRect?.().width ?? 0)
+    setLineLeftX(lineRef?.getBoundingClientRect?.().left ?? 0)
   }, [
     lineRef?.getBoundingClientRect?.().width,
     lineRef?.getBoundingClientRect?.().left,
-  ]);
+  ])
 
-  const [mouseX, setMouseX] = useState<number>(0);
+  const [mouseX, setMouseX] = useState<number>(0)
 
   const handleMouseMove = useCallback((event: any) => {
-    setMouseX(event.pageX);
-  }, []);
+    setMouseX(event.pageX)
+  }, [])
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove)
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [handleMouseMove]);
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [handleMouseMove])
 
-  const [dragInterval, setDragInterval] = useState<number>(1); // px
+  const [dragInterval, setDragInterval] = useState<number>(1) // px
   useEffect(
     () => setDragInterval((lineWidth * DRAG_INTERVAL) / 24),
     [lineWidth]
-  );
+  )
 
   return (
     <Stack width="100%" height="22px">
@@ -221,13 +221,13 @@ const BrowsingTimeSelector = (props: {
         {props.ranges?.map((allowedTimeRange, i) => {
           const decimalStartTime =
             dayjs(allowedTimeRange.startTime).utc().hour() +
-            dayjs(allowedTimeRange.startTime).utc().minute() / 60;
+            dayjs(allowedTimeRange.startTime).utc().minute() / 60
           const decimalEndTime =
             dayjs(allowedTimeRange.endTime).utc().hour() +
-            dayjs(allowedTimeRange.endTime).utc().minute() / 60;
+            dayjs(allowedTimeRange.endTime).utc().minute() / 60
           const endTimeIsMidnight =
             dayjs(allowedTimeRange.endTime).utc().day() >
-            dayjs(allowedTimeRange.startTime).utc().day();
+            dayjs(allowedTimeRange.startTime).utc().day()
           return (
             <BrowsingTimeSelectorRange
               key={i}
@@ -250,12 +250,12 @@ const BrowsingTimeSelector = (props: {
                     Math.floor(end),
                     Math.floor((end % 1) * 60)
                   )
-                );
+                )
               }}
               delete={() => props.deleteRange(allowedTimeRange.id)}
               noDeletion={props.ranges?.length === 1}
             />
-          );
+          )
         })}
         <Stack flex={1} justifyContent="space-between" direction="row">
           {[...Array(1 + 24 / DISPLAY_INTERVAL).keys()]
@@ -289,35 +289,35 @@ const BrowsingTimeSelector = (props: {
                     }`}</Typography>
                   </Stack>
                 </Stack>
-              );
+              )
             })}
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
 const AllowedTimeRow = (props: {
-  dayName: string;
-  times: IAllowedTime[];
-  addAllowedTime: (startTime: number, endTime: number) => void;
-  reset: () => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
+  dayName: string
+  times: IAllowedTime[]
+  addAllowedTime: (startTime: number, endTime: number) => any
+  reset: () => any
+  deleteRange: (id: IAllowedTime['id']) => any
   setAllowedTimes: (
     id: IAllowedTime['id'],
     startTime: IAllowedTime['startTime'],
     endTime: IAllowedTime['endTime']
-  ) => void;
-  smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
+  ) => any
+  smallerLabelFont?: boolean
+  halveLabelFrequency?: boolean
 }) => {
-  const [sortedTimes, setSortedTimes] = useState<IAllowedTime[]>([]);
+  const [sortedTimes, setSortedTimes] = useState<IAllowedTime[]>([])
   useEffect(
     () => setSortedTimes(_.sortBy(props.times, (t) => new Date(t.startTime))),
     [props.times]
-  );
+  )
   const { newSegmentTimes, clearNewSegmentTimes } =
-    useNewSegmentTimes(sortedTimes);
+    useNewSegmentTimes(sortedTimes)
   return (
     <Stack direction="row" alignItems="center">
       <Stack width="120px">
@@ -339,8 +339,8 @@ const AllowedTimeRow = (props: {
           backgroundColor="rgb(255,255,255)"
           onClick={() => {
             newSegmentTimes &&
-              props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
-            clearNewSegmentTimes();
+              props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1])
+            clearNewSegmentTimes()
           }}
           disabled={!newSegmentTimes}
         >
@@ -357,7 +357,7 @@ const AllowedTimeRow = (props: {
         </UrsorButton>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default AllowedTimeRow;
+export default AllowedTimeRow

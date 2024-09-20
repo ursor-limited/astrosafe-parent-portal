@@ -1,15 +1,15 @@
-import { Stack } from '@mui/system';
-import { useState } from 'react';
-import { PALETTE } from './../ui';
+import { Stack } from '@mui/system'
+import { useState } from 'react'
+import { PALETTE } from './../ui'
 
 const AstroSwitch = (props: {
-  on: boolean;
-  compromise?: boolean;
-  callback: () => void;
-  small?: boolean;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  on: boolean
+  compromise?: boolean
+  callback: () => any
+  small?: boolean
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>
 }) => {
-  const [hovering, setHovering] = useState<boolean>(false);
+  const [hovering, setHovering] = useState<boolean>(false)
   return (
     <Stack
       height={props.small ? '16px' : '28px'}
@@ -28,10 +28,10 @@ const AstroSwitch = (props: {
       boxSizing="border-box"
       justifyContent="center"
       onMouseEnter={() => {
-        setHovering(true);
+        setHovering(true)
       }}
       onMouseLeave={() => {
-        setHovering(false);
+        setHovering(false)
       }}
       sx={{
         cursor: 'pointer',
@@ -69,7 +69,7 @@ const AstroSwitch = (props: {
         {props.icon ? <props.icon height="14px" width="14px" /> : null}
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default AstroSwitch;
+export default AstroSwitch

@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Box, Stack } from '@mui/system';
-import { PALETTE, Typography } from './../ui';
-import { IApp } from '../profile/components/AppsTab';
+import React, { useState } from 'react'
+import { Box, Stack } from '@mui/system'
+import { PALETTE, Typography } from './../ui'
+import { IApp } from '../profile/components/AppsTab'
 
-const PADDING = '8px';
-export const MIN_WIDTH = '175px';
-const HEIGHT = '243px';
-const IMAGE_HEIGHT = '108px';
-const BORDER_RADIUS = '12px';
+const PADDING = '8px'
+export const MIN_WIDTH = '175px'
+const HEIGHT = '243px'
+const IMAGE_HEIGHT = '108px'
+const BORDER_RADIUS = '12px'
 export const PLACEHOLDER_IMAGE_URL_COMMON_SECTION =
-  'https://ursorassets.s3.eu-west-1.amazonaws.com/img/cardAssets/patterns/pattern';
+  'https://ursorassets.s3.eu-west-1.amazonaws.com/img/cardAssets/patterns/pattern'
 
 export interface IPlatformCardProps {
-  app: IApp;
-  clickCallback: () => void;
+  app: IApp
+  clickCallback: () => any
 }
 
 const PlatformCard = (props: IPlatformCardProps) => {
@@ -51,7 +51,7 @@ const PlatformCard = (props: IPlatformCardProps) => {
         {props.app.title}
       </Typography>
     </Stack>
-  );
-};
+  )
+}
 
-export default PlatformCard;
+export default PlatformCard

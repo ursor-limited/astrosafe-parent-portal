@@ -10,7 +10,7 @@ import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
 import { isMobile } from 'react-device-detect'
 import ApiController from '../../../api'
 
-const BlockedWordTag = (props: { word: string; onClick: () => void }) => (
+const BlockedWordTag = (props: { word: string; onClick: () => any }) => (
   <Stack
     height="36px"
     minWidth="98px"

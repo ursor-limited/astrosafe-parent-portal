@@ -1,10 +1,10 @@
-import { Stack } from '@mui/system';
-import { PALETTE, Typography } from './../../ui';
+import { Stack } from '@mui/system'
+import { PALETTE, Typography } from './../../ui'
 
 const AstroTabSwitch = (props: {
-  items: { id: string; text: string }[];
-  select: (id: string) => void;
-  selected: string;
+  items: { id: string; text: string }[]
+  select: (id: string) => any
+  selected: string
 }) => (
   <Stack direction="row" spacing="12px">
     {props.items.map((item) => (
@@ -35,6 +35,6 @@ const AstroTabSwitch = (props: {
       </Stack>
     ))}
   </Stack>
-);
+)
 
-export default AstroTabSwitch;
+export default AstroTabSwitch

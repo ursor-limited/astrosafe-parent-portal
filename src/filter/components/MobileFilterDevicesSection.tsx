@@ -18,8 +18,8 @@ import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 const MobileFilterPageDevicesSection = (props: {
   email: string
   devices: IDevice[]
-  onAdd: () => void
-  openChangeFilterDialogForDevice: (device: IDevice) => void
+  onAdd: () => any
+  openChangeFilterDialogForDevice: (device: IDevice) => any
 }) => {
   const navigate = useNavigate()
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)

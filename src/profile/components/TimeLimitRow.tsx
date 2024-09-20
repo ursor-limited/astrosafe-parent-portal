@@ -1,25 +1,23 @@
-import { Stack } from '@mui/system';
-import { ReactComponent as TimeMinusIcon } from './../../images/TimeMinusIcon.svg';
-import { ReactComponent as TimePlusIcon } from './../../images/TimePlusIcon.svg';
-import { PALETTE, Typography } from './../../ui';
-import _ from 'lodash';
-import { DAILY_LIMIT_INCREMENT, ITimeLimit } from './LimitsTab';
-import { useEffect, useState } from 'react';
+import { Stack } from '@mui/system'
+import { ReactComponent as TimeMinusIcon } from './../../images/TimeMinusIcon.svg'
+import { ReactComponent as TimePlusIcon } from './../../images/TimePlusIcon.svg'
+import { PALETTE, Typography } from './../../ui'
+import _ from 'lodash'
+import { DAILY_LIMIT_INCREMENT, ITimeLimit } from './LimitsTab'
+import { useEffect, useState } from 'react'
 
 const TimeLimitRow = (props: {
-  dayName: string;
-  allowedMinutes: ITimeLimit['allowedMinutes'];
-  decrement: () => void;
-  increment: () => void;
+  dayName: string
+  allowedMinutes: ITimeLimit['allowedMinutes']
+  decrement: () => any
+  increment: () => any
 }) => {
-  const [decrementDisabled, setDecrementDisabled] = useState<boolean>(false);
-  const [incrementDisabled, setIncrementDisabled] = useState<boolean>(false);
+  const [decrementDisabled, setDecrementDisabled] = useState<boolean>(false)
+  const [incrementDisabled, setIncrementDisabled] = useState<boolean>(false)
   useEffect(() => {
-    setDecrementDisabled(props.allowedMinutes < DAILY_LIMIT_INCREMENT);
-    setIncrementDisabled(
-      props.allowedMinutes > 24 * 60 - DAILY_LIMIT_INCREMENT
-    );
-  }, [props.allowedMinutes]);
+    setDecrementDisabled(props.allowedMinutes < DAILY_LIMIT_INCREMENT)
+    setIncrementDisabled(props.allowedMinutes > 24 * 60 - DAILY_LIMIT_INCREMENT)
+  }, [props.allowedMinutes])
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
       <Typography variant="large" bold color={PALETTE.secondary.grey[3]}>
@@ -57,7 +55,7 @@ const TimeLimitRow = (props: {
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default TimeLimitRow;
+export default TimeLimitRow

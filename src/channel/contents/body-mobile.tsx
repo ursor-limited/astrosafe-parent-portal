@@ -1,23 +1,23 @@
-import React from 'react';
-import useNavigate from '../../hooks/useNavigate';
-import { IVideo } from './../../profile/components/ContentTab';
-import { Stack } from '@mui/system';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import VideoCard from './../../folder/components/VideoCard';
-import EmptyStateIllustration from './../../components/EmptyStateIllustration';
-import { ITitleRowItem } from './../../components/TitleRow';
-import { IActionPopupItem } from './../../components/ActionPopup';
-import MobilePageLayout from './../../components/MobilePageLayout';
+import React from 'react'
+import useNavigate from '../../hooks/useNavigate'
+import { IVideo } from './../../profile/components/ContentTab'
+import { Stack } from '@mui/system'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import VideoCard from './../../folder/components/VideoCard'
+import EmptyStateIllustration from './../../components/EmptyStateIllustration'
+import { ITitleRowItem } from './../../components/TitleRow'
+import { IActionPopupItem } from './../../components/ActionPopup'
+import MobilePageLayout from './../../components/MobilePageLayout'
 
 const ChannelPageMobileBody = (props: {
-  videos: IVideo[];
-  onUpdate: () => void;
-  setVideoEditingDialogId: (id: IVideo['id']) => void;
-  titleRow: ITitleRowItem[];
-  actions: IActionPopupItem[];
-  onBack: () => void;
+  videos: IVideo[]
+  onUpdate: () => any
+  setVideoEditingDialogId: (id: IVideo['id']) => any
+  titleRow: ITitleRowItem[]
+  actions: IActionPopupItem[]
+  onBack: () => any
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
@@ -48,7 +48,7 @@ const ChannelPageMobileBody = (props: {
         </EmptyStateIllustration>
       )}
     </MobilePageLayout>
-  );
-};
+  )
+}
 
-export default ChannelPageMobileBody;
+export default ChannelPageMobileBody

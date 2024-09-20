@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { alpha, Box } from '@mui/system';
-import Calendar from 'react-calendar';
-import { ReactComponent as ChevronIcon } from './../images/ChevronLeftIcon.svg';
-import { PALETTE } from './../ui';
-import dayjs from 'dayjs';
-import DynamicContainer from './DynamicContainer';
+import React, { useState } from 'react'
+import { alpha, Box } from '@mui/system'
+import Calendar from 'react-calendar'
+import { ReactComponent as ChevronIcon } from './../images/ChevronLeftIcon.svg'
+import { PALETTE } from './../ui'
+import dayjs from 'dayjs'
+import DynamicContainer from './DynamicContainer'
 
 export interface IUrsorCalendarProps {
-  value: Date;
-  hidePast?: boolean;
-  disableFuture?: boolean;
-  onChange: (newDate: Date) => void;
+  value: Date
+  hidePast?: boolean
+  disableFuture?: boolean
+  onChange: (newDate: Date) => any
 }
 
 export default function UrsorCalendar(props: IUrsorCalendarProps) {
@@ -20,11 +20,11 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
     dayjs().isAfter(props.value)
       ? new Date()
       : new Date(props.value.getFullYear(), props.value.getMonth(), 1)
-  );
+  )
 
   const showingCurrentMonth =
     viewMonthStartDate?.getMonth() === new Date().getMonth() &&
-    viewMonthStartDate?.getFullYear() === new Date().getFullYear();
+    viewMonthStartDate?.getFullYear() === new Date().getFullYear()
 
   return (
     <Box
@@ -143,5 +143,5 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
         />
       </DynamicContainer>
     </Box>
-  );
+  )
 }

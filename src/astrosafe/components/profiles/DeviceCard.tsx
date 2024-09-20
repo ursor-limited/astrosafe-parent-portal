@@ -52,7 +52,7 @@ export const DeviceCardSection = (props: {
 
 export const DeviceCardBrowsingStatusSection = (props: {
   browsingEnabled: boolean
-  flipBrowsingEnabled: () => void
+  flipBrowsingEnabled: () => any
 }) => {
   const [setRef, size] = useElementSize()
   return (
@@ -101,7 +101,7 @@ export const DeviceCardBrowsingStatusSection = (props: {
 export const DeviceCardScreenTimeSection = (props: {
   totalTime: number
   elapsedTime: number
-  onClickView: () => void
+  onClickView: () => any
 }) => (
   <DeviceCardSection title="Screen time left today">
     <Stack direction="row" alignItems="center" spacing="38px">
@@ -232,11 +232,11 @@ interface DeviceCardProps {
   deviceId: string
   small?: boolean
   noExtras?: boolean
-  onClick?: () => void
-  onFilterClick?: () => void
-  onClickView?: () => void
-  gotoDeviceOnClick?: () => void
-  onClickOpen?: () => void
+  onClick?: () => any
+  onFilterClick?: () => any
+  onClickView?: () => any
+  gotoDeviceOnClick?: () => any
+  onClickOpen?: () => any
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({

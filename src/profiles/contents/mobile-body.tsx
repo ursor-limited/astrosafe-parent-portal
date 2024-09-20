@@ -15,10 +15,10 @@ import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 const AllDevicesPageMobileBody = (props: {
   devices: IDevice[]
   filters: IFilter[]
-  setConnectDialogOpen: () => void
-  //setDownloadDialogOpen: () => void;
-  setRenameDeviceDialogId: (id: IDevice['id']) => void
-  setDisconnectDialogOpen: (id: IDevice['id']) => void
+  setConnectDialogOpen: () => any
+  //setDownloadDialogOpen: () => any;
+  setRenameDeviceDialogId: (id: IDevice['id']) => any
+  setDisconnectDialogOpen: (id: IDevice['id']) => any
 }) => {
   const navigate = useNavigate()
   return (

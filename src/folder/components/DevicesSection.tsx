@@ -1,41 +1,41 @@
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
-import { ReactComponent as XIcon } from './../../images/X.svg';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { Stack } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import _ from 'lodash';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { useState } from 'react';
-import ApiController from './../../api';
-import { IDevice } from './../../filter/contents/common';
-import { IContentBucket } from './../../profile/components/ContentTab';
-import AllDevicesDialog from './../../components/AllDevicesDialog';
-import DeviceCard from './../../profiles/components/DeviceCard';
-import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
+import { ReactComponent as XIcon } from './../../images/X.svg'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { Stack } from '@mui/system'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import _ from 'lodash'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { useState } from 'react'
+import ApiController from './../../api'
+import { IDevice } from './../../filter/contents/common'
+import { IContentBucket } from './../../profile/components/ContentTab'
+import AllDevicesDialog from './../../components/AllDevicesDialog'
+import DeviceCard from './../../profiles/components/DeviceCard'
+import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const DevicesSection = (props: {
-  title: string;
-  devices: IDevice[];
-  folderId: IContentBucket['id'];
-  onAdd: () => void;
-  onRemove: () => void;
-  isMobile?: boolean;
+  title: string
+  devices: IDevice[]
+  folderId: IContentBucket['id']
+  onAdd: () => any
+  onRemove: () => any
+  isMobile?: boolean
 }) => {
-  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
+  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
 
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   const removeDevice = (id: IDevice['id']) =>
     ApiController.removeFolderFromDevice(props.folderId, id).then(
       props.onRemove
-    );
+    )
 
   const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
-    useState<number | undefined>();
+    useState<number | undefined>()
 
   return (
     <>
@@ -125,7 +125,7 @@ const DevicesSection = (props: {
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
         onAdd={() => {
-          props.onAdd();
+          props.onAdd()
         }}
         onRemove={setRemovalConfirmationDialogId}
       />
@@ -142,7 +142,7 @@ const DevicesSection = (props: {
         />
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default DevicesSection;
+export default DevicesSection

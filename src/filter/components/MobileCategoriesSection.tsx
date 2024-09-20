@@ -16,8 +16,8 @@ const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter
   categories: IFilterCategory[]
   allowedCategories: IFilterUrl['id'][]
-  flipCategory: (id: number) => void
-  flipSubcategory: (id: IFilterCategory['categoryId']) => void
+  flipCategory: (id: number) => any
+  flipSubcategory: (id: IFilterCategory['categoryId']) => any
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}

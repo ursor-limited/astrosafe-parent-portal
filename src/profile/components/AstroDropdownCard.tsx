@@ -1,22 +1,22 @@
-import { Stack } from '@mui/system';
-import React, { useState } from 'react';
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as ChevronDown } from './../../images/ChevronDown.svg';
-import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg';
-import UrsorPopover from './../../components/UrsorPopover';
+import { Stack } from '@mui/system'
+import React, { useState } from 'react'
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as ChevronDown } from './../../images/ChevronDown.svg'
+import { ReactComponent as CheckCircleFillIcon } from './../../images/CheckCircleFillIcon.svg'
+import UrsorPopover from './../../components/UrsorPopover'
 import AstroSettingCard, {
   IAstroSettingCardProps,
-} from './../../filter/components/AstroSettingCard';
+} from './../../filter/components/AstroSettingCard'
 
 const AstroDropdownCard = (props: {
-  title: string;
-  subtitle?: string;
-  image?: React.ReactNode;
-  items: (IAstroSettingCardProps & { id: string })[];
-  selected: string;
-  select: (id: string) => void;
+  title: string
+  subtitle?: string
+  image?: React.ReactNode
+  items: (IAstroSettingCardProps & { id: string })[]
+  selected: string
+  select: (id: string) => any
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <UrsorPopover
       open={open}
@@ -33,8 +33,8 @@ const AstroDropdownCard = (props: {
                 transition: '0.2s',
               }}
               onClick={() => {
-                props.select(item.id);
-                setOpen(false);
+                props.select(item.id)
+                setOpen(false)
               }}
             >
               <AstroSettingCard
@@ -75,7 +75,7 @@ const AstroDropdownCard = (props: {
         />
       </Stack>
     </UrsorPopover>
-  );
-};
+  )
+}
 
-export default AstroDropdownCard;
+export default AstroDropdownCard

@@ -22,9 +22,9 @@
 // const TextCreationDialog = (props: {
 //   open: boolean;
 //   text?: IText;
-//   closeCallback: () => void;
-//   creationCallback?: (text: IText) => void;
-//   updateCallback?: () => void;
+//   closeCallback: () => any;
+//   creationCallback?: (text: IText) => any;
+//   updateCallback?: () => any;
 //   mobile?: boolean;
 // }) => {
 //   const [value, setValue] = useState<string>("");

@@ -10,12 +10,12 @@ import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const VideoCreationDialog = (props: {
   open: boolean
-  onClose: () => void
+  onClose: () => any
   folderId: IContentBucket['id']
-  creationCallback: () => void
+  creationCallback: () => any
   updateDetails?: {
     video: IVideo
-    callback?: () => void
+    callback?: () => any
   }
   belongsToChannel?: boolean
 }) => {

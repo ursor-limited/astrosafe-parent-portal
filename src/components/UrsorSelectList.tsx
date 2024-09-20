@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Stack } from '@mui/system';
-import { Typography } from './../ui';
+import React, { useState } from 'react'
+import { Stack } from '@mui/system'
+import { Typography } from './../ui'
 
 export interface IUrsorSelectItem {
-  id: string;
-  value: string;
-  icon?: JSX.Element;
+  id: string
+  value: string
+  icon?: JSX.Element
 }
 
 export interface IUrsorSelectListProps {
-  items: IUrsorSelectItem[];
-  selected: string[];
-  keepOpenOnSelect?: boolean;
-  centerAlign?: boolean;
-  callback: (id: string) => void;
-  clearAllCallback?: () => void;
+  items: IUrsorSelectItem[]
+  selected: string[]
+  keepOpenOnSelect?: boolean
+  centerAlign?: boolean
+  callback: (id: string) => any
+  clearAllCallback?: () => any
 }
 
 export default function UrsorSelectList(props: IUrsorSelectListProps) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <Stack spacing="6px">
       {props.items.map((item) => (
@@ -29,8 +29,8 @@ export default function UrsorSelectList(props: IUrsorSelectListProps) {
           justifyContent={props.centerAlign ? 'center' : undefined}
           key={item.id}
           onClick={() => {
-            props.callback(item.id);
-            !props.keepOpenOnSelect && setOpen(false);
+            props.callback(item.id)
+            !props.keepOpenOnSelect && setOpen(false)
           }}
           sx={{
             opacity:
@@ -51,5 +51,5 @@ export default function UrsorSelectList(props: IUrsorSelectListProps) {
         </Stack>
       ))}
     </Stack>
-  );
+  )
 }

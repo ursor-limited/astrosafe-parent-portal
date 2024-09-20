@@ -1,9 +1,9 @@
-import React from 'react';
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import _ from 'lodash';
-import { IAllowedTime } from './LimitsTab';
-import MobileAllowedTimeRow from './MobileAllowedTimeRow';
+import React from 'react'
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
+import _ from 'lodash'
+import { IAllowedTime } from './LimitsTab'
+import MobileAllowedTimeRow from './MobileAllowedTimeRow'
 
 // const AllowedTimesSectionTimeSelector = () => {
 //   const [open, setOpen] = useState<boolean>(false);
@@ -23,18 +23,18 @@ import MobileAllowedTimeRow from './MobileAllowedTimeRow';
 // };
 
 const MobileAllowedTimesSection = (props: {
-  allowedTimes: IAllowedTime[];
+  allowedTimes: IAllowedTime[]
   setAllowedTime: (
     id: IAllowedTime['id'],
     startTime: IAllowedTime['startTime'],
     endTime: IAllowedTime['endTime']
-  ) => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
-  addTimeLimit: (day: number, startTime: number, endTime: number) => void;
-  reset: (day: IAllowedTime['day']) => void;
-  topRightElement?: React.ReactNode;
-  smallerLabelFont?: boolean;
-  disabled: boolean;
+  ) => any
+  deleteRange: (id: IAllowedTime['id']) => any
+  addTimeLimit: (day: number, startTime: number, endTime: number) => any
+  reset: (day: IAllowedTime['day']) => any
+  topRightElement?: React.ReactNode
+  smallerLabelFont?: boolean
+  disabled: boolean
 }) => (
   <AstroBentoCard
     title="Time scheduler"
@@ -74,6 +74,6 @@ const MobileAllowedTimesSection = (props: {
       </Stack>
     ) : null}
   </AstroBentoCard>
-);
+)
 
-export default MobileAllowedTimesSection;
+export default MobileAllowedTimesSection

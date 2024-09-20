@@ -25,7 +25,7 @@ export interface IPageLayoutProps {
   description?: string
   dotColor?: string
   titleBackButton?: boolean
-  titleBackButtonCallback?: () => void
+  titleBackButtonCallback?: () => any
   particles?: boolean
   bodyWidth?: string
   noSidebar?: boolean
@@ -33,14 +33,14 @@ export interface IPageLayoutProps {
   button?: {
     text: string
     icon: React.FC<React.SVGProps<SVGSVGElement>>
-    callback: () => void
+    callback: () => any
     disabled?: boolean
     tourId?: string
   }
   secondaryButton?: {
     text: string
     icon: React.FC<React.SVGProps<SVGSVGElement>>
-    callback: () => void
+    callback: () => any
     svgStrokeInsteadOfFill?: boolean
     disabled?: boolean
     tourId?: string
@@ -53,7 +53,7 @@ export interface IPageLayoutProps {
   classroomId?: string
   disableConnectionBar?: boolean
   buttonsDelay?: number
-  onScroll?: () => void
+  onScroll?: () => any
   fullHeight?: string
   maxWidth?: number
   actions: IActionPopupItem[]

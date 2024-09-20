@@ -16,10 +16,10 @@ import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 const AllDevicesPageDesktopBody = (props: {
   devices: IEnrichedDevice[]
   filters: IFilter[]
-  setConnectDialogOpen: () => void
-  // setDownloadDialogOpen: () => void;
-  setRenameDeviceDialogId: (id: IDevice['id']) => void
-  setDisconnectDialogOpen: (id: IDevice['id']) => void
+  setConnectDialogOpen: () => any
+  // setDownloadDialogOpen: () => any;
+  setRenameDeviceDialogId: (id: IDevice['id']) => any
+  setDisconnectDialogOpen: (id: IDevice['id']) => any
   email: string
 }) => {
   const navigate = useNavigate()

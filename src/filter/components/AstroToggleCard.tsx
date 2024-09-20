@@ -1,15 +1,15 @@
-import AstroSwitch from './../../components/AstroSwitch';
-import { Stack } from '@mui/system';
+import AstroSwitch from './../../components/AstroSwitch'
+import { Stack } from '@mui/system'
 
-import React from 'react';
-import { PALETTE, Typography } from './../../ui';
+import React from 'react'
+import { PALETTE, Typography } from './../../ui'
 
 const AstroToggleCard = (props: {
-  on: boolean;
-  callback: () => void;
-  title: string;
-  subtitle?: string;
-  image?: React.ReactNode;
+  on: boolean
+  callback: () => any
+  title: string
+  subtitle?: string
+  image?: React.ReactNode
 }) => (
   <Stack
     height="72px"
@@ -37,6 +37,6 @@ const AstroToggleCard = (props: {
     </Stack>
     <AstroSwitch on={props.on} callback={props.callback} />
   </Stack>
-);
+)
 
-export default AstroToggleCard;
+export default AstroToggleCard

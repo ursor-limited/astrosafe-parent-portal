@@ -76,8 +76,8 @@ export const FilterLegend = (props: { small?: boolean }) => (
 
 const CategoryCard = (
   props: IFilterCategory & {
-    flipCategory: (id: IFilterCategory['categoryId']) => void
-    flipSubcategory: (id: IFilterSubcategory['id']) => void
+    flipCategory: (id: IFilterCategory['categoryId']) => any
+    flipSubcategory: (id: IFilterSubcategory['id']) => any
     allowedCategories: IFilterSubcategory['id'][]
   }
 ) => {

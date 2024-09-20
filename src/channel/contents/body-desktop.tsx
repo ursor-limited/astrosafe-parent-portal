@@ -1,21 +1,21 @@
-import React from 'react';
-import { IVideo } from './../../profile/components/ContentTab';
-import PageLayout from './../../components/PageLayout';
-import { Stack } from '@mui/system';
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import VideoCard from './../../folder/components/VideoCard';
-import EmptyStateIllustration from './../../components/EmptyStateIllustration';
-import { ITitleRowItem } from './../../components/TitleRow';
-import { IActionPopupItem } from './../../components/ActionPopup';
+import React from 'react'
+import { IVideo } from './../../profile/components/ContentTab'
+import PageLayout from './../../components/PageLayout'
+import { Stack } from '@mui/system'
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import VideoCard from './../../folder/components/VideoCard'
+import EmptyStateIllustration from './../../components/EmptyStateIllustration'
+import { ITitleRowItem } from './../../components/TitleRow'
+import { IActionPopupItem } from './../../components/ActionPopup'
 
 const ChannelPageDesktopBody = (props: {
-  videos: IVideo[];
-  onUpdate: () => void;
-  setVideoEditingDialogId: (id: IVideo['id']) => void;
-  titleRow: ITitleRowItem[];
-  actions: IActionPopupItem[];
-  onBack: () => void;
+  videos: IVideo[]
+  onUpdate: () => any
+  setVideoEditingDialogId: (id: IVideo['id']) => any
+  titleRow: ITitleRowItem[]
+  actions: IActionPopupItem[]
+  onBack: () => any
 }) => {
   return (
     <PageLayout
@@ -51,7 +51,7 @@ const ChannelPageDesktopBody = (props: {
         </EmptyStateIllustration>
       )}
     </PageLayout>
-  );
-};
+  )
+}
 
-export default ChannelPageDesktopBody;
+export default ChannelPageDesktopBody

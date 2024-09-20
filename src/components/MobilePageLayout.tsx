@@ -1,27 +1,27 @@
-import { Stack } from '@mui/system';
-import MobileTitleRow from './MobileTitleRow';
-import UrsorActionButton from './UrsorActionButton';
-import { IActionPopupItem } from './ActionPopup';
-import React, { useState } from 'react';
-import { Typography } from './../ui';
-import { ReactComponent as ThreeBarsIcon } from './../images/ThreeBarsIcon.svg';
-import MobileSideBar, { AstroPage } from './MobileSideBar';
-import { ITitleRowItem } from './TitleRow';
-import { ReactComponent as ChevronLeftIcon } from './../images/ChevronLeftIcon.svg';
-import InfoButton, { IInfoButtonProps } from './InfoButton';
+import { Stack } from '@mui/system'
+import MobileTitleRow from './MobileTitleRow'
+import UrsorActionButton from './UrsorActionButton'
+import { IActionPopupItem } from './ActionPopup'
+import React, { useState } from 'react'
+import { Typography } from './../ui'
+import { ReactComponent as ThreeBarsIcon } from './../images/ThreeBarsIcon.svg'
+import MobileSideBar, { AstroPage } from './MobileSideBar'
+import { ITitleRowItem } from './TitleRow'
+import { ReactComponent as ChevronLeftIcon } from './../images/ChevronLeftIcon.svg'
+import InfoButton, { IInfoButtonProps } from './InfoButton'
 
 const MobilePageLayout = (props: {
-  title?: string;
-  titleRow?: ITitleRowItem;
-  info?: IInfoButtonProps;
-  actions?: IActionPopupItem[];
-  topRightElement?: React.ReactNode;
-  selectedPage: AstroPage;
-  header?: React.ReactNode;
-  titleBackButtonCallback?: () => void;
-  children: React.ReactNode;
+  title?: string
+  titleRow?: ITitleRowItem
+  info?: IInfoButtonProps
+  actions?: IActionPopupItem[]
+  topRightElement?: React.ReactNode
+  selectedPage: AstroPage
+  header?: React.ReactNode
+  titleBackButtonCallback?: () => any
+  children: React.ReactNode
 }) => {
-  const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+  const [sideBarOpen, setSideBarOpen] = useState<boolean>(false)
   return (
     <>
       <Stack
@@ -86,7 +86,7 @@ const MobilePageLayout = (props: {
         onClose={() => setSideBarOpen(false)}
       />
     </>
-  );
-};
+  )
+}
 
-export default MobilePageLayout;
+export default MobilePageLayout

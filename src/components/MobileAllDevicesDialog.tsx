@@ -15,9 +15,9 @@ const MobileAllDevicesDialog = (props: {
   email: string
   title: string
   open: boolean
-  onClose: () => void
-  onAdd: () => void
-  onRemove: (id: IDevice['id']) => void
+  onClose: () => any
+  onAdd: () => any
+  onRemove: (id: IDevice['id']) => any
   devices: IDevice[]
 }) => {
   const [searchValue, setSearchValue] = useState<string>('')

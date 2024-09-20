@@ -1,43 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
-import { useState } from 'react';
-import { TextField } from '@mui/material';
-import { PALETTE } from './palette';
-import { FONT_SIZES, LINE_HEIGHTS } from './typography';
-import { Stack } from '@mui/system';
+import { useState } from 'react'
+import { TextField } from '@mui/material'
+import { PALETTE } from './palette'
+import { FONT_SIZES, LINE_HEIGHTS } from './typography'
+import { Stack } from '@mui/system'
 
-const N_ROWS = 3;
-const BOLD_FONT_WEIGHT = 450;
+const N_ROWS = 3
+const BOLD_FONT_WEIGHT = 450
 
 export interface UrsorTextFieldProps {
-  width?: string;
-  height?: string;
-  borderRadius?: string;
-  backgroundColor?: string;
-  border?: string;
-  outline?: string;
-  backgroundBlur?: string;
-  password?: boolean;
-  paddingLeft?: string;
-  centerAlign?: boolean;
-  fontSize?: string;
-  color?: string;
-  boldValue?: boolean;
-  noBold?: boolean;
-  value?: string;
-  onEnterKey?: () => void;
-  onBlur?: () => void;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyPress?: () => void;
-  placeholder?: string;
-  endIcon?: JSX.Element;
-  white?: boolean;
-  noBorder?: boolean;
-  flex?: boolean;
+  width?: string
+  height?: string
+  borderRadius?: string
+  backgroundColor?: string
+  border?: string
+  outline?: string
+  backgroundBlur?: string
+  password?: boolean
+  paddingLeft?: string
+  centerAlign?: boolean
+  fontSize?: string
+  color?: string
+  boldValue?: boolean
+  noBold?: boolean
+  value?: string
+  onEnterKey?: () => any
+  onBlur?: () => any
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => any
+  onKeyPress?: () => any
+  placeholder?: string
+  endIcon?: JSX.Element
+  white?: boolean
+  noBorder?: boolean
+  flex?: boolean
 }
 
 export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
-  const [hovering, setHovering] = useState<boolean>(false);
-  const [active, setActive] = useState(false);
+  const [hovering, setHovering] = useState<boolean>(false)
+  const [active, setActive] = useState(false)
   return (
     <Stack
       sx={{
@@ -64,18 +64,18 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         }}
         multiline
         onBlur={() => {
-          setActive(false);
-          props.onBlur?.();
+          setActive(false)
+          props.onBlur?.()
         }}
         onChange={props.onChange}
         onFocus={() => {
-          setActive(true);
+          setActive(true)
         }}
         onMouseEnter={() => {
-          setHovering(true);
+          setHovering(true)
         }}
         onMouseLeave={() => {
-          setHovering(false);
+          setHovering(false)
         }}
         onKeyPress={props.onKeyPress}
         placeholder={props.placeholder}
@@ -115,5 +115,5 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         value={props.value}
       />
     </Stack>
-  );
+  )
 }

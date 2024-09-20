@@ -20,13 +20,13 @@ export interface IContentCreationDialogProps {
   open: boolean
   type: AstroContent
   title: IFilterUrl['title']
-  setTitle: (title: IFilterUrl['title']) => void
+  setTitle: (title: IFilterUrl['title']) => any
   info?: IInfoButtonProps
   url: IFilterUrl['url']
-  setUrl: (url: IFilterUrl['url']) => void
-  onUrlFieldBlur?: () => void
-  closeCallback: () => void
-  onSubmit?: () => void
+  setUrl: (url: IFilterUrl['url']) => any
+  onUrlFieldBlur?: () => any
+  closeCallback: () => any
+  onSubmit?: () => any
   editing?: boolean
   buttonDisabled?: boolean
   extraBottomElement?: React.ReactNode

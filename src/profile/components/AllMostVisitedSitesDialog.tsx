@@ -12,7 +12,7 @@ import _ from 'lodash'
 
 const AllMostVisitedSitesDialog = (props: {
   open: boolean
-  onClose: () => void
+  onClose: () => any
   sites: IVisitedSite[]
   isMobile?: boolean
 }) => {

@@ -1,16 +1,16 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { UrsorButton, UrsorInputField } from './../../ui';
-import { LabeledInputField } from './../../ui/labeled-input-field';
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { UrsorButton, UrsorInputField } from './../../ui'
+import { LabeledInputField } from './../../ui/labeled-input-field'
 
 const FolderCreationDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (name: string) => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  onSubmit: (name: string) => any
+  isMobile?: boolean
 }) => {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>('')
   return (
     <UrsorDialog
       open={props.open}
@@ -44,15 +44,15 @@ const FolderCreationDialog = (props: {
           variant="tertiary"
           width="100%"
           onClick={() => {
-            props.onSubmit(name);
-            props.onClose();
+            props.onSubmit(name)
+            props.onClose()
           }}
         >
           Create
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FolderCreationDialog;
+export default FolderCreationDialog

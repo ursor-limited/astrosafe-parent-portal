@@ -35,17 +35,17 @@ const FolderPageMobileBody = (props: {
   contents: IContentCard[]
   allFolders: IContentBucket[]
   devices: IDevice[]
-  setCreationDialogOpen: (type: AstroContent) => void
-  loadFolderAndContents: () => void
-  setAddDeviceDialogOpen: () => void
-  onRemoveDevice: () => void
+  setCreationDialogOpen: (type: AstroContent) => any
+  loadFolderAndContents: () => any
+  setAddDeviceDialogOpen: () => any
+  onRemoveDevice: () => any
   searchValue: string
-  setSearchValue: (value: string) => void
+  setSearchValue: (value: string) => any
   selectedContentType: AstroContent | 'all'
-  setSelectedContentType: (type: AstroContent | 'all') => void
-  setLinkEditingDialogId: (id: ILink['id']) => void
-  setVideoEditingDialogId: (id: IVideo['id']) => void
-  setChannelEditingDialogId: (id: IChannel['id']) => void
+  setSelectedContentType: (type: AstroContent | 'all') => any
+  setLinkEditingDialogId: (id: ILink['id']) => any
+  setVideoEditingDialogId: (id: IVideo['id']) => any
+  setChannelEditingDialogId: (id: IChannel['id']) => any
   titleRow: ITitleRowItem[]
   actions: IActionPopupItem[]
 }) => {

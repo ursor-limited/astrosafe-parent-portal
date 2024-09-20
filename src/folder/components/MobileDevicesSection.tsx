@@ -20,8 +20,8 @@ const MobileDevicesSection = (props: {
   title: string
   devices: IDevice[]
   folderId: IContentBucket['id']
-  onAdd: () => void
-  onRemove: (id: IDevice['id']) => void
+  onAdd: () => any
+  onRemove: (id: IDevice['id']) => any
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
 

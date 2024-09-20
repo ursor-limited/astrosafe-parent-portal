@@ -1,23 +1,23 @@
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import _ from 'lodash';
-import { IAllowedTime } from './LimitsTab';
-import AllowedTimeRow from './AllowedTimeRow';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
+import _ from 'lodash'
+import { IAllowedTime } from './LimitsTab'
+import AllowedTimeRow from './AllowedTimeRow'
 
 const AllowedTimesSection = (props: {
-  allowedTimes: IAllowedTime[];
+  allowedTimes: IAllowedTime[]
   setAllowedTimes: (
     id: IAllowedTime['id'],
     startTime: IAllowedTime['startTime'],
     endTime: IAllowedTime['endTime']
-  ) => void;
-  addTimeLimit: (day: number, startTime: number, endTime: number) => void;
-  reset: (day: IAllowedTime['day']) => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
-  topRightElement?: React.ReactNode;
-  smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
-  disabled: boolean;
+  ) => any
+  addTimeLimit: (day: number, startTime: number, endTime: number) => any
+  reset: (day: IAllowedTime['day']) => any
+  deleteRange: (id: IAllowedTime['id']) => any
+  topRightElement?: React.ReactNode
+  smallerLabelFont?: boolean
+  halveLabelFrequency?: boolean
+  disabled: boolean
 }) => (
   <AstroBentoCard
     title="Time scheduler"
@@ -58,6 +58,6 @@ const AllowedTimesSection = (props: {
       </Stack>
     ) : null}
   </AstroBentoCard>
-);
+)
 
-export default AllowedTimesSection;
+export default AllowedTimesSection

@@ -1,20 +1,20 @@
-import { ReactComponent as ChevronDownIcon } from './../images/ChevronDown.svg';
-import { Stack } from '@mui/system';
-import UrsorPopover from './UrsorPopover';
-import { useState } from 'react';
-import { Typography } from './../ui';
-import UrsorCalendar from './UrsorCalendar';
+import { ReactComponent as ChevronDownIcon } from './../images/ChevronDown.svg'
+import { Stack } from '@mui/system'
+import UrsorPopover from './UrsorPopover'
+import { useState } from 'react'
+import { Typography } from './../ui'
+import UrsorCalendar from './UrsorCalendar'
 
 export interface IInfoButtonProps {
-  title: string;
-  body: string;
+  title: string
+  body: string
 }
 
 const CalendarButton = (props: {
-  value: Date;
-  setValue: (date: Date) => void;
+  value: Date
+  setValue: (date: Date) => any
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <UrsorPopover
       open={open}
@@ -22,8 +22,8 @@ const CalendarButton = (props: {
         <UrsorCalendar
           value={props.value}
           onChange={(value: Date) => {
-            setOpen(false);
-            props.setValue(value);
+            setOpen(false)
+            props.setValue(value)
           }}
           disableFuture
         />
@@ -55,7 +55,7 @@ const CalendarButton = (props: {
         <ChevronDownIcon height="20px" width="20px" />
       </Stack>
     </UrsorPopover>
-  );
-};
+  )
+}
 
-export default CalendarButton;
+export default CalendarButton

@@ -1,13 +1,13 @@
-import React from 'react';
-import { Stack } from '@mui/system';
-import { ReactComponent as ChevronRightIcon } from './../images/ChevronRight.svg';
-import { ReactComponent as ChevronLeftIcon } from './../images/ChevronLeft.svg';
-import { PALETTE, Typography } from './../ui';
+import React from 'react'
+import { Stack } from '@mui/system'
+import { ReactComponent as ChevronRightIcon } from './../images/ChevronRight.svg'
+import { ReactComponent as ChevronLeftIcon } from './../images/ChevronLeft.svg'
+import { PALETTE, Typography } from './../ui'
 
 const PageSelector = (props: {
-  pageIndex: number;
-  nPages: number;
-  setPageIndex: (index: number) => void;
+  pageIndex: number
+  nPages: number
+  setPageIndex: (index: number) => any
 }) => {
   return (
     <Stack
@@ -82,7 +82,7 @@ const PageSelector = (props: {
         </Stack>,
       ]}
     </Stack>
-  );
-};
+  )
+}
 
-export default PageSelector;
+export default PageSelector

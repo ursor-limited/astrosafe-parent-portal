@@ -1,12 +1,12 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { UrsorButton } from './../../ui';
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { UrsorButton } from './../../ui'
 
 const FilterBlacklistExceptionDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: () => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  onSubmit: () => any
+  isMobile?: boolean
 }) => {
   return (
     <UrsorDialog
@@ -32,8 +32,8 @@ const FilterBlacklistExceptionDialog = (props: {
             variant="tertiary"
             width="100%"
             onClick={() => {
-              props.onSubmit();
-              props.onClose();
+              props.onSubmit()
+              props.onClose()
             }}
           >
             Yes
@@ -44,7 +44,7 @@ const FilterBlacklistExceptionDialog = (props: {
         </Stack>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FilterBlacklistExceptionDialog;
+export default FilterBlacklistExceptionDialog

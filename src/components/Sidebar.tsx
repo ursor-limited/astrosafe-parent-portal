@@ -1,28 +1,28 @@
-import * as React from 'react';
-import { Stack, keyframes } from '@mui/system';
-import { useElementSize } from 'usehooks-ts';
-import { PALETTE, Typography } from './../ui';
-import { ReactComponent as BookIcon } from './../images/BookIcon.svg';
-import { ReactComponent as GearIcon } from './../images/GearIcon.svg';
-import { ReactComponent as PeopleIcon } from './../images/PeopleIcon.svg';
-import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg';
-import useNavigate from '../hooks/useNavigate';
-import { useUserContext } from './UserContext';
-import { UserInitialsCircle } from '../account/contents/common';
+import * as React from 'react'
+import { Stack, keyframes } from '@mui/system'
+import { useElementSize } from 'usehooks-ts'
+import { PALETTE, Typography } from './../ui'
+import { ReactComponent as BookIcon } from './../images/BookIcon.svg'
+import { ReactComponent as GearIcon } from './../images/GearIcon.svg'
+import { ReactComponent as PeopleIcon } from './../images/PeopleIcon.svg'
+import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg'
+import useNavigate from '../hooks/useNavigate'
+import { useUserContext } from './UserContext'
+import { UserInitialsCircle } from '../account/contents/common'
 
-export const WIDTH = '106px';
-const Y_PADDING = '26px';
+export const WIDTH = '106px'
+const Y_PADDING = '26px'
 
-const ICON_SIZE = '28px';
-const SMALL_ICON_SIZE = '22px';
+const ICON_SIZE = '28px'
+const SMALL_ICON_SIZE = '22px'
 
-const BUTTON_Y_PADDING = '10px';
-const BUTTON_X_PADDING = '23px';
+const BUTTON_Y_PADDING = '10px'
+const BUTTON_X_PADDING = '23px'
 
-const BUTTON_SELECTED_BACKGROUND = PALETTE.secondary.purple[2];
+const BUTTON_SELECTED_BACKGROUND = PALETTE.secondary.purple[2]
 
-const SMALL_ICON_HEIGHT_THRESHOLD = 630;
-const NO_TEXT_HEIGHT_THRESHOLD = 469;
+const SMALL_ICON_HEIGHT_THRESHOLD = 630
+const NO_TEXT_HEIGHT_THRESHOLD = 469
 
 export const slideIn = keyframes`
 from {
@@ -31,7 +31,7 @@ from {
 to {
   transform: translateX(40px);
 }
-`;
+`
 
 export const slideOut = keyframes`
 from {
@@ -40,7 +40,7 @@ from {
 to {
   transform: translateX(-1000px);
 }
-`;
+`
 
 export type SideBarItemId =
   | 'home'
@@ -65,21 +65,21 @@ export type SideBarItemId =
   | 'users'
   | 'channels'
   | 'moonsafe'
-  | 'content';
+  | 'content'
 
 export interface ISidebarItem {
-  id?: SideBarItemId;
-  tourId?: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  noPathFill?: boolean; // unfortunately some svgs have to be colored by stroke instead of path fill
-  title: string;
-  callback: () => void;
-  notificationCount?: number;
+  id?: SideBarItemId
+  tourId?: string
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  noPathFill?: boolean // unfortunately some svgs have to be colored by stroke instead of path fill
+  title: string
+  callback: () => any
+  notificationCount?: number
 }
 
 export interface ISidebarProps {
-  selectedItemId: SideBarItemId;
-  classroomId?: string;
+  selectedItemId: SideBarItemId
+  classroomId?: string
 }
 
 export const getListButtonStyle = (
@@ -87,7 +87,7 @@ export const getListButtonStyle = (
   disabled?: boolean,
   center?: boolean
 ) => {
-  const backgroundColor = selected ? BUTTON_SELECTED_BACKGROUND : null;
+  const backgroundColor = selected ? BUTTON_SELECTED_BACKGROUND : null
   return {
     fontFamily: 'Rubik',
     color: selected ? PALETTE.font.light : PALETTE.font.dark,
@@ -104,18 +104,18 @@ export const getListButtonStyle = (
     },
     cursor: 'pointer',
     ...(center ? { display: 'flex', justifyContent: 'center' } : null),
-  };
-};
+  }
+}
 
 const SidebarItem = (props: {
-  selected?: boolean;
-  title: string;
-  callback: () => void;
-  children: React.ReactNode;
-  small?: boolean;
-  noText?: boolean;
-  tourId?: string;
-  notificationCount?: number;
+  selected?: boolean
+  title: string
+  callback: () => any
+  children: React.ReactNode
+  small?: boolean
+  noText?: boolean
+  tourId?: string
+  notificationCount?: number
 }) => (
   <Stack
     id={props.tourId}
@@ -176,11 +176,11 @@ const SidebarItem = (props: {
       ) : null}
     </Stack>
   </Stack>
-);
+)
 
 export default function Sidebar(props: ISidebarProps) {
-  const user = useUserContext().user;
-  const navigate = useNavigate();
+  const user = useUserContext().user
+  const navigate = useNavigate()
   const topItems: ISidebarItem[] = [
     {
       id: 'devices',
@@ -203,7 +203,7 @@ export default function Sidebar(props: ISidebarProps) {
       title: 'Content',
       callback: () => navigate.push('/folders'),
     },
-  ];
+  ]
 
   const bottomItems: ISidebarItem[] = [
     {
@@ -212,12 +212,12 @@ export default function Sidebar(props: ISidebarProps) {
       title: 'Account',
       callback: () => navigate.push('/account'),
     },
-  ];
+  ]
 
   const getList = (items: ISidebarItem[], small: boolean, noText: boolean) => (
     <Stack spacing={small ? '16px' : '24px'} width="100%">
       {items.map((item, index) => {
-        const selected = item.id === props.selectedItemId;
+        const selected = item.id === props.selectedItemId
         return (
           <SidebarItem
             key={index}
@@ -231,14 +231,14 @@ export default function Sidebar(props: ISidebarProps) {
           >
             <item.icon height={small ? SMALL_ICON_SIZE : ICON_SIZE} />
           </SidebarItem>
-        );
+        )
       })}
     </Stack>
-  );
+  )
 
-  const [ref, { width, height }] = useElementSize();
-  const small = !!height && height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD;
-  const noText = !!height && height < NO_TEXT_HEIGHT_THRESHOLD;
+  const [ref, { width, height }] = useElementSize()
+  const small = !!height && height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD
+  const noText = !!height && height < NO_TEXT_HEIGHT_THRESHOLD
 
   return (
     <>
@@ -271,5 +271,5 @@ export default function Sidebar(props: ISidebarProps) {
         </SidebarItem>
       </Stack>
     </>
-  );
+  )
 }

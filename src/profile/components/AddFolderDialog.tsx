@@ -1,31 +1,31 @@
-import ApiController from './../../api';
-import { SearchInput } from './../../components/SearchInput';
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { IDevice } from './../../filter/contents/common';
-import { IContentBucket } from './ContentTab';
-import { IGroup } from './../../folder/contents/common';
-import { IEnrichedContentBucket } from './../../folders/contents/common';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
+import ApiController from './../../api'
+import { SearchInput } from './../../components/SearchInput'
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { IDevice } from './../../filter/contents/common'
+import { IContentBucket } from './ContentTab'
+import { IGroup } from './../../folder/contents/common'
+import { IEnrichedContentBucket } from './../../folders/contents/common'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
 
 const AddFolderDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onAdd: (id: IDevice['id']) => void;
-  openCreateNewDialog: () => void;
-  addedFolders: IEnrichedContentBucket[];
-  isMobile?: boolean;
-  groupId: IGroup['id'];
+  open: boolean
+  onClose: () => any
+  onAdd: (id: IDevice['id']) => any
+  openCreateNewDialog: () => any
+  addedFolders: IEnrichedContentBucket[]
+  isMobile?: boolean
+  groupId: IGroup['id']
 }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [allFolders, setAllFolders] = useState<IContentBucket[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [allFolders, setAllFolders] = useState<IContentBucket[]>([])
   useEffect(() => {
-    ApiController.getGroupFolders(props.groupId).then((d) => setAllFolders(d));
-  }, [props.groupId]);
+    ApiController.getGroupFolders(props.groupId).then((d) => setAllFolders(d))
+  }, [props.groupId])
 
-  const [nonAddedFolders, setNonAddedFolders] = useState<IContentBucket[]>([]);
+  const [nonAddedFolders, setNonAddedFolders] = useState<IContentBucket[]>([])
   useEffect(
     () =>
       setNonAddedFolders(
@@ -34,9 +34,9 @@ const AddFolderDialog = (props: {
         )
       ),
     [allFolders, props.addedFolders]
-  );
+  )
 
-  const [filteredFolders, setFilteredFolders] = useState<IContentBucket[]>([]);
+  const [filteredFolders, setFilteredFolders] = useState<IContentBucket[]>([])
   useEffect(
     () =>
       setFilteredFolders(
@@ -47,7 +47,7 @@ const AddFolderDialog = (props: {
         )
       ),
     [nonAddedFolders, searchValue]
-  );
+  )
   return (
     <UrsorDialog
       open={props.open}
@@ -125,7 +125,7 @@ const AddFolderDialog = (props: {
         Create new
       </UrsorButton>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default AddFolderDialog;
+export default AddFolderDialog

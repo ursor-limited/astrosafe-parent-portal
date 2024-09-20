@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import DynamicCardGrid from '../../../components/DynamicCardGrid'
 import PageLayout from '../../../components/PageLayout'
 import UrsorFadeIn from '../../../components/UrsorFadeIn'
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { ReactComponent as PlusIcon } from '../../../images/PlusIcon.svg'
 import { Stack } from '@mui/system'
 import { IEnrichedContentBucket } from '../../../folders/contents/common'
 import FolderCard from '../../../components/FolderCard'
@@ -16,8 +16,8 @@ import { isMobile } from 'react-device-detect'
 
 interface FoldersSectionProps {
   email: string
-  onClickFolder: (folder: IEnrichedContentBucket) => {}
-  onCreateFolder: (folder: IEnrichedContentBucket) => {}
+  onClickFolder: (folder: IEnrichedContentBucket) => any
+  onCreateFolder: (folder: IEnrichedContentBucket) => any
 }
 
 const FoldersSection: React.FC<FoldersSectionProps> = ({
@@ -50,6 +50,7 @@ const FoldersSection: React.FC<FoldersSectionProps> = ({
 
   return (
     <PageLayout
+      noSidebar
       title="My Content"
       info={INFOS.folders}
       bodyWidth="100%"

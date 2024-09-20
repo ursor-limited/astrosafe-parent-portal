@@ -1,59 +1,59 @@
-import _ from 'lodash';
+import _ from 'lodash'
 import React, {
   useContext,
   createContext,
   useState,
   useEffect,
   useCallback,
-} from 'react';
-import { useLocalStorage } from 'usehooks-ts';
-import { DUMMY_USER_ID, IUser } from '../account/contents/common';
-import ApiController from '../api';
+} from 'react'
+import { useLocalStorage } from 'usehooks-ts'
+import { DUMMY_USER_ID, IUser } from '../account/contents/common'
+import ApiController from '../api'
 
-const hotjarVersion = 6;
+const hotjarVersion = 6
 
 export interface IUserContext {
-  user?: IUser;
-  loaded: boolean;
-  loading?: boolean;
-  refresh?: () => void;
-  clear?: () => void;
-  schoolIsSubscribed?: boolean;
+  user?: IUser
+  loaded: boolean
+  loading?: boolean
+  refresh?: () => any
+  clear?: () => any
+  schoolIsSubscribed?: boolean
 }
 
-const UserContext = createContext<IUserContext>({ loaded: false });
+const UserContext = createContext<IUserContext>({ loaded: false })
 
 const useUserContext = () => {
-  const context = useContext(UserContext);
+  const context = useContext(UserContext)
   if (context === undefined) {
-    throw new Error('useUserContext must be used within a UserContextProvider');
+    throw new Error('useUserContext must be used within a UserContextProvider')
   }
-  return context;
-};
+  return context
+}
 
 export interface IUserProviderProps {
-  checkoutSessionId?: string;
-  children: React.ReactNode;
+  checkoutSessionId?: string
+  children: React.ReactNode
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // this is legacy, used for getting the user details by auth0. Got to hook it up to keycloak!
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 const UserProvider = (props: IUserProviderProps) => {
-  const [user, setUser] = useState<IUser | undefined>();
+  const [user, setUser] = useState<IUser | undefined>()
 
   const loadUser = useCallback(
     () => ApiController.getUser(DUMMY_USER_ID).then((u) => setUser(u)),
     []
-  );
+  )
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [loaded, setLoaded] = useState<boolean>(false);
+    loadUser()
+  }, [loadUser])
+  const [loading, setLoading] = useState<boolean>(false)
+  const [loaded, setLoaded] = useState<boolean>(false)
 
-  const [signedIn, setSignedIn] = useLocalStorage<boolean>('s ignedIn', false);
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>('s ignedIn', false)
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
-    useLocalStorage<boolean>('upgradedNotificationPending', false);
+    useLocalStorage<boolean>('upgradedNotificationPending', false)
 
   // useEffect(() => {
   //   setTimeout(
@@ -154,7 +154,7 @@ const UserProvider = (props: IUserProviderProps) => {
   ] = useLocalStorage<'cancelled' | 'renewed' | null>(
     's ubscriptionStatusChangePossible',
     null
-  );
+  )
   // useEffect(() => {
   //   if (!signedIn) return;
   //   if (
@@ -188,7 +188,7 @@ const UserProvider = (props: IUserProviderProps) => {
     >
       {props.children}
     </UserContext.Provider>
-  );
-};
+  )
+}
 
-export { UserProvider, useUserContext };
+export { UserProvider, useUserContext }

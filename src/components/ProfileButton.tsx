@@ -45,11 +45,11 @@ const ProfileButtonActualButton = (props: {
 )
 
 const ProfilePopupButton = (props: {
-  callback: () => void
+  callback: () => any
   icon: React.FC<React.SVGProps<SVGSVGElement>>
   text: string
-  // hoveringOnCallback: () => void;
-  // hoveringOffCallback: () => void;
+  // hoveringOnCallback: () => any;
+  // hoveringOffCallback: () => any;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false)
   return (

@@ -1,28 +1,28 @@
-import { Stack } from '@mui/system';
-import { IDevice } from '../filter/contents/common';
-import DynamicCardGrid from './DynamicCardGrid';
-import UrsorFadeIn from './UrsorFadeIn';
-import { ReactComponent as XIcon } from './../images/X.svg';
-import { ReactComponent as PlusIcon } from './../images/PlusIcon.svg';
-import { BACKDROP_STYLE, BORDER_RADIUS } from './UrsorDialog';
-import { Dialog } from '@mui/material';
-import { Typography, UrsorButton } from './../ui';
-import { useEffect, useState } from 'react';
-import { SearchInput } from './SearchInput';
-import DeviceCard from '../profiles/components/DeviceCard';
-import InfoButton from './InfoButton';
-import { INFOS } from '../profile/components/ProfilePageTabLayout';
+import { Stack } from '@mui/system'
+import { IDevice } from '../filter/contents/common'
+import DynamicCardGrid from './DynamicCardGrid'
+import UrsorFadeIn from './UrsorFadeIn'
+import { ReactComponent as XIcon } from './../images/X.svg'
+import { ReactComponent as PlusIcon } from './../images/PlusIcon.svg'
+import { BACKDROP_STYLE, BORDER_RADIUS } from './UrsorDialog'
+import { Dialog } from '@mui/material'
+import { Typography, UrsorButton } from './../ui'
+import { useEffect, useState } from 'react'
+import { SearchInput } from './SearchInput'
+import DeviceCard from '../profiles/components/DeviceCard'
+import InfoButton from './InfoButton'
+import { INFOS } from '../profile/components/ProfilePageTabLayout'
 
 const AllDevicesDialog = (props: {
-  title: string;
-  open: boolean;
-  onClose: () => void;
-  onAdd: () => void;
-  onRemove?: (id: IDevice['id']) => void;
-  devices: IDevice[];
+  title: string
+  open: boolean
+  onClose: () => any
+  onAdd: () => any
+  onRemove?: (id: IDevice['id']) => any
+  devices: IDevice[]
 }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([])
   useEffect(
     () =>
       setFilteredDevices(
@@ -31,7 +31,7 @@ const AllDevicesDialog = (props: {
         )
       ),
     [props.devices, searchValue]
-  );
+  )
   return (
     <Dialog
       transitionDuration={800}
@@ -101,7 +101,7 @@ const AllDevicesDialog = (props: {
         </DynamicCardGrid>
       </Stack>
     </Dialog>
-  );
-};
+  )
+}
 
-export default AllDevicesDialog;
+export default AllDevicesDialog

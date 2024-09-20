@@ -1,19 +1,19 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { IDevice } from './../../filter/contents/common';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { UrsorButton, UrsorInputField } from './../../ui';
-import { LabeledInputField } from './../../ui/labeled-input-field';
+import UrsorDialog from './../../components/UrsorDialog'
+import { IDevice } from './../../filter/contents/common'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { UrsorButton, UrsorInputField } from './../../ui'
+import { LabeledInputField } from './../../ui/labeled-input-field'
 
 const DeviceRenameDialog = (props: {
-  open: boolean;
-  name: IDevice['name'];
-  onClose: () => void;
-  onSubmit: (name: string) => void;
-  isMobile?: boolean;
+  open: boolean
+  name: IDevice['name']
+  onClose: () => any
+  onSubmit: (name: string) => any
+  isMobile?: boolean
 }) => {
-  const [name, setName] = useState<string>('');
-  useEffect(() => setName(props.name), [props.name]);
+  const [name, setName] = useState<string>('')
+  useEffect(() => setName(props.name), [props.name])
   return (
     <UrsorDialog
       open={props.open}
@@ -53,7 +53,7 @@ const DeviceRenameDialog = (props: {
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default DeviceRenameDialog;
+export default DeviceRenameDialog

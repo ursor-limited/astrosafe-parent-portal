@@ -26,9 +26,9 @@ const ProfilePageDesktopBody = (props: {
   actions: IActionPopupItem[]
   folders: IEnrichedContentBucket[]
   tab?: AstroAccountTab
-  onUpdateDevice: () => void
-  onUpdateFolders: () => void
-  openAddFolderDialog: () => void
+  onUpdateDevice: () => any
+  onUpdateFolders: () => any
+  openAddFolderDialog: () => any
 }) => {
   const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(

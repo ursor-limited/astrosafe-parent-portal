@@ -1,34 +1,34 @@
-import { Stack } from '@mui/system';
-import UrsorPopover from './UrsorPopover';
-import { PALETTE, Typography } from './../ui';
-import { ReactComponent as ChevronDown } from './../images/ChevronDown.svg';
-import { useState } from 'react';
+import { Stack } from '@mui/system'
+import UrsorPopover from './UrsorPopover'
+import { PALETTE, Typography } from './../ui'
+import { ReactComponent as ChevronDown } from './../images/ChevronDown.svg'
+import { useState } from 'react'
 
 export interface ITitleRowItem {
-  text: string;
-  image?: React.ReactNode;
+  text: string
+  image?: React.ReactNode
   options?: {
-    text: string;
-    imageUrl?: string;
-    image?: React.ReactNode;
-    callback: () => void;
-  }[];
-  label?: string; // a small grey text between the actual text and the chevron
-  callback?: () => void;
+    text: string
+    imageUrl?: string
+    image?: React.ReactNode
+    callback: () => any
+  }[]
+  label?: string // a small grey text between the actual text and the chevron
+  callback?: () => any
 }
 
 const TitleRowItemCore = (
   props: ITitleRowItem & { last: boolean; isMobile?: boolean }
 ) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   const ActualItem = (
     <Stack
       direction="row"
       spacing={props.isMobile ? '6px' : '12px'}
       onClick={() => {
-        if (props.options?.length === 0) return;
-        setOpen(true);
-        props.callback?.();
+        if (props.options?.length === 0) return
+        setOpen(true)
+        props.callback?.()
       }}
       alignItems="flex-end"
     >
@@ -65,7 +65,7 @@ const TitleRowItemCore = (
         />
       ) : null}
     </Stack>
-  );
+  )
   return props.options && props.options.length > 0 ? (
     <UrsorPopover
       open={open}
@@ -106,8 +106,8 @@ const TitleRowItemCore = (
     </UrsorPopover>
   ) : (
     ActualItem
-  );
-};
+  )
+}
 
 const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
   return (
@@ -117,7 +117,7 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
       alignItems="center"
     >
       {props.items.map((x, i) => {
-        const isLast = i === (props.items?.length ?? 0) - 1;
+        const isLast = i === (props.items?.length ?? 0) - 1
         return (
           <Stack
             key={i}
@@ -149,10 +149,10 @@ const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
               </Typography>
             ) : null}
           </Stack>
-        );
+        )
       })}
     </Stack>
-  );
-};
+  )
+}
 
-export default TitleRow;
+export default TitleRow

@@ -1,31 +1,31 @@
-import { Stack } from '@mui/system';
-import { CONTENT_BRANDING } from '../contents/common';
-import { PALETTE, Typography } from './../../ui';
-import _ from 'lodash';
-import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg';
-import { ReactComponent as PencilIcon } from './../../images/Pencil.svg';
-import { useState } from 'react';
-import UrsorActionButton from './../../components/UrsorActionButton';
-import DeletionDialog from './../../components/DeletionDialog';
-import { AstroContent, IContent } from './../../profile/components/ContentTab';
+import { Stack } from '@mui/system'
+import { CONTENT_BRANDING } from '../contents/common'
+import { PALETTE, Typography } from './../../ui'
+import _ from 'lodash'
+import { ReactComponent as TrashcanIcon } from './../../images/TrashcanIcon.svg'
+import { ReactComponent as PencilIcon } from './../../images/Pencil.svg'
+import { useState } from 'react'
+import UrsorActionButton from './../../components/UrsorActionButton'
+import DeletionDialog from './../../components/DeletionDialog'
+import { AstroContent, IContent } from './../../profile/components/ContentTab'
 
-import { getAbsoluteUrl } from './../../api';
-import { cleanUrl } from './../../profile/components/MobileInsightsTab';
+import { getAbsoluteUrl } from './../../api'
+import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: 'Video',
   channel: 'Channel',
   link: 'Link',
-};
+}
 
 const ContentCardCore = (props: {
-  onClick?: () => void;
-  type: AstroContent;
-  title?: IContent['title'];
-  twoLineTitleSectionHeight?: boolean;
-  children: React.ReactNode;
+  onClick?: () => any
+  type: AstroContent
+  title?: IContent['title']
+  twoLineTitleSectionHeight?: boolean
+  children: React.ReactNode
 }) => {
-  const Icon = CONTENT_BRANDING[props.type].icon;
+  const Icon = CONTENT_BRANDING[props.type].icon
   return (
     <Stack
       onClick={props.onClick}
@@ -68,23 +68,23 @@ const ContentCardCore = (props: {
         </Typography>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
 const ContentCard = (props: {
-  type: AstroContent;
-  title?: IContent['title'];
-  url?: IContent['url'];
-  onClick?: () => void;
-  noPointerEvents?: boolean;
-  noMenu?: boolean;
-  onDelete: () => void;
-  onOpenEditingDialog: () => void;
-  isMobile?: boolean;
-  twoLineTitleSectionHeight?: boolean;
-  children: React.ReactNode;
+  type: AstroContent
+  title?: IContent['title']
+  url?: IContent['url']
+  onClick?: () => any
+  noPointerEvents?: boolean
+  noMenu?: boolean
+  onDelete: () => any
+  onOpenEditingDialog: () => any
+  isMobile?: boolean
+  twoLineTitleSectionHeight?: boolean
+  children: React.ReactNode
 }) => {
-  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false)
   return (
     <>
       <Stack
@@ -160,7 +160,7 @@ const ContentCard = (props: {
         isMobile={props.isMobile}
       />
     </>
-  );
-};
+  )
+}
 
-export default ContentCard;
+export default ContentCard

@@ -1,12 +1,12 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { FloatingIntroCards, MobileIntroCards } from './DeviceInstructionsView';
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { FloatingIntroCards, MobileIntroCards } from './DeviceInstructionsView'
 
 const DeviceConnectDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onOpen: () => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  onOpen: () => any
+  isMobile?: boolean
 }) => {
   return (
     <UrsorDialog
@@ -32,7 +32,7 @@ const DeviceConnectDialog = (props: {
         )}
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default DeviceConnectDialog;
+export default DeviceConnectDialog

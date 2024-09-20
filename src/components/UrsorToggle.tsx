@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { Switch } from '@mui/material';
-import { PALETTE } from './../ui';
-import { boxShadow } from 'html2canvas/dist/types/css/property-descriptors/box-shadow';
+import React, { useState } from 'react'
+import { Switch } from '@mui/material'
+import { PALETTE } from './../ui'
+import { boxShadow } from 'html2canvas/dist/types/css/property-descriptors/box-shadow'
 
 export interface IUrsorToggle {
-  checked: boolean;
-  small?: boolean;
-  callback: () => void;
+  checked: boolean
+  small?: boolean
+  callback: () => any
 }
 
-const SWITCH_LENGTH = 50; // px
-const SMALL_SWITCH_LENGTH = 31;
-const SWITCH_HEIGHT = 24.5; // px
-const SMALL_SWITCH_HEIGHT = 16;
-const SWITCH_THUMB_MARGIN = 3;
-const SMALL_SWITCH_THUMB_MARGIN = 1.6;
+const SWITCH_LENGTH = 50 // px
+const SMALL_SWITCH_LENGTH = 31
+const SWITCH_HEIGHT = 24.5 // px
+const SMALL_SWITCH_HEIGHT = 16
+const SWITCH_THUMB_MARGIN = 3
+const SMALL_SWITCH_THUMB_MARGIN = 1.6
 
-const SWITCH_THUMB_SIZE = SWITCH_HEIGHT - 2 * SWITCH_THUMB_MARGIN;
+const SWITCH_THUMB_SIZE = SWITCH_HEIGHT - 2 * SWITCH_THUMB_MARGIN
 const SMALL_SWITCH_THUMB_SIZE =
-  SMALL_SWITCH_HEIGHT - 2 * SMALL_SWITCH_THUMB_MARGIN;
+  SMALL_SWITCH_HEIGHT - 2 * SMALL_SWITCH_THUMB_MARGIN
 const SWITCH_MOVEMENT_DISTANCE =
-  SWITCH_LENGTH - SWITCH_THUMB_SIZE - 2 * SWITCH_THUMB_MARGIN;
+  SWITCH_LENGTH - SWITCH_THUMB_SIZE - 2 * SWITCH_THUMB_MARGIN
 const SMALL_SWITCH_MOVEMENT_DISTANCE =
-  SMALL_SWITCH_LENGTH - SMALL_SWITCH_THUMB_SIZE - 2 * SMALL_SWITCH_THUMB_MARGIN;
+  SMALL_SWITCH_LENGTH - SMALL_SWITCH_THUMB_SIZE - 2 * SMALL_SWITCH_THUMB_MARGIN
 
 export const getSwitchStyle = (small: boolean) => ({
   width: `${small ? SMALL_SWITCH_LENGTH : SWITCH_LENGTH}px`,
@@ -69,7 +69,7 @@ export const getSwitchStyle = (small: boolean) => ({
       display: 'none',
     },
   },
-});
+})
 
 export default function UrsorToggle(props: IUrsorToggle) {
   return (
@@ -80,5 +80,5 @@ export default function UrsorToggle(props: IUrsorToggle) {
       //   checkedIcon={getSwitchIcon(false)}
       onChange={props.callback}
     />
-  );
+  )
 }

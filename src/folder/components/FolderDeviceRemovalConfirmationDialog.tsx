@@ -1,14 +1,14 @@
-import UrsorDialog from './../../components/UrsorDialog';
-import { IDevice } from './../../filter/contents/common';
-import { Stack } from '@mui/system';
-import { Typography, UrsorButton } from './../../ui';
+import UrsorDialog from './../../components/UrsorDialog'
+import { IDevice } from './../../filter/contents/common'
+import { Stack } from '@mui/system'
+import { Typography, UrsorButton } from './../../ui'
 
 const FolderDeviceRemovalConfirmationDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: () => void;
-  deviceName: IDevice['name'];
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  onSubmit: () => any
+  deviceName: IDevice['name']
+  isMobile?: boolean
 }) => {
   return (
     <UrsorDialog
@@ -35,8 +35,8 @@ const FolderDeviceRemovalConfirmationDialog = (props: {
           variant="tertiary"
           width="100%"
           onClick={() => {
-            props.onSubmit();
-            props.onClose();
+            props.onSubmit()
+            props.onClose()
           }}
         >
           Yes
@@ -45,14 +45,14 @@ const FolderDeviceRemovalConfirmationDialog = (props: {
           variant="secondary"
           width="100%"
           onClick={() => {
-            props.onClose();
+            props.onClose()
           }}
         >
           No
         </UrsorButton>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FolderDeviceRemovalConfirmationDialog;
+export default FolderDeviceRemovalConfirmationDialog

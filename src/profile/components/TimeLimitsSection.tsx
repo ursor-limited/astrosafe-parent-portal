@@ -1,16 +1,16 @@
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
-import _ from 'lodash';
-import { ITimeLimit } from './LimitsTab';
-import TimeLimitRow from './TimeLimitRow';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
+import _ from 'lodash'
+import { ITimeLimit } from './LimitsTab'
+import TimeLimitRow from './TimeLimitRow'
 
 const TimeLimitsSection = (props: {
-  timeLimits: ITimeLimit[];
-  decrement: (day: number) => void;
-  increment: (day: number) => void;
-  topRightElement?: React.ReactNode;
-  disabled: boolean;
-  isMobile?: boolean;
+  timeLimits: ITimeLimit[]
+  decrement: (day: number) => any
+  increment: (day: number) => any
+  topRightElement?: React.ReactNode
+  disabled: boolean
+  isMobile?: boolean
 }) => (
   <AstroBentoCard
     title="Daily limits"
@@ -47,5 +47,5 @@ const TimeLimitsSection = (props: {
       ))}
     </Stack>
   </AstroBentoCard>
-);
-export default TimeLimitsSection;
+)
+export default TimeLimitsSection

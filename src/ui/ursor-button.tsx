@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-sort-props -- want to have paddings in the current order */
 
-import { Stack, keyframes } from '@mui/system';
-import React, { useEffect, useState } from 'react';
-import { PALETTE } from './palette';
-import { Typography } from './typography';
+import { Stack, keyframes } from '@mui/system'
+import React, { useEffect, useState } from 'react'
+import { PALETTE } from './palette'
+import { Typography } from './typography'
 
 export const spin = keyframes`
 from {
@@ -12,29 +12,29 @@ from {
 to {
   transform: rotate(180deg);
 }
-`;
+`
 
 // tertiary is implemented here only for dark mode; the light mode implementation is in UrsorMagicalButton
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
-export type ButtonSize = 'large' | 'medium' | 'small' | 'tiny';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary'
+export type ButtonSize = 'large' | 'medium' | 'small' | 'tiny'
 
-type ButtonState = 'enabled' | 'hover' | 'pressed';
+type ButtonState = 'enabled' | 'hover' | 'pressed'
 
-type Mode = 'light' | 'dark';
+type Mode = 'light' | 'dark'
 
 export const HEIGHTS: Record<ButtonSize, number> = {
   large: 52,
   medium: 42,
   small: 28,
   tiny: 20,
-};
+}
 
 export const ICON_SIZES: Record<ButtonSize, number> = {
   large: 26,
   medium: 20,
   small: 20,
   tiny: 16,
-};
+}
 
 export const PADDINGS: Record<ButtonSize, { x: number; y: number }> = {
   large: { x: 32, y: 12 },
@@ -50,7 +50,7 @@ export const PADDINGS: Record<ButtonSize, { x: number; y: number }> = {
     x: 12,
     y: 2,
   },
-};
+}
 
 export const BACKGROUND_COLORS: Record<
   Mode,
@@ -80,7 +80,7 @@ export const BACKGROUND_COLORS: Record<
       pressed: PALETTE.secondary.purple[1],
     },
   },
-};
+}
 
 export const FONT_COLORS: Record<
   Mode,
@@ -115,7 +115,7 @@ export const FONT_COLORS: Record<
       pressed: PALETTE.font.light,
     },
   },
-};
+}
 
 export const BORDER_COLORS: Record<
   Mode,
@@ -135,50 +135,50 @@ export const BORDER_COLORS: Record<
       pressed: PALETTE.secondary.grey[3],
     },
   },
-};
+}
 
 export interface UrsorButtonProps {
-  children?: React.ReactNode;
-  onClick?: () => void;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  fontSize?: string;
-  paddingY?: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  hoverOpacity?: number;
-  fontColor?: string;
-  startIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  endIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  iconSize?: number;
-  iconColor?: string;
-  useNaturalIconColor?: boolean;
-  disabled?: boolean;
-  dark?: boolean;
-  shadow?: boolean;
-  strongShadow?: boolean;
-  width?: string;
-  height?: string;
-  paddingX?: string;
-  iconSpin?: boolean;
+  children?: React.ReactNode
+  onClick?: () => any
+  variant?: ButtonVariant
+  size?: ButtonSize
+  fontSize?: string
+  paddingY?: string
+  backgroundColor?: string
+  borderColor?: string
+  hoverOpacity?: number
+  fontColor?: string
+  startIcon?: React.FC<React.SVGProps<SVGSVGElement>>
+  endIcon?: React.FC<React.SVGProps<SVGSVGElement>>
+  iconSize?: number
+  iconColor?: string
+  useNaturalIconColor?: boolean
+  disabled?: boolean
+  dark?: boolean
+  shadow?: boolean
+  strongShadow?: boolean
+  width?: string
+  height?: string
+  paddingX?: string
+  iconSpin?: boolean
 }
 
 export function UrsorButton(props: UrsorButtonProps): JSX.Element {
-  const mode = props.dark ? 'dark' : 'light';
-  const variant = props.variant ?? 'primary';
-  const size = props.size ?? 'medium';
-  const [hovering, setHovering] = useState<boolean>(false);
-  const [pressed, setPressed] = useState<boolean>(false);
-  const [state, setState] = useState<ButtonState>('enabled');
+  const mode = props.dark ? 'dark' : 'light'
+  const variant = props.variant ?? 'primary'
+  const size = props.size ?? 'medium'
+  const [hovering, setHovering] = useState<boolean>(false)
+  const [pressed, setPressed] = useState<boolean>(false)
+  const [state, setState] = useState<ButtonState>('enabled')
   useEffect(() => {
     if (pressed) {
-      setState('pressed');
+      setState('pressed')
     } else if (hovering) {
-      setState('hover');
+      setState('hover')
     } else {
-      setState('enabled');
+      setState('enabled')
     }
-  }, [hovering, pressed]);
+  }, [hovering, pressed])
   return (
     <Stack
       alignItems="center"
@@ -193,17 +193,17 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       justifyContent="center"
       onClick={props.onClick}
       onMouseDown={() => {
-        setPressed(true);
+        setPressed(true)
       }}
       onMouseEnter={() => {
-        setHovering(true);
+        setHovering(true)
       }}
       onMouseLeave={() => {
-        setHovering(false);
-        setPressed(false);
+        setHovering(false)
+        setPressed(false)
       }}
       onMouseUp={() => {
-        setPressed(false);
+        setPressed(false)
       }}
       px={props.paddingX || `${PADDINGS[size].x}px`}
       pl={
@@ -281,5 +281,5 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         />
       ) : null}
     </Stack>
-  );
+  )
 }

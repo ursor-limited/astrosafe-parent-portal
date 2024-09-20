@@ -10,12 +10,12 @@ import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const LinkCreationDialog = (props: {
   open: boolean
-  onClose: () => void
+  onClose: () => any
   folderId: IContentBucket['id']
-  creationCallback: () => void
+  creationCallback: () => any
   updateDetails?: {
     link: ILink
-    callback?: () => void
+    callback?: () => any
   }
 }) => {
   const [title, setTitle] = useState<string>('')

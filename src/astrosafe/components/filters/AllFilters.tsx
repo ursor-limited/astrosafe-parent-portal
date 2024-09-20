@@ -8,6 +8,7 @@ import _ from 'lodash'
 import useAuth from '../../../hooks/useAuth'
 import { DeviceType } from '../../../profile/contents/common'
 import { isMobile } from 'react-device-detect'
+import { Stack } from '@mui/system'
 
 export interface IDevice {
   id: number

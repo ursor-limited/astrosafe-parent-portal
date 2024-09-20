@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment -- "no time to fix" */
 
-import React from 'react';
-import type { SxProps } from '@mui/system';
-import { Box } from '@mui/system';
-import { PALETTE } from './palette';
+import React from 'react'
+import type { SxProps } from '@mui/system'
+import { Box } from '@mui/system'
+import { PALETTE } from './palette'
 
-export const DEFAULT_FONT_WEIGHT = 360;
-export const BOLD_FONT_WEIGHT = 500;
+export const DEFAULT_FONT_WEIGHT = 360
+export const BOLD_FONT_WEIGHT = 500
 
 export const getMaxLinesStyle = (n: number) => ({
   display: '-webkit-box',
@@ -14,7 +14,7 @@ export const getMaxLinesStyle = (n: number) => ({
   WebkitBoxOrient: 'vertical',
   WebkitLineClamp: n,
   //wordBreak: "break-word",
-});
+})
 
 export type UrsorTypographyVariant =
   | 'h0'
@@ -27,7 +27,7 @@ export type UrsorTypographyVariant =
   | 'medium'
   | 'normal'
   | 'small'
-  | 'tiny';
+  | 'tiny'
 
 export const FONT_SIZES: Record<UrsorTypographyVariant, number> = {
   h0: 80,
@@ -41,7 +41,7 @@ export const FONT_SIZES: Record<UrsorTypographyVariant, number> = {
   normal: 16,
   small: 14,
   tiny: 10,
-};
+}
 
 export const LINE_HEIGHTS: Record<UrsorTypographyVariant, number> = {
   h0: 80,
@@ -55,7 +55,7 @@ export const LINE_HEIGHTS: Record<UrsorTypographyVariant, number> = {
   normal: 22,
   small: 20,
   tiny: 11,
-};
+}
 
 const DEFAULT_BOLD: UrsorTypographyVariant[] = [
   'h0',
@@ -64,20 +64,20 @@ const DEFAULT_BOLD: UrsorTypographyVariant[] = [
   'h3',
   'h4',
   'h5',
-];
+]
 
 export interface TypographyProps {
-  variant?: UrsorTypographyVariant;
-  bold?: boolean;
-  faded?: boolean;
-  noWrap?: boolean;
-  color?: string;
-  maxLines?: number;
-  scale?: number;
-  sx?: SxProps;
-  htmlTag?: keyof JSX.IntrinsicElements;
-  onClick?: () => void;
-  children: React.ReactNode;
+  variant?: UrsorTypographyVariant
+  bold?: boolean
+  faded?: boolean
+  noWrap?: boolean
+  color?: string
+  maxLines?: number
+  scale?: number
+  sx?: SxProps
+  htmlTag?: keyof JSX.IntrinsicElements
+  onClick?: () => any
+  children: React.ReactNode
 }
 
 export function Typography(props: TypographyProps): JSX.Element {
@@ -132,5 +132,5 @@ export function Typography(props: TypographyProps): JSX.Element {
         props.children
       )}
     </Box>
-  );
+  )
 }

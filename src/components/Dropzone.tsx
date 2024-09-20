@@ -1,16 +1,16 @@
 /* from https://blog.alexdevero.com/react-file-dropzone/ */
 
-import { Box, Stack } from '@mui/system';
-import React, { forwardRef } from 'react';
+import { Box, Stack } from '@mui/system'
+import React, { forwardRef } from 'react'
 
 // Define interface for component props/api:
 export interface DropZoneProps {
-  onDragStateChange?: (isDragActive: boolean) => void;
-  onDrag?: () => void;
-  onDragIn?: () => void;
-  onDragOut?: () => void;
-  onDrop?: () => void;
-  onFileDrop?: (files: File) => void;
+  onDragStateChange?: (isDragActive: boolean) => any
+  onDrag?: () => any
+  onDragIn?: () => any
+  onDragOut?: () => any
+  onDrop?: () => any
+  onFileDrop?: (files: File) => any
 }
 
 export const DropZone = forwardRef(
@@ -22,73 +22,73 @@ export const DropZone = forwardRef(
       onDragIn,
       onDragOut,
       onDrop,
-    } = props;
+    } = props
 
-    const [file, setFile] = React.useState<File | undefined>(undefined);
+    const [file, setFile] = React.useState<File | undefined>(undefined)
     // Create state to keep track when dropzone is active/non-active:
-    const [isDragActive, setIsDragActive] = React.useState(false);
+    const [isDragActive, setIsDragActive] = React.useState(false)
     // Prepare ref for dropzone element:
-    const dropZoneRef = React.useRef<null | HTMLDivElement>(null);
+    const dropZoneRef = React.useRef<null | HTMLDivElement>(null)
 
     // Create handler for dragenter event:
     const handleDragIn = React.useCallback(
       (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
-        onDragIn?.();
+        event.preventDefault()
+        event.stopPropagation()
+        onDragIn?.()
 
         if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-          setIsDragActive(true);
+          setIsDragActive(true)
         }
       },
       [onDragIn]
-    );
+    )
 
     // Create handler for dragleave event:
     const handleDragOut = React.useCallback(
       (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
-        onDragOut?.();
+        event.preventDefault()
+        event.stopPropagation()
+        onDragOut?.()
 
-        setIsDragActive(false);
+        setIsDragActive(false)
       },
       [onDragOut]
-    );
+    )
 
     // Create handler for dragover event:
     const handleDrag = React.useCallback(
       (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
+        event.preventDefault()
+        event.stopPropagation()
 
-        onDrag?.();
+        onDrag?.()
         if (!isDragActive) {
-          setIsDragActive(true);
+          setIsDragActive(true)
         }
       },
       [isDragActive, onDrag]
-    );
+    )
 
     // Create handler for drop event:
     const handleDrop = React.useCallback(
       (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
+        event.preventDefault()
+        event.stopPropagation()
 
-        setIsDragActive(false);
+        setIsDragActive(false)
 
         if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
           // dropped
-          onFileDrop?.(event.dataTransfer.files[0]);
-          event.dataTransfer.clearData();
+          onFileDrop?.(event.dataTransfer.files[0])
+          event.dataTransfer.clearData()
         } else if (event.target?.files && event.target.files.length > 0) {
           // clicked
-          onFileDrop?.(event.target.files[0]);
+          onFileDrop?.(event.target.files[0])
         }
       },
       [onFileDrop]
-    );
+    )
 
     // React.useEffect(() => {
 
@@ -96,27 +96,27 @@ export const DropZone = forwardRef(
 
     // Obser active state and emit changes:
     React.useEffect(() => {
-      onDragStateChange?.(isDragActive);
-    }, [isDragActive]);
+      onDragStateChange?.(isDragActive)
+    }, [isDragActive])
 
     // Attach listeners to dropzone on mount:
     React.useEffect(() => {
-      const tempZoneRef = dropZoneRef?.current;
+      const tempZoneRef = dropZoneRef?.current
       if (tempZoneRef) {
-        tempZoneRef.addEventListener('dragenter', handleDragIn);
-        tempZoneRef.addEventListener('dragleave', handleDragOut);
-        tempZoneRef.addEventListener('dragover', handleDrag);
-        tempZoneRef.addEventListener('drop', handleDrop);
+        tempZoneRef.addEventListener('dragenter', handleDragIn)
+        tempZoneRef.addEventListener('dragleave', handleDragOut)
+        tempZoneRef.addEventListener('dragover', handleDrag)
+        tempZoneRef.addEventListener('drop', handleDrop)
       }
 
       // Remove listeners from dropzone on unmount:
       return () => {
-        tempZoneRef?.removeEventListener('dragenter', handleDragIn);
-        tempZoneRef?.removeEventListener('dragleave', handleDragOut);
-        tempZoneRef?.removeEventListener('dragover', handleDrag);
-        tempZoneRef?.removeEventListener('drop', handleDrop);
-      };
-    }, []);
+        tempZoneRef?.removeEventListener('dragenter', handleDragIn)
+        tempZoneRef?.removeEventListener('dragleave', handleDragOut)
+        tempZoneRef?.removeEventListener('dragover', handleDrag)
+        tempZoneRef?.removeEventListener('drop', handleDrop)
+      }
+    }, [])
 
     // Render <div> with ref and children:
     return (
@@ -148,10 +148,10 @@ export const DropZone = forwardRef(
         />
         {props.children}
       </Stack>
-    );
+    )
   }
-);
+)
 
-DropZone.displayName = 'DropZone';
+DropZone.displayName = 'DropZone'
 
-export default DropZone;
+export default DropZone

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useLottie } from 'lottie-react';
-import byteAppear from './../lotties/byteAppear.json';
-import byteDisappear from './../lotties/byteDisappear.json';
-import byteCelebration from './../lotties/byteCelebration.json';
-import { Box } from '@mui/system';
+import React, { useEffect, useState } from 'react'
+import { useLottie } from 'lottie-react'
+import byteAppear from './../lotties/byteAppear.json'
+import byteDisappear from './../lotties/byteDisappear.json'
+import byteCelebration from './../lotties/byteCelebration.json'
+import { Box } from '@mui/system'
 
-const HEIGHT = 45;
+const HEIGHT = 45
 
-export type ByteAnimation = 'appear' | 'disappear' | 'celebration';
+export type ByteAnimation = 'appear' | 'disappear' | 'celebration'
 const JSONS: Record<ByteAnimation, any> = {
   appear: byteAppear,
   disappear: byteDisappear,
   celebration: byteCelebration,
-};
+}
 
 export interface IByteAnimationProps {
-  callback: () => void;
-  lottieJson: any;
+  callback: () => any
+  lottieJson: any
 }
 
 function ByteAnimation(props: IByteAnimationProps) {
@@ -25,31 +25,31 @@ function ByteAnimation(props: IByteAnimationProps) {
     autoplay: true,
     loop: false,
     onComplete: props.callback,
-  };
-  const { View } = useLottie(options, { height: HEIGHT });
-  return View;
+  }
+  const { View } = useLottie(options, { height: HEIGHT })
+  return View
 }
 
 export interface IStepsByteControllerProps {
-  animation: ByteAnimation;
-  delay?: number;
+  animation: ByteAnimation
+  delay?: number
 }
 
 export default function Byte(props: IStepsByteControllerProps) {
-  const [animation, setAnimation] = useState<ByteAnimation | null>(null);
+  const [animation, setAnimation] = useState<ByteAnimation | null>(null)
 
   useEffect(() => {
-    (animation || !noTransitionFromNull.includes(props.animation)) &&
-      setTimeout(() => setAnimation(props.animation), props.delay ?? 0);
-  }, [props.animation]);
+    ;(animation || !noTransitionFromNull.includes(props.animation)) &&
+      setTimeout(() => setAnimation(props.animation), props.delay ?? 0)
+  }, [props.animation])
 
-  const noTransitionFromNull: ByteAnimation[] = ['disappear'];
+  const noTransitionFromNull: ByteAnimation[] = ['disappear']
 
-  const callbacks: Record<ByteAnimation, () => void> = {
+  const callbacks: Record<ByteAnimation, () => any> = {
     appear: () => null,
     disappear: () => setAnimation(null),
     celebration: () => null,
-  };
+  }
 
   return (
     <Box
@@ -65,5 +65,5 @@ export default function Byte(props: IStepsByteControllerProps) {
         />
       ) : null}
     </Box>
-  );
+  )
 }

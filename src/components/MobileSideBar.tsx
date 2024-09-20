@@ -1,14 +1,14 @@
-import { Stack } from '@mui/system';
-import { PALETTE, Typography } from './../ui';
-import { ReactComponent as PeopleIcon } from './../images/PeopleIcon.svg';
-import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg';
-import { ReactComponent as BookIcon } from './../images/BookIcon.svg';
-import { ReactComponent as VersionsIcon } from './../images/VersionsIcon.svg';
-import { ReactComponent as XIcon } from './../images/X.svg';
-import _ from 'lodash';
+import { Stack } from '@mui/system'
+import { PALETTE, Typography } from './../ui'
+import { ReactComponent as PeopleIcon } from './../images/PeopleIcon.svg'
+import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg'
+import { ReactComponent as BookIcon } from './../images/BookIcon.svg'
+import { ReactComponent as VersionsIcon } from './../images/VersionsIcon.svg'
+import { ReactComponent as XIcon } from './../images/X.svg'
+import _ from 'lodash'
 
-import { UserInitialsCircle } from './../account/contents/common';
-import useNavigate from '../hooks/useNavigate';
+import { UserInitialsCircle } from './../account/contents/common'
+import useNavigate from '../hooks/useNavigate'
 
 export const astroPages = [
   'profiles',
@@ -16,15 +16,15 @@ export const astroPages = [
   'content',
   'lessons',
   'account',
-] as const;
-export type AstroPage = (typeof astroPages)[number];
+] as const
+export type AstroPage = (typeof astroPages)[number]
 const PAGE_ICONS: Record<AstroPage, React.FC<React.SVGProps<SVGSVGElement>>> = {
   profiles: PeopleIcon,
   filters: FilterIcon,
   content: BookIcon,
   lessons: VersionsIcon,
   account: VersionsIcon,
-};
+}
 
 const PAGE_ROUTES: Record<AstroPage, string> = {
   profiles: 'profiles',
@@ -32,7 +32,7 @@ const PAGE_ROUTES: Record<AstroPage, string> = {
   content: 'folders',
   lessons: 'lessons',
   account: 'account',
-};
+}
 
 const PAGE_DISPLAY_NAMES: Record<AstroPage, string> = {
   profiles: 'Kids',
@@ -40,14 +40,14 @@ const PAGE_DISPLAY_NAMES: Record<AstroPage, string> = {
   content: 'Content',
   lessons: 'Lessons',
   account: 'Account',
-};
+}
 
 const MobileSideBar = (props: {
-  open: boolean;
-  onClose: () => void;
-  selectedPage: AstroPage;
+  open: boolean
+  onClose: () => any
+  selectedPage: AstroPage
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <>
       <Stack
@@ -97,7 +97,7 @@ const MobileSideBar = (props: {
         <Stack justifyContent="space-between" height="100%">
           <Stack spacing="24px">
             {['profiles', 'filters', 'content'].map((page) => {
-              const Icon = PAGE_ICONS[page as AstroPage];
+              const Icon = PAGE_ICONS[page as AstroPage]
               return (
                 <Stack
                   key={page}
@@ -133,7 +133,7 @@ const MobileSideBar = (props: {
                     {PAGE_DISPLAY_NAMES[page as AstroPage]}
                   </Typography>
                 </Stack>
-              );
+              )
             })}
           </Stack>
           <Stack
@@ -164,7 +164,7 @@ const MobileSideBar = (props: {
         </Stack>
       </Stack>
     </>
-  );
-};
+  )
+}
 
-export default MobileSideBar;
+export default MobileSideBar

@@ -11,8 +11,8 @@ import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
 
 const ChangeFilterDialog = (props: {
   open: boolean
-  onClose: () => void
-  submitChange: (id: IFilter['id']) => void
+  onClose: () => any
+  submitChange: (id: IFilter['id']) => any
   currentFilterId: IFilter['id']
   groupId: IGroup['id']
   isMobile?: boolean

@@ -1,23 +1,23 @@
-import { Stack } from '@mui/system';
-import dayjs from 'dayjs';
-import _ from 'lodash';
-import { useEffect, useState } from 'react';
-import { PALETTE, Typography } from './../../ui';
-import { UrsorTypographyVariant } from './../../ui/typography';
-import { IDayScreenTime } from './InsightsTab';
+import { Stack } from '@mui/system'
+import dayjs from 'dayjs'
+import _ from 'lodash'
+import { useEffect, useState } from 'react'
+import { PALETTE, Typography } from './../../ui'
+import { UrsorTypographyVariant } from './../../ui/typography'
+import { IDayScreenTime } from './InsightsTab'
 
-const yInterval = 1; // hours
-const TIME_LIMIT = 6;
+const yInterval = 1 // hours
+const TIME_LIMIT = 6
 
 const AstroTimeChart = (props: {
-  times: IDayScreenTime[];
-  selected: IDayScreenTime['date'];
-  setSelectedDatetime: (datetime: IDayScreenTime['date']) => void;
-  barWidth?: number;
-  labelFontSize?: UrsorTypographyVariant;
-  barsXPadding?: number;
+  times: IDayScreenTime[]
+  selected: IDayScreenTime['date']
+  setSelectedDatetime: (datetime: IDayScreenTime['date']) => any
+  barWidth?: number
+  labelFontSize?: UrsorTypographyVariant
+  barsXPadding?: number
 }) => {
-  const [maxTime, setMaxTime] = useState<number>(0); // minutes
+  const [maxTime, setMaxTime] = useState<number>(0) // minutes
   useEffect(
     () =>
       setMaxTime(
@@ -25,12 +25,12 @@ const AstroTimeChart = (props: {
           props.times[0]?.screenTime
       ),
     [props.times]
-  );
-  const [nHorizontalLines, setNHorizontalLines] = useState<number>(1);
+  )
+  const [nHorizontalLines, setNHorizontalLines] = useState<number>(1)
   useEffect(() => {
-    const nIntervals = Math.ceil(maxTime / (60 * yInterval));
-    setNHorizontalLines(nIntervals === 1 ? 1 : nIntervals + 1); // if the total time is less than 1 hour, the y range should be only 1 hour for ease of viewing
-  }, [maxTime]);
+    const nIntervals = Math.ceil(maxTime / (60 * yInterval))
+    setNHorizontalLines(nIntervals === 1 ? 1 : nIntervals + 1) // if the total time is less than 1 hour, the y range should be only 1 hour for ease of viewing
+  }, [maxTime])
   return (
     <Stack
       flex={1}
@@ -169,7 +169,7 @@ const AstroTimeChart = (props: {
         ))}
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default AstroTimeChart;
+export default AstroTimeChart

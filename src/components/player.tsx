@@ -1,93 +1,92 @@
-import { Stack, keyframes } from '@mui/system';
-import { ReactComponent as Play } from './../images/play.svgimages/play.svg';
-import { ReactComponent as Sync } from './../images/Sync.svg';
-import { ReactComponent as FullScreenIcon } from './../images/FullScreen.svg';
-import { ReactComponent as NormalScreenIcon } from './../images/NormalScreen.svg';
-import { ReactComponent as KiteMark } from './../images/kiteMark.svgimages/kiteMark.svg';
-import { useCallback, useEffect, useState } from 'react';
-import { PALETTE, Typography } from './../ui';
-import { useWindowSize } from 'usehooks-ts';
+import { Stack, keyframes } from '@mui/system'
+import { ReactComponent as Play } from './../images/play.svgimages/play.svg'
+import { ReactComponent as Sync } from './../images/Sync.svg'
+import { ReactComponent as FullScreenIcon } from './../images/FullScreen.svg'
+import { ReactComponent as NormalScreenIcon } from './../images/NormalScreen.svg'
+import { ReactComponent as KiteMark } from './../images/kiteMark.svgimages/kiteMark.svg'
+import { useCallback, useEffect, useState } from 'react'
+import { PALETTE, Typography } from './../ui'
+import { useWindowSize } from 'usehooks-ts'
 
-const BEZIER = 'cubic-bezier(.18,3.03,.35,-0.38)';
+const BEZIER = 'cubic-bezier(.18,3.03,.35,-0.38)'
 
-const VIDEO_DISABLINGS = ['fs', 'rel', 'controls'];
+const VIDEO_DISABLINGS = ['fs', 'rel', 'controls']
 
-const BORDER_RADIUS = '14px';
+const BORDER_RADIUS = '14px'
 
-export const PADDING_TOP = '120px';
+export const PADDING_TOP = '120px'
 
 const Player = (props: {
-  playerId: string;
-  url: string;
-  playingCallback?: (playing: boolean) => void;
-  mutedCallback?: (muted: boolean) => void;
-  provider?: 'youtube' | 'vimeo';
-  width: number;
-  height: number;
-  setDuration?: (duration: number) => void;
-  startTime?: number;
-  setCurrentTime?: (time: number) => void;
-  setCurrentTimeSetter?: (f: (time: number) => void) => void;
-  setPlayingSetter?: (f: (playing: boolean) => void) => void;
-  setMuteSetter?: (f: () => void) => void;
-  endTime?: number;
-  showUrlBar?: boolean;
-  setFullscreen?: (fs: boolean) => void;
-  noGlow?: boolean;
-  noKitemark?: boolean;
-  mobile?: boolean;
-  smallPlayIcon?: boolean;
-  noBackdrop?: boolean;
-  borderRadius?: string;
-  noUrlStartTime?: boolean;
-  autoPlay?: boolean;
+  playerId: string
+  url: string
+  playingCallback?: (playing: boolean) => any
+  mutedCallback?: (muted: boolean) => any
+  provider?: 'youtube' | 'vimeo'
+  width: number
+  height: number
+  setDuration?: (duration: number) => any
+  startTime?: number
+  setCurrentTime?: (time: number) => any
+  setCurrentTimeSetter?: (f: (time: number) => any) => any
+  setPlayingSetter?: (f: (playing: boolean) => any) => any
+  setMuteSetter?: (f: () => any) => any
+  endTime?: number
+  showUrlBar?: boolean
+  setFullscreen?: (fs: boolean) => any
+  noGlow?: boolean
+  noKitemark?: boolean
+  mobile?: boolean
+  smallPlayIcon?: boolean
+  noBackdrop?: boolean
+  borderRadius?: string
+  noUrlStartTime?: boolean
+  autoPlay?: boolean
 }) => {
-  const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
-  const [starHovering, setStarHovering] = useState<boolean>(false);
+  const [overlayHovering, setOverlayHovering] = useState<boolean>(false)
+  const [starHovering, setStarHovering] = useState<boolean>(false)
 
-  const [playing, setPlaying] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false)
   useEffect(
     () => props.playingCallback?.(playing),
     [playing, props.playingCallback]
-  );
-  const [muted, setMuted] = useState<boolean>(false);
-  useEffect(() => props.mutedCallback?.(muted), [muted, props.mutedCallback]);
+  )
+  const [muted, setMuted] = useState<boolean>(false)
+  useEffect(() => props.mutedCallback?.(muted), [muted, props.mutedCallback])
 
   useEffect(() => {
-    (playing || overlayHovering) &&
+    ;(playing || overlayHovering) &&
       props.mobile &&
-      setTimeout(() => setOverlayHovering(false), 3000);
-  }, [props.mobile, props.provider, playing, overlayHovering]);
+      setTimeout(() => setOverlayHovering(false), 3000)
+  }, [props.mobile, props.provider, playing, overlayHovering])
 
-  const [youtubePauseOverlay, setYoutubePauseOverlay] =
-    useState<boolean>(false);
-  const [ended, setEnded] = useState<boolean>(false);
+  const [youtubePauseOverlay, setYoutubePauseOverlay] = useState<boolean>(false)
+  const [ended, setEnded] = useState<boolean>(false)
 
   /////////////////////////
   /* YOUTUBE specific */
   /////////////////////////
   function onPlayerReady(event: any) {
-    setPlayer(event.target);
-    setPlaying(false);
+    setPlayer(event.target)
+    setPlaying(false)
   }
 
   function onPlayerStateChange(event: any) {
     //@ts-ignore
-    const videoStatuses = Object.entries(window.YT.PlayerState);
+    const videoStatuses = Object.entries(window.YT.PlayerState)
 
     const status = //@ts-ignore
-      videoStatuses.find((status) => status[1] === event.data)[0];
-    status === 'PLAYING' && setPlaying(true);
+      videoStatuses.find((status) => status[1] === event.data)[0]
+    status === 'PLAYING' && setPlaying(true)
     // setTimeout(
     //   () => event.target.getPlayerState?.() === 2 && setPlaying(false),
     //   500 // prevent pausing if this is a seek instead of an actual pause
     // );
     if (status !== 'PLAYING') {
-      setPlaying(false);
-      setYoutubePauseOverlay(true);
+      setPlaying(false)
+      setYoutubePauseOverlay(true)
       //status === "ENDED" && setEnded(true);
     } else {
-      setTimeout(() => setYoutubePauseOverlay(false), 500);
+      setTimeout(() => setYoutubePauseOverlay(false), 500)
     }
   }
 
@@ -107,24 +106,24 @@ const Player = (props: {
         onStateChange: onPlayerStateChange,
         // onApiChange,
       },
-    });
-  };
+    })
+  }
 
-  const [player, setPlayer] = useState<any | undefined>(undefined);
+  const [player, setPlayer] = useState<any | undefined>(undefined)
   function loadVideo() {
     if (url?.includes('youtube')) {
       //@ts-ignore
-      window.YT.ready(onYoutubeReady);
+      window.YT.ready(onYoutubeReady)
     } else {
       //@ts-ignore
-      const playah = new Vimeo.Player(props.playerId);
+      const playah = new Vimeo.Player(props.playerId)
       if (playah) {
-        playah.on('pause', () => setPlaying(false));
-        playah.on('play', () => setPlaying(true));
-        setPlayer(playah);
+        playah.on('pause', () => setPlaying(false))
+        playah.on('play', () => setPlaying(true))
+        setPlayer(playah)
       }
     }
-    setPlaying(false);
+    setPlaying(false)
   }
 
   /////////////////////////
@@ -132,7 +131,7 @@ const Player = (props: {
   /////////////////////////
   /////////////////////////
 
-  const [url, setUrl] = useState<string | undefined>(undefined);
+  const [url, setUrl] = useState<string | undefined>(undefined)
   useEffect(
     () =>
       setUrl(
@@ -157,40 +156,40 @@ const Player = (props: {
       //props.endTime, props.startTime,
       props.url,
     ]
-  );
+  )
 
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  useEffect(() => props.setCurrentTime?.(currentTime), [currentTime]);
+  const [currentTime, setCurrentTime] = useState<number>(0)
+  useEffect(() => props.setCurrentTime?.(currentTime), [currentTime])
 
   useEffect(() => {
     player &&
       props.endTime &&
       currentTime > props.endTime &&
-      (url?.includes('vimeo') ? player?.pause() : player?.pauseVideo());
-  }, [currentTime, props.endTime]);
+      (url?.includes('vimeo') ? player?.pause() : player?.pauseVideo())
+  }, [currentTime, props.endTime])
 
   useEffect(() => {
-    if (!player?.getCurrentTime || !playing) return;
+    if (!player?.getCurrentTime || !playing) return
     const interval = setInterval(() => {
       url?.includes('vimeo')
         ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
         : setCurrentTime(() => {
-            const foo = player.getCurrentTime();
-            return foo;
-          });
-    }, 200);
-    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [player, playing, url]);
+            const foo = player.getCurrentTime()
+            return foo
+          })
+    }, 200)
+    return () => clearInterval(interval) // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [player, playing, url])
 
   useEffect(() => {
-    if (!player || !url) return;
+    if (!player || !url) return
     const interval = setInterval(() => {
       setMuted(
         props.provider === 'youtube' ? player?.isMuted() : !player?.getVolume()
-      );
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [player, url]);
+      )
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [player, url])
 
   useEffect(() => {
     if (
@@ -199,77 +198,77 @@ const Player = (props: {
     ) {
       url?.includes('vimeo')
         ? player?.setCurrentTime(props.startTime ?? 0)
-        : player?.seekTo(props.startTime ?? 0);
-      url?.includes('vimeo') ? player?.pause() : player?.pauseVideo();
-      setPlaying(false);
-      setEnded(!!(props.endTime && currentTime >= props.endTime));
+        : player?.seekTo(props.startTime ?? 0)
+      url?.includes('vimeo') ? player?.pause() : player?.pauseVideo()
+      setPlaying(false)
+      setEnded(!!(props.endTime && currentTime >= props.endTime))
     } else {
-      setEnded(false);
+      setEnded(false)
     }
-  }, [currentTime]);
+  }, [currentTime])
 
   useEffect(() => {
-    if (!url) return;
+    if (!url) return
     url.includes('vimeo')
       ? player?.getDuration?.().then?.((d: number) => {
-          props.setDuration?.(d);
+          props.setDuration?.(d)
         })
-      : props.setDuration?.(player?.getDuration());
-  }, [player?.getDuration, url, player?.origin]);
+      : props.setDuration?.(player?.getDuration())
+  }, [player?.getDuration, url, player?.origin])
 
   const removePreviousScript = (id: string) => {
-    const previousScript = document.getElementById(id);
-    previousScript?.parentNode?.removeChild(previousScript);
-  };
+    const previousScript = document.getElementById(id)
+    previousScript?.parentNode?.removeChild(previousScript)
+  }
 
   useEffect(() => {
-    if (!url || !document) return;
-    removePreviousScript(url);
-    var tag = document.createElement('script');
-    tag.id = url;
+    if (!url || !document) return
+    removePreviousScript(url)
+    var tag = document.createElement('script')
+    tag.id = url
     tag.src = url?.includes('youtube')
       ? 'https://www.youtube.com/iframe_api'
-      : 'https://player.vimeo.com/api/player.js';
+      : 'https://player.vimeo.com/api/player.js'
     //@ts-ignore
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
-    tag.onload = loadVideo;
-  }, [url, document]);
+    var firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag)
+    tag.onload = loadVideo
+  }, [url, document])
 
-  const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
+  const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false)
   useEffect(() => {
-    playing && setHasBegunPlaying(true);
-  }, [playing]);
+    playing && setHasBegunPlaying(true)
+  }, [playing])
 
   useEffect(() => {
     props.setCurrentTimeSetter?.((time: number) => {
-      setCurrentTime(time);
+      setCurrentTime(time)
       url?.includes('vimeo')
         ? player?.setCurrentTime(time ?? 0)
-        : player?.seekTo(time ?? 0);
-    });
+        : player?.seekTo(time ?? 0)
+    })
     props.setPlayingSetter?.((p: boolean) => {
-      if (!p && !hasBegunPlaying) return;
+      if (!p && !hasBegunPlaying) return
       if (!p) {
-        url?.includes('vimeo') ? player?.pause() : player?.pauseVideo();
+        url?.includes('vimeo') ? player?.pause() : player?.pauseVideo()
       } else {
-        resume();
+        resume()
       }
-    });
+    })
     props.setMuteSetter?.(() => {
       if (props.provider === 'youtube') {
-        player?.isMuted() ? player?.unMute() : player?.mute();
+        player?.isMuted() ? player?.unMute() : player?.mute()
       } else {
-        player?.getVolume().then((v: number) => player?.setVolume(v ? 0 : 1));
+        player?.getVolume().then((v: number) => player?.setVolume(v ? 0 : 1))
       }
-    });
-  }, [url, player, hasBegunPlaying]);
+    })
+  }, [url, player, hasBegunPlaying])
 
   const resume = () => {
     // the playerState used to be in player.v, then it was changed to player.playerState, and then back. So we cannot rely on youtube to keep it constant.
     const playerState =
-      player?.playerInfo?.playerState || player?.v?.playerState;
-    setEnded(false);
+      player?.playerInfo?.playerState || player?.v?.playerState
+    setEnded(false)
     if (
       url?.includes('youtube') &&
       playerState &&
@@ -277,77 +276,77 @@ const Player = (props: {
         playerState === 0 || // 0 is the ended
         playerState === 5) // 5 is the non-yet-started
     ) {
-      player?.playVideo();
+      player?.playVideo()
     } else if (url?.includes('vimeo')) {
-      player?.play();
+      player?.play()
     }
-  };
+  }
 
-  const [fullScreen, setFullScreen] = useState<boolean>(false);
-  useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
+  const [fullScreen, setFullScreen] = useState<boolean>(false)
+  useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen])
 
   const handleUserKeyPress = useCallback((event: any) => {
     if (event.code === 's pace') {
-      resume();
+      resume()
     }
-  }, []);
+  }, [])
 
   const [mouseIsOutsideWindow, setMouseIsOutsideWindow] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   useEffect(() => {
-    window.addEventListener('keydown', handleUserKeyPress);
+    window.addEventListener('keydown', handleUserKeyPress)
     return () => {
-      window.removeEventListener('keydown', handleUserKeyPress);
-    };
-  }, [handleUserKeyPress]);
+      window.removeEventListener('keydown', handleUserKeyPress)
+    }
+  }, [handleUserKeyPress])
 
   const handleMouseEnterWindow = useCallback(() => {
     //setOverallHovering(false);
-    setOverlayHovering(true);
+    setOverlayHovering(true)
     //setTimeout(() => setOverlayHovering(false), [3000]);
-  }, []);
+  }, [])
 
   useEffect(() => {
-    document.addEventListener('mouseenter', handleMouseEnterWindow);
+    document.addEventListener('mouseenter', handleMouseEnterWindow)
     return () => {
-      document.removeEventListener('mouseenter', handleMouseEnterWindow);
-    };
-  }, [document, handleMouseEnterWindow]);
+      document.removeEventListener('mouseenter', handleMouseEnterWindow)
+    }
+  }, [document, handleMouseEnterWindow])
 
   const handleMouseLeaveWindow = useCallback(() => {
     //setOverallHovering(false);
     // setOverlayHovering(true);
     // setTimeout(() => setOverlayHovering(false), 3000);
-    setMouseIsOutsideWindow(true);
-  }, []);
+    setMouseIsOutsideWindow(true)
+  }, [])
 
   useEffect(() => {
-    document.addEventListener('mouseleave', handleMouseLeaveWindow);
+    document.addEventListener('mouseleave', handleMouseLeaveWindow)
     return () => {
-      document.removeEventListener('mouseleave', handleMouseLeaveWindow);
-    };
-  }, [document, handleMouseLeaveWindow]);
+      document.removeEventListener('mouseleave', handleMouseLeaveWindow)
+    }
+  }, [document, handleMouseLeaveWindow])
 
-  const { width, height } = useWindowSize();
+  const { width, height } = useWindowSize()
 
-  const [videoWidth, setVideoWidth] = useState<number>(0);
+  const [videoWidth, setVideoWidth] = useState<number>(0)
   useEffect(() => {
-    const windowAspectRatio = width / height;
-    const videoAspectRatio = 16 / 9;
+    const windowAspectRatio = width / height
+    const videoAspectRatio = 16 / 9
     setVideoWidth(
       windowAspectRatio < videoAspectRatio ? width : height * videoAspectRatio
-    );
-  }, [width, height]);
+    )
+  }, [width, height])
 
-  const [videoHeight, setVideoHeight] = useState<number>(0);
+  const [videoHeight, setVideoHeight] = useState<number>(0)
   useEffect(() => {
-    const windowAspectRatio = width / height;
-    const videoAspectRatio = 16 / 9;
+    const windowAspectRatio = width / height
+    const videoAspectRatio = 16 / 9
     setVideoHeight(
       windowAspectRatio > videoAspectRatio ? height : width / videoAspectRatio
-    );
-  }, [width, height]);
+    )
+  }, [width, height])
 
   return (
     <Stack
@@ -400,8 +399,8 @@ const Player = (props: {
               youtubePauseOverlay || mouseIsOutsideWindow ? undefined : 'none',
           }}
           onMouseEnter={() => {
-            setOverlayHovering(true);
-            setMouseIsOutsideWindow(false);
+            setOverlayHovering(true)
+            setMouseIsOutsideWindow(false)
           }}
           onMouseLeave={() => setOverlayHovering(false)} //@ts-ignore
           //onClick={(event) => iframe?.dispatchEvent(event)}
@@ -587,7 +586,7 @@ const Player = (props: {
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default Player;
+export default Player

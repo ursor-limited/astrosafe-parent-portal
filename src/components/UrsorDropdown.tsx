@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Stack } from '@mui/system';
-import UrsorPopover from './UrsorPopover';
-import { PALETTE, Typography } from './../ui';
+import React, { useEffect, useState } from 'react'
+import { Box, Stack } from '@mui/system'
+import UrsorPopover from './UrsorPopover'
+import { PALETTE, Typography } from './../ui'
 
-const ROW_HEIGHT = '45px';
-export const X_PADDING = '20px';
-const LIST_MAX_HEIGHT = '400px';
+const ROW_HEIGHT = '45px'
+export const X_PADDING = '20px'
+const LIST_MAX_HEIGHT = '400px'
 
 interface IUrsorDropdownRowProps {
-  value: string;
-  secondaryValue?: string;
-  icon?: JSX.Element;
-  hovering?: boolean;
-  ///callback?: () => void;
+  value: string
+  secondaryValue?: string
+  icon?: JSX.Element
+  hovering?: boolean
+  ///callback?: () => any;
 }
 
 export function UrsorDropdownListRow(props: IUrsorDropdownRowProps) {
@@ -49,7 +49,7 @@ export function UrsorDropdownListRow(props: IUrsorDropdownRowProps) {
         ) : null}
       </Stack>
     </Stack>
-  );
+  )
 }
 
 export function UrsorDropdownListHeader(props: { title: string }) {
@@ -60,16 +60,16 @@ export function UrsorDropdownListHeader(props: { title: string }) {
       </Typography>
       <Box height="1px" width="100%" bgcolor={PALETTE.secondary.grey[3]} />
     </Stack>
-  );
+  )
 }
 
 export function UrsorDropdownList(props: {
   rows: (Pick<IUrsorDropdownRowProps, 'value' | 'secondaryValue' | 'icon'> & {
-    id: string;
-    callback: () => void;
-  })[];
+    id: string
+    callback: () => any
+  })[]
 }) {
-  const [hoverRowId, setHoverRowId] = useState<string | undefined>(undefined);
+  const [hoverRowId, setHoverRowId] = useState<string | undefined>(undefined)
   return (
     <Stack width="100%" maxHeight={LIST_MAX_HEIGHT}>
       {props.rows.map((row) => (
@@ -85,19 +85,19 @@ export function UrsorDropdownList(props: {
         </Box>
       ))}
     </Stack>
-  );
+  )
 }
 
 export interface IUrsorDropdownButtonProps {
   rows: (Pick<IUrsorDropdownRowProps, 'value' | 'secondaryValue' | 'icon'> & {
-    id: string;
-    callback: () => void;
-  })[];
-  children: React.ReactNode;
+    id: string
+    callback: () => any
+  })[]
+  children: React.ReactNode
 }
 
 export function UrsorDropdownButton(props: IUrsorDropdownButtonProps) {
-  const [popupOpen, setPopupOpen] = useState<boolean>(false);
+  const [popupOpen, setPopupOpen] = useState<boolean>(false)
 
   return (
     <UrsorPopover
@@ -117,5 +117,5 @@ export function UrsorDropdownButton(props: IUrsorDropdownButtonProps) {
         {props.children}
       </Box>
     </UrsorPopover>
-  );
+  )
 }

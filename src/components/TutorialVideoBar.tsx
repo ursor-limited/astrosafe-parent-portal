@@ -1,17 +1,17 @@
-import { Stack } from '@mui/system';
-import { ReactComponent as PlayIcon } from './../images/PlayIcon.svg';
-import { PALETTE, Typography, UrsorButton } from './../ui';
+import { Stack } from '@mui/system'
+import { ReactComponent as PlayIcon } from './../images/PlayIcon.svg'
+import { PALETTE, Typography, UrsorButton } from './../ui'
 
-import { ReactComponent as X } from './../images/X.svg';
-import { useState } from 'react';
+import { ReactComponent as X } from './../images/X.svg'
+import { useState } from 'react'
 
 const TutorialVideoBar = (props: {
-  title: string;
-  subtitle: string;
-  callback: () => void;
-  xCallback: () => void;
+  title: string
+  subtitle: string
+  callback: () => any
+  xCallback: () => any
 }) => {
-  const [hovering, setHovering] = useState<boolean>(false);
+  const [hovering, setHovering] = useState<boolean>(false)
   return (
     <Stack
       borderRadius="12px"
@@ -59,10 +59,10 @@ const TutorialVideoBar = (props: {
         width="100%"
         onClick={props.callback}
         onMouseEnter={() => {
-          setHovering(true);
+          setHovering(true)
         }}
         onMouseLeave={() => {
-          setHovering(false);
+          setHovering(false)
         }}
       />
       <Stack
@@ -78,7 +78,7 @@ const TutorialVideoBar = (props: {
         <X height="20px" width="20px" />
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default TutorialVideoBar;
+export default TutorialVideoBar

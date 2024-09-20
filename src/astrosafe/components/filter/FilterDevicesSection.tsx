@@ -20,7 +20,7 @@ import { INotificationContext } from '../../../components/NotificationContext'
 interface FilterDevicesSectionProps {
   filterId: number
   email: string
-  onClickDevice?: () => void
+  onClickDevice?: () => any
 }
 
 const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({

@@ -1,15 +1,15 @@
-import { Stack } from '@mui/system';
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
+import { Stack } from '@mui/system'
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
 
 export const AddContentButton = (props: {
-  color: string;
-  title: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  mobile?: boolean;
-  fullWidth?: boolean;
-  strongShadow?: boolean;
-  onClick: () => void;
+  color: string
+  title: string
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  mobile?: boolean
+  fullWidth?: boolean
+  strongShadow?: boolean
+  onClick: () => any
 }) => {
   return (
     <Stack
@@ -83,5 +83,5 @@ export const AddContentButton = (props: {
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}

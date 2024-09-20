@@ -1,52 +1,52 @@
-import React, { useState } from 'react';
-import { Stack } from '@mui/system';
-import { ReactComponent as ChevronDown } from './../images/ChevronDown.svg';
-import { ReactComponent as X } from './../images/X.svg';
-import { PALETTE } from './../ui';
-import { Typography } from './../ui';
-import UrsorPopover from './UrsorPopover';
+import React, { useState } from 'react'
+import { Stack } from '@mui/system'
+import { ReactComponent as ChevronDown } from './../images/ChevronDown.svg'
+import { ReactComponent as X } from './../images/X.svg'
+import { PALETTE } from './../ui'
+import { Typography } from './../ui'
+import UrsorPopover from './UrsorPopover'
 
 export interface IUrsorSelectItem {
-  id: string;
-  value: string;
+  id: string
+  value: string
 }
 
 export interface IUrsorSelectProps {
-  items: IUrsorSelectItem[];
-  selected: string[];
-  placeholder?: string;
-  retainPlaceholder?: boolean; // keep it on even when the list is open
-  leftAlign?: boolean;
-  leftAlignPopover?: boolean;
-  keepOpenOnSelect?: boolean;
-  width?: number | string;
-  fieldWidth?: string;
-  white?: boolean;
-  callback: (id: string) => void;
-  clearAllCallback?: () => void;
+  items: IUrsorSelectItem[]
+  selected: string[]
+  placeholder?: string
+  retainPlaceholder?: boolean // keep it on even when the list is open
+  leftAlign?: boolean
+  leftAlignPopover?: boolean
+  keepOpenOnSelect?: boolean
+  width?: number | string
+  fieldWidth?: string
+  white?: boolean
+  callback: (id: string) => any
+  clearAllCallback?: () => any
   listButtons?: {
-    title: string;
-    callback: () => void;
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
-    color?: string;
-  }[];
-  disabled?: boolean;
-  zIndex?: number;
+    title: string
+    callback: () => any
+    icon: React.FC<React.SVGProps<SVGSVGElement>>
+    color?: string
+  }[]
+  disabled?: boolean
+  zIndex?: number
 }
 
 export default function UrsorSelect(props: IUrsorSelectProps) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   const [hoveringRowId, setHoveringRowId] = useState<string | undefined>(
     undefined
-  );
+  )
   const list = (
     <Stack width={props.width} px="20px" pt="10px" pb="5px">
       {props.listButtons?.map((lb, i) => (
         <Stack
           key="button"
           onClick={() => {
-            lb.callback();
-            setOpen(false);
+            lb.callback()
+            setOpen(false)
           }}
           height={i > 0 ? '43px' : '38px'}
           alignItems="center"
@@ -86,8 +86,8 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         <Stack
           key={item.id}
           onClick={() => {
-            props.callback(item.id);
-            !props.keepOpenOnSelect && setOpen(false);
+            props.callback(item.id)
+            !props.keepOpenOnSelect && setOpen(false)
           }}
           height="38px"
           justifyContent="center"
@@ -113,16 +113,16 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         </Stack>
       ))}
     </Stack>
-  );
+  )
 
   const getDisplayValue = () => {
     if (props.retainPlaceholder) {
-      return props.placeholder;
+      return props.placeholder
     }
     return props.selected.length > 0
       ? props.items.find((item) => props.selected.includes(item.id))?.value
-      : '';
-  };
+      : ''
+  }
 
   return (
     <Stack
@@ -224,5 +224,5 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         </Stack>
       </UrsorPopover>
     </Stack>
-  );
+  )
 }

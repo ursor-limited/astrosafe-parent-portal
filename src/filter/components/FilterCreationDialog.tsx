@@ -7,8 +7,8 @@ import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const FilterCreationDialog = (props: {
   open: boolean
-  onClose: () => void
-  onSubmit: (name: string) => void
+  onClose: () => any
+  onSubmit: (name: string) => any
   isMobile?: boolean
 }) => {
   const [name, setName] = useState<string>('')

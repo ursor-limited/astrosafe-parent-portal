@@ -87,7 +87,7 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
 
 export const FrequencySwitch = (props: {
   value: 'monthly' | 'annual'
-  callback: () => void
+  callback: () => any
 }) => (
   <Stack direction="row" spacing="12px" alignItems="center" height="26px">
     <Typography bold color={PALETTE.secondary.grey[4]}>
@@ -184,7 +184,7 @@ const PricingCard = (props: {
   notif?: string
   noButtonIcon?: boolean
   icon?: React.FC<React.SVGProps<SVGSVGElement>>
-  callback: () => void
+  callback: () => any
 }) => (
   <Stack
     flex={1}
@@ -353,7 +353,7 @@ const PricingCard = (props: {
 
 const UpgradeDialog = (props: {
   open: boolean
-  closeCallback: () => void
+  closeCallback: () => any
   mobile?: boolean
 }) => {
   const user = useUserContext().user

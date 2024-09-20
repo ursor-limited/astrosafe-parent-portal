@@ -1,16 +1,16 @@
-import { AstroBentoCard } from './../../filter/components/AstroBentoCard';
-import { Stack } from '@mui/system';
+import { AstroBentoCard } from './../../filter/components/AstroBentoCard'
+import { Stack } from '@mui/system'
 
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { IRequestedSite } from './LimitsTab';
-import ApiController from './../../api';
-import { useContext } from 'react';
-import NotificationContext from './../../components/NotificationContext';
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { IRequestedSite } from './LimitsTab'
+import ApiController from './../../api'
+import { useContext } from 'react'
+import NotificationContext from './../../components/NotificationContext'
 
 const RequestedSiteRow = (
   props: IRequestedSite & {
-    onApprove: () => void;
-    onDeny: () => void;
+    onApprove: () => any
+    onDeny: () => any
   }
 ) => (
   <Stack
@@ -78,13 +78,13 @@ const RequestedSiteRow = (
       </UrsorButton>
     </Stack>
   </Stack>
-);
+)
 
 const RequestedSitesSection = (props: {
-  sites: IRequestedSite[];
-  onUpdate: () => void;
+  sites: IRequestedSite[]
+  onUpdate: () => any
 }) => {
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
   return (
     <Stack spacing="12px">
       <Typography variant="large" bold>{`${props.sites.length} requested site${
@@ -97,21 +97,21 @@ const RequestedSitesSection = (props: {
             {...s}
             onApprove={() =>
               ApiController.approveRequestedSite(s.id).then(() => {
-                props.onUpdate();
-                notificationCtx.success('Approved site');
+                props.onUpdate()
+                notificationCtx.success('Approved site')
               })
             }
             onDeny={() =>
               ApiController.denyRequestedSite(s.id).then(() => {
-                props.onUpdate();
-                notificationCtx.negativeSuccess('Denied site');
+                props.onUpdate()
+                notificationCtx.negativeSuccess('Denied site')
               })
             }
           />
         ))}
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default RequestedSitesSection;
+export default RequestedSitesSection

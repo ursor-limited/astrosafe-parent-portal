@@ -1,23 +1,23 @@
-import { Stack } from '@mui/system';
-import { useState } from 'react';
-import { PALETTE } from './../ui';
-import { ReactComponent as SearchIcon } from './../images/SearchIcon.svg';
-import { ReactComponent as XIcon } from './../images/X.svg';
-import { FONT_SIZES } from './../ui/typography';
-import { Input } from '@mui/material';
+import { Stack } from '@mui/system'
+import { useState } from 'react'
+import { PALETTE } from './../ui'
+import { ReactComponent as SearchIcon } from './../images/SearchIcon.svg'
+import { ReactComponent as XIcon } from './../images/X.svg'
+import { FONT_SIZES } from './../ui/typography'
+import { Input } from '@mui/material'
 
 export const SearchInput = (props: {
-  value: string;
-  callback: (value: string) => void;
-  clearCallback: () => void;
-  shadow?: boolean;
-  fullWidth?: boolean;
-  height?: string;
-  grey?: boolean;
-  iconSize?: string;
+  value: string
+  callback: (value: string) => any
+  clearCallback: () => any
+  shadow?: boolean
+  fullWidth?: boolean
+  height?: string
+  grey?: boolean
+  iconSize?: string
 }) => {
-  const [active, setActive] = useState(false);
-  const [hovering, setHovering] = useState(false);
+  const [active, setActive] = useState(false)
+  const [hovering, setHovering] = useState(false)
   return (
     <Stack
       height={props.height || '28px'}
@@ -71,7 +71,7 @@ export const SearchInput = (props: {
           },
         }}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          props.callback(event.target.value);
+          props.callback(event.target.value)
         }}
         placeholder="Search"
         onBlur={() => setActive(false)}
@@ -90,5 +90,5 @@ export const SearchInput = (props: {
         <XIcon width="16px" height="16px" />
       </Stack>
     </Stack>
-  );
-};
+  )
+}

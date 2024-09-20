@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import _ from 'lodash';
-import { Stack } from '@mui/system';
-import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg';
-import { PALETTE, UrsorButton } from './../ui';
-import UrsorSelectList from './UrsorSelectList';
-import UrsorPopover from './UrsorPopover';
+import React, { useState } from 'react'
+import _ from 'lodash'
+import { Stack } from '@mui/system'
+import { ReactComponent as FilterIcon } from './../images/FilterIcon.svg'
+import { PALETTE, UrsorButton } from './../ui'
+import UrsorSelectList from './UrsorSelectList'
+import UrsorPopover from './UrsorPopover'
 
 export interface IClassSortButtonProps<T extends string> {
-  selected: T;
-  types: T[];
-  displayNames: { [id in T]: string };
-  callback: (sortType: T) => void;
-  darkMode?: boolean;
-  iconOnly?: boolean;
-  width?: string;
-  text?: string;
-  noText?: boolean;
-  disabled?: boolean;
+  selected: T
+  types: T[]
+  displayNames: { [id in T]: string }
+  callback: (sortType: T) => any
+  darkMode?: boolean
+  iconOnly?: boolean
+  width?: string
+  text?: string
+  noText?: boolean
+  disabled?: boolean
 }
 
 const SortButton = <T extends string>(
   props: IClassSortButtonProps<T> & { children?: React.ReactNode }
 ) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <UrsorPopover
       open={open}
@@ -34,8 +34,8 @@ const SortButton = <T extends string>(
             value: props.displayNames[sortType],
           }))}
           callback={(id) => {
-            props.callback(id as T);
-            setOpen(false);
+            props.callback(id as T)
+            setOpen(false)
           }}
         />
       }
@@ -76,7 +76,7 @@ const SortButton = <T extends string>(
         </UrsorButton>
       )}
     </UrsorPopover>
-  );
-};
+  )
+}
 
-export default SortButton;
+export default SortButton

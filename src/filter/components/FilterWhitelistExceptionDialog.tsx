@@ -1,14 +1,14 @@
-import NotificationContext from './../../components/NotificationContext';
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useContext, useState } from 'react';
-import { UrsorButton } from './../../ui';
+import NotificationContext from './../../components/NotificationContext'
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useContext, useState } from 'react'
+import { UrsorButton } from './../../ui'
 
 const FilterWhitelistExceptionDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: () => void;
-  isMobile?: boolean;
+  open: boolean
+  onClose: () => any
+  onSubmit: () => any
+  isMobile?: boolean
 }) => {
   return (
     <UrsorDialog
@@ -34,8 +34,8 @@ const FilterWhitelistExceptionDialog = (props: {
             variant="tertiary"
             width="100%"
             onClick={() => {
-              props.onSubmit();
-              props.onClose();
+              props.onSubmit()
+              props.onClose()
             }}
           >
             Yes
@@ -46,7 +46,7 @@ const FilterWhitelistExceptionDialog = (props: {
         </Stack>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default FilterWhitelistExceptionDialog;
+export default FilterWhitelistExceptionDialog

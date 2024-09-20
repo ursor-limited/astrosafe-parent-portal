@@ -1,15 +1,15 @@
-import AstroSwitch from './../../components/AstroSwitch';
-import { Stack } from '@mui/system';
+import AstroSwitch from './../../components/AstroSwitch'
+import { Stack } from '@mui/system'
 
-import React from 'react';
-import { PALETTE, Typography } from './../../ui';
-import { ReactComponent as CheckIcon } from './../../images/CheckIcon.svg';
-import { IApp } from './AppsTab';
-import { cleanUrl } from './MobileInsightsTab';
+import React from 'react'
+import { PALETTE, Typography } from './../../ui'
+import { ReactComponent as CheckIcon } from './../../images/CheckIcon.svg'
+import { IApp } from './AppsTab'
+import { cleanUrl } from './MobileInsightsTab'
 
 const AppToggleCard = (
   props: IApp & {
-    callback: () => void;
+    callback: () => any
   }
 ) => (
   <Stack
@@ -83,6 +83,6 @@ const AppToggleCard = (
       </Stack>
     </Stack>
   </Stack>
-);
+)
 
-export default AppToggleCard;
+export default AppToggleCard

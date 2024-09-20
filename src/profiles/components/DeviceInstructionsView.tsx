@@ -1,11 +1,11 @@
-import { Stack, alpha, keyframes } from '@mui/system';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg';
+import { Stack, alpha, keyframes } from '@mui/system'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
 
-import DownloadDialog from './DownloadDialog';
-import { useState } from 'react';
+import DownloadDialog from './DownloadDialog'
+import { useState } from 'react'
 
-const PULSE_AMPLITUDE = '12px';
+const PULSE_AMPLITUDE = '12px'
 
 export const pulse = keyframes`
   from {
@@ -14,13 +14,13 @@ export const pulse = keyframes`
   to {
     transform: translateY(${PULSE_AMPLITUDE})
   }
-`;
+`
 
 export const FloatingIntroCards = (props: {
-  onOpen: () => void;
-  fadedEdges?: boolean;
-  greyCards?: boolean;
-  spacing: string;
+  onOpen: () => any
+  fadedEdges?: boolean
+  greyCards?: boolean
+  spacing: string
 }) => (
   <Stack position="relative" width="100%">
     {props.fadedEdges ? (
@@ -133,11 +133,11 @@ export const FloatingIntroCards = (props: {
       </Stack>
     </Stack>
   </Stack>
-);
+)
 
 export const MobileIntroCards = (props: {
-  onOpen: () => void;
-  greyCards?: boolean;
+  onOpen: () => any
+  greyCards?: boolean
 }) => (
   <Stack position="relative" spacing="16px" alignItems="center">
     <InstructionCard
@@ -174,13 +174,13 @@ export const MobileIntroCards = (props: {
       grey={props.greyCards}
     />
   </Stack>
-);
+)
 
 const InstructionCard = (props: {
-  stepIndex: number;
-  text: string;
-  grey?: boolean;
-  children?: React.ReactNode;
+  stepIndex: number
+  text: string
+  grey?: boolean
+  children?: React.ReactNode
 }) => (
   <Stack
     width="260px"
@@ -213,10 +213,10 @@ const InstructionCard = (props: {
     </Stack>
     {props.children ? <Stack pt="6px">{props.children}</Stack> : null}
   </Stack>
-);
+)
 
 const DeviceInstructionsView = () => {
-  const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false)
   return (
     <>
       <Stack
@@ -267,7 +267,7 @@ const DeviceInstructionsView = () => {
         onClose={() => setDownloadDialogOpen(false)}
       />
     </>
-  );
-};
+  )
+}
 
-export default DeviceInstructionsView;
+export default DeviceInstructionsView

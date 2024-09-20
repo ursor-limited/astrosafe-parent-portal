@@ -7,9 +7,9 @@ import { IFilter } from '../../astrosafe/components/filters/AllFilters'
 
 const FilterRenameDialog = (props: {
   open: boolean
-  onClose: () => void
+  onClose: () => any
   name: IFilter['title']
-  onSubmit: (name: string) => void
+  onSubmit: (name: string) => any
   isMobile?: boolean
 }) => {
   const [name, setName] = useState<string>('')

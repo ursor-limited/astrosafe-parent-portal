@@ -14,12 +14,12 @@ import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 
 const ChannelCreationDialog = (props: {
   open: boolean
-  onClose: () => void
+  onClose: () => any
   folderId: IEnrichedContentBucket['id']
-  creationCallback: () => void
+  creationCallback: () => any
   updateDetails?: {
     channel: IChannel
-    callback?: () => void
+    callback?: () => any
   }
 }) => {
   const [title, setTitle] = useState<string>('')

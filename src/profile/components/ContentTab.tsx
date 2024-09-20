@@ -1,68 +1,68 @@
-import DynamicCardGrid from './../../components/DynamicCardGrid';
-import { Stack } from '@mui/system';
-import FolderCard from '../../components/FolderCard';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import useNavigate from '../../hooks/useNavigate';
-import { IEnrichedContentBucket } from './../../folders/contents/common';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { IDevice } from './../../filter/contents/common';
-import ApiController from './../../api';
-import { useContext, useState } from 'react';
-import NotificationContext from './../../components/NotificationContext';
-import FolderDeviceRemovalConfirmationDialog from './../../folder/components/FolderDeviceRemovalConfirmationDialog';
+import DynamicCardGrid from './../../components/DynamicCardGrid'
+import { Stack } from '@mui/system'
+import FolderCard from '../../components/FolderCard'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import useNavigate from '../../hooks/useNavigate'
+import { IEnrichedContentBucket } from './../../folders/contents/common'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { IDevice } from './../../filter/contents/common'
+import ApiController from './../../api'
+import { useContext, useState } from 'react'
+import NotificationContext from './../../components/NotificationContext'
+import FolderDeviceRemovalConfirmationDialog from './../../folder/components/FolderDeviceRemovalConfirmationDialog'
 
-import ProfilePageTabLayout, { INFOS } from './ProfilePageTabLayout';
+import ProfilePageTabLayout, { INFOS } from './ProfilePageTabLayout'
 
-export type AstroContent = 'video' | 'channel' | 'link';
+export type AstroContent = 'video' | 'channel' | 'link'
 
 export interface IContent {
-  id: number;
-  title: string;
-  url: string;
-  createdAt: string;
-  contentBucketId: IContentBucket['id'];
+  id: number
+  title: string
+  url: string
+  createdAt: string
+  contentBucketId: IContentBucket['id']
 }
 
 export interface IContentBucket {
-  id: number;
-  title: string;
-  groupId: number;
-  videos: IVideo[];
-  channels: IChannel[];
-  links: ILink[];
-  lessons: ILesson[];
+  id: number
+  title: string
+  groupId: number
+  videos: IVideo[]
+  channels: IChannel[]
+  links: ILink[]
+  lessons: ILesson[]
 }
 
 export interface ILink extends IContent {
-  thumbnailUrl: string;
+  thumbnailUrl: string
 }
 export interface IChannel extends IContent {
-  profileUrl: string;
-  bannerUrl: string;
+  profileUrl: string
+  bannerUrl: string
 }
 export interface IVideo extends IContent {
-  thumbnailUrl: string;
-  channelId?: IChannel['id'];
+  thumbnailUrl: string
+  channelId?: IChannel['id']
 }
 export interface ILesson extends IContent {
-  imageUrls: string[];
+  imageUrls: string[]
 }
 
 const DevicePageContentTab = (props: {
-  folders: IEnrichedContentBucket[];
-  isMobile?: boolean;
-  onUpdate: () => void;
-  deviceId: IDevice['id'];
-  deviceName: IDevice['name'];
-  openAddFolderDialog: () => void;
+  folders: IEnrichedContentBucket[]
+  isMobile?: boolean
+  onUpdate: () => any
+  deviceId: IDevice['id']
+  deviceName: IDevice['name']
+  openAddFolderDialog: () => any
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [
     folderDeviceRemovalConfirmationDialogId,
     setFolderDeviceRemovalConfirmationDialogId,
-  ] = useState<number | undefined>();
-  const notificationCtx = useContext(NotificationContext);
+  ] = useState<number | undefined>()
+  const notificationCtx = useContext(NotificationContext)
   return (
     <ProfilePageTabLayout
       title={`${props.folders.length} Content Folder${
@@ -160,7 +160,7 @@ const DevicePageContentTab = (props: {
         />
       ) : null}
     </ProfilePageTabLayout>
-  );
-};
+  )
+}
 
-export default DevicePageContentTab;
+export default DevicePageContentTab

@@ -1,33 +1,33 @@
-import ApiController from './../../api';
-import { SearchInput } from './../../components/SearchInput';
-import UrsorDialog from './../../components/UrsorDialog';
-import { Stack } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { PALETTE, Typography } from './../../ui';
-import { IGroup } from '../contents/common';
-import { IDevice } from './../../filter/contents/common';
+import ApiController from './../../api'
+import { SearchInput } from './../../components/SearchInput'
+import UrsorDialog from './../../components/UrsorDialog'
+import { Stack } from '@mui/system'
+import { useEffect, useState } from 'react'
+import { PALETTE, Typography } from './../../ui'
+import { IGroup } from '../contents/common'
+import { IDevice } from './../../filter/contents/common'
 
 const AddDeviceDialog = (props: {
-  title: string;
-  subtitle: string[];
-  emptyText: string;
-  open: boolean;
-  onClose: () => void;
-  onAdd: (id: IDevice['id']) => void;
-  addedDevices: IDevice[];
-  groupId: IGroup['id'];
-  isMobile?: boolean;
+  title: string
+  subtitle: string[]
+  emptyText: string
+  open: boolean
+  onClose: () => any
+  onAdd: (id: IDevice['id']) => any
+  addedDevices: IDevice[]
+  groupId: IGroup['id']
+  isMobile?: boolean
 }) => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [allDevices, setAllDevices] = useState<IDevice[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [allDevices, setAllDevices] = useState<IDevice[]>([])
   useEffect(() => {
     props.groupId &&
       ApiController.getGroupEnrichedDevices(props.groupId).then((d) =>
         setAllDevices(d)
-      );
-  }, [props.groupId]);
+      )
+  }, [props.groupId])
 
-  const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([]);
+  const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([])
   useEffect(
     () =>
       setNonAddedDevices(
@@ -36,9 +36,9 @@ const AddDeviceDialog = (props: {
         )
       ),
     [allDevices, props.addedDevices]
-  );
+  )
 
-  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([]);
+  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([])
   useEffect(
     () =>
       setFilteredDevices(
@@ -49,7 +49,7 @@ const AddDeviceDialog = (props: {
         )
       ),
     [nonAddedDevices, searchValue]
-  );
+  )
   return (
     <UrsorDialog
       open={props.open}
@@ -117,7 +117,7 @@ const AddDeviceDialog = (props: {
         </Stack>
       )}
     </UrsorDialog>
-  );
-};
+  )
+}
 
-export default AddDeviceDialog;
+export default AddDeviceDialog

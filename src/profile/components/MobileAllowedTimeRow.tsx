@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import UrsorDialog from './../../components/UrsorDialog';
-import { PALETTE, Typography } from './../../ui';
-import { getISODateString, IAllowedTime } from './LimitsTab';
-import { alpha, Stack } from '@mui/system';
-import dayjs from 'dayjs';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import useNewSegmentTimes from './useNewSegmentTimes';
-import _ from 'lodash';
-import { ReactComponent as XIcon } from './../../images/X.svg';
+import React, { useEffect, useState } from 'react'
+import UrsorDialog from './../../components/UrsorDialog'
+import { PALETTE, Typography } from './../../ui'
+import { getISODateString, IAllowedTime } from './LimitsTab'
+import { alpha, Stack } from '@mui/system'
+import dayjs from 'dayjs'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import useNewSegmentTimes from './useNewSegmentTimes'
+import _ from 'lodash'
+import { ReactComponent as XIcon } from './../../images/X.svg'
 
 const DAY_FULL_NAMES = {
   1: 'Monday',
@@ -17,23 +17,23 @@ const DAY_FULL_NAMES = {
   5: 'Friday',
   6: 's aturday',
   0: 's unday',
-};
+}
 
 const TimeSelectionColumn = (props: {
-  day: IAllowedTime['day'];
-  time: IAllowedTime['startTime'];
-  setTime: (newTime: IAllowedTime['startTime']) => void;
+  day: IAllowedTime['day']
+  time: IAllowedTime['startTime']
+  setTime: (newTime: IAllowedTime['startTime']) => any
 }) => {
-  const [gridRef, setGridRef] = useState<HTMLElement | null>(null);
-  const [hideTopGradient, setHideTopGradient] = useState<boolean>(true);
-  const [hideBottomGradient, setHideBottomGradient] = useState<boolean>(false);
+  const [gridRef, setGridRef] = useState<HTMLElement | null>(null)
+  const [hideTopGradient, setHideTopGradient] = useState<boolean>(true)
+  const [hideBottomGradient, setHideBottomGradient] = useState<boolean>(false)
   const handleScroll = () => {
     if (gridRef) {
-      const { scrollTop, scrollHeight, clientHeight } = gridRef;
-      setHideTopGradient(scrollTop < 3);
-      setHideBottomGradient(scrollTop + clientHeight >= scrollHeight);
+      const { scrollTop, scrollHeight, clientHeight } = gridRef
+      setHideTopGradient(scrollTop < 3)
+      setHideBottomGradient(scrollTop + clientHeight >= scrollHeight)
     }
-  };
+  }
   return (
     <Stack spacing="12px" alignItems="center">
       <Typography bold variant="h5" color={PALETTE.secondary.grey[5]}>
@@ -121,17 +121,17 @@ const TimeSelectionColumn = (props: {
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
 const MobileTimeSelectionDialog = (props: {
-  day: IAllowedTime['day'];
-  open: boolean;
-  startTime: IAllowedTime['startTime'];
-  setStartTime: (time: IAllowedTime['startTime']) => void;
-  endTime: IAllowedTime['endTime'];
-  setEndTime: (time: IAllowedTime['endTime']) => void;
-  onClose: () => void;
+  day: IAllowedTime['day']
+  open: boolean
+  startTime: IAllowedTime['startTime']
+  setStartTime: (time: IAllowedTime['startTime']) => any
+  endTime: IAllowedTime['endTime']
+  setEndTime: (time: IAllowedTime['endTime']) => any
+  onClose: () => any
 }) => {
   return (
     <UrsorDialog
@@ -163,18 +163,18 @@ const MobileTimeSelectionDialog = (props: {
         </Stack>
       </Stack>
     </UrsorDialog>
-  );
-};
+  )
+}
 
 const MobileAllowedTimeRowDisplayButton = (props: {
-  day: IAllowedTime['day'];
-  dayName: string;
-  startTime: IAllowedTime['startTime'];
-  setStartTime: (time: IAllowedTime['startTime']) => void;
-  endTime: IAllowedTime['endTime'];
-  setEndTime: (time: IAllowedTime['endTime']) => void;
+  day: IAllowedTime['day']
+  dayName: string
+  startTime: IAllowedTime['startTime']
+  setStartTime: (time: IAllowedTime['startTime']) => any
+  endTime: IAllowedTime['endTime']
+  setEndTime: (time: IAllowedTime['endTime']) => any
 }) => {
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false)
   return (
     <>
       <Stack
@@ -218,33 +218,33 @@ const MobileAllowedTimeRowDisplayButton = (props: {
         />
       ) : null}
     </>
-  );
-};
+  )
+}
 
 const MobileAllowedTimeRow = (props: {
-  day: IAllowedTime['day'];
-  times: IAllowedTime[];
-  addRange: (startTime: number, endTime: number) => void;
-  deleteRange: (id: IAllowedTime['id']) => void;
-  reset: () => void;
+  day: IAllowedTime['day']
+  times: IAllowedTime[]
+  addRange: (startTime: number, endTime: number) => any
+  deleteRange: (id: IAllowedTime['id']) => any
+  reset: () => any
   setRangeTimes: (
     id: IAllowedTime['id'],
     startTime: IAllowedTime['startTime'],
     endTime: IAllowedTime['endTime']
-  ) => void;
-  smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
+  ) => any
+  smallerLabelFont?: boolean
+  halveLabelFrequency?: boolean
 }) => {
-  const [sortedTimes, setSortedTimes] = useState<IAllowedTime[]>([]);
+  const [sortedTimes, setSortedTimes] = useState<IAllowedTime[]>([])
   useEffect(
     () => setSortedTimes(_.sortBy(props.times, (t) => new Date(t.startTime))),
     [props.times]
-  );
+  )
   const { newSegmentTimes, clearNewSegmentTimes } =
-    useNewSegmentTimes(sortedTimes);
+    useNewSegmentTimes(sortedTimes)
 
   //@ts-ignore
-  const dayName = DAY_FULL_NAMES[props.day];
+  const dayName = DAY_FULL_NAMES[props.day]
   return (
     <Stack spacing="4px">
       <Typography bold color={PALETTE.secondary.grey[3]}>
@@ -311,8 +311,8 @@ const MobileAllowedTimeRow = (props: {
             }}
             onClick={() => {
               newSegmentTimes &&
-                props.addRange(newSegmentTimes[0], newSegmentTimes[1]);
-              clearNewSegmentTimes();
+                props.addRange(newSegmentTimes[0], newSegmentTimes[1])
+              clearNewSegmentTimes()
             }}
           >
             <PlusIcon height="20px" width="20px" />
@@ -320,7 +320,7 @@ const MobileAllowedTimeRow = (props: {
         </Stack>
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default MobileAllowedTimeRow;
+export default MobileAllowedTimeRow

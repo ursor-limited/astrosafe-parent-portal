@@ -34,7 +34,7 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
 export const DeviceCardFilterSection = (props: {
   filterId: IFilter['id']
   email: string
-  changeFilter: (id: IFilter['id']) => void
+  changeFilter: (id: IFilter['id']) => any
 }) => {
   const { user } = useAuth(props.email)
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
@@ -138,8 +138,8 @@ export const DeviceCardFilterSection = (props: {
 const HorizontalDeviceCard = (
   props: IEnrichedDevice & {
     email: string
-    onClickViewScreenTime: () => void
-    onUpdate: () => void
+    onClickViewScreenTime: () => any
+    onUpdate: () => any
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)

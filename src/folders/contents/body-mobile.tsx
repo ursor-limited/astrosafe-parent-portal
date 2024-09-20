@@ -1,20 +1,20 @@
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg';
-import { Stack } from '@mui/system';
-import useNavigate from '../../hooks/useNavigate';
-import { IEnrichedContentBucket } from './common';
-import MobilePageLayout from './../../components/MobilePageLayout';
-import { UrsorButton } from './../../ui';
-import FolderCard from './../../components/FolderCard';
-import EmptyStateIllustration from './../../components/EmptyStateIllustration';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
+import { Stack } from '@mui/system'
+import useNavigate from '../../hooks/useNavigate'
+import { IEnrichedContentBucket } from './common'
+import MobilePageLayout from './../../components/MobilePageLayout'
+import { UrsorButton } from './../../ui'
+import FolderCard from './../../components/FolderCard'
+import EmptyStateIllustration from './../../components/EmptyStateIllustration'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const AllFoldersPageMobileBody = (props: {
-  folders: IEnrichedContentBucket[];
-  createFolder: () => void;
-  onUpdate: () => void;
+  folders: IEnrichedContentBucket[]
+  createFolder: () => any
+  onUpdate: () => any
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <MobilePageLayout
       title="My Folders"
@@ -54,7 +54,7 @@ const AllFoldersPageMobileBody = (props: {
         </EmptyStateIllustration>
       )}
     </MobilePageLayout>
-  );
-};
+  )
+}
 
-export default AllFoldersPageMobileBody;
+export default AllFoldersPageMobileBody
