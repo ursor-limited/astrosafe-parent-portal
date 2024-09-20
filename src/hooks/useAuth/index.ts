@@ -40,8 +40,14 @@ const useAuth = (email: string) => {
         } // Failing login after first failed login = death?
       )
 
-    return () => {
+    const handleBeforeUnload = () => {
       localStorage.removeItem('user_info')
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [])
 
