@@ -15,6 +15,7 @@ import PageSelector from '../../../components/PageSelector'
 import { SearchInput } from '../../../components/SearchInput'
 import { isMobile } from 'react-device-detect'
 import useAuth from '../../../hooks/useAuth'
+import useDevice from '../../../hooks/useDevice'
 
 const PAGE_SIZE = 20
 
@@ -73,7 +74,7 @@ export const AppsLegend = (props: { small?: boolean }) => (
 )
 
 interface DevicePageAppsSectionProps {
-  deviceId: IDevice['id']
+  deviceId: string
   email: string
 }
 
@@ -96,11 +97,15 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
   const [apps, setApps] = useState<IApp[]>([])
   const [filteredApps, setFilteredApps] = useState<IApp[]>([])
 
+  const device = useDevice(deviceId)
+
   useAuth(email)
 
   useEffect(() => {
+    if (!device?.id) return
+
     ApiController.getApps(
-      deviceId,
+      device.id,
       pageIndex + 1,
       PAGE_SIZE,
       selectedCategory,
@@ -109,7 +114,7 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
       setApps(_.sortBy(response.apps, (a) => a.id))
       setNPages(response.pages)
     })
-  }, [deviceId, pageIndex, selectedCategory, searchValue])
+  }, [device, deviceId, pageIndex, selectedCategory, searchValue])
 
   useEffect(
     () =>
@@ -233,12 +238,13 @@ const DevicePageAppsSection: React.FC<DevicePageAppsSectionProps> = ({
                       )
                       ;(a.enabled
                         ? ApiController.disableApp
-                        : ApiController.enableApp)(deviceId, a.id).then(() =>
-                        notificationCtx.success(
-                          a.enabled
-                            ? `Disabled ${a.title}`
-                            : `Enabled ${a.title}`
-                        )
+                        : ApiController.enableApp)(device?.id || 0, a.id).then(
+                        () =>
+                          notificationCtx.success(
+                            a.enabled
+                              ? `Disabled ${a.title}`
+                              : `Enabled ${a.title}`
+                          )
                       )
                     }}
                   />

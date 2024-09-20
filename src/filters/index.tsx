@@ -6,7 +6,7 @@ import RootLayout from './../layout'
 const Filters = (props: { email: string }) => {
   return (
     <RootLayout>
-      <AllFiltersPage isMobile={isMobile} email={props.email} />
+      <AllFiltersPage email={props.email} />
     </RootLayout>
   )
 }

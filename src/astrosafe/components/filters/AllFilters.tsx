@@ -7,6 +7,7 @@ import FilterCreationDialog from '../../../filter/components/FilterCreationDialo
 import _ from 'lodash'
 import useAuth from '../../../hooks/useAuth'
 import { DeviceType } from '../../../profile/contents/common'
+import { isMobile } from 'react-device-detect'
 
 export interface IDevice {
   id: number
@@ -89,15 +90,15 @@ export interface IGroupFilter {
 }
 
 interface AllFiltersPageProps {
-  isMobile: boolean
   email: string
   onCardClick?: (filterId: number) => {}
+  onCreateFilter?: (filterId: number) => {}
 }
 
 const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
-  isMobile,
   email,
-  onCardClick = () => {},
+  onCardClick = (filterId: number) => {},
+  onCreateFilter = (filterId: number) => {},
 }) => {
   const { user } = useAuth(email)
   const [filters, setFilters] = useState<IGroupFilter[]>([])
@@ -109,7 +110,6 @@ const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
   }, [user?.group_id])
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false)
-  const navigate = useNavigate()
   return (
     <>
       {isMobile ? (
@@ -131,7 +131,7 @@ const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
         onSubmit={(title: IFilter['title']) =>
           user?.group_id &&
           ApiController.createFilter(user.group_id, title).then((f) =>
-            navigate.push(`/filters/${f.filterId}`)
+            onCreateFilter(f)
           )
         }
         isMobile={isMobile}

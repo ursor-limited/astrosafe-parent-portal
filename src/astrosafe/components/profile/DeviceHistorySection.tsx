@@ -14,6 +14,7 @@ import PageSelector from '../../../components/PageSelector'
 import { SearchInput } from '../../../components/SearchInput'
 import UrsorFadeIn from '../../../components/UrsorFadeIn'
 import useAuth from '../../../hooks/useAuth'
+import useDevice from '../../../hooks/useDevice'
 
 export const PAGE_LENGTH = 55
 
@@ -172,7 +173,7 @@ export interface IDomainGroup {
 }
 
 interface DeviceHistoryCardProps {
-  deviceId: IDevice['id']
+  deviceId: string
   email: string
   date: string
 }
@@ -188,10 +189,15 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [history, setHistory] = useState<IHistoryItem[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
+
+  const device = useDevice(deviceId)
+
   useEffect(() => setPageIndex(0), [searchValue])
   useEffect(() => {
+    if (!device?.id) return
+
     ApiController.getHistory(
-      deviceId,
+      device.id,
       date,
       pageIndex + 1,
       PAGE_LENGTH,
@@ -200,7 +206,7 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
       setHistory(response.history)
       setNPages(response.pages)
     })
-  }, [deviceId, date, pageIndex, searchValue])
+  }, [device, deviceId, date, pageIndex, searchValue])
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])
   useEffect(() => {

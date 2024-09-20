@@ -21,43 +21,28 @@ export default function AllFiltersPageDesktopBody(props: {
   onClick?: (filterId: number) => void
 }) {
   return (
-    <PageLayout
-      title="My Filters"
-      titleBackButton={true}
-      info={INFOS.filters}
-      bodyWidth="100%"
-      fullHeight
-      selectedSidebarItemId="filters"
-      button={{
-        text: 'Add a Filter',
-        callback: props.setCreateFilterDialogOpen,
-        icon: PlusIcon,
-      }}
-      maxWidth={834}
-    >
-      <Stack pl="50px">
-        <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
-          {props.filters.map((f, i) => (
-            <Stack
-              key={f.id}
-              sx={{
-                cursor: 'pointer',
-                transition: '0.2s',
-                '&:hover': { opacity: 0.6 },
-              }}
-              onClick={() => {
-                if (!props?.onClick) return
+    <Stack flex={1} flexDirection="row" flexWrap="wrap">
+      <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
+        {props.filters.map((f, i) => (
+          <Stack
+            key={f.id}
+            sx={{
+              cursor: 'pointer',
+              transition: '0.2s',
+              '&:hover': { opacity: 0.6 },
+            }}
+            onClick={() => {
+              if (!props?.onClick) return
 
-                props.onClick(f.id)
-              }}
-            >
-              <UrsorFadeIn duration={800} delay={i * 150}>
-                <FilterCard {...f} />
-              </UrsorFadeIn>
-            </Stack>
-          ))}
-        </DynamicCardGrid>
-      </Stack>
-    </PageLayout>
+              props.onClick(f.id)
+            }}
+          >
+            <UrsorFadeIn duration={800} delay={i * 150}>
+              <FilterCard {...f} />
+            </UrsorFadeIn>
+          </Stack>
+        ))}
+      </DynamicCardGrid>
+    </Stack>
   )
 }
