@@ -1,68 +1,68 @@
-import PageLayout from './../../components/PageLayout';
-import { Stack } from '@mui/system';
-import DevicesSection from '../components/DevicesSection';
-import { PALETTE, Typography } from './../../ui';
-import { SearchInput } from './../../components/SearchInput';
-import SortButton from './../../components/SortButton';
-import { AddContentButton } from '../components/AddContentButton';
-import { CONTENT_BRANDING, IContentCard } from './common';
+import PageLayout from './../../components/PageLayout'
+import { Stack } from '@mui/system'
+import DevicesSection from '../components/DevicesSection'
+import { PALETTE, Typography } from './../../ui'
+import { SearchInput } from './../../components/SearchInput'
+import SortButton from './../../components/SortButton'
+import { AddContentButton } from '../components/AddContentButton'
+import { CONTENT_BRANDING, IContentCard } from './common'
 
-import ChannelCard from '../components/ChannelCard';
-import VideoCard from '../components/VideoCard';
-import LinkCard from '../components/LinkCard';
-import { useEffect, useState } from 'react';
-import _ from 'lodash';
-import useColumnWidth from './../../components/useColumnWidth';
-import useNavigate from '../../hooks/useNavigate';
-import UrsorFadeIn from './../../components/UrsorFadeIn';
-import { ITitleRowItem } from './../../components/TitleRow';
-import { IDevice } from './../../filter/contents/common';
+import ChannelCard from '../components/ChannelCard'
+import VideoCard from '../components/VideoCard'
+import LinkCard from '../components/LinkCreateButton'
+import { useEffect, useState } from 'react'
+import _ from 'lodash'
+import useColumnWidth from './../../components/useColumnWidth'
+import useNavigate from '../../hooks/useNavigate'
+import UrsorFadeIn from './../../components/UrsorFadeIn'
+import { ITitleRowItem } from './../../components/TitleRow'
+import { IDevice } from './../../filter/contents/common'
 import {
   AstroContent,
   IChannel,
   IContentBucket,
   ILink,
   IVideo,
-} from './../../profile/components/ContentTab';
-import { useWindowSize } from 'usehooks-ts';
-import { IActionPopupItem } from './../../components/ActionPopup';
+} from './../../profile/components/ContentTab'
+import { useWindowSize } from 'usehooks-ts'
+import { IActionPopupItem } from './../../components/ActionPopup'
 
-const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
+const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134
 
 const FolderPageDesktopBody = (props: {
-  folderId: IContentBucket['id'];
-  folder?: IContentBucket;
-  contents: IContentCard[];
-  allFolders: IContentBucket[];
-  devices: IDevice[];
-  setContentCreationDialogOpen: (type: AstroContent) => void;
-  loadFolderAndContents: () => void;
-  setAddDeviceDialogOpen: () => void;
-  onRemoveDevice: () => void;
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-  selectedContentType: AstroContent | 'all';
-  setSelectedContentType: (type: AstroContent | 'all') => void;
-  setLinkEditingDialogId: (id: ILink['id']) => void;
-  setVideoEditingDialogId: (id: IVideo['id']) => void;
-  setChannelEditingDialogId: (id: IChannel['id']) => void;
-  titleRow: ITitleRowItem[];
-  actions: IActionPopupItem[];
+  folderId: IContentBucket['id']
+  folder?: IContentBucket
+  contents: IContentCard[]
+  allFolders: IContentBucket[]
+  devices: IDevice[]
+  setContentCreationDialogOpen: (type: AstroContent) => void
+  loadFolderAndContents: () => void
+  setAddDeviceDialogOpen: () => void
+  onRemoveDevice: () => void
+  searchValue: string
+  setSearchValue: (value: string) => void
+  selectedContentType: AstroContent | 'all'
+  setSelectedContentType: (type: AstroContent | 'all') => void
+  setLinkEditingDialogId: (id: ILink['id']) => void
+  setVideoEditingDialogId: (id: IVideo['id']) => void
+  setChannelEditingDialogId: (id: IChannel['id']) => void
+  titleRow: ITitleRowItem[]
+  actions: IActionPopupItem[]
 }) => {
-  const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
-  const [columns, setColumns] = useState<IContentCard[][]>([]);
+  const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510)
+  const [columns, setColumns] = useState<IContentCard[][]>([])
   useEffect(() => {
-    const chunked = _.chunk(props.contents, nColumns);
+    const chunked = _.chunk(props.contents, nColumns)
     setColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
-    );
-  }, [nColumns, props.contents]);
+    )
+  }, [nColumns, props.contents])
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { width } = useWindowSize();
+  const { width } = useWindowSize()
 
   return (
     <PageLayout
@@ -109,7 +109,7 @@ const FolderPageDesktopBody = (props: {
             <SearchInput
               value={props.searchValue ?? ''}
               callback={(value: string) => {
-                props.setSearchValue(value);
+                props.setSearchValue(value)
               }}
               clearCallback={() => props.setSearchValue('')}
               shadow
@@ -235,7 +235,7 @@ const FolderPageDesktopBody = (props: {
         </Stack>
       </Stack>
     </PageLayout>
-  );
-};
+  )
+}
 
-export default FolderPageDesktopBody;
+export default FolderPageDesktopBody

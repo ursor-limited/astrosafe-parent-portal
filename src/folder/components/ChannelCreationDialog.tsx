@@ -1,40 +1,40 @@
-import { Stack } from '@mui/system';
-import ContentCreationDialog from './ContentCreationDialog';
-import { useContext, useEffect, useState } from 'react';
-import ChannelCard from './ChannelCard';
-import NotificationContext from './../../components/NotificationContext';
-import ApiController, { getAbsoluteUrl } from './../../api';
-import { ReactComponent as CheckboxIcon } from './../../images/CheckboxIcon.svg';
-import { ReactComponent as EmptyCheckboxIcon } from './../../images/EmptyCheckboxIcon.svg';
-import { PALETTE, Typography } from './../../ui';
-import { IEnrichedContentBucket } from '../../folders/contents/common';
-import { IChannel } from './../../profile/components/ContentTab';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
-import { cleanUrl } from './../../profile/components/MobileInsightsTab';
+import { Stack } from '@mui/system'
+import ContentCreationDialog from './ContentCreationDialog'
+import { useContext, useEffect, useState } from 'react'
+import ChannelCard from './ChannelCard'
+import NotificationContext from './../../components/NotificationContext'
+import ApiController, { getAbsoluteUrl } from './../../api'
+import { ReactComponent as CheckboxIcon } from './../../images/CheckboxIcon.svg'
+import { ReactComponent as EmptyCheckboxIcon } from './../../images/EmptyCheckboxIcon.svg'
+import { PALETTE, Typography } from './../../ui'
+import { IEnrichedContentBucket } from '../../folders/contents/common'
+import { IChannel } from './../../profile/components/ContentTab'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
+import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 
 const ChannelCreationDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  folderId: IEnrichedContentBucket['id'];
-  creationCallback: () => void;
+  open: boolean
+  onClose: () => void
+  folderId: IEnrichedContentBucket['id']
+  creationCallback: () => void
   updateDetails?: {
-    channel: IChannel;
-    callback?: () => void;
-  };
+    channel: IChannel
+    callback?: () => void
+  }
 }) => {
-  const [title, setTitle] = useState<string>('');
-  const [url, setUrl] = useState<string>('');
-  const [profileUrl, setProfileUrl] = useState<string>('');
-  const [bannerUrl, setBannerUrl] = useState<string>('');
+  const [title, setTitle] = useState<string>('')
+  const [url, setUrl] = useState<string>('')
+  const [profileUrl, setProfileUrl] = useState<string>('')
+  const [bannerUrl, setBannerUrl] = useState<string>('')
   useEffect(() => {
-    props.updateDetails && setTitle(props.updateDetails?.channel.title);
-    props.updateDetails && setUrl(props.updateDetails?.channel.url);
+    props.updateDetails && setTitle(props.updateDetails?.channel.title)
+    props.updateDetails && setUrl(props.updateDetails?.channel.url)
     props.updateDetails &&
-      setProfileUrl(props.updateDetails?.channel.profileUrl);
-    props.updateDetails && setBannerUrl(props.updateDetails?.channel.bannerUrl);
-  }, [props.updateDetails]);
+      setProfileUrl(props.updateDetails?.channel.profileUrl)
+    props.updateDetails && setBannerUrl(props.updateDetails?.channel.bannerUrl)
+  }, [props.updateDetails])
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
   const submitCreation = () =>
     ApiController.createChannel(
@@ -43,7 +43,7 @@ const ChannelCreationDialog = (props: {
       bannerUrl,
       profileUrl,
       props.folderId
-    ).then(props.creationCallback);
+    ).then(props.creationCallback)
 
   const submitUpdate = () =>
     props.updateDetails?.channel.id &&
@@ -55,38 +55,38 @@ const ChannelCreationDialog = (props: {
       profileUrl
     )
       .then(props.updateDetails?.callback)
-      .then(() => notificationCtx.success('Updated Channel'));
+      .then(() => notificationCtx.success('Updated Channel'))
 
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false)
 
   const [manuallyChangedTitle, setManuallyChangedTitle] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   const loadPreview = () => {
     ApiController.getChannelPreview(
       encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
     )
       .then((result) => {
-        result.title && !manuallyChangedTitle && setTitle(result.title);
-        result.bannerUrl && setBannerUrl(result.bannerUrl);
-        result.profileUrl && setProfileUrl(result.profileUrl);
+        result.title && !manuallyChangedTitle && setTitle(result.title)
+        result.bannerUrl && setBannerUrl(result.bannerUrl)
+        result.profileUrl && setProfileUrl(result.profileUrl)
       })
-      .catch(() => null);
-  };
+      .catch(() => null)
+  }
 
   return (
     <ContentCreationDialog
       open={props.open}
       closeCallback={props.onClose}
       onSubmit={() => {
-        (props.updateDetails?.callback ? submitUpdate : submitCreation)();
-        props.onClose();
+        ;(props.updateDetails?.callback ? submitUpdate : submitCreation)()
+        props.onClose()
       }}
       info={INFOS.addChannel}
       type="channel"
       setTitle={(t) => {
-        setTitle(t);
-        setManuallyChangedTitle(true);
+        setTitle(t)
+        setManuallyChangedTitle(true)
       }}
       title={title}
       setUrl={setUrl}
@@ -143,7 +143,7 @@ const ChannelCreationDialog = (props: {
         />
       </Stack>
     </ContentCreationDialog>
-  );
-};
+  )
+}
 
-export default ChannelCreationDialog;
+export default ChannelCreationDialog

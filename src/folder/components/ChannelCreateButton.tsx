@@ -1,8 +1,9 @@
-import ContentCard from './ContentCard'
+import ContentCard from '../../folder/components/ContentCard'
 import { Stack } from '@mui/system'
 import ApiController from '../../api'
 import { IChannel, IContentBucket } from '../../profile/components/ContentTab'
 import { PALETTE } from '../../ui'
+import useNavigate from '../../hooks/useNavigate'
 
 const IMAGE_HEIGHT = 160
 
@@ -18,11 +19,16 @@ const ChannelCard = (
     folderId?: IContentBucket['id']
   }
 ) => {
+  const navigate = useNavigate()
   return (
     <ContentCard
       type="channel"
       title={props.title}
-      onClick={props.noPointerEvents ? undefined : () => {}}
+      onClick={
+        props.noPointerEvents
+          ? undefined
+          : () => navigate.push(`/channel/${props.id}`)
+      }
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() =>

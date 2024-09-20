@@ -1,9 +1,9 @@
 import ContentCard from './ContentCard'
+
 import { Stack } from '@mui/system'
 import ApiController from '../../api'
 import { ILink } from '../../profile/components/ContentTab'
 import { PALETTE } from '../../ui'
-import { isMobile } from 'react-device-detect'
 
 const IMAGE_HEIGHT = 227
 
@@ -13,6 +13,7 @@ const LinkCard = (
     noMenu?: boolean
     onDelete?: () => void
     onOpenEditingDialog?: () => void
+    isMobile?: boolean
     twoLineTitleSectionHeight?: boolean
   }
 ) => {
@@ -27,7 +28,7 @@ const LinkCard = (
         props.id && ApiController.deleteLink(props.id).then(props.onDelete)
       }
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
-      isMobile={isMobile}
+      isMobile={props.isMobile}
       twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
     >
       <Stack

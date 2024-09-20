@@ -1,49 +1,49 @@
-import { Stack } from '@mui/system';
-import VideoCard from './VideoCard';
-import { useContext, useEffect, useState } from 'react';
-import ApiController, { getAbsoluteUrl } from './../../api';
-import NotificationContext from './../../components/NotificationContext';
-import ContentCreationDialog from './ContentCreationDialog';
-import { IContentBucket, IVideo } from './../../profile/components/ContentTab';
-import { cleanUrl } from './../../profile/components/MobileInsightsTab';
-import { INFOS } from './../../profile/components/ProfilePageTabLayout';
+import { Stack } from '@mui/system'
+import VideoCard from './VideoCreateButton'
+import { useContext, useEffect, useState } from 'react'
+import ApiController, { getAbsoluteUrl } from './../../api'
+import NotificationContext from './../../components/NotificationContext'
+import ContentCreationDialog from './ContentCreationDialog'
+import { IContentBucket, IVideo } from './../../profile/components/ContentTab'
+import { cleanUrl } from './../../profile/components/MobileInsightsTab'
+import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const VideoCreationDialog = (props: {
-  open: boolean;
-  onClose: () => void;
-  folderId: IContentBucket['id'];
-  creationCallback: () => void;
+  open: boolean
+  onClose: () => void
+  folderId: IContentBucket['id']
+  creationCallback: () => void
   updateDetails?: {
-    video: IVideo;
-    callback?: () => void;
-  };
-  belongsToChannel?: boolean;
+    video: IVideo
+    callback?: () => void
+  }
+  belongsToChannel?: boolean
 }) => {
-  const [title, setTitle] = useState<string>('');
-  const [url, setUrl] = useState<string>('');
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
+  const [title, setTitle] = useState<string>('')
+  const [url, setUrl] = useState<string>('')
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
   useEffect(() => {
-    props.updateDetails && setTitle(props.updateDetails?.video.title);
-    props.updateDetails && setUrl(props.updateDetails?.video.url);
+    props.updateDetails && setTitle(props.updateDetails?.video.title)
+    props.updateDetails && setUrl(props.updateDetails?.video.url)
     props.updateDetails &&
-      setThumbnailUrl(props.updateDetails?.video.thumbnailUrl);
-  }, [props.updateDetails]);
+      setThumbnailUrl(props.updateDetails?.video.thumbnailUrl)
+  }, [props.updateDetails])
 
   const [manuallyChangedTitle, setManuallyChangedTitle] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   const loadPreview = () => {
     ApiController.getVideoPreview(
       encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
     )
       .then((result) => {
-        result.title && !manuallyChangedTitle && setTitle(result.title);
-        result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl);
+        result.title && !manuallyChangedTitle && setTitle(result.title)
+        result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl)
       })
-      .catch(() => null);
-  };
+      .catch(() => null)
+  }
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
   const submitCreation = () =>
     ApiController.createVideo(
@@ -51,7 +51,7 @@ const VideoCreationDialog = (props: {
       getAbsoluteUrl(cleanUrl(url)),
       thumbnailUrl,
       props.folderId
-    ).then(props.creationCallback);
+    ).then(props.creationCallback)
 
   const submitUpdate = () =>
     props.updateDetails?.video.id &&
@@ -64,23 +64,23 @@ const VideoCreationDialog = (props: {
       //thumbnailUrl
     )
       .then(props.updateDetails?.callback)
-      .then(() => notificationCtx.success('Updated Video'));
+      .then(() => notificationCtx.success('Updated Video'))
 
   return (
     <ContentCreationDialog
       open={props.open}
       closeCallback={() => {
-        props.onClose();
+        props.onClose()
       }}
       onSubmit={() => {
-        (props.updateDetails?.callback ? submitUpdate : submitCreation)();
-        props.onClose();
+        ;(props.updateDetails?.callback ? submitUpdate : submitCreation)()
+        props.onClose()
       }}
       info={INFOS.addVideo}
       type="video"
       setTitle={(t) => {
-        setTitle(t);
-        setManuallyChangedTitle(true);
+        setTitle(t)
+        setManuallyChangedTitle(true)
       }}
       title={title}
       setUrl={setUrl}
@@ -104,7 +104,7 @@ const VideoCreationDialog = (props: {
         />
       </Stack>
     </ContentCreationDialog>
-  );
-};
+  )
+}
 
-export default VideoCreationDialog;
+export default VideoCreationDialog

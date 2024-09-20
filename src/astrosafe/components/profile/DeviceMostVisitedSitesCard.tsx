@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { AstroBentoCard } from '../../filter/components/AstroBentoCard'
-import AstroTimeChart from './AstroTimeChart'
+import { AstroBentoCard } from '../../../filter/components/AstroBentoCard'
+import AstroTimeChart from '../../../profile/components/AstroTimeChart'
 import { Stack } from '@mui/system'
-import { Typography } from '../../ui'
+import { Typography } from '../../../ui'
 import { ReactComponent as ChevronRightIcon } from './../../images/ChevronRight.svg'
 import { ReactComponent as ChevronLeftIcon } from './../../images/ChevronLeft.svg'
 import _ from 'lodash'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import CalendarButton from '../../components/CalendarButton'
-import { IDayScreenTime, IVisitedSite } from './InsightsTab'
-import ApiController from '../../api'
-import useDevice from '../../hooks/useDevice'
-import useAuth from '../../hooks/useAuth'
+import CalendarButton from '../../../components/CalendarButton'
+import {
+  IDayScreenTime,
+  IVisitedSite,
+} from '../../../profile/components/InsightsTab'
+import ApiController from '../../../api'
+import useDevice from '../../../hooks/useDevice'
+import useAuth from '../../../hooks/useAuth'
 import { isMobile } from 'react-device-detect'
-import MostVisitedSitesSection from './MostVisitedSitesSection'
+import MostVisitedSitesSection from '../../../profile/components/MostVisitedSitesSection'
 
 dayjs.extend(utc)
 
