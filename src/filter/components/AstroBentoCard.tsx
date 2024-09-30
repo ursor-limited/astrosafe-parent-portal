@@ -17,6 +17,7 @@ export const AstroBentoCard = (props: {
   paddingBottom?: string
   info?: IInfoButtonProps
   isMobile?: boolean
+  titleColor?: string
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false)
   return (
@@ -28,7 +29,6 @@ export const AstroBentoCard = (props: {
       paddingBottom={props.paddingBottom}
       flex={1}
       border={`1px solid ${PALETTE.secondary.grey[2]}`}
-      width="100%"
     >
       <Stack>
         <Stack justifyContent="space-between" direction="row">
@@ -45,7 +45,11 @@ export const AstroBentoCard = (props: {
                 spacing="6px"
               >
                 {props.icon ? <props.icon height="20px" width="20px" /> : null}
-                <Typography variant={props.isMobile ? 'normal' : 'large'} bold>
+                <Typography
+                  variant={props.isMobile ? 'normal' : 'large'}
+                  bold
+                  color={props.titleColor}
+                >
                   {props.title}
                 </Typography>
                 {props.info &&

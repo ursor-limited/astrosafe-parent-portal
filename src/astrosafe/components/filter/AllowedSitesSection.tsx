@@ -11,7 +11,7 @@ import UrsorTable, {
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import _ from 'lodash'
-import { IFilterUrl } from '../filters/AllFilters'
+import { IFilter, IFilterUrl } from '../filters/AllFilters'
 import FilterWhitelistExceptionDialog from '../../../filter/components/FilterWhitelistExceptionDialog'
 import ApiController from '../../../api'
 import { IFilterException } from '../../../filter/contents/common'
@@ -164,17 +164,30 @@ const FilterPageAllowedSitesSection: React.FC<
   const [confirmationDialogOpen, setConfirmationDialogOpen] =
     useState<boolean>(false)
 
+  const [filter, setFilter] = useState<IFilter>()
+
+  useEffect(() => {
+    ApiController.getFilter(filterId).then((data) => setFilter(data))
+  }, [])
+
   return (
     <>
       <AstroBentoCard
         icon={ThumbsUpIcon}
         title={`${allowedSites?.length ?? 0} allowed site exception${
-          allowedSites?.length === 1 ? '' : 's '
+          allowedSites?.length === 1 ? '' : 's'
         }`}
         subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!"
         isMobile={isMobile}
+        titleColor={filter?.official ? PALETTE.secondary.grey[3] : undefined}
       >
-        <Stack spacing="20px">
+        <Stack
+          spacing="20px"
+          sx={{
+            pointerEvents: filter?.official ? 'none' : undefined,
+            opacity: filter?.official ? 0.55 : 1,
+          }}
+        >
           <UrsorInputField
             value={inputValue}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -203,18 +216,21 @@ const FilterPageAllowedSitesSection: React.FC<
                 }
               }}
               noHeaderGradient
-              getActionButtonItems={(i) => [
-                {
-                  icon: TrashcanIcon,
-                  text: 'Delete',
-                  kallback: () => {
-                    if (!allowedSites?.[parseInt(i)]?.domain) return
-
-                    removeAllowedSite(allowedSites?.[parseInt(i)]?.domain)
-                  },
-                  color: PALETTE.system.red,
-                },
-              ]}
+              getActionButtonItems={
+                filter?.official
+                  ? undefined
+                  : (i) => [
+                      {
+                        icon: TrashcanIcon,
+                        text: 'Delete',
+                        kallback: () =>
+                          removeAllowedSite(
+                            allowedSites?.[parseInt(i)]?.domain!
+                          ),
+                        color: PALETTE.system.red,
+                      },
+                    ]
+              }
               rowClickCallback={(id) => null}
               titleColumnWidth="20%"
             />
@@ -226,7 +242,6 @@ const FilterPageAllowedSitesSection: React.FC<
         onClose={() => setConfirmationDialogOpen(false)}
         onSubmit={() => {
           addAllowedSite(inputValue)
-
           setInputValue('')
         }}
         isMobile={isMobile}
@@ -236,16 +251,3 @@ const FilterPageAllowedSitesSection: React.FC<
 }
 
 export default FilterPageAllowedSitesSection
-
-// <Stack>
-//   {allowedSites.map((s) => (
-//     <Stack
-//       key={s.id}
-//       height="48px"
-//       px="16px"
-//       border={`1px solid ${PALETTE.secondary.grey[1]}`}
-//     >
-//       <Typography>{s.url}</Typography>
-//     </Stack>
-//   ))}
-// </Stack>

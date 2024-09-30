@@ -76,9 +76,10 @@ export const FilterLegend = (props: { small?: boolean }) => (
 
 const CategoryCard = (
   props: IFilterCategory & {
-    flipCategory: (id: IFilterCategory['categoryId']) => any
-    flipSubcategory: (id: IFilterSubcategory['id']) => any
+    flipCategory: (id: IFilterCategory['categoryId']) => void
+    flipSubcategory: (id: IFilterSubcategory['id']) => void
     allowedCategories: IFilterSubcategory['id'][]
+    locked?: boolean
   }
 ) => {
   const [collapsed, setCollapsed] = useState<boolean>(true)
@@ -86,10 +87,12 @@ const CategoryCard = (
   useEffect(
     () =>
       setStatus(
-        props.subCategories.every((c) => props.allowedCategories.includes(c.id))
+        props.subCategories.every((sc) =>
+          props.allowedCategories.includes(sc.id)
+        )
           ? 'on'
-          : props.subCategories.some((c) =>
-              props.allowedCategories.includes(c.id)
+          : props.subCategories.some((sc) =>
+              props.allowedCategories.includes(sc.id)
             )
           ? 'custom'
           : 'off'
@@ -105,7 +108,7 @@ const CategoryCard = (
     )
   }, [props.allowedCategories])
   return (
-    <AstroCard key={props.categoryId}>
+    <AstroCard>
       <DynamicContainer duration={600}>
         <Stack p="16px" spacing="16px">
           <Stack
@@ -114,7 +117,12 @@ const CategoryCard = (
             justifyContent="space-between"
           >
             <Stack>
-              <Typography bold>{props.title}</Typography>
+              <Typography
+                bold
+                color={props.locked ? PALETTE.secondary.grey[3] : undefined}
+              >
+                {props.title}
+              </Typography>
               <Typography
                 bold
                 variant="small"
@@ -128,7 +136,10 @@ const CategoryCard = (
             <Stack direction="row" spacing="20px">
               <Stack
                 sx={{
-                  pointerEvents: props.permanentlyBlocked ? 'none' : undefined,
+                  pointerEvents:
+                    props.locked || props.permanentlyBlocked
+                      ? 'none'
+                      : undefined,
                 }}
               >
                 <AstroSwitch
@@ -170,14 +181,21 @@ const CategoryCard = (
                       cursor: 'pointer',
                       transition: '0.2s',
                       '&:hover': { opacity: 0.7 },
-                      pointerEvents: props.permanentlyBlocked
-                        ? 'none'
-                        : undefined,
+                      pointerEvents:
+                        props.locked || props.permanentlyBlocked
+                          ? 'none'
+                          : undefined,
                     }}
                   >
                     <Stack justifyContent="space-between">
                       <Stack spacing="16px" alignItems="center" direction="row">
-                        <Typography maxLines={1} bold>
+                        <Typography
+                          maxLines={1}
+                          bold
+                          color={
+                            props.locked ? PALETTE.secondary.grey[3] : undefined
+                          }
+                        >
                           {sc.title}
                         </Typography>
                       </Stack>
@@ -274,6 +292,7 @@ const FilterCategoriesSection: React.FC<FilterCategoriesSectionProps> = ({
             {...cg}
             flipCategory={flipCategory}
             flipSubcategory={flipSubcategory}
+            locked={filter?.official}
             allowedCategories={
               filter?.filterCategoryWhitelist.map(({ id }) => id) || []
             }

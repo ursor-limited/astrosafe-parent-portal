@@ -155,6 +155,12 @@ const FilterPageBlockedSitesSection: React.FC<
   const [confirmationDialogOpen, setConfirmationDialogOpen] =
     useState<boolean>(false)
 
+  const [filter, setFilter] = useState<IFilter>()
+
+  useEffect(() => {
+    ApiController.getFilter(filterId).then((data) => setFilter(data))
+  }, [])
+
   return (
     <>
       <AstroBentoCard
@@ -164,8 +170,15 @@ const FilterPageBlockedSitesSection: React.FC<
         }`}
         subtitle="Add sites here that you never want to be accessible. This will make sure the site isn't accessible even if the rest of the corresponding Category is!"
         isMobile={isMobile}
+        titleColor={filter?.official ? PALETTE.secondary.grey[3] : undefined}
       >
-        <Stack spacing="20px">
+        <Stack
+          spacing="20px"
+          sx={{
+            pointerEvents: filter?.official ? 'none' : undefined,
+            opacity: filter?.official ? 0.55 : 1,
+          }}
+        >
           <UrsorInputField
             value={inputValue}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -194,16 +207,19 @@ const FilterPageBlockedSitesSection: React.FC<
                 }
               }}
               noHeaderGradient
-              getActionButtonItems={(i) => [
-                {
-                  icon: TrashcanIcon,
-                  text: 'Delete',
-                  kallback: () => {
-                    removeBlockedSite(blockedSites[parseInt(i)].domain)
-                  },
-                  color: PALETTE.system.red,
-                },
-              ]}
+              getActionButtonItems={
+                filter?.official
+                  ? undefined
+                  : (i) => [
+                      {
+                        icon: TrashcanIcon,
+                        text: 'Delete',
+                        kallback: () =>
+                          removeBlockedSite(blockedSites[parseInt(i)].domain),
+                        color: PALETTE.system.red,
+                      },
+                    ]
+              }
               rowClickCallback={(id) => null}
             />
           ) : null}
