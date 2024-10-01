@@ -603,18 +603,18 @@ class ApiController {
     searchTerm?: string
   ) {
     return get(
-      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${
+      `troomi/devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${
         searchTerm ? `&search=${searchTerm}` : ''
       }${categoryId ? `&categoryId=${categoryId}` : ''}`
     ).then((response: any) => response.json())
   }
 
   static async enableApp(deviceId: IDevice['id'], appId: IApp['id']) {
-    return post(`devices/${deviceId}/apps/${appId}/enable`, {})
+    return post(`troomi/devices/${deviceId}/apps/${appId}/enable`, {})
   }
 
   static async disableApp(deviceId: IDevice['id'], appId: IApp['id']) {
-    return dellete(`devices/${deviceId}/apps/${appId}/disable`)
+    return dellete(`troomi/devices/${deviceId}/apps/${appId}/disable`)
   }
 
   static async updateUser(
