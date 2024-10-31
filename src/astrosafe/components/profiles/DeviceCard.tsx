@@ -252,14 +252,19 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
 }) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)
 
-  const [renameDeviceDialogOpen, setRenameDeviceDialogOpen] =
-    useState<boolean>()
-
   const notificationCtx = useContext(NotificationContext)
 
   const [filterData, setFilterData] = useState<IFilter>()
 
   const deviceData = useDevice(deviceId)
+
+  useEffect(() => {
+    if (!deviceData?.id) return
+
+    ApiController.getEnrichedDevice(deviceData.id).then((device) =>
+      setBrowsingEnabled(Boolean(device?.config?.browsingAllowed))
+    )
+  }, [deviceData])
 
   useEffect(() => {
     if (!deviceData?.filterId) return

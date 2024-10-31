@@ -36,7 +36,7 @@ const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
     ApiController.getFilterDevices(filterId).then((data) => {
       setDevices(data)
     })
-  }, [])
+  }, [filterId])
 
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
 

@@ -234,7 +234,7 @@ const FilterCategoriesSection: React.FC<FilterCategoriesSectionProps> = ({
     ApiController.getFilter(filterId).then((data) => setFilter(data))
 
     ApiController.getAllFilterCategories().then((data) => setCategories(data))
-  }, [])
+  }, [filterId])
 
   const [allowedSubcategories, setAllowedSubcategories] = useState<
     IFilterSubcategory['id'][]

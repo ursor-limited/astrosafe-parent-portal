@@ -36,7 +36,7 @@ const FilterPageBlockedSitesSection: React.FC<
     ApiController.getBlockedSites(filterId).then((data) =>
       setBlockedSites(data)
     )
-  }, [])
+  }, [filterId])
 
   const NotificationContext = createContext<INotificationContext>({
     message: null,
@@ -159,7 +159,7 @@ const FilterPageBlockedSitesSection: React.FC<
 
   useEffect(() => {
     ApiController.getFilter(filterId).then((data) => setFilter(data))
-  }, [])
+  }, [filterId])
 
   return (
     <>
@@ -207,19 +207,15 @@ const FilterPageBlockedSitesSection: React.FC<
                 }
               }}
               noHeaderGradient
-              getActionButtonItems={
-                filter?.official
-                  ? undefined
-                  : (i) => [
-                      {
-                        icon: TrashcanIcon,
-                        text: 'Delete',
-                        kallback: () =>
-                          removeBlockedSite(blockedSites[parseInt(i)].domain),
-                        color: PALETTE.system.red,
-                      },
-                    ]
-              }
+              getActionButtonItems={(i) => [
+                {
+                  icon: TrashcanIcon,
+                  text: 'Delete',
+                  kallback: () =>
+                    removeBlockedSite(blockedSites[parseInt(i)].domain),
+                  color: PALETTE.system.red,
+                },
+              ]}
               rowClickCallback={(id) => null}
             />
           ) : null}

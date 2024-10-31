@@ -241,7 +241,7 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
         rows: dg.rows,
       }))
     )
-  }, [history])
+  }, [device, history])
 
   return (
     <AstroBentoCard

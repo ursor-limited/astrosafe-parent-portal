@@ -92,11 +92,14 @@ const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
       title: IFilterSubcategory['title']
     }[]
   >([])
+
+  const device = useDevice(deviceId)
+
   useEffect(() => {
     ApiController.getAppCategorySubGroups().then((cats: any) =>
       setCategories(_.sortBy(cats, (c) => c.title))
     )
-  }, [])
+  }, [device])
 
   const [nPages, setNPages] = useState<number>(1)
 
@@ -108,8 +111,6 @@ const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
   const [filteredApps, setFilteredApps] = useState<IApp[]>([])
 
   useAuth(email)
-
-  const device = useDevice(deviceId)
 
   useEffect(() => {
     if (!device?.id) return
@@ -124,7 +125,7 @@ const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
       setApps(_.sortBy(response.apps, (a) => a.title))
       setNPages(response.pages)
     })
-  }, [deviceId, pageIndex, selectedCategory, searchValue])
+  }, [device, pageIndex, selectedCategory, searchValue])
 
   useEffect(() => {
     if (!device?.id) return

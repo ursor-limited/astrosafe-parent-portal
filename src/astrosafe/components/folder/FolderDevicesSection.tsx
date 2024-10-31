@@ -74,7 +74,7 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
 
   useEffect(() => {
     ApiController.getFolder(folderId).then(setFolder)
-  }, [])
+  }, [folderId])
 
   return (
     <>

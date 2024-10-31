@@ -41,7 +41,7 @@ const FilterPageAllowedSitesSection: React.FC<
     ApiController.getAllowedSites(filterId).then((data) =>
       setAllowedSites(data)
     )
-  }, [])
+  }, [filterId])
 
   const loadAllowedSites = useCallback(
     () => ApiController.getAllowedSites(filterId).then(setAllowedSites),
@@ -168,7 +168,7 @@ const FilterPageAllowedSitesSection: React.FC<
 
   useEffect(() => {
     ApiController.getFilter(filterId).then((data) => setFilter(data))
-  }, [])
+  }, [filterId])
 
   return (
     <>
@@ -216,21 +216,15 @@ const FilterPageAllowedSitesSection: React.FC<
                 }
               }}
               noHeaderGradient
-              getActionButtonItems={
-                filter?.official
-                  ? undefined
-                  : (i) => [
-                      {
-                        icon: TrashcanIcon,
-                        text: 'Delete',
-                        kallback: () =>
-                          removeAllowedSite(
-                            allowedSites?.[parseInt(i)]?.domain!
-                          ),
-                        color: PALETTE.system.red,
-                      },
-                    ]
-              }
+              getActionButtonItems={(i) => [
+                {
+                  icon: TrashcanIcon,
+                  text: 'Delete',
+                  kallback: () =>
+                    removeAllowedSite(allowedSites?.[parseInt(i)]?.domain!),
+                  color: PALETTE.system.red,
+                },
+              ]}
               rowClickCallback={(id) => null}
               titleColumnWidth="20%"
             />
