@@ -172,6 +172,38 @@ export interface IDomainGroup {
   rows: IHistoryItem[]
 }
 
+interface InsightsTabEmptyStateIndicatorProps {
+  imageSrc: string
+  width: number
+  height: number
+  isMobile?: boolean
+}
+
+const InsightsTabEmptyStateIndicator: React.FC<
+  InsightsTabEmptyStateIndicatorProps
+> = ({ imageSrc, width, height, isMobile }) => (
+  <Stack
+    spacing={isMobile ? '6px' : '12px'}
+    justifyContent="center"
+    alignItems="center"
+    height="100%"
+    pb={isMobile ? '12px' : undefined}
+    sx={{
+      opacity: 0.6,
+    }}
+  >
+    <img src={imageSrc} alt="No data available" width={width} height={height} />
+
+    <Typography
+      bold
+      variant={isMobile ? 'medium' : 'h5'}
+      color={PALETTE.secondary.grey[4]}
+    >
+      No data available
+    </Typography>
+  </Stack>
+)
+
 const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
   const [nPages, setNPages] = useState<number>(1)
   const [pageIndex, setPageIndex] = useState<number>(0)
@@ -192,6 +224,7 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
   }, [props.deviceId, props.date, pageIndex, searchValue])
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])
+
   useEffect(() => {
     const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
       history,
@@ -240,15 +273,23 @@ const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
       }
     >
       <Stack spacing="16px">
-        {domainGroups.map((dg, i) => (
-          <UrsorFadeIn
-            key={`${i}${pageIndex}${props.date}`}
-            delay={i * 70}
-            duration={600}
-          >
-            <HistoryDomainRow {...dg} />
-          </UrsorFadeIn>
-        ))}
+        {domainGroups.length === 0 ? (
+          <InsightsTabEmptyStateIndicator
+            imageSrc="https://ursorassets.s3.eu-west-1.amazonaws.com/timer.svg"
+            width={112}
+            height={65}
+          />
+        ) : (
+          domainGroups.map((dg, i) => (
+            <UrsorFadeIn
+              key={`${i}${pageIndex}${props.date}`}
+              delay={i * 70}
+              duration={600}
+            >
+              <HistoryDomainRow {...dg} />
+            </UrsorFadeIn>
+          ))
+        )}
       </Stack>
       {nPages > 1 ? (
         <Stack pt="24px" pb="9px">
