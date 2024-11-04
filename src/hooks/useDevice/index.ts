@@ -16,7 +16,7 @@ const useDevice = (externalDeviceId: string) => {
           setDeviceData(data)
         })
       )
-  }, [])
+  }, [externalDeviceId])
 
   return deviceData
 }

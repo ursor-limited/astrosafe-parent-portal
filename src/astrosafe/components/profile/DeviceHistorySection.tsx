@@ -7,7 +7,6 @@ import { ReactComponent as ChevronDownIcon } from '../../../images/ChevronDown.s
 import { useEffect, useState } from 'react'
 import DynamicContainer from '../../../components/DynamicContainer'
 import _ from 'lodash'
-import { IDevice } from '../../../filter/contents/common'
 import ApiController, { getAbsoluteUrl } from '../../../api'
 import { cleanUrl } from '../../../profile/components/MobileInsightsTab'
 import PageSelector from '../../../components/PageSelector'
@@ -34,6 +33,7 @@ const HistoryRow = (props: IHistoryItem & { duration?: number }) => {
         dayjs(props.finishedAt).diff(props.searchedAt, 'seconds')
     )
   }, [props.duration, props.searchedAt, props.finishedAt])
+
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
@@ -198,7 +198,7 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
 
     ApiController.getHistory(
       device.id,
-      date,
+      dayjs(date).format('YYYY-MM-DD'),
       pageIndex + 1,
       PAGE_LENGTH,
       searchValue
@@ -206,7 +206,7 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
       setHistory(response.history)
       setNPages(response.pages)
     })
-  }, [device, deviceId, date, pageIndex, searchValue])
+  }, [device, date, pageIndex, searchValue])
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])
   useEffect(() => {
