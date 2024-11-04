@@ -31,14 +31,9 @@ import ApiController from '../../../api'
 interface FolderContentProps {
   folderId: number
   email: string
-  onFolderRemove: (folder: IContentBucket) => {}
 }
 
-const FolderContent: React.FC<FolderContentProps> = ({
-  email,
-  folderId,
-  onFolderRemove = (folder: IContentBucket) => {},
-}) => {
+const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
   useAuth(email)
 
   const [filteredContents, setFilteredContents] = useState<IContentCard[]>([])
@@ -52,13 +47,11 @@ const FolderContent: React.FC<FolderContentProps> = ({
     useState<boolean>(false)
 
   const deleteFolder = () =>
-    ApiController.removeFolder(folderId)
-      .then((folder) => {
-        if (!folder!) return
+    ApiController.removeFolder(folderId).then((folder) => {
+      if (!folder!) return
 
-        return folder.json()
-      })
-      .then((folder) => onFolderRemove(folder))
+      return folder.json()
+    })
 
   const actions = [
     {
