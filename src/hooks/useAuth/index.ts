@@ -8,7 +8,7 @@ const useAuth = (email: string) => {
   useEffect(() => {
     const userData = localStorage.getItem('user_info')
 
-    if (userData) {
+    if (userData && userData.replace('"', '').trim() === 'null') {
       setUser(JSON.parse(userData))
 
       return

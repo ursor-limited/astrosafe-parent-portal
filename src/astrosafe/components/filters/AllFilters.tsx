@@ -111,6 +111,7 @@ const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
   }, [user?.group_id])
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false)
+
   return (
     <>
       {isMobile ? (
@@ -126,15 +127,28 @@ const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
           onClick={(filterId) => onCardClick(filterId)}
         />
       )}
+
       <FilterCreationDialog
         open={filterCreationDialogOpen}
         onClose={() => setFilterCreationDialogOpen(false)}
-        onSubmit={(title: IFilter['title']) =>
-          user?.group_id &&
-          ApiController.createFilter(user.group_id, title).then((f) =>
+        onSubmit={(title: IFilter['title']) => {
+          if (!user?.group_id) return
+
+          ApiController.createFilter(user.group_id, title).then((f) => {
+            setFilters((prevState) => [
+              ...prevState,
+              {
+                id: f.id,
+                title: title,
+                official: false,
+                devices: [] as IGroupFilter['devices'],
+                totalDeviceCount: 0,
+              } as IGroupFilter,
+            ])
+
             onCreateFilter(f)
-          )
-        }
+          })
+        }}
         isMobile={isMobile}
       />
     </>

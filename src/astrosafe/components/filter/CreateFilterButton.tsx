@@ -36,12 +36,13 @@ const CreateFilterButton: React.FC<CreateFilterButtonProps> = ({
       <FilterCreationDialog
         open={filterCreationDialogOpen}
         onClose={() => setFilterCreationDialogOpen(false)}
-        onSubmit={(title: IFilter['title']) =>
-          user?.group_id &&
+        onSubmit={(title: IFilter['title']) => {
+          if (!user?.group_id) return
+
           ApiController.createFilter(user.group_id, title).then((f) =>
             onCreateFilter(f)
           )
-        }
+        }}
         isMobile={isMobile}
       />
     </>

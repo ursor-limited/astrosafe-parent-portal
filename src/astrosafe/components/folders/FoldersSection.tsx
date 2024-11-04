@@ -42,9 +42,15 @@ const FoldersSection: React.FC<FoldersSectionProps> = ({
     loadFolders()
   }, [loadFolders])
 
-  const createFolder = (title: IContentBucket['title']) =>
-    user?.group_id &&
-    ApiController.createFolder(title, user.group_id).then(onCreateFolder)
+  const createFolder = (title: IContentBucket['title']) => {
+    if (!user?.group_id) return
+
+    ApiController.createFolder(title, user.group_id).then((data) => {
+      loadFolders()
+
+      onCreateFolder(data)
+    })
+  }
 
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false)
 
@@ -58,7 +64,7 @@ const FoldersSection: React.FC<FoldersSectionProps> = ({
       selectedSidebarItemId="content"
       button={{
         text: 'Create a Folder',
-        callback: createFolder,
+        callback: () => setCreationDialogOpen(true),
         icon: PlusIcon,
       }}
       maxWidth={834}
@@ -88,7 +94,7 @@ const FoldersSection: React.FC<FoldersSectionProps> = ({
       <FolderCreationDialog
         open={creationDialogOpen}
         onClose={() => setCreationDialogOpen(false)}
-        onSubmit={createFolder}
+        onSubmit={(title) => createFolder(title)}
         isMobile={isMobile}
       />
     </PageLayout>

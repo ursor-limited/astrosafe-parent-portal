@@ -31,7 +31,7 @@ const FolderContentCreationButton: React.FC<
       <AddContentButton
         key={contentType}
         onClick={() => {
-          console.log('test')
+          setOpen(true)
         }}
         {...CONTENT_BRANDING[contentType as AstroContent]}
         fullWidth
