@@ -24,7 +24,11 @@ const FolderContentCreationButton: React.FC<
 > = ({ folderId, contentType }) => {
   const [open, setOpen] = useState<boolean>(false)
 
-  const { loadFolderAndContents } = useLoadFolderAndContents(folderId)
+  const dispatchLocalStorageEvent = () => {
+    localStorage.setItem('new_content', 'true')
+
+    window.dispatchEvent(new Event('storage-update'))
+  }
 
   return (
     <>
@@ -42,21 +46,27 @@ const FolderContentCreationButton: React.FC<
           open={open}
           onClose={() => setOpen(false)}
           folderId={folderId}
-          creationCallback={loadFolderAndContents}
+          creationCallback={() => {
+            dispatchLocalStorageEvent()
+          }}
         />
       ) : contentType === 'video' ? (
         <VideoCreationDialog
           open={open}
           onClose={() => setOpen(false)}
           folderId={folderId}
-          creationCallback={loadFolderAndContents}
+          creationCallback={() => {
+            dispatchLocalStorageEvent()
+          }}
         />
       ) : (
         <ChannelCreationDialog
           open={open}
           onClose={() => setOpen(false)}
           folderId={folderId}
-          creationCallback={loadFolderAndContents}
+          creationCallback={() => {
+            dispatchLocalStorageEvent()
+          }}
         />
       )}
     </>
