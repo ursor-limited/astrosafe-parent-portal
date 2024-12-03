@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { UserInfo } from './../../auth/model'
 import { getUserInfo } from './../../auth'
+import Cookies from 'js-cookie'
 
 const useAuth = (email: string) => {
   const [user, setUser] = useState<UserInfo>({} as UserInfo)
@@ -8,7 +9,7 @@ const useAuth = (email: string) => {
   useEffect(() => {
     const userData = localStorage.getItem('user_info')
 
-    if (userData) {
+    if (userData && Cookies.get('access_token')) {
       setUser(JSON.parse(userData))
 
       return
