@@ -2,23 +2,46 @@ import { useEffect, useState } from 'react'
 import ApiController, { BACKEND_URL } from '../../../src/api'
 import { IEnrichedDevice } from '../../../src/profiles/contents/common'
 
+let deviceDiscoveryPromise: Promise<IEnrichedDevice> | null = null
+
+const discoverDevice = (externalDeviceId: string) => {
+  if (deviceDiscoveryPromise) return deviceDiscoveryPromise
+
+  deviceDiscoveryPromise = (async () => {
+    const res = await fetch(
+      `${BACKEND_URL}/devices/discover/${externalDeviceId}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      }
+    )
+
+    const device = await res.json()
+
+    const enrichedDevice = await ApiController.getEnrichedDevice(device.id)
+
+    return enrichedDevice
+  })()
+
+  return deviceDiscoveryPromise
+}
+
 const useDevice = (externalDeviceId: string) => {
-  const [deviceData, setDeviceData] = useState<IEnrichedDevice>()
+  const [device, setDevice] = useState<IEnrichedDevice | null>(null)
 
   useEffect(() => {
-    fetch(`${BACKEND_URL}/devices/discover/${externalDeviceId}`, {
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    })
-      .then((resp) => resp.json())
-      .then((data) =>
-        ApiController.getEnrichedDevice(data.id).then((data) => {
-          setDeviceData(data)
-        })
-      )
+    if (!externalDeviceId) return
+
+    discoverDevice(externalDeviceId)
+      .then((data) => setDevice(data))
+      .catch((error) => {
+        console.error(`Failed to load device: ${externalDeviceId}`, error)
+
+        setDevice(null)
+      })
   }, [externalDeviceId])
 
-  return deviceData
+  return device
 }
 
 export default useDevice

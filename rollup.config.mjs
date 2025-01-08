@@ -12,12 +12,6 @@ import svgr from '@svgr/rollup'
 import path from 'path'
 import fs from 'fs'
 
-const loadJSONFile = (file) => {
-  return JSON.parse(fs.readFileSync(file, 'utf-8'))
-}
-
-const packageJson = loadJSONFile('./package.json')
-
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
 
