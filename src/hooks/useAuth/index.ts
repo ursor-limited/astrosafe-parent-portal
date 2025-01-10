@@ -43,7 +43,11 @@ export const fetchAndCacheUserInfo = async (
 }
 
 const login = async (isProd: boolean) => {
-  const resp = await fetch('https://api.astrosafe.co/troomi/login', {
+  const url = isProd
+    ? 'https://api.astrosafe.co/troomi/login'
+    : 'https://dev.api.astrosafe.co/troomi/login'
+
+  const resp = await fetch(url, {
     method: 'POST',
     credentials: 'include',
   })
@@ -54,7 +58,11 @@ const login = async (isProd: boolean) => {
 }
 
 const logout = (isProd: boolean) => {
-  window.location.href = 'https://api.astrosafe.co/logout'
+  const url = isProd
+    ? 'https://api.astrosafe.co/logout'
+    : 'https://dev.api.astrosafe.co/logout'
+
+  window.location.href = url
 }
 
 const useAuth = (email: string, isProd: boolean) => {
