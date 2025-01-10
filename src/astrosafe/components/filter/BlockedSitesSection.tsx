@@ -23,19 +23,22 @@ import { INotificationContext } from '../../../components/NotificationContext'
 interface FilterPageBlockedSitesSectionProps {
   filterId: number
   email: string
+  isProd?: boolean
 }
 
 const FilterPageBlockedSitesSection: React.FC<
   FilterPageBlockedSitesSectionProps
-> = ({ filterId, email }) => {
-  useAuth(email)
+> = ({ filterId, email, isProd = false }) => {
+  useAuth(email, isProd)
 
   const [blockedSites, setBlockedSites] = useState<IFilterException[]>([])
 
+  const apiController = new ApiController(isProd)
+
   useEffect(() => {
-    ApiController.getBlockedSites(filterId).then((data) =>
-      setBlockedSites(data)
-    )
+    apiController
+      .getBlockedSites(filterId)
+      .then((data) => setBlockedSites(data))
   }, [filterId])
 
   const NotificationContext = createContext<INotificationContext>({
@@ -49,7 +52,7 @@ const FilterPageBlockedSitesSection: React.FC<
   const notificationCtx = useContext(NotificationContext)
 
   const loadBlockedSites = useCallback(
-    () => ApiController.getBlockedSites(filterId).then(setBlockedSites),
+    () => apiController.getBlockedSites(filterId).then(setBlockedSites),
     [filterId]
   )
 
@@ -58,12 +61,14 @@ const FilterPageBlockedSitesSection: React.FC<
   }, [loadBlockedSites])
 
   const addBlockedSite = (url: string) =>
-    ApiController.addBlockedSite(filterId, url)
+    apiController
+      .addBlockedSite(filterId, url)
       .then(loadBlockedSites)
       .then(() => notificationCtx.success('Added blocked site.'))
 
   const removeBlockedSite = (url: string) =>
-    ApiController.removeBlockedSite(filterId, url)
+    apiController
+      .removeBlockedSite(filterId, url)
       .then(loadBlockedSites)
       .then(() => notificationCtx.negativeSuccess('Removed blocked site.'))
 
@@ -158,7 +163,7 @@ const FilterPageBlockedSitesSection: React.FC<
   const [filter, setFilter] = useState<IFilter>()
 
   useEffect(() => {
-    ApiController.getFilter(filterId).then((data) => setFilter(data))
+    apiController.getFilter(filterId).then((data) => setFilter(data))
   }, [filterId])
 
   return (

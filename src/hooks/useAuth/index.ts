@@ -6,7 +6,8 @@ import Cookies from 'js-cookie'
 let userInfoPromise: Promise<UserInfo> | null = null
 
 export const fetchAndCacheUserInfo = async (
-  email: string
+  email: string,
+  isProd: boolean
 ): Promise<UserInfo> => {
   if (userInfoPromise) return userInfoPromise
 
@@ -20,15 +21,15 @@ export const fetchAndCacheUserInfo = async (
     if (!Cookies.get('access_token')) localStorage.removeItem('user_info')
 
     try {
-      const userData = await getUserInfo(email)
+      const userData = await getUserInfo(email, isProd)
 
       localStorage.setItem('user_info', JSON.stringify(userData))
 
       return userData
     } catch (error) {
-      await login()
+      await login(isProd)
 
-      const userData = await getUserInfo(email)
+      const userData = await getUserInfo(email, isProd)
 
       localStorage.setItem('user_info', JSON.stringify(userData))
 
@@ -41,7 +42,7 @@ export const fetchAndCacheUserInfo = async (
   return userInfoPromise
 }
 
-const login = async () => {
+const login = async (isProd: boolean) => {
   const resp = await fetch('https://api.astrosafe.co/troomi/login', {
     method: 'POST',
     credentials: 'include',
@@ -52,11 +53,11 @@ const login = async () => {
   return await resp.json()
 }
 
-const logout = () => {
+const logout = (isProd: boolean) => {
   window.location.href = 'https://api.astrosafe.co/logout'
 }
 
-const useAuth = (email: string) => {
+const useAuth = (email: string, isProd: boolean) => {
   const [user, setUser] = useState<UserInfo>(() => {
     const cachedData = localStorage.getItem('user_info')
 
@@ -64,7 +65,7 @@ const useAuth = (email: string) => {
   })
 
   useEffect(() => {
-    fetchAndCacheUserInfo(email)
+    fetchAndCacheUserInfo(email, isProd)
       .then((data) => setUser(data))
       .catch((err) => {
         console.error('Failed to fetch user info:', err)

@@ -1,4 +1,4 @@
-import React from 'react'
+/* 
 import { isMobile } from 'react-device-detect'
 import FilterPage from './contents/common'
 import RootLayout from '../layout'
@@ -17,3 +17,4 @@ const Filter = (props: { id: string; email: string }) => {
 }
 
 export default Filter
+*/

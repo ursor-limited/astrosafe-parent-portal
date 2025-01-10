@@ -26,6 +26,7 @@ interface DeviceScreenTimeCardProps {
   email: string
   deviceId: string
   date?: Date
+  isProd?: boolean
 }
 
 interface InsightsTabEmptyStateIndicatorProps {
@@ -145,6 +146,7 @@ const DeviceMostVisitedSitesCard: React.FC<DeviceScreenTimeCardProps> = ({
   email,
   deviceId,
   date = new Date(),
+  isProd = false,
 }) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([])
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0) // days from today
@@ -154,29 +156,31 @@ const DeviceMostVisitedSitesCard: React.FC<DeviceScreenTimeCardProps> = ({
   const [allMostVisitedSitesDialogOpen, setAllMostVisitedSitesDialogOpen] =
     useState<boolean>(false)
 
-  useAuth(email)
+  useAuth(email, isProd)
 
-  const device = useDevice(deviceId)
+  const device = useDevice(deviceId, isProd)
 
   useEffect(() => {
     if (!device?.id) return
 
-    ApiController.getStats(
-      device.id,
-      dayjs(date).subtract(3, 'days').format('YYYY-MM-DD'),
-      dayjs(date).add(3, 'days').format('YYYY-MM-DD')
-    ).then((stats) => {
-      setTimes(stats.screenTime)
-
-      setVisitedSites(
-        _.sortBy(
-          stats.visitedWebsites?.find(
-            (w: any) => w.date === dayjs(date).format('YYYY-MM-DD')
-          )?.websites || [],
-          (t) => t.screenTime
-        )
+    new ApiController(isProd)
+      .getStats(
+        device.id,
+        dayjs(date).subtract(3, 'days').format('YYYY-MM-DD'),
+        dayjs(date).add(3, 'days').format('YYYY-MM-DD')
       )
-    })
+      .then((stats) => {
+        setTimes(stats.screenTime)
+
+        setVisitedSites(
+          _.sortBy(
+            stats.visitedWebsites?.find(
+              (w: any) => w.date === dayjs(date).format('YYYY-MM-DD')
+            )?.websites || [],
+            (t) => t.screenTime
+          )
+        )
+      })
   }, [device, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex])
 
   useEffect(() => {

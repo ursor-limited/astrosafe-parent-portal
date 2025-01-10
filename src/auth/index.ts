@@ -1,8 +1,14 @@
-import { BACKEND_URL } from '../api'
 import { UserInfo } from './model'
 
-export const getUserInfo = async (email: string): Promise<UserInfo> => {
-  const resp = await fetch(`${BACKEND_URL}/troomi/users/self?email=${email}`, {
+export const getUserInfo = async (
+  email: string,
+  isProd: boolean
+): Promise<UserInfo> => {
+  const backendUrl = isProd
+    ? 'https://api.astrosafe.co'
+    : 'https://dev.api.astrosafe.co'
+
+  const resp = await fetch(`${backendUrl}/troomi/users/self?email=${email}`, {
     credentials: 'include',
   })
 

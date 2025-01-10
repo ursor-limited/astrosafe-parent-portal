@@ -152,6 +152,7 @@ interface DeviceHistoryCardProps {
   deviceId: string
   email: string
   date?: Date
+  isProd?: boolean
 }
 
 const MobileHistoryRow = (props: IHistoryItem & { duration?: number }) => {
@@ -343,31 +344,34 @@ const DeviceHistorySection: React.FC<DeviceHistoryCardProps> = ({
   deviceId,
   email,
   date = new Date(),
+  isProd = false,
 }) => {
-  useAuth(email)
+  useAuth(email, isProd)
 
   const [nPages, setNPages] = useState<number>(1)
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [history, setHistory] = useState<IHistoryItem[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
 
-  const device = useDevice(deviceId)
+  const device = useDevice(deviceId, isProd)
 
   useEffect(() => setPageIndex(0), [searchValue])
 
   useEffect(() => {
     if (!device?.id) return
 
-    ApiController.getHistory(
-      device.id,
-      dayjs(date).format('YYYY-MM-DD'),
-      pageIndex + 1,
-      PAGE_LENGTH,
-      searchValue
-    ).then((response) => {
-      setHistory(response.history)
-      setNPages(response.pages)
-    })
+    new ApiController(isProd)
+      .getHistory(
+        device.id,
+        dayjs(date).format('YYYY-MM-DD'),
+        pageIndex + 1,
+        PAGE_LENGTH,
+        searchValue
+      )
+      .then((response) => {
+        setHistory(response.history)
+        setNPages(response.pages)
+      })
   }, [device, date, pageIndex, searchValue])
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])

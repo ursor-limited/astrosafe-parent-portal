@@ -56,6 +56,7 @@ const DevicePageContentTab = (props: {
   deviceId: IDevice['id']
   deviceName: IDevice['name']
   openAddFolderDialog: () => any
+  isProd: boolean
 }) => {
   const navigate = useNavigate()
   const [
@@ -95,6 +96,7 @@ const DevicePageContentTab = (props: {
                   isMobile={props.isMobile}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
+                  isProd={props.isProd}
                   // extraActions={[
                   //   {
                   //     text: "Remove Device",
@@ -146,10 +148,11 @@ const DevicePageContentTab = (props: {
           open={true}
           onClose={() => setFolderDeviceRemovalConfirmationDialogId(undefined)}
           onSubmit={() =>
-            ApiController.removeFolderFromDevice(
-              folderDeviceRemovalConfirmationDialogId,
-              props.deviceId
-            )
+            new ApiController(props.isProd)
+              .removeFolderFromDevice(
+                folderDeviceRemovalConfirmationDialogId,
+                props.deviceId
+              )
               .then(props.onUpdate)
               .then(() =>
                 notificationCtx.negativeSuccess('Removed Folder from Device.')

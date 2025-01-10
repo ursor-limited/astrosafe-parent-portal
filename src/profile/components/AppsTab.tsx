@@ -76,11 +76,15 @@ export const AppsLegend = (props: { small?: boolean }) => (
 const DevicePageAppsTab = (props: {
   deviceId: IDevice['id']
   isMobile?: boolean
+  isProd: boolean
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>()
   const [categories, setCategories] = useState<IFilterSubcategory[]>([])
+
+  const apiController = new ApiController(props.isProd)
+
   useEffect(() => {
-    ApiController.getAllFilterCategories().then(setCategories)
+    apiController.getAllFilterCategories().then(setCategories)
   }, [])
 
   const [nPages, setNPages] = useState<number>(1)
@@ -93,16 +97,18 @@ const DevicePageAppsTab = (props: {
   const [filteredApps, setFilteredApps] = useState<IApp[]>([])
 
   useEffect(() => {
-    ApiController.getApps(
-      props.deviceId,
-      pageIndex + 1,
-      PAGE_SIZE,
-      selectedCategory,
-      searchValue
-    ).then((response) => {
-      setApps(_.sortBy(response.apps, (a) => a.id))
-      setNPages(response.pages)
-    })
+    apiController
+      .getApps(
+        props.deviceId,
+        pageIndex + 1,
+        PAGE_SIZE,
+        selectedCategory,
+        searchValue
+      )
+      .then((response) => {
+        setApps(_.sortBy(response.apps, (a) => a.id))
+        setNPages(response.pages)
+      })
   }, [props.deviceId, pageIndex, selectedCategory, searchValue])
 
   useEffect(
@@ -226,8 +232,8 @@ const DevicePageAppsTab = (props: {
                         )
                       )
                       ;(a.enabled
-                        ? ApiController.disableApp
-                        : ApiController.enableApp)(props.deviceId, a.id).then(
+                        ? apiController.disableApp
+                        : apiController.enableApp)(props.deviceId, a.id).then(
                         () =>
                           notificationCtx.success(
                             a.enabled

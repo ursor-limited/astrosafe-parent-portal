@@ -24,11 +24,29 @@ import {
   IVideo,
 } from './../../profile/components/ContentTab'
 import { IActionPopupItem } from './../../components/ActionPopup'
-
-import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 import useNavigate from '../../hooks/useNavigate'
 
-const FolderPageMobileBody = (props: {
+const FolderPageMobileBody = ({
+  email,
+  folderId,
+  folder,
+  contents,
+  actions,
+  devices,
+  searchValue,
+  loadFolderAndContents,
+  selectedContentType,
+  onRemoveDevice,
+  setAddDeviceDialogOpen,
+  setChannelEditingDialogId,
+  setCreationDialogOpen,
+  setLinkEditingDialogId,
+  setSearchValue,
+  setSelectedContentType,
+  setVideoEditingDialogId,
+  titleRow,
+  isProd,
+}: {
   email: string
   folderId: IContentBucket['id']
   folder?: IContentBucket
@@ -48,29 +66,31 @@ const FolderPageMobileBody = (props: {
   setChannelEditingDialogId: (id: IChannel['id']) => any
   titleRow: ITitleRowItem[]
   actions: IActionPopupItem[]
+  isProd: boolean
 }) => {
   const navigate = useNavigate()
   return (
     <MobilePageLayout
-      titleRow={props.titleRow.slice(-1)[0]}
+      titleRow={titleRow.slice(-1)[0]}
       titleBackButtonCallback={() => navigate.push('/folders')}
       selectedPage="content"
-      actions={props.actions}
+      actions={actions}
     >
       <Stack spacing="24px" pb="32px">
         <MobileDevicesSection
-          email={props.email}
-          title={`${props.devices.length} ${
-            props.devices.length === 1 ? 'Device has' : 'Devices have'
+          email={email}
+          title={`${devices.length} ${
+            devices.length === 1 ? 'Device has' : 'Devices have'
           } access to this Folder`}
-          devices={props.devices}
-          folderId={props.folderId}
-          onAdd={props.setAddDeviceDialogOpen}
+          devices={devices}
+          folderId={folderId}
+          onAdd={setAddDeviceDialogOpen}
           onRemove={(id: IDevice['id']) =>
-            ApiController.removeFolderFromDevice(props.folderId, id).then(
-              props.onRemoveDevice
-            )
+            new ApiController(isProd)
+              .removeFolderFromDevice(folderId, id)
+              .then(onRemoveDevice)
           }
+          isProd={isProd}
         />
         <Stack justifyContent="center">
           <Stack
@@ -80,25 +100,25 @@ const FolderPageMobileBody = (props: {
           />
         </Stack>
         <Stack justifyContent="space-between" spacing="8px">
-          <Typography variant="medium" bold>{`${props.contents.length} item${
-            props.contents.length === 1 ? '' : 's '
+          <Typography variant="medium" bold>{`${contents.length} item${
+            contents.length === 1 ? '' : 's '
           } in this Folder`}</Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
-              value={props.searchValue ?? ''}
+              value={searchValue ?? ''}
               callback={(value: string) => {
-                props.setSearchValue(value)
+                setSearchValue(value)
               }}
-              clearCallback={() => props.setSearchValue('')}
+              clearCallback={() => setSearchValue('')}
               shadow
               fullWidth
               iconSize="18px"
             />
             <SortButton
               noText
-              selected={props.selectedContentType}
+              selected={selectedContentType}
               callback={(id) =>
-                props.setSelectedContentType(id as AstroContent | 'all')
+                setSelectedContentType(id as AstroContent | 'all')
               }
               types={['all', 'link', 'video', 'channel']}
               displayNames={{
@@ -115,7 +135,7 @@ const FolderPageMobileBody = (props: {
           {['link', 'video', 'channel'].map((c) => (
             <Stack
               key={c}
-              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
+              onClick={() => setCreationDialogOpen(c as AstroContent)}
               flex={1}
             >
               <AddContentButton
@@ -136,9 +156,9 @@ const FolderPageMobileBody = (props: {
           boxSizing="border-box"
         >
           <Stack overflow="hidden" flex={1}>
-            {props.contents.length > 0 ? (
+            {contents.length > 0 ? (
               <Stack flex={1} spacing="12px">
-                {props.contents.map((x, i) => (
+                {contents.map((x, i) => (
                   <Stack key={`${x.content.id}${x.type}`}>
                     {/* <a
                       href={getAbsoluteUrl(cleanUrl(x.content.url))}
@@ -152,30 +172,32 @@ const FolderPageMobileBody = (props: {
                       {x.type === 'link' ? (
                         <LinkCard
                           {...(x.content as ILink)}
-                          onDelete={props.loadFolderAndContents}
+                          onDelete={loadFolderAndContents}
                           onOpenEditingDialog={() =>
-                            props.setLinkEditingDialogId(x.content.id)
+                            setLinkEditingDialogId(x.content.id)
                           }
                           isMobile
+                          isProd={isProd}
                         />
                       ) : x.type === 'video' ? (
                         <VideoCard
                           {...(x.content as IVideo)}
-                          onDelete={props.loadFolderAndContents}
+                          onDelete={loadFolderAndContents}
                           onOpenEditingDialog={() =>
-                            props.setVideoEditingDialogId(x.content.id)
+                            setVideoEditingDialogId(x.content.id)
                           }
                           isMobile
+                          isProd={isProd}
                         />
                       ) : x.type === 'channel' ? (
                         <ChannelCard
                           {...(x.content as IChannel)}
-                          onDelete={props.loadFolderAndContents}
+                          onDelete={loadFolderAndContents}
                           onOpenEditingDialog={() =>
-                            props.setChannelEditingDialogId(x.content.id)
+                            setChannelEditingDialogId(x.content.id)
                           }
                           isMobile
-                          folderId={props.folderId}
+                          folderId={folderId}
                         />
                       ) : null}
                     </UrsorFadeIn>

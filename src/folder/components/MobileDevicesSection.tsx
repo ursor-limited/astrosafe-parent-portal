@@ -20,6 +20,7 @@ const MobileDevicesSection = (props: {
   title: string
   devices: IDevice[]
   folderId: IContentBucket['id']
+  isProd: boolean
   onAdd: () => any
   onRemove: (id: IDevice['id']) => any
 }) => {
@@ -58,6 +59,7 @@ const MobileDevicesSection = (props: {
                     </Stack>
                   }
                   noExtras
+                  isProd={props.isProd}
                 />
               </UrsorFadeIn>
             ))}
@@ -129,6 +131,7 @@ const MobileDevicesSection = (props: {
           props.onAdd()
         }}
         onRemove={setRemovalConfirmationDialogId}
+        isProd={props.isProd}
       />
       {removalConfirmationDialogId ? (
         <FolderDeviceRemovalConfirmationDialog

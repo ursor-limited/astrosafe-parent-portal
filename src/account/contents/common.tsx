@@ -2,17 +2,9 @@ import { ReactComponent as PhoneIcon } from './../../images/PhoneIcon.svg'
 import { ReactComponent as PeopleIcon } from './../../images/PeopleIcon.svg'
 import { ReactComponent as ClockIcon } from './../../images/ClockIcon.svg'
 import { Stack } from '@mui/system'
-import { useCallback, useContext, useEffect, useState } from 'react'
 import { PALETTE, Typography } from './../../ui'
 import _ from 'lodash'
 import { IGroup } from '../../folder/contents/common'
-import DeviceConnectDialog from '../../profiles/components/DeviceConnectDialog'
-import DownloadDialog from '../../profiles/components/DownloadDialog'
-import UpgradeDialog from '../../components/UpgradeDialog'
-import ApiController from '../../api'
-import NotificationContext from './../../components/NotificationContext'
-import useAuth from './../../hooks/useAuth'
-
 export const DUMMY_USER_ID = 1
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`

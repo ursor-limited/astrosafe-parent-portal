@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AllFiltersPageDesktopBody from './body-desktop'
 import AllFiltersPageMobileBody from './body-mobile'
 import ApiController from '../../api'
@@ -70,21 +70,34 @@ export interface IGroupFilter {
   blacklistedWords: number
 }
 
-const AllFiltersPage = (props: { email: string; isMobile: boolean }) => {
-  const { user } = useAuth(props.email)
+interface AllFiltersPageProps {
+  email: string
+  isMobile: boolean
+  isProd: boolean
+}
+
+const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
+  email,
+  isMobile,
+  isProd = false,
+}) => {
+  const { user } = useAuth(email, isProd)
+
   const [filters, setFilters] = useState<IGroupFilter[]>([])
+
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then((filtahs) =>
-        setFilters(_.sortBy(filtahs, (f) => f.id))
-      )
+      new ApiController(isProd)
+        .getGroupFilters(user.group_id)
+        .then((filtahs) => setFilters(_.sortBy(filtahs, (f) => f.id)))
   }, [user?.group_id])
+
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false)
 
   return (
     <>
-      {props.isMobile ? (
+      {isMobile ? (
         <AllFiltersPageMobileBody
           filters={filters}
           setCreateFilterDialogOpen={() => setFilterCreationDialogOpen(true)}
@@ -101,7 +114,7 @@ const AllFiltersPage = (props: { email: string; isMobile: boolean }) => {
         onSubmit={() => {
           console.log('submitted')
         }}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
     </>
   )

@@ -18,11 +18,14 @@ const AddFolderDialog = (props: {
   addedFolders: IEnrichedContentBucket[]
   isMobile?: boolean
   groupId: IGroup['id']
+  isProd: boolean
 }) => {
   const [searchValue, setSearchValue] = useState<string>('')
   const [allFolders, setAllFolders] = useState<IContentBucket[]>([])
   useEffect(() => {
-    ApiController.getGroupFolders(props.groupId).then((d) => setAllFolders(d))
+    new ApiController(props.isProd)
+      .getGroupFolders(props.groupId)
+      .then((d) => setAllFolders(d))
   }, [props.groupId])
 
   const [nonAddedFolders, setNonAddedFolders] = useState<IContentBucket[]>([])

@@ -8,7 +8,14 @@ import { IContentBucket, ILink } from './../../profile/components/ContentTab'
 import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
-const LinkCreationDialog = (props: {
+const LinkCreationDialog = ({
+  updateDetails,
+  isProd,
+  open,
+  onClose,
+  folderId,
+  creationCallback,
+}: {
   open: boolean
   onClose: () => any
   folderId: IContentBucket['id']
@@ -17,24 +24,25 @@ const LinkCreationDialog = (props: {
     link: ILink
     callback?: () => any
   }
+  isProd: boolean
 }) => {
   const [title, setTitle] = useState<string>('')
   const [url, setUrl] = useState<string>('')
   const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
   useEffect(() => {
-    props.updateDetails && setTitle(props.updateDetails?.link.title)
-    props.updateDetails && setUrl(props.updateDetails?.link.url)
-    props.updateDetails &&
-      setThumbnailUrl(props.updateDetails?.link.thumbnailUrl)
-  }, [props.updateDetails])
+    updateDetails && setTitle(updateDetails?.link.title)
+    updateDetails && setUrl(updateDetails?.link.url)
+    updateDetails && setThumbnailUrl(updateDetails?.link.thumbnailUrl)
+  }, [updateDetails])
 
   const [manuallyChangedTitle, setManuallyChangedTitle] =
     useState<boolean>(false)
 
+  const apiController = new ApiController(isProd)
+
   const loadPreview = () => {
-    ApiController.getLinkPreview(
-      encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
-    )
+    apiController
+      .getLinkPreview(encodeURIComponent(getAbsoluteUrl(cleanUrl(url))))
       .then((result) => {
         result.title && !manuallyChangedTitle && setTitle(result.title)
         result.faviconUrl && setThumbnailUrl(result.faviconUrl)
@@ -45,35 +53,33 @@ const LinkCreationDialog = (props: {
   const notificationCtx = useContext(NotificationContext)
 
   const submitCreation = () =>
-    ApiController.createLink(
-      title,
-      getAbsoluteUrl(cleanUrl(url)),
-      thumbnailUrl,
-      props.folderId
-    ).then(props.creationCallback)
+    apiController
+      .createLink(title, getAbsoluteUrl(cleanUrl(url)), thumbnailUrl, folderId)
+      .then(creationCallback)
 
   const submitUpdate = () =>
-    props.updateDetails?.link.id &&
-    ApiController.updateLink(
-      props.updateDetails.link.id,
-      title,
-      getAbsoluteUrl(cleanUrl(url)),
-      thumbnailUrl
-    )
-      .then(props.updateDetails?.callback)
+    updateDetails?.link.id &&
+    apiController
+      .updateLink(
+        updateDetails.link.id,
+        title,
+        getAbsoluteUrl(cleanUrl(url)),
+        thumbnailUrl
+      )
+      .then(updateDetails?.callback)
       .then(() => notificationCtx.success('Updated Link'))
 
   return (
     <ContentCreationDialog
-      open={props.open}
-      closeCallback={props.onClose}
+      open={open}
+      closeCallback={onClose}
       onSubmit={() => {
-        ;(props.updateDetails?.callback ? submitUpdate : submitCreation)()
-        props.onClose()
+        ;(updateDetails?.callback ? submitUpdate : submitCreation)()
+        onClose()
       }}
       type="link"
       info={INFOS.addLink}
-      editing={!!props.updateDetails}
+      editing={!!updateDetails}
       setTitle={(t) => {
         setTitle(t)
         setManuallyChangedTitle(true)
@@ -96,6 +102,7 @@ const LinkCreationDialog = (props: {
           noPointerEvents
           noMenu
           twoLineTitleSectionHeight
+          isProd={isProd}
         />
       </Stack>
     </ContentCreationDialog>

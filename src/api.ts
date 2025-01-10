@@ -29,228 +29,217 @@ export interface IVideoComment {
   time: number
 }
 
-export const BACKEND_URL = 'https://api.astrosafe.co'
-
-export const AUTH_URL = 'https://auth.astrosafe.co'
-
 export const getAbsoluteUrl = (url: string) => `https://${url}`
 
-export const get = (route: string) =>
-  fetch(
-    //@ts-ignore
-    `${BACKEND_URL}/${route}`,
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: { Origin: 'https://localhost:3000' },
-    }
-  ).catch((err) => {
-    if (err.statusCode === 401) {
-      Cookies.remove('access_token')
-
-      Cookies.remove('user_info')
-    }
-  })
-
-export const post = (route: string, body?: any) =>
-  fetch(
-    //@ts-ignore
-    `${BACKEND_URL}/${route}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Origin: 'https://localhost:3000',
-      },
-      credentials: 'include',
-      body: body ? JSON.stringify(body) : undefined,
-      cache: 'no-store',
-    }
-  ).catch((err) => {
-    if (err.statusCode === 401) {
-      Cookies.remove('access_token')
-
-      Cookies.remove('user_info')
-    }
-  })
-
-export const put = (route: string, body: any) =>
-  fetch(
-    //@ts-ignore
-    `${BACKEND_URL}/${route}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Origin: 'https://localhost:3000',
-      },
-      credentials: 'include',
-      body: JSON.stringify(body),
-    }
-  ).catch((err) => {
-    if (err.statusCode === 401) {
-      Cookies.remove('access_token')
-
-      Cookies.remove('user_info')
-    }
-  })
-
-export const patch = (route: string, body: any) =>
-  fetch(
-    //@ts-ignore
-    `${BACKEND_URL}/${route}`,
-    {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Origin: 'https://localhost:3000',
-      },
-      credentials: 'include',
-      body: JSON.stringify(body),
-    }
-  ).catch((err) => {
-    if (err.statusCode === 401) {
-      Cookies.remove('access_token')
-
-      Cookies.remove('user_info')
-    }
-  })
-
-const dellete = (route: string) =>
-  fetch(
-    //@ts-ignore
-    `${BACKEND_URL}/${route}`,
-    {
-      method: 'DELETE',
-      headers: { Origin: 'https://localhost:3000' },
-      credentials: 'include',
-    }
-  ).catch((err) => {
-    if (err.statusCode === 401) {
-      Cookies.remove('access_token')
-
-      Cookies.remove('user_info')
-    }
-  })
-
 class ApiController {
-  static async getDevice(id: IDevice['id']) {
-    return get(`devices/${id}`).then((response: any) => response.json())
+  BACKEND_URL: string
+  AUTH_URL: string
+
+  constructor(isProd: boolean = false) {
+    this.BACKEND_URL = isProd
+      ? 'https://api.astrosafe.co'
+      : 'https://dev.api.astrosafe.co'
+
+    this.AUTH_URL = isProd
+      ? 'https://auth.astrosafe.co'
+      : 'https://dev.auth.astrosafe.co'
   }
 
-  static async getEnrichedDevice(id: IDevice['id']) {
-    return get(
+  private get = (route: string) =>
+    fetch(
+      //@ts-ignore
+      `${this.BACKEND_URL}/${route}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: { Origin: 'https://localhost:3000' },
+      }
+    ).catch((err) => {
+      if (err.statusCode === 401) {
+        Cookies.remove('access_token')
+
+        Cookies.remove('user_info')
+      }
+    })
+
+  private post = (route: string, body?: any) =>
+    fetch(
+      //@ts-ignore
+      `${this.BACKEND_URL}/${route}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://localhost:3000',
+        },
+        credentials: 'include',
+        body: body ? JSON.stringify(body) : undefined,
+        cache: 'no-store',
+      }
+    ).catch((err) => {
+      if (err.statusCode === 401) {
+        Cookies.remove('access_token')
+
+        Cookies.remove('user_info')
+      }
+    })
+
+  private put = (route: string, body: any) =>
+    fetch(
+      //@ts-ignore
+      `${this.BACKEND_URL}/${route}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://localhost:3000',
+        },
+        credentials: 'include',
+        body: JSON.stringify(body),
+      }
+    ).catch((err) => {
+      if (err.statusCode === 401) {
+        Cookies.remove('access_token')
+
+        Cookies.remove('user_info')
+      }
+    })
+
+  private patch = (route: string, body: any) =>
+    fetch(
+      //@ts-ignore
+      `${this.BACKEND_URL}/${route}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Origin: 'https://localhost:3000',
+        },
+        credentials: 'include',
+        body: JSON.stringify(body),
+      }
+    ).catch((err) => {
+      if (err.statusCode === 401) {
+        Cookies.remove('access_token')
+
+        Cookies.remove('user_info')
+      }
+    })
+
+  private delete = (route: string) =>
+    fetch(
+      //@ts-ignore
+      `${this.BACKEND_URL}/${route}`,
+      {
+        method: 'DELETE',
+        headers: { Origin: 'https://localhost:3000' },
+        credentials: 'include',
+      }
+    ).catch((err) => {
+      if (err.statusCode === 401) {
+        Cookies.remove('access_token')
+
+        Cookies.remove('user_info')
+      }
+    })
+
+  public async getDevice(id: IDevice['id']) {
+    return this.get(`devices/${id}`).then((response: any) => response.json())
+  }
+
+  public async getEnrichedDevice(id: IDevice['id']) {
+    return this.get(
       `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json())
   }
 
-  static async getDeviceWithTimesAndConfig(id: IDevice['id']) {
-    return get(
+  public async getDeviceWithTimesAndConfig(id: IDevice['id']) {
+    return this.get(
       `devices/${id}?includeTimeLimits=true&includeAllowedTimes=true&includeConfig=true`
     ).then((response: any) => response.json())
   }
 
-  static async renameDevice(id: IDevice['id'], name: IDevice['name']) {
-    return patch(`devices/${id}`, { name })
+  public async renameDevice(id: IDevice['id'], name: IDevice['name']) {
+    return this.patch(`devices/${id}`, { name })
   }
 
-  static async getGroupEnrichedDevices(id: IGroup['id']) {
-    return get(
+  public async getGroupEnrichedDevices(id: IGroup['id']) {
+    return this.get(
       `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json())
   }
 
-  static async getFolderDevices(id: IContentBucket['id']) {
-    return get(`devices?contentBucketId=${id}&includeConfig=true`).then(
+  public async getFolderDevices(id: IContentBucket['id']) {
+    return this.get(`devices?contentBucketId=${id}&includeConfig=true`).then(
       (response: any) => response.json()
     )
   }
 
-  static async getDeviceFolders(id: IDevice['id']) {
-    return get(`content/buckets?deviceId=${id}&includePreview=true`).then(
+  public async getDeviceFolders(id: IDevice['id']) {
+    return this.get(`content/buckets?deviceId=${id}&includePreview=true`).then(
       (response: any) => response.json()
     )
   }
 
-  static async getGroupFolders(id: IGroup['id']) {
-    return get(`content/buckets?groupId=${id}`).then((response: any) =>
+  public async getGroupFolders(id: IGroup['id']) {
+    return this.get(`content/buckets?groupId=${id}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async addFolderToDevice(
+  public async addFolderToDevice(
     folderId: IContentBucket['id'],
     deviceId: IDevice['id']
   ) {
-    return post(`content/buckets/${folderId}/devices`, { deviceId })
+    return this.post(`content/buckets/${folderId}/devices`, { deviceId })
   }
 
-  static async removeFolderFromDevice(
+  public async removeFolderFromDevice(
     folderId: IContentBucket['id'],
     deviceId: IDevice['id']
   ) {
-    return dellete(`content/buckets/${folderId}/devices/${deviceId}`)
+    return this.delete(`content/buckets/${folderId}/devices/${deviceId}`)
   }
 
-  static async createFolder(
+  public async createFolder(
     title: IContentBucket['title'],
     groupId: IContentBucket['groupId']
   ) {
-    return post('content/buckets', { title, groupId }).then((response: any) =>
-      response.json()
-    )
-  }
-
-  static async removeFolder(id: IContentBucket['id']) {
-    return dellete(`content/buckets/${id}`)
-  }
-
-  static async getFolder(id: IContentBucket['id']) {
-    return get(`content/buckets/${id}`).then((response: any) => response.json())
-  }
-
-  static async getEnrichedFolders(id: IGroup['id']) {
-    return get(`content/buckets?groupId=${id}&includePreview=true`).then(
+    return this.post('content/buckets', { title, groupId }).then(
       (response: any) => response.json()
     )
   }
 
-  static async renameFolder(
+  public async removeFolder(id: IContentBucket['id']) {
+    return this.delete(`content/buckets/${id}`)
+  }
+
+  public async getFolder(id: IContentBucket['id']) {
+    return this.get(`content/buckets/${id}`).then((response: any) =>
+      response.json()
+    )
+  }
+
+  public async getEnrichedFolders(id: IGroup['id']) {
+    return this.get(`content/buckets?groupId=${id}&includePreview=true`).then(
+      (response: any) => response.json()
+    )
+  }
+
+  public async renameFolder(
     id: IContentBucket['id'],
     title: IContentBucket['title']
   ) {
-    return put(`content/buckets/${id}`, { title })
+    return this.put(`content/buckets/${id}`, { title })
   }
 
-  static async createLink(
+  public async createLink(
     title: ILink['title'],
     url: ILink['url'],
     thumbnailUrl: ILink['thumbnailUrl'],
     contentBucketId: IContentBucket['id']
   ) {
-    return post(`content/links`, { title, url, thumbnailUrl, contentBucketId })
-  }
-
-  static async updateLink(
-    id: ILink['id'],
-    title: ILink['title'],
-    url: ILink['url'],
-    thumbnailUrl: ILink['thumbnailUrl']
-  ) {
-    return put(`content/links/${id}`, { title, url, thumbnailUrl })
-  }
-
-  static async deleteLink(id: ILink['id']) {
-    return dellete(`content/links/${id}`)
-  }
-
-  static async createVideo(
-    title: ILink['title'],
-    url: ILink['url'],
-    thumbnailUrl: ILink['thumbnailUrl'],
-    contentBucketId: IContentBucket['id']
-  ) {
-    return post(`content/videos`, {
+    return this.post(`content/links`, {
       title,
       url,
       thumbnailUrl,
@@ -258,7 +247,34 @@ class ApiController {
     })
   }
 
-  static async updateVideo(
+  public async updateLink(
+    id: ILink['id'],
+    title: ILink['title'],
+    url: ILink['url'],
+    thumbnailUrl: ILink['thumbnailUrl']
+  ) {
+    return this.put(`content/links/${id}`, { title, url, thumbnailUrl })
+  }
+
+  public async deleteLink(id: ILink['id']) {
+    return this.delete(`content/links/${id}`)
+  }
+
+  public async createVideo(
+    title: ILink['title'],
+    url: ILink['url'],
+    thumbnailUrl: ILink['thumbnailUrl'],
+    contentBucketId: IContentBucket['id']
+  ) {
+    return this.post(`content/videos`, {
+      title,
+      url,
+      thumbnailUrl,
+      contentBucketId,
+    })
+  }
+
+  public async updateVideo(
     id: IVideo['id'],
     title: IVideo['title'],
     url: IVideo['url'],
@@ -266,25 +282,30 @@ class ApiController {
     isChannel?: boolean
     //thumbnailUrl: IVideo["thumbnailUrl"]
   ) {
-    return put(`content/videos/${id}${isChannel ? '?isChannel=true' : ''}`, {
-      title,
-      url,
-      contentBucketId,
-    })
+    return this.put(
+      `content/videos/${id}${isChannel ? '?isChannel=true' : ''}`,
+      {
+        title,
+        url,
+        contentBucketId,
+      }
+    )
   }
 
-  static async deleteVideo(id: IVideo['id'], isChannel?: boolean) {
-    return dellete(`content/videos/${id}${isChannel ? '?isChannel=true' : ''}`)
+  public async deleteVideo(id: IVideo['id'], isChannel?: boolean) {
+    return this.delete(
+      `content/videos/${id}${isChannel ? '?isChannel=true' : ''}`
+    )
   }
 
-  static async createChannel(
+  public async createChannel(
     title: IChannel['title'],
     url: IChannel['url'],
     bannerUrl: IChannel['bannerUrl'],
     profileUrl: IChannel['profileUrl'],
     contentBucketId: IContentBucket['id']
   ) {
-    return post(`content/channels`, {
+    return this.post(`content/channels`, {
       title,
       url,
       bannerUrl,
@@ -293,14 +314,14 @@ class ApiController {
     })
   }
 
-  static async updateChannel(
+  public async updateChannel(
     id: IChannel['id'],
     title: IChannel['title'],
     url: IChannel['url'],
     bannerUrl: IChannel['bannerUrl'],
     profileUrl: IChannel['profileUrl']
   ) {
-    return put(`content/channels/${id}`, {
+    return this.put(`content/channels/${id}`, {
       title,
       url,
       bannerUrl,
@@ -308,335 +329,345 @@ class ApiController {
     })
   }
 
-  static async deleteChannel(id: ILink['id']) {
-    return dellete(`content/channels/${id}`)
+  public async deleteChannel(id: ILink['id']) {
+    return this.delete(`content/channels/${id}`)
   }
 
-  static async getUser(id: IUser['id']) {
-    return get(`users/${id}`).then((response: any) => response.json())
+  public async getUser(id: IUser['id']) {
+    return this.get(`users/${id}`).then((response: any) => response.json())
   }
 
-  static async getGroupUsers(id: IUser['id']) {
-    return get(`users?groupId=${id}`).then((response: any) => response.json())
-  }
-
-  static async createUser(email: IUser['email']) {
-    return post('users', { email, realName: '', displayName: '' })
-  }
-
-  static async createFilter(groupId: IGroup['id'], title: IFilter['title']) {
-    return post(`groups/${groupId}/filters`, { title }).then((response: any) =>
+  public async getGroupUsers(id: IUser['id']) {
+    return this.get(`users?groupId=${id}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async changeFilterName(id: IFilter['id'], title: IFilter['title']) {
-    return patch(`filters/${id}`, { title })
+  public async createUser(email: IUser['email']) {
+    return this.post('users', { email, realName: '', displayName: '' })
   }
 
-  static async removeFilter(id: IFilter['id']) {
-    return dellete(`filters/${id}`)
+  public async createFilter(groupId: IGroup['id'], title: IFilter['title']) {
+    return this.post(`groups/${groupId}/filters`, { title }).then(
+      (response: any) => response.json()
+    )
   }
 
-  static async getFilter(id: IFilter['id']) {
-    return get(`filters/${id}`).then((response: any) => response.json())
+  public async changeFilterName(id: IFilter['id'], title: IFilter['title']) {
+    return this.patch(`filters/${id}`, { title })
   }
 
-  static async getGroupFilters(id: IGroup['id']) {
-    return get(`filters?groupId=${id}`).then((response: any) => response.json())
+  public async removeFilter(id: IFilter['id']) {
+    return this.delete(`filters/${id}`)
   }
 
-  static async getAllFilterCategories() {
-    return get('filters/categories').then((response: any) => response.json())
+  public async getFilter(id: IFilter['id']) {
+    return this.get(`filters/${id}`).then((response: any) => response.json())
   }
 
-  static async getFilterCategories(id: IFilter['id']) {
-    return get(`filters/${id}/whitelist/categories`).then((response: any) =>
+  public async getGroupFilters(id: IGroup['id']) {
+    return this.get(`filters?groupId=${id}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async getFilterDevices(id: IFilter['id'], groupId?: IGroup['id']) {
-    return get(
+  public async getAllFilterCategories() {
+    return this.get('filters/categories').then((response: any) =>
+      response.json()
+    )
+  }
+
+  public async getFilterCategories(id: IFilter['id']) {
+    return this.get(`filters/${id}/whitelist/categories`).then(
+      (response: any) => response.json()
+    )
+  }
+
+  public async getFilterDevices(id: IFilter['id'], groupId?: IGroup['id']) {
+    return this.get(
       `devices?filterId=${id}&includeConfig=true` +
         (groupId ? `&groupId=${groupId}` : '')
     ).then((response: any) => response.json())
   }
 
-  static async addFilterToDevice(
+  public async addFilterToDevice(
     filterId: IFilter['id'],
     deviceId: IDevice['id']
   ) {
-    return post(`filters/${filterId}/devices`, { deviceId })
+    return this.post(`filters/${filterId}/devices`, { deviceId })
   }
 
-  static async getBlockedSites(filterId: IFilter['id']) {
-    return get(`filters/${filterId}/blacklist`).then((response: any) =>
+  public async getBlockedSites(filterId: IFilter['id']) {
+    return this.get(`filters/${filterId}/blacklist`).then((response: any) =>
       response.json()
     )
   }
 
-  static async getAllowedSites(filterId: IFilter['id']) {
-    return get(`filters/${filterId}/whitelist`).then((response: any) =>
+  public async getAllowedSites(filterId: IFilter['id']) {
+    return this.get(`filters/${filterId}/whitelist`).then((response: any) =>
       response.json()
     )
   }
 
-  static async removeBlockedSite(
+  public async removeBlockedSite(
     filterId: IFilter['id'],
     url: IFilterException['domain']
   ) {
-    return dellete(
+    return this.delete(
       `filters/${filterId}/blacklist/${encodeURIComponent(
         getAbsoluteUrl(cleanUrl(url))
       )}`
     )
   }
 
-  static async addBlockedSite(filterId: IFilter['id'], url: IFilterUrl['url']) {
-    return post(`filters/${filterId}/blacklist`, {
+  public async addBlockedSite(filterId: IFilter['id'], url: IFilterUrl['url']) {
+    return this.post(`filters/${filterId}/blacklist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     })
   }
 
-  static async removeAllowedSite(
+  public async removeAllowedSite(
     filterId: IFilter['id'],
     url: IFilterException['domain']
   ) {
-    return dellete(
+    return this.delete(
       `filters/${filterId}/whitelist/${encodeURIComponent(
         getAbsoluteUrl(cleanUrl(url))
       )}`
     )
   }
 
-  static async addAllowedSite(filterId: IFilter['id'], url: IFilterUrl['url']) {
-    return post(`filters/${filterId}/whitelist`, {
+  public async addAllowedSite(filterId: IFilter['id'], url: IFilterUrl['url']) {
+    return this.post(`filters/${filterId}/whitelist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     })
   }
 
-  static async addWhitelistSubcategory(
+  public async addWhitelistSubcategory(
     filterId: IFilter['id'],
     id: IFilterSubcategory['id']
   ) {
-    return post(`filters/${filterId}/whitelist/categories`, {
+    return this.post(`filters/${filterId}/whitelist/categories`, {
       categoryId: id.toString(),
     })
   }
 
-  static async removeWhitelistSubcategory(
+  public async removeWhitelistSubcategory(
     filterId: IFilter['id'],
     id: IFilterSubcategory['id']
   ) {
-    return dellete(`filters/${filterId}/whitelist/categories/${id}`)
+    return this.delete(`filters/${filterId}/whitelist/categories/${id}`)
   }
 
-  static async addWhitelistCategory(
+  public async addWhitelistCategory(
     filterId: IFilter['id'],
     id: IFilterCategory['categoryId']
   ) {
-    return post(`filters/${filterId}/whitelist/categories?isGroup=true`, {
+    return this.post(`filters/${filterId}/whitelist/categories?isGroup=true`, {
       categoryId: id.toString(),
     })
   }
 
-  static async removeWhitelistCategory(
+  public async removeWhitelistCategory(
     filterId: IFilter['id'],
     id: IFilterCategory['categoryId']
   ) {
-    return dellete(
+    return this.delete(
       `filters/${filterId}/whitelist/categories/${id}?isGroup=true`
     )
   }
 
-  static async getBlockedSearchWords(filterId: IFilter['id']) {
-    return get(`filters/${filterId}/blacklist/words`).then((response: any) =>
-      response.json()
-    )
-  }
-
-  static async addBlockedSearchWord(filterId: IFilter['id'], word: string) {
-    return post(`filters/${filterId}/blacklist/words`, { word })
-  }
-
-  static async removeBlockedSearchWord(filterId: IFilter['id'], word: string) {
-    return dellete(`filters/${filterId}/blacklist/words/${word}`)
-  }
-
-  static async getRequestedSites(deviceId: IDevice['id']) {
-    return get(`devices/${deviceId}/requests?status=pending`).then(
+  public async getBlockedSearchWords(filterId: IFilter['id']) {
+    return this.get(`filters/${filterId}/blacklist/words`).then(
       (response: any) => response.json()
     )
   }
 
-  static async approveRequestedSite(id: IRequestedSite['id']) {
-    return post(`devices/requests/${id}/approve`, {})
+  public async addBlockedSearchWord(filterId: IFilter['id'], word: string) {
+    return this.post(`filters/${filterId}/blacklist/words`, { word })
   }
 
-  static async denyRequestedSite(id: IRequestedSite['id']) {
-    return dellete(`devices/requests/${id}/deny`)
+  public async removeBlockedSearchWord(filterId: IFilter['id'], word: string) {
+    return this.delete(`filters/${filterId}/blacklist/words/${word}`)
   }
 
-  static async getLinkPreview(url: ILink['url']) {
-    return get(`content/links/preview/${url}`).then((response: any) =>
+  public async getRequestedSites(deviceId: IDevice['id']) {
+    return this.get(`devices/${deviceId}/requests?status=pending`).then(
+      (response: any) => response.json()
+    )
+  }
+
+  public async approveRequestedSite(id: IRequestedSite['id']) {
+    return this.post(`devices/requests/${id}/approve`, {})
+  }
+
+  public async denyRequestedSite(id: IRequestedSite['id']) {
+    return this.delete(`devices/requests/${id}/deny`)
+  }
+
+  public async getLinkPreview(url: ILink['url']) {
+    return this.get(`content/links/preview/${url}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async getVideoPreview(url: IVideo['url']) {
-    return get(`content/videos/preview/${url}`).then((response: any) =>
+  public async getVideoPreview(url: IVideo['url']) {
+    return this.get(`content/videos/preview/${url}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async getChannelPreview(url: IChannel['url']) {
-    return get(`content/channels/preview/${url}`).then((response: any) =>
+  public async getChannelPreview(url: IChannel['url']) {
+    return this.get(`content/channels/preview/${url}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async setTimeLimit(
+  public async setTimeLimit(
     limitId: ITimeLimit['id'],
     timeLimit: ITimeLimit['allowedMinutes']
   ) {
-    return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit })
+    return this.patch(`devices/configs/screentime/limits/${limitId}`, {
+      timeLimit,
+    })
   }
 
-  static async addAllowedTimeRange(
+  public async addAllowedTimeRange(
     deviceId: IDevice['id'],
     day: IAllowedTime['day'],
     startTime: IAllowedTime['startTime'],
     endTime: IAllowedTime['endTime']
   ) {
-    return post(`devices/${deviceId}/config/screentime/allowed`, {
+    return this.post(`devices/${deviceId}/config/screentime/allowed`, {
       startTime,
       endTime,
     })
   }
 
-  static async changeAllowedTimeRange(
+  public async changeAllowedTimeRange(
     id: IAllowedTime['id'],
     startTime: IAllowedTime['startTime'],
     endTime: IAllowedTime['endTime']
   ) {
-    return patch(`devices/configs/screentime/allowed/${id}`, {
+    return this.patch(`devices/configs/screentime/allowed/${id}`, {
       startTime,
       endTime,
     })
   }
 
-  static async removeAllowedTimeRange(id: IAllowedTime['id']) {
-    return dellete(`devices/configs/screentime/allowed/${id}`)
+  public async removeAllowedTimeRange(id: IAllowedTime['id']) {
+    return this.delete(`devices/configs/screentime/allowed/${id}`)
   }
 
-  static async resetAllowedTimes(
+  public async resetAllowedTimes(
     deviceId: IDevice['id'],
     day: IAllowedTime['day']
   ) {
-    return put(
+    return this.put(
       `devices/${deviceId}/config/screentime/allowed/reset?day=${day}`,
       {}
     )
   }
 
-  static async flipBrowsingAllowed(
+  public async flipBrowsingAllowed(
     deviceId: IDevice['id'],
     browsingAllowed: boolean
   ) {
-    return patch(`devices/${deviceId}/configs/browsing`, { browsingAllowed })
+    return this.patch(`devices/${deviceId}/configs/browsing`, {
+      browsingAllowed,
+    })
   }
 
-  static async getQRCode(groupId: IGroup['id']) {
-    return post(`groups/${groupId}/devices/qrcode`, {}).then((response: any) =>
-      response.text()
+  public async getQRCode(groupId: IGroup['id']) {
+    return this.post(`groups/${groupId}/devices/qrcode`, {}).then(
+      (response: any) => response.text()
     )
   }
 
-  static async flipTimeLimitsEnabled(
+  public async flipTimeLimitsEnabled(
     deviceId: IDevice['id'],
     enabled: boolean
   ) {
-    return patch(`devices/${deviceId}/config/screentime/toggle`, {
+    return this.patch(`devices/${deviceId}/config/screentime/toggle`, {
       timeLimitsEnabled: enabled,
     })
   }
 
-  static async flipAllowedTimesEnabled(
+  public async flipAllowedTimesEnabled(
     deviceId: IDevice['id'],
     enabled: boolean
   ) {
-    return patch(`devices/${deviceId}/config/screentime/toggle`, {
+    return this.patch(`devices/${deviceId}/config/screentime/toggle`, {
       allowedTimesEnabled: enabled,
     })
   }
 
-  static async getStats(
+  public async getStats(
     deviceId: IDevice['id'],
     startDate: string,
     endDate: string
   ) {
-    return get(
+    return this.get(
       `devices/${deviceId}/statistics?startDate=${startDate}&endDate=${endDate}`
     ).then((response: any) => response.json())
   }
 
-  static async getHistory(
+  public async getHistory(
     deviceId: IDevice['id'],
     date: string,
     pageIndex: number,
     pageSize: number,
     searchTerm?: string
   ) {
-    return get(
+    return this.get(
       `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}${
         searchTerm ? `&search=${searchTerm}` : ''
       }`
     ).then((response: any) => response.json())
   }
 
-  static async getApps(
+  public async getApps(
     deviceId: IDevice['id'],
     pageIndex: number,
     pageSize: number,
     categoryId?: IFilterSubcategory['categoryId'],
     searchTerm?: string
   ) {
-    return get(
+    return this.get(
       `troomi/devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${
         searchTerm ? `&search=${searchTerm}` : ''
       }${categoryId ? `&categoryId=${categoryId}` : ''}`
     ).then((response: any) => response.json())
   }
 
-  static async enableApp(deviceId: IDevice['id'], appId: IApp['id']) {
-    return post(`troomi/devices/${deviceId}/apps/${appId}/enable`, {})
+  public async enableApp(deviceId: IDevice['id'], appId: IApp['id']) {
+    return this.post(`troomi/devices/${deviceId}/apps/${appId}/enable`, {})
   }
 
-  static async disableApp(deviceId: IDevice['id'], appId: IApp['id']) {
-    return dellete(`troomi/devices/${deviceId}/apps/${appId}/disable`)
+  public async disableApp(deviceId: IDevice['id'], appId: IApp['id']) {
+    return this.delete(`troomi/devices/${deviceId}/apps/${appId}/disable`)
   }
 
-  static async updateUser(
+  public async updateUser(
     id: IUser['id'],
     realName: IUser['realName'],
     displayName: IUser['displayName']
   ) {
-    return put(`users/${id}`, { realName, displayName })
+    return this.put(`users/${id}`, { realName, displayName })
   }
 
-  static async getChannel(id: IChannel['id']) {
-    return get(`content/channels/${id}`).then((response: any) =>
+  public async getChannel(id: IChannel['id']) {
+    return this.get(`content/channels/${id}`).then((response: any) =>
       response.json()
     )
   }
 
-  static async changeChannelName(id: IChannel['id'], title: IChannel['title']) {
-    return put(`content/channels/${id}`, { title })
+  public async changeChannelName(id: IChannel['id'], title: IChannel['title']) {
+    return this.put(`content/channels/${id}`, { title })
   }
 
-  static async getAppCategorySubGroups() {
-    return get(`filters/appCategorySubGroups`).then((response: any) =>
+  public async getAppCategorySubGroups() {
+    return this.get(`filters/appCategorySubGroups`).then((response: any) =>
       response.json()
     )
   }

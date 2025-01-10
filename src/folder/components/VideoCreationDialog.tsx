@@ -8,7 +8,15 @@ import { IContentBucket, IVideo } from './../../profile/components/ContentTab'
 import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
-const VideoCreationDialog = (props: {
+const VideoCreationDialog = ({
+  isProd,
+  updateDetails,
+  belongsToChannel,
+  onClose,
+  open,
+  creationCallback,
+  folderId,
+}: {
   open: boolean
   onClose: () => any
   folderId: IContentBucket['id']
@@ -18,24 +26,26 @@ const VideoCreationDialog = (props: {
     callback?: () => any
   }
   belongsToChannel?: boolean
+  isProd: boolean
 }) => {
   const [title, setTitle] = useState<string>('')
   const [url, setUrl] = useState<string>('')
   const [thumbnailUrl, setThumbnailUrl] = useState<string>('')
+
+  const apiController = new ApiController(isProd)
+
   useEffect(() => {
-    props.updateDetails && setTitle(props.updateDetails?.video.title)
-    props.updateDetails && setUrl(props.updateDetails?.video.url)
-    props.updateDetails &&
-      setThumbnailUrl(props.updateDetails?.video.thumbnailUrl)
-  }, [props.updateDetails])
+    updateDetails && setTitle(updateDetails?.video.title)
+    updateDetails && setUrl(updateDetails?.video.url)
+    updateDetails && setThumbnailUrl(updateDetails?.video.thumbnailUrl)
+  }, [updateDetails])
 
   const [manuallyChangedTitle, setManuallyChangedTitle] =
     useState<boolean>(false)
 
   const loadPreview = () => {
-    ApiController.getVideoPreview(
-      encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
-    )
+    apiController
+      .getVideoPreview(encodeURIComponent(getAbsoluteUrl(cleanUrl(url))))
       .then((result) => {
         result.title && !manuallyChangedTitle && setTitle(result.title)
         result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl)
@@ -46,35 +56,33 @@ const VideoCreationDialog = (props: {
   const notificationCtx = useContext(NotificationContext)
 
   const submitCreation = () =>
-    ApiController.createVideo(
-      title,
-      getAbsoluteUrl(cleanUrl(url)),
-      thumbnailUrl,
-      props.folderId
-    ).then(props.creationCallback)
+    apiController
+      .createVideo(title, getAbsoluteUrl(cleanUrl(url)), thumbnailUrl, folderId)
+      .then(creationCallback)
 
   const submitUpdate = () =>
-    props.updateDetails?.video.id &&
-    ApiController.updateVideo(
-      props.updateDetails.video.id,
-      title,
-      getAbsoluteUrl(cleanUrl(url)),
-      !props.belongsToChannel ? props.folderId : undefined,
-      props.belongsToChannel
-      //thumbnailUrl
-    )
-      .then(props.updateDetails?.callback)
+    updateDetails?.video.id &&
+    apiController
+      .updateVideo(
+        updateDetails.video.id,
+        title,
+        getAbsoluteUrl(cleanUrl(url)),
+        !belongsToChannel ? folderId : undefined,
+        belongsToChannel
+        //thumbnailUrl
+      )
+      .then(updateDetails?.callback)
       .then(() => notificationCtx.success('Updated Video'))
 
   return (
     <ContentCreationDialog
-      open={props.open}
+      open={open}
       closeCallback={() => {
-        props.onClose()
+        onClose()
       }}
       onSubmit={() => {
-        ;(props.updateDetails?.callback ? submitUpdate : submitCreation)()
-        props.onClose()
+        ;(updateDetails?.callback ? submitUpdate : submitCreation)()
+        onClose()
       }}
       info={INFOS.addVideo}
       type="video"
@@ -85,7 +93,7 @@ const VideoCreationDialog = (props: {
       title={title}
       setUrl={setUrl}
       url={url}
-      editing={!!props.updateDetails}
+      editing={!!updateDetails}
       onUrlFieldBlur={loadPreview}
     >
       <Stack
@@ -101,6 +109,7 @@ const VideoCreationDialog = (props: {
           noPointerEvents
           noMenu
           twoLineTitleSectionHeight
+          isProd={isProd}
         />
       </Stack>
     </ContentCreationDialog>

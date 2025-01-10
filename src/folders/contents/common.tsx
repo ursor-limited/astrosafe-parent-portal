@@ -21,16 +21,23 @@ export interface IEnrichedContentBucket {
   }
 }
 
-const AllFoldersPage = (props: { isMobile: boolean; email: string }) => {
-  const { user } = useAuth(props.email)
+const AllFoldersPage = (props: {
+  isMobile: boolean
+  email: string
+  isProd: boolean
+}) => {
+  const { user } = useAuth(props.email, props.isProd)
   const navigate = useNavigate()
   const [folders, setFolders] = useState<IEnrichedContentBucket[]>([])
+
+  const apiController = new ApiController(props.isProd)
+
   const loadFolders = useCallback(
     () =>
       user?.group_id &&
-      ApiController.getEnrichedFolders(user.group_id).then((f) =>
-        setFolders(f)
-      ),
+      apiController
+        .getEnrichedFolders(user.group_id)
+        .then((f) => setFolders(f)),
     [user?.group_id]
   )
   useEffect(() => {
@@ -38,9 +45,9 @@ const AllFoldersPage = (props: { isMobile: boolean; email: string }) => {
   }, [loadFolders])
   const createFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
-    ApiController.createFolder(title, user.group_id).then((response) =>
-      navigate.push(`/folders/${response.contentBucketId}`)
-    )
+    apiController
+      .createFolder(title, user.group_id)
+      .then((response) => navigate.push(`/folders/${response.contentBucketId}`))
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false)
 
   return (
@@ -50,12 +57,14 @@ const AllFoldersPage = (props: { isMobile: boolean; email: string }) => {
           folders={folders}
           createFolder={() => setCreationDialogOpen(true)}
           onUpdate={loadFolders}
+          isProd={props.isProd}
         />
       ) : (
         <AllFoldersPageDesktopBody
           folders={folders}
           createFolder={() => setCreationDialogOpen(true)}
           onUpdate={loadFolders}
+          isProd={props.isProd}
         />
       )}
       <FolderCreationDialog

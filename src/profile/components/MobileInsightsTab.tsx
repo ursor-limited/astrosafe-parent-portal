@@ -22,6 +22,7 @@ export const cleanUrl = (url: string) =>
 const DevicePageMobileInsightsTab = (props: {
   deviceId: IDevice['id']
   email: string
+  isProd: boolean
 }) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([])
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0) // days from today
@@ -29,26 +30,28 @@ const DevicePageMobileInsightsTab = (props: {
   const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(6)
   const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([])
   useEffect(() => {
-    ApiController.getStats(
-      props.deviceId,
-      dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'),
-      dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')
-    ).then((stats) => {
-      setTimes(stats.screenTime)
-      setVisitedSites(
-        _.sortBy(
-          stats.visitedWebsites?.find(
-            (w: any) =>
-              w.date ===
-              dayjs()
-                .utc()
-                .subtract(selectedDayIndex, 'days')
-                .format('YYYY-MM-DD')
-          )?.websites || [],
-          (t) => t.screenTime
-        )
+    new ApiController(props.isProd)
+      .getStats(
+        props.deviceId,
+        dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'),
+        dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')
       )
-    })
+      .then((stats) => {
+        setTimes(stats.screenTime)
+        setVisitedSites(
+          _.sortBy(
+            stats.visitedWebsites?.find(
+              (w: any) =>
+                w.date ===
+                dayjs()
+                  .utc()
+                  .subtract(selectedDayIndex, 'days')
+                  .format('YYYY-MM-DD')
+            )?.websites || [],
+            (t) => t.screenTime
+          )
+        )
+      })
   }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex])
 
   const [timeSpent, setTimeSpent] = useState<number>(0)
@@ -176,6 +179,7 @@ const DevicePageMobileInsightsTab = (props: {
             .utc()
             .subtract(selectedDayIndex, 'days')
             .format('YYYY-MM-DD')}
+          isProd={props.isProd}
         />
       </Stack>
     </>

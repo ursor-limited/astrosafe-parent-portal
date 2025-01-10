@@ -24,11 +24,13 @@ import useAuth from '../../../hooks/useAuth'
 interface FilterDevicesSectionProps {
   folderId: IContentBucket['id']
   email: string
+  isProd?: boolean
 }
 
 const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
   folderId,
   email,
+  isProd = false,
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
 
@@ -43,12 +45,14 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
     error: (message: string) => null,
   })
 
+  const apiController = new ApiController(isProd)
+
   const notificationCtx = useContext(NotificationContext)
 
   const [devices, setDevices] = useState<IDevice[]>([])
 
   const loadDevices = useCallback(
-    () => ApiController.getFolderDevices(folderId).then((d) => setDevices(d)),
+    () => apiController.getFolderDevices(folderId).then((d) => setDevices(d)),
     [folderId]
   )
 
@@ -57,7 +61,7 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
   }, [loadDevices])
 
   const removeDevice = (id: IDevice['id']) =>
-    ApiController.removeFolderFromDevice(folderId, id).then(() => {
+    apiController.removeFolderFromDevice(folderId, id).then(() => {
       loadDevices()
 
       notificationCtx.negativeSuccess('Removed Device')
@@ -68,12 +72,12 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
 
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] = useState<boolean>(false)
 
-  const { user } = useAuth(email)
+  const { user } = useAuth(email, isProd)
 
   const [folder, setFolder] = useState<IContentBucket>()
 
   useEffect(() => {
-    ApiController.getFolder(folderId).then(setFolder)
+    apiController.getFolder(folderId).then(setFolder)
   }, [folderId])
 
   return (
@@ -118,6 +122,7 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
                     </Stack>
                   }
                   noExtras
+                  isProd={isProd}
                 />
               </UrsorFadeIn>
             ))}
@@ -167,6 +172,7 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
           setAddDeviceDialogOpen(true)
         }}
         onRemove={setRemovalConfirmationDialogId}
+        isProd={isProd}
       />
       {removalConfirmationDialogId ? (
         <FolderDeviceRemovalConfirmationDialog
@@ -190,13 +196,14 @@ const FolderDevicesSection: React.FC<FilterDevicesSectionProps> = ({
         emptyText="This Content Folder is on all of your Devices"
         addedDevices={devices}
         onAdd={(id) => {
-          ApiController.addFolderToDevice(folderId, id).then(() => {
+          apiController.addFolderToDevice(folderId, id).then(() => {
             setAddDeviceDialogOpen(false)
             loadDevices()
             notificationCtx.success('Added Device')
           })
         }}
         isMobile={isMobile}
+        isProd={isProd}
       />
     </>
   )

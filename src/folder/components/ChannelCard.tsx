@@ -6,31 +6,45 @@ import { PALETTE } from '../../ui'
 
 const IMAGE_HEIGHT = 160
 
-const ChannelCard = (
-  props: Partial<Omit<IChannel, 'createdAt'>> & {
-    noPointerEvents?: boolean
-    noMenu?: boolean
-    onDelete?: () => any
-    onUpdate?: () => any
-    onOpenEditingDialog?: () => any
-    isMobile?: boolean
-    twoLineTitleSectionHeight?: boolean
-    folderId?: IContentBucket['id']
-  }
-) => {
+interface ChannelCardProps extends Partial<Omit<IChannel, 'createdAt'>> {
+  noPointerEvents?: boolean
+  noMenu?: boolean
+  onDelete?: () => any
+  onUpdate?: () => any
+  onOpenEditingDialog?: () => any
+  isMobile?: boolean
+  twoLineTitleSectionHeight?: boolean
+  folderId?: IContentBucket['id']
+  isProd?: boolean
+}
+
+const ChannelCard: React.FC<ChannelCardProps> = ({
+  profileUrl,
+  title,
+  id,
+  bannerUrl,
+  noPointerEvents,
+  noMenu,
+  onDelete,
+  onUpdate,
+  onOpenEditingDialog,
+  isMobile,
+  twoLineTitleSectionHeight,
+  isProd = false,
+}) => {
   return (
     <ContentCard
       type="channel"
-      title={props.title}
-      onClick={props.noPointerEvents ? undefined : () => {}}
-      noPointerEvents={props.noPointerEvents}
-      noMenu={props.noMenu}
+      title={title}
+      onClick={noPointerEvents ? undefined : () => {}}
+      noPointerEvents={noPointerEvents}
+      noMenu={noMenu}
       onDelete={() =>
-        props.id && ApiController.deleteChannel(props.id).then(props.onDelete)
+        id && new ApiController(isProd).deleteChannel(id).then(onDelete)
       }
-      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
-      isMobile={props.isMobile}
-      twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
+      onOpenEditingDialog={() => onOpenEditingDialog?.()}
+      isMobile={isMobile}
+      twoLineTitleSectionHeight={twoLineTitleSectionHeight}
     >
       <Stack
         height={IMAGE_HEIGHT}
@@ -40,9 +54,9 @@ const ChannelCard = (
         position="relative"
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
-        {props.bannerUrl ? (
+        {bannerUrl ? (
           <img
-            src={props.bannerUrl}
+            src={bannerUrl}
             style={{
               objectFit: 'cover',
               justifyContent: 'center',
@@ -53,7 +67,7 @@ const ChannelCard = (
         ) : (
           <Stack flex={1} bgcolor={PALETTE.secondary.grey[2]} />
         )}
-        {props.profileUrl ? (
+        {profileUrl ? (
           <Stack
             position="absolute"
             top={0}
@@ -72,9 +86,9 @@ const ChannelCard = (
               position="relative"
               boxShadow="0 0 20px rgba(0,0,0,0.1)"
             >
-              {props.profileUrl ? (
+              {profileUrl ? (
                 <img
-                  src={props.profileUrl}
+                  src={profileUrl}
                   style={{
                     objectFit: 'cover',
                     justifyContent: 'center',

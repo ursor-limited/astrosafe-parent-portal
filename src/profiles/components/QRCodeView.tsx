@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react'
 import { PALETTE, Typography, UrsorButton } from './../../ui'
 import useAuth from './../../hooks/useAuth'
 
-const QRCodeView = (props: { email: string }) => {
-  const { user } = useAuth(props.email)
+const QRCodeView = (props: { email: string; isProd: boolean }) => {
+  const { user } = useAuth(props.email, props.isProd)
   const [image, setImage] = useState<string>('')
   useEffect(() => {
-    user?.group_id && ApiController.getQRCode(user.group_id).then(setImage)
+    user?.group_id &&
+      new ApiController(props.isProd).getQRCode(user.group_id).then(setImage)
   }, [user?.group_id])
   return (
     <Stack

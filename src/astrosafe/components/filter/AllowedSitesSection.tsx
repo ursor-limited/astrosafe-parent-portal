@@ -28,23 +28,26 @@ export interface IAllowedSitesTableRowItems {
 interface FilterPageBlockedSitesSectionProps {
   filterId: number
   email: string
+  isProd?: boolean
 }
 
 const FilterPageAllowedSitesSection: React.FC<
   FilterPageBlockedSitesSectionProps
-> = ({ filterId, email }) => {
-  useAuth(email)
+> = ({ filterId, email, isProd = false }) => {
+  useAuth(email, isProd)
 
   const [allowedSites, setAllowedSites] = useState<IFilterException[]>()
 
+  const apiController = new ApiController(isProd)
+
   useEffect(() => {
-    ApiController.getAllowedSites(filterId).then((data) =>
-      setAllowedSites(data)
-    )
+    apiController
+      .getAllowedSites(filterId)
+      .then((data) => setAllowedSites(data))
   }, [filterId])
 
   const loadAllowedSites = useCallback(
-    () => ApiController.getAllowedSites(filterId).then(setAllowedSites),
+    () => apiController.getAllowedSites(filterId).then(setAllowedSites),
     [filterId]
   )
   useEffect(() => {
@@ -52,12 +55,14 @@ const FilterPageAllowedSitesSection: React.FC<
   }, [loadAllowedSites])
 
   const addAllowedSite = (url: string) =>
-    ApiController.addAllowedSite(filterId, url)
+    apiController
+      .addAllowedSite(filterId, url)
       .then(loadAllowedSites)
       .then(() => notificationCtx.success('Added allowed site.'))
 
   const removeAllowedSite = (url: string) =>
-    ApiController.removeAllowedSite(filterId, url)
+    apiController
+      .removeAllowedSite(filterId, url)
       .then(loadAllowedSites)
       .then(() => notificationCtx.negativeSuccess('Removed allowed site.'))
 
@@ -167,7 +172,7 @@ const FilterPageAllowedSitesSection: React.FC<
   const [filter, setFilter] = useState<IFilter>()
 
   useEffect(() => {
-    ApiController.getFilter(filterId).then((data) => setFilter(data))
+    apiController.getFilter(filterId).then((data) => setFilter(data))
   }, [filterId])
 
   return (

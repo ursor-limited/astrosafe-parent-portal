@@ -3,10 +3,14 @@ import AllFoldersPage from './contents/common'
 import { isMobile } from 'react-device-detect'
 import RootLayout from './../layout'
 
-const Folders = (props: { email: string }) => {
+const Folders = (props: { email: string; isProd: boolean }) => {
   return (
     <RootLayout>
-      <AllFoldersPage isMobile={isMobile} email={props.email} />
+      <AllFoldersPage
+        isMobile={isMobile}
+        email={props.email}
+        isProd={props.isProd}
+      />
     </RootLayout>
   )
 }

@@ -11,6 +11,7 @@ import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[]
+  isProd: boolean
   createFolder: () => any
   onUpdate: () => any
 }) => {
@@ -40,6 +41,7 @@ const AllFoldersPageDesktopBody = (props: {
                   clickCallback={() => navigate.push(`/folders/${f.id}`)}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
+                  isProd={props.isProd}
                 />
               </UrsorFadeIn>
             ))}

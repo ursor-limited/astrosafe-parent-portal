@@ -232,6 +232,7 @@ interface DeviceCardProps {
   deviceId: string
   small?: boolean
   noExtras?: boolean
+  isProd?: boolean
   onClick?: () => any
   onFilterClick?: () => any
   onClickView?: () => any
@@ -244,6 +245,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
   deviceId,
   small = false,
   noExtras = false,
+  isProd = false,
   onClick = () => {},
   onFilterClick = () => {},
   onClickView = () => {},
@@ -256,20 +258,24 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
 
   const [filterData, setFilterData] = useState<IFilter>()
 
-  const deviceData = useDevice(deviceId)
+  const deviceData = useDevice(deviceId, isProd)
+
+  const apiController = new ApiController(isProd)
 
   useEffect(() => {
     if (!deviceData?.id) return
 
-    ApiController.getEnrichedDevice(deviceData.id).then((device) =>
-      setBrowsingEnabled(Boolean(device?.config?.browsingAllowed))
-    )
+    apiController
+      .getEnrichedDevice(deviceData.id)
+      .then((device) =>
+        setBrowsingEnabled(Boolean(device?.config?.browsingAllowed))
+      )
   }, [deviceData])
 
   useEffect(() => {
     if (!deviceData?.filterId) return
 
-    ApiController.getFilter(deviceData.filterId).then((data) => {
+    apiController.getFilter(deviceData.filterId).then((data) => {
       setFilterData(data)
     })
   }, [deviceData?.filterId])
@@ -288,7 +294,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
     />
   )
 
-  useAuth(email)
+  useAuth(email, isProd)
 
   return (
     <AstroCard>
@@ -457,7 +463,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
 
                   setBrowsingEnabled(!browsingEnabled)
 
-                  ApiController.flipBrowsingAllowed(
+                  apiController.flipBrowsingAllowed(
                     deviceData.id,
                     !browsingEnabled
                   )

@@ -35,17 +35,21 @@ export type IEnrichedDevice = IDevice & {
 export default function AllDevicesPage(props: {
   isMobile: boolean
   email: string
+  isProd: boolean
 }) {
-  const { user } = useAuth(props.email)
+  const { user } = useAuth(props.email, props.isProd)
   const [devices, setDevices] = useState<IEnrichedDevice[]>([])
+
+  const apiController = new ApiController(props.isProd)
+
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupEnrichedDevices(user?.group_id).then(setDevices)
+      apiController.getGroupEnrichedDevices(user?.group_id).then(setDevices)
   }, [user?.group_id])
   const [filters, setFilters] = useState<IFilter[]>([])
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then(setFilters)
+      apiController.getGroupFilters(user.group_id).then(setFilters)
   }, [user?.group_id])
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
     IDevice['id'] | undefined
@@ -86,7 +90,7 @@ export default function AllDevicesPage(props: {
           open={true}
           onClose={() => setRenameDeviceDialogId(undefined)}
           onSubmit={(name) => {
-            ApiController.renameDevice(renameDeviceDialogId, name).then()
+            apiController.renameDevice(renameDeviceDialogId, name).then()
             setRenameDeviceDialogId(undefined)
           }}
           name={devices.find((d) => d.id === renameDeviceDialogId)?.name ?? ''}

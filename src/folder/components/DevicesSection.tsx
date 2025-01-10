@@ -16,13 +16,22 @@ import DeviceCard from './../../profiles/components/DeviceCard'
 import FolderDeviceRemovalConfirmationDialog from './FolderDeviceRemovalConfirmationDialog'
 import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
-const DevicesSection = (props: {
+const DevicesSection = ({
+  isProd,
+  folderId,
+  onAdd,
+  onRemove,
+  title,
+  devices,
+  isMobile,
+}: {
   title: string
   devices: IDevice[]
   folderId: IContentBucket['id']
   onAdd: () => any
   onRemove: () => any
   isMobile?: boolean
+  isProd: boolean
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false)
 
@@ -30,9 +39,9 @@ const DevicesSection = (props: {
     useState<boolean>(false)
 
   const removeDevice = (id: IDevice['id']) =>
-    ApiController.removeFolderFromDevice(props.folderId, id).then(
-      props.onRemove
-    )
+    new ApiController(isProd)
+      .removeFolderFromDevice(folderId, id)
+      .then(onRemove)
 
   const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
     useState<number | undefined>()
@@ -40,7 +49,7 @@ const DevicesSection = (props: {
   return (
     <>
       <AstroBentoCard
-        title={props.title}
+        title={title}
         info={INFOS.folderDevice}
         notCollapsible
         topRightStuff={
@@ -60,16 +69,16 @@ const DevicesSection = (props: {
               size="small"
               endIcon={PlusIcon}
               iconSize={16}
-              onClick={props.onAdd}
+              onClick={onAdd}
             >
               Add Device
             </UrsorButton>
           </Stack>
         }
       >
-        {props.devices.length > 0 ? (
+        {devices.length > 0 ? (
           <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-            {props.devices.map((d, i) => (
+            {devices.map((d, i) => (
               <UrsorFadeIn key={d.id} duration={800} delay={i * 150}>
                 <DeviceCard
                   {...d}
@@ -79,6 +88,7 @@ const DevicesSection = (props: {
                     </Stack>
                   }
                   noExtras
+                  isProd={isProd}
                 />
               </UrsorFadeIn>
             ))}
@@ -105,7 +115,7 @@ const DevicesSection = (props: {
             }}
             onMouseEnter={() => setHoveringOnButton(true)}
             onMouseLeave={() => setHoveringOnButton(false)}
-            onClick={props.onAdd}
+            onClick={onAdd}
           >
             <PlusIcon height="32px" width="32px" />
             <Typography
@@ -118,16 +128,17 @@ const DevicesSection = (props: {
         )}
       </AstroBentoCard>
       <AllDevicesDialog
-        title={`${props.devices.length} ${
-          props.devices.length === 1 ? 'Device has' : 'Devices have'
+        title={`${devices.length} ${
+          devices.length === 1 ? 'Device has' : 'Devices have'
         } access to this Folder`}
-        devices={props.devices?.slice(0, 4) || []}
+        devices={devices?.slice(0, 4) || []}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
         onAdd={() => {
-          props.onAdd()
+          onAdd()
         }}
         onRemove={setRemovalConfirmationDialogId}
+        isProd={isProd}
       />
       {removalConfirmationDialogId ? (
         <FolderDeviceRemovalConfirmationDialog
@@ -135,10 +146,10 @@ const DevicesSection = (props: {
           onClose={() => setRemovalConfirmationDialogId(undefined)}
           onSubmit={() => removeDevice(removalConfirmationDialogId)}
           deviceName={
-            props.devices.find((d) => d.id === removalConfirmationDialogId)
-              ?.name ?? ''
+            devices.find((d) => d.id === removalConfirmationDialogId)?.name ??
+            ''
           }
-          isMobile={props.isMobile}
+          isMobile={isMobile}
         />
       ) : null}
     </>

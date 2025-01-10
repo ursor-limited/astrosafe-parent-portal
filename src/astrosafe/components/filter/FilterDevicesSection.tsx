@@ -20,20 +20,24 @@ import { INotificationContext } from '../../../components/NotificationContext'
 interface FilterDevicesSectionProps {
   filterId: number
   email: string
+  isProd?: boolean
   onClickDevice?: () => any
 }
 
 const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
   filterId,
   email,
+  isProd = false,
   onClickDevice = () => {},
 }) => {
-  const { user } = useAuth(email)
+  const { user } = useAuth(email, isProd)
 
   const [devices, setDevices] = useState<IDevice[]>()
 
+  const apiController = new ApiController(isProd)
+
   useEffect(() => {
-    ApiController.getFilterDevices(filterId).then((data) => {
+    apiController.getFilterDevices(filterId).then((data) => {
       setDevices(data)
     })
   }, [filterId])
@@ -45,7 +49,7 @@ const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
 
   const loadDevices = useCallback(() => {
     user?.group_id &&
-      ApiController.getFilterDevices(filterId, user.group_id).then(setDevices)
+      apiController.getFilterDevices(filterId, user.group_id).then(setDevices)
   }, [filterId, user?.group_id])
 
   useEffect(() => {
@@ -65,7 +69,7 @@ const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] = useState<boolean>(false)
 
   const applyFilterToDevice = (id: IDevice['id']) =>
-    ApiController.addFilterToDevice(filterId, id).then(() => {
+    apiController.addFilterToDevice(filterId, id).then(() => {
       setAddDeviceDialogOpen(false)
       loadDevices()
       notificationCtx.success('Applied this Filter to Device.')
@@ -132,6 +136,7 @@ const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
                     }
                     noExtras
                     onClick={onClickDevice}
+                    isProd={isProd}
                   />
                 </Stack>
               </UrsorFadeIn>
@@ -183,6 +188,7 @@ const FilterDevicesSection: React.FC<FilterDevicesSectionProps> = ({
           const device = devices?.find((d) => d.id === id)
           device && setChangeFilterDialogOpenForDevice(device)
         }}
+        isProd={isProd}
       />
     </>
   )

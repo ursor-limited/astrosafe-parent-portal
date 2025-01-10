@@ -18,6 +18,7 @@ import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 const MobileFilterPageDevicesSection = (props: {
   email: string
   devices: IDevice[]
+  isProd: boolean
   onAdd: () => any
   openChangeFilterDialogForDevice: (device: IDevice) => any
 }) => {
@@ -62,6 +63,7 @@ const MobileFilterPageDevicesSection = (props: {
                     }
                     noExtras
                     onClick={() => navigate.push(`/profiles/${d.id}`)}
+                    isProd={props.isProd}
                   />
                 </Stack>
               </UrsorFadeIn>
@@ -137,6 +139,7 @@ const MobileFilterPageDevicesSection = (props: {
           const device = props.devices.find((d) => d.id === id)
           device && props.openChangeFilterDialogForDevice(device)
         }}
+        isProd={props.isProd}
       />
     </>
   )

@@ -25,13 +25,17 @@ import useAuth from './../../hooks/useAuth'
 export const MobileDeviceCardFilterRow = (props: {
   filterId: IFilter['id']
   email: string
+  isProd: boolean
   changeFilter: (id: IFilter['id']) => any
 }) => {
-  const { user } = useAuth(props.email)
+  const { user } = useAuth(props.email, props.isProd)
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
+
+  const apiController = new ApiController(props.isProd)
+
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then(setAllFilters)
+      apiController.getGroupFilters(user.group_id).then(setAllFilters)
   }, [user?.group_id])
   const [open, setOpen] = useState<boolean>(false)
   return (
@@ -234,6 +238,7 @@ const MobileDeviceCard = (
     onClickViewScreenTime?: () => any
     button?: React.ReactNode
     onClick?: () => any
+    isProd: boolean
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)
@@ -242,10 +247,16 @@ const MobileDeviceCard = (
     [props.config?.browsingAllowed]
   )
   const navigate = useNavigate()
+
   const notificationCtx = useContext(NotificationContext)
+
   const onClick = () => navigate.push(`/profiles/${props.id}`)
+
+  const apiController = new ApiController(props.isProd)
+
   const changeFilter = (id: IFilter['id']) =>
-    ApiController.addFilterToDevice(id, props.id)
+    apiController
+      .addFilterToDevice(id, props.id)
       .then(props.onUpdate)
       .then(() => notificationCtx.success('Changed Filter'))
   return (
@@ -407,6 +418,7 @@ const MobileDeviceCard = (
                   email={props.email}
                   filterId={props.filterId}
                   changeFilter={changeFilter}
+                  isProd
                 />
               </Stack>
               <MobileDeviceCardRow
@@ -419,7 +431,7 @@ const MobileDeviceCard = (
                     small
                     callback={() => {
                       setBrowsingEnabled(!browsingEnabled)
-                      ApiController.flipBrowsingAllowed(
+                      apiController.flipBrowsingAllowed(
                         props.id,
                         !browsingEnabled
                       )

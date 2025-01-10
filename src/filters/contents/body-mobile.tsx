@@ -7,7 +7,7 @@ import _ from 'lodash'
 import DynamicCardGrid from '../../components/DynamicCardGrid'
 import useNavigate from '../../hooks/useNavigate'
 import FilterCard from '../../filter/components/FilterCard'
-import { IGroupFilter } from '../../astrosafe/components/filters/filters'
+import { IGroupFilter } from '../../astrosafe/components/filters/AllFilters'
 import MobilePageLayout from './../../components/MobilePageLayout'
 import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 

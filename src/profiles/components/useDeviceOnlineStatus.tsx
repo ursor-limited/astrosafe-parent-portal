@@ -6,9 +6,10 @@ import useAuth from './../../hooks/useAuth'
 
 const useDeviceOnlineStatus = (
   devices: (IDevice | IEnrichedDevice)[],
-  email: string
+  email: string,
+  isProd: boolean = false
 ) => {
-  const { user } = useAuth(email)
+  const { user } = useAuth(email, isProd)
 
   const [cuttingEdgeOnlineStatusDevices, setCuttingEdgeOnlineStatusDevices] =
     useState<(IDevice | IEnrichedDevice)[]>([])

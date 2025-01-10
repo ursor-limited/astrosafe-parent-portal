@@ -7,7 +7,18 @@ import { PALETTE, Typography } from './../../ui'
 import { IGroup } from '../contents/common'
 import { IDevice } from './../../filter/contents/common'
 
-const AddDeviceDialog = (props: {
+const AddDeviceDialog = ({
+  title,
+  subtitle,
+  emptyText,
+  open,
+  onClose,
+  onAdd,
+  addedDevices,
+  groupId,
+  isMobile,
+  isProd = false,
+}: {
   title: string
   subtitle: string[]
   emptyText: string
@@ -17,25 +28,26 @@ const AddDeviceDialog = (props: {
   addedDevices: IDevice[]
   groupId: IGroup['id']
   isMobile?: boolean
+  isProd: boolean
 }) => {
   const [searchValue, setSearchValue] = useState<string>('')
   const [allDevices, setAllDevices] = useState<IDevice[]>([])
   useEffect(() => {
-    props.groupId &&
-      ApiController.getGroupEnrichedDevices(props.groupId).then((d) =>
-        setAllDevices(d)
-      )
-  }, [props.groupId])
+    groupId &&
+      new ApiController(isProd)
+        .getGroupEnrichedDevices(groupId)
+        .then((d) => setAllDevices(d))
+  }, [groupId])
 
   const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([])
   useEffect(
     () =>
       setNonAddedDevices(
         allDevices.filter(
-          (d) => !props.addedDevices.find((device) => device.id === d.id)
+          (d) => !addedDevices.find((device) => device.id === d.id)
         )
       ),
-    [allDevices, props.addedDevices]
+    [allDevices, addedDevices]
   )
 
   const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([])
@@ -52,13 +64,13 @@ const AddDeviceDialog = (props: {
   )
   return (
     <UrsorDialog
-      open={props.open}
-      onCloseCallback={props.onClose}
-      title={props.title}
-      subtitle={props.subtitle}
+      open={open}
+      onCloseCallback={onClose}
+      title={title}
+      subtitle={subtitle}
       width="434px"
-      height={props.isMobile ? '76%' : undefined}
-      isMobile={props.isMobile}
+      height={isMobile ? '76%' : undefined}
+      isMobile={isMobile}
     >
       <SearchInput
         value={searchValue}
@@ -75,7 +87,7 @@ const AddDeviceDialog = (props: {
             bold
             sx={{ textAlign: 'center' }}
           >
-            {props.emptyText}
+            {emptyText}
           </Typography>
         </Stack>
       ) : (
@@ -91,7 +103,7 @@ const AddDeviceDialog = (props: {
                 transition: '0.2s',
                 '&:hover': { opacity: 0.7 },
               }}
-              onClick={() => props.onAdd(d.id)}
+              onClick={() => onAdd(d.id)}
             >
               <Stack
                 borderRadius="100%"

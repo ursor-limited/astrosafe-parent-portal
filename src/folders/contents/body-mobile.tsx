@@ -11,6 +11,7 @@ import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[]
+  isProd: boolean
   createFolder: () => any
   onUpdate: () => any
 }) => {
@@ -43,6 +44,7 @@ const AllFoldersPageMobileBody = (props: {
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
                   isMobile
+                  isProd={props.isProd}
                 />
               </UrsorFadeIn>
             ))}

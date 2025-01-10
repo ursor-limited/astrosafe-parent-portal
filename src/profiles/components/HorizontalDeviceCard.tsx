@@ -34,13 +34,17 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
 export const DeviceCardFilterSection = (props: {
   filterId: IFilter['id']
   email: string
+  isProd: boolean
   changeFilter: (id: IFilter['id']) => any
 }) => {
-  const { user } = useAuth(props.email)
+  const { user } = useAuth(props.email, props.isProd)
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
+
+  const apiController = new ApiController(props.isProd)
+
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then(setAllFilters)
+      apiController.getGroupFilters(user.group_id).then(setAllFilters)
   }, [user?.group_id])
   const [open, setOpen] = useState<boolean>(false)
   return (
@@ -138,6 +142,7 @@ export const DeviceCardFilterSection = (props: {
 const HorizontalDeviceCard = (
   props: IEnrichedDevice & {
     email: string
+    isProd: boolean
     onClickViewScreenTime: () => any
     onUpdate: () => any
   }
@@ -150,9 +155,12 @@ const HorizontalDeviceCard = (
   const navigate = useNavigate()
   const onClick = () => navigate.push(`/profiles/${props.id}`)
 
+  const apiController = new ApiController(props.isProd)
+
   const notificationCtx = useContext(NotificationContext)
   const changeFilter = (id: IFilter['id']) =>
-    ApiController.addFilterToDevice(id, props.id)
+    apiController
+      .addFilterToDevice(id, props.id)
       .then(props.onUpdate)
       .then(() => notificationCtx.success('Changed Filter'))
   return (
@@ -248,12 +256,13 @@ const HorizontalDeviceCard = (
             email={props.email}
             filterId={props.filterId}
             changeFilter={changeFilter}
+            isProd
           />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
             flipBrowsingEnabled={() => {
               setBrowsingEnabled(!browsingEnabled)
-              ApiController.flipBrowsingAllowed(props.id, !browsingEnabled)
+              apiController.flipBrowsingAllowed(props.id, !browsingEnabled)
               notificationCtx.success(
                 `Browsing is now ${
                   !browsingEnabled ? 'enabled' : 'disabled'

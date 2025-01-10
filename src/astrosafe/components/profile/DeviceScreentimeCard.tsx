@@ -22,31 +22,35 @@ dayjs.extend(utc)
 interface DeviceScreenTimeCardProps {
   email: string
   deviceId: string
+  isProd?: boolean
 }
 
 const DeviceScreenTimeCard: React.FC<DeviceScreenTimeCardProps> = ({
   email,
   deviceId,
+  isProd = false,
 }) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([])
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0) // days from today
   const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0)
   const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(6)
 
-  useAuth(email)
+  useAuth(email, isProd)
 
-  const device = useDevice(deviceId)
+  const device = useDevice(deviceId, isProd)
 
   useEffect(() => {
     if (!device?.id) return
 
-    ApiController.getStats(
-      device.id,
-      dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'),
-      dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')
-    ).then((stats) => {
-      setTimes(stats.screenTime)
-    })
+    new ApiController(isProd)
+      .getStats(
+        device.id,
+        dayjs().utc().subtract(rangeStartDayIndex, 'days').format('YYYY-MM-DD'),
+        dayjs().utc().subtract(rangeEndDayIndex, 'days').format('YYYY-MM-DD')
+      )
+      .then((stats) => {
+        setTimes(stats.screenTime)
+      })
   }, [device?.id, rangeStartDayIndex, rangeEndDayIndex, selectedDayIndex])
 
   const [timeSpent, setTimeSpent] = useState<number>(0)

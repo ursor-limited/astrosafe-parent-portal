@@ -16,25 +16,29 @@ import { isMobile } from 'react-device-detect'
 
 interface FoldersSectionProps {
   email: string
+  isProd?: boolean
   onClickFolder: (folder: IEnrichedContentBucket) => any
   onCreateFolder: (folder: IEnrichedContentBucket) => any
 }
 
 const FoldersSection: React.FC<FoldersSectionProps> = ({
   email,
+  isProd = false,
   onClickFolder,
   onCreateFolder,
 }) => {
-  const { user } = useAuth(email)
+  const { user } = useAuth(email, isProd)
 
   const [folders, setFolders] = useState<IEnrichedContentBucket[]>([])
+
+  const apiController = new ApiController(isProd)
 
   const loadFolders = useCallback(
     () =>
       user?.group_id &&
-      ApiController.getEnrichedFolders(user.group_id).then((f) =>
-        setFolders(f)
-      ),
+      apiController
+        .getEnrichedFolders(user.group_id)
+        .then((f) => setFolders(f)),
     [user?.group_id]
   )
 
@@ -45,7 +49,7 @@ const FoldersSection: React.FC<FoldersSectionProps> = ({
   const createFolder = (title: IContentBucket['title']) => {
     if (!user?.group_id) return
 
-    ApiController.createFolder(title, user.group_id).then((data) => {
+    apiController.createFolder(title, user.group_id).then((data) => {
       loadFolders()
 
       onCreateFolder(data)
@@ -80,6 +84,7 @@ const FoldersSection: React.FC<FoldersSectionProps> = ({
                   clickCallback={() => onClickFolder(f)}
                   editingCallback={loadFolders}
                   deletionCallback={loadFolders}
+                  isProd={isProd}
                 />
               </UrsorFadeIn>
             ))}

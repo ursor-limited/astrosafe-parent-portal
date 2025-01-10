@@ -16,6 +16,7 @@ import { INFOS } from '../profile/components/ProfilePageTabLayout'
 const AllDevicesDialog = (props: {
   title: string
   open: boolean
+  isProd: boolean
   onClose: () => any
   onAdd: () => any
   onRemove?: (id: IDevice['id']) => any
@@ -95,6 +96,7 @@ const AllDevicesDialog = (props: {
                 }
                 hideToggles
                 noExtras
+                isProd={props.isProd}
               />
             </UrsorFadeIn>
           ))}

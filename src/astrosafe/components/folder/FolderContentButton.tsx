@@ -17,11 +17,12 @@ type ContentType = 'link' | 'video' | 'channel'
 interface FolderContentCreationButtonProps {
   folderId: number
   contentType: ContentType
+  isProd?: boolean
 }
 
 const FolderContentCreationButton: React.FC<
   FolderContentCreationButtonProps
-> = ({ folderId, contentType }) => {
+> = ({ folderId, contentType, isProd = false }) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const dispatchLocalStorageEvent = () => {
@@ -49,6 +50,7 @@ const FolderContentCreationButton: React.FC<
           creationCallback={() => {
             dispatchLocalStorageEvent()
           }}
+          isProd={isProd}
         />
       ) : contentType === 'video' ? (
         <VideoCreationDialog
@@ -58,6 +60,7 @@ const FolderContentCreationButton: React.FC<
           creationCallback={() => {
             dispatchLocalStorageEvent()
           }}
+          isProd={isProd}
         />
       ) : (
         <ChannelCreationDialog
@@ -67,6 +70,7 @@ const FolderContentCreationButton: React.FC<
           creationCallback={() => {
             dispatchLocalStorageEvent()
           }}
+          isProd={isProd}
         />
       )}
     </>

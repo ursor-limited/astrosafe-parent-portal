@@ -7,33 +7,44 @@ import { PALETTE } from '../../ui'
 
 const IMAGE_HEIGHT = 144
 
-const VideoCard = (
-  props: Partial<Omit<IVideo, 'createdAt'>> & {
-    noPointerEvents?: boolean
-    noMenu?: boolean
-    onDelete?: () => any
-    onUpdate?: () => any
-    onOpenEditingDialog?: () => any
-    isMobile?: boolean
-    twoLineTitleSectionHeight?: boolean
-  }
-) => {
+const VideoCard = ({
+  title,
+  url,
+  id,
+  isProd,
+  channelId,
+  noMenu,
+  noPointerEvents,
+  twoLineTitleSectionHeight,
+  isMobile,
+  onDelete,
+  onOpenEditingDialog,
+  onUpdate,
+  thumbnailUrl,
+}: Partial<Omit<IVideo, 'createdAt'>> & {
+  noPointerEvents?: boolean
+  noMenu?: boolean
+  onDelete?: () => any
+  onUpdate?: () => any
+  onOpenEditingDialog?: () => any
+  isMobile?: boolean
+  twoLineTitleSectionHeight?: boolean
+  isProd: boolean
+}) => {
   return (
     <ContentCard
       type="video"
-      title={props.title}
-      url={props.url}
-      noPointerEvents={props.noPointerEvents}
-      noMenu={props.noMenu}
+      title={title}
+      url={url}
+      noPointerEvents={noPointerEvents}
+      noMenu={noMenu}
       onDelete={() =>
-        props.id &&
-        ApiController.deleteVideo(props.id, !!props.channelId).then(
-          props.onDelete
-        )
+        id &&
+        new ApiController(isProd).deleteVideo(id, !!channelId).then(onDelete)
       }
-      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
-      isMobile={props.isMobile}
-      twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
+      onOpenEditingDialog={() => onOpenEditingDialog?.()}
+      isMobile={isMobile}
+      twoLineTitleSectionHeight={twoLineTitleSectionHeight}
     >
       <Stack
         height={IMAGE_HEIGHT}
@@ -43,9 +54,9 @@ const VideoCard = (
         position="relative"
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
-        {props.thumbnailUrl ? (
+        {thumbnailUrl ? (
           <img
-            src={props.thumbnailUrl}
+            src={thumbnailUrl}
             style={{
               objectFit: 'cover',
               justifyContent: 'center',

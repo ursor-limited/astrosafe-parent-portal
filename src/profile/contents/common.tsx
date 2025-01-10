@@ -25,23 +25,34 @@ export type DeviceType = 'chrome' | 'android' | 'ios'
 
 export type AstroAccountTab = 'content' | 'insights' | 'apps' | 'limits'
 
-export default function ProfilePage(props: {
+export interface ProfilePageProps {
   deviceId: number
   email: string
   isMobile: boolean
-
+  isProd: boolean
   tab?: AstroAccountTab
-}) {
-  const { user } = useAuth(props.email)
+}
+
+export default function ProfilePage({
+  deviceId,
+  email,
+  isMobile,
+  isProd,
+  tab,
+}: ProfilePageProps) {
+  const { user } = useAuth(email, isProd)
+
   const [device, setDevice] = useState<IEnrichedDevice | undefined>()
+
+  const apiController = new ApiController(isProd)
+
   const loadDevice = useCallback(
-    () =>
-      ApiController.getEnrichedDevice(props.deviceId).then((d) => setDevice(d)),
-    [props.deviceId]
+    () => apiController.getEnrichedDevice(deviceId).then((d) => setDevice(d)),
+    [deviceId]
   )
 
   const [cuttingEdgeOnlineStatusDevice]: IEnrichedDevice[] =
-    useDeviceOnlineStatus(device ? [device] : [], props.email)
+    useDeviceOnlineStatus(device ? [device] : [], email)
 
   useEffect(() => {
     loadDevice()
@@ -59,9 +70,9 @@ export default function ProfilePage(props: {
   const [allDevices, setAllDevices] = useState<IDevice[]>([])
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupEnrichedDevices(user.group_id).then((d) =>
-        setAllDevices(d)
-      )
+      apiController
+        .getGroupEnrichedDevices(user.group_id)
+        .then((d) => setAllDevices(d))
   }, [user?.group_id])
 
   const [deviceFolders, setDeviceFolders] = useState<IEnrichedContentBucket[]>(
@@ -69,10 +80,12 @@ export default function ProfilePage(props: {
   )
   const loadFolders = useCallback(
     () =>
-      ApiController.getDeviceFolders(props.deviceId).then((folders) =>
-        setDeviceFolders(_.reverse(_.sortBy(folders, (f) => f.id)))
-      ),
-    [props.deviceId]
+      apiController
+        .getDeviceFolders(deviceId)
+        .then((folders) =>
+          setDeviceFolders(_.reverse(_.sortBy(folders, (f) => f.id)))
+        ),
+    [deviceId]
   )
   useEffect(() => {
     loadFolders()
@@ -93,14 +106,14 @@ export default function ProfilePage(props: {
             justifyContent="center"
             alignItems="center"
             bgcolor={PALETTE.secondary.blue[2]}
-            height={props.isMobile ? 24 : 36}
-            width={props.isMobile ? 24 : 36}
+            height={isMobile ? 24 : 36}
+            width={isMobile ? 24 : 36}
           >
             {device?.profileAvatarUrl ? (
               <img
                 src={device?.profileAvatarUrl ?? ''}
-                height={props.isMobile ? 24 : 36}
-                width={props.isMobile ? 24 : 36}
+                height={isMobile ? 24 : 36}
+                width={isMobile ? 24 : 36}
                 alt="device profile"
               />
             ) : (
@@ -130,14 +143,14 @@ export default function ProfilePage(props: {
         </Stack>
       ),
       options: allDevices
-        .filter((d) => d.id !== props.deviceId)
+        .filter((d) => d.id !== deviceId)
         .map((d) => ({
           text: d.name,
           imageUrl: d.profileAvatarUrl,
           callback: () => navigate.push(`/profiles/${d.id}`),
         })),
       label:
-        !props.isMobile && device?.deviceType
+        !isMobile && device?.deviceType
           ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]
           : undefined,
     },
@@ -155,50 +168,53 @@ export default function ProfilePage(props: {
 
   const createAndAddFolder = (title: IContentBucket['title']) =>
     user?.group_id &&
-    ApiController.createFolder(title, user.group_id).then((response) => {
-      ApiController.addFolderToDevice(response.contentBucketId, props.deviceId)
+    apiController.createFolder(title, user.group_id).then((response) => {
+      apiController.addFolderToDevice(response.contentBucketId, deviceId)
       navigate.push(`/folders/${response.contentBucketId}`)
       notificationCtx.success('Created Folder and added it to the Device.')
     })
 
   return device ? (
     <>
-      {props.isMobile ? (
+      {isMobile ? (
         <ProfilePageMobileBody
-          email={props.email}
+          email={email}
           device={cuttingEdgeOnlineStatusDevice || device}
           titleRow={titleRow}
           actions={actions}
           folders={deviceFolders}
-          tab={props.tab}
+          tab={tab}
           onUpdateDevice={loadDevice}
           onUpdateFolders={loadFolders}
           openAddFolderDialog={() => setAddFolderDialogOpen(true)}
+          isProd={isProd}
         />
       ) : (
         <ProfilePageDesktopBody
-          email={props.email}
+          email={email}
           device={cuttingEdgeOnlineStatusDevice || device}
           titleRow={titleRow}
           actions={actions}
           folders={deviceFolders}
-          tab={props.tab}
+          tab={tab}
           onUpdateDevice={loadDevice}
           onUpdateFolders={loadFolders}
           openAddFolderDialog={() => setAddFolderDialogOpen(true)}
+          isProd={isProd}
         />
       )}
       <DeviceRenameDialog
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
         onSubmit={(name) => {
-          ApiController.renameDevice(props.deviceId, name)
+          apiController
+            .renameDevice(deviceId, name)
             .then(loadDevice)
             .then(() => notificationCtx.success('Renamed Device'))
           setRenameDialogOpen(false)
         }}
         name={device.name ?? ''}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
       <DeviceDisconnectDialog
         open={disconnectDialogOpen}
@@ -211,7 +227,8 @@ export default function ProfilePage(props: {
         onClose={() => setAddFolderDialogOpen(false)}
         addedFolders={deviceFolders}
         onAdd={(id) =>
-          ApiController.addFolderToDevice(id, props.deviceId)
+          apiController
+            .addFolderToDevice(id, deviceId)
             .then(loadFolders)
             .then(() => setAddFolderDialogOpen(false))
             .then(() => notificationCtx.success('Added Folder to Device.'))
@@ -220,13 +237,14 @@ export default function ProfilePage(props: {
           setCreateFolderDialogOpen(true)
           setAddFolderDialogOpen(false)
         }}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
+        isProd={isProd}
       />
       <FolderCreationDialog
         open={createFolderDialogOpen}
         onClose={() => setCreateFolderDialogOpen(false)}
         onSubmit={createAndAddFolder}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
     </>
   ) : (

@@ -7,35 +7,40 @@ import {
   IContentBucket,
 } from './../../profile/components/ContentTab'
 
-const useLoadFolderAndContents = (folderId: IContentBucket['id']) => {
+const useLoadFolderAndContents = (
+  folderId: IContentBucket['id'],
+  isProd: boolean
+) => {
   const [folder, setFolder] = useState<IContentBucket | undefined>()
   const [contents, setContents] = useState<IContentCard[]>([])
 
   const loadFolderAndContents = useCallback(
     () =>
-      ApiController.getFolder(folderId).then((f: IContentBucket) => {
-        setFolder(f)
-        setContents(
-          _.sortBy(
-            [
-              ...f.links.map((l) => ({
-                type: 'link' as AstroContent,
-                content: l,
-              })),
-              ...f.videos.map((v) => ({
-                type: 'video' as AstroContent,
-                content: v,
-              })),
-              ...f.channels.map((c) => ({
-                type: 'channel' as AstroContent,
-                content: c,
-              })),
-              // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
-            ],
-            (c) => c.content.createdAt
+      new ApiController(isProd)
+        .getFolder(folderId)
+        .then((f: IContentBucket) => {
+          setFolder(f)
+          setContents(
+            _.sortBy(
+              [
+                ...f.links.map((l) => ({
+                  type: 'link' as AstroContent,
+                  content: l,
+                })),
+                ...f.videos.map((v) => ({
+                  type: 'video' as AstroContent,
+                  content: v,
+                })),
+                ...f.channels.map((c) => ({
+                  type: 'channel' as AstroContent,
+                  content: c,
+                })),
+                // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
+              ],
+              (c) => c.content.createdAt
+            )
           )
-        )
-      }),
+        }),
     [folderId]
   )
 

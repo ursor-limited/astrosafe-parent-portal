@@ -15,6 +15,7 @@ const MobileAllDevicesDialog = (props: {
   email: string
   title: string
   open: boolean
+  isProd: boolean
   onClose: () => any
   onAdd: () => any
   onRemove: (id: IDevice['id']) => any
@@ -91,6 +92,7 @@ const MobileAllDevicesDialog = (props: {
                   </Stack>
                 }
                 noExtras
+                isProd={props.isProd}
               />
             </UrsorFadeIn>
           ))}

@@ -1,22 +1,22 @@
-import { Stack } from '@mui/system';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { PALETTE, Typography, UrsorButton } from './../../ui';
-import { ReactComponent as SearchIcon } from './../../images/SearchIcon.svg';
-import _ from 'lodash';
-import AstroSwitch from './../../components/AstroSwitch';
-import RequestedSitesSection from './RequestedSitesSection';
-import ApiController from './../../api';
-import { IDevice, IDeviceConfig } from './../../filter/contents/common';
-import { IEnrichedDevice } from '../../profiles/contents/common';
-import TimeLimitsSection from './TimeLimitsSection';
-import AllowedTimesSection from './AllowedTimesSection';
-import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import { useWindowSize } from 'usehooks-ts';
-import MobileAllowedTimesSection from './MobileAllowedTimesSection';
-import ProfilePageTabLayout from './ProfilePageTabLayout';
-import NotificationContext from './../../components/NotificationContext';
-dayjs.extend(utc);
+import { Stack } from '@mui/system'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { PALETTE, Typography, UrsorButton } from './../../ui'
+import { ReactComponent as SearchIcon } from './../../images/SearchIcon.svg'
+import _ from 'lodash'
+import AstroSwitch from './../../components/AstroSwitch'
+import RequestedSitesSection from './RequestedSitesSection'
+import ApiController from './../../api'
+import { IDevice, IDeviceConfig } from './../../filter/contents/common'
+import { IEnrichedDevice } from '../../profiles/contents/common'
+import TimeLimitsSection from './TimeLimitsSection'
+import AllowedTimesSection from './AllowedTimesSection'
+import dayjs, { Dayjs } from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import { useWindowSize } from 'usehooks-ts'
+import MobileAllowedTimesSection from './MobileAllowedTimesSection'
+import ProfilePageTabLayout from './ProfilePageTabLayout'
+import NotificationContext from './../../components/NotificationContext'
+dayjs.extend(utc)
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
   dayjs
@@ -26,112 +26,121 @@ export const getISODateString = (day: number, hours: number, minutes: number) =>
     .minute(minutes)
     .second(0)
     .millisecond(0)
-    .toISOString();
+    .toISOString()
 
 export interface IRequestedSite {
-  id: number;
-  url: string;
-  title: string;
-  faviconUrl: string;
+  id: number
+  url: string
+  title: string
+  faviconUrl: string
 }
 
-export type Weekday = 'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat';
+export type Weekday = 'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat'
 
-export const DAILY_LIMIT_INCREMENT = 15; // minutes
+export const DAILY_LIMIT_INCREMENT = 15 // minutes
 
-const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
-const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1450;
-const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1080;
+const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536
+const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1450
+const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1080
 
 export interface ITimeLimit {
-  id: number;
-  day: number;
-  allowedMinutes: number;
+  id: number
+  day: number
+  allowedMinutes: number
 }
 
 export interface IAllowedTime {
-  id: number;
-  day: number;
-  startTime: string;
-  endTime: string;
+  id: number
+  day: number
+  startTime: string
+  endTime: string
 }
 
 const DevicePageLimitsTab = (props: {
-  deviceId: IDevice['id'];
-  isMobile?: boolean;
+  deviceId: IDevice['id']
+  isMobile?: boolean
+  isProd: boolean
 }) => {
-  const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
-  const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([]);
-  const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>();
+  const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([])
+  const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([])
+  const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>()
+
+  const apiController = new ApiController(props.isProd)
+
   const loadData = useCallback(
     () =>
-      ApiController.getDeviceWithTimesAndConfig(props.deviceId).then(
-        (d: IEnrichedDevice) => {
-          setAllowedTimes(d.allowedTimes as IAllowedTime[]);
-          setTimeLimits(d.timeLimits as ITimeLimit[]);
-          setDeviceConfig(d.config as IDeviceConfig);
-        }
-      ),
+      apiController
+        .getDeviceWithTimesAndConfig(props.deviceId)
+        .then((d: IEnrichedDevice) => {
+          setAllowedTimes(d.allowedTimes as IAllowedTime[])
+          setTimeLimits(d.timeLimits as ITimeLimit[])
+          setDeviceConfig(d.config as IDeviceConfig)
+        }),
     [props.deviceId]
-  );
+  )
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    loadData()
+  }, [loadData])
 
   const addAllowedTime = (
     day: IAllowedTime['day'],
     startTime: number,
     endTime: number
   ) => {
-    ApiController.addAllowedTimeRange(
-      props.deviceId,
-      day,
-      getISODateString(
+    apiController
+      .addAllowedTimeRange(
+        props.deviceId,
         day,
-        Math.floor(startTime),
-        Math.floor((startTime % 1) * 60)
-      ),
-      getISODateString(day, Math.floor(endTime), Math.floor((endTime % 1) * 60))
-    ).then(loadData);
-  };
+        getISODateString(
+          day,
+          Math.floor(startTime),
+          Math.floor((startTime % 1) * 60)
+        ),
+        getISODateString(
+          day,
+          Math.floor(endTime),
+          Math.floor((endTime % 1) * 60)
+        )
+      )
+      .then(loadData)
+  }
 
   const reset = (day: IAllowedTime['day']) => {
-    ApiController.resetAllowedTimes(props.deviceId, day).then(loadData);
-  };
+    apiController.resetAllowedTimes(props.deviceId, day).then(loadData)
+  }
 
   const deleteRange = (id: IAllowedTime['id']) => {
-    ApiController.removeAllowedTimeRange(id).then(loadData);
-  };
+    apiController.removeAllowedTimeRange(id).then(loadData)
+  }
 
-  const [allowedTimesEnabled, setAllowedTimesEnabled] =
-    useState<boolean>(false);
-  const [timeLimitsEnabled, setTimeLimitsEnabled] = useState<boolean>(false);
+  const [allowedTimesEnabled, setAllowedTimesEnabled] = useState<boolean>(false)
+  const [timeLimitsEnabled, setTimeLimitsEnabled] = useState<boolean>(false)
 
   useEffect(() => {
     if (deviceConfig) {
       !_.isUndefined(deviceConfig?.allowedTimesEnabled) &&
-        setAllowedTimesEnabled(deviceConfig.allowedTimesEnabled);
+        setAllowedTimesEnabled(deviceConfig.allowedTimesEnabled)
       !_.isUndefined(deviceConfig?.timeLimitsEnabled) &&
-        setTimeLimitsEnabled(deviceConfig.timeLimitsEnabled);
+        setTimeLimitsEnabled(deviceConfig.timeLimitsEnabled)
     }
-  }, [deviceConfig]);
+  }, [deviceConfig])
 
-  const [requestedSites, setRequestedSites] = useState<IRequestedSite[]>([]);
+  const [requestedSites, setRequestedSites] = useState<IRequestedSite[]>([])
   const loadRequestedSites = useCallback(
     () =>
-      ApiController.getRequestedSites(props.deviceId).then(setRequestedSites),
+      apiController.getRequestedSites(props.deviceId).then(setRequestedSites),
     [props.deviceId]
-  );
+  )
   useEffect(() => {
-    loadRequestedSites();
-  }, [loadRequestedSites]);
+    loadRequestedSites()
+  }, [loadRequestedSites])
 
-  const { width } = useWindowSize();
+  const { width } = useWindowSize()
 
   const [
     allowedTimesLabelsSmallerFontSize,
     setAllowedTimesLabelsSmallerFontSize,
-  ] = useState<boolean>(false);
+  ] = useState<boolean>(false)
   useEffect(
     () =>
       setAllowedTimesLabelsSmallerFontSize(
@@ -139,25 +148,24 @@ const DevicePageLimitsTab = (props: {
           width > SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD
       ),
     [width]
-  );
+  )
 
-  const [switchToColumn, setSwitchToColumn] = useState<boolean>(false);
+  const [switchToColumn, setSwitchToColumn] = useState<boolean>(false)
   useEffect(
     () => setSwitchToColumn(width < SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD),
     [width]
-  );
+  )
 
-  const [halveLabelFrequency, setHalveLabelFrequency] =
-    useState<boolean>(false);
+  const [halveLabelFrequency, setHalveLabelFrequency] = useState<boolean>(false)
   useEffect(
     () =>
       setHalveLabelFrequency(
         width < HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD
       ),
     [width]
-  );
+  )
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
   return (
     <ProfilePageTabLayout
@@ -172,6 +180,7 @@ const DevicePageLimitsTab = (props: {
           <RequestedSitesSection
             sites={requestedSites}
             onUpdate={loadRequestedSites}
+            isProd={props.isProd}
           />
         ) : null}
         {/* <Typography variant="h5">Device controls</Typography> */}
@@ -257,11 +266,11 @@ const DevicePageLimitsTab = (props: {
                   <AstroSwitch
                     on={allowedTimesEnabled}
                     callback={() => {
-                      setAllowedTimesEnabled(!allowedTimesEnabled);
-                      ApiController.flipAllowedTimesEnabled(
+                      setAllowedTimesEnabled(!allowedTimesEnabled)
+                      apiController.flipAllowedTimesEnabled(
                         props.deviceId,
                         !allowedTimesEnabled
-                      );
+                      )
                     }}
                   />
                 }
@@ -271,8 +280,8 @@ const DevicePageLimitsTab = (props: {
                     allowedTimes.map((t) =>
                       t.id === id ? { ...t, startTime, endTime } : t
                     )
-                  );
-                  ApiController.changeAllowedTimeRange(id, startTime, endTime);
+                  )
+                  apiController.changeAllowedTimeRange(id, startTime, endTime)
                 }}
                 deleteRange={deleteRange}
                 addTimeLimit={addAllowedTime}
@@ -286,16 +295,16 @@ const DevicePageLimitsTab = (props: {
                   <AstroSwitch
                     on={allowedTimesEnabled}
                     callback={() => {
-                      setAllowedTimesEnabled(!allowedTimesEnabled);
-                      ApiController.flipAllowedTimesEnabled(
+                      setAllowedTimesEnabled(!allowedTimesEnabled)
+                      apiController.flipAllowedTimesEnabled(
                         props.deviceId,
                         !allowedTimesEnabled
-                      );
+                      )
                       notificationCtx.success(
                         `Switched allowed times ${
                           allowedTimesEnabled ? 'off' : 'on'
                         } on this Device`
-                      );
+                      )
                     }}
                   />
                 }
@@ -305,8 +314,8 @@ const DevicePageLimitsTab = (props: {
                     allowedTimes.map((t) =>
                       t.id === id ? { ...t, startTime, endTime } : t
                     )
-                  );
-                  ApiController.changeAllowedTimeRange(id, startTime, endTime);
+                  )
+                  apiController.changeAllowedTimeRange(id, startTime, endTime)
                 }}
                 addTimeLimit={addAllowedTime}
                 reset={reset}
@@ -322,23 +331,23 @@ const DevicePageLimitsTab = (props: {
               <AstroSwitch
                 on={timeLimitsEnabled}
                 callback={() => {
-                  setTimeLimitsEnabled(!timeLimitsEnabled);
-                  ApiController.flipTimeLimitsEnabled(
+                  setTimeLimitsEnabled(!timeLimitsEnabled)
+                  apiController.flipTimeLimitsEnabled(
                     props.deviceId,
                     !timeLimitsEnabled
-                  );
+                  )
                   notificationCtx.success(
                     `Switched time limits ${
                       timeLimitsEnabled ? 'off' : 'on'
                     } on this Device`
-                  );
+                  )
                 }}
               />
             }
             isMobile={props.isMobile}
             timeLimits={timeLimits}
             increment={(day) => {
-              const limitId = timeLimits.find((l) => l.day === day)?.id;
+              const limitId = timeLimits.find((l) => l.day === day)?.id
               if (limitId) {
                 setTimeLimits(
                   timeLimits.map((l) =>
@@ -351,16 +360,16 @@ const DevicePageLimitsTab = (props: {
                         }
                       : l
                   )
-                );
-                ApiController.setTimeLimit(
+                )
+                apiController.setTimeLimit(
                   limitId,
                   (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
                     DAILY_LIMIT_INCREMENT
-                );
+                )
               }
             }}
             decrement={(day) => {
-              const limitId = timeLimits.find((l) => l.day === day)?.id;
+              const limitId = timeLimits.find((l) => l.day === day)?.id
               if (limitId) {
                 setTimeLimits(
                   timeLimits.map((l) =>
@@ -373,12 +382,12 @@ const DevicePageLimitsTab = (props: {
                         }
                       : l
                   )
-                );
-                ApiController.setTimeLimit(
+                )
+                apiController.setTimeLimit(
                   limitId,
                   (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
                     DAILY_LIMIT_INCREMENT
-                );
+                )
               }
             }}
             disabled={!timeLimitsEnabled}
@@ -386,7 +395,7 @@ const DevicePageLimitsTab = (props: {
         </Stack>
       </Stack>
     </ProfilePageTabLayout>
-  );
-};
+  )
+}
 
-export default DevicePageLimitsTab;
+export default DevicePageLimitsTab

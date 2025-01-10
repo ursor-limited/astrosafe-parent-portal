@@ -219,21 +219,25 @@ const CategoryCard = (
 interface FilterCategoriesSectionProps {
   filterId: number
   email: string
+  isProd?: boolean
 }
 
 const FilterCategoriesSection: React.FC<FilterCategoriesSectionProps> = ({
   filterId,
   email,
+  isProd = false,
 }) => {
   const [filter, setFilter] = useState<IFilter>()
   const [categories, setCategories] = useState<IFilterCategory[]>()
 
-  useAuth(email)
+  useAuth(email, isProd)
+
+  const apiController = new ApiController(isProd)
 
   useEffect(() => {
-    ApiController.getFilter(filterId).then((data) => setFilter(data))
+    apiController.getFilter(filterId).then((data) => setFilter(data))
 
-    ApiController.getAllFilterCategories().then((data) => setCategories(data))
+    apiController.getAllFilterCategories().then((data) => setCategories(data))
   }, [filterId])
 
   const [allowedSubcategories, setAllowedSubcategories] = useState<
@@ -241,18 +245,20 @@ const FilterCategoriesSection: React.FC<FilterCategoriesSectionProps> = ({
   >([])
 
   useEffect(() => {
-    ApiController.getFilterCategories(filterId).then((response) =>
-      setAllowedSubcategories(response.map((x: any) => x.categoryId))
-    )
+    apiController
+      .getFilterCategories(filterId)
+      .then((response) =>
+        setAllowedSubcategories(response.map((x: any) => x.categoryId))
+      )
   }, [filterId])
 
   const flipSubcategory = (id: IFilterSubcategory['id']) => {
     if (allowedSubcategories.includes(id)) {
       setAllowedSubcategories(allowedSubcategories.filter((sid) => sid !== id))
-      ApiController.removeWhitelistSubcategory(filterId, id)
+      apiController.removeWhitelistSubcategory(filterId, id)
     } else {
       setAllowedSubcategories([...allowedSubcategories, id])
-      ApiController.addWhitelistSubcategory(filterId, id)
+      apiController.addWhitelistSubcategory(filterId, id)
     }
   }
 
@@ -267,12 +273,12 @@ const FilterCategoriesSection: React.FC<FilterCategoriesSectionProps> = ({
       setAllowedSubcategories(
         allowedSubcategories.filter((acid) => !subcategoryIds.includes(acid))
       )
-      ApiController.removeWhitelistCategory(filterId, id)
+      apiController.removeWhitelistCategory(filterId, id)
     } else {
       setAllowedSubcategories(
         _.uniq([...allowedSubcategories, ...subcategoryIds])
       )
-      ApiController.addWhitelistCategory(filterId, id)
+      apiController.addWhitelistCategory(filterId, id)
     }
   }
 

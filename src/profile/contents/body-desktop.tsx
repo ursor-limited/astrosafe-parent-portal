@@ -26,6 +26,7 @@ const ProfilePageDesktopBody = (props: {
   actions: IActionPopupItem[]
   folders: IEnrichedContentBucket[]
   tab?: AstroAccountTab
+  isProd: boolean
   onUpdateDevice: () => any
   onUpdateFolders: () => any
   openAddFolderDialog: () => any
@@ -61,6 +62,7 @@ const ProfilePageDesktopBody = (props: {
             onClickViewScreenTime={() => setSelectedTab('limits')}
             onUpdate={props.onUpdateDevice}
             noDeviceTypeUnderAvatar
+            isProd={props.isProd}
           />
         ) : (
           <HorizontalDeviceCard
@@ -68,6 +70,7 @@ const ProfilePageDesktopBody = (props: {
             {...props.device}
             onClickViewScreenTime={() => setSelectedTab('limits')}
             onUpdate={props.onUpdateDevice}
+            isProd={props.isProd}
           />
         )}
         <Stack flex={1} height="56px" minHeight="56px" justifyContent="center">
@@ -109,9 +112,12 @@ const ProfilePageDesktopBody = (props: {
           />
         </Stack>
         {selectedTab === 'insights' ? (
-          <DevicePageInsightsTab deviceId={props.device.id} />
+          <DevicePageInsightsTab
+            deviceId={props.device.id}
+            isProd={props.isProd}
+          />
         ) : selectedTab === 'apps' ? (
-          <DevicePageAppsTab deviceId={props.device.id} />
+          <DevicePageAppsTab deviceId={props.device.id} isProd={props.isProd} />
         ) : selectedTab === 'content' ? (
           <DevicePageContentTab
             deviceId={props.device.id}
@@ -119,9 +125,13 @@ const ProfilePageDesktopBody = (props: {
             folders={props.folders}
             onUpdate={props.onUpdateFolders}
             openAddFolderDialog={props.openAddFolderDialog}
+            isProd={props.isProd}
           />
         ) : selectedTab === 'limits' ? (
-          <DevicePageLimitsTab deviceId={props.device.id} />
+          <DevicePageLimitsTab
+            deviceId={props.device.id}
+            isProd={props.isProd}
+          />
         ) : null}
       </Stack>
     </PageLayout>

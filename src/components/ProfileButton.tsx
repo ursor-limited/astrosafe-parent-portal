@@ -95,8 +95,12 @@ const ProfilePopupButton = (props: {
   )
 }
 
-const ProfileButton = (props: { email: string; light?: boolean }) => {
-  const { user, logout } = useAuth(props.email)
+const ProfileButton = (props: {
+  email: string
+  light?: boolean
+  isProd: boolean
+}) => {
+  const { user, logout } = useAuth(props.email, props.isProd)
   const userCtx = useUserContext()
   const [open, setOpen] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -172,7 +176,7 @@ const ProfileButton = (props: { email: string; light?: boolean }) => {
             ) : null} */}
             <ProfilePopupButton
               callback={() => {
-                logout()
+                logout(props.isProd)
                 localStorage.clear()
                 //mixpanel.reset();
               }}

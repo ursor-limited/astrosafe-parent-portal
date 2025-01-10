@@ -204,23 +204,29 @@ const InsightsTabEmptyStateIndicator: React.FC<
   </Stack>
 )
 
-const HistorySection = (props: { deviceId: IDevice['id']; date: string }) => {
+const HistorySection = (props: {
+  deviceId: IDevice['id']
+  date: string
+  isProd: boolean
+}) => {
   const [nPages, setNPages] = useState<number>(1)
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [history, setHistory] = useState<IHistoryItem[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
   useEffect(() => setPageIndex(0), [searchValue])
   useEffect(() => {
-    ApiController.getHistory(
-      props.deviceId,
-      props.date,
-      pageIndex + 1,
-      PAGE_LENGTH,
-      searchValue
-    ).then((response) => {
-      setHistory(response.history)
-      setNPages(response.pages)
-    })
+    new ApiController(props.isProd)
+      .getHistory(
+        props.deviceId,
+        props.date,
+        pageIndex + 1,
+        PAGE_LENGTH,
+        searchValue
+      )
+      .then((response) => {
+        setHistory(response.history)
+        setNPages(response.pages)
+      })
   }, [props.deviceId, props.date, pageIndex, searchValue])
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([])

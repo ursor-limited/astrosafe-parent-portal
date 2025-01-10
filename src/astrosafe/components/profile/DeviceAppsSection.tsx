@@ -79,11 +79,13 @@ export const AppsLegend = (props: { small?: boolean }) => (
 interface DeviceAppsSectionProps {
   deviceId: string
   email: string
+  isProd?: boolean
 }
 
 const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
   deviceId,
   email,
+  isProd = false,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>()
   const [categories, setCategories] = useState<
@@ -93,12 +95,14 @@ const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
     }[]
   >([])
 
-  const device = useDevice(deviceId)
+  const device = useDevice(deviceId, isProd)
+
+  const apiController = new ApiController(isProd)
 
   useEffect(() => {
-    ApiController.getAppCategorySubGroups().then((cats: any) =>
-      setCategories(_.sortBy(cats, (c) => c.title))
-    )
+    apiController
+      .getAppCategorySubGroups()
+      .then((cats: any) => setCategories(_.sortBy(cats, (c) => c.title)))
   }, [device])
 
   const [nPages, setNPages] = useState<number>(1)
@@ -110,36 +114,40 @@ const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
   const [apps, setApps] = useState<IApp[]>([])
   const [filteredApps, setFilteredApps] = useState<IApp[]>([])
 
-  useAuth(email)
+  useAuth(email, isProd)
 
   useEffect(() => {
     if (!device?.id) return
 
-    ApiController.getApps(
-      device.id,
-      pageIndex + 1,
-      PAGE_SIZE,
-      selectedCategory,
-      searchValue
-    ).then((response: any) => {
-      setApps(_.sortBy(response.apps, (a) => a.title))
-      setNPages(response.pages)
-    })
+    apiController
+      .getApps(
+        device.id,
+        pageIndex + 1,
+        PAGE_SIZE,
+        selectedCategory,
+        searchValue
+      )
+      .then((response: any) => {
+        setApps(_.sortBy(response.apps, (a) => a.title))
+        setNPages(response.pages)
+      })
   }, [device, pageIndex, selectedCategory, searchValue])
 
   useEffect(() => {
     if (!device?.id) return
 
-    ApiController.getApps(
-      device.id,
-      pageIndex + 1,
-      PAGE_SIZE,
-      selectedCategory,
-      searchValue
-    ).then((response: any) => {
-      setApps(_.sortBy(response.apps, (a) => a.title))
-      setNPages(response.pages)
-    })
+    apiController
+      .getApps(
+        device.id,
+        pageIndex + 1,
+        PAGE_SIZE,
+        selectedCategory,
+        searchValue
+      )
+      .then((response: any) => {
+        setApps(_.sortBy(response.apps, (a) => a.title))
+        setNPages(response.pages)
+      })
   }, [device])
 
   useEffect(() => {
@@ -269,8 +277,8 @@ const DeviceAppsSection: React.FC<DeviceAppsSectionProps> = ({
                           )
                         )
                         ;(a.enabled
-                          ? ApiController.disableApp
-                          : ApiController.enableApp)(
+                          ? apiController.disableApp
+                          : apiController.enableApp)(
                           device?.id || 0,
                           a.id
                         ).then(() =>

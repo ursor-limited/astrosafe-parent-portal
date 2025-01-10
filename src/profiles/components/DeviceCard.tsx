@@ -244,6 +244,7 @@ interface DeviceCardProps extends IEnrichedDevice {
   onClickView?: () => any
   gotoDeviceOnClick?: () => any
   noExtras?: boolean
+  isProd: boolean
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({
@@ -266,6 +267,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
   screenTime,
   id,
   deviceType,
+  isProd,
 }) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false)
   useEffect(
@@ -431,7 +433,10 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                 browsingEnabled={browsingEnabled}
                 flipBrowsingEnabled={() => {
                   setBrowsingEnabled(!browsingEnabled)
-                  ApiController.flipBrowsingAllowed(id, !browsingEnabled)
+                  new ApiController(isProd).flipBrowsingAllowed(
+                    id,
+                    !browsingEnabled
+                  )
                   notificationCtx.success(
                     `Browsing is now ${
                       !browsingEnabled ? 'enabled' : 'disabled'

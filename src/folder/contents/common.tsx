@@ -73,30 +73,36 @@ export interface IContentCard {
   content: IContent
 }
 
-export default function FolderPage(props: {
+export default function FolderPage({
+  folderId,
+  isMobile,
+  email,
+  isProd,
+}: {
   folderId: number
   isMobile: boolean
   email: string
+  isProd: boolean
 }) {
   const navigate = useNavigate()
-  const { user } = useAuth(props.email)
+  const { user } = useAuth(email, isProd)
 
   const [devices, setDevices] = useState<IDevice[]>([])
+
+  const apiController = new ApiController(isProd)
+
   const loadDevices = useCallback(
-    () =>
-      ApiController.getFolderDevices(props.folderId).then((d) => setDevices(d)),
-    [props.folderId]
+    () => apiController.getFolderDevices(folderId).then((d) => setDevices(d)),
+    [folderId]
   )
   useEffect(() => {
     loadDevices()
   }, [loadDevices])
-  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(
-    devices,
-    props.email
-  )
+  const cuttingEdgeOnlineStatusDevices = useDeviceOnlineStatus(devices, email)
 
   const { folder, contents, loadFolderAndContents } = useLoadFolderAndContents(
-    props.folderId
+    folderId,
+    isProd
   )
 
   const [searchValue, setSearchValue] = useState<string>('')
@@ -134,7 +140,7 @@ export default function FolderPage(props: {
   const [allFolders, setFolders] = useState<IContentBucket[]>([])
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFolders(user.group_id).then(setFolders)
+      apiController.getGroupFolders(user.group_id).then(setFolders)
   }, [user?.group_id])
 
   const [folderRenameDialogOpen, setFolderRenameDialogOpen] =
@@ -162,7 +168,7 @@ export default function FolderPage(props: {
     {
       text: folder?.title ?? '',
       options: allFolders
-        .filter((f) => f.id !== props.folderId)
+        .filter((f) => f.id !== folderId)
         .map((f) => ({
           text: f.title,
           callback: () => navigate.push(`/folders/${f.id}`),
@@ -173,9 +179,7 @@ export default function FolderPage(props: {
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false)
 
   const deleteFolder = () =>
-    ApiController.removeFolder(props.folderId).then(() =>
-      navigate.push('/folders')
-    )
+    apiController.removeFolder(folderId).then(() => navigate.push('/folders'))
 
   const actions = [
     {
@@ -198,10 +202,10 @@ export default function FolderPage(props: {
 
   return (
     <>
-      {props.isMobile ? (
+      {isMobile ? (
         <FolderPageMobileBody
-          email={props.email}
-          folderId={props.folderId}
+          email={email}
+          folderId={folderId}
           folder={folder}
           contents={filteredContents}
           allFolders={allFolders}
@@ -224,10 +228,11 @@ export default function FolderPage(props: {
           setChannelEditingDialogId={setChannelEditingDialogId}
           titleRow={titleRow}
           actions={actions}
+          isProd={isProd}
         />
       ) : (
         <FolderPageDesktopBody
-          folderId={props.folderId}
+          folderId={folderId}
           folder={folder}
           contents={filteredContents}
           allFolders={allFolders}
@@ -250,6 +255,7 @@ export default function FolderPage(props: {
           setChannelEditingDialogId={setChannelEditingDialogId}
           titleRow={titleRow}
           actions={actions}
+          isProd={isProd}
         />
       )}
       {devices ? (
@@ -262,13 +268,14 @@ export default function FolderPage(props: {
           emptyText="This Content Folder is on all of your Devices"
           addedDevices={devices}
           onAdd={(id) => {
-            ApiController.addFolderToDevice(props.folderId, id).then(() => {
+            apiController.addFolderToDevice(folderId, id).then(() => {
               setAddDeviceDialogOpen(false)
               loadDevices()
               notificationCtx.success('Added Device')
             })
           }}
-          isMobile={props.isMobile}
+          isMobile={isMobile}
+          isProd={isProd}
         />
       ) : null}
       <FolderRenameDialog
@@ -276,12 +283,12 @@ export default function FolderPage(props: {
         onClose={() => setFolderRenameDialogOpen(false)}
         name={folder?.title ?? ''}
         onSubmit={(name) =>
-          ApiController.renameFolder(props.folderId, name).then(() => {
+          apiController.renameFolder(folderId, name).then(() => {
             loadFolderAndContents()
             notificationCtx.success('Renamed Folder')
           })
         }
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
       {contentCreationDialogOpen ? (
         contentCreationDialogOpen === 'video' ? (
@@ -290,8 +297,9 @@ export default function FolderPage(props: {
             onClose={() => {
               setContentCreationDialogOpen(undefined)
             }}
-            folderId={props.folderId}
+            folderId={folderId}
             creationCallback={loadFolderAndContents}
+            isProd={isProd}
           />
         ) : contentCreationDialogOpen === 'link' ? (
           <LinkCreationDialog
@@ -299,8 +307,9 @@ export default function FolderPage(props: {
             onClose={() => {
               setContentCreationDialogOpen(undefined)
             }}
-            folderId={props.folderId}
+            folderId={folderId}
             creationCallback={loadFolderAndContents}
+            isProd={isProd}
           />
         ) : contentCreationDialogOpen === 'channel' ? (
           <ChannelCreationDialog
@@ -308,8 +317,9 @@ export default function FolderPage(props: {
             onClose={() => {
               setContentCreationDialogOpen(undefined)
             }}
-            folderId={props.folderId}
+            folderId={folderId}
             creationCallback={loadFolderAndContents}
+            isProd={isProd}
           />
         ) : null
       ) : null}
@@ -319,7 +329,7 @@ export default function FolderPage(props: {
           onClose={() => {
             setLinkEditingDialogId(undefined)
           }}
-          folderId={props.folderId}
+          folderId={folderId}
           creationCallback={loadFolderAndContents}
           updateDetails={{
             link: contents.find(
@@ -327,6 +337,7 @@ export default function FolderPage(props: {
             )?.content as ILink,
             callback: loadFolderAndContents,
           }}
+          isProd={isProd}
         />
       ) : null}
       {videoEditingDialogId && contents ? (
@@ -335,7 +346,7 @@ export default function FolderPage(props: {
           onClose={() => {
             setVideoEditingDialogId(undefined)
           }}
-          folderId={props.folderId}
+          folderId={folderId}
           creationCallback={loadFolderAndContents}
           updateDetails={{
             video: contents.find(
@@ -343,6 +354,7 @@ export default function FolderPage(props: {
             )?.content as IVideo,
             callback: loadFolderAndContents,
           }}
+          isProd={isProd}
         />
       ) : null}
       {channelEditingDialogId && contents ? (
@@ -351,7 +363,7 @@ export default function FolderPage(props: {
           onClose={() => {
             setChannelEditingDialogId(undefined)
           }}
-          folderId={props.folderId}
+          folderId={folderId}
           creationCallback={loadFolderAndContents}
           updateDetails={{
             channel: contents.find(
@@ -360,6 +372,7 @@ export default function FolderPage(props: {
             )?.content as IChannel,
             callback: loadFolderAndContents,
           }}
+          isProd={isProd}
         />
       ) : null}
       <DeletionDialog
@@ -368,7 +381,7 @@ export default function FolderPage(props: {
         onClose={() => setDeletionDialogOpen(false)}
         subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
         onSubmit={deleteFolder}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
     </>
   )

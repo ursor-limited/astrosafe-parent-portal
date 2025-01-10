@@ -15,6 +15,7 @@ const ChannelPageDesktopBody = (props: {
   setVideoEditingDialogId: (id: IVideo['id']) => any
   titleRow: ITitleRowItem[]
   actions: IActionPopupItem[]
+  isProd: boolean
   onBack: () => any
 }) => {
   return (
@@ -40,6 +41,7 @@ const ChannelPageDesktopBody = (props: {
                     props.setVideoEditingDialogId(v.id)
                   }
                   twoLineTitleSectionHeight
+                  isProd={props.isProd}
                 />
               </UrsorFadeIn>
             ))}

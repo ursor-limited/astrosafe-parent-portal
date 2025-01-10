@@ -39,16 +39,28 @@ export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
   'blue',
 ]
 
-const FolderCard = (
-  props: IEnrichedContentBucket & {
-    clickCallback?: () => any
-    editingCallback?: () => any
-    deletionCallback?: () => any
-    extraActions?: IActionPopupItem[]
-    strongShadow?: boolean
-    isMobile?: boolean
-  }
-) => {
+interface FolderCardProps extends IEnrichedContentBucket {
+  clickCallback?: () => any
+  editingCallback?: () => any
+  deletionCallback?: () => any
+  extraActions?: IActionPopupItem[]
+  strongShadow?: boolean
+  isMobile?: boolean
+  isProd: boolean
+}
+
+const FolderCard: React.FC<FolderCardProps> = ({
+  id,
+  title,
+  preview,
+  clickCallback,
+  editingCallback,
+  deletionCallback,
+  extraActions,
+  strongShadow,
+  isMobile,
+  isProd = false,
+}) => {
   const [stackCard1Color, setStackCard1Color] = useState<string>('#ffffff')
   const [stackCard2Color, setStackCard2Color] = useState<string>('#ffffff')
   useEffect(() => {
@@ -71,17 +83,19 @@ const FolderCard = (
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false)
 
+  const apiController = new ApiController(isProd)
+
   const deleteFolder = () =>
-    ApiController.removeFolder(props.id).then(() => {
-      props.deletionCallback?.()
+    apiController.removeFolder(id).then(() => {
+      deletionCallback?.()
       notificationCtx.negativeSuccess('Removed Folder')
     })
 
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false)
 
   const renameFolder = (title: IContentBucket['title']) =>
-    ApiController.renameFolder(props.id, title).then(() => {
-      props.editingCallback?.()
+    apiController.renameFolder(id, title).then(() => {
+      editingCallback?.()
       notificationCtx.success('Renamed Folder')
     })
 
@@ -113,7 +127,7 @@ const FolderCard = (
             transition: '0.4s',
           }}
           boxShadow={
-            props.strongShadow
+            strongShadow
               ? '0 0 20px rgba(0,0,0,0.08)'
               : '0 0 12px rgba(0,0,0,0.06)'
           }
@@ -135,19 +149,19 @@ const FolderCard = (
             transition: '0.4s',
           }}
           boxShadow={
-            props.strongShadow
+            strongShadow
               ? '0 0 20px rgba(0,0,0,0.08)'
               : '0 0 12px rgba(0,0,0,0.06)'
           }
           zIndex={0}
         />
-        {props.editingCallback && props.deletionCallback ? (
+        {editingCallback && deletionCallback ? (
           <Stack
             position="absolute"
             top="163px"
             right="3px"
             zIndex={2}
-            // onClick={() => navigate.push(`/lesson/${props.canonicalUrl}`)}
+            // onClick={() => navigate.push(`/lesson/${canonicalUrl}`)}
           >
             <UrsorActionButton
               size="32px"
@@ -155,7 +169,7 @@ const FolderCard = (
               actions={[
                 {
                   text: 'Open',
-                  kallback: () => navigate.push(`/folders/${props.id}`),
+                  kallback: () => navigate.push(`/folders/${id}`),
                   icon: ArrowUpRight,
                 },
                 {
@@ -169,7 +183,7 @@ const FolderCard = (
                   icon: TrashcanIcon,
                   color: PALETTE.system.red,
                 },
-                ...(props.extraActions || []),
+                ...(extraActions || []),
               ]}
             />
           </Stack>
@@ -188,7 +202,7 @@ const FolderCard = (
           bgcolor="rgb(255,255,255)"
           width="100%"
           boxShadow={
-            props.strongShadow
+            strongShadow
               ? '0 0 20px rgba(0,0,0,0.08)'
               : '0 0 12px rgba(0,0,0,0.06)'
           }
@@ -197,7 +211,7 @@ const FolderCard = (
         >
           <Stack
             flex={1}
-            onClick={props.clickCallback}
+            onClick={clickCallback}
             sx={{
               cursor: 'pointer',
               transition: '0.2s',
@@ -226,12 +240,12 @@ const FolderCard = (
                   },
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  backgroundImage: props.preview?.thumbnailUrls?.[0]
-                    ? `url(${props.preview.thumbnailUrls[0]})`
+                  backgroundImage: preview?.thumbnailUrls?.[0]
+                    ? `url(${preview.thumbnailUrls[0]})`
                     : undefined,
                 }}
               >
-                {!props.preview?.thumbnailUrls?.[0] ? (
+                {!preview?.thumbnailUrls?.[0] ? (
                   <Stack
                     sx={{
                       animation: `${spin} 9s linear`,
@@ -256,12 +270,12 @@ const FolderCard = (
                     },
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundImage: props.preview?.thumbnailUrls?.[1]
-                      ? `url(${props.preview.thumbnailUrls[1]})`
+                    backgroundImage: preview?.thumbnailUrls?.[1]
+                      ? `url(${preview.thumbnailUrls[1]})`
                       : undefined,
                   }}
                 >
-                  {!props.preview?.thumbnailUrls?.[1] ? (
+                  {!preview?.thumbnailUrls?.[1] ? (
                     <Stack
                       sx={{
                         animation: `${spin} 12s linear`,
@@ -286,12 +300,12 @@ const FolderCard = (
                     },
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundImage: props.preview?.thumbnailUrls?.[2]
-                      ? `url(${props.preview?.thumbnailUrls[2]})`
+                    backgroundImage: preview?.thumbnailUrls?.[2]
+                      ? `url(${preview?.thumbnailUrls[2]})`
                       : undefined,
                   }}
                 >
-                  {!props.preview?.thumbnailUrls?.[2] ? (
+                  {!preview?.thumbnailUrls?.[2] ? (
                     <Stack
                       sx={{
                         animation: `${spin} 4s linear`,
@@ -308,15 +322,15 @@ const FolderCard = (
               <Stack direction="row" flex={1} minHeight="58px">
                 <Stack pt="8px" flex={1}>
                   <Typography bold variant="medium" maxLines={2}>
-                    {props.title}
+                    {title}
                   </Typography>
                 </Stack>
                 <Stack minWidth="27px" />
               </Stack>
-              {props.preview?.devices ? (
+              {preview?.devices ? (
                 <ProfileImageRow
-                  devices={props.preview?.devices}
-                  totalDeviceCount={props.preview.totalDeviceCount ?? 0}
+                  devices={preview?.devices}
+                  totalDeviceCount={preview.totalDeviceCount ?? 0}
                 />
               ) : null}
             </Stack>
@@ -329,12 +343,12 @@ const FolderCard = (
         onClose={() => setDeletionDialogOpen(false)}
         subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
         onSubmit={deleteFolder}
-        isMobile={props.isMobile}
+        isMobile={isMobile}
       />
       <FolderRenameDialog
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
-        name={props.title ?? ''}
+        name={title ?? ''}
         onSubmit={renameFolder}
         isMobile={false}
       />

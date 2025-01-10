@@ -7,28 +7,38 @@ import { isMobile } from 'react-device-detect'
 
 const IMAGE_HEIGHT = 227
 
-const LinkCard = (
-  props: Partial<Omit<ILink, 'createdAt'>> & {
-    noPointerEvents?: boolean
-    noMenu?: boolean
-    onDelete?: () => any
-    onOpenEditingDialog?: () => any
-    twoLineTitleSectionHeight?: boolean
-  }
-) => {
+const LinkCard = ({
+  title,
+  url,
+  noMenu,
+  noPointerEvents,
+  isProd,
+  id,
+  onDelete,
+  onOpenEditingDialog,
+  twoLineTitleSectionHeight,
+  thumbnailUrl,
+}: Partial<Omit<ILink, 'createdAt'>> & {
+  noPointerEvents?: boolean
+  noMenu?: boolean
+  onDelete?: () => any
+  onOpenEditingDialog?: () => any
+  twoLineTitleSectionHeight?: boolean
+  isProd: boolean
+}) => {
   return (
     <ContentCard
       type="link"
-      title={props.title}
-      url={props.url}
-      noPointerEvents={props.noPointerEvents}
-      noMenu={props.noMenu}
+      title={title}
+      url={url}
+      noPointerEvents={noPointerEvents}
+      noMenu={noMenu}
       onDelete={() =>
-        props.id && ApiController.deleteLink(props.id).then(props.onDelete)
+        id && new ApiController(isProd).deleteLink(id).then(onDelete)
       }
-      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
+      onOpenEditingDialog={() => onOpenEditingDialog?.()}
       isMobile={isMobile}
-      twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
+      twoLineTitleSectionHeight={twoLineTitleSectionHeight}
     >
       <Stack
         height={IMAGE_HEIGHT}
@@ -38,9 +48,9 @@ const LinkCard = (
         position="relative"
         boxShadow="0 0 6px rgba(0,0,0,0.08)"
       >
-        {props.thumbnailUrl ? (
+        {thumbnailUrl ? (
           <img
-            src={props.thumbnailUrl}
+            src={thumbnailUrl}
             style={{ objectFit: 'cover' }}
             alt="image card image"
           />

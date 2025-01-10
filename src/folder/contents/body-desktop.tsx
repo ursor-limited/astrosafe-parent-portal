@@ -48,6 +48,7 @@ const FolderPageDesktopBody = (props: {
   setChannelEditingDialogId: (id: IChannel['id']) => any
   titleRow: ITitleRowItem[]
   actions: IActionPopupItem[]
+  isProd: boolean
 }) => {
   const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510)
   const [columns, setColumns] = useState<IContentCard[][]>([])
@@ -84,6 +85,7 @@ const FolderPageDesktopBody = (props: {
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}
           onRemove={props.onRemoveDevice}
+          isProd={props.isProd}
         />
         <Stack justifyContent="center">
           <Stack
@@ -181,6 +183,7 @@ const FolderPageDesktopBody = (props: {
                                 onOpenEditingDialog={() =>
                                   props.setLinkEditingDialogId(x.content.id)
                                 }
+                                isProd={props.isProd}
                               />
                             ) : x.type === 'video' ? (
                               <VideoCard
@@ -189,6 +192,7 @@ const FolderPageDesktopBody = (props: {
                                 onOpenEditingDialog={() =>
                                   props.setVideoEditingDialogId(x.content.id)
                                 }
+                                isProd={props.isProd}
                               />
                             ) : x.type === 'channel' ? (
                               <ChannelCard

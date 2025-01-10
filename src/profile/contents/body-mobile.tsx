@@ -16,35 +16,49 @@ import MobileDeviceCard from '../../profiles/components/MobileDeviceCard'
 import { ReactComponent as PlusIcon } from './../../images/PlusIcon.svg'
 import DevicePageAppsTab from '../components/AppsTab'
 
-const ProfilePageMobileBody = (props: {
+const ProfilePageMobileBody = ({
+  email,
+  device,
+  titleRow,
+  actions,
+  folders,
+  tab,
+  isProd,
+  onUpdateDevice,
+  onUpdateFolders,
+  openAddFolderDialog,
+}: {
   email: string
   device: IDevice
   titleRow: ITitleRowItem[]
   actions: IActionPopupItem[]
   folders: IEnrichedContentBucket[]
   tab?: AstroAccountTab
+  isProd: boolean
   onUpdateDevice: () => any
   onUpdateFolders: () => any
   openAddFolderDialog: () => any
 }) => {
   const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
-    props.tab ?? 'content'
+    tab ?? 'content'
   )
+
   return (
     <MobilePageLayout
-      titleRow={props.titleRow.slice(-1)[0]}
+      titleRow={titleRow.slice(-1)[0]}
       titleBackButtonCallback={() => navigate.push('/profiles')}
       selectedPage="profiles"
-      actions={props.actions}
+      actions={actions}
     >
       <Stack spacing="24px" flex={1}>
         <MobileDeviceCard
-          email={props.email}
-          {...props.device}
+          email={email}
+          {...device}
           onClickViewScreenTime={() => setSelectedTab('limits')}
-          onUpdate={props.onUpdateDevice}
+          onUpdate={onUpdateDevice}
           noDeviceTypeUnderAvatar
+          isProd={isProd}
         />
         <Stack width="100%" alignItems="center" justifyContent="center">
           <Stack
@@ -77,22 +91,24 @@ const ProfilePageMobileBody = (props: {
         />
         {selectedTab === 'insights' ? (
           <DevicePageMobileInsightsTab
-            email={props.email}
-            deviceId={props.device.id}
+            email={email}
+            deviceId={device.id}
+            isProd={isProd}
           />
         ) : selectedTab === 'apps' ? (
-          <DevicePageAppsTab deviceId={props.device.id} isMobile />
+          <DevicePageAppsTab deviceId={device.id} isMobile isProd={isProd} />
         ) : selectedTab === 'content' ? (
           <DevicePageContentTab
-            deviceId={props.device.id}
-            deviceName={props.device.name}
-            folders={props.folders}
-            onUpdate={props.onUpdateFolders}
-            openAddFolderDialog={props.openAddFolderDialog}
+            deviceId={device.id}
+            deviceName={device.name}
+            folders={folders}
+            onUpdate={onUpdateFolders}
+            openAddFolderDialog={openAddFolderDialog}
             isMobile
+            isProd={isProd}
           />
         ) : selectedTab === 'limits' ? (
-          <DevicePageLimitsTab deviceId={props.device.id} isMobile />
+          <DevicePageLimitsTab deviceId={device.id} isMobile isProd={isProd} />
         ) : null}
       </Stack>
     </MobilePageLayout>

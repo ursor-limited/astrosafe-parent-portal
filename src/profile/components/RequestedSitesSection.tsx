@@ -83,7 +83,10 @@ const RequestedSiteRow = (
 const RequestedSitesSection = (props: {
   sites: IRequestedSite[]
   onUpdate: () => any
+  isProd: boolean
 }) => {
+  const apiController = new ApiController(props.isProd)
+
   const notificationCtx = useContext(NotificationContext)
   return (
     <Stack spacing="12px">
@@ -96,13 +99,13 @@ const RequestedSitesSection = (props: {
             key={s.id}
             {...s}
             onApprove={() =>
-              ApiController.approveRequestedSite(s.id).then(() => {
+              apiController.approveRequestedSite(s.id).then(() => {
                 props.onUpdate()
                 notificationCtx.success('Approved site')
               })
             }
             onDeny={() =>
-              ApiController.denyRequestedSite(s.id).then(() => {
+              apiController.denyRequestedSite(s.id).then(() => {
                 props.onUpdate()
                 notificationCtx.negativeSuccess('Denied site')
               })

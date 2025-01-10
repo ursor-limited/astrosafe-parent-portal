@@ -9,17 +9,19 @@ import { isMobile } from 'react-device-detect'
 
 interface CreateFilterButtonProps {
   email: string
+  isProd?: boolean
   onCreateFilter: (filter: IFilter) => {}
 }
 
 const CreateFilterButton: React.FC<CreateFilterButtonProps> = ({
   email,
+  isProd = false,
   onCreateFilter = (filter: IFilter) => {},
 }) => {
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false)
 
-  const { user } = useAuth(email)
+  const { user } = useAuth(email, isProd)
 
   return (
     <>
@@ -39,9 +41,9 @@ const CreateFilterButton: React.FC<CreateFilterButtonProps> = ({
         onSubmit={(title: IFilter['title']) => {
           if (!user?.group_id) return
 
-          ApiController.createFilter(user.group_id, title).then((f) =>
-            onCreateFilter(f)
-          )
+          new ApiController(isProd)
+            .createFilter(user.group_id, title)
+            .then((f) => onCreateFilter(f))
         }}
         isMobile={isMobile}
       />

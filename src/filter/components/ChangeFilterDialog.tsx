@@ -9,7 +9,7 @@ import UrsorDialog from '../../components/UrsorDialog'
 import { IDevice } from '../contents/common'
 import { ReactComponent as FilterIcon } from './../../images/FilterIcon.svg'
 
-const ChangeFilterDialog = (props: {
+interface ChangeFilterDialogProps {
   open: boolean
   onClose: () => any
   submitChange: (id: IFilter['id']) => any
@@ -17,24 +17,40 @@ const ChangeFilterDialog = (props: {
   groupId: IGroup['id']
   isMobile?: boolean
   deviceName: IDevice['name']
+  isProd: boolean
+}
+
+const ChangeFilterDialog: React.FC<ChangeFilterDialogProps> = ({
+  open,
+  onClose,
+  submitChange,
+  currentFilterId,
+  groupId,
+  isMobile,
+  deviceName,
+  isProd,
 }) => {
   const [allFilters, setAllFilters] = useState<IFilter[]>([])
+
   useEffect(() => {
-    ApiController.getGroupFilters(props.groupId).then((d) => setAllFilters(d))
-  }, [props.groupId])
+    new ApiController(isProd)
+      .getGroupFilters(groupId)
+      .then((d) => setAllFilters(d))
+  }, [groupId])
+
   return (
     <UrsorDialog
-      open={props.open}
-      onCloseCallback={props.onClose}
+      open={open}
+      onCloseCallback={onClose}
       title="Change Filter"
-      subtitle={['Change the Filter of', props.deviceName]}
+      subtitle={['Change the Filter of', deviceName]}
       width="434px"
       dynamicHeight
-      isMobile={props.isMobile}
+      isMobile={isMobile}
     >
       <Stack pt="16px" spacing="16px" width="100%">
         {allFilters
-          .filter((f) => f.id !== props.currentFilterId)
+          .filter((f) => f.id !== currentFilterId)
           .map((f) => (
             <Stack
               key={f.id}
@@ -52,8 +68,8 @@ const ChangeFilterDialog = (props: {
                 },
               }}
               onClick={() => {
-                props.submitChange(f.id)
-                props.onClose()
+                submitChange(f.id)
+                onClose()
               }}
               alignItems="center"
             >

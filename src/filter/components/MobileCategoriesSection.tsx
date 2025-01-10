@@ -10,7 +10,7 @@ import {
   IFilterCategory,
   IFilterUrl,
 } from '../../astrosafe/components/filters/AllFilters'
-import { FilterLegend } from './CategoriesSection'
+import { FilterLegend } from '../../astrosafe/components/filter/CategoriesSection'
 
 const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter

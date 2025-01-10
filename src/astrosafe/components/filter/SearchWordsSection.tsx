@@ -41,30 +41,34 @@ const BlockedWordTag = (props: { word: string; onClick: () => any }) => (
 interface SearchWordsSectionProps {
   filterId: number
   email: string
+  isProd?: boolean
 }
 
 const SearchWordsSection: React.FC<SearchWordsSectionProps> = ({
   filterId,
   email,
+  isProd = false,
 }) => {
-  useAuth(email)
+  useAuth(email, isProd)
 
   const [inputValue, setInputValue] = useState<string>('')
 
   const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([])
 
+  const apiController = new ApiController(isProd)
+
   useEffect(() => {
-    ApiController.getBlockedSearchWords(filterId).then(setBlockedSearchWords)
+    apiController.getBlockedSearchWords(filterId).then(setBlockedSearchWords)
   }, [filterId])
 
   const addToBlockedSearchWords = (word: string) => {
     setBlockedSearchWords([...blockedSearchWords, word])
-    ApiController.addBlockedSearchWord(filterId, word)
+    apiController.addBlockedSearchWord(filterId, word)
   }
 
   const removeFromBlockedSearchWords = (word: string) => {
     setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
-    ApiController.removeBlockedSearchWord(filterId, word)
+    apiController.removeBlockedSearchWord(filterId, word)
   }
 
   return (

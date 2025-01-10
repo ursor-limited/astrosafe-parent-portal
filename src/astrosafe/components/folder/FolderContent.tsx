@@ -31,10 +31,15 @@ import ApiController from '../../../api'
 interface FolderContentProps {
   folderId: number
   email: string
+  isProd?: boolean
 }
 
-const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
-  useAuth(email)
+const FolderContent: React.FC<FolderContentProps> = ({
+  email,
+  folderId,
+  isProd = false,
+}) => {
+  useAuth(email, isProd)
 
   const [filteredContents, setFilteredContents] = useState<IContentCard[]>([])
 
@@ -46,12 +51,13 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
   const [folderRenameDialogOpen, setFolderRenameDialogOpen] =
     useState<boolean>(false)
 
-  const deleteFolder = () =>
-    ApiController.removeFolder(folderId).then((folder) => {
+  const deleteFolder = () => {
+    return new ApiController(isProd).removeFolder(folderId).then((folder) => {
       if (!folder!) return
 
       return folder.json()
     })
+  }
 
   const actions = [
     {
@@ -72,8 +78,10 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
     },
   ]
 
-  const { folder, contents, loadFolderAndContents } =
-    useLoadFolderAndContents(folderId)
+  const { folder, contents, loadFolderAndContents } = useLoadFolderAndContents(
+    folderId,
+    isProd
+  )
 
   const [selectedContentType, setSelectedContentType] = useState<
     AstroContent | 'all'
@@ -148,6 +156,7 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
                             onOpenEditingDialog={() =>
                               setLinkEditingDialogId(x.content.id)
                             }
+                            isProd={isProd}
                           />
                         ) : x.type === 'video' ? (
                           <VideoCard
@@ -156,6 +165,7 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
                             onOpenEditingDialog={() =>
                               setVideoEditingDialogId(x.content.id)
                             }
+                            isProd={isProd}
                           />
                         ) : x.type === 'channel' ? (
                           <ChannelCard
@@ -214,6 +224,7 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
             )?.content as ILink,
             callback: loadFolderAndContents,
           }}
+          isProd={isProd}
         />
       ) : null}
 
@@ -231,6 +242,7 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
             )?.content as IVideo,
             callback: loadFolderAndContents,
           }}
+          isProd={isProd}
         />
       ) : null}
 
@@ -249,6 +261,7 @@ const FolderContent: React.FC<FolderContentProps> = ({ email, folderId }) => {
             )?.content as IChannel,
             callback: loadFolderAndContents,
           }}
+          isProd={isProd}
         />
       ) : null}
 

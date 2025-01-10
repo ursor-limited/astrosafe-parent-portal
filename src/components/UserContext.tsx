@@ -38,11 +38,16 @@ export interface IUserProviderProps {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // this is legacy, used for getting the user details by auth0. Got to hook it up to keycloak!
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-const UserProvider = (props: IUserProviderProps) => {
+const UserProvider: React.FC<IUserProviderProps & { isProd: boolean }> = ({
+  checkoutSessionId,
+  children,
+  isProd,
+}) => {
   const [user, setUser] = useState<IUser | undefined>()
 
   const loadUser = useCallback(
-    () => ApiController.getUser(DUMMY_USER_ID).then((u) => setUser(u)),
+    () =>
+      new ApiController(isProd).getUser(DUMMY_USER_ID).then((u) => setUser(u)),
     []
   )
   useEffect(() => {
@@ -60,7 +65,7 @@ const UserProvider = (props: IUserProviderProps) => {
   //     () => {
   //       loadUser();
   //     },
-  //     props.checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
+  //     checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
   //   );
   //   if (user?.email && !signedIn) {
   //     notificationCtx.success("Signed in");
@@ -100,10 +105,10 @@ const UserProvider = (props: IUserProviderProps) => {
   // };
 
   // useEffect(() => {
-  //   if (props.checkoutSessionId) {
+  //   if (checkoutSessionId) {
   //     safeTubeUser?.id &&
   //       ApiController.claimCheckoutSessionId(
-  //         props.checkoutSessionId,
+  //         checkoutSessionId,
   //         safeTubeUser?.id
   //       ).then(loadUser);
   //     //setTimeout(loadUser, 600); // needed to make sure that there is enough time to store the
@@ -186,7 +191,7 @@ const UserProvider = (props: IUserProviderProps) => {
         schoolIsSubscribed: true,
       }}
     >
-      {props.children}
+      {children}
     </UserContext.Provider>
   )
 }

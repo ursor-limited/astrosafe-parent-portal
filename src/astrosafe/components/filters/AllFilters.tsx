@@ -92,22 +92,27 @@ export interface IGroupFilter {
 
 interface AllFiltersPageProps {
   email: string
+  isProd?: boolean
   onCardClick?: (filterId: number) => {}
   onCreateFilter?: (filterId: number) => {}
 }
 
 const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
   email,
+  isProd = false,
   onCardClick = (filterId: number) => {},
   onCreateFilter = (filterId: number) => {},
 }) => {
-  const { user } = useAuth(email)
+  const { user } = useAuth(email, isProd)
   const [filters, setFilters] = useState<IGroupFilter[]>([])
+
+  const apiController = new ApiController(isProd)
+
   useEffect(() => {
     user?.group_id &&
-      ApiController.getGroupFilters(user.group_id).then((filtahs) =>
-        setFilters(_.sortBy(filtahs, (f) => f.id))
-      )
+      apiController
+        .getGroupFilters(user.group_id)
+        .then((filtahs) => setFilters(_.sortBy(filtahs, (f) => f.id)))
   }, [user?.group_id])
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false)
@@ -134,7 +139,7 @@ const AllFiltersPage: React.FC<AllFiltersPageProps> = ({
         onSubmit={(title: IFilter['title']) => {
           if (!user?.group_id) return
 
-          ApiController.createFilter(user.group_id, title).then((f) => {
+          apiController.createFilter(user.group_id, title).then((f) => {
             setFilters((prevState) => [
               ...prevState,
               {

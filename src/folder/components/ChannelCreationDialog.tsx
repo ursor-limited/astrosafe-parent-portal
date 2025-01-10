@@ -12,7 +12,14 @@ import { IChannel } from './../../profile/components/ContentTab'
 import { INFOS } from './../../profile/components/ProfilePageTabLayout'
 import { cleanUrl } from './../../profile/components/MobileInsightsTab'
 
-const ChannelCreationDialog = (props: {
+const ChannelCreationDialog = ({
+  open,
+  onClose,
+  folderId,
+  creationCallback,
+  updateDetails,
+  isProd = false,
+}: {
   open: boolean
   onClose: () => any
   folderId: IEnrichedContentBucket['id']
@@ -21,40 +28,45 @@ const ChannelCreationDialog = (props: {
     channel: IChannel
     callback?: () => any
   }
+  isProd: boolean
 }) => {
   const [title, setTitle] = useState<string>('')
   const [url, setUrl] = useState<string>('')
   const [profileUrl, setProfileUrl] = useState<string>('')
   const [bannerUrl, setBannerUrl] = useState<string>('')
   useEffect(() => {
-    props.updateDetails && setTitle(props.updateDetails?.channel.title)
-    props.updateDetails && setUrl(props.updateDetails?.channel.url)
-    props.updateDetails &&
-      setProfileUrl(props.updateDetails?.channel.profileUrl)
-    props.updateDetails && setBannerUrl(props.updateDetails?.channel.bannerUrl)
-  }, [props.updateDetails])
+    updateDetails && setTitle(updateDetails?.channel.title)
+    updateDetails && setUrl(updateDetails?.channel.url)
+    updateDetails && setProfileUrl(updateDetails?.channel.profileUrl)
+    updateDetails && setBannerUrl(updateDetails?.channel.bannerUrl)
+  }, [updateDetails])
 
   const notificationCtx = useContext(NotificationContext)
 
+  const apiController = new ApiController(isProd)
+
   const submitCreation = () =>
-    ApiController.createChannel(
-      title,
-      getAbsoluteUrl(cleanUrl(url)),
-      bannerUrl,
-      profileUrl,
-      props.folderId
-    ).then(props.creationCallback)
+    apiController
+      .createChannel(
+        title,
+        getAbsoluteUrl(cleanUrl(url)),
+        bannerUrl,
+        profileUrl,
+        folderId
+      )
+      .then(creationCallback)
 
   const submitUpdate = () =>
-    props.updateDetails?.channel.id &&
-    ApiController.updateChannel(
-      props.updateDetails.channel.id,
-      title,
-      getAbsoluteUrl(cleanUrl(url)),
-      bannerUrl,
-      profileUrl
-    )
-      .then(props.updateDetails?.callback)
+    updateDetails?.channel.id &&
+    apiController
+      .updateChannel(
+        updateDetails.channel.id,
+        title,
+        getAbsoluteUrl(cleanUrl(url)),
+        bannerUrl,
+        profileUrl
+      )
+      .then(updateDetails?.callback)
       .then(() => notificationCtx.success('Updated Channel'))
 
   const [checked, setChecked] = useState<boolean>(false)
@@ -63,9 +75,8 @@ const ChannelCreationDialog = (props: {
     useState<boolean>(false)
 
   const loadPreview = () => {
-    ApiController.getChannelPreview(
-      encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
-    )
+    apiController
+      .getChannelPreview(encodeURIComponent(getAbsoluteUrl(cleanUrl(url))))
       .then((result) => {
         result.title && !manuallyChangedTitle && setTitle(result.title)
         result.bannerUrl && setBannerUrl(result.bannerUrl)
@@ -76,11 +87,11 @@ const ChannelCreationDialog = (props: {
 
   return (
     <ContentCreationDialog
-      open={props.open}
-      closeCallback={props.onClose}
+      open={open}
+      closeCallback={onClose}
       onSubmit={() => {
-        ;(props.updateDetails?.callback ? submitUpdate : submitCreation)()
-        props.onClose()
+        ;(updateDetails?.callback ? submitUpdate : submitCreation)()
+        onClose()
       }}
       info={INFOS.addChannel}
       type="channel"
@@ -92,10 +103,10 @@ const ChannelCreationDialog = (props: {
       setUrl={setUrl}
       url={url}
       onUrlFieldBlur={loadPreview}
-      buttonDisabled={!checked && !props.updateDetails}
-      editing={!!props.updateDetails}
+      buttonDisabled={!checked && !updateDetails}
+      editing={!!updateDetails}
       extraBottomElement={
-        !props.updateDetails ? (
+        !updateDetails ? (
           <Stack direction="row" spacing="8px">
             <Stack
               pt="3px"
